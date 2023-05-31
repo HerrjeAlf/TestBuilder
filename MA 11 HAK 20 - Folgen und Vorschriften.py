@@ -69,12 +69,15 @@ def folgen(nr, teilaufg):
     else:
         geom_folge_q = random.choice([2,3,4,5])
 
-    a_n_alle = [start_arithm_folge + (x-1)*arithm_folge_d,
-                start_geom_folge * geom_folge_q**(x-1)]
+    a_n_alle = [start_arithm_folge + (x-1) * arithm_folge_d,
+                start_geom_folge * geom_folge_q**(x-1),
+                start_arithm_folge - arithm_folge_d ** x]
     a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
-                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}']
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    latex(start_arithm_folge) + r'~-~' + latex(arithm_folge_d) + r'^n']
     folgenart_alle = [r' \mathrm{Es~ist~eine~arithmetische~Folge.} ',
-                      r' \mathrm{Es~ist~eine~geometrische~Folge.} ']
+                      r' \mathrm{Es~ist~eine~geometrische~Folge.} ',
+                      r' \mathrm{Es~ist~eine~arithmetische~Folge.} ']
     auswahl_folgenart = random.randint(1,len(a_n_alle)) - 1
     print(len(a_n_alle))
     print(auswahl_folgenart)
@@ -160,7 +163,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
-    Aufgabe.generate_pdf('HAK 20 - Folgen und Bildungsvorschrift Gruppe A', clean_tex=true)
+    Aufgabe.generate_pdf(f'HAK 20 - Folgen und Bildungsvorschrift {Teil}', clean_tex=true)
 
 
 # Erwartungshorizont
@@ -178,7 +181,7 @@ def Erwartungshorizont():
         else:
             Loesung.append(elements)
 
-    Loesung.generate_pdf('HAK 20 - Folgen und Bildungsvorschrift Gruppe A - Lsg', clean_tex=true)
+    Loesung.generate_pdf(f'HAK 20 - Folgen und Bildungsvorschrift {Teil} - Lsg', clean_tex=true)
 
 
 # Druck der Seiten
