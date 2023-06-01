@@ -63,18 +63,25 @@ def folgen(nr, teilaufg):
     start_arithm_folge = zzahl(1,10)
     start_geom_folge = nzahl(1,10)
     arithm_folge_d = nzahl(2,10)
+    arithm_folge_d_2 = zzahl(2,10)
     if nzahl(1,2) == 1:
         p = random.choice([2,4,5,8,10])
         geom_folge_q = Rational(1,p)
     else:
-        geom_folge_q = random.choice([2,3,4,5])
+        geom_folge_q = random.choice([2, 3, 4, 5])
 
-    a_n_alle = [start_arithm_folge + (x-1)*arithm_folge_d,
-                start_geom_folge * geom_folge_q**(x-1)]
+    a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
+                start_geom_folge * geom_folge_q ** (x - 1),
+                start_arithm_folge + arithm_folge_d_2 ** x]
     a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
-                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}']
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    latex(start_arithm_folge) + '~+~' + vorz_str_minus(arithm_folge_d_2) + r'^n']
     folgenart_alle = [r' \mathrm{Es~ist~eine~arithmetische~Folge.} ',
-                      r' \mathrm{Es~ist~eine~geometrische~Folge.} ']
+                      r' \mathrm{Es~ist~eine~geometrische~Folge.} ',
+                      r' \mathrm{Es~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} ']
+    auswahl_folgenart = random.randint(1, len(a_n_alle)) - 1
+    print(len(a_n_alle))
+    print(auswahl_folgenart)
     auswahl_folgenart = random.randint(1,len(a_n_alle)) - 1
     print(len(a_n_alle))
     print(auswahl_folgenart)
@@ -160,7 +167,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
-    Aufgabe.generate_pdf('HAK 20 - Folgen und Bildungsvorschrift Gruppe A', clean_tex=true)
+    Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
 
 # Erwartungshorizont
@@ -178,7 +185,7 @@ def Erwartungshorizont():
         else:
             Loesung.append(elements)
 
-    Loesung.generate_pdf('HAK 20 - Folgen und Bildungsvorschrift Gruppe A - Lsg', clean_tex=true)
+    Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
 
 # Druck der Seiten
