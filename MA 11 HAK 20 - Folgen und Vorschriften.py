@@ -1,4 +1,4 @@
-import pylatex, math, random, sympy, numpy
+import math, random, sympy, numpy
 from random import randrange, randint, choice
 from sympy import *
 from numpy.linalg import solve as slv
@@ -60,63 +60,92 @@ def Bild_1(a, b, f, n):
 def folgen(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
-    start_arithm_folge = zzahl(1,10)
-    start_geom_folge = nzahl(1,10)
-    arithm_folge_d = nzahl(2,10)
-    arithm_folge_d_2 = zzahl(2,10)
-    if nzahl(1,2) == 1:
-        p = random.choice([2,4,5,8,10])
-        geom_folge_q = Rational(1,p)
+    start_arithm_folge = zzahl(1, 10)
+    start_geom_folge = nzahl(1, 10)
+    arithm_folge_d = nzahl(2, 10)
+    basis = zzahl(2, 10)
+    if nzahl(1, 2) == 1:
+        p = random.choice([2, 4, 5, 8, 10])
+        geom_folge_q = Rational(1, p)
     else:
         geom_folge_q = random.choice([2, 3, 4, 5])
 
+    bel_vorschrift = [start_arithm_folge + basis ** x,
+                      start_arithm_folge - 1 / x,
+                      start_arithm_folge/(x+arithm_folge_d),
+                      x**arithm_folge_d]
+    bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
+                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{x~' + vorz_str(arithm_folge_d) + '}',
+                          r'n^{' + str(arithm_folge_d) + '}']
+    ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
-                start_arithm_folge + arithm_folge_d_2 ** x]
+                bel_vorschrift[ausw_folge]]
     a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
                     latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
-                    latex(start_arithm_folge) + '~+~' + vorz_str_minus(arithm_folge_d_2) + r'^n']
-    folgenart_alle = [r' \mathrm{Es~ist~eine~arithmetische~Folge.} ',
-                      r' \mathrm{Es~ist~eine~geometrische~Folge.} ',
-                      r' \mathrm{Es~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} ']
+                    bel_vorschrift_str[ausw_folge]]
+
     auswahl_folgenart = random.randint(1, len(a_n_alle)) - 1
-    print(len(a_n_alle))
-    print(auswahl_folgenart)
-    auswahl_folgenart = random.randint(1,len(a_n_alle)) - 1
-    print(len(a_n_alle))
-    print(auswahl_folgenart)
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
-    folgenart = folgenart_alle[auswahl_folgenart]
-
-
-    data = [a_n.subs(x,i) for i in range(4)]
-    data_lsg = [a_n.subs(x,i) for i in range(7)]
-
-    print(data)
+    data = [a_n.subs(x, i) for i in range(1, 5)]
+    data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
 
     aufgabe = []
     aufgabe.append(MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')))
     aufgabe.append('Gegeben ist die folgende Zahlenfolge: \n\n')
-    aufgabe.append(latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' + latex(data[3]) + r', ~ ...  \\')
+    aufgabe.append(latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
+                   latex(data[3]) + r', ~ ...  \\')
 
     loesung = []
     loesung.append(r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}')
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1]) + ',~' + latex(data_lsg[2]) + ',~' +
-                       latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) )
+        loesung.append(
+            str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1]) + ',~' + latex(
+                data_lsg[2]) + ',~' +
+            latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]))
         i = i + 1
 
     if b in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische Zahlenfolge handelt. \n\n')
+        aufgabe.append(str(liste_teilaufg[
+                               i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische Zahlenfolge handelt. \n\n')
         if auswahl_folgenart == 0:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hier~die~Lösung~für~arithm.~Folge} --> a_2 - a_1 = ... usw.')
-        elif auswahl_folgenart == 1:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hier~die~Lösung~für~geometr.~Folge} --> a_2 / a_1 = ... usw.')
-        else:
-            loesung.append(str(liste_teilaufg[i])+ r') \quad \mathrm{Hier~die~Lösung~für~arithm.~Folge} --> a_2 - a_1 = ... und a_2 / a_1 = ...')
+            table_b = Tabular('|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(1, 4)
+            table_b.add_row('Differenz der Werte', 'a1-a0', 'a2-a1', 'a3-a2')
+            table_b.add_hline(1, 4)
+            table_b.add_row('Ergebnis', data[1] - data[0], data[2] - data[1], data[3] - data[2])
+            table_b.add_hline(1, 4)
+            loesung.append(str(liste_teilaufg[i]) +
+                           r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,ist~es~eine~arithmetische~Folge~mit~d~=~' +
+                           str(arithm_folge_d) + r'.} \quad (3P)')
+            loesung.append(table_b)
+        if auswahl_folgenart == 1:
+            table_b = Tabular('|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(1, 4)
+            table_b.add_row('Quotient der Werte', 'a1/a0', 'a2/a1', 'a3/a2')
+            table_b.add_hline(1, 4)
+            table_b.add_row('Ergebnis', Rational(data[1], data[0]), Rational(data[2] / data[1]),
+                            Rational(data[3] / data[2]))
+            table_b.add_hline(1, 4)
+            loesung.append(str(liste_teilaufg[i]) +
+                           r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,ist~es~eine~geometrische~Folge~mit~q~=~' +
+                           str(geom_folge_q) + '.} \quad (3P)')
+            loesung.append(table_b)
+        if auswahl_folgenart == 2:
+            table_b = Tabular('|c|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(1, 5)
+            table_b.add_row('Quotient der Werte', 'a1-a0', 'a2-a1', 'a1/a0', 'a2/a1')
+            table_b.add_hline(1, 5)
+            table_b.add_row('Ergebnis', data[1] - data[0], data[2] - data[1], N(data[1] / data[0], 3),
+                            N(data[2] / data[1], 4))
+            table_b.add_hline(1, 5)
+            loesung.append(str(liste_teilaufg[i]) +
+                           r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,Es~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} \quad (3P)')
+            loesung.append(table_b)
         i = i + 1
 
     if c in teilaufg:
