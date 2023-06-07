@@ -76,7 +76,7 @@ def folgen(nr, teilaufg):
                       x**arithm_folge_d]
     bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
                           str(start_arithm_folge) + r'~-~ \frac{1}{n}',
-                          r' \frac{' + str(start_arithm_folge) + r'}{x~' + vorz_str(arithm_folge_d) + '}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
