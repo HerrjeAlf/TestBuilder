@@ -8,8 +8,8 @@ from sympy import *
 
 # Defintion der Funktionen
 
-Expand All
-	@@ -14,56 +14,64 @@
+a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+pi = numpy.pi
 
 liste_variable = [a, b, c, d, x, y, z]
 
@@ -74,8 +74,8 @@ def folgen(nr, teilaufg):
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
         geom_folge_q = Rational(1, p)
-Expand All
-	@@ -72,13 +80,14 @@ def folgen(nr, teilaufg):
+    else:
+        geom_folge_q = random.choice([2, 3, 4, 5])
 
     bel_vorschrift = [start_arithm_folge + basis ** x,
                       start_arithm_folge - 1 / x,
@@ -90,8 +90,12 @@ Expand All
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
                 bel_vorschrift[ausw_folge]]
-Expand All
-	@@ -92,36 +101,33 @@ def folgen(nr, teilaufg):
+    a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    bel_vorschrift_str[ausw_folge]]
+    auswahl_folgenart = random.randint(1, len(a_n_alle)) - 1
+    a_n = a_n_alle[auswahl_folgenart]
+    a_n_str = a_n_str_alle[auswahl_folgenart]
     data = [a_n.subs(x, i) for i in range(1, 5)]
     data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
 
@@ -125,8 +129,9 @@ Expand All
             loesung.append(table_b)
         if auswahl_folgenart == 1:
             table_b = Tabular('|c|c|c|c|', row_height=1.2)
-Expand All
-	@@ -131,9 +137,9 @@ def folgen(nr, teilaufg):
+            table_b.add_hline(1, 4)
+            table_b.add_row('Quotient der Werte', 'a1/a0', 'a2/a1', 'a3/a2')
+            table_b.add_hline(1, 4)
             table_b.add_row('Ergebnis', Rational(data[1], data[0]), Rational(data[2] / data[1]),
                             Rational(data[3] / data[2]))
             table_b.add_hline(1, 4)
@@ -136,8 +141,9 @@ Expand All
             loesung.append(table_b)
         if auswahl_folgenart == 2:
             table_b = Tabular('|c|c|c|c|c|', row_height=1.2)
-Expand All
-	@@ -143,28 +149,32 @@ def folgen(nr, teilaufg):
+            table_b.add_hline(1, 5)
+            table_b.add_row('Quotient der Werte', 'a1-a0', 'a2-a1', 'a1/a0', 'a2/a1')
+            table_b.add_hline(1, 5)
             table_b.add_row('Ergebnis', data[1] - data[0], data[2] - data[1], N(data[1] / data[0], 3),
                             N(data[2] / data[1], 4))
             table_b.add_hline(1, 5)
@@ -170,8 +176,8 @@ def grenzwerte(nr, teilaufg):
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
         geom_folge_q = Rational(1, p)
-Expand All
-	@@ -173,13 +183,14 @@ def grenzwerte(nr, teilaufg):
+    else:
+        geom_folge_q = random.choice([2, 3, 4, 5])
 
     bel_vorschrift = [start_arithm_folge + basis ** x,
                       start_arithm_folge - 1 / x,
@@ -186,8 +192,11 @@ Expand All
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
                 bel_vorschrift[ausw_folge]]
-Expand All
-	@@ -192,23 +203,20 @@ def grenzwerte(nr, teilaufg):
+    a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    bel_vorschrift_str[ausw_folge]]
+    auswahl_folgenart = random.randint(1, len(a_n_alle)) - 1
+    a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
     grenzwert = limit(a_n, x, oo)
 
@@ -208,8 +217,11 @@ Aufgabe_1, Loesung_1 = folgen(1, [a, b, c])
 Aufgabe_2, Loesung_2 = grenzwerte(2, [a])
 
 # Angaben für den Test im pdf-Dokument
-Expand All
-	@@ -222,6 +230,7 @@ def grenzwerte(nr, teilaufg):
+Datum = NoEscape(r' \today')
+Kurs = 'Leistungskurs'
+Fach = 'Mathematik'
+Klasse = '11'
+Lehrer = 'Herr Herrys'
 Art = 'HAK 20 - Folgen und Bildungsvorschrift'
 Teil = 'Gruppe A'
 
@@ -217,3 +229,50 @@ Teil = 'Gruppe A'
 # der Teil in dem die PDF-Datei erzeugt wird
 
 def Hausaufgabenkontrolle():
+    geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
+    Aufgabe = Document(geometry_options=geometry_options)
+    # erste Seite
+    table1 = Tabular('c|c|c|c|c|c|', row_height=1.2)
+    table1.add_hline(2, 6)
+    table1.add_row(MediumText(bold('Torhorst - Gesamtschule')), 'Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:')
+    table1.add_row(SmallText('mit gymnasialer Oberstufe'), Klasse, Fach, Kurs, Lehrer, Datum)
+    table1.add_hline(2, 6)
+    Aufgabe.append(table1)
+    Aufgabe.append(' \n\n')
+    Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
+    for elements in Aufgabe_1:
+        if '~' in elements:
+            with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Aufgabe.append(elements)
+    for elements in Aufgabe_2:
+        if '~' in elements:
+            with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Aufgabe.append(elements)
+    Aufgabe.append(NewPage())
+    Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
+    Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+# Erwartungshorizont
+def Erwartungshorizont():
+    geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
+    Loesung = Document(geometry_options=geometry_options)
+    Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
+    for elements in Loesung_1:
+        if '~' in elements:
+            with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Loesung.append(elements)
+    for elements in Loesung_2:
+        if '~' in elements:
+            with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Loesung.append(elements)
+    Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+# Druck der Seiten
+Hausaufgabenkontrolle()
+Erwartungshorizont()
