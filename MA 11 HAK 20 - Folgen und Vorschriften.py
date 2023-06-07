@@ -177,7 +177,7 @@ def grenzwerte(nr, teilaufg):
                       x**arithm_folge_d]
     bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
                           str(start_arithm_folge) + r'~-~ \frac{1}{n}',
-                          r' \frac{' + str(start_arithm_folge) + r'}{x~' + vorz_str(arithm_folge_d) + '}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
@@ -203,7 +203,7 @@ def grenzwerte(nr, teilaufg):
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den Grenzwert der gegebenen Folge. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to \infty } ' + a_n_str + '~=~' + \
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{n \to \infty } ' + a_n_str + '~=~' + \
                        latex(grenzwert) + r' \quad (2P) \\')
         i = i + 1
     return aufgabe, loesung
