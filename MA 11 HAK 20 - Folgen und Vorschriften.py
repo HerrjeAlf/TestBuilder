@@ -153,9 +153,63 @@ def folgen(nr, teilaufg):
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
         i = i + 1
 
+    print(data)
+    print(a_n)
+    print(auswahl_folgenart)
+    return aufgabe, loesung
+
+def grenzwerte(nr, teilaufg):
+    liste_teilaufg = [a, b, c, d]
+    i = 0
+    start_arithm_folge = zzahl(1, 10)
+    start_geom_folge = nzahl(1, 10)
+    arithm_folge_d = nzahl(2, 10)
+    basis = zzahl(2, 10)
+    if nzahl(1, 2) == 1:
+        p = random.choice([2, 4, 5, 8, 10])
+        geom_folge_q = Rational(1, p)
+    else:
+        geom_folge_q = random.choice([2, 3, 4, 5])
+
+    bel_vorschrift = [start_arithm_folge + basis ** x,
+                      start_arithm_folge - 1 / x,
+                      start_arithm_folge/(x+arithm_folge_d),
+                      x**arithm_folge_d]
+    bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
+                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{x~' + vorz_str(arithm_folge_d) + '}',
+                          r'n^{' + str(arithm_folge_d) + '}']
+    ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
+    a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
+                start_geom_folge * geom_folge_q ** (x - 1),
+                bel_vorschrift[ausw_folge]]
+    a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    bel_vorschrift_str[ausw_folge]]
+
+    auswahl_folgenart = random.randint(1, len(a_n_alle)) - 1
+    a_n = a_n_alle[auswahl_folgenart]
+    a_n_str = a_n_str_alle[auswahl_folgenart]
+    grenzwert = limit(a_n, x, oo)
+
+    aufgabe = []
+    aufgabe.append(MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')))
+    aufgabe.append('Gegeben ist die folgende Bildungsvorschrift:')
+    aufgabe.append(r'a_{n}~=~' + a_n_str)
+
+    loesung = []
+    loesung.append(r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}')
+
+
+    if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den Grenzwert der gegebenen Folge. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to \infty } ' + a_n_str + '~=~' + \
+                       latex(grenzwert) + r' \quad (2P) \\')
+        i = i + 1
     return aufgabe, loesung
 
 Aufgabe_1, Loesung_1 = folgen(1, [a,b,c])
+Aufgabe_2, Loesung_2 = grenzwerte(2, [a])
 
 # Angaben für den Test im pdf-Dokument
 
@@ -193,6 +247,13 @@ def Hausaufgabenkontrolle():
         else:
             Aufgabe.append(elements)
 
+    for elements in Aufgabe_2:
+        if '~' in elements:
+            with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Aufgabe.append(elements)
+
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
@@ -208,6 +269,13 @@ def Erwartungshorizont():
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
 
     for elements in Loesung_1:
+        if '~' in elements:
+            with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                agn.append(elements)
+        else:
+            Loesung.append(elements)
+
+    for elements in Loesung_2:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
