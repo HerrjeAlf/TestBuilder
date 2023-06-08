@@ -99,9 +99,9 @@ def folgen(nr, teilaufg):
     data = [a_n.subs(x, i) for i in range(1, 5)]
     data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n',
-               latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
-               latex(data[3]) + r', ~ ...  \\']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n']
+    aufgabe.append(latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
+                   latex(data[3]) + r', ~ ...  \\')
 
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
@@ -200,8 +200,8 @@ def grenzwerte(nr, teilaufg):
     a_n_str = a_n_str_alle[auswahl_folgenart]
     grenzwert = limit(a_n, x, oo)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift:',
-               r'a_{n}~=~' + a_n_str]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n']
+    aufgabe.append(r'a_{n}~=~' + a_n_str)
 
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
