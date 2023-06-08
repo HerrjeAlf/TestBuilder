@@ -99,9 +99,10 @@ def folgen(nr, teilaufg):
     data = [a_n.subs(x, i) for i in range(1, 5)]
     data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n',
-               latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
-               latex(data[3]) + r', ~ ...  \\']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n']
+    aufgabe.append(latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
+                   latex(data[3]) + r', ~ ...  \\')
+
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
@@ -199,8 +200,8 @@ def grenzwerte(nr, teilaufg):
     a_n_str = a_n_str_alle[auswahl_folgenart]
     grenzwert = limit(a_n, x, oo)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n',
-               r'a_{n}~=~' + a_n_str]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n']
+    aufgabe.append(r'a_{n}~=~' + a_n_str)
 
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
@@ -239,21 +240,18 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(table1)
     Aufgabe.append(' \n\n')
     Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
-
     for elements in Aufgabe_1:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-    
     for elements in Aufgabe_2:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-    
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
@@ -262,21 +260,18 @@ def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
-    
     for elements in Loesung_1:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-    
     for elements in Loesung_2:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-    
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 # Druck der Seiten
 Hausaufgabenkontrolle()
