@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat
 from pylatex.utils import bold
 from sympy import *
+from threading import Thread
 
-# Defintion der Funktionen
+# Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 pi = numpy.pi
@@ -246,38 +247,42 @@ def Hausaufgabenkontrolle():
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-    
+
     for elements in Aufgabe_2:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-    
+
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+
+
 # Erwartungshorizont
 def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
-    
+
     for elements in Loesung_1:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-    
+
     for elements in Loesung_2:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-    
+
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+
+
 # Druck der Seiten
-Hausaufgabenkontrolle()
-Erwartungshorizont()
+Thread(target=Hausaufgabenkontrolle).start()
+Thread(target=Erwartungshorizont).start()
