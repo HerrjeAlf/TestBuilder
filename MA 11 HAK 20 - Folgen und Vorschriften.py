@@ -1,15 +1,17 @@
-import numpy
-import random
-
+import numpy, random
 import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat
 from pylatex.utils import bold
 from sympy import *
+from threading import Thread
 
-# Defintion der Funktionen
+# Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
-pi = numpy.pi
+
+
+def Hausaufgabenkontrolle():
+
 
 liste_variable = [a, b, c, d, x, y, z]
 
@@ -23,7 +25,6 @@ def nzahl(p, q):
     k = random.randint(p, q)
     return k
 
-
 def vorz_str(k):
     if k < 0:
         k = latex(k)
@@ -31,14 +32,12 @@ def vorz_str(k):
         k = '+' + latex(k)
     return k
 
-
 def vorz_str_minus(k):
     if k < 0:
         k = '(' + latex(k) + ')'
     else:
         k = latex(k)
     return k
-
 
 def Bild_1(a, b, f, n):
     ax = plt.gca()
@@ -59,24 +58,19 @@ def Bild_1(a, b, f, n):
     plt.axis([-6, 6, -6, 6])
     return plt.plot(a, b, linewidth=2)
 
-
 # Berechnung für die Aufgaben
-
 def folgen(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
-
     start_arithm_folge = zzahl(1, 10)
     start_geom_folge = nzahl(1, 10)
     arithm_folge_d = nzahl(2, 10)
     basis = zzahl(2, 10)
-
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
         geom_folge_q = Rational(1, p)
     else:
         geom_folge_q = random.choice([2, 3, 4, 5])
-
     bel_vorschrift = [start_arithm_folge + basis ** x,
                       start_arithm_folge - 1 / x,
                       start_arithm_folge / (x + arithm_folge_d),
@@ -86,7 +80,6 @@ def folgen(nr, teilaufg):
                           r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
-
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
                 bel_vorschrift[ausw_folge]]
@@ -98,13 +91,10 @@ def folgen(nr, teilaufg):
     a_n_str = a_n_str_alle[auswahl_folgenart]
     data = [a_n.subs(x, i) for i in range(1, 5)]
     data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n']
-    aufgabe.append(latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
-                   latex(data[3]) + r', ~ ...  \\')
-
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge: \n\n',
+               latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
+               latex(data[3]) + r', ~ ...  \\']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
         loesung.append(
@@ -112,7 +102,6 @@ def folgen(nr, teilaufg):
                 data_lsg[2]) + ',~' +
             latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]))
         i += 1
-
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
                                                 'Zahlenfolge handelt. \n\n')
@@ -152,33 +141,27 @@ def folgen(nr, teilaufg):
                                                     r'\quad (3P)')
             loesung.append(table_b)
         i += 1
-
     if c in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
         i += 1
-
     print(data)
     print(a_n)
     print(auswahl_folgenart)
     return aufgabe, loesung
 
-
 def grenzwerte(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
-
     start_arithm_folge = zzahl(1, 10)
     start_geom_folge = nzahl(1, 10)
     arithm_folge_d = nzahl(2, 10)
     basis = zzahl(2, 10)
-
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
         geom_folge_q = Rational(1, p)
     else:
         geom_folge_q = random.choice([2, 3, 4, 5])
-
     bel_vorschrift = [start_arithm_folge + basis ** x,
                       start_arithm_folge - 1 / x,
                       start_arithm_folge / (x + arithm_folge_d),
@@ -188,7 +171,6 @@ def grenzwerte(nr, teilaufg):
                           r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
-
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
                 bel_vorschrift[ausw_folge]]
@@ -199,12 +181,9 @@ def grenzwerte(nr, teilaufg):
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
     grenzwert = limit(a_n, x, oo)
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n']
-    aufgabe.append(r'a_{n}~=~' + a_n_str)
-
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n',
+               r'a_{n}~=~' + a_n_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den Grenzwert der gegebenen Folge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{n \to \infty } ' + a_n_str + '~=~'
@@ -212,10 +191,8 @@ def grenzwerte(nr, teilaufg):
         i += 1
     return aufgabe, loesung
 
-
 Aufgabe_1, Loesung_1 = folgen(1, [a, b, c])
 Aufgabe_2, Loesung_2 = grenzwerte(2, [a])
-
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
 Kurs = 'Leistungskurs'
@@ -225,9 +202,7 @@ Lehrer = 'Herr Herrys'
 Art = 'HAK 20 - Folgen und Bildungsvorschrift'
 Teil = 'Gruppe A'
 
-
 # der Teil in dem die PDF-Datei erzeugt wird
-
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
     Aufgabe = Document(geometry_options=geometry_options)
@@ -246,33 +221,42 @@ def Hausaufgabenkontrolle():
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
+
     for elements in Aufgabe_2:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
+
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+
+
 # Erwartungshorizont
 def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
+
     for elements in Loesung_1:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
+
     for elements in Loesung_2:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
+
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+
+
 # Druck der Seiten
-Hausaufgabenkontrolle()
-Erwartungshorizont()
+Thread(target=Hausaufgabenkontrolle).start()
+Thread(target=Erwartungshorizont).start()
