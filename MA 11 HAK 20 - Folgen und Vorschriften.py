@@ -9,17 +9,9 @@ from threading import Thread
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 
-
-def Hausaufgabenkontrolle():
-
-
-liste_variable = [a, b, c, d, x, y, z]
-
-
 def zzahl(p, q):
     k = random.choice([-1, 1]) * random.randint(p, q)
     return k
-
 
 def nzahl(p, q):
     k = random.randint(p, q)
