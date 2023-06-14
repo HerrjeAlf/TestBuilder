@@ -9,18 +9,13 @@ from threading import Thread
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 
-liste_variable = [a, b, c, d, x, y, z]
-
-
 def zzahl(p, q):
     k = random.choice([-1, 1]) * random.randint(p, q)
     return k
 
-
 def nzahl(p, q):
     k = random.randint(p, q)
     return k
-
 
 def vorz_str(k):
     if k < 0:
@@ -29,14 +24,12 @@ def vorz_str(k):
         k = '+' + latex(k)
     return k
 
-
 def vorz_str_minus(k):
     if k < 0:
         k = '(' + latex(k) + ')'
     else:
         k = latex(k)
     return k
-
 
 def Bild_1(a, b, f, n):
     ax = plt.gca()
@@ -56,7 +49,6 @@ def Bild_1(a, b, f, n):
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
     return plt.plot(a, b, linewidth=2)
-
 
 # Berechnung für die Aufgaben
 def folgen(nr, teilaufg):
@@ -144,6 +136,33 @@ def folgen(nr, teilaufg):
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
         i += 1
+
+    if d in teilaufg and auswahl_folgenart < 2:
+        if auswahl_folgenart == 0:
+            a_unten = nzahl(1, 50)
+            a_oben = nzahl(51, 100)
+            n = a_oben - a_unten
+            wert_a_unten = a_n.subs(x, a_unten)
+            wert_a_oben = a_n.subs(x, a_oben)
+            aufgabe.append(str(liste_teilaufg[
+                                   i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
+            ergebnis = n * (wert_a_oben + wert_a_unten) / 2
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
+                           str(a_oben) + r'} ~ a_n ~=~ ' + str(n) + r' \cdot \frac{~' + str(wert_a_unten) +
+                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+        else:
+            a_unten = nzahl(11, 20)
+            a_oben = nzahl(21, 30)
+            n = a_oben - a_unten
+            aufgabe.append(str(liste_teilaufg[
+                                   i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
+            ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
+                           str(a_oben) + r'} ~ a_n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(
+                n + 1) +
+                           '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+        i += 1
+
     print(data)
     print(a_n)
     print(auswahl_folgenart)
@@ -181,13 +200,13 @@ def grenzwerte_folgen(nr, teilaufg):
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
     grenzwert = limit(a_n, x, oo)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift: \n\n',
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Bildungsvorschrift:',
                r'a_{n}~=~' + a_n_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den Grenzwert der gegebenen Folge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{n \to \infty } ' + a_n_str + '~=~'
-                       + latex(grenzwert) + r' \quad (2P) \\')
+                       + latex(grenzwert) + r' \quad (2P)')
         i += 1
     return aufgabe, loesung
 
@@ -209,12 +228,12 @@ def grenzwerte_funktionen(nr, teilaufg):
 
     fkt = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
 
-    aufgabe = [MediumText(bold('Aufgabe' + str(nr) + ' \n\n')),
-               'Bestimmen Sie den Grenzwert durch Termumformungen.']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Bestimmen Sie den Grenzwert durch Termumformungen.')
+        aufgabe.append(r' \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt)
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt +
                        r'~=~ \lim \limits_{x \to ' + str(polstelle) + r'} ~ \frac{' + latex(faktor) + '(x' +
                        vorz_str(polstelle) + r') \cdot (x~' + vorz_str(-1 * polstelle) + ')}{' + latex(
@@ -225,10 +244,9 @@ def grenzwerte_funktionen(nr, teilaufg):
     return aufgabe, loesung
 
 
-Aufgabe_1, Loesung_1 = folgen(1, [a, b, c])
+Aufgabe_1, Loesung_1 = folgen(1, [a, b, c, d])
 Aufgabe_2, Loesung_2 = grenzwerte_folgen(2, [a])
-
-Aufgabe_4, Loesung_4 = grenzwerte_funktionen(4, [a])
+Aufgabe_3, Loesung_3 = grenzwerte_funktionen(3, [a])
 
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
@@ -237,7 +255,7 @@ Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 21 - Grenzwerte von Funktionen'
-Teil = 'Gruppe A'
+Teil = 'Gruppe B'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
@@ -267,7 +285,7 @@ def Hausaufgabenkontrolle():
         else:
             Aufgabe.append(elements)
 
-    for elements in Aufgabe_4:
+    for elements in Aufgabe_3:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
@@ -299,7 +317,7 @@ def Erwartungshorizont():
         else:
             Loesung.append(elements)
 
-    for elements in Loesung_4:
+    for elements in Loesung_3:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
