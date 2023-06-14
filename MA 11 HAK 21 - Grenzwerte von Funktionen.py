@@ -224,7 +224,7 @@ def grenzwerte_funktionen(nr, teilaufg):
     else:
         nenner = x + (-1 * polstelle)
         fkt_gekuerzt = r'~=~ \lim \limits_{x \to ' + str(polstelle) + '} ~ ' + latex(faktor) + \
-                       r' \cdot (x' + vorz_str(polstelle) + '~)'
+                       r' \cdot (x' + vorz_str(-1*polstelle) + '~)'
 
     fkt = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
 
@@ -236,8 +236,7 @@ def grenzwerte_funktionen(nr, teilaufg):
         aufgabe.append(r' \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt)
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt +
                        r'~=~ \lim \limits_{x \to ' + str(polstelle) + r'} ~ \frac{' + latex(faktor) + '(x' +
-                       vorz_str(polstelle) + r') \cdot (x~' + vorz_str(-1 * polstelle) + ')}{' + latex(
-            nenner) + '}' + fkt_gekuerzt +
+                       vorz_str(polstelle) + r') \cdot (x~' + vorz_str(-1 * polstelle) + ')}{' + latex(nenner) + '}' + fkt_gekuerzt +
                        r'~=~' + str(faktor * (polstelle * 2)) + r'\quad (4P) \\')
         i += 1
 
