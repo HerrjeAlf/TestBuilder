@@ -54,6 +54,7 @@ def Bild_1(a, b, f, n):
 def folgen(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
+    Punkte = 0
     start_arithm_folge = zzahl(1, 10)
     start_geom_folge = nzahl(1, 10)
     arithm_folge_d = nzahl(2, 10)
@@ -92,6 +93,7 @@ def folgen(nr, teilaufg):
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1]) + ',~' +
                        latex(data_lsg[2]) + ',~' + latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' +
                        latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3P)')
+        Punkte += 3
         i += 1
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
@@ -131,10 +133,12 @@ def folgen(nr, teilaufg):
                                                     r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
                                                     r'\quad (3P)')
             loesung.append(table_b)
+        Punkte += 3
         i += 1
     if c in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
+        Punkte += 2
         i += 1
 
     if d in teilaufg and auswahl_folgenart < 2:
@@ -161,17 +165,19 @@ def folgen(nr, teilaufg):
                            str(a_oben) + r'} ~ a_n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(
                 n + 1) +
                            '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+        Punkte += 3
         i += 1
 
     print(data)
     print(a_n)
     print(auswahl_folgenart)
-    return aufgabe, loesung
+    return aufgabe, loesung, Punkte
 
 
 def grenzwerte_folgen(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
+    Punkte = 0
     start_arithm_folge = zzahl(2, 10)
     start_geom_folge = nzahl(2, 10)
     arithm_folge_d = nzahl(2, 10)
@@ -207,13 +213,14 @@ def grenzwerte_folgen(nr, teilaufg):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den Grenzwert der gegebenen Folge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{n \to \infty } ' + a_n_str + '~=~'
                        + latex(grenzwert) + r' \quad (2P)')
+        Punkte += 2
         i += 1
-    return aufgabe, loesung
-
+    return aufgabe, loesung, Punkte
 
 def grenzwerte_funktionen(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
+    Punkte = 0
     faktor = zzahl(1, 10)
     polstelle = zzahl(1, 8)
     zaehler = expand(faktor * (x ** 2 - polstelle ** 2))
@@ -224,7 +231,7 @@ def grenzwerte_funktionen(nr, teilaufg):
     else:
         nenner = x + (-1 * polstelle)
         fkt_gekuerzt = r'~=~ \lim \limits_{x \to ' + str(polstelle) + '} ~ ' + latex(faktor) + \
-                       r' \cdot (x' + vorz_str(-1*polstelle) + '~)'
+                       r' \cdot (x' + vorz_str(polstelle) + '~)'
 
     fkt = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
 
@@ -236,16 +243,19 @@ def grenzwerte_funktionen(nr, teilaufg):
         aufgabe.append(r' \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt)
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt +
                        r'~=~ \lim \limits_{x \to ' + str(polstelle) + r'} ~ \frac{' + latex(faktor) + '(x' +
-                       vorz_str(polstelle) + r') \cdot (x~' + vorz_str(-1 * polstelle) + ')}{' + latex(nenner) + '}' + fkt_gekuerzt +
-                       r'~=~' + str(faktor * (polstelle * 2)) + r'\quad (4P) \\')
+                       vorz_str(polstelle) + r') \cdot (x~' + vorz_str(-1 * polstelle) + ')}{' + latex(nenner) + '}' +
+                       fkt_gekuerzt + r'~=~' + str(faktor * (polstelle * 2)) + r'\quad (4P) \\')
+        Punkte += 4
         i += 1
 
-    return aufgabe, loesung
+    return aufgabe, loesung, Punkte
 
 
-Aufgabe_1, Loesung_1 = folgen(1, [a, b, c, d])
-Aufgabe_2, Loesung_2 = grenzwerte_folgen(2, [a])
-Aufgabe_3, Loesung_3 = grenzwerte_funktionen(3, [a])
+Aufgabe_1, Loesung_1, p_1 = folgen(1, [a, b, c, d])
+Aufgabe_2, Loesung_2, p_2 = grenzwerte_folgen(2, [a])
+Aufgabe_3, Loesung_3, p_3 = grenzwerte_funktionen(3, [a])
+
+Punkte = str(p_1 + p_2 + p_3)
 
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
@@ -291,6 +301,9 @@ def Hausaufgabenkontrolle():
         else:
             Aufgabe.append(elements)
 
+    Aufgabe.append('\n\n')
+    Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. Deine Note ist: \n\n')))
+
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
@@ -322,6 +335,9 @@ def Erwartungshorizont():
                 agn.append(elements)
         else:
             Loesung.append(elements)
+
+    Loesung.append('\n\n')
+    Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
