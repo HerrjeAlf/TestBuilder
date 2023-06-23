@@ -1,13 +1,16 @@
-import numpy, random
-import matplotlib.pyplot as plt
-from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat
-from pylatex.utils import bold
+import pylatex, math, random, sympy, numpy, matplotlib
+from random import randrange, randint, choice
 from sympy import *
+from numpy.linalg import solve as slv
+import matplotlib.pyplot as plt
+from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
+from pylatex.utils import bold
 from threading import Thread
 
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+fig = plt.Figure()
 
 def zzahl(p, q):
     k = random.choice([-1, 1]) * random.randint(p, q)
@@ -31,7 +34,7 @@ def vorz_str_minus(k):
         k = latex(k)
     return k
 
-def Bild_1(a, b, f, n):
+def Graph(a, b, xwert, f, n, name):
     ax = plt.gca()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -43,12 +46,14 @@ def Bild_1(a, b, f, n):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(-4, f.subs(x, -4)), xycoords='data', xytext=(+5, +5), textcoords='offset points', fontsize=12)
+    plt.annotate(n, xy=(xwert, f.subs(x,xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points', fontsize=12)
     plt.grid(True)
     plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
-    return plt.plot(a, b, linewidth=2)
+    plt.plot(a, b, linewidth=2)
+    return plt.savefig(name, dpi = 150)
+
 
 # Berechnung für die Aufgaben
 def folgen(nr, teilaufg):
@@ -162,7 +167,7 @@ def folgen(nr, teilaufg):
                                    i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
             ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
-                           str(a_oben) + r'} ~ a_n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(
+                           str(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(
                 n + 1) +
                            '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
         Punkte += 3
@@ -254,49 +259,67 @@ def aenderungsrate(nr, teilaufg):
     liste_teilaufg = [a, b, c, d]
     i = 0
     Punkte = 0
-    faktor = zzahl(1,100)/(10)
-    nst_1 = zzahl(1,5)
-    nst_2 = nst_1 + zzahl(1,5)
-    x_wert_1 = nst_1 + nzahl(1,3)
-    x_wert_2 = nst_1 - nzahl(1,3)
-    fkt = faktor*x**2 - faktor*(nst_1+nst_2)*x + faktor*nst_1*nst_2
-    fkt_str = latex(faktor*x**2) + vorz_str(faktor*(nst_1+nst_2)) + r' \cdot x' + vorz_str(faktor*nst_1*nst_2)
+    faktor = zzahl(1,20)/(10)
+    s_xwert = zzahl(1,5)
+    s_ywert = zzahl(1,3)
+    x_wert_1 = s_xwert - nzahl(1,3)
+    x_wert_2 = x_wert_1 + nzahl(2,4)
+    fkt = expand(faktor*(x - s_xwert)**2 + s_ywert)
     y_wert_1 = fkt.subs(x,x_wert_1)
     y_wert_2 = fkt.subs(x, x_wert_2)
     fkt_abl = diff(fkt,x)
-    fkt_abl_x0 = fkt_abl.subs(x, nst_1)
+    fkt_abl_x0 = fkt_abl.subs(x, x_wert_1)
 
 
     print('f(x)=' + str(fkt))
     print('f`(x)=' + str(fkt_abl))
     print('f`(x_0)=' + str(fkt_abl_x0))
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die folgende Funktion:', r'f(x)~=~' + latex(fkt)]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Brechne die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ]. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r' \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + str(y_wert_2) + vorz_str(-1 * y_wert_1) +
-                       '}{' + str(x_wert_2) + str(x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),3)) +
-                       r'fkt\quad (4P) \\')
-        Punkte += 4
+        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+
+        xwerte = [-6+x/5 for x in range(60)]
+        ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
+        Graph(xwerte, ywerte, s_xwert, fkt, 'f', f'Aufgabe_{nr}')
+        Punkte += 3
         i += 1
 
     if b in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die lokale Änderungsrate an der Stelle x = {x_wert_1}. \n\n')
-
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + str(y_wert_2) + vorz_str(-1 * y_wert_1) +
+                       '}{' + str(x_wert_2) + str(x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),3)) +
+                       r' \quad \to \quad \mathrm{Zeichnung~stimmt~überein} \quad (4P) \\')
         Punkte += 4
         i += 1
 
+    if c in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_1}. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Tangente~an~Punkt~(1P),~Steigungsdreieck~(1P),~m~bestimmt~~(1P)}  \\')
+
+        if a not in teilaufg:
+            xwerte = [-6 + x / 5 for x in range(60)]
+            ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
+            Graph(xwerte, ywerte, s_xwert, fkt, 'f', f'Aufgabe_{nr}')
+        Punkte += 3
+        i += 1
+
+    if d in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_1} mit einer Rechnung. \n\n')
+
+        Punkte += 4
+#    plt.show()
     return aufgabe, loesung, Punkte
 
 
 Aufgabe_1, Loesung_1, p_1 = folgen(1, [a, b, c, d])
 Aufgabe_2, Loesung_2, p_2 = grenzwerte_folgen(2, [a])
 Aufgabe_3, Loesung_3, p_3 = grenzwerte_funktionen(3, [a])
-Aufgabe_4, Loesung_4, p_4 = aenderungsrate(4, [a, b])
+Aufgabe_4, Loesung_4, p_4 = aenderungsrate(4, [a, b, c, d])
 Punkte = str(p_1 + p_2 + p_3+ p_4)
-
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
 Kurs = 'Leistungskurs'
@@ -353,6 +376,10 @@ def Hausaufgabenkontrolle():
 
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
+
+    with Aufgabe.create(Figure(position='h!')) as graph:
+        graph.add_image(r'C:\Users\aherr\GitHub\Aufgabe_4.png', width='400px')
+
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
 
@@ -397,5 +424,5 @@ def Erwartungshorizont():
 
 
 # Druck der Seiten
-Thread(target=Hausaufgabenkontrolle).start()
-Thread(target=Erwartungshorizont).start()
+Hausaufgabenkontrolle()
+Erwartungshorizont()
