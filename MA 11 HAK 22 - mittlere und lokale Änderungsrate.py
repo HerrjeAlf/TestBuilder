@@ -262,14 +262,14 @@ def aenderungsrate(nr, teilaufg):
     faktor = zzahl(1,20)/(10)
     s_xwert = zzahl(1,5)
     s_ywert = zzahl(1,3)
-    x_wert_1 = s_xwert - nzahl(1,3)
+    x_wert_1 = s_xwert - nzahl(1,2)
     x_wert_2 = x_wert_1 + nzahl(2,4)
     fkt = expand(faktor*(x - s_xwert)**2 + s_ywert)
-    fkt_str = latex(faktor) + 'x^2' + vorz_str(-2*faktor*s_xwert) + 'x' + latex((faktor*(s_xwert**2))+s_ywert)
-    y_wert_1 = fkt.subs(x,x_wert_1)
+    fkt_str = latex(faktor) + 'x^2' + vorz_str(-2*faktor*s_xwert) + 'x' + vorz_str((faktor*(s_xwert**2))+s_ywert)
+    y_wert_1 = fkt.subs(x, x_wert_1)
     y_wert_2 = fkt.subs(x, x_wert_2)
     fkt_abl = diff(fkt,x)
-    fkt_abl_x0 = fkt_abl.subs(x, x_wert_1)
+    fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
     print('f(x)=' + str(fkt))
     print('f`(x)=' + str(fkt_abl))
@@ -280,7 +280,7 @@ def aenderungsrate(nr, teilaufg):
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
 
         dy = y_wert_2 - y_wert_1
         dx = x_wert_2 - x_wert_1
@@ -309,7 +309,7 @@ def aenderungsrate(nr, teilaufg):
 
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + str(y_wert_2) + vorz_str(-1 * y_wert_1) +
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + latex(N(y_wert_2,3)) + vorz_str(-1 * N(y_wert_1,3)) +
                        '}{' + str(x_wert_2) + vorz_str(-1*x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),3)) +
                        r' \quad \to \quad \mathrm{Zeichnung~stimmt~überein} \quad (4P) \\')
         Punkte += 4
@@ -317,7 +317,7 @@ def aenderungsrate(nr, teilaufg):
 
     if c in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
 
         if a not in teilaufg:
             xwerte = [-6 + x / 5 for x in range(60)]
@@ -334,10 +334,19 @@ def aenderungsrate(nr, teilaufg):
         i += 1
 
     if d in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_1} mit einer Rechnung. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r')\quad \lim \limits_{x \to ' + str(x_wert_1) + '} ~' + fkt_str + r'\quad (4P) \\')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} mit einer Rechnung. \n\n')
+
+        Division_fkt_linear = (fkt-fkt.subs(x,x_wert_2))/(x-x_wert_2)
+        partialbruch = apart(Division_fkt_linear)
+
+        print(Division_fkt_linear)
+        print(partialbruch)
+
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + '} ~' + fkt_str +
+                       r' ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + vorz_str(N(-1*fkt.subs(x,x_wert_2),3)) + '}{x~' + vorz_str(-1*x_wert_2) + '} ~=~' + r' \lim \limits_{x \to ' +
+                       str(x_wert_2) + '}' + latex(partialbruch) + r'~=~' + latex(N(fkt_abl_x0,3)) + r' \quad (4P) \\')
         Punkte += 4
-    plt.show()
+    # plt.show()
     return aufgabe, loesung, Punkte
 
 
@@ -404,7 +413,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
     with Aufgabe.create(Figure(position='h!')) as graph:
-        graph.add_image(r'C:\Users\aherr\Documents\GitHub\Schule\Aufgabe_4.png', width='400px')
+        graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_4.png', width='400px')
 
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
@@ -448,7 +457,7 @@ def Erwartungshorizont():
 
     Loesung.append(NewPage())
     with Loesung.create(Figure(position='h!')) as graph:
-        graph.add_image(r'C:\Users\aherr\Documents\GitHub\Schule\loesung_Aufgabe_4.png', width='400px')
+        graph.add_image(r'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_4.png', width='400px')
 
 
 
@@ -456,5 +465,5 @@ def Erwartungshorizont():
 
 
 # Druck der Seiten
-# Hausaufgabenkontrolle()
-# Erwartungshorizont()
+Hausaufgabenkontrolle()
+Erwartungshorizont()
