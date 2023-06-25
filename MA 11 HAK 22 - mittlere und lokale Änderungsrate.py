@@ -52,7 +52,7 @@ def Graph(a, b, xwert, f, n, name):
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
     plt.plot(a, b, linewidth=2)
-    return plt.savefig(name, dpi = 150)
+    return plt.savefig(name, dpi = 200)
 
 
 # Berechnung für die Aufgaben
@@ -73,7 +73,7 @@ def folgen(nr, teilaufg):
                       start_arithm_folge - 1 / x,
                       start_arithm_folge / (x + arithm_folge_d),
                       x ** arithm_folge_d]
-    bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
+    bel_vorschrift_str = [str(start_arithm_folge) + r'+ \left( '+ str(basis) + r' \right) ^{n}',
                           str(start_arithm_folge) + r'~-~ \frac{1}{n}',
                           r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
@@ -265,53 +265,79 @@ def aenderungsrate(nr, teilaufg):
     x_wert_1 = s_xwert - nzahl(1,3)
     x_wert_2 = x_wert_1 + nzahl(2,4)
     fkt = expand(faktor*(x - s_xwert)**2 + s_ywert)
+    fkt_str = latex(faktor) + 'x^2' + vorz_str(-2*faktor*s_xwert) + 'x' + latex((faktor*(s_xwert**2))+s_ywert)
     y_wert_1 = fkt.subs(x,x_wert_1)
     y_wert_2 = fkt.subs(x, x_wert_2)
     fkt_abl = diff(fkt,x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_1)
 
-
     print('f(x)=' + str(fkt))
     print('f`(x)=' + str(fkt_abl))
     print('f`(x_0)=' + str(fkt_abl_x0))
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die folgende Funktion:', r'f(x)~=~' + latex(fkt)]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die folgende Funktion:', r'f(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
 
+        dy = y_wert_2 - y_wert_1
+        dx = x_wert_2 - x_wert_1
+        fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
         xwerte = [-6+x/5 for x in range(60)]
-        ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-        Graph(xwerte, ywerte, s_xwert, fkt, 'f', f'Aufgabe_{nr}')
+        ywerte = [fkt.subs( x, xwerte[i]) for i in range(60)]
+        Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
+
+        xwerte_dy = [x_wert_2 for x in range(60)]
+        ywerte_dy = [y_wert_2 - dy/60*x for x in range(60)]
+        xwerte_dx = [x_wert_1 + x*dx/60 for x in range(60)]
+        ywerte_dx = [y_wert_1 for x in range(60)]
+
+        ywerte_sekante = [fkt_sekante.subs( x, xwerte[i])  for i in range(60)]
+
+        plt.plot(xwerte_dy,ywerte_dy)
+        plt.plot(xwerte_dx,ywerte_dx)
+        plt.plot(xwerte,ywerte_sekante)
+
+        if c not in liste_teilaufg:
+            plt.savefig('loesung_Aufgabe_4', dpi=150)
+
+
         Punkte += 3
         i += 1
 
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + str(y_wert_2) + vorz_str(-1 * y_wert_1) +
-                       '}{' + str(x_wert_2) + str(x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),3)) +
+                       '}{' + str(x_wert_2) + vorz_str(-1*x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),3)) +
                        r' \quad \to \quad \mathrm{Zeichnung~stimmt~überein} \quad (4P) \\')
         Punkte += 4
         i += 1
 
     if c in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_1}. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Tangente~an~Punkt~(1P),~Steigungsdreieck~(1P),~m~bestimmt~~(1P)}  \\')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
 
         if a not in teilaufg:
             xwerte = [-6 + x / 5 for x in range(60)]
-            ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            Graph(xwerte, ywerte, s_xwert, fkt, 'f', f'Aufgabe_{nr}')
+            ywerte = [fkt.subs( x, xwerte[i]) for i in range(60)]
+            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
+
+        steigung_tangente = fkt_abl.subs(x, x_wert_2)
+        fkt_tangente = steigung_tangente*(x-x_wert_2)+y_wert_2
+        ywerte_tangente = [fkt_tangente.subs(x, xwerte[i]) for i in range(60)]
+        plt.plot(xwerte,ywerte_tangente)
+        plt.savefig('loesung_Aufgabe_4', dpi=150)
+
         Punkte += 3
         i += 1
 
     if d in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_1} mit einer Rechnung. \n\n')
-
+        loesung.append(str(liste_teilaufg[i]) + r')\quad \lim \limits_{x \to ' + str(x_wert_1) + '} ~' + fkt_str + r'\quad (4P) \\')
         Punkte += 4
-#    plt.show()
+    plt.show()
     return aufgabe, loesung, Punkte
 
 
@@ -327,7 +353,7 @@ Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 22 - mittlere und lokale Änderungsrate'
-Teil = 'Gr. A'
+Teil = 'Probe 02'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
@@ -378,7 +404,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
     with Aufgabe.create(Figure(position='h!')) as graph:
-        graph.add_image(r'C:\Users\aherr\GitHub\Aufgabe_4.png', width='400px')
+        graph.add_image(r'C:\Users\aherr\Documents\GitHub\Schule\Aufgabe_4.png', width='400px')
 
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
@@ -420,9 +446,15 @@ def Erwartungshorizont():
     Loesung.append('\n\n')
     Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
+    Loesung.append(NewPage())
+    with Loesung.create(Figure(position='h!')) as graph:
+        graph.add_image(r'C:\Users\aherr\Documents\GitHub\Schule\loesung_Aufgabe_4.png', width='400px')
+
+
+
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
 
 # Druck der Seiten
-Hausaufgabenkontrolle()
-Erwartungshorizont()
+# Hausaufgabenkontrolle()
+# Erwartungshorizont()
