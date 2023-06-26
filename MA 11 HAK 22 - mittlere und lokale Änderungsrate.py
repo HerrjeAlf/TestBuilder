@@ -294,19 +294,20 @@ def aenderungsrate(nr, teilaufg):
         dx = x_wert_2 - x_wert_1
         fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
         xwerte = [-6+x/5 for x in range(60)]
+        xwerte_geraden = [-6,6]
         ywerte = [fkt.subs( x, xwerte[i]) for i in range(60)]
         Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
 
-        xwerte_dy = [x_wert_2 for x in range(60)]
-        ywerte_dy = [y_wert_2 - dy/60*x for x in range(60)]
-        xwerte_dx = [x_wert_1 + x*dx/60 for x in range(60)]
-        ywerte_dx = [y_wert_1 for x in range(60)]
+        xwerte_dy = [x_wert_2, x_wert_2]
+        ywerte_dy = [y_wert_1, y_wert_2]
+        xwerte_dx = [x_wert_1, x_wert_2]
+        ywerte_dx = [y_wert_1, y_wert_1]
 
-        ywerte_sekante = [fkt_sekante.subs( x, xwerte[i])  for i in range(60)]
+        ywerte_sekante = [fkt_sekante.subs( x, -6), fkt_sekante.subs( x, 6)]
 
         plt.plot(xwerte_dy,ywerte_dy)
         plt.plot(xwerte_dx,ywerte_dx)
-        plt.plot(xwerte,ywerte_sekante)
+        plt.plot(xwerte_geraden,ywerte_sekante)
 
         if c not in liste_teilaufg:
             plt.savefig('loesung_Aufgabe_4', dpi=150)
@@ -333,8 +334,8 @@ def aenderungsrate(nr, teilaufg):
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente*(x-x_wert_2)+y_wert_2
-        ywerte_tangente = [fkt_tangente.subs(x, xwerte[i]) for i in range(60)]
-        plt.plot(xwerte,ywerte_tangente)
+        ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
+        plt.plot(xwerte_geraden,ywerte_tangente)
         plt.savefig('loesung_Aufgabe_4', dpi=150)
 
         Punkte += 3
