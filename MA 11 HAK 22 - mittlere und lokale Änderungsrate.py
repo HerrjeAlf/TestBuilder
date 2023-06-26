@@ -260,14 +260,15 @@ def aenderungsrate(nr, teilaufg):
     i = 0
     Punkte = 0
     faktor = zzahl(1,20)/(10)
-    s_xwert = zzahl(1,5)
+    s_xwert = zzahl(1,3)
     s_ywert = zzahl(1,3)
-    x_wert_1 = s_xwert - nzahl(1,2)
-    x_wert_2 = x_wert_1 + nzahl(2,4)
+    abstand = random.choice([[-1,2],[-2,1]])
+    x_wert_1 = s_xwert + abstand[0]
+    x_wert_2 = s_xwert + abstand[1]
     fkt = expand(faktor*(x - s_xwert)**2 + s_ywert)
     fkt_str = latex(faktor) + 'x^2' + vorz_str(-2*faktor*s_xwert) + 'x' + vorz_str((faktor*(s_xwert**2))+s_ywert)
-    y_wert_1 = fkt.subs(x, x_wert_1)
-    y_wert_2 = fkt.subs(x, x_wert_2)
+    y_wert_1 = N(fkt.subs(x, x_wert_1),3)
+    y_wert_2 = N(fkt.subs(x, x_wert_2),3)
     fkt_abl = diff(fkt,x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
@@ -280,7 +281,14 @@ def aenderungsrate(nr, teilaufg):
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+
+        if y_wert_1 == y_wert_2:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
+            Punkte += 2
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+            Punkte += 3
+
 
         dy = y_wert_2 - y_wert_1
         dx = x_wert_2 - x_wert_1
@@ -304,7 +312,6 @@ def aenderungsrate(nr, teilaufg):
             plt.savefig('loesung_Aufgabe_4', dpi=150)
 
 
-        Punkte += 3
         i += 1
 
     if b in teilaufg:
@@ -362,7 +369,7 @@ Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 22 - mittlere und lokale Änderungsrate'
-Teil = 'Probe 02'
+Teil = 'Gr. B'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird

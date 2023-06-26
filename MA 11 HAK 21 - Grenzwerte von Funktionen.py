@@ -250,6 +250,26 @@ def grenzwerte_funktionen(nr, teilaufg):
 
     return aufgabe, loesung, Punkte
 
+def aenderungsrate(nr, teilaufg):
+    liste_teilaufg = [a, b, c, d]
+    i = 0
+    Punkte = 0
+    def funktion_grad(n):
+        faktor =
+        for i in range(n):
+            nst =
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Brechne die mittlere Änderungsrate zwischen  x = {} und x = {}.')
+        loesung.append(str(liste_teilaufg[i]) + r' \quad (4P) \\')
+        Punkte += 4
+        i += 1
+
+    return aufgabe, loesung, Punkte
+
 
 Aufgabe_1, Loesung_1, p_1 = folgen(1, [a, b, c, d])
 Aufgabe_2, Loesung_2, p_2 = grenzwerte_folgen(2, [a])
