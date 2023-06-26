@@ -349,8 +349,10 @@ def aenderungsrate(nr, teilaufg):
         print(Division_fkt_linear)
         print(partialbruch)
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + vorz_str(N(-1*fkt.subs(x,x_wert_2),3)) + '}{x~' + vorz_str(-1*x_wert_2) + '} ~=~' + r' \lim \limits_{x \to ' +
-                       str(x_wert_2) + '}' + latex(partialbruch) + r'~=~' + latex(N(fkt_abl_x0,3)) + r' \quad (3P) \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
+                       fkt_str + vorz_str(N(-1*fkt.subs(x,x_wert_2),3)) + '}{x~' + vorz_str(-1*x_wert_2) + '} ~=~' +
+                       r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + latex(partialbruch) + r'~=~' +
+                       latex(N(fkt_abl_x0,3)) + r' \quad (3P) \\')
         Punkte += 3
     # plt.show()
     return aufgabe, loesung, Punkte
