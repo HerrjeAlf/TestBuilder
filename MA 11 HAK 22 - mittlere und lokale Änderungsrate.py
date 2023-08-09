@@ -1,14 +1,12 @@
 import pylatex, math, random, sympy, numpy, matplotlib
 from random import randrange, randint, choice
 from sympy import *
-from numpy.linalg import solve as slv
 import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
-from threading import Thread
+
 
 # Definition der Funktionen
-
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 fig = plt.Figure()
 
@@ -53,11 +51,14 @@ def Graph(a, b, xwert, f, n, name):
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
     plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
                  fontsize=12)
+    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+                 fontsize=12)
     plt.grid(True)
     plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
     plt.plot(a, b, linewidth=2)
+    return plt.savefig(name, dpi=200)
     return plt.savefig(name, dpi=200)
 
 
@@ -102,10 +103,11 @@ def folgen(nr, teilaufg):
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1]) + ',~' +
-                       latex(data_lsg[2]) + ',~' + latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' +
-                       latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3P)')
+                   latex(data_lsg[2]) + ',~' + latex(data_lsg[3]) + r',~' + latex(data_lsg[4]) + ',~' +
+                   latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3P)')
         Punkte += 3
         i += 1
+
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
                                                 'Zahlenfolge handelt. \n\n')
@@ -117,8 +119,8 @@ def folgen(nr, teilaufg):
             table_b.add_row('Ergebnis', data[1] - data[0], data[2] - data[1], data[3] - data[2])
             table_b.add_hline(1, 4)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
-                                                    r'~ist~es~eine~arithmetische~Folge~mit~d~=~'
-                           + str(arithm_folge_d) + r'.} \quad (3P)')
+                                            r'~ist~es~eine~arithmetische~Folge~mit~d~=~'
+                       + str(arithm_folge_d) + r'.} \quad (3P)')
             loesung.append(table_b)
         if auswahl_folgenart == 1:
             table_b = Tabular('|c|c|c|c|', row_height=1.2)
@@ -129,8 +131,8 @@ def folgen(nr, teilaufg):
                             Rational(data[3] / data[2]))
             table_b.add_hline(1, 4)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
-                                                    r'~ist~es~eine~geometrische~Folge~mit~q~=~'
-                           + str(geom_folge_q) + '.} \quad (3P)')
+                                            r'~ist~es~eine~geometrische~Folge~mit~q~=~'
+                       + str(geom_folge_q) + '.} \quad (3P)')
             loesung.append(table_b)
         if auswahl_folgenart == 2:
             table_b = Tabular('|c|c|c|c|c|', row_height=1.2)
@@ -141,8 +143,8 @@ def folgen(nr, teilaufg):
                             N(data[2] / data[1], 4))
             table_b.add_hline(1, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
-                                                    r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
-                                                    r'\quad (3P)')
+                                            r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
+                                            r'\quad (3P)')
             loesung.append(table_b)
         Punkte += 3
         i += 1
@@ -151,7 +153,6 @@ def folgen(nr, teilaufg):
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
         Punkte += 2
         i += 1
-
     if d in teilaufg and auswahl_folgenart < 2:
         if auswahl_folgenart == 0:
             a_unten = nzahl(1, 50)
@@ -159,26 +160,27 @@ def folgen(nr, teilaufg):
             n = a_oben - a_unten
             wert_a_unten = a_n.subs(x, a_unten)
             wert_a_oben = a_n.subs(x, a_oben)
+            aufgabe.append(str(liste_teilaufg[
+                           i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} '
                                                     f'bis n={a_oben}. \n\n')
             ergebnis = n * (wert_a_oben + wert_a_unten) / 2
             loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
-                           str(a_oben) + r'} ~ a_n ~=~ ' + str(n) + r' \cdot \frac{~' + str(wert_a_unten) +
-                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
-        else:
-            a_unten = nzahl(11, 20)
-            a_oben = nzahl(21, 30)
-            n = a_oben - a_unten
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} '
-                                                    f'bis n={a_oben}. \n\n')
-            ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
-                           str(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(
-                n + 1) +
-                           '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+                            str(a_oben) + r'} ~ a_n ~=~ ' + str(n) + r' \cdot \frac{~' + str(wert_a_unten) +
+                            vorz_str(wert_a_oben) + '~}{~2~} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+    else:
+        a_unten = nzahl(11, 20)
+        a_oben = nzahl(21, 30)
+        n = a_oben - a_unten
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} '
+                                                f'bis n={a_oben}. \n\n')
+        ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
+                       str(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{' + str(n + 1) +
+                       '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
         Punkte += 3
         i += 1
-
     print(data)
     print(a_n)
     print(auswahl_folgenart)
@@ -244,12 +246,9 @@ def grenzwerte_funktionen(nr, teilaufg):
         nenner = x + (-1 * polstelle)
         fkt_gekuerzt = r'~=~ \lim \limits_{x \to ' + str(polstelle) + '} ~ ' + latex(faktor) + \
                        r' \cdot (x' + vorz_str(polstelle) + '~)'
-
     fkt = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Bestimmen Sie den Grenzwert durch Termumformungen.')
         aufgabe.append(r' \lim \limits_{x \to ' + str(polstelle) + '} ~' + fkt)
@@ -280,10 +279,8 @@ def aenderungsrate(nr, teilaufg):
     werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
 
     max_werte = 5.5
-    regeln = [
-        lambda _: all(wert < max_werte for wert in werte),
-        lambda _: all(wert > -max_werte for wert in werte),
-    ]
+    regeln = [lambda _: all(wert < max_werte for wert in werte),
+              lambda _: all(wert > -max_werte for wert in werte)]
     while not all(regel(werte) for regel in regeln):
         s_xwert = zzahl(1, 3)
         s_ywert = zzahl(1, 3)
@@ -319,12 +316,11 @@ def aenderungsrate(nr, teilaufg):
                                                 f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
         if y_wert_1 == y_wert_2:
-            loesung.append(
-                str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
             Punkte += 2
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P)'
+                                                    ',~~m~bestimmt~(1P)} \\')
             Punkte += 3
 
         dy = y_wert_2 - y_wert_1
@@ -352,52 +348,47 @@ def aenderungsrate(nr, teilaufg):
         i += 1
 
     if b in teilaufg:
-        aufgabe.append(str(liste_teilaufg[
-                               i]) + f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] '
-                                     f'durch Rechnung. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' + latex(
-            N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) +
-                       '}{' + str(x_wert_2) + vorz_str(-1 * x_wert_1) + '} ~=~' + latex(
-            N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3)) +
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval'
+                                                ' [ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' +
+                       latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) +
+                       '}{' + str(x_wert_2) + vorz_str(-1 * x_wert_1) + '} ~=~' +
+                       latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3)) +
                        r' \quad \to \quad \mathrm{Zeichnung~stimmt~überein} \quad (4P) \\')
         Punkte += 4
         i += 1
 
-    if c in teilaufg:
-        aufgabe.append(str(
-            liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
+        if c in teilaufg:
+            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
 
         if a not in teilaufg:
             xwerte = [-6 + x / 5 for x in range(60)]
+
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
             Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
 
-        steigung_tangente = fkt_abl.subs(x, x_wert_2)
-        fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
-        ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
-        plt.plot(xwerte_geraden, ywerte_tangente)
-        plt.savefig('loesung_Aufgabe_4', dpi=150)
+            steigung_tangente = fkt_abl.subs(x, x_wert_2)
+            fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
+            ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
+            plt.plot(xwerte_geraden, ywerte_tangente)
+            plt.savefig('loesung_Aufgabe_4', dpi=150)
 
-        Punkte += 3
-        i += 1
+            Punkte += 3
+            i += 1
 
-    if d in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
-                                                f'mit einer Rechnung. \n\n')
+        if d in teilaufg:
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} mit einer Rechnung. \n\n')
+            Division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
+            partialbruch = apart(Division_fkt_linear)
+            print(Division_fkt_linear)
+            print(partialbruch)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
+                           fkt_str + vorz_str(N(-1 * fkt.subs(x, x_wert_2), 3)) + '}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
+                           r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + latex(partialbruch) + '~=~' +
+                           latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
+            Punkte += 3
 
-        Division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
-        partialbruch = apart(Division_fkt_linear)
-
-        print(Division_fkt_linear)
-        print(partialbruch)
-
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + vorz_str(N(-1 * fkt.subs(x, x_wert_2), 3)) + '}{x~' + vorz_str(
-            -1 * x_wert_2) + '} ~=~' +
-                       r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + latex(partialbruch) + '~=~' +
-                       latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
-        Punkte += 3
     # plt.show()
     return aufgabe, loesung, Punkte
 
@@ -406,6 +397,7 @@ Aufgabe_1, Loesung_1, p_1 = folgen(1, [a, b, c, d])
 Aufgabe_2, Loesung_2, p_2 = grenzwerte_folgen(2, [a])
 Aufgabe_3, Loesung_3, p_3 = grenzwerte_funktionen(3, [a])
 Aufgabe_4, Loesung_4, p_4 = aenderungsrate(4, [a, b, c, d])
+Punkte = str(p_1 + p_2 + p_3 + p_4)
 Punkte = str(p_1 + p_2 + p_3 + p_4)
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
@@ -436,37 +428,30 @@ def Hausaufgabenkontrolle():
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-
     for elements in Aufgabe_2:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-
     for elements in Aufgabe_3:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-
     for elements in Aufgabe_4:
         if '~' in elements:
             with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Aufgabe.append(elements)
-
     Aufgabe.append('\n\n')
     Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. Deine Note ist: \n\n')))
-
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-
     with Aufgabe.create(Figure(position='h!')) as graph:
         graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_4.png', width='400px')
-
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
 
@@ -475,38 +460,32 @@ def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
-
     for elements in Loesung_1:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-
     for elements in Loesung_2:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-
     for elements in Loesung_3:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-
     for elements in Loesung_4:
         if '~' in elements:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 agn.append(elements)
         else:
             Loesung.append(elements)
-
     Loesung.append('\n\n')
     Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
-
     Loesung.append(NewPage())
     with Loesung.create(Figure(position='h!')) as graph:
         graph.add_image(r'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_4.png', width='400px')
