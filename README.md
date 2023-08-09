@@ -1,7 +1,3 @@
 # Schule
-
-Was ist die Aufgabe des Projekts?
-Warum ist das Projekt sinnvoll?
-Wie können Benutzer am Projekt mitwirken?
-Wo erhalten Benutzer Hilfe zu deinem Projekt?
-Wer verwaltet das Projekt und trägt dazu bei?
+Hier werden für das Fach Mathematik Test bzw. Klausuren in den Klassenstufen 7 bis 12 erstellt. Die Aufgaben sind immer vom gleichen Typ aber mit zufälligen Werten bzw. verschiedenen Aufgabenstellungen. Die Ausgabe erzeugt immer zwei Pdf Dateien, ein Aufgabenblatt und eine Lösung.
+Diese individuell automatisiert erstellten Test's bzw. Klausuren ermöglichen den Schüler_innen, einen Test bzw. Klausur so oft nachzuschreiben, bis sie die gewünschten Leistungen erreicht haben (ohne das der Lehrer_in mehr Arbeit beim Erstellen neuer Arbeiten hat) und kann somit ein Thema solange bearbeiten, bis er/sie es verstanden hat bzw. die notwendigen Kompetenzen erworben hat.   
