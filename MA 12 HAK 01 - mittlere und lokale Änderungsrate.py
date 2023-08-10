@@ -50,8 +50,7 @@ def Graph(a, b, xwert, f, n, name):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
-                 fontsize=12)
+    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points', fontsize=12)
     plt.grid(True)
     plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
@@ -76,12 +75,7 @@ def aenderungsrate(nr, teilaufg):
     y_wert_2 = faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert
     werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
 
-    max_werte = 5.5
-    regeln = [
-        lambda _: all(wert < max_werte for wert in werte),
-        lambda _: all(wert > -max_werte for wert in werte),
-    ]
-    while not all(regel(werte) for regel in regeln):
+    while not all(abs(wert) < 6 for wert in werte):
         s_xwert = zzahl(1, 3)
         s_ywert = zzahl(1, 3)
         abstand = random.choice([[-1, 2], [-2, 1]])
@@ -159,8 +153,7 @@ def aenderungsrate(nr, teilaufg):
         i += 1
 
     if c in teilaufg:
-        aufgabe.append(str(
-            liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
 
         if a not in teilaufg:
@@ -205,7 +198,7 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 23 - mittlere und lokale Änderungsrate'
+Art = 'HAK 01 - mittlere und lokale Änderungsrate'
 Teil = 'Gr. A'
 
 
