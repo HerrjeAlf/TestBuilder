@@ -154,16 +154,28 @@ def aenderungsrate(nr, teilaufg):
 
     if c in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
-
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
+                                                    r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
         if a not in teilaufg:
             xwerte = [-6 + x / 5 for x in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
+            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_1')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
+
+        x_wert_3 = x_wert_2 - 1
+        x_wert_4 = x_wert_2 + 1
+        y_wert_3 = fkt_tangente.subs(x,x_wert_3)
+        y_wert_4 = fkt_tangente.subs(x,x_wert_4)
+        xwerte_dy = [x_wert_4, x_wert_4]
+        ywerte_dy = [y_wert_3, y_wert_4]
+        xwerte_dx = [x_wert_3, x_wert_4]
+        ywerte_dx = [y_wert_3, y_wert_3]
         ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
+
+        plt.plot(xwerte_dy, ywerte_dy)
+        plt.plot(xwerte_dx, ywerte_dx)
         plt.plot(xwerte_geraden, ywerte_tangente)
         plt.savefig('loesung_Aufgabe_1', dpi=150)
 
@@ -181,8 +193,7 @@ def aenderungsrate(nr, teilaufg):
         print(partialbruch)
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + vorz_str(N(-1 * fkt.subs(x, x_wert_2), 3)) + '}{x~' + vorz_str(
-            -1 * x_wert_2) + '} ~=~' +
+                       fkt_str + vorz_str(N(-1 * fkt.subs(x, x_wert_2), 3)) + '}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
                        r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + latex(partialbruch) + '~=~' +
                        latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
         Punkte += 3
