@@ -3,6 +3,7 @@ from random import randrange, randint, choice
 from sympy import *
 from numpy.linalg import solve as slv
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
 
@@ -58,63 +59,30 @@ def Graph(a, b, xwert, f, n, name):
     plt.plot(a, b, linewidth=2)
     return plt.savefig(name, dpi=200)
 
+def Graph3D(xwerte, f):
+    fig = plt.figure()
+    ax = fig.gca(projection='3D')
 
-def aenderungsrate(nr, teilaufg):
-    liste_teilaufg = [a, b, c, d]
-    i = 0
-    Punkte = 0
 
-    faktor = zzahl(1, 20) / 10
-    s_xwert = zzahl(1, 3)
-    s_ywert = zzahl(1, 3)
-    abstand = random.choice([[-1, 2], [-2, 1]])
 
-    x_wert_1 = s_xwert + abstand[0]
-    x_wert_2 = s_xwert + abstand[1]
-    y_wert_1 = faktor * (x_wert_1 - s_xwert) ** 2 + s_ywert
-    y_wert_2 = faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert
-    werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
+def vektoren(nr, teilaufg):
 
-    while not all(abs(wert) < 6 for wert in werte):
-        s_xwert = zzahl(1, 3)
-        s_ywert = zzahl(1, 3)
-        abstand = random.choice([[-1, 2], [-2, 1]])
-
-        x_wert_1 = s_xwert + abstand[0]
-        x_wert_2 = s_xwert + abstand[1]
-        y_wert_1 = faktor * (x_wert_1 - s_xwert) ** 2 + s_ywert
-        y_wert_2 = faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert
-        werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
-
-    print(f'\033[0;36mIntervall: [X: {x_wert_1} Y: {round(y_wert_1, 2)} | '
-          f'X: {x_wert_2} Y: {round(y_wert_2, 2)}]\033[0m')
-
-    fkt = expand(faktor * (x - s_xwert) ** 2 + s_ywert)
-    fkt_str = latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert) + 'x' + vorz_str(
-        (faktor * (s_xwert ** 2)) + s_ywert)
-    fkt_abl = diff(fkt, x)
-    fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
-
-    print('f(x)=' + str(fkt))
-    print('f`(x)=' + str(fkt_abl))
-    print('f`(x_0)=' + str(fkt_abl_x0))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
                r'f(x)~=~' + fkt_str]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval '
                                                 f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
         if y_wert_1 == y_wert_2:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
-            loesung.append(r' \\')
+            loesung.append(
+                str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
             Punkte += 2
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
                                                     r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
-            loesung.append(r' \\')
             Punkte += 3
 
         dy = y_wert_2 - y_wert_1
@@ -150,35 +118,21 @@ def aenderungsrate(nr, teilaufg):
                        vorz_str(-1 * x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),
                                                                    3)) + r'\quad \to \quad \mathrm{'
                                                                          r'Zeichnung~stimmt~überein} \quad (4P) \\')
-        loesung.append(r' \\')
         Punkte += 4
         i += 1
 
     if c in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
-        loesung.append(r' \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),~m~bestimmt~(1P)}  \\')
+
         if a not in teilaufg:
             xwerte = [-6 + x / 5 for x in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_1')
+            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_4')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
-
-        x_wert_3 = x_wert_2 - 1
-        x_wert_4 = x_wert_2 + 1
-        y_wert_3 = fkt_tangente.subs(x,x_wert_3)
-        y_wert_4 = fkt_tangente.subs(x,x_wert_4)
-        xwerte_dy = [x_wert_4, x_wert_4]
-        ywerte_dy = [y_wert_3, y_wert_4]
-        xwerte_dx = [x_wert_3, x_wert_4]
-        ywerte_dx = [y_wert_3, y_wert_3]
         ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
-
-        plt.plot(xwerte_dy, ywerte_dy)
-        plt.plot(xwerte_dx, ywerte_dx)
         plt.plot(xwerte_geraden, ywerte_tangente)
         plt.savefig('loesung_Aufgabe_1', dpi=150)
 
@@ -188,46 +142,19 @@ def aenderungsrate(nr, teilaufg):
     if d in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
                                                 f'mit einer Rechnung. \n\n')
-        a_3_re = faktor
-        b_1_re = -2 * faktor * s_xwert
-        b_2_re = faktor * x_wert_2
-        b_3_re = b_1_re + b_2_re
-        c_1_re = faktor * (s_xwert ** 2) + s_ywert - (faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert)
-        c_2_re = b_3_re * x_wert_2
-        c_3_re = c_1_re + c_2_re
-
-        a_1 = latex(N(faktor, 3))
-        a_3 = latex(N(a_3_re,3))
-        b_1 = latex(N(b_1_re,3))
-        b_2 = latex(N(b_2_re,3))
-        b_3 = latex(N(b_3_re,3))
-        c_1 = latex(N(c_1_re,3))
-        c_2 = latex(N(c_2_re,3))
-
-        table = Tabular('c|c|c', row_height=1.2)
-        table.add_row(a_1, b_1, c_1)
-        table.add_hline(1, 3)
-        table.add_row('', b_2, c_2)
-        table.add_hline(1, 3)
-        table.add_row(a_3, b_3, 0)
 
         Division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
-        partialbruch = latex(faktor) + '~x~' + vorz_str(b_3_re)
+        partialbruch = apart(Division_fkt_linear)
 
         print(Division_fkt_linear)
         print(partialbruch)
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + ' ~-~(~' + vorz_str(N(fkt.subs(x, x_wert_2), 3)) + '~)}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
-                       r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + partialbruch + '~=~' +
+                       fkt_str + vorz_str(N(-1 * fkt.subs(x, x_wert_2), 3)) + '}{x~' + vorz_str(
+            -1 * x_wert_2) + '} ~=~' +
+                       r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + latex(partialbruch) + '~=~' +
                        latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
-        loesung.append(r' \\')
-        loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
-        loesung.append(table)
-        loesung.append(r' \hspace{5em}')
-
-        Punkte += 5
-
+        Punkte += 3
     # plt.show()
     return [aufgabe, loesung, Punkte]
 
@@ -236,11 +163,11 @@ aufgaben = [aenderungsrate(1, [a, b, c, d])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
-Kurs = 'Leistungskurs'
+Kurs = 'Grundkurskurs'
 Fach = 'Mathematik'
-Klasse = '12'
+Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 01 - mittlere und lokale Änderungsrate'
+Art = 'HAK 01 - Punkte und Vektoren'
 Teil = 'Gr. A'
 
 
@@ -261,7 +188,7 @@ def Hausaufgabenkontrolle():
     for aufgabe in aufgaben:
         for elements in aufgabe[0]:
             if '~' in elements:
-                with Aufgabe.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             else:
                 Aufgabe.append(elements)
@@ -283,11 +210,13 @@ def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
     Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
-
     for loesung in aufgaben:
-        with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
-            for elements in loesung[1]:
-                agn.append(elements)
+        for elements in loesung[1]:
+            if '~' in elements:
+                with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                    agn.append(elements)
+            else:
+                Loesung.append(elements)
 
     Loesung.append('\n\n')
     Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
