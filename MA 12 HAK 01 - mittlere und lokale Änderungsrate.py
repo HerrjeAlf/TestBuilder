@@ -218,7 +218,7 @@ def aenderungsrate(nr, teilaufg):
         print(partialbruch)
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + ' ~-~(~' + vorz_str(N(fkt.subs(x, x_wert_2), 3)) + '~)}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
+                       fkt_str + ' ~-~(~' + N(fkt.subs(x, x_wert_2), 3) + '~)}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
                        r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + partialbruch + '~=~' +
                        latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
         loesung.append(r' \\')
