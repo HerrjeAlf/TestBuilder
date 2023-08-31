@@ -1,10 +1,10 @@
-import pylatex, math, random, sympy, numpy, matplotlib
-from random import randrange, randint, choice
-from sympy import *
-from numpy.linalg import solve as slv
+import numpy
+import random
+
 import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
+from sympy import *
 
 # Definition der Funktionen
 
@@ -38,7 +38,7 @@ def vorz_str_minus(k):
     return k
 
 
-def Graph(a, b, xwert, f, n, name):
+def Graph(a, b, xwert, f, f_str, n, name):
     ax = plt.gca()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -50,12 +50,14 @@ def Graph(a, b, xwert, f, n, name):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points', fontsize=12)
+    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+                 fontsize=12)
     plt.grid(True)
     plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
     plt.plot(a, b, linewidth=2)
+    plt.suptitle(r'$f(x) =' + f_str + '$', usetex=True)
     return plt.savefig(name, dpi=200)
 
 
@@ -95,20 +97,22 @@ def aenderungsrate(nr, teilaufg):
     fkt_abl = diff(fkt, x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
-    print('f(x)=' + str(fkt))
-    print('f`(x)=' + str(fkt_abl))
-    print('f`(x_0)=' + str(fkt_abl_x0))
+    print("f(x)=" + str(fkt))
+    print("f'(x)=" + str(fkt_abl))
+    print("f'(x_0)=" + str(fkt_abl_x0))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
                r'f(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
+    xwerte_geraden = [-6, 6]
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval '
                                                 f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
         if y_wert_1 == y_wert_2:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~Steigung~bestimmt~(1P)} \\')
+            loesung.append(
+                str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~Steigung~bestimmt~(1P)} \\')
             loesung.append(r' \\')
             Punkte += 2
         else:
@@ -120,10 +124,9 @@ def aenderungsrate(nr, teilaufg):
         dy = y_wert_2 - y_wert_1
         dx = x_wert_2 - x_wert_1
         fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
-        xwerte = [-6 + x / 5 for x in range(60)]
-        xwerte_geraden = [-6, 6]
+        xwerte = [-6 + n / 5 for n in range(60)]
         ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-        Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_1')
+        Graph(xwerte, ywerte, s_xwert, fkt, fkt_str, 'f', 'Aufgabe_1')
 
         xwerte_dy = [x_wert_2, x_wert_2]
         ywerte_dy = [y_wert_1, y_wert_2]
@@ -145,32 +148,35 @@ def aenderungsrate(nr, teilaufg):
         aufgabe.append(str(liste_teilaufg[i]) +
                        f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] '
                        f'durch Rechnung. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{' +
-                       latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2) +
-                       vorz_str(-1 * x_wert_1) + '} ~=~' + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1),
-                                                                   3)) + r'\quad \to \quad \mathrm{'
-                                                                         r'Zeichnung~stimmt~überein} \quad (4P) \\')
+        (loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2) +
+                        ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) +
+                        str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{' + latex(N(y_wert_2, 3)) +
+                        vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2) + vorz_str(-1 * x_wert_1) + '} ~=~' +
+                        latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3)) +
+                        r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~überein} \quad (4P) \\'))
         loesung.append(r' \\')
         Punkte += 4
         i += 1
 
     if c in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+        aufgabe.append(str(
+            liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+                                                r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
         loesung.append(r' \\')
+        Punkte += 3
         if a not in teilaufg:
-            xwerte = [-6 + x / 5 for x in range(60)]
+            xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            Graph(xwerte, ywerte, s_xwert, fkt, 'f', 'Aufgabe_1')
+            Graph(xwerte, ywerte, s_xwert, fkt, fkt_str, 'f', 'Aufgabe_1')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
 
         x_wert_3 = x_wert_2 - 1
         x_wert_4 = x_wert_2 + 1
-        y_wert_3 = fkt_tangente.subs(x,x_wert_3)
-        y_wert_4 = fkt_tangente.subs(x,x_wert_4)
+        y_wert_3 = fkt_tangente.subs(x, x_wert_3)
+        y_wert_4 = fkt_tangente.subs(x, x_wert_4)
         xwerte_dy = [x_wert_4, x_wert_4]
         ywerte_dy = [y_wert_3, y_wert_4]
         xwerte_dx = [x_wert_3, x_wert_4]
@@ -197,12 +203,12 @@ def aenderungsrate(nr, teilaufg):
         c_3_re = c_1_re + c_2_re
 
         a_1 = latex(N(faktor, 3))
-        a_3 = latex(N(a_3_re,3))
-        b_1 = latex(N(b_1_re,3))
-        b_2 = latex(N(b_2_re,3))
-        b_3 = latex(N(b_3_re,3))
-        c_1 = latex(N(c_1_re,3))
-        c_2 = latex(N(c_2_re,3))
+        a_3 = latex(N(a_3_re, 3))
+        b_1 = latex(N(b_1_re, 3))
+        b_2 = latex(N(b_2_re, 3))
+        b_3 = latex(N(b_3_re, 3))
+        c_1 = latex(N(c_1_re, 3))
+        c_2 = latex(N(c_2_re, 3))
 
         table = Tabular('c|c|c', row_height=1.2)
         table.add_row(a_1, b_1, c_1)
@@ -212,14 +218,16 @@ def aenderungsrate(nr, teilaufg):
         table.add_row(a_3, b_3, 0)
 
         Division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
-        partialbruch = latex(faktor) + '~x~' + vorz_str(b_3_re)
+        partialbruch = latex(faktor) + 'x' + vorz_str(b_3_re)
 
         print(Division_fkt_linear)
         print(partialbruch)
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + ' ~-~(~' + latex(N(fkt.subs(x, x_wert_2), 3)) + '~)}{x~' + vorz_str(-1 * x_wert_2) +
-                       '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + partialbruch + '~=~' +
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) +
+                       r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2) +
+                       r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-(' +
+                       latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2) +
+                       '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~' +
                        latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\' +
                        r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\')
         loesung.append(r' \\')
@@ -231,6 +239,7 @@ def aenderungsrate(nr, teilaufg):
 
     # plt.show()
     return [aufgabe, loesung, Punkte]
+
 
 aufgaben = [aenderungsrate(1, [a, b, c, d])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
