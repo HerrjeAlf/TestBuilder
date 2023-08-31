@@ -108,12 +108,12 @@ def aenderungsrate(nr, teilaufg):
                                                 f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
         if y_wert_1 == y_wert_2:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~m~bestimmt~(1P)} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~Steigung~bestimmt~(1P)} \\')
             loesung.append(r' \\')
             Punkte += 2
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+                                                    r'~~Steigungsdreieck~(1P),~Steigung~bestimmt~(1P)} \\')
             loesung.append(r' \\')
             Punkte += 3
 
@@ -218,22 +218,23 @@ def aenderungsrate(nr, teilaufg):
         print(partialbruch)
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' +
-                       fkt_str + ' ~-~(~' + N(fkt.subs(x, x_wert_2), 3) + '~)}{x~' + vorz_str(-1 * x_wert_2) + '} ~=~' +
-                       r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + partialbruch + '~=~' +
-                       latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\')
+                       fkt_str + ' ~-~(~' + latex(N(fkt.subs(x, x_wert_2), 3)) + '~)}{x~' + vorz_str(-1 * x_wert_2) +
+                       '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}' + partialbruch + '~=~' +
+                       latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\' +
+                       r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\')
         loesung.append(r' \\')
         loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
         loesung.append(table)
         loesung.append(r' \hspace{5em}')
 
-        Punkte += 5
+        Punkte += 6
 
     # plt.show()
     return [aufgabe, loesung, Punkte]
 
-
 aufgaben = [aenderungsrate(1, [a, b, c, d])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
+
 # Angaben für den Test im pdf-Dokument
 Datum = NoEscape(r' \today')
 Kurs = 'Leistungskurs'
@@ -270,9 +271,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. Deine Note ist: \n\n')))
 
     Aufgabe.append(NewPage())
-    Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-    with Aufgabe.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
-        agn.append('f(x)~=~' + fkt_str)
+
     with Aufgabe.create(Figure(position='h!')) as graph:
         graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png', width='400px')
 
