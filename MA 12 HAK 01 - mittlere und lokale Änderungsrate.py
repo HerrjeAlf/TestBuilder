@@ -271,7 +271,8 @@ def Hausaufgabenkontrolle():
 
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-
+    with Aufgabe.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+        agn.append('f(x)~=~' + fkt_str)
     with Aufgabe.create(Figure(position='h!')) as graph:
         graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png', width='400px')
 
