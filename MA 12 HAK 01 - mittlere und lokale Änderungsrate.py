@@ -153,7 +153,7 @@ def aenderungsrate(nr, teilaufg):
                         str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{' + latex(N(y_wert_2, 3)) +
                         vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2) + vorz_str(-1 * x_wert_1) + '} ~=~' +
                         latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3)) +
-                        r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~überein} \quad (4P) \\'))
+                        r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\'))
         loesung.append(r' \\')
         Punkte += 4
         i += 1
@@ -162,7 +162,7 @@ def aenderungsrate(nr, teilaufg):
         aufgabe.append(str(
             liste_teilaufg[i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
-                                                r'~~Steigungsdreieck~(1P),~~m~bestimmt~(1P)} \\')
+                                                r'~~Steigungsdreieck~(1P),~Steigung~bestimmt~(1P)} \\')
         loesung.append(r' \\')
         Punkte += 3
         if a not in teilaufg:
@@ -200,7 +200,6 @@ def aenderungsrate(nr, teilaufg):
         b_3_re = b_1_re + b_2_re
         c_1_re = faktor * (s_xwert ** 2) + s_ywert - (faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert)
         c_2_re = b_3_re * x_wert_2
-        c_3_re = c_1_re + c_2_re
 
         a_1 = latex(N(faktor, 3))
         a_3 = latex(N(a_3_re, 3))
