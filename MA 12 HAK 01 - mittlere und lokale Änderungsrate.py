@@ -164,7 +164,6 @@ def aenderungsrate(nr, teilaufg):
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
                                                 r'~~Steigungsdreieck~(1P),~Steigung~bestimmt~(1P)} \\')
         loesung.append(r' \\')
-        Punkte += 3
         if a not in teilaufg:
             xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
