@@ -228,7 +228,7 @@ def aenderungsrate(nr, teilaufg):
                        latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2) +
                        '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~' +
                        latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\' +
-                       r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\')
+                       r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\')
         loesung.append(r' \\')
         loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
         loesung.append(table)
