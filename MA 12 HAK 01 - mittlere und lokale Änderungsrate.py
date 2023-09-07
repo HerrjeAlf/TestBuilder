@@ -60,7 +60,7 @@ def erstellen(Teil='Gr. A'):
         plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
         plt.axis([-6, 6, -6, 6])
         plt.plot(a, b, linewidth=2)
-        plt.suptitle(r'$f(x) =' + f_str + '$', usetex=True)
+        plt.suptitle(r'Dargestellt ist der Graph von \ $f(x) =' + f_str + '$', usetex=True)
         return plt.savefig(name, dpi=200)
 
     def aenderungsrate(nr, teilaufg):
@@ -283,7 +283,8 @@ def erstellen(Teil='Gr. A'):
             MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. Deine Note ist: \n\n')))
 
         Aufgabe.append(NewPage())
-
+        Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
+        Aufgabe.append(' \n\n')
         with Aufgabe.create(Figure(position='h!')) as graph:
             graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png', width='400px')
 
