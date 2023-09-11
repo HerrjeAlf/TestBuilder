@@ -41,6 +41,8 @@ def vorz_str_minus(k):
 
 
 def erstellen(Teil='Gr. A'):
+    print(f'\n\033[1;35mHAK {Teil}\033[0m')
+
     def Graph(a, b, xwert, f, f_str, n, name):
         ax = plt.gca()
         ax.spines['top'].set_color('none')
@@ -60,7 +62,7 @@ def erstellen(Teil='Gr. A'):
         plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
         plt.axis([-6, 6, -6, 6])
         plt.plot(a, b, linewidth=2)
-        plt.suptitle(r'Dargestellt ist der Graph von \ $f(x) =' + f_str + '$', usetex=True)
+        plt.suptitle(r'Dargestellt ist der Graph von: \ $f(x) =' + f_str + '$', usetex=True)
         return plt.savefig(name, dpi=200)
 
     def aenderungsrate(nr, teilaufg):
@@ -248,26 +250,29 @@ def erstellen(Teil='Gr. A'):
         liste_teilaufg = [a, b, c, d]
         i = 0
         Punkte = 0
-                
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Berechne die Steigungsfunktion der folgenden Funktionen mithilfe des Differentialqoutienten.']
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Berechne die Steigungsfunktion der folgenden Funktionen mithilfe des Differentialqoutienten.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         if a in teilaufg:
-            a1 = zzahl(1,5)
-            a2 = zzahl(1,5)
-            fkt = a1*x+a2
-            fkt_str = str(a1) + 'x ~' + vorz_str(a2)
+            a1 = zzahl(1, 5)
+            a2 = zzahl(1, 5)
+            x_0 = nzahl(1, 5)
+            fkt = a1 * x + a2
+            fkt_str = str(a1) + 'x' + vorz_str(a2)
 
-            aufgabe.append(r'str(liste_teilaufg[i]) + r') \quad ' + fkt_str + r' \hspace{10em}')
-            loesung.append(r'str(liste_teilaufg[i]) + r') \quad f \prime (x)~=~ \lim \limits_{ h \to 0}'
-                           r'\frac{' + str(a_1) + '(x~+~h)' + vorz_str(a2) + '~-~(' + str(a1) + 'x' + str(a2)')}'
-                           r'{h} + '= ~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + 'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\')
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + r', ~~x_{0}=' + str(x_0) + r'\hspace{10em}')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f \prime (x_{0})=\lim \limits_{ h \to 0} \frac{f(x_{0}+h) - f(x_{0})}{h}'
+                           + r'=\lim \limits_{ h \to 0}\frac{' + str(a1) + '(' + str(x_0) + ' + h)' + vorz_str(a2) + ' - (' + str(a1)
+                           + r'\cdot' + str(x_0) + str(vorz_str(a2)) + r')}{h}' + r'=\lim \limits_{ h \to 0} \frac{~' + str(a1)
+                           + r'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\')
             Punkte += 3
             i += 1
-            
+
         return [aufgabe, loesung, Punkte]
-    
-    aufgaben = [aenderungsrate(1, [a, b, c, d])]
+
+    aufgaben = [aenderungsrate(1, [a, b, c, d]), ableitungen(2, [a])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
