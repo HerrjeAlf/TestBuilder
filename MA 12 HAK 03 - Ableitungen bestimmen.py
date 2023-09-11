@@ -255,24 +255,49 @@ def erstellen(Teil='Gr. A'):
                    'Berechne die Steigungsfunktion der folgenden Funktionen mithilfe des Differentialqoutienten.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
+        def faktorliste(n):
+            faktorliste = [zzahl(1,5) for x in range(n)]
+            return faktorliste
+
+
         if a in teilaufg:
-            a1 = zzahl(1, 5)
-            a2 = zzahl(1, 5)
-            x_0 = nzahl(1, 5)
-            fkt = a1 * x + a2
+            koeffizienten = faktorliste(2)
+            a1 = koeffizienten[0]
+            a2 = koeffizienten[1]
             fkt_str = str(a1) + 'x' + vorz_str(a2)
 
-            aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + r', ~~x_{0}=' + str(x_0) + r'\hspace{10em}')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad f \prime (x_{0})=\lim \limits_{ h \to 0} \frac{f(x_{0}+h) - f(x_{0})}{h}'
-                           + r'=\lim \limits_{ h \to 0}\frac{' + str(a1) + '(' + str(x_0) + ' + h)' + vorz_str(a2) + ' - (' + str(a1)
-                           + r'\cdot' + str(x_0) + str(vorz_str(a2)) + r')}{h}' + r'=\lim \limits_{ h \to 0} \frac{~' + str(a1)
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + r' \hspace{15em} ')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f \prime (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
+                           + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + '(x + h)' + vorz_str(a2) + '~-~(' + str(a1)
+                           + r'x' + vorz_str(a2) + r')}{h}' + r'=\lim \limits_{ h \to 0} \frac{~' + str(a1)
                            + r'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\')
             Punkte += 3
             i += 1
 
+        if b in teilaufg:
+            koeffizienten = faktorliste(3)
+            a1 = koeffizienten[0]
+            a2 = koeffizienten[1]
+            a3 = koeffizienten[2]
+            fkt_str = str(a1) + 'x^2~' + vorz_str(a2) + 'x~' + vorz_str(a3)
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + r' \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f \prime (x) ~=~ \lim \limits_{ h \to 0}'
+                           r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(a1) + '(x + h)^2 ~'
+                           + vorz_str(a2) + '(x+h) ~' + vorz_str(a3) + ' ~-~ (' + str(a1) + 'x^2' + str(vorz_str(a2)) +
+                           r'x~' + vorz_str(a3)')}{h}' + r' ~=~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + r'x^2~' +
+                           vorz_str(2*a1) + 'xh ~' + vorz_str(a1) + 'h^2~' + vorz_str(a2) + 'x^2~' + vorz_str(a2) + 'x' +
+                           vorz_str(a2) + 'h' + vorz_str(a3) + '~' + vorz_str(-1 * a1) + 'x^2~' + vorz_str(-1 * a2) +
+                           'x~' + vorz_str(-1 * a3) + r'}{h} ~=~ \\ =~ \lim \limits_{ h \to 0} \frac{~h(~' + str(2*a1) +
+                           r'x~' + vorz_str(a1) + 'h ~' + vorz_str(a2) + r'~)}{h} ~=~ \lim \limits_{ h \to 0} ' +
+                           str(2*a1) + r'x~' + vorz_str(a1) + 'h ~' + vorz_str(a2) + r'~=~' + str(2*a1) + 'x~' +
+                           vorz_str(a2) + r' \quad (5P) \\')
+            Punkte += 5
+            i += 1
+
+
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [aenderungsrate(1, [a, b, c, d]), ableitungen(2, [a])]
+    aufgaben = [aenderungsrate(1, [a, b, c, d]), ableitungen(2, [a, b])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -281,7 +306,7 @@ def erstellen(Teil='Gr. A'):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'HAK 01 - mittlere und lokale Änderungsrate'
+    Art = 'HAK 03 - Ableitungen herleiten'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
