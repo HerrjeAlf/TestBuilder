@@ -268,19 +268,19 @@ def erstellen(Teil='Gr. A'):
             loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste Ableitung~der~folgenden~'
                                                     r'Funktionen~mithilfe~des~Differentialquotienten}. \\\\')  # \n\n zu einen Fehler geführt
             loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
-                           + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)' + vorz_str(a2) + r'~-~('
+                           + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
                            + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
-                           + str(a1) + 'x' + vorz_str(a1) + 'h' + vorz_str(a2) + vorz_str(-1*a1) + r'x' + vorz_str(-1*a2)
+                           + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1*a1) + r'x~' + vorz_str(-1*a2)
                            + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + r'h~}{h} ~=~' + str(a1)
                            + r' \quad (3P) \\\\')  # \\\\ anstatt \\ damit es übersichtlicher in der Lösung ist
             loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
                            + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
                            + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
                            + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
-                           + r'x^2 ~' + vorz_str(2*b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x'
-                           + vorz_str(b2) + 'h' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2 ~'
+                           + r'x^2 ~' + vorz_str(2*b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x~'
+                           + vorz_str(b2) + 'h~' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~'
                            + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) +  r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
-                           + vorz_str(2*b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
+                           + str(2*b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
                            + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2*b1) + r'x~' + vorz_str(b1)
                            + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2*b1) + r'x~'
                            + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2) + r' \quad (5P) \\')
