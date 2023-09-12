@@ -253,45 +253,37 @@ def erstellen(Teil='Gr. A'):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         def faktorliste(n):
-            faktorliste = [zzahl(1,5) for x in range(n)]
-            return faktorliste
-
+            return [zzahl(1, 5) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
         if a in teilaufg:
-            koeffizienten_a = faktorliste(2)
-            a1 = koeffizienten_a[0]
-            a2 = koeffizienten_a[1]
-            koeffizienten_b = faktorliste(3)
-            b1 = koeffizienten_b[0]
-            b2 = koeffizienten_b[1]
-            b3 = koeffizienten_b[2]
+            a1, a2 = faktorliste(2)  # funktioniert auch so :)
+            b1, b2, b3 = faktorliste(3)
             fkt_str_a = str(a1) + 'x' + vorz_str(a2)
-            fkt_str_b = str(b1) + 'x^2~' + vorz_str(b2) + 'x~' + vorz_str(b3)
+            fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)  # die ~ für den gleichmäßigen Abstand entfernt
 
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Steigungsfunktion der folgenden Funktionen'
-                                                    ' mithilfe des Differentialqoutienten.')
-            aufgabe.append(r'i) \quad f_1 ~(x)~=~' + fkt_str_a + r' \hspace{15em} ' + r'ii) \quad f_2 ~(x)~=~' + fkt_str_b + r' \hspace{5em} \\')
-
-            loesung.append(str(liste_teilaufg[i]) + ') Berechne die Steigungsfunktion der folgenden Funktionen'
-                                                    ' mithilfe des Differentialqoutienten. \n\n')
-            loesung.append(r' i) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
-                           + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + '(x + h)' + vorz_str(a2) + '~-~(' + str(a1)
-                           + r'x' + vorz_str(a2) + r')}{h}' + r'=\lim \limits_{ h \to 0} \frac{~' + str(a1)
-                           + r'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\')
-
-            loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}' +
-                           r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + '(x + h)^2 ~'
-                           + vorz_str(b2) + '(x+h) ~' + vorz_str(b3) + ' ~-~ (' + str(b1) + 'x^2' + vorz_str(b2) +
-                           'x~' + vorz_str(b3) + ')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1) + r'x^2~' +
-                           vorz_str(2*b1) + 'xh ~' + vorz_str(b1) + 'h^2~' + vorz_str(b2) + 'x^2~' + vorz_str(b2) + 'x' +
-                           vorz_str(b2) + 'h' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~' + vorz_str(-1 * b2) +
-                           'x~' + vorz_str(-1 * b3) + r'}{h}  \\ =~ \lim \limits_{ h \to 0} \frac{~h(~' + str(2*b1) +
-                           r'x~' + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~)}{h} ~=~ \lim \limits_{ h \to 0} ' +
-                           str(2*b1) + r'x~' + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' +
-                           vorz_str(b2) + r' \quad (5P) \\')
+            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Steigungsfunktion der folgenden Funktionen '
+                                                    r'mithilfe des Differentialquotienten.')
+            aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{15em} ' + r'ii) \quad f_2 (x)~=~'
+                           + fkt_str_b + r' \hspace{5em} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~Steigungsfunktion~der~folgenden~'
+                                                    r'Funktionen~mithilfe~des~Differentialquotienten}.\\')  # \n\n zu einen Fehler geführt
+            loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
+                           + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)' + vorz_str(a2) + r'~-~('
+                           + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r'=~\lim \limits_{ h \to 0} \frac{~' + str(a1)
+                           + r'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\\\')  # \\\\ anstatt \\ damit es übersichtlicher in der Lösung ist
+            loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
+                           + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
+                           + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
+                           + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
+                           + r'x^2~' + vorz_str(2*b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r'x^2~'
+                           + vorz_str(b2) + 'x' + vorz_str(b2) + 'h' + vorz_str(b3) + r'~' + vorz_str(-1 * b1) + r'x^2~'
+                           + vorz_str(-1 * b2) + 'x~' + vorz_str(-1 * b3)
+                           + r'}{h}  \\ =~ \lim \limits_{ h \to 0} \frac{~h(~' + str(2*b1) + r'x~' + vorz_str(b1)
+                           + 'h ~' + vorz_str(b2) + r'~)}{h} ~=~ \lim \limits_{ h \to 0} ' + str(2*b1) + r'x~'
+                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2)
+                           + r' \quad (5P) \\')
             Punkte += 8
             i += 1
-
 
         return [aufgabe, loesung, Punkte]
 
