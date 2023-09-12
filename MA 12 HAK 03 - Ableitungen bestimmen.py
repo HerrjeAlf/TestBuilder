@@ -268,16 +268,18 @@ def erstellen(Teil='Gr. A'):
             fkt_str_a = str(a1) + 'x' + vorz_str(a2)
             fkt_str_b = str(b1) + 'x^2~' + vorz_str(b2) + 'x~' + vorz_str(b3)
 
-            aufgabe.append(str(liste_teilaufg[i]) + 'Berechne die Steigungsfunktion der folgenden Funktionen'
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Steigungsfunktion der folgenden Funktionen'
                                                     ' mithilfe des Differentialqoutienten.')
-            aufgabe.append(r'i) \quad f_1 ~(x)~=~' + fkt_str_a + r' \hspace{15em} ' + r'ii) \quad f_2 ~(x)~=~' + fkt_str_b + r' \\')
+            aufgabe.append(r'i) \quad f_1 ~(x)~=~' + fkt_str_a + r' \hspace{15em} ' + r'ii) \quad f_2 ~(x)~=~' + fkt_str_b + r' \hspace{5em} \\')
 
-            loesung.append(str(liste_teilaufg[i]) + r') \quad i) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
+            loesung.append(str(liste_teilaufg[i]) + ') Berechne die Steigungsfunktion der folgenden Funktionen'
+                                                    ' mithilfe des Differentialqoutienten. \n\n')
+            loesung.append(r' i) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
                            + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + '(x + h)' + vorz_str(a2) + '~-~(' + str(a1)
                            + r'x' + vorz_str(a2) + r')}{h}' + r'=\lim \limits_{ h \to 0} \frac{~' + str(a1)
                            + r'h~}{h} ~=~' + str(a1) + r' \quad (3P) \\')
 
-            loesung.append(r'ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}' +
+            loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}' +
                            r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + '(x + h)^2 ~'
                            + vorz_str(b2) + '(x+h) ~' + vorz_str(b3) + ' ~-~ (' + str(b1) + 'x^2' + vorz_str(b2) +
                            'x~' + vorz_str(b3) + ')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1) + r'x^2~' +
