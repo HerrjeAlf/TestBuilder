@@ -256,9 +256,9 @@ def erstellen(Teil='Gr. A'):
             return [zzahl(1, 5) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
         def exponenten(n):
-            menge = set()
+            menge = set() # ich habe hier eine Menge verwendet, weil diese keine gleiche Elemente enthält
             while len(menge) < n:
-                menge.add(nzahl(2,4+n))
+                menge.add(nzahl(2,4 + n))
             return menge
 
         if a in teilaufg:
@@ -294,7 +294,7 @@ def erstellen(Teil='Gr. A'):
             i += 1
 
         if b in teilaufg:
-            def funktion(p):
+            def funktion(p): # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
                 if random.random() > 0.5:
                     fkt = zzahl(1,10)
                 else:
@@ -303,12 +303,13 @@ def erstellen(Teil='Gr. A'):
                 potenzen = exponenten(p)
                 for koeffizient in koeffizienten:
                     fkt = koeffizient*(x**potenzen.pop()) + fkt
-                fkt_abl = expand(diff(fkt, x))
+                fkt_abl_1 = expand(diff(fkt, x))
+                fkt_abl_2 = expand(diff(fkt, x, 2))
 
-                return fkt, fkt_abl
+                return fkt, fkt_abl_1, fkt_abl_2
 
-            fkt_i, fkt_abl_i = funktion(2)
-            fkt_ii, fkt_abl_ii = funktion(3)
+            fkt_i, fkt_abl_1_i, fkt_abl_2_i = funktion(2)
+            fkt_ii, fkt_abl_1_ii, fkt_abl_2_ii = funktion(3)
 
             aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen '
                                                     r'mithilfe der elementaren Ableitungsregeln.')
@@ -316,8 +317,8 @@ def erstellen(Teil='Gr. A'):
                            + latex(fkt_ii) + r' \hspace{5em} \\')
             loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~'
                                                     r'Funktionen~mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
-            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_i) + r' \quad (2P) \hspace{5em}'
-                           r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_ii) + r' \quad (3P) \\')
+            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (2P) \hspace{5em}'
+                           r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (3P) \\')
             Punkte += 5
             i += 1
         return [aufgabe, loesung, Punkte]
