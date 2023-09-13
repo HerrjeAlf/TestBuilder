@@ -112,19 +112,7 @@ def erstellen(Teil='Gr. A'):
             aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval '
                                                     f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
-            if y_wert_1 == y_wert_2:
-                loesung.append(
-                    str(liste_teilaufg[
-                            i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~Steigung~bestimmt~(1P)} \\')
-                loesung.append(r' \\')
-                Punkte += 2
-            else:
-                loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
-                                                        r'~~Steigungsdreieck~(1P),~Steigung~bestimmt~(1P)} \\')
-                loesung.append(r' \\')
-                Punkte += 3
-
-            dy = y_wert_2 - y_wert_1
+             dy = y_wert_2 - y_wert_1
             dx = x_wert_2 - x_wert_1
             fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
             xwerte = [-6 + n / 5 for n in range(60)]
@@ -136,15 +124,24 @@ def erstellen(Teil='Gr. A'):
             xwerte_dx = [x_wert_1, x_wert_2]
             ywerte_dx = [y_wert_1, y_wert_1]
 
+            steigung_dreieck = N((y_wert_2-y_wert_1)/(x_wert_2-x_wert_1),2)
+
             ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
 
             plt.plot(xwerte_dy, ywerte_dy)
             plt.plot(xwerte_dx, ywerte_dx)
             plt.plot(xwerte_geraden, ywerte_sekante)
 
+
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
+                                        r'~~Steigungsdreieck~(1P),~Steigung~m~=~' + steigung_dreieck +
+                                        r'bestimmt~(1P)} \\')
+            loesung.append(r' \\')
+
             if c not in liste_teilaufg:
                 plt.savefig('loesung_Aufgabe_1', dpi=150)
 
+            Punkte += 3
             i += 1
 
         if b in teilaufg:
@@ -166,8 +163,7 @@ def erstellen(Teil='Gr. A'):
             aufgabe.append(str(
                 liste_teilaufg[
                     i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~Steigung~bestimmt~(1P)} \\')
+
             loesung.append(r' \\')
             if a not in teilaufg:
                 xwerte = [-6 + n / 5 for n in range(60)]
@@ -178,12 +174,11 @@ def erstellen(Teil='Gr. A'):
             fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
 
             x_wert_3 = x_wert_2 - 1
-            x_wert_4 = x_wert_2 + 1
             y_wert_3 = fkt_tangente.subs(x, x_wert_3)
-            y_wert_4 = fkt_tangente.subs(x, x_wert_4)
-            xwerte_dy = [x_wert_4, x_wert_4]
-            ywerte_dy = [y_wert_3, y_wert_4]
-            xwerte_dx = [x_wert_3, x_wert_4]
+            steigung_dreieck = N((y_wert_2 - y_wert_3)/(x_wert_2-x_wert_3),2)
+            xwerte_dy = [x_wert_2, x_wert_2]
+            ywerte_dy = [y_wert_2, y_wert_3]
+            xwerte_dx = [x_wert_2, x_wert_3]
             ywerte_dx = [y_wert_3, y_wert_3]
             ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
 
@@ -191,7 +186,9 @@ def erstellen(Teil='Gr. A'):
             plt.plot(xwerte_dx, ywerte_dx)
             plt.plot(xwerte_geraden, ywerte_tangente)
             plt.savefig('loesung_Aufgabe_1', dpi=150)
-
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
+                                                    r'~~Steigungsdreieck~(1P),~Steigung~m~=~' + str(steigung_dreieck) +
+                                                    r'~bestimmt~(1P)} \\')
             Punkte += 3
             i += 1
 
@@ -232,14 +229,14 @@ def erstellen(Teil='Gr. A'):
                            r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-(' +
                            latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2) +
                            '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~' +
-                           latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\' +
+                           latex(N(fkt_abl_x0, 3)) + r' \quad (2P) \\' +
                            r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\')
-            loesung.append(r' \\')
-            loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
-            loesung.append(table)
-            loesung.append(r' \hspace{5em}')
+            # loesung.append(r' \\')
+            # loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
+            # loesung.append(table)
+            # loesung.append(r' \hspace{5em}')
 
-            Punkte += 6
+            Punkte += 3
 
         # plt.show()
         return [aufgabe, loesung, Punkte]
@@ -317,7 +314,7 @@ def erstellen(Teil='Gr. A'):
                            + latex(fkt_ii) + r' \hspace{5em} \\')
             loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~'
                                                     r'Funktionen~mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
-            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (2P) \hspace{5em}'
+            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i) + r' \quad (2P) \hspace{5em}'
                            r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (3P) \\')
             Punkte += 5
             i += 1
@@ -359,7 +356,7 @@ def erstellen(Teil='Gr. A'):
 
         Aufgabe.append('\n\n')
         Aufgabe.append(
-            MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. Deine Note ist: \n\n')))
+            MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
@@ -395,8 +392,8 @@ def erstellen(Teil='Gr. A'):
     Erwartungshorizont()
 
 
-anzahl_HAKs = 1
-probe = True
+anzahl_HAKs = 2
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:
