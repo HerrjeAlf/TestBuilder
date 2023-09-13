@@ -255,13 +255,19 @@ def erstellen(Teil='Gr. A'):
         def faktorliste(n):
             return [zzahl(1, 5) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
+        def exponenten(n):
+            menge = set()
+            while len(menge) < n:
+                menge.add(nzahl(2,4+n))
+            return menge
+
         if a in teilaufg:
             a1, a2 = faktorliste(2)  # funktioniert auch so :)
             b1, b2, b3 = faktorliste(3)
             fkt_str_a = str(a1) + 'x' + vorz_str(a2)
             fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)  # die ~ für den gleichmäßigen Abstand entfernt
 
-            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Steigungsfunktion der folgenden Funktionen '
+            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen '
                                                     r'mithilfe des Differentialquotienten.')
             aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
                            + fkt_str_b + r' \hspace{5em} \\')
@@ -283,10 +289,37 @@ def erstellen(Teil='Gr. A'):
                            + str(2*b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
                            + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2*b1) + r'x~' + vorz_str(b1)
                            + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2*b1) + r'x~'
-                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2) + r' \quad (5P) \\')
+                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2) + r' \quad (5P) \\\\')
             Punkte += 8
             i += 1
 
+        if b in teilaufg:
+            def funktion(p):
+                if random.random() > 0.5:
+                    fkt = zzahl(1,10)
+                else:
+                    fkt = 0
+                koeffizienten = faktorliste(p)
+                potenzen = exponenten(p)
+                for koeffizient in koeffizienten:
+                    fkt = koeffizient*(x**potenzen.pop()) + fkt
+                fkt_abl = expand(diff(fkt, x))
+
+                return fkt, fkt_abl
+
+            fkt_i, fkt_abl_i = funktion(2)
+            fkt_ii, fkt_abl_ii = funktion(3)
+
+            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen '
+                                                    r'mithilfe der elementaren Ableitungsregeln.')
+            aufgabe.append(r'i) \quad f_1 (x)~=~' + latex(fkt_i) + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
+                           + latex(fkt_ii) + r' \hspace{5em} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~'
+                                                    r'Funktionen~mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
+            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_i) + r' \quad (2P) \hspace{5em}'
+                           r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_ii) + r' \quad (3P) \\')
+            Punkte += 5
+            i += 1
         return [aufgabe, loesung, Punkte]
 
     aufgaben = [aenderungsrate(1, [a, b, c, d]), ableitungen(2, [a, b])]
@@ -361,8 +394,8 @@ def erstellen(Teil='Gr. A'):
     Erwartungshorizont()
 
 
-anzahl_HAKs = 2
-probe = False
+anzahl_HAKs = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:
