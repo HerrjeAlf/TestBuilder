@@ -13,32 +13,28 @@ fig = plt.Figure()
 
 
 def zzahl(p, q):
-    k = random.choice([-1, 1]) * random.randint(p, q)
-    return k
+    return random.choice([-1, 1]) * random.randint(p, q)
 
 
 def nzahl(p, q):
-    k = random.randint(p, q)
-    return k
+    return random.randint(p, q)
 
 
 def vorz_str(k):
     if k < 0:
-        k = latex(k)
+        return latex(k)
     else:
-        k = '+' + latex(k)
-    return k
+        return f'+{latex(k)}'
 
 
 def vorz_str_minus(k):
     if k < 0:
-        k = '(' + latex(k) + ')'
+        return f'({latex(k)})'
     else:
-        k = latex(k)
-    return k
+        return latex(k)
 
 
-def erstellen(Teil='Gr. A'):
+def erstellen(Teil):
     print(f'\n\033[1;35mHAK {Teil}\033[0m')
 
     def Graph(a, b, xwert, f, f_str, n, name):
@@ -64,7 +60,6 @@ def erstellen(Teil='Gr. A'):
         return plt.savefig(name, dpi=200)
 
     def aenderungsrate(nr, teilaufg):
-        liste_teilaufg = [a, b, c, d]
         i = 0
         Punkte = 0
 
@@ -94,8 +89,8 @@ def erstellen(Teil='Gr. A'):
               f'X: {x_wert_2} Y: {round(y_wert_2, 2)}]\033[0m')
 
         fkt = expand(faktor * (x - s_xwert) ** 2 + s_ywert)
-        fkt_str = latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert) + 'x' + vorz_str(
-            (faktor * (s_xwert ** 2)) + s_ywert)
+        fkt_str = (latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert)
+                   + 'x' + vorz_str((faktor * (s_xwert ** 2)) + s_ywert))
         fkt_abl = diff(fkt, x)
         fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
@@ -109,10 +104,10 @@ def erstellen(Teil='Gr. A'):
 
         xwerte_geraden = [-6, 6]
         if a in teilaufg:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im Interval '
-                                                    f'[ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
+            aufgabe.append(str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
+                                              f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
 
-             dy = y_wert_2 - y_wert_1
+            dy = y_wert_2 - y_wert_1
             dx = x_wert_2 - x_wert_1
             fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
             xwerte = [-6 + n / 5 for n in range(60)]
@@ -132,37 +127,33 @@ def erstellen(Teil='Gr. A'):
             plt.plot(xwerte_dx, ywerte_dx)
             plt.plot(xwerte_geraden, ywerte_sekante)
 
+            loesung.append(str(teilaufg[i])
+                           + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~m='
+                           + str(steigung_dreieck) + r'~bestimmt~(1P)} \\\\')
 
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),'
-                                        r'~~Steigungsdreieck~(1P),~Steigung~m~=~' + steigung_dreieck +
-                                        r'bestimmt~(1P)} \\')
-            loesung.append(r' \\')
-
-            if c not in liste_teilaufg:
+            if c not in teilaufg:
                 plt.savefig('loesung_Aufgabe_1', dpi=150)
 
             Punkte += 3
             i += 1
 
         if b in teilaufg:
-            aufgabe.append(str(liste_teilaufg[i]) +
+            aufgabe.append(str(teilaufg[i]) +
                            f') Überprüfe die mittlere Änderungsrate im Interval [ {x_wert_1} | {x_wert_2} ] '
                            f'durch Rechnung. \n\n')
-            (loesung.append(
-                str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2) +
-                ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) +
-                str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{' + latex(N(y_wert_2, 3)) +
-                vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2) + vorz_str(-1 * x_wert_1) + '} ~=~' +
-                latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3)) +
-                r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\'))
-            loesung.append(r' \\')
+            loesung.append(
+                str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2)
+                + ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) + str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{'
+                + latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2)
+                + vorz_str(-1 * x_wert_1) + '} ~=~'
+                + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
+                + r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
             Punkte += 4
             i += 1
 
         if c in teilaufg:
-            aufgabe.append(str(
-                liste_teilaufg[
-                    i]) + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+            aufgabe.append(str(teilaufg[i])
+                           + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
             loesung.append(r' \\')
             if a not in teilaufg:
@@ -186,16 +177,16 @@ def erstellen(Teil='Gr. A'):
             plt.plot(xwerte_dx, ywerte_dx)
             plt.plot(xwerte_geraden, ywerte_tangente)
             plt.savefig('loesung_Aufgabe_1', dpi=150)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Tangente~an~Punkt~(1P),'
-                                                    r'~~Steigungsdreieck~(1P),~Steigung~m~=~' + str(steigung_dreieck) +
-                                                    r'~bestimmt~(1P)} \\')
+            loesung.append(str(teilaufg[i])
+                           + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~m~=~'
+                           + str(steigung_dreieck) + r'~bestimmt~(1P)} \\\\')
             Punkte += 3
             i += 1
 
         if d in teilaufg:
-            aufgabe.append(
-                str(liste_teilaufg[i]) + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
-                                         f'mit einer Rechnung. \n\n')
+            aufgabe.append(str(teilaufg[i])
+                           + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
+                             f'mit einer Rechnung. \n\n')
             a_3_re = faktor
             b_1_re = -2 * faktor * s_xwert
             b_2_re = faktor * x_wert_2
@@ -218,20 +209,19 @@ def erstellen(Teil='Gr. A'):
             table.add_hline(1, 3)
             table.add_row(a_3, b_3, 0)
 
-            Division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
+            division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
             partialbruch = latex(faktor) + 'x' + vorz_str(b_3_re)
 
-            print(Division_fkt_linear)
+            print(division_fkt_linear)
             print(partialbruch)
 
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2) +
-                           r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2) +
-                           r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-(' +
-                           latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2) +
-                           '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~' +
-                           latex(N(fkt_abl_x0, 3)) + r' \quad (2P) \\' +
-                           r' \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\')
-            # loesung.append(r' \\')
+            loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2)
+                           + r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
+                           + r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
+                           + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
+                           + '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~'
+                           + latex(N(fkt_abl_x0, 3)) + r' \quad (2P) \\'
+                           + r'\to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\\\')
             # loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
             # loesung.append(table)
             # loesung.append(r' \hspace{5em}')
@@ -242,7 +232,6 @@ def erstellen(Teil='Gr. A'):
         return [aufgabe, loesung, Punkte]
 
     def ableitungen(nr, teilaufg):
-        liste_teilaufg = [a, b, c, d]
         i = 0
         Punkte = 0
 
@@ -253,51 +242,51 @@ def erstellen(Teil='Gr. A'):
             return [zzahl(1, 5) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
         def exponenten(n):
-            menge = set() # ich habe hier eine Menge verwendet, weil diese keine gleiche Elemente enthält
+            menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
             while len(menge) < n:
-                menge.add(nzahl(2,4 + n))
+                menge.add(nzahl(2, 4 + n))
             return menge
 
         if a in teilaufg:
             a1, a2 = faktorliste(2)  # funktioniert auch so :)
             b1, b2, b3 = faktorliste(3)
             fkt_str_a = str(a1) + 'x' + vorz_str(a2)
-            fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)  # die ~ für den gleichmäßigen Abstand entfernt
+            fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
 
-            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen '
-                                                    r'mithilfe des Differentialquotienten.')
+            aufgabe.append(str(teilaufg[i])
+                           + r') Berechne die Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.')
             aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
                            + fkt_str_b + r' \hspace{5em} \\')
-            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste Ableitung~der~folgenden~'
-                                                    r'Funktionen~mithilfe~des~Differentialquotienten}. \\\\')  # \n\n zu einen Fehler geführt
+            loesung.append(str(teilaufg[i])
+                           + r') \mathrm{~Berechne~die~erste Ableitung~der~folgenden~Funktionen~mithilfe~des~'
+                             r'Differentialquotienten}. \\\\')
             loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
                            + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
                            + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
-                           + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1*a1) + r'x~' + vorz_str(-1*a2)
-                           + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + r'h~}{h} ~=~' + str(a1)
-                           + r' \quad (3P) \\\\')  # \\\\ anstatt \\ damit es übersichtlicher in der Lösung ist
+                           + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1*a1) + r'x~'
+                           + vorz_str(-1*a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + r'h~}{h} ~=~'
+                           + str(a1) + r' \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
             loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
                            + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
                            + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
                            + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
                            + r'x^2 ~' + vorz_str(2*b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x~'
                            + vorz_str(b2) + 'h~' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~'
-                           + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) +  r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
+                           + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) + r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
                            + str(2*b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
                            + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2*b1) + r'x~' + vorz_str(b1)
                            + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2*b1) + r'x~'
-                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2) + r' \quad (5P) \\\\')
+                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2*b1) + 'x~' + vorz_str(b2)
+                           + r' \quad (5P) \\\\')
             Punkte += 8
             i += 1
 
         if b in teilaufg:
-            def funktion(p): # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
-                if random.random() > 0.5:
-                    fkt = zzahl(1,10)
-                else:
-                    fkt = 0
+            def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
+                fkt = random.choice([zzahl(1, 10), 0])
                 koeffizienten = faktorliste(p)
                 potenzen = exponenten(p)
+
                 for koeffizient in koeffizienten:
                     fkt = koeffizient*(x**potenzen.pop()) + fkt
                 fkt_abl_1 = expand(diff(fkt, x))
@@ -308,12 +297,14 @@ def erstellen(Teil='Gr. A'):
             fkt_i, fkt_abl_1_i, fkt_abl_2_i = funktion(2)
             fkt_ii, fkt_abl_1_ii, fkt_abl_2_ii = funktion(3)
 
-            aufgabe.append(str(liste_teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen '
-                                                    r'mithilfe der elementaren Ableitungsregeln.')
+            aufgabe.append(str(teilaufg[i])
+                           + r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
+                             r'elementaren Ableitungsregeln.')
             aufgabe.append(r'i) \quad f_1 (x)~=~' + latex(fkt_i) + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
                            + latex(fkt_ii) + r' \hspace{5em} \\')
-            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~'
-                                                    r'Funktionen~mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
+            loesung.append(str(teilaufg[i])
+                           + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~der~'
+                             r'elementaren~Ableitungsregeln.} \\\\')
             loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i) + r' \quad (2P) \hspace{5em}'
                            r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (3P) \\')
             Punkte += 5
@@ -362,8 +353,8 @@ def erstellen(Teil='Gr. A'):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
         Aufgabe.append(' \n\n')
         with Aufgabe.create(Figure(position='h!')) as graph:
-            graph.add_image(r'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png', width='400px')
-
+            graph.add_image(r'Aufgabe_1.png', width='400px')
+            # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png' wechseln
         Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
@@ -382,7 +373,8 @@ def erstellen(Teil='Gr. A'):
 
         Loesung.append(NewPage())
         with Loesung.create(Figure(position='h!')) as graph:
-            graph.add_image(r'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_1.png', width='400px')
+            graph.add_image(r'loesung_Aufgabe_1.png', width='400px')
+            # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_1.png' wechseln
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
         plt.cla()

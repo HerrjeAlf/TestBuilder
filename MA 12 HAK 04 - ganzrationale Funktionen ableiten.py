@@ -89,7 +89,7 @@ def erstellen(Teil):
               f'X: {x_wert_2} Y: {round(y_wert_2, 2)}]\033[0m')
 
         fkt = expand(faktor * (x - s_xwert) ** 2 + s_ywert)
-        fkt_abl = diff(fkt,x)
+        fkt_abl = diff(fkt, x)
         fkt_str = (latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert)
                    + 'x' + vorz_str((faktor * (s_xwert ** 2)) + s_ywert))
         fkt_abl = diff(fkt, x)
@@ -120,7 +120,7 @@ def erstellen(Teil):
             xwerte_dx = [x_wert_1, x_wert_2]
             ywerte_dx = [y_wert_1, y_wert_1]
 
-            steigung_dreieck = N((y_wert_2-y_wert_1)/(x_wert_2-x_wert_1),2)
+            steigung_dreieck = N((y_wert_2-y_wert_1)/(x_wert_2-x_wert_1), 2)
 
             ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
 
@@ -156,7 +156,6 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i])
                            + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
-            loesung.append(r' \\')
             if a not in teilaufg:
                 xwerte = [-6 + n / 5 for n in range(60)]
                 ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
@@ -167,7 +166,7 @@ def erstellen(Teil):
 
             x_wert_3 = x_wert_2 - 1
             y_wert_3 = fkt_tangente.subs(x, x_wert_3)
-            steigung_dreieck = N((y_wert_2 - y_wert_3)/(x_wert_2-x_wert_3),2)
+            steigung_dreieck = N((y_wert_2 - y_wert_3)/(x_wert_2-x_wert_3), 2)
             xwerte_dy = [x_wert_2, x_wert_2]
             ywerte_dy = [y_wert_2, y_wert_3]
             xwerte_dx = [x_wert_2, x_wert_3]
@@ -216,8 +215,7 @@ def erstellen(Teil):
             print(division_fkt_linear)
             print(partialbruch)
 
-
-            #loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2)
+            # loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2)
             #               + r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
             #               + r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
             #               + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
@@ -229,8 +227,9 @@ def erstellen(Teil):
             # loesung.append(r' \hspace{5em}')
 
             loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
-                           + str(x_wert_2) + ')~=~' + latex(fkt_abl.subs(x,x_wert_2)) +
-                           r' \quad (2P) \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\\\')
+                           + str(x_wert_2) + ')~=~' + latex(fkt_abl.subs(x, x_wert_2)) +
+                           r' \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
+                           r'\quad (1P) \\\\')
             Punkte += 3
 
         # plt.show()
@@ -243,7 +242,7 @@ def erstellen(Teil):
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
-        def faktorliste(p,q,n):
+        def faktorliste(p, q, n):
             return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
         def exponenten(n):
@@ -253,8 +252,8 @@ def erstellen(Teil):
             return menge
 
         if a in teilaufg:
-            a1, a2 = faktorliste(2,10,2)  # funktioniert auch so :)
-            b1, b2, b3 = faktorliste(2,12,3)
+            a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
+            b1, b2, b3 = faktorliste(2, 12, 3)
             fkt_str_a = str(a1) + 'x' + vorz_str(a2)
             fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
 
@@ -263,7 +262,7 @@ def erstellen(Teil):
             aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
                            + fkt_str_b + r' \hspace{5em} \\')
             loesung.append(str(teilaufg[i])
-                           + r') \mathrm{~Berechne~die~erste Ableitung~der~folgenden~Funktionen~mithilfe~des~'
+                           + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~des~'
                              r'Differentialquotienten}. \\\\')
             loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
                            + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
@@ -289,7 +288,7 @@ def erstellen(Teil):
         if b in teilaufg:
             def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
                 fkt = random.choice([zzahl(1, 10), 0])
-                koeffizienten = faktorliste(1,15, p)
+                koeffizienten = faktorliste(1, 15, p)
                 potenzen = exponenten(p)
 
                 for koeffizient in koeffizienten:
@@ -311,61 +310,67 @@ def erstellen(Teil):
                            + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~der~'
                              r'elementaren~Ableitungsregeln.} \\\\')
             loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i) + r' \quad (2P) \hspace{5em}'
-                           r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (3P) \\')
+                           r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii) + r' \quad (3P) \\\\')
             Punkte += 5
             i += 1
 
         if c in teilaufg:
             # Teilaufgabe i:
-            faktor_i_a = zzahl(3,15)
-            exponent = nzahl(2,6)
+            faktor_i_a = zzahl(3, 15)
+            exponent = nzahl(2, 6)
             fkt_i = faktor_i_a / (x**exponent)
             fkt_i_str = r' \frac{' + str(faktor_i_a) + '}{x^{' + str(exponent) + '}}'
             fkt_i_str_einf = str(faktor_i_a) + r'\cdot x^{' + str(-1*exponent) + '}'
-            fkt_i_str_abl = str(-1* faktor_i_a * exponent) + r' \cdot x^{' + str(-1*exponent -1) + '}'
+            fkt_i_str_abl = str(-1 * faktor_i_a * exponent) + r' \cdot x^{' + str(-1*exponent - 1) + '}'
 
             # Teilaufgabe ii
-            faktor_ii_a = zzahl(2,15)
+            faktor_ii_a = zzahl(2, 15)
             exp_ii_a, exp_ii_b = exponenten(2)
             fkt_ii = faktor_ii_a * x**(exp_ii_a/exp_ii_b)
             fkt_ii_str = str(faktor_ii_a) + r' \sqrt[' + str(exp_ii_a) + ']{x^{' + str(exp_ii_b) + '}}'
             fkt_ii_str_einf = str(faktor_ii_a) + r' \cdot x^{ \frac{' + str(exp_ii_b) + '}{' + str(exp_ii_a) + '}}'
-            fkt_ii_str_abl = latex(Rational(faktor_ii_a * exp_ii_b,exp_ii_a)) + r' \cdot x^{' + latex(Rational(exp_ii_b,exp_ii_a)-1) + '}'
+            fkt_ii_str_abl = (latex(Rational(faktor_ii_a * exp_ii_b, exp_ii_a)) + r' \cdot x^{'
+                              + latex(Rational(exp_ii_b, exp_ii_a)-1) + '}')
 
             # print('2c) fkt_ii = ' + str(fkt_ii) + ' und fkt_ii_str = ' + str(fkt_ii_str) + ' und fkt_ii_abl = ' + str(fkt_iii_str_abl))
 
             # Teilaufgabe iii
-            faktor_iii_a, faktor_iii_b, faktor_iii_c = faktorliste(2,12,3)
+            faktor_iii_a, faktor_iii_b, faktor_iii_c = faktorliste(2, 12, 3)
             exp_iii_a, exp_iii_b, exp_iii_c = exponenten(3)
+            print(exp_iii_a, exp_iii_b, exp_iii_c)
 
             if faktor_iii_a/faktor_iii_b < 0:
                 fkt_iii_str = (r'-~ \frac{' + str(abs(faktor_iii_a)) + '}{' + str(abs(faktor_iii_b)) + r'x^{' +
                                str(exp_iii_a) + '}}')
-                fkt_iii_str_einf = ('-~' + latex(Rational(abs(faktor_iii_a),abs(faktor_iii_b))) + r' \cdot x^{' +
+                fkt_iii_str_einf = ('-~' + latex(Rational(abs(faktor_iii_a), abs(faktor_iii_b))) + r' \cdot x^{' +
                                     str(-1*exp_iii_a) + '}')
-                fkt_iii_str_abl = (latex(Rational(abs(faktor_iii_a*exp_iii_a),abs(faktor_iii_b))) + r' \cdot x^{'
+                fkt_iii_str_abl = (latex(Rational(abs(faktor_iii_a*exp_iii_a), abs(faktor_iii_b))) + r' \cdot x^{'
                                    + str(-1*exp_iii_a - 1) + '}')
             else:
                 fkt_iii_str = (r' \frac{' + str(abs(faktor_iii_a)) + '}{' + str(abs(faktor_iii_b)) + r'x^{' +
                                str(exp_iii_a) + '}}')
                 fkt_iii_str_einf = (latex(Rational(abs(faktor_iii_a), abs(faktor_iii_b))) + r' \cdot x^{' +
                                     str(-1 * exp_iii_a) + '}')
-                fkt_iii_str_abl = ('-~' + latex(Rational(abs(faktor_iii_a * exp_iii_a), abs(faktor_iii_b))) + r' \cdot x^{'
-                                   + str(-1 * exp_iii_a - 1) + '}')
+                fkt_iii_str_abl = ('-~' + latex(Rational(abs(faktor_iii_a * exp_iii_a), abs(faktor_iii_b)))
+                                   + r' \cdot x^{' + str(-1 * exp_iii_a - 1) + '}')
 
             if faktor_iii_c < 0:
                 fkt_iii_str = (fkt_iii_str + r'~-~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
                                str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
-                fkt_iii_str_einf = (fkt_iii_str_einf + '~-~' + str(abs(faktor_iii_c)) + r' \cdot x^{ \frac{' + str(exp_iii_c)
-                                    + '}{' + str(exp_iii_b) + '}}')
-                fkt_iii_str_abl = (fkt_iii_str_abl + '~-~' + latex(Rational(abs(faktor_iii_c * exp_iii_c),abs(exp_iii_b))) +
-                                   r' \cdot x^{' + latex(Rational(exp_iii_c - exp_iii_b,exp_iii_b)) + '}')
+                exp_iii_c *= -1
+                fkt_iii_str_einf = (fkt_iii_str_einf + '~-~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
+                                    + latex(Rational(exp_iii_c, exp_iii_b)) + '}')
+                fkt_iii_str_abl = (fkt_iii_str_abl + '~+~'
+                                   + latex(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
+                                   + r' \cdot x^{' + latex(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
             else:
                 fkt_iii_str = (fkt_iii_str + r'~+~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
                                str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
-                fkt_iii_str_einf = (fkt_iii_str_einf + '~+~' + str(abs(faktor_iii_c)) + r' \cdot x^{ \frac{'
-                                    + str(exp_iii_c) + '}{' + str(exp_iii_b) + '}}')
-                fkt_iii_str_abl = (fkt_iii_str_abl + '~+~' + latex(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
+                exp_iii_c *= -1
+                fkt_iii_str_einf = (fkt_iii_str_einf + '~+~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
+                                    + latex(Rational(exp_iii_c, exp_iii_b)) + '}')
+                fkt_iii_str_abl = (fkt_iii_str_abl + '~-~'
+                                   + latex(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
                                    + r' \cdot x^{' + latex(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
 
             print(faktor_iii_a)
@@ -379,14 +384,14 @@ def erstellen(Teil):
                                               r'elementaren Ableitungsregeln.')
             aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_i_str + r' \hspace{5em} ' + r'ii) \quad f_2 (x)~=~'
                            + fkt_ii_str + r' \hspace{5em} iii) \quad f_3(x)~=~' + fkt_iii_str + r' \\')
-            loesung.append(str(teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~der~'
-                                              r'elementaren~Ableitungsregeln.} \\\\')
+            loesung.append(str(teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
+                                              r'mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
             loesung.append(r'i) \quad f_1(x) ~=~' + fkt_i_str + '~=~' + fkt_i_str_einf +
                            r' \quad f_1^{ \prime} (x) ~=~' + fkt_i_str_abl + r' \quad (1P) \\')
-            loesung.append(r'iii) \quad f_2(x) ~=~' + fkt_ii_str + '~=~' + fkt_ii_str_einf +
-                           r' \quad f_1^{ \prime} (x) ~=~' + fkt_ii_str_abl + r' \quad (1P) \\')
-            loesung.append(r'iii) \quad f_2(x) ~=~' + fkt_iii_str + '~=~' + fkt_iii_str_einf +
-                           r' \quad f_1^{ \prime} (x) ~=~' + fkt_iii_str_abl + r' \quad (1P) \\')
+            loesung.append(r'ii) \quad f_2(x) ~=~' + fkt_ii_str + '~=~' + fkt_ii_str_einf +
+                           r' \quad f_2^{ \prime} (x) ~=~' + fkt_ii_str_abl + r' \quad (1P) \\')
+            loesung.append(r'iii) \quad f_3(x) ~=~' + fkt_iii_str + '~=~' + fkt_iii_str_einf +
+                           r' \quad f_3^{ \prime} (x) ~=~' + fkt_iii_str_abl + r' \quad (1P) \\')
             Punkte += 7
             i += 1
 
@@ -394,7 +399,6 @@ def erstellen(Teil):
 
     aufgaben = [aenderungsrate(1, [a, b, c, d]), ableitungen(2, [a, b, c])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
-
 
     # Angaben für den Test im pdf-Dokument
     Datum = NoEscape(r' \today')
