@@ -373,12 +373,12 @@ def erstellen(Teil):
                                    + latex(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
                                    + r' \cdot x^{' + latex(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
 
-            print(faktor_iii_a)
-            print(faktor_iii_b)
-            print(faktor_iii_c)
-            print(r'2c) fkt_iii_str = ' + str(fkt_iii_str))
-            print(r'2c) fkt_iii_einf = ' + str(fkt_iii_str_einf))
-            print(r'2c) fkt_iii_abl = ' + str(fkt_iii_str_abl))
+            # print(faktor_iii_a)
+            # print(faktor_iii_b)
+            # print(faktor_iii_c)
+            # print(r'2c) fkt_iii_str = ' + str(fkt_iii_str))
+            # print(r'2c) fkt_iii_einf = ' + str(fkt_iii_str_einf))
+            # print(r'2c) fkt_iii_abl = ' + str(fkt_iii_str_abl))
 
             aufgabe.append(str(teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
                                               r'elementaren Ableitungsregeln.')
@@ -394,6 +394,36 @@ def erstellen(Teil):
                            r' \quad f_3^{ \prime} (x) ~=~' + fkt_iii_str_abl + r' \quad (1P) \\')
             Punkte += 7
             i += 1
+        if d in teilaufg:
+            x_wert_1 = zzahl(1,4)
+            y_wert_1 = zzahl(1,4)
+            
+            if x_wert > 0:
+                x_wert_2 = x_wert_1 - zzahl(2,5)
+            else:
+                x_wert_2 = x_wert_1 + zzahl(2,5)
+            
+            if y_wert_1 > 0:
+                y_wert_2 = x_wert_1 - zzahl(2,5)
+            else:
+                y_wert_2 = y_wert_1 + zzahl(2,5)
+
+            A = numpy.array([[x_wert_1**3, x_wert_1**2, x_wert_1, 1],
+                            [x_wert_2**3, x_wert_2**2, x_wert_2, 1],
+                            [3*x_wert_1**2, 2*x_wert_1, 1, 0],
+                            [3*x_wert_2**2, 2*x_wert_2, 1, 0]])
+            b = numpy.array([y_wert_1, y_wert_2, 0, 0])
+
+            loesung_vektor = solve(A,b)
+            loesung_liste = []
+            fkt = N(loesung_liste.pop(0),2)*x**3 + N(loesung_liste.pop(0),2)*x**2 + N(loesung_liste.pop(0),2)*x + N(loesung_liste.pop(0),2)
+            fkt_str = 
+            fkt_abl = diff(fkt,x,1)
+            xwerte = [-6 + n / 5 for n in range(60)]
+            ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
+            Graph(xwerte, ywerte, x_wert_1, fkt, fkt_str, 'f', 'Aufgabe_2')
+            Graph(xwerte, ywerte, x_wert_1, fkt_abl, fkt_abl, 'Ableitung', 'loesung_Aufgabe_2')
+            aufgabe.append(str(teilaufg[i]) + r') Zeichne .')
 
         return [aufgabe, loesung, Punkte]
 
@@ -441,6 +471,10 @@ def erstellen(Teil):
         with Aufgabe.create(Figure(position='h!')) as graph:
             graph.add_image(r'Aufgabe_1.png', width='400px')
             # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png' wechseln
+        
+            graph.add_image(r'Aufgabe_1.png', width='400px')
+            # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\Aufgabe_2.png' wechseln
+        
         Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
@@ -461,6 +495,9 @@ def erstellen(Teil):
         with Loesung.create(Figure(position='h!')) as graph:
             graph.add_image(r'loesung_Aufgabe_1.png', width='400px')
             # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_1.png' wechseln
+            
+            graph.add_image(r'Aufgabe_1.png', width='400px')
+            # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\loesung_Aufgabe_2.png' wechseln
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
         plt.cla()
