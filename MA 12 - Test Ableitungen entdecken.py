@@ -105,8 +105,8 @@ def erstellen(Teil):
             ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
 
             loesung.append(str(teilaufg[i])
-                           + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~m='
-                           + str(steigung_dreieck) + r'~bestimmt~(1P)} \\\\')
+                           + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~'
+                             r'\mathbf{m=' + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
 
             if c not in teilaufg:
                 Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
@@ -125,9 +125,9 @@ def erstellen(Teil):
                 str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2)
                 + ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) + str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{'
                 + latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2)
-                + vorz_str(-1 * x_wert_1) + '} ~=~'
+                + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
                 + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
-                + r'\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
+                + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
             Punkte += 4
             i += 1
 
@@ -169,8 +169,8 @@ def erstellen(Teil):
                                 xwerte_geraden, ywerte_tangente)
 
             loesung.append(str(teilaufg[i])
-                           + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~m~=~'
-                           + str(steigung_dreieck) + r'~bestimmt~(1P)} \\\\')
+                           + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~\mathbf{m='
+                           + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
             Punkte += 3
             i += 1
 
@@ -218,8 +218,8 @@ def erstellen(Teil):
             # loesung.append(r' \hspace{5em}')
 
             loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
-                           + str(x_wert_2) + ')~=~' + latex(fkt_abl.subs(x, x_wert_2)) +
-                           r' \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
+                           + str(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
+                           r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
                            r'\quad (1P) \\\\')
             Punkte += 3
         return [aufgabe, loesung, Punkte]
@@ -257,8 +257,8 @@ def erstellen(Teil):
                            + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
                            + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
                            + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
-                           + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1) + r'h~}{h} ~=~'
-                           + str(a1) + r' \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
+                           + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
+                           + r'h~}{h} ~=~\mathbf{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
             loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
                            + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
                            + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
@@ -269,8 +269,8 @@ def erstellen(Teil):
                            + str(2 * b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
                            + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2 * b1) + r'x~' + vorz_str(b1)
                            + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2 * b1) + r'x~'
-                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~' + str(2 * b1) + 'x~' + vorz_str(b2)
-                           + r' \quad (5P) \\\\')
+                           + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~\mathbf{' + str(2 * b1) + 'x~' + vorz_str(b2)
+                           + r'} \quad (5P) \\\\')
             Punkte += 8
             i += 1
 
@@ -298,9 +298,9 @@ def erstellen(Teil):
             loesung.append(str(teilaufg[i])
                            + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~der~'
                              r'elementaren~Ableitungsregeln.} \\\\')
-            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i)
-                           + r' \quad (2P) \hspace{5em}ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii)
-                           + r' \quad (3P) \\\\')
+            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~\mathbf{' + latex(fkt_abl_1_i)
+                           + r'} \quad (2P) \hspace{5em}ii) \quad f_2^{ \prime} (x) ~=~\mathbf{' + latex(fkt_abl_1_ii)
+                           + r'} \quad (3P) \\\\')
             Punkte += 5
             i += 1
 
@@ -377,11 +377,11 @@ def erstellen(Teil):
             loesung.append(str(teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
                                               r'mithilfe~der~elementaren~Ableitungsregeln.} \\\\')
             loesung.append(r'i) \quad f_1(x) ~=~' + fkt_i_str + '~=~' + fkt_i_str_einf +
-                           r' \quad f_1^{ \prime} (x) ~=~' + fkt_i_str_abl + r' \quad (1P) \\')
+                           r' \quad f_1^{ \prime} (x) ~=~\mathbf{' + fkt_i_str_abl + r'} \quad (1P) \\')
             loesung.append(r'ii) \quad f_2(x) ~=~' + fkt_ii_str + '~=~' + fkt_ii_str_einf +
-                           r' \quad f_2^{ \prime} (x) ~=~' + fkt_ii_str_abl + r' \quad (1P) \\')
+                           r' \quad f_2^{ \prime} (x) ~=~\mathbf{' + fkt_ii_str_abl + r'} \quad (1P) \\')
             loesung.append(r'iii) \quad f_3(x) ~=~' + fkt_iii_str + '~=~' + fkt_iii_str_einf +
-                           r' \quad f_3^{ \prime} (x) ~=~' + fkt_iii_str_abl + r' \quad (2P) \\')
+                           r' \quad f_3^{ \prime} (x) ~=~\mathbf{' + fkt_iii_str_abl + r'} \quad (2P) \\')
             Punkte += 4
             i += 1
         if d in teilaufg:
@@ -491,7 +491,6 @@ def erstellen(Teil):
         Loesung.append(NewPage())
         with Loesung.create(Figure(position='h!')) as graph:
             graph.add_image(r'loesung_Aufgabe_1.png', width='400px')
-
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
