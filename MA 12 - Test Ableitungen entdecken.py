@@ -12,11 +12,14 @@ import Zeichnung
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 
+
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 
+
 def nzahl(p, q):
     return random.randint(p, q)
+
 
 def vorz_str(k):
     if k < 0:
@@ -24,14 +27,16 @@ def vorz_str(k):
     else:
         return f'+{latex(k)}'
 
+
 def vorz_str_minus(k):
     if k < 0:
         return f'({latex(k)})'
     else:
         return latex(k)
 
+
 def erstellen(Teil):
-    print(f'\n\033[1;35mHAK {Teil}\033[0m')
+    print(f'\n\033[1;35m{Teil}\033[0m')
     def aenderungsrate(nr, teilaufg):
         i = 0
         Punkte = 0
@@ -87,7 +92,8 @@ def erstellen(Teil):
             xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
             Zeichnung.loeschen()
-            Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
+            Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+                                                          r'\ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
 
             xwerte_dy = [x_wert_2, x_wert_2]
             ywerte_dy = [y_wert_1, y_wert_2]
@@ -103,9 +109,10 @@ def erstellen(Teil):
                            + str(steigung_dreieck) + r'~bestimmt~(1P)} \\\\')
 
             if c not in teilaufg:
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$',
-                                'f', 'loesung_Aufgabe_1', a_2 = xwerte_dy, b_2 = ywerte_dy, a_3 = xwerte_dx , b_3 = ywerte_dx,
-                                a_4 = xwerte_geraden, b_4 = ywerte_sekante)
+                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+                                                              r'\ $f(x) =' + fkt_str + '$', 'f',
+                                'loesung_Aufgabe_1', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
+                                xwerte_geraden, ywerte_sekante)
 
             Punkte += 3
             i += 1
@@ -131,7 +138,8 @@ def erstellen(Teil):
             if a not in teilaufg:
                 xwerte = [-6 + n / 5 for n in range(60)]
                 ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
+                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+                                                              r'\ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
 
             steigung_tangente = fkt_abl.subs(x, x_wert_2)
             fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
@@ -151,14 +159,14 @@ def erstellen(Teil):
                 Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt,
                                 r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
                 Zeichnung.Graph(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
-                                + fkt_str + '$', 'f', 'loesung_Aufgabe_1', a_5=xwerte_dy_c, b_5=ywerte_dy_c,
-                                a_6=xwerte_dx_c, b_6=ywerte_dx_cs_xwert, a_7=xwerte_geraden, b_7=ywerte_tangente)
+                                + fkt_str + '$', 'f', 'loesung_Aufgabe_1', '', xwerte_dy_c,
+                                ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
             else:
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$',
-                                'f', 'loesung_Aufgabe_1', a_2=xwerte_dy, b_2=ywerte_dy, a_3=xwerte_dx, b_3=ywerte_dx,
-                                a_4=xwerte_geraden, b_4=ywerte_sekante, a_5 = xwerte_dy_c, b_5 = ywerte_dy_c,
-                                a_6 = xwerte_dx_c, b_6 = ywerte_dx_c,  a_7 = xwerte_geraden,
-                                b_7 = ywerte_tangente)
+                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
+                                                              r'und ihre Steigungsdreiecke',
+                                'f', 'loesung_Aufgabe_1', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
+                                xwerte_geraden, ywerte_sekante, xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c,
+                                xwerte_geraden, ywerte_tangente)
 
             loesung.append(str(teilaufg[i])
                            + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~m~=~'
@@ -290,9 +298,9 @@ def erstellen(Teil):
             loesung.append(str(teilaufg[i])
                            + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~der~'
                              r'elementaren~Ableitungsregeln.} \\\\')
-            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i) + r' \quad (2P) \hspace{5em}'
-                                                                                    r'ii) \quad f_2^{ \prime} (x) ~=~' + latex(
-                fkt_abl_1_ii) + r' \quad (3P) \\\\')
+            loesung.append(r'i) \quad f_1^{ \prime} (x) ~=~' + latex(fkt_abl_1_i)
+                           + r' \quad (2P) \hspace{5em}ii) \quad f_2^{ \prime} (x) ~=~' + latex(fkt_abl_1_ii)
+                           + r' \quad (3P) \\\\')
             Punkte += 5
             i += 1
 
@@ -405,13 +413,13 @@ def erstellen(Teil):
             ywerte_abl_d = [fkt_abl.subs(x, xwerte_d[i]) for i in range(60)]
             Zeichnung.loeschen()
             Zeichnung.Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Funktionsgraph', 'f', 'Aufgabe_2')
-            Zeichnung.Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - Graph und seine Ableitung', 'f', 'loesung_Aufgabe_2',a_2 = xwerte_d, b_2 = ywerte_abl_d)
+            Zeichnung.Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - '
+                                                               'Graph und seine Ableitung', 'f',
+                            'loesung_Aufgabe_2', xwerte_d, ywerte_abl_d)
             aufgabe.append(str(teilaufg[i]) + r') Skizziere im Koordinatensystem den Graphen der Ableitungsfunktion.')
             loesung.append(str(teilaufg[i]) + r') \quad \mathrm{~Graph~der~Ableitungsfunktion~(2P)} ')
             Punkte += 2
             i += 1
-
-
 
         return [aufgabe, loesung, Punkte]
 
