@@ -54,6 +54,7 @@ def erstellen(Teil):
         plt.plot(a, b, linewidth=2)
         plt.suptitle(titel, usetex=True)
         return plt.savefig(name, dpi=200)
+    
     def anwendungen(nr, teilaufg):
         i = 0
         Punkte = 0
@@ -61,6 +62,8 @@ def erstellen(Teil):
         y_wert_s = x_wert_s - 3
         faktor = -1 * nzahl(2, 20) / 20
         fkt = expand(faktor * (x - x_wert_s) ** 2 + y_wert_s)
+        fkt_str = str(faktor) + 'x^2~' + vorz_str(-1*2*faktor*x_wert_s) + 'x~' + latex(faktor*(x_wert_s**2)+y_wert_s)
+        fkt_str_pq = 'x^2~' + vorz_str(-1*2*x_wert_s) + 'x~' + latex((x_wert_s**2)+y_wert_s)
         fkt_abl = diff(fkt, x, 1)
         x_wert_x0 = solve(Eq(fkt, 0), x)
         m_tangente = Rational(y_wert_s , (x_wert_s - 1))
@@ -83,9 +86,10 @@ def erstellen(Teil):
 
         if a in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Fußpunkte des Hügels. \n\n')
-            loesung.append(str(teilaufg[i]) + r')')
+            loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor)
+                           + r' \quad \to \quad 0~=~' + fkt_str_pq + r' \quad (3P)')
 
-            Punkte += 3
+            Punkte += 5
             i += 1
 
         if b in teilaufg:
