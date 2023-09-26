@@ -39,7 +39,7 @@ def erstellen(Teil):
         ax.spines['right'].set_color('none')
         ax.spines['bottom'].set_position(('data', 0))
         ax.spines['left'].set_position(('data', 0))
-        ax.set_xlabel('West', size=10, labelpad=-24, x=1.03)
+        ax.set_xlabel('Ost', size=10, labelpad=-24, x=1.03)
         ax.set_ylabel('Höhe', size=10, labelpad=-21, y=1.02, rotation=0)
         ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
         arrow_fmt = dict(markersize=4, color='black', clip_on=False)
