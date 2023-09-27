@@ -58,16 +58,31 @@ def erstellen(Teil):
     def anwendungen(nr, teilaufg):
         i = 0
         Punkte = 0
-        x_wert_s = nzahl(8, 16) / 2
-        y_wert_s = x_wert_s - 3
-        faktor = -1 * nzahl(2, 20) / 20
-        fkt = expand(faktor * (x - x_wert_s) ** 2 + y_wert_s)
-        fkt_str = str(faktor) + 'x^2~' + vorz_str(-1*2*faktor*x_wert_s) + 'x~' + latex(faktor*(x_wert_s**2)+y_wert_s)
-        fkt_str_pq = 'x^2~' + vorz_str(-1*2*x_wert_s) + 'x~' + latex((x_wert_s**2)+y_wert_s)
+        i = 0
+        Punkte = 0
+
+        x_wert_x1 = nzahl(4, 8) / 2
+        x_wert_x2 = x_wert_x1 + nzahl(6, 10) / 2
+        x_wert_s = 0.5 * (x_wert_x2 + x_wert_x1)
+        faktor = -1 * nzahl(2, 8) / 2
+        fkt = expand(faktor * (x - x_wert_x1) * (x - x_wert_x2))
+        y_wert_s = fkt.subs(x, x_wert_s)
+
+        while y_wert_s > 5 or y_wert_s < 2:
+            x_wert_x1 = nzahl(4, 8) / 2
+            x_wert_x2 = x_wert_x1 + nzahl(4, 8) / 2
+            x_wert_s = 0.5 * (x_wert_x2 + x_wert_x1)
+            fkt = expand(-1 * (x - x_wert_x1) * (x - x_wert_x2))
+            y_wert_s = fkt.subs(x, x_wert_s)
+
+        fkt_str = (str(faktor) + 'x^2~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2)) + 'x~'
+                   + vorz_str(faktor * x_wert_x1 * x_wert_x2))
+        p_fkt = -1 * (x_wert_x1 + x_wert_x2)
+        q_fkt = x_wert_x1 * x_wert_x2
+        fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
         fkt_abl = diff(fkt, x, 1)
-        x_wert_x0 = solve(Eq(fkt, 0), x)
-        m_tangente = Rational(y_wert_s , (x_wert_s - 1))
-        m_tangente_prozent = Rational(y_wert_s *100, (x_wert_s - 1))
+        fkt_abl_str = str(2 * faktor) + 'x~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2))
+        m_tangente = Rational(y_wert_s, (x_wert_s - 1))
         fkt_tangente = m_tangente * x - m_tangente
         print(fkt_tangente)
         x_wert_schnittpunkt = solve(Eq(fkt, fkt_tangente), x)
@@ -86,31 +101,87 @@ def erstellen(Teil):
 
         if a in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Fußpunkte des Hügels. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor)
-                           + r' \quad \to \quad 0~=~' + fkt_str_pq + r' \quad (3P)')
+            loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                           + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor) + r' \quad \to \quad 0~=~'
+                           + fkt_str_pq + r' \quad (3P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt, 4))
+                           + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
+                           + vorz_str(N(q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
+                           + vorz_str_minus(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
+                           + r' x_1 ~=~' + str(x_wert_x1) + r' \quad \mathrm{und} \quad x_2 ~=~' + str(x_wert_x2)
+                           + r' \quad (2P) \quad P_1(' + str(x_wert_x1) + r' \vert 0) \quad \mathrm{und} \quad P_2('
+                           + str(x_wert_x2) + r' \vert 0) \quad (1P) \\')
+
+        if b in teilaufg:
+            m_x1 = fkt_abl.subs(x, x_wert_x1)
+            winkel_x1 = numpy.arctan(m_x1)
+            aufgabe.append(str(teilaufg[i]) + ') Berechne die Steigung und den Steigungswinkel am westlichen Fußpunkt. \n\n')
+            loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
+                           + str(x_wert_x1) + r') ~=~ ' + str(N(m_x1,3)) + r' \quad (2P) \quad \to \quad'
+                           + r' \alpha ~=~ arctan(' + str(N(m_x1)) + r') ~=~ ' + str(N(winkel_x1,3)) + r' \quad (2P)')
+
+            Punkte += 4
+            i += 1
+
+        if c in teilaufg:
+            fkt_tp = fkt - fkt_tangente
+            fkt_tp_str = (str(faktor) + 'x^2~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2) - m_tangente) + 'x~'
+                          + vorz_str(faktor * x_wert_x1 * x_wert_x2 + m_tangente))
+            p_fkt_tp = -1 * (x_wert_x1 + x_wert_x2) - m_tangente/faktor
+            q_fkt_tp = x_wert_x1 * x_wert_x2 + m_tangente/faktor
+            aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
+            aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente) + r' \mathrm{~beträgt}. \hspace{38em}')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in}  y~=~m~x~+~n \to \quad '
+                           + r' 0 ~=~' + latex(m_tangente) + r' \cdot 1 ~+~n \vert ' + vorz_str(-1 * m_tangente)
+                           + r' \quad \to n ~=~' + vorz_str(-1 * m_tangente) + r' \quad y~=~' + str(m_tangente)
+                           + r' \cdot x ' + vorz_str(-1 * m_tangente) + r' \quad (3P) \\'
+                           + fkt_str + '~=~' + latex(fkt_tangente) + r' \vert ' + vorz_str(-1*fkt_tangente)
+                           + r' \quad \to \quad 0 ~=~ ' + fkt_tp_str + )
+
+            Punkte += 3
+            i += 1
+
+        if d in teilaufg:
+            aufgabe.append(str(teilaufg[i]) + ') Berechne den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
+            loesung.append(str(teilaufg[i]) + r') ')
 
             Punkte += 5
             i += 1
 
-        if b in teilaufg:
-            aufgabe.append(str(teilaufg[i]) + ') Berechne die Steigung  und den Steigungswinkel am westlichen Fußpunkt. \n\n')
-            loesung.append(str(teilaufg[i]) + r')')
-
-            Punkte += 3
-            i += 1
-
-        if c in teilaufg:
-            aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
-            aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente) + r' \mathrm{~beträgt}. \hspace{38em}')
-            loesung.append(str(teilaufg[i]) + r')')
-
-            Punkte += 3
-            i += 1
-
-
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [anwendungen(1, [a,b,c])]
+    def steigungen(nr, teilaufg):
+        i = 0
+        Punkte = 0
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+
+        def faktorliste(p, q, n):
+            return [zzahl(p, q) for _ in range(n)]
+
+        def exponenten(n):
+            menge = set()
+            while len(menge) < n:
+                menge.add(nzahl(2, 6 + n))
+            return menge
+
+        if a in teilaufg:
+            a1, a2, a3 = faktorliste(2, 10, 3)
+
+            auswahl = random.choice([[a1*x**2 + a2*x + a3,str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3),2*a1*x + a2]])
+            fkt, fkt_str, fkt_abl = auswahl[0], auswahl[1], auswahl[2]
+            stelle = zzahl(1,5)
+            steigung = int(fkt_abl.subs(x,stelle))
+
+            aufgabe.append(str(teilaufg[i]) + r') Berechne, wo die Funktion f die Steigung m hat. ')
+            aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
+            loesung.append(str(teilaufg[i]) + r') ')
+
+            Punkte += 2
+            i += 1
+        return [aufgabe, loesung, Punkte]
+
+    aufgaben = [anwendungen(1, [a,b,c]), steigungen(2,[a])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
