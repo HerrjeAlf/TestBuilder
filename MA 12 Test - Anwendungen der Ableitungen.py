@@ -70,7 +70,8 @@ def erstellen(Teil):
             x_wert_x1 = nzahl(4, 8) / 2
             x_wert_x2 = x_wert_x1 + nzahl(4, 8) / 2
             x_wert_s = 0.5 * (x_wert_x2 + x_wert_x1)
-            fkt = expand(-1 * (x - x_wert_x1) * (x - x_wert_x2))
+            faktor = -1 * nzahl(2, 8) / 2
+            fkt = expand(faktor* (x - x_wert_x1) * (x - x_wert_x2))
             y_wert_s = fkt.subs(x, x_wert_s)
 
         fkt_str = (str(faktor) + 'x^2~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2)) + 'x~'
@@ -104,7 +105,7 @@ def erstellen(Teil):
                            + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor) + r' \\ 0~=~'
                            + fkt_str_pq + r' \quad (3P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt, 4))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
-                           + vorz_str(N(q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
+                           + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
                            + r' x_1 ~=~' + str(x_wert_x1) + r' \quad \mathrm{und} \quad x_2 ~=~' + str(x_wert_x2)
                            + r' \quad (2P) \quad P_1(' + str(x_wert_x1) + r' \vert 0) \quad \mathrm{und} \quad P_2('
@@ -147,7 +148,7 @@ def erstellen(Teil):
                            + vorz_str_minus(faktor) + r' \quad \to \quad 0~=~'
                            + fkt_tp_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt_tp, 3))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
-                           + vorz_str(N(q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
+                           + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
                            + r' x_1 ~=~' + str(N(x_werte_tp[0],3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
                            + str(N(x_werte_tp[1],3)) + r' \quad (2P) \quad P_1(' + str(N(x_werte_tp[0],3))
