@@ -197,25 +197,35 @@ def erstellen(Teil):
 
         if a in teilaufg:
             a1, a2, a3 = faktorliste(2, 10, 3)
-            e1, e2 = exponenten(2)
+            e1, e2 = nzahl(2,5)*2-1, nzahl(2,5)*2-1
             funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), 2*a1*x + a2],
                                  [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
                                   str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
                                  [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
-                                  latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}')]])
-            Aufgabe = 0
+                                  latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
+            Aufgabe = random.randint(0,1)
+            Aufgabe = 1
+
             funktion_liste = funktionen_liste[Aufgabe]
             fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
             fkt_abl = diff(fkt, x)
-            stelle = zzahl(1,5)
+            stelle = zzahl(3,10)/2
             steigung = int(fkt_abl.subs(x,stelle))
-
-            loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + latex(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
+            while steigung == 0:
+                stelle = zzahl(3,10)/2
+                steigung = int(fkt_abl.subs(x, stelle))
+            print('stelle =' + str(stelle))
+            print('steigung = ' + str(steigung))
+            print('faktor = ' +str(a1))
+            print('exponent = ' + str(e1))
+            print(steigung/(-1*a1*e1))
+            loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
                              + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~'
                              + latex(N((steigung-a2)/(2*a1),3)) + r' \quad (5P) \\',
-                             r' \quad f ^ { \prime} (x) ~ = ~' + latex(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
-                             + vorz_str_minus(-1*a1*e1) + r'~ \vert \sqrt[ ' + str(-1*e1-1) + r']{} \quad \to \quad x~=~'
-                             + latex(N((steigung - a2) / (2 * a1), 3)) + r' \quad (5P) \\']
+                             r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
+                             + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
+                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~'
+                             + latex(N(((steigung/(-1*a1*e1))**(1/(1-e1))),3)) + r' \quad (5P) \\']
 
             loesung_1 = loesung_liste[Aufgabe]
 
@@ -293,8 +303,8 @@ def erstellen(Teil):
         plt.cla()
 
     # Druck der Seiten
-    # Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Hausaufgabenkontrolle()
+    Erwartungshorizont()
 
 
 anzahl_HAKs = 1
