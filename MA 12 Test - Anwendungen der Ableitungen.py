@@ -96,14 +96,14 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Fußpunkte des Hügels. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                            + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor) + r' \\ 0~=~'
-                           + fkt_str_pq + r' \quad (3P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt, 4))
+                           + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt, 4))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
                            + r' x_1 ~=~' + str(x_wert_x1) + r' \quad \mathrm{und} \quad x_2 ~=~' + str(x_wert_x2)
-                           + r' \quad (2P) \quad P_1(' + str(x_wert_x1) + r' \vert 0) \quad \mathrm{und} \quad P_2('
+                           + r' \quad (1P) \quad P_1(' + str(x_wert_x1) + r' \vert 0) \quad \mathrm{und} \quad P_2('
                            + str(x_wert_x2) + r' \vert 0) \quad (1P) \\\\')
-            Punkte += 8
+            Punkte += 6
             i += 1
 
         if b in teilaufg:
@@ -132,22 +132,22 @@ def erstellen(Teil):
             #print(x_werte_tp[0], x_werte_tp[1])
             aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
             aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente_str) + r' \mathrm{~beträgt}. \hspace{38em}')
-            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in}  t(x)~=~m~x~+~n \to \quad '
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
                            + r' 0 ~=~' + latex(N(m_tangente,3)) + r' \cdot 1 ~+~n \quad \vert '
                            + vorz_str(N(-1 * m_tangente,3)) + r' \quad (1P) \\ n ~=~' + vorz_str(N(-1 * m_tangente,3))
                            + r' \quad t(x)~=~' + str(N(m_tangente,3)) + r' \cdot x ' + vorz_str(N(-1 * m_tangente,3))
                            + r' \quad (2P) \\' + fkt_str + '~=~' + latex(fkt_tangente) + r'~ \vert -('
                            + latex(fkt_tangente) + r') \quad (1P) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
                            + vorz_str_minus(faktor) + r' \quad \to \quad 0~=~'
-                           + fkt_tp_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt_tp, 3))
+                           + fkt_tp_pq + r' \quad (1P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt_tp, 3))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
                            + r' x_1 ~=~' + str(N(x_werte_tp[0],3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                           + str(N(x_werte_tp[1],3)) + r' \quad (2P) \quad P_1(' + str(N(x_werte_tp[0],3))
+                           + str(N(x_werte_tp[1],3)) + r' \quad (1P) \quad P_1(' + str(N(x_werte_tp[0],3))
                            + r' \vert' + str(N(y_wert_tp,3)) + r') \quad (1P) \\\\')
 
-            Punkte += 3
+            Punkte += 9
             i += 1
 
         if d in teilaufg:
@@ -174,7 +174,7 @@ def erstellen(Teil):
                            r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta) + r' \quad (2P) \\'
                            + loesung_1)
 
-            Punkte += 7
+            Punkte += 6
             i += 1
 
         return [aufgabe, loesung, Punkte]
@@ -221,11 +221,11 @@ def erstellen(Teil):
             print(steigung/(-1*a1*e1))
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
                              + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~'
-                             + latex(N((steigung-a2)/(2*a1),3)) + r' \quad (5P) \\',
+                             + latex(N((steigung-a2)/(2*a1),3)) + r' \quad (4P) \\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                              + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
                              + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~'
-                             + latex(N(((steigung/(-1*a1*e1))**(1/(1-e1))),3)) + r' \quad (5P) \\']
+                             + latex(N(((steigung/(-1*a1*e1))**(1/(1-e1))),3)) + r' \quad (4P) \\']
 
             loesung_1 = loesung_liste[Aufgabe]
 
