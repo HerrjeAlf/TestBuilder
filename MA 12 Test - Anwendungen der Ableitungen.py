@@ -265,7 +265,7 @@ def erstellen(Teil):
             fkt_abl_gerade = diff(fkt_gerade,x)
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
                              + fkt_abl_str_parabel + '~ = ~' + fkt_abl_gerade + r' \quad \to \quad \vert '
-                             + ]
+                             + vorz_str_minus(2*a1)]
 
             loesung_1 = loesung_liste[Aufgabe]
 
