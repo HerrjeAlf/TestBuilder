@@ -54,7 +54,7 @@ def erstellen(Teil):
         plt.plot(a, b, linewidth=2)
         plt.suptitle(titel, usetex=True)
         return plt.savefig(name, dpi=200)
-    
+
     def anwendungen(nr, teilaufg):
         i = 0
         Punkte = 0
@@ -100,9 +100,10 @@ def erstellen(Teil):
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
-                           + r' x_1 ~=~' + str(x_wert_x1) + r' \quad \mathrm{und} \quad x_2 ~=~' + str(x_wert_x2)
-                           + r' \quad (1P) \quad P_1(' + str(x_wert_x1) + r' \vert 0) \quad \mathrm{und} \quad P_2('
-                           + str(x_wert_x2) + r' \vert 0) \quad (1P) \\\\')
+                           + r' x_1 ~=~\mathbf{' + str(x_wert_x1) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
+                           + str(x_wert_x2) + r'} \quad (1P) \quad \mathbf{P_1(' + str(x_wert_x1)
+                           + r' \vert 0)} \quad \mathrm{und} \quad \mathbf{P_2(' + str(x_wert_x2)
+                           + r' \vert 0)} \quad (1P) \\\\')
             Punkte += 6
             i += 1
 
@@ -112,9 +113,9 @@ def erstellen(Teil):
             winkel_x1 = math.degrees(N(atan(m_x1),2))
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Steigung und den Steigungswinkel am westlichen Fußpunkt. \n\n')
             loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
-                           + str(x_wert_x1) + r') ~=~ ' + str(N(m_x1,3)) + r' \quad (2P) \\'
-                           + r' \alpha ~=~ arctan(' + str(N(m_x1,3)) + r') ~=~ ' + str(N(winkel_x1,3))
-                           + r' \quad (2P) \\\\')
+                           + str(x_wert_x1) + r') ~=~ \mathbf{' + str(N(m_x1,3)) + r'} \quad (2P) \\'
+                           + r' \alpha ~=~ arctan(' + str(N(m_x1,3)) + r') ~=~ \mathbf{' + str(N(winkel_x1,3))
+                           + r'^\circ} \quad (2P) \\\\')
 
             Punkte += 4
             i += 1
@@ -143,9 +144,9 @@ def erstellen(Teil):
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
                            + vorz_str_minus(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
-                           + r' x_1 ~=~' + str(N(x_werte_tp[0],3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                           + str(N(x_werte_tp[1],3)) + r' \quad (1P) \quad P_1(' + str(N(x_werte_tp[0],3))
-                           + r' \vert' + str(N(y_wert_tp,3)) + r') \quad (1P) \\\\')
+                           + r' x_1 ~=~\mathbf{' + str(N(x_werte_tp[0],3)) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
+                           + str(N(x_werte_tp[1],3)) + r'} \quad (1P) \quad \mathbf{P_1(' + str(N(x_werte_tp[0],3))
+                           + r' \vert' + str(N(y_wert_tp,3)) + r')} \quad (1P) \\\\')
 
             Punkte += 9
             i += 1
@@ -154,13 +155,13 @@ def erstellen(Teil):
             m_fkt_x_tp = fkt_abl.subs(x, x_werte_tp[0])
             winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
             winkel_beta = N(math.degrees(atan(m_tangente)),3)
-            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '~-~' + vorz_str_minus(winkel_alpha)
-                       + r' \vert ~=~' + str(abs(winkel_beta-winkel_alpha)) + r' \quad (2P) \\')
+            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '^\circ~-~' + vorz_str_minus(winkel_alpha)
+                       + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\')
             if abs(winkel_beta-winkel_alpha) > 90:
-                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '~-~' + vorz_str_minus(winkel_alpha)
-                           + r' \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r' \quad \to \quad \gamma ~=~ 180 ~-~'
-                           + str(abs(winkel_beta - winkel_alpha)) + '~=~' + str(180 - abs(winkel_beta - winkel_alpha))
-                           + r' \quad (2P) \\')
+                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '^\circ~-~' + vorz_str_minus(winkel_alpha)
+                           + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
+                           + str(abs(winkel_beta - winkel_alpha)) + '^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
+                           + r'^\circ} \quad (2P) \\')
                 Punkte += 1
 
             print(m_fkt_x_tp)
@@ -169,16 +170,16 @@ def erstellen(Teil):
             loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
                            + str(N(x_werte_tp[0],3)) + r') ~=~ ' + str(N(m_fkt_x_tp,3))
                            + r' \quad (1P) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
-                           + latex(winkel_alpha) + r' \quad (2P) \\'
+                           + latex(winkel_alpha) + r'^\circ \quad (2P) \\'
                            + r' t^{ \prime}(x) ~=~' + str(N(m_tangente,3)) + r' \quad \to \quad'
-                           r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta) + r' \quad (2P) \\'
+                           r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta) + r'^\circ \quad (2P) \\'
                            + loesung_1)
 
             Punkte += 6
             i += 1
 
         if e in teilaufg:
-            aufgabe.append(str(teilaufg[i]) + ') Berechn den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
+            aufgabe.append(str(teilaufg[i]) + ') Berechne den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
                                               ' Steigung des Hügels besitzt. \n\n')
             loesung.append(str(teilaufg[i]) + r') ')
 
@@ -235,12 +236,12 @@ def erstellen(Teil):
             print('exponent = ' + str(e1))
             print(steigung/(-1*a1*e1))
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
-                             + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~'
-                             + latex(N((steigung-a2)/(2*a1),3)) + r' \quad (3P) \\',
+                             + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
+                             + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P) \\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                              + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
-                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~'
-                             + latex(N((sqrt((steigung/(-1*a1*e1)),1-e1)),3)) + r' \quad (3P) \\']
+                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
+                             + latex(N((sqrt((steigung/(-1*a1*e1)),1-e1)),3)) + r'} \quad (3P) \\']
             loesung_1 = loesung_liste[Aufgabe]
 
             aufgabe.append(str(teilaufg[i]) + r') Berechne die Stelle, an der die Funktion f die Steigung m hat. ')
