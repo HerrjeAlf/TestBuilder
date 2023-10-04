@@ -155,12 +155,12 @@ def erstellen(Teil):
             m_fkt_x_tp = fkt_abl.subs(x, x_werte_tp[0])
             winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
             winkel_beta = N(math.degrees(atan(m_tangente)),3)
-            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '^\circ~-~' + vorz_str_minus(winkel_alpha)
+            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
                        + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\')
             if abs(winkel_beta-winkel_alpha) > 90:
-                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + '^\circ~-~' + vorz_str_minus(winkel_alpha)
+                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
                            + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
-                           + str(abs(winkel_beta - winkel_alpha)) + '^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
+                           + str(abs(winkel_beta - winkel_alpha)) + r'^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
                            + r'^\circ} \quad (2P) \\')
                 Punkte += 1
 
