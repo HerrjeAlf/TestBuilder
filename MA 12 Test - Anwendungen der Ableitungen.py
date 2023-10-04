@@ -54,7 +54,7 @@ def erstellen(Teil):
         plt.plot(a, b, linewidth=2)
         plt.suptitle(titel, usetex=True)
         return plt.savefig(name, dpi=200)
-
+    
     def anwendungen(nr, teilaufg):
         i = 0
         Punkte = 0
@@ -164,7 +164,7 @@ def erstellen(Teil):
                            + r'^\circ} \quad (2P) \\')
                 Punkte += 1
 
-            print(m_fkt_x_tp)
+            # print(m_fkt_x_tp)
 
             aufgabe.append(str(teilaufg[i]) + ') Berechne den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
             loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
@@ -220,7 +220,6 @@ def erstellen(Teil):
                                  [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
                                   latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
             Aufgabe = random.randint(0,1)
-            Aufgabe = 1
 
             funktion_liste = funktionen_liste[Aufgabe]
             fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
@@ -234,14 +233,15 @@ def erstellen(Teil):
             print('steigung = ' + str(steigung))
             print('faktor = ' +str(a1))
             print('exponent = ' + str(e1))
-            print(steigung/(-1*a1*e1))
+            print('diskrimante = ' + str(steigung/(-1*a1*e1)))
+
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
                              + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
                              + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P) \\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                              + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
-                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
-                             + latex(N((sqrt((steigung/(-1*a1*e1)),1-e1)),3)) + r'} \quad (3P) \\']
+                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~'
+                             + latex(N((sqrt((steigung/(-1*a1*e1)),1-e1)),3)) + r' \quad (3P) \\']
             loesung_1 = loesung_liste[Aufgabe]
 
             aufgabe.append(str(teilaufg[i]) + r') Berechne die Stelle, an der die Funktion f die Steigung m hat. ')
@@ -250,6 +250,33 @@ def erstellen(Teil):
 
             Punkte += 3
             i += 1
+
+        if a in teilaufg:
+            a1, a2, a3 = faktorliste(2, 10, 3)
+            funktionen_liste = ([[a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x'],
+                                 [a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2)]])
+            Aufgabe = random.randint(0, 1)
+            Aufgabe = 0
+            parabel_liste = funktionen_liste[Aufgabe]
+            fkt_parabel, fkt_str_paranel, fkt_abl_str_parabel = parabel_liste[0], parabel_liste[1], parabel_liste[2]
+            fkt_abl_parabel = diff(fkt_parabel, x)
+            gerade_liste = funktionen_liste[Aufgabe+1]
+            fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = gerade_liste[0], gerade_liste[1], gerade_liste[2]
+            fkt_abl_gerade = diff(fkt_gerade,x)
+            loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+                             + fkt_abl_str_parabel + '~ = ~' + fkt_abl_gerade + r' \quad \to \quad \vert '
+                             + ]
+
+            loesung_1 = loesung_liste[Aufgabe]
+
+            aufgabe.append(str(teilaufg[i]) + r') Berechne die Stelle, an der die Funktion f die Steigung m hat. ')
+            aufgabe.append(
+                r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
+            loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
+
+            Punkte += 3
+            i += 1
+
         return [aufgabe, loesung, Punkte]
 
     aufgaben = [anwendungen(1, [a,b,c,d,e,f]), steigungen(2,[a])]
