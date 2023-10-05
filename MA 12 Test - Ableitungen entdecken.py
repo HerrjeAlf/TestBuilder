@@ -381,7 +381,7 @@ def erstellen(Teil):
             loesung.append(r'ii) \quad f_2(x) ~=~' + fkt_ii_str + '~=~' + fkt_ii_str_einf +
                            r' \quad f_2^{ \prime} (x) ~=~\mathbf{' + fkt_ii_str_abl + r'} \quad (1P) \\')
             loesung.append(r'iii) \quad f_3(x) ~=~' + fkt_iii_str + '~=~' + fkt_iii_str_einf +
-                           r' \quad f_3^{ \prime} (x) ~=~\mathbf{' + fkt_iii_str_abl + r'} \quad (2P) \\')
+                           r' \quad f_3^{ \prime} (x) ~=~\mathbf{' + fkt_iii_str_abl + r'} \quad (2P) \\\\')
             Punkte += 4
             i += 1
         if d in teilaufg:

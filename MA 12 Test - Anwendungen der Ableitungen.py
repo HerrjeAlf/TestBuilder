@@ -54,7 +54,7 @@ def erstellen(Teil):
         plt.plot(a, b, linewidth=2)
         plt.suptitle(titel, usetex=True)
         return plt.savefig(name, dpi=200)
-    
+
     def anwendungen(nr, teilaufg):
         i = 0
         Punkte = 0
@@ -156,12 +156,12 @@ def erstellen(Teil):
             winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
             winkel_beta = N(math.degrees(atan(m_tangente)),3)
             loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
-                       + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\')
+                       + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
             if abs(winkel_beta-winkel_alpha) > 90:
                 loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
                            + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
                            + str(abs(winkel_beta - winkel_alpha)) + r'^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
-                           + r'^\circ} \quad (2P) \\')
+                           + r'^\circ} \quad (2P) \\\\')
                 Punkte += 1
 
             # print(m_fkt_x_tp)
@@ -181,16 +181,30 @@ def erstellen(Teil):
         if e in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
                                               ' Steigung des Hügels besitzt. \n\n')
-            loesung.append(str(teilaufg[i]) + r') ')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{aus~} f^{ \prime } (' + str(N(x_werte_tp[0],3)) + ') ~=~ '
+                                            + str(N(m_fkt_x_tp,3)) + r' \mathrm{~und~} P_1('
+                                            + str(N(x_werte_tp[0],3)) + r' \vert' + str(N(y_wert_tp,3))
+                                            + r') \mathrm{~folgt~} \quad \to \quad' + str(N(y_wert_tp,3)) + '~=~'
+                                            + str(N(m_fkt_x_tp,3)) + r' \cdot ' + vorz_str_minus(N(x_werte_tp[0],3))
+                                            + r'+~n \quad \vert ' + vorz_str(N(-1*m_fkt_x_tp*x_werte_tp[0],3))
+                                            + r' \quad n~=~' + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
+                                            + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
+                                            + str(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3)) + '}{'+ str(N(m_fkt_x_tp,3))
+                                            + r'} ~=~' + str(N((-1*y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp,3))
+                                            + r' \quad (2P) \\\\')
 
             Punkte += 4
             i += 1
 
         if f in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Höhe des Hügels. \n\n')
-            loesung.append(str(teilaufg[i]) + r') ')
+            loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
+                                            + vorz_str(p_fkt) + '~x~' + vorz_str(q_fkt) + r') \\ ~=~' + str(faktor) + r' \cdot (~x^2~'
+                                            + vorz_str(p_fkt) + '~x~' + vorz_str(q_fkt) + vorz_str((p_fkt/2)**2)
+                                            + vorz_str(-1*(p_fkt/2)**2) + ') ~=~' + str(faktor) + '(~x~'
+                                            + vorz_str(-1*x_wert_s) + '~)^2' + vorz_str(y_wert_s) + r'\quad (3P) \\\\')
 
-            Punkte += 4
+            Punkte += 3
             i += 1
 
         return [aufgabe, loesung, Punkte]
@@ -237,49 +251,55 @@ def erstellen(Teil):
 
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
                              + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
-                             + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P) \\',
+                             + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P) \\\\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                              + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
-                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~'
-                             + latex(N((sqrt((steigung/(-1*a1*e1)),1-e1)),3)) + r' \quad (3P) \\']
-            loesung_1 = loesung_liste[Aufgabe]
+                             + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
+                             + latex(N((sqrt((steigung/(-1*a1*e1)),-1-e1)),3)) + r'} \quad (3P) \\\\']
 
-            aufgabe.append(str(teilaufg[i]) + r') Berechne die Stelle, an der die Funktion f die Steigung m hat. ')
+            loesung_1 = loesung_liste[Aufgabe]
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert a, an der die Funktion f die Steigung m hat. ')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
             loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
 
             Punkte += 3
             i += 1
 
-        if a in teilaufg:
+        if b in teilaufg:
             a1, a2, a3 = faktorliste(2, 10, 3)
             funktionen_liste = ([[a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x'],
                                  [a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2)]])
             Aufgabe = random.randint(0, 1)
             Aufgabe = 0
             parabel_liste = funktionen_liste[Aufgabe]
-            fkt_parabel, fkt_str_paranel, fkt_abl_str_parabel = parabel_liste[0], parabel_liste[1], parabel_liste[2]
+            fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel = parabel_liste[0], parabel_liste[1], parabel_liste[2]
             fkt_abl_parabel = diff(fkt_parabel, x)
             gerade_liste = funktionen_liste[Aufgabe+1]
             fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = gerade_liste[0], gerade_liste[1], gerade_liste[2]
             fkt_abl_gerade = diff(fkt_gerade,x)
-            loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
-                             + fkt_abl_str_parabel + '~ = ~' + fkt_abl_gerade + r' \quad \to \quad \vert '
-                             + vorz_str_minus(2*a1)]
+
+            loesung_liste = [r' \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+                             + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert '
+                             + vorz_str_minus(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
+                             + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
+                             + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
+                             + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
+                             + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
+                             + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
+                             + r' \quad \to \quad a~=~' + latex(N((a2**2/(2*a1)) + a3  - (a2**2)/(4*a1),3)) + r' \quad (3P)']
 
             loesung_1 = loesung_liste[Aufgabe]
-
-            aufgabe.append(str(teilaufg[i]) + r') Berechne die Stelle, an der die Funktion f die Steigung m hat. ')
-            aufgabe.append(
-                r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
+            aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
+                           + r' \hspace{15em}')
             loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
 
-            Punkte += 3
+            Punkte += 6
             i += 1
 
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [anwendungen(1, [a,b,c,d,e,f]), steigungen(2,[a])]
+    aufgaben = [anwendungen(1, [a,b,c,d,e,f]), steigungen(2,[a,b])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -288,7 +308,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'HAK 05 - Anwendungen der Ableitung'
+    Art = 'Test - Anwendungen der Ableitung'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
