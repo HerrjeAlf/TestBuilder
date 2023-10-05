@@ -233,8 +233,10 @@ def erstellen(Teil):
                                   str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
                                  [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
                                   latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
-            Aufgabe = random.randint(0,1)
 
+            # to-do: Liste der Funktionen und Lösungen um eine Wurzelfunktion der Form a*x^(m/n) erweitern
+
+            Aufgabe = random.randint(0,1)
             funktion_liste = funktionen_liste[Aufgabe]
             fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
             fkt_abl = diff(fkt, x)
@@ -269,6 +271,10 @@ def erstellen(Teil):
             a1, a2, a3 = faktorliste(2, 10, 3)
             funktionen_liste = ([[a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x'],
                                  [a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2)]])
+
+            # to do: - Liste um Funktionen der Formen f(x) = a1*x^2 + a3 + nzahl(2,10)/2 sowie g(x) = a2*x+a3
+            #           bzw. ist a1 < 0 dann f(x) = a1*x^2 + a3 - nzahl(2,10)/2
+
             Aufgabe = random.randint(0, 1)
             Aufgabe = 0
             parabel_liste = funktionen_liste[Aufgabe]
