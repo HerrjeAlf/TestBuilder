@@ -227,7 +227,8 @@ def erstellen(Teil):
 
         if a in teilaufg:
             a1, a2, a3 = faktorliste(2, 10, 3)
-            e1, e2 = (nzahl(2,4)*2)-1, (nzahl(3,6)*2)-1
+            e1 = (nzahl(2,4)*2)-1
+            e2 = e1 + (nzahl(0,2)*2)+1
             funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), str(2*a1) + '~x~' + str(a2)],
                                  [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
                                   str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
@@ -235,11 +236,11 @@ def erstellen(Teil):
                                   latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
 
             Aufgabe = random.randint(0,2)
-            Aufgabe = 2
+            # Aufgabe = 2
             funktion_liste = funktionen_liste[Aufgabe]
             fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
             fkt_abl = diff(fkt, x)
-            stelle = zzahl(3,10)/2
+            stelle = nzahl(3,10)/2
             steigung = int(fkt_abl.subs(x,stelle))
             while steigung == 0:
                 stelle = zzahl(3,10)/2
@@ -258,9 +259,10 @@ def erstellen(Teil):
                              + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
                              + latex(N((sqrt((steigung/(-1*a1*e1)),-1-e1)),3)) + r'} \quad (3P) \\\\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                             + vorz_str_minus(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(Rational((e2-e1)/e1)) + r'} \quad \to \quad x~=~ \big('
-                             + latex(Rational(steigung*e1, a1 * e2)) + r' \big) ^{ ' +  latex(Rational((e2-e1)/e1)) + r'} ~=~\mathbf{'
-                             + latex(Rational(steigung*e1, a1 * e2)**Rational((e2-e1)/e1)) + r'} \quad (3P) \\\\']
+                             + vorz_str_minus(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N((e2-e1)/e1,3))
+                             + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
+                             + r' \Big) ^{ ' +  latex(N((e2-e1)/e1,3)) + r'} ~=~\mathbf{'
+                             + latex(N(((steigung*e1)/(a1 * e2))**((e2-e1)/e1),3)) + r'} \quad (3P) \\\\']
 
             loesung_1 = loesung_liste[Aufgabe]
             aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert a, an der die Funktion f die Steigung m hat. ')
@@ -272,36 +274,23 @@ def erstellen(Teil):
 
         if b in teilaufg:
             a1, a2, a3 = faktorliste(2, 10, 3)
-            funktionen_liste = ([[a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x'],
-                                 [a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2)]])
+            verschiebung = zzahl(2,10)/2
+            fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel= (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
+            fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = (a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2))
 
-            # to do: - Liste um Funktionen der Formen f(x) = a1*x^2 + a3 + nzahl(2,10)/2 sowie g(x) = a2*x+a3
-            #           bzw. ist a1 < 0 dann f(x) = a1*x^2 + a3 - nzahl(2,10)/2
-
-            Aufgabe = random.randint(0, 1)
-            Aufgabe = 0
-            parabel_liste = funktionen_liste[Aufgabe]
-            fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel = parabel_liste[0], parabel_liste[1], parabel_liste[2]
-            fkt_abl_parabel = diff(fkt_parabel, x)
-            gerade_liste = funktionen_liste[Aufgabe+1]
-            fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = gerade_liste[0], gerade_liste[1], gerade_liste[2]
-            fkt_abl_gerade = diff(fkt_gerade,x)
-
-            loesung_liste = [r' \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
-                             + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert '
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
+            aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
+                           + r' \hspace{15em}')
+            loesung.append(str(teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+                             + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
                              + vorz_str_minus(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
                              + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
                              + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
                              + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
                              + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
                              + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
-                             + r' \quad \to \quad a~=~' + latex(N((a2**2/(2*a1)) + a3  - (a2**2)/(4*a1),3)) + r' \quad (3P)']
-
-            loesung_1 = loesung_liste[Aufgabe]
-            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
-            aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
-                           + r' \hspace{15em}')
-            loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
+                             + r' \quad \to \quad a~=~' + latex(N((a2**2/(2*a1)) + a3  - (a2**2)/(4*a1),3))
+                             + r' \quad (3P)')
 
             Punkte += 6
             i += 1
