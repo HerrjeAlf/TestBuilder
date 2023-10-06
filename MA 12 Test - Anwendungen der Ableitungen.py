@@ -190,7 +190,7 @@ def erstellen(Teil):
                                             + r' \quad n~=~' + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
                                             + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
                                             + str(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3)) + '}{'+ str(N(m_fkt_x_tp,3))
-                                            + r'} ~=~' + str(N((-1*y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp,3))
+                                            + r'} ~=~' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
                                             + r' \quad (2P) \\\\')
 
             Punkte += 4
