@@ -244,14 +244,25 @@ def erstellen(Teil):
             funktion_liste = funktionen_liste[Aufgabe]
             fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
             fkt_abl = diff(fkt, x)
-            stelle = nzahl(3,10)/2
-            steigung = int(fkt_abl.subs(x,stelle))
+            stelle = nzahl(3, 10)/2
+            # Problem gelöst/umgangen, dass er einen TypeError ausgibt (kann kein complex zu int)
+            try:
+                steigung = int(fkt_abl.subs(x,stelle))
+            except TypeError as te:
+                print(te)
+                steigung = 0
+
             while steigung == 0:
                 stelle = zzahl(3,10)/2
-                steigung = int(fkt_abl.subs(x, stelle))
-            print('stelle =' + str(stelle))
+                try:
+                    steigung = int(fkt_abl.subs(x, stelle))
+                except TypeError as te:
+                    print(te)
+                    continue
+
+            print('stelle = ' + str(stelle))
             print('steigung = ' + str(steigung))
-            print('faktor = ' +str(a1))
+            print('faktor = ' + str(a1))
             print('exponent = ' + str(e1))
             print('diskrimante = ' + str(steigung/(-1*a1*e1)))
 
