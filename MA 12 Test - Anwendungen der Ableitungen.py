@@ -190,8 +190,8 @@ def erstellen(Teil):
                                             + r' \quad n~=~' + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
                                             + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
                                             + str(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3)) + '}{'+ str(N(m_fkt_x_tp,3))
-                                            + r'} ~=~' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
-                                            + r' \quad (2P) \\\\')
+                                            + r'} ~=~\mathbf{' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
+                                            + r'} \quad (2P) \\\\')
 
             Punkte += 4
             i += 1
@@ -199,10 +199,14 @@ def erstellen(Teil):
         if f in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Höhe des Hügels. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
-                                            + vorz_str(p_fkt) + '~x~' + vorz_str(q_fkt) + r') \\ ~=~' + str(faktor) + r' \cdot (~x^2~'
-                                            + vorz_str(p_fkt) + '~x~' + vorz_str(q_fkt) + vorz_str((p_fkt/2)**2)
-                                            + vorz_str(-1*(p_fkt/2)**2) + ') ~=~' + str(faktor) + '(~x~'
-                                            + vorz_str(-1*x_wert_s) + '~)^2' + vorz_str(y_wert_s) + r'\quad (3P) \\\\')
+                                            + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \\ ~=~'
+                                            + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
+                                            + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
+                                            + vorz_str(faktor*q_fkt) + r' \\ ~=~' + str(faktor) + r' \cdot ((x'
+                                            + vorz_str(-1*x_wert_s) + ')^2' + vorz_str(-1 * (p_fkt / 2) ** 2) + ')'
+                                            + vorz_str(faktor * q_fkt) + '~=~' + str(faktor)
+                                            + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
+                                            + r'}\quad (3P) \\\\')
 
             Punkte += 3
             i += 1
@@ -289,8 +293,8 @@ def erstellen(Teil):
                              + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
                              + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
                              + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
-                             + r' \quad \to \quad a~=~' + latex(N((a2**2/(2*a1)) + a3  - (a2**2)/(4*a1),3))
-                             + r' \quad (3P)')
+                             + r' \quad \to \quad a~=~\mathbf{' + latex(N((a2**2/(2*a1)) + a3 - (a2**2)/(4*a1),3))
+                             + r'} \quad (3P)')
 
             Punkte += 6
             i += 1
