@@ -230,35 +230,29 @@ def erstellen(Teil):
             return menge
 
         if a in teilaufg:
-            a1, a2, a3 = faktorliste(2, 10, 3)
-            e1 = (nzahl(2,4)*2)-1
-            e2 = e1 + (nzahl(0,2)*2)+1
-            funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), str(2*a1) + r'x' + vorz_str(a2)],
-                                 [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
-                                  str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
-                                 [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
-                                  latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
-
-            Aufgabe = random.randint(0,2)
-            # Aufgabe = 2
-            funktion_liste = funktionen_liste[Aufgabe]
-            fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
-            fkt_abl = diff(fkt, x)
-            stelle = nzahl(3, 10)/2
-            # Problem gelöst/umgangen, dass er einen TypeError ausgibt (kann kein complex zu int)
-            try:
-                steigung = int(fkt_abl.subs(x,stelle))
-            except TypeError as te:
-                print(te)
-                steigung = 0
-
+            # Problem versucht zu lösen/umgehen, dass er einen TypeError ausgibt (kann kein complex zu int)
+            steigung = 0
             while steigung == 0:
-                stelle = zzahl(3,10)/2
                 try:
+                    a1, a2, a3 = faktorliste(2, 10, 3)
+                    e1 = (nzahl(2,4)*2)-1
+                    e2 = e1 + (nzahl(0,2)*2)+1
+                    funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), str(2*a1) + r'x' + vorz_str(a2)],
+                                         [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
+                                          str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
+                                         [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
+                                          latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
+
+                    Aufgabe = random.randint(0, 2)
+                    # Aufgabe = 1
+                    funktion_liste = funktionen_liste[Aufgabe]
+                    fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
+                    fkt_abl = diff(fkt, x)
+                    stelle = nzahl(3, 10)/2
                     steigung = int(fkt_abl.subs(x, stelle))
                 except TypeError as te:
                     print(te)
-                    continue
+                    steigung = 0
 
             print('stelle = ' + str(stelle))
             print('steigung = ' + str(steigung))
@@ -272,15 +266,15 @@ def erstellen(Teil):
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                              + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
                              + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
-                             + latex(N((sqrt((steigung/(-1*a1*e1)),-1-e1)),3)) + r'} \quad (3P) \\\\',
+                             + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3P) \\\\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                             + vorz_str_minus(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1),3))
+                             + vorz_str_minus(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
                              + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
-                             + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1),3)) + r'} ~=~\mathbf{'
-                             + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)),3)) + r'} \quad (3P) \\\\']
+                             + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~\mathbf{'
+                             + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P) \\\\']
 
             loesung_1 = loesung_liste[Aufgabe]
-            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert a, an der die Funktion f die Steigung m hat. ')
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert x, an der die Funktion f die Steigung m hat. ')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
             loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
 
