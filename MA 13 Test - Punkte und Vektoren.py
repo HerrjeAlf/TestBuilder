@@ -212,7 +212,7 @@ def vektorrechnung(nr, teilaufg):
         print('r =' + str(faktor_1))
         print('s =' + str(faktor_2))
         vektor_2 = punkt_vektor(5)
-        vektor_3 = punkt_vektor(7)
+        vektor_3 = [zzahl(1,7), zzahl(0,5),zzahl(1,7)]
         vektor_1 = (vektor_2[0] * faktor_1 + vektor_3[0] * faktor_2,
                     vektor_2[1] * faktor_1 + vektor_3[1] * faktor_2,
                     vektor_2[2] * faktor_1 + vektor_3[2] * faktor_2)
@@ -260,7 +260,7 @@ def vektorrechnung(nr, teilaufg):
                          + r' \Big) \quad (1P) \quad \to \quad'
                          + r' s ~=~ ' + latex((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2))
                          + r' \quad (1P) \quad \to \quad r ~=~'
-                         + latex((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)))
+                         + latex(N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3))
                          + r' \quad (1P) \quad \mathrm{Probe} ~ (1P)')
         elif z_3 != 0:
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + str(z_1) + '~=~'
@@ -272,7 +272,7 @@ def vektorrechnung(nr, teilaufg):
                          + r' \cdot s \Big) \quad (2P) \quad \to \quad'
                          + r' s ~=~ ' + latex((z_1 - (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2))
                          + r' \quad (1P) \quad  r~=~ '
-                         + latex(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)))
+                         + latex(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
                          + r' \quad \mathrm{Probe} ~ (1P)')
         else:
             pass
@@ -282,14 +282,14 @@ def vektorrechnung(nr, teilaufg):
         Punkte += 7
         
     if d in teilaufg:
-        vektor_1 = punkt_vektor(5)
+        vektor_2 = punkt_vektor(5)
         faktor = zzahl(2, 40) / 10
         if random.random() < 0.5:
                 faktor = zzahl(2,40)/5
-                vektor_2 = (faktor * vektor_1[0],faktor * vektor_1[1],faktor * vektor_1[2])
+                vektor_1 = (faktor * vektor_2[0],faktor * vektor_2[1],faktor * vektor_2[2])
                 ergebnis = r' \mathrm{Die~Vektoren~sind~kollinear.} \quad (4P) \\'
         else:
-            vektor_2 = (vektor_1[0]*zzahl(1,6)/2,vektor_1[1]*zzahl(3,8)/2,vektor_1[2]*zzahl(5,10)/2)
+            vektor_1 = (vektor_2[0]*zzahl(1,6)/2,vektor_2[1]*zzahl(3,8)/2,vektor_2[2]*zzahl(5,10)/2)
             ergebnis = r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} \quad (4P) \\'
 
         aufgabe.append(str(teilaufg[i]) + f') Prüfen Sie, ob die gegebenen Vektoren kollinear sind.')
@@ -302,15 +302,89 @@ def vektorrechnung(nr, teilaufg):
                       r' \end{pmatrix} \\')
         loesung.append(r'~ \\\\')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.}')
-        loesung.append(str(vektor_1[0]) + '~=~' + str(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'  + latex(Rational(vektor_1[0],vektor_2[0])) + r' \\'
-                       + str(vektor_1[1]) + '~=~' + str(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'  + latex(Rational(vektor_1[1],vektor_2[1])) + r' \\'
-                       + str(vektor_1[2]) + '~=~' + str(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'  + latex(Rational(vektor_1[2],vektor_2[2])) + r' \\'
+        loesung.append(str(vektor_1[0]) + '~=~' + str(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
+                       + str(vektor_1[1]) + '~=~' + str(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
+                       + str(vektor_1[2]) + '~=~' + str(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
                        + ergebnis)
         i += 1
         Punkte += 4
+
+    if e in teilaufg:
+        vektor_a = punkt_vektor(5)
+        vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
+        vektor_ab = vektor_b - np.array(vektor_a)
+        vektor_t = np.array(vektor_a) + (nzahl(1,9)/10) * vektor_ab
+        vektor_at = vektor_t - np.array(vektor_a)
+        vektor_tb = vektor_b - vektor_t
+        laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
+                            + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
+        ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
+        laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
+                            + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
+        ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
+        # print('vektor A = ' + str(vektor_a))
+        # print('vektor B = ' + str(vektor_b))
+        # print('vektor_ab' + str(vektor_ab))
+        # print('vektor T = ' + str(vektor_t))
+        aufgabe.append(str(teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB? \n\n')
+        aufgabe.append('A( ' + str(vektor_a[0]) + ' | ' + str(vektor_a[1]) + ' | ' + str(vektor_a[2]) + ' ), '
+                       'B( ' + str(vektor_b[0]) + ' | ' + str(vektor_b[1]) + ' | ' + str(vektor_b[2]) + ' ) und '
+                       'T( ' + str(vektor_t[0]) + ' | ' + str(vektor_t[1]) + ' | ' + str(vektor_t[2]) + ' ). \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + str(vektor_t[0]) + '~-~' + vorz_str(-1*vektor_a[0])
+                       + ')^2 ~+~(' + str(vektor_t[1]) + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + str(vektor_t[2])
+                       + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
+                       + r' \mathrm{d(T,B)~=~} \sqrt{(' + str(vektor_b[0]) + '~-~' + vorz_str(-1*vektor_t[0])
+                       + ')^2 ~+~(' + str(vektor_b[1]) + '~-~' + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + str(vektor_b[2]) + '~-~'
+                       + vorz_str(-1*vektor_t[1]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (2P) \\'
+                       + r' r~=~ \frac{ ' + latex(ergebnis_at) + '}{' + latex(ergebnis_tb) + '} ~=~'
+                       + latex(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\')
+        i += 1
+        Punkte += 6
+
+    if f in teilaufg:
+        vektor_a = punkt_vektor(5)
+        vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
+        vektor_ab = vektor_b - np.array(vektor_a)
+        a1 = nzahl(1,9)
+        faktor = a1/10
+        vektor_t = np.array(vektor_a) + faktor * vektor_ab
+        vektor_at = vektor_t - np.array(vektor_a)
+        vektor_tb = vektor_b - vektor_t
+        laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
+                            + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
+        laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
+                            + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
+        faktor_r = Rational(a1,(10-a1))
+        # print('1f) faktor = ' + str(faktor))
+        # print('1f) r =' + str(faktor_r))
+        # print('r_2 = ' + str(faktor_r_2))
+        aufgabe.append(str(teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
+        aufgabe.append('A(~' + latex(vektor_a[0]) + r'~ \vert ~' + latex(vektor_a[1]) + r'~ \vert ~' + latex(vektor_a[2])
+                       + '~), \quad T(~' + latex(vektor_t[0]) + r'~ \vert ~' + latex(vektor_t[1]) + r'~ \vert ~'
+                       + latex(vektor_t[2]) + '~) \quad \mathrm{und~r~=~}' + latex(faktor_r) + r'. \\')
+        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
+                                          r' \cdot \mathrm{ (~1~+~ \frac{1}{r} ~)}  ~=~'
+                       r' \begin{pmatrix} ' + str(vektor_a[0]) + r' \\'
+                                            + str(vektor_a[1]) + r' \\'
+                                            + str(vektor_a[2]) + r' \\'
+                       r' \end{pmatrix} ~+~ \begin{pmatrix} ' + latex(N(vektor_at[0],3))+ r' \\'
+                                                              + latex(N(vektor_at[1],3)) + r' \\'
+                                                              + latex(N(vektor_at[2],3)) + r' \\'
+                       r' \end{pmatrix} \cdot \Big( ~1~+~ \frac{1}{r} \Big) \\'
+                       r' ~=~ \begin{pmatrix} ' + latex(N(vektor_at[0],3)) + r' \\'
+                                                + latex(N(vektor_at[1],3)) + r' \\'
+                                                + latex(N(vektor_at[2],3)) + r' \\'
+                       r' \end{pmatrix} \cdot ' + vorz_str_minus(N(1 + (10-a1)/a1,3)) + '~=~'
+                       r' \begin{pmatrix} ' + latex(N(vektor_b[0],3)) + r' \\'
+                                            + latex(N(vektor_b[1],3)) + r' \\'
+                                            + latex(N(vektor_b[2],3)) + r' \\'
+                       r' \end{pmatrix} \quad \to \quad B(~' + str(vektor_b[0]) + r'~ \vert ~' + str(vektor_b[1])
+                       + r'~ \vert ~' + str(vektor_b[2]) + r' ~) \quad (4P) \\')
+        i += 1
+        Punkte += 6
     return [aufgabe, loesung, Punkte]
 
-aufgaben = [punkte_und_vektoren(1, [a, b, c]), vektorrechnung(2, [a,b,c,d])]
+aufgaben = [punkte_und_vektoren(1, [a, b, c]), vektorrechnung(2, [a,b,c,d,e,f])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
 # Angaben für den Test im pdf-Dokument
@@ -320,8 +394,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 04 - Vektorrechnung'
-Teil = 'Probe'
+Art = 'Test - Einstieg Vektorrechnung'
+Teil = 'Probe 02'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
