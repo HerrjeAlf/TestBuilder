@@ -108,21 +108,6 @@ def kongruente_Dreiecke(nr, teilaufg):
         Punkte += 7
         i += 1
     return aufgabe, loesung, Punkte
-
-def verhaeltnisgleichgungen(nr, teilaufg):
-    i = 0
-    Punkte = 0
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist das folgende rechtwinkliges Dreieck.']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-
-    if a in teilaufg:
-        pass
-
-    return aufgabe, loesung, Punkte, grafik_aufgabe
-
-
-
 def rechtwinkliges_dreieck(nr, teilaufg):
     i = 0
     Punkte = 0
@@ -173,17 +158,54 @@ def rechtwinkliges_dreieck(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an.')
+        aufgabe.append(str(teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad ' + loesung_1)
         Punkte += 5
         i += 1
 
-
-
     return aufgabe, loesung, Punkte
 
+def verhaeltnisgleichgungen(nr, teilaufg):
+    i = 0
+    Punkte = 0
+    auswahl = nzahl(0,6)
+    liste_dreiecke = ['dreiecke\dreieck_01.png','dreiecke\dreieck_02.png','dreiecke\dreieck_03.png','dreiecke\dreieck_04.png',
+                      'dreiecke\dreieck_05.png','dreiecke\dreieck_06.png','dreiecke\dreieck_07.png',]
+    grafik_aufgabe = liste_dreiecke[auswahl]
+    auswahl_winkel = random.choice(['Alpha','Beta'])
+    if auswahl_winkel == 'Alpha':
+        liste_loesungen = [r' \mathrm{sin \alpha ~=~ \frac{a}{c}, \quad cos \alpha ~=~ \frac{b}{c}, \quad tan \alpha ~=~ \frac{a}{b}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{e}{f}, \quad cos \alpha ~=~ \frac{d}{f}, \quad tan \alpha ~=~ \frac{e}{d}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{h}{i}, \quad cos \alpha ~=~ \frac{g}{i}, \quad tan \alpha ~=~ \frac{h}{g}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{k}{m}, \quad cos \alpha ~=~ \frac{l}{m}, \quad tan \alpha ~=~ \frac{k}{l}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{n}{p}, \quad cos \alpha ~=~ \frac{o}{p}, \quad tan \alpha ~=~ \frac{n}{o}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{q}{s}, \quad cos \alpha ~=~ \frac{r}{s}, \quad tan \alpha ~=~ \frac{q}{r}}',
+                           r' \mathrm{sin \alpha ~=~ \frac{t}{v}, \quad cos \alpha ~=~ \frac{u}{v}, \quad tan \alpha ~=~ \frac{t}{u}}']
+    else:
+        liste_loesungen = [r' \mathrm{sin \beta ~=~ \frac{b}{c}, \quad cos \beta ~=~ \frac{a}{c}, \quad tan \beta ~=~ \frac{b}{a}}',
+                           r' \mathrm{sin \beta ~=~ \frac{d}{f}, \quad cos \beta ~=~ \frac{e}{f}, \quad tan \beta ~=~ \frac{d}{e}}',
+                           r' \mathrm{sin \beta ~=~ \frac{g}{i}, \quad cos \beta ~=~ \frac{h}{i}, \quad tan \beta ~=~ \frac{g}{h}}',
+                           r' \mathrm{sin \beta ~=~ \frac{l}{m}, \quad cos \beta ~=~ \frac{k}{m}, \quad tan \beta ~=~ \frac{l}{k}}',
+                           r' \mathrm{sin \beta ~=~ \frac{o}{p}, \quad cos \beta ~=~ \frac{n}{p}, \quad tan \beta ~=~ \frac{o}{n}}',
+                           r' \mathrm{sin \beta ~=~ \frac{r}{s}, \quad cos \beta ~=~ \frac{q}{s}, \quad tan \beta ~=~ \frac{r}{q}}',
+                           r' \mathrm{sin \beta ~=~ \frac{u}{v}, \quad cos \beta ~=~ \frac{t}{v}, \quad tan \beta ~=~ \frac{u}{t}}']
 
-aufgaben = [kongruente_Dreiecke(1, [a, b]), rechtwinkliges_dreieck(2, [a])]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        aufgabe.append(str(teilaufg[i]) + f') Gib den Sinus, Kosinus und Tangens von {auswahl_winkel} als Seitenverhältnis an. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad ' + liste_loesungen[auswahl] + r' \quad (3P) \\')
+
+        i += 1
+        Punkte += 3
+
+    return aufgabe, loesung, Punkte, grafik_aufgabe
+
+aufgaben = [kongruente_Dreiecke(1, [a, b]),
+            rechtwinkliges_dreieck(2, [a]),
+            verhaeltnisgleichgungen(3, [a])]
+
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
 # Angaben für den Test im pdf-Dokument
@@ -214,6 +236,10 @@ def Hausaufgabenkontrolle():
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
+            elif 'Abbildung' in elements:
+                Aufgabe.append(elements)
+                with Aufgabe.create(Figure(position='h!')) as graph:
+                    graph.add_image(aufgabe[3], width='200px')
             else:
                 Aufgabe.append(elements)
 

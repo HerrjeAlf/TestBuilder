@@ -376,7 +376,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_HAKs = 2
+anzahl_HAKs = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
