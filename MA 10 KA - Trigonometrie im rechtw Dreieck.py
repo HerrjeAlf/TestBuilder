@@ -109,6 +109,20 @@ def kongruente_Dreiecke(nr, teilaufg):
         i += 1
     return aufgabe, loesung, Punkte
 
+def verhaeltnisgleichgungen(nr, teilaufg):
+    i = 0
+    Punkte = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist das folgende rechtwinkliges Dreieck.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        pass
+
+    return aufgabe, loesung, Punkte, grafik_aufgabe
+
+
+
 def rechtwinkliges_dreieck(nr, teilaufg):
     i = 0
     Punkte = 0
@@ -164,7 +178,10 @@ def rechtwinkliges_dreieck(nr, teilaufg):
         Punkte += 5
         i += 1
 
+
+
     return aufgabe, loesung, Punkte
+
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]), rechtwinkliges_dreieck(2, [a])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
@@ -176,7 +193,7 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 03 - Satz des Pythagoras'
+Art = 'HAK 04 - Verhältnisgleichungen im rechtw. Dreieck'
 Teil = 'Gr. A'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():

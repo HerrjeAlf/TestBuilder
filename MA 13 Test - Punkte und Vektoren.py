@@ -329,7 +329,8 @@ def vektorrechnung(nr, teilaufg):
         aufgabe.append(str(teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB? \n\n')
         aufgabe.append('A( ' + str(vektor_a[0]) + ' | ' + str(vektor_a[1]) + ' | ' + str(vektor_a[2]) + ' ), '
                        'B( ' + str(vektor_b[0]) + ' | ' + str(vektor_b[1]) + ' | ' + str(vektor_b[2]) + ' ) und '
-                       'T( ' + str(vektor_t[0]) + ' | ' + str(vektor_t[1]) + ' | ' + str(vektor_t[2]) + ' ). \n\n')
+                       'T( ' + latex(N(vektor_t[0],3)) + ' | ' + latex(N(vektor_t[1],3))
+                       + ' | ' + latex(N(vektor_t[2],3)) + ' ). \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + str(vektor_t[0]) + '~-~' + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + str(vektor_t[1]) + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + str(vektor_t[2])
                        + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
