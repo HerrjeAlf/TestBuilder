@@ -220,6 +220,7 @@ def vektorrechnung(nr, teilaufg):
         x_2, y_2, z_2 = vektor_2[0], vektor_2[1], vektor_2[2]
         x_3, y_3, z_3 = vektor_3[0], vektor_3[1], vektor_3[2]
 
+
         aufgabe.append(str(teilaufg[i]) + ') Überprüfe, ob der gegebenen Vektor a als Linearkombination'
                                                 ' von b und c dargestellt werden kann. \n\n')
         aufgabe.append(r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + str(x_1) + r' \\'
@@ -302,9 +303,9 @@ def vektorrechnung(nr, teilaufg):
                       r' \end{pmatrix} \\')
         loesung.append(r'~ \\\\')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.}')
-        loesung.append(str(vektor_1[0]) + '~=~' + str(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
-                       + str(vektor_1[1]) + '~=~' + str(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
-                       + str(vektor_1[2]) + '~=~' + str(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'  + latex(faktor) + r' \\'
+        loesung.append(latex(N(vektor_1[0],3)) + '~=~' + str(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'  + latex(N(vektor_1[0]/vektor_2[0],3)) + r' \\'
+                       + latex(N(vektor_1[1],3)) + '~=~' + str(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'  + latex(N(vektor_1[1]/vektor_2[1],3)) + r' \\'
+                       + latex(N(vektor_1[2],3)) + '~=~' + str(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'  + latex(N(vektor_1[2]/vektor_2[2],3)) + r' \\'
                        + ergebnis)
         i += 1
         Punkte += 4
@@ -313,9 +314,12 @@ def vektorrechnung(nr, teilaufg):
         vektor_a = punkt_vektor(5)
         vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
         vektor_ab = vektor_b - np.array(vektor_a)
-        vektor_t = np.array(vektor_a) + (nzahl(1,9)/10) * vektor_ab
-        vektor_at = vektor_t - np.array(vektor_a)
-        vektor_tb = vektor_b - vektor_t
+        faktor = nzahl(1,9)/10
+        vektor_t = [N(vektor_a[0] + vektor_ab[0]*faktor,3),
+                    N(vektor_a[1] + vektor_ab[1]*faktor,3),
+                    N(vektor_a[2] + vektor_ab[2]*faktor,3)]
+        vektor_at = np.array(vektor_t) - np.array(vektor_a)
+        vektor_tb = vektor_b - np.array(vektor_t)
         laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
         ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
@@ -331,11 +335,11 @@ def vektorrechnung(nr, teilaufg):
                        'B( ' + str(vektor_b[0]) + ' | ' + str(vektor_b[1]) + ' | ' + str(vektor_b[2]) + ' ) und '
                        'T( ' + latex(N(vektor_t[0],3)) + ' | ' + latex(N(vektor_t[1],3))
                        + ' | ' + latex(N(vektor_t[2],3)) + ' ). \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + str(vektor_t[0]) + '~-~' + vorz_str(-1*vektor_a[0])
-                       + ')^2 ~+~(' + str(vektor_t[1]) + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + str(vektor_t[2])
-                       + '~-~' + vorz_str(-1*vektor_a[1]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
-                       + r' \mathrm{d(T,B)~=~} \sqrt{(' + str(vektor_b[0]) + '~-~' + vorz_str(-1*vektor_t[0])
-                       + ')^2 ~+~(' + str(vektor_b[1]) + '~-~' + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + str(vektor_b[2]) + '~-~'
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + str(vektor_t[0]) + vorz_str(-1*vektor_a[0])
+                       + ')^2 ~+~(' + str(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + str(vektor_t[2])
+                       + vorz_str(-1*vektor_a[1]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
+                       + r' \mathrm{d(T,B)~=~} \sqrt{(' + str(vektor_b[0]) + vorz_str(-1*vektor_t[0])
+                       + ')^2 ~+~(' + str(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + str(vektor_b[2])
                        + vorz_str(-1*vektor_t[1]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (2P) \\'
                        + r' r~=~ \frac{ ' + latex(ergebnis_at) + '}{' + latex(ergebnis_tb) + '} ~=~'
                        + latex(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\')
@@ -356,9 +360,9 @@ def vektorrechnung(nr, teilaufg):
         laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
-        # print('1f) faktor = ' + str(faktor))
-        # print('1f) r =' + str(faktor_r))
-        # print('r_2 = ' + str(faktor_r_2))
+        print('1f) faktor = ' + str(faktor))
+        print('1f) r =' + str(faktor_r))
+        # print('r_2 = ' + str(faktor_r))
         aufgabe.append(str(teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
         aufgabe.append('A(~' + latex(vektor_a[0]) + r'~ \vert ~' + latex(vektor_a[1]) + r'~ \vert ~' + latex(vektor_a[2])
                        + '~), \quad T(~' + latex(vektor_t[0]) + r'~ \vert ~' + latex(vektor_t[1]) + r'~ \vert ~'
@@ -371,14 +375,16 @@ def vektorrechnung(nr, teilaufg):
                        r' \end{pmatrix} ~+~ \begin{pmatrix} ' + latex(N(vektor_at[0],3))+ r' \\'
                                                               + latex(N(vektor_at[1],3)) + r' \\'
                                                               + latex(N(vektor_at[2],3)) + r' \\'
-                       r' \end{pmatrix} \cdot \Big( ~1~+~ \frac{1}{r} \Big) \\'
-                       r' ~=~ \begin{pmatrix} ' + latex(N(vektor_at[0],3)) + r' \\'
-                                                + latex(N(vektor_at[1],3)) + r' \\'
-                                                + latex(N(vektor_at[2],3)) + r' \\'
-                       r' \end{pmatrix} \cdot ' + vorz_str_minus(N(1 + (10-a1)/a1,3)) + '~=~'
-                       r' \begin{pmatrix} ' + latex(N(vektor_b[0],3)) + r' \\'
-                                            + latex(N(vektor_b[1],3)) + r' \\'
-                                            + latex(N(vektor_b[2],3)) + r' \\'
+                       r' \end{pmatrix} \cdot \Big( ~1~+~ ' + latex(Rational(10-a1,a1)) + r' \Big) \\'
+                       r' ~=~ \begin{pmatrix} ' + str(vektor_a[0]) + r' \\'
+                                                + str(vektor_a[1]) + r' \\'
+                                                + str(vektor_a[2]) + r' \\'
+                       r' \end{pmatrix} ~+~ \begin{pmatrix} ' + latex(N(vektor_at[0]*(1+(10-a1)/a1),3)) + r' \\'
+                                                              + latex(N(vektor_at[1]*(1+(10-a1)/a1),3)) + r' \\'
+                                                              + latex(N(vektor_at[2]*(1+(10-a1)/a1),3)) + r' \\'
+                       r' \end{pmatrix} ~=~ \begin{pmatrix} ' + latex(N(vektor_b[0],3)) + r' \\'
+                                                              + latex(N(vektor_b[1],3)) + r' \\'
+                                                              + latex(N(vektor_b[2],3)) + r' \\'
                        r' \end{pmatrix} \quad \to \quad B(~' + str(vektor_b[0]) + r'~ \vert ~' + str(vektor_b[1])
                        + r'~ \vert ~' + str(vektor_b[2]) + r' ~) \quad (4P) \\')
         i += 1
@@ -396,7 +402,7 @@ Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
 Art = 'Test - Einstieg Vektorrechnung'
-Teil = 'Probe 02'
+Teil = 'Gr. B'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
