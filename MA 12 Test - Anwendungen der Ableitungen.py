@@ -193,22 +193,22 @@ def erstellen(Teil):
                                             + r'} ~=~\mathbf{' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
                                             + r'} \quad (2P) \\\\')
 
-            Punkte += 4
+            Punkte += 5
             i += 1
 
         if f in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Höhe des Hügels. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
-                                            + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \\ ~=~'
+                                            + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~'
                                             + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
                                             + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
-                                            + vorz_str(faktor*q_fkt) + r' \\ ~=~' + str(faktor) + r' \cdot ((x'
+                                            + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~' + str(faktor) + r' \cdot ((x'
                                             + vorz_str(-1*x_wert_s) + ')^2' + vorz_str(-1 * (p_fkt / 2) ** 2) + ')'
                                             + vorz_str(faktor * q_fkt) + '~=~' + str(faktor)
                                             + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
-                                            + r'}\quad (3P) \\\\')
+                                            + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + str(y_wert_s) +  r'.} \quad (1P)')
 
-            Punkte += 3
+            Punkte += 4
             i += 1
 
         return [aufgabe, loesung, Punkte]

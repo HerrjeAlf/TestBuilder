@@ -64,18 +64,18 @@ def punkte_und_vektoren(nr, teilaufg):
             vektor_ac = random.choice(vektoren_auswahl)
         laenge_vektor_ac = r' \sqrt{' + str(sum(a*a for a in vektor_ac)) + '}' + '~=~' + str(sqrt(N(sum(a*a for a in vektor_ac),3)))
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
-        ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_ab) + np.array(vektor_ac)
-        loesung_1 = (r'~=~ \begin{pmatrix}' + str(vektor_ac[0]) + r' \\' + str(vektor_ac[1]) + r' \\' + str(vektor_ac[2])
+        ortsvektor_d = np.array(ortsvektor_a) - np.array(vektor_ab)
+        loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + str(vektor_ac[0]) + r' \\' + str(vektor_ac[1]) + r' \\' + str(vektor_ac[2])
                      + r' \\' + r' \end{pmatrix} \to \mathrm{d(A,C)~=~} \sqrt{(' + str(vektor_ac[0]) + ')^2 ~+~('
                      + str(vektor_ac[1]) + ')^2 ~+~(' + str(vektor_ac[2]) + ')^2 } ~=~' + laenge_vektor_ac
                      + r' \quad (3P) \\')
-        loesung_2 =  (r') \quad \overrightarrow{OD} = \overrightarrow{OB} ~+~ \overrightarrow{AC} ~=~'
-                     r' \begin{pmatrix} ' + str(ortsvektor_b[0]) + r' \\'
-                                          + str(ortsvektor_b[1]) + r' \\'
-                                          + str(ortsvektor_b[2]) + r' \\'
-                     r' \end{pmatrix} ~+~ \begin{pmatrix} ' + str(vektor_ac[0]) + r' \\'
-                                                            + str(vektor_ac[1]) + r' \\'
-                                                            + str(vektor_ac[2]) + r' \\'
+        loesung_2 =  (r') \quad \overrightarrow{OD} = \overrightarrow{OC} ~+~ \overrightarrow{BA} ~=~'
+                     r' \begin{pmatrix} ' + str(ortsvektor_a[0]) + r' \\'
+                                          + str(ortsvektor_a[1]) + r' \\'
+                                          + str(ortsvektor_a[2]) + r' \\'
+                     r' \end{pmatrix} ~+~ \begin{pmatrix} ' + str(-1*vektor_ab[0]) + r' \\'
+                                                            + str(-1*vektor_ab[1]) + r' \\'
+                                                            + str(-1*vektor_ab[2]) + r' \\'
                      r' \end{pmatrix} ~=~ \begin{pmatrix} ' + str(ortsvektor_d[0]) + r' \\'
                                                             + str(ortsvektor_d[1]) + r' \\'
                                                             + str(ortsvektor_d[2]) + r' \\'
@@ -87,15 +87,15 @@ def punkte_und_vektoren(nr, teilaufg):
         laenge_vektor_bc = r' \sqrt{' + str(sum(a*a for a in vektor_bc)) + '}' + '~=~' + str(sqrt(N(sum(a*a for a in vektor_bc),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
         vektor_ac = np.array(vektor_ab) + np.array(vektor_bc)
-        ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_ab) + np.array(vektor_ac)
-        loesung_1 = (r'~=~ \begin{pmatrix}' + str(vektor_bc[0]) + r' \\' + str(vektor_bc[1]) + r' \\' + str(vektor_bc[2])
+        ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_bc)
+        loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + str(vektor_bc[0]) + r' \\' + str(vektor_bc[1]) + r' \\' + str(vektor_bc[2])
                      + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{(' + str(vektor_bc[0]) + ')^2 ~+~('
                      + str(vektor_bc[1]) + ')^2 ~+~(' + str(vektor_bc[2]) + ')^2 } ~=~' + laenge_vektor_bc
-                     + r' \quad (4P) \\')
-        loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OC} ~+~ \overrightarrow{BC} ~=~ '
-                    r' \begin{pmatrix} ' + str(ortsvektor_c[0]) + r' \\'
-                                         + str(ortsvektor_c[1]) + r' \\'
-                                         + str(ortsvektor_c[2]) + r' \\'
+                     + r' \quad (3P) \\')
+        loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OA} ~+~ \overrightarrow{BC} ~=~ '
+                    r' \begin{pmatrix} ' + str(ortsvektor_a[0]) + r' \\'
+                                         + str(ortsvektor_a[1]) + r' \\'
+                                         + str(ortsvektor_a[2]) + r' \\'
                     r' \end{pmatrix} ~+~ \begin{pmatrix} ' + str(vektor_bc[0]) + r' \\'
                                                            + str(vektor_bc[1]) + r' \\'
                                                            + str(vektor_bc[2]) + r' \\'
@@ -127,15 +127,15 @@ def punkte_und_vektoren(nr, teilaufg):
                                                 + str(vektor_ab[2]) + r' \\'
                                                 r' \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + str(vektor_ab[0]) +
                                                 ')^2 ~+~(' + str(vektor_ab[1]) + ')^2 ~+~(' + str(vektor_ab[2]) + ')^2 } ~=~'
-                                                + laenge_vektor_ab + r' \quad (3P) \\ \overrightarrow{AC} '
+                                                + laenge_vektor_ab + r' \quad (3P) \\'
                                                 + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
                                                 r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\')
         i += 1
         Punkte += 7
 
     if c in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + f') Bestimmen Sie einen Punkt D, so dass das Viereck'
-                                                f' ABDC ein Parallelogramm ist. \n\n')
+        aufgabe.append(str(teilaufg[i]) + f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
+                                                f' ein Parallelogramm bilden. \n\n')
         loesung.append(str(teilaufg[i]) + loesung_2 +
                                                r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D(' + str(ortsvektor_d[0])  + ' | '
                                                                                              + str(ortsvektor_d[1]) + ' | '
@@ -323,8 +323,8 @@ def vektorrechnung(nr, teilaufg):
         laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
         ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
-        laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
-                            + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
+        laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
+                            + latex(N(sqrt(sum(a*a for a in vektor_tb)),3))
         ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
         # print('vektor A = ' + str(vektor_a))
         # print('vektor B = ' + str(vektor_b))
@@ -355,8 +355,8 @@ def vektorrechnung(nr, teilaufg):
         vektor_t = np.array(vektor_a) + faktor * vektor_ab
         vektor_at = vektor_t - np.array(vektor_a)
         vektor_tb = vektor_b - vektor_t
-        laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
-                            + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
+        laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),3)) + '} ~=~'
+                            + latex(N(sqrt(sum(a*a for a in vektor_at)),3))
         laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
@@ -388,7 +388,7 @@ def vektorrechnung(nr, teilaufg):
                        r' \end{pmatrix} \quad \to \quad B(~' + str(vektor_b[0]) + r'~ \vert ~' + str(vektor_b[1])
                        + r'~ \vert ~' + str(vektor_b[2]) + r' ~) \quad (4P) \\')
         i += 1
-        Punkte += 6
+        Punkte += 4
     return [aufgabe, loesung, Punkte]
 
 aufgaben = [punkte_und_vektoren(1, [a, b, c]), vektorrechnung(2, [a,b,c,d,e,f])]
