@@ -5,7 +5,7 @@ from numpy.linalg import solve as slv
 import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
-from threading import Thread
+from Dreiecke_konstruieren import dreieck_zeichen
 
 # Definition der Funktionen
 
@@ -168,39 +168,40 @@ def rechtwinkliges_dreieck(nr, teilaufg):
 def verhaeltnisgleichgungen(nr, teilaufg):
     i = 0
     Punkte = 0
-    auswahl = nzahl(0,6)
-    liste_dreiecke = ['dreiecke\dreieck_01.png','dreiecke\dreieck_02.png','dreiecke\dreieck_03.png','dreiecke\dreieck_04.png',
-                      'dreiecke\dreieck_05.png','dreiecke\dreieck_06.png','dreiecke\dreieck_07.png',]
-    grafik_aufgabe = liste_dreiecke[auswahl]
-    auswahl_winkel = random.choice(['Alpha','Beta'])
-    if auswahl_winkel == 'Alpha':
-        liste_loesungen = [r' \mathrm{sin \alpha ~=~ \frac{a}{c}, \quad cos \alpha ~=~ \frac{b}{c}, \quad tan \alpha ~=~ \frac{a}{b}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{e}{f}, \quad cos \alpha ~=~ \frac{d}{f}, \quad tan \alpha ~=~ \frac{e}{d}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{h}{i}, \quad cos \alpha ~=~ \frac{g}{i}, \quad tan \alpha ~=~ \frac{h}{g}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{k}{m}, \quad cos \alpha ~=~ \frac{l}{m}, \quad tan \alpha ~=~ \frac{k}{l}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{n}{p}, \quad cos \alpha ~=~ \frac{o}{p}, \quad tan \alpha ~=~ \frac{n}{o}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{q}{s}, \quad cos \alpha ~=~ \frac{r}{s}, \quad tan \alpha ~=~ \frac{q}{r}}',
-                           r' \mathrm{sin \alpha ~=~ \frac{t}{v}, \quad cos \alpha ~=~ \frac{u}{v}, \quad tan \alpha ~=~ \frac{t}{u}}']
-    else:
-        liste_loesungen = [r' \mathrm{sin \beta ~=~ \frac{b}{c}, \quad cos \beta ~=~ \frac{a}{c}, \quad tan \beta ~=~ \frac{b}{a}}',
-                           r' \mathrm{sin \beta ~=~ \frac{d}{f}, \quad cos \beta ~=~ \frac{e}{f}, \quad tan \beta ~=~ \frac{d}{e}}',
-                           r' \mathrm{sin \beta ~=~ \frac{g}{i}, \quad cos \beta ~=~ \frac{h}{i}, \quad tan \beta ~=~ \frac{g}{h}}',
-                           r' \mathrm{sin \beta ~=~ \frac{l}{m}, \quad cos \beta ~=~ \frac{k}{m}, \quad tan \beta ~=~ \frac{l}{k}}',
-                           r' \mathrm{sin \beta ~=~ \frac{o}{p}, \quad cos \beta ~=~ \frac{n}{p}, \quad tan \beta ~=~ \frac{o}{n}}',
-                           r' \mathrm{sin \beta ~=~ \frac{r}{s}, \quad cos \beta ~=~ \frac{q}{s}, \quad tan \beta ~=~ \frac{r}{q}}',
-                           r' \mathrm{sin \beta ~=~ \frac{u}{v}, \quad cos \beta ~=~ \frac{t}{v}, \quad tan \beta ~=~ \frac{u}{t}}']
 
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    l_a = (m ** 2 - n ** 2) / 10
+    l_b= 2 * m * n / 10
+    l_c = (m ** 2 + n ** 2) / 10
+    pkt = [[0,0], [l_c,0], [(l_b**2)/l_c,l_a*l_b/l_c]]
+    st = random.choice([['a','b','c'], ['d','e','f'], ['g','k','l'],
+                        ['m','n','p'], ['r','s','t'], ['u','v','w'], ['x','y','z']])
+
+    name = 'Aufgabe_' + str(nr)
+    grafik = 'Aufgabe_' + str(nr) + '.png'
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
+        dreieck_zeichen(pkt, st, [r'\alpha',r'\beta',r'90^{ \circ}'], name)
+        auswahl_winkel = random.choice(['Alpha', 'Beta'])
+        if auswahl_winkel == 'Alpha':
+            loesungen = (r' \mathrm{sin \alpha ~=~ \frac{' + st[0] + '}{' + st[2] + '},'
+                               r'\quad cos \alpha ~=~ \frac{' + st[1] + '}{' + st[2] + '},'
+                               r'\quad tan \alpha ~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
+        else:
+            loesungen = (r' \mathrm{sin \beta ~=~ \frac{' + st[1] + '}{' + st[2] + '}, '
+                               r'\quad cos \beta ~=~ \frac{' + st[0] + '}{' + st[2] + '},'
+                               r'\quad tan \beta ~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
+
         aufgabe.append(str(teilaufg[i]) + f') Gib den Sinus, Kosinus und Tangens von {auswahl_winkel} als Seitenverhältnis an. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + liste_loesungen[auswahl] + r' \quad (3P) \\')
+        loesung.append(str(teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P) \\')
 
         i += 1
         Punkte += 3
 
-    return aufgabe, loesung, Punkte, grafik_aufgabe
+    return aufgabe, loesung, Punkte, grafik
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a]),

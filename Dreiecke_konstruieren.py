@@ -150,22 +150,39 @@ class AngleAnnotation(Arc):
             offs = trans.transform(((X-s/2), 0))[0] * 72
             self.text.set_position([offs*np.cos(angle), offs*np.sin(angle)])
 
-def dreieck_zeichen(p1,p2,p3,s1,s2,s3,w1,w2,w3):
+def dreieck_zeichen(pkt, st, wk, name):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
-
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_color('none')
+    ax.spines['left'].set_color('none')
     # Plot two crossing lines and label each angle between them with the above
     # ``AngleAnnotation`` tool.
-    l1 = [p1,p2]
-    l2 = [p2,p3]
-    l3 = [p3,p1]
+    print('Punkte: ' + str(pkt))
+    l1 = [pkt[1],pkt[2]]
+    print('l1 = ' + str(l1))
+    l2 = [pkt[2],pkt[0]]
+    print('l2 = ' + str(l2))
+    l3 = [pkt[0],pkt[1]]
+    print('l3 = ' + str(l3))
     line1, = ax.plot(*zip(*l1))
+    name_line1 = ax.annotate(st[0], xy=((pkt[1][0]+pkt[0][0])/2,(pkt[1][1]+pkt[0][1])/2), xycoords='data',
+                             xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+
     line2, = ax.plot(*zip(*l2))
-    line3, = ax.plot(*zip(*l3))
+    name_line2 = ax.annotate(st[1], xy=((pkt[2][0]+pkt[1][0])/2,(pkt[2][1]+pkt[1][1])/2), xycoords='data',
+                             xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+    line3 = ax.plot(*zip(*l3))
+    name_line3 = ax.annotate(st[2], xy=((pkt[0][0]+pkt[2][0])/2,(pkt[0][1]+pkt[2][1])/2), xycoords='data',
+                             xytext=(+2,+2),  textcoords='offset points', fontsize=12)
     # point, = ax.plot(*p1, marker="o")
 
-    am1 = AngleAnnotation(p1, l1[1], l2[1], ax=ax, size=130, text=r"$\alpha$")
-    am2 = AngleAnnotation(p2, l2[1], l3[0], ax=ax, size=130, text=r"$\beta$")
-    am3 = AngleAnnotation(p3, l3[0], l1[0], ax=ax, size=130, text=r"$\gamma$")
+    am1 = AngleAnnotation(pkt[0], l2[1], l3[1], ax=ax, size=130, text=r'$' + wk[0] + '$')
+    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=130, text=r'$' + wk[1] + '$')
+    am3 = AngleAnnotation(pkt[2], l1[0], l2[0], ax=ax, size=130, text=r'$' + wk[2] + '$')
 
-    return plt.show()
+    plt.show()
+
+    return plt.savefig(name, dpi=300)
+
