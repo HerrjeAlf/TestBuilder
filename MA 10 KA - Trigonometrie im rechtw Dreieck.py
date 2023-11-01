@@ -5,20 +5,23 @@ from numpy.linalg import solve as slv
 import matplotlib.pyplot as plt
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
-from Dreiecke_konstruieren import dreieck_zeichen
+from flaechen_konstruieren import dreieck_zeichnen
 
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 fig = plt.Figure()
 
+
 def zzahl(p, q):
     k = random.choice([-1, 1]) * random.randint(p, q)
     return k
 
+
 def nzahl(p, q):
     k = random.randint(p, q)
     return k
+
 
 def vorz_str(k):
     if k < 0:
@@ -27,6 +30,7 @@ def vorz_str(k):
         k = '+' + latex(k)
     return k
 
+
 def vorz_str_minus(k):
     if k < 0:
         k = '(' + latex(k) + ')'
@@ -34,53 +38,44 @@ def vorz_str_minus(k):
         k = latex(k)
     return k
 
-def Graph(a, b, xwert, f, n, name):
-    ax = plt.gca()
-    ax.spines['top'].set_color('none')
-    ax.spines['right'].set_color('none')
-    ax.spines['bottom'].set_position(('data', 0))
-    ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
-    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(xwert, f.subs(x,xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points', fontsize=12)
-    plt.grid(True)
-    plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
-    plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
-    plt.axis([-6, 6, -6, 6])
-    plt.plot(a, b, linewidth=2)
-    return plt.savefig(name, dpi = 200)
-
 
 # Berechnung für die Aufgaben
 def kongruente_Dreiecke(nr, teilaufg):
     i = 0
     Punkte = 0
 
-    n = random.randint(1,5)
-    m = n + random.randint(1,5)
-    a_d = (m**2 - n**2)/10
-    b_d = 2*m*n/10
-    c_d = (m**2 + n**2)/10
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    a_d = (m ** 2 - n ** 2) / 10
+    b_d = 2 * m * n / 10
+    c_d = (m ** 2 + n ** 2) / 10
     gamma = 90
-    beta = int(math.degrees(math.asin(b_d/c_d)))
+    beta = int(math.degrees(math.asin(b_d / c_d)))
     alpha = gamma - beta
 
     auswahl = random.choice([['sss', 'a~=~' + str(a_d) + 'cm', 'b~=~' + str(b_d) + 'cm', 'c~=~' + str(c_d) + 'cm'],
-                             ['sws', 'a~=~' + str(a_d) + 'cm', 'b~=~' + str(b_d) + 'cm', r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['sws', 'b~=~' + str(b_d) + 'cm', 'c~=~' + str(c_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}'],
-                             ['sws', 'c~=~' + str(c_d) + 'cm', 'a~=~' + str(a_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
-                             ['wsw', 'a~=~' + str(a_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}', r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['wsw', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}', r' \gamma ~=~ ' + str(gamma) + r' ^{  \circ}'],
-                             ['wsw', 'c~=~' + str(c_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}', r' \beta ~=~ ' + str(beta) + r' ^{  \circ}'],
-                             ['sww', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}', r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
-                             ['sww', 'c~=~' + str(c_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}', r' \gamma ~=~' + str(gamma)+ r' ^{  \circ}'],
-                             ['sww', 'a~=~' + str(a_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}', r' \gamma ~=~' + str(gamma)+ r' ^{  \circ}'],
-                             ['Ssw', 'b~=~' + str(b_d) + 'cm', ' c ~=~' + str(c_d) + 'cm', r' \gamma ~=~' + str(gamma)+ r' ^{  \circ}'],
-                             ['Ssw', 'a~=~' + str(a_d) + 'cm', ' c ~=~' + str(c_d) + 'cm', r' \gamma ~=~' + str(gamma)+ r' ^{  \circ}']])
+                             ['sws', 'a~=~' + str(a_d) + 'cm', 'b~=~' + str(b_d) + 'cm',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['sws', 'b~=~' + str(b_d) + 'cm', 'c~=~' + str(c_d) + 'cm',
+                              r' \alpha ~=~' + str(alpha) + r' ^{  \circ}'],
+                             ['sws', 'c~=~' + str(c_d) + 'cm', 'a~=~' + str(a_d) + 'cm',
+                              r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
+                             ['wsw', 'a~=~' + str(a_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['wsw', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                              r' \gamma ~=~ ' + str(gamma) + r' ^{  \circ}'],
+                             ['wsw', 'c~=~' + str(c_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                              r' \beta ~=~ ' + str(beta) + r' ^{  \circ}'],
+                             ['sww', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                              r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
+                             ['sww', 'c~=~' + str(c_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['sww', 'a~=~' + str(a_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['Ssw', 'b~=~' + str(b_d) + 'cm', ' c ~=~' + str(c_d) + 'cm',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['Ssw', 'a~=~' + str(a_d) + 'cm', ' c ~=~' + str(c_d) + 'cm',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}']])
 
     # print('a = ' + str(a))
     # print('a = ' + str(a))
@@ -91,32 +86,37 @@ def kongruente_Dreiecke(nr, teilaufg):
     # print('alpha = ' + str(alpha))
     print(auswahl)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
     aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~' + str(auswahl[3]) + r'.')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Nenne den Kongruenzsatz, nach dem das Dreieck kongruent ist. \n\n')
+        aufgabe.append(str(teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad ' + str(auswahl[0]) + r' \quad (1P) ~')
         Punkte += 1
         i += 1
     if b in teilaufg:
         aufgabe.append(str(teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Planskizze} ~(2P), \quad ' + str(auswahl[1]) + '~(1P),~' + str(auswahl[2]) + '~(1P),~' +
-                                                str(auswahl[3]) + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} '
-                                                                  r' ~(2P)')
+        loesung.append(
+            str(teilaufg[i]) + r') \quad \mathrm{Planskizze} ~(2P), \quad ' + str(auswahl[1]) + '~(1P),~' + str(
+                auswahl[2]) + '~(1P),~' +
+            str(auswahl[3]) + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} '
+                              r' ~(2P)')
         Punkte += 7
         i += 1
     return aufgabe, loesung, Punkte
+
+
 def rechtwinkliges_dreieck(nr, teilaufg):
     i = 0
     Punkte = 0
 
-    n = random.randint(1,5)
-    m = n + random.randint(1,5)
-    s_1 = (m**2 - n**2)/10
-    s_2 = 2*m*n/10
-    s_3 = (m**2 + n**2)/10
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    s_1 = (m ** 2 - n ** 2) / 10
+    s_2 = 2 * m * n / 10
+    s_3 = (m ** 2 + n ** 2) / 10
     print(s_1)
     print(s_2)
     print(s_3)
@@ -132,38 +132,46 @@ def rechtwinkliges_dreieck(nr, teilaufg):
                              ['c', 'b', 'a', r' \gamma ', r' \beta ', r' \alpha ']])
     print(auswahl)
     if random.random() < 0.33:
-        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[1]) + '~=~' + str(s_2) + r'cm, ~ \mathrm{und} ~'
-                    + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[1]) + '~=~' + str(
+            s_2) + r'cm, ~ \mathrm{und} ~'
+                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
                      + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(auswahl[2])
                      + r'~=~ \sqrt{ (' + str(s_1) + r'cm)^2 ~+~ (' + str(s_2) + r'cm)^2 } ~=~'
                      + str(s_3) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
     elif random.random() < 0.66:
-        aufgabe_1 = (str(auswahl[1]) + '~=~' + str(s_2) + r'cm,~' + str(auswahl[2]) + '~=~' + str(s_3) + r'cm, ~ \mathrm{und} ~'
-                    + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[1]) + '~=~' + str(s_2) + r'cm,~' + str(auswahl[2]) + '~=~' + str(
+            s_3) + r'cm, ~ \mathrm{und} ~'
+                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
-                     + r'^2 \quad \vert -' + str(auswahl[1]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(auswahl[0])
+                     + r'^2 \quad \vert -' + str(auswahl[1]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(
+                    auswahl[0])
                      + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ (' + str(s_2) + r'cm)^2 } ~=~' + str(s_1)
                      + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
     else:
-        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[2]) + '~=~' + str(s_3) + r'cm, ~ \mathrm{und} ~'
-                    + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[2]) + '~=~' + str(
+            s_3) + r'cm, ~ \mathrm{und} ~'
+                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
-                     + r'^2 \quad \vert -' + str(auswahl[0]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(auswahl[1])
+                     + r'^2 \quad \vert -' + str(auswahl[0]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(
+                    auswahl[1])
                      + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ (' + str(s_1) + r'cm)^2 } ~=~' + str(s_2)
                      + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n','Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:']
     aufgabe.append(aufgabe_1)
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an. \n\n')
+        aufgabe.append(str(
+            teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad ' + loesung_1)
         Punkte += 5
         i += 1
 
     return aufgabe, loesung, Punkte
+
 
 def verhaeltnisgleichgungen(nr, teilaufg):
     i = 0
@@ -171,37 +179,48 @@ def verhaeltnisgleichgungen(nr, teilaufg):
 
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
+    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
     l_a = (m ** 2 - n ** 2) / 10
-    l_b= 2 * m * n / 10
+    l_b = 2 * m * n / 10
     l_c = (m ** 2 + n ** 2) / 10
-    pkt = [[0,0], [l_c,0], [(l_b**2)/l_c,l_a*l_b/l_c]]
-    st = random.choice([['a','b','c'], ['d','e','f'], ['g','k','l'],
-                        ['m','n','p'], ['r','s','t'], ['u','v','w'], ['x','y','z']])
+    # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
+    pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+    print('Aufgabe 3 - Länge Seite a: ' + str(l_a))
+    print('Aufgabe 3 - Länge Seite b: ' + str(l_b))
+    print('Aufgabe 3 - Länge Seite c: ' + str(l_c))
+    auswahl_beschriftung = random.randint(0, 6)
+    seitenbezeichnung = ([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'k', 'l'],
+                          ['m', 'n', 'p'], ['r', 's', 't'], ['u', 'v', 'w'], ['x', 'y', 'z']])
+    punktbezeichung = ([['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'K', 'L'],
+                         ['M', 'N', 'P'], ['R', 'S', 'T'], ['U', 'V', 'W'], ['X', 'Y', 'Z']])
+    st = seitenbezeichnung[auswahl_beschriftung]
+    pkt_bez = punktbezeichung[auswahl_beschriftung]
 
     name = 'Aufgabe_' + str(nr)
     grafik = 'Aufgabe_' + str(nr) + '.png'
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        dreieck_zeichen(pkt, st, [r'\alpha',r'\beta',r'90^{ \circ}'], name)
+        dreieck_zeichnen(pkt, pkt_bez, st, [r'\alpha', r'\beta', r'90^{ \circ}'], name)
         auswahl_winkel = random.choice(['Alpha', 'Beta'])
         if auswahl_winkel == 'Alpha':
-            loesungen = (r' \mathrm{sin \alpha ~=~ \frac{' + st[0] + '}{' + st[2] + '},'
-                               r'\quad cos \alpha ~=~ \frac{' + st[1] + '}{' + st[2] + '},'
-                               r'\quad tan \alpha ~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
+            loesungen = (r' \mathrm{sin \alpha ~=~ \frac{' + st[0] + '}{' + st[2] + r'}, \quad cos \alpha ~=~ \frac{'
+                         + st[1] + '}{' + st[2] + r'}, \quad tan \alpha ~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
         else:
-            loesungen = (r' \mathrm{sin \beta ~=~ \frac{' + st[1] + '}{' + st[2] + '}, '
-                               r'\quad cos \beta ~=~ \frac{' + st[0] + '}{' + st[2] + '},'
-                               r'\quad tan \beta ~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
+            loesungen = (r' \mathrm{sin \beta ~=~ \frac{' + st[1] + '}{' + st[2] + r'}, \quad cos \beta ~=~ \frac{'
+                         + st[0] + '}{' + st[2] + r'}, \quad tan \beta ~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
 
-        aufgabe.append(str(teilaufg[i]) + f') Gib den Sinus, Kosinus und Tangens von {auswahl_winkel} als Seitenverhältnis an. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P) \\')
+        aufgabe.append(str(
+            teilaufg[i]) + f') Gib den Sinus, Kosinus und Tangens von {auswahl_winkel} als Seitenverhältnis an. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
 
         i += 1
         Punkte += 3
 
     return aufgabe, loesung, Punkte, grafik
+
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a]),
@@ -218,6 +237,8 @@ Klasse = '10'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 04 - Verhältnisgleichungen im rechtw. Dreieck'
 Teil = 'Gr. A'
+
+
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
@@ -240,7 +261,7 @@ def Hausaufgabenkontrolle():
             elif 'Abbildung' in elements:
                 Aufgabe.append(elements)
                 with Aufgabe.create(Figure(position='h!')) as graph:
-                    graph.add_image(aufgabe[3], width='200px')
+                    graph.add_image(aufgabe[3], width='300px')
             else:
                 Aufgabe.append(elements)
 
@@ -250,6 +271,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(NewPage())
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+
 
 # Erwartungshorizont
 def Erwartungshorizont():

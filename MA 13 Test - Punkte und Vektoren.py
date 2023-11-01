@@ -402,7 +402,7 @@ Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
 Art = 'Test - Einstieg Vektorrechnung'
-Teil = 'Gr. B'
+Teil = 'Probe 02'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
