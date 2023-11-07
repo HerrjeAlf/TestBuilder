@@ -301,7 +301,6 @@ def Erwartungshorizont():
 
     Loesung.append('\n\n')
     Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
-    Loesung.append(NewPage())
 
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 # Druck der Seiten

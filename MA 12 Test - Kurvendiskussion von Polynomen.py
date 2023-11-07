@@ -116,7 +116,7 @@ def erstellen(Teil):
         fkt_f_c3 = fkt_f_a3 + fkt_f_b3
         fkt_f_b4 = nst_f_1 * fkt_f_c3
         fkt_f_c4 = fkt_f_a4 + fkt_f_b4
-
+        grafik = ' '
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
                    r' f(x)~=~' + latex(fkt_f)]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
@@ -128,19 +128,19 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + latex(fkt_f) + '~=~' + \
                            latex(grenzwert_f_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} ' + \
-                           latex(fkt_f) + '~=~' + latex(grenzwert_f_min) + r' \quad (2P) \\')
+                           latex(fkt_f) + '~=~' + latex(grenzwert_f_min) + r' \quad (2P) \\\\')
             Punkte += 2
             i += 1
 
         if b in teilaufg:
             fkt_f_sym = fkt_f.subs(x, -x)
             if fkt_f_sym == fkt_f:
-                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3P) \\')
+                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3P) \\\\')
             elif fkt_f_sym == -1 * fkt_f:
-                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3P) \\')
+                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3P) \\\\')
             else:
                 lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
-                                                         r'\mathrm{nicht~symmetrisch} \quad (3P) \\')
+                                                         r'\mathrm{nicht~symmetrisch} \quad (3P) \\\\')
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + lsg)
 
@@ -161,16 +161,16 @@ def erstellen(Teil):
                                              + r' \quad (2P) \\')
             loesung.append('(' + latex(fkt_f) + r')~ \div ~(x' + vorz_str(-1 * nst_f_1) + ')~=~'
                            + latex(fkt_f_partial) + r' \quad (4P) \\')
-            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) + \
+            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) +
                           r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
-            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' + \
-                          r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) + \
+            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
+                          r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) +
                           r'} \quad (2P) \\')
-            loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' + \
+            loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
-            loesung.append(r'S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad S_{x_1}(' + latex(nst_f_1) + \
-                          r' \vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3)) + r' \vert 0) \quad S_y(0 \vert ' + \
-                          latex(s_fkt_f) + r') \quad (4P) \\')
+            loesung.append(r'S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad S_{x_1}(' + latex(nst_f_1) +
+                          r' \vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3)) + r' \vert 0) \quad S_y(0 \vert ' +
+                          latex(s_fkt_f) + r') \quad (4P) \\\\')
 
             Punkte += 16
             i += 1
@@ -206,10 +206,10 @@ def erstellen(Teil):
 
             if fkt_f_2.subs(x, x_2_fkt_f_1) < 0:
                 loesung_f_monotonie_2 = r'~<~0~ \to HP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
-                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\'
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\'
             else:
                 loesung_f_monotonie_2 = r'~>~0~ \to TP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
-                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\'
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\'
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrema der Funktion f und deren Art'
                                               ' mithilfe des hinreichenden Kriteriums. \n\n')
@@ -230,21 +230,32 @@ def erstellen(Teil):
             Punkte += 12
             i += 1
 
-        # Graphen zeichen
+        if e in teilaufg:
+            xwert_Wendepunkt = Rational(2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3), 6 * faktor_f)
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                           + fkt_f_2_str + r' \quad \vert ~-~' + vorz_str_minus(-2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3))
+                           + r' \quad \vert \div ' + vorz_str_minus(6 * faktor_f) + r' \quad \to \quad x_1~=~'
+                           + latex(xwert_Wendepunkt) + r' \quad (2P) \\')
+            loesung.append(r' f^{ \prime \prime \prime }(' + latex(xwert_Wendepunkt) + r') \quad \neq 0 \quad \to \quad WP('
+                           + latex(xwert_Wendepunkt) + r' \vert ' + latex(round(fkt_f.subs(x, xwert_Wendepunkt), 3))
+                           + r') \quad (3P) \\\\')
+            Punkte += 5
+            i += 1
+        if f in teilaufg:
+            xmin_f = round(nst_f_3 - 0.1, 0)
+            xmax_f = round(nst_f_2 + 0.1, 0)
 
-        if abs(fkt_f.subs(x, x_1_fkt_f_1)) > abs(fkt_f.subs(x, x_2_fkt_f_1)):
-            ymax = int(abs(fkt_f.subs(x, x_1_fkt_f_1)))
-        else:
-            ymax = int(abs(fkt_f.subs(x, x_2_fkt_f_1)))
-        xwerte = [-6 + n / 20 for n in range(240)]
-        ywerte = [fkt_f.subs(x, xwerte[i]) for i in range(240)]
-        Graph(xwerte,ywerte, ymax, nst_f_1,fkt_f,r'Dargestellt ist der Graph von: '
-              r'\ $f(x) =' + latex(fkt_f) + '$', 'f', 'Aufgabe_1')
-        # plt.show()
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}]. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') Die folgende Abbildung zeigt die Lösung. (5P) \\')
+            grafik = plot(fkt_f, (x,xmin_f,xmax_f) ,show=True)
 
-        return [aufgabe, loesung, Punkte]
+            Punkte += 5
+            i += 1
 
-    aufgaben = [kurvendiskussion(1, [d])]
+        return [aufgabe, loesung, Punkte, grafik]
+
+    aufgaben = [kurvendiskussion(1, [a,b,c,d,e])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -301,6 +312,7 @@ def erstellen(Teil):
         Loesung.append('\n\n')
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
+        Loesung.append(NewPage())
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
