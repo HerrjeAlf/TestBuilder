@@ -30,54 +30,221 @@ def vorz_str_minus(k):
     else:
         return latex(k)
 
-def erstellen(Teil):
-    print(f'\n\033[1;35mHAK {Teil}\033[0m')
+def Graph(xwerte, ywerte, ymax, xwert, f, titel, n, name):
+    fig, ax = plt.subplots()
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['left'].set_position(('data', 0))
+    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+                 fontsize=12)
+    plt.grid(True)
+    plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
+    plt.yticks(np.linspace(- ymax, ymax, 11, endpoint=True))
+    plt.axis([-6, 6, -ymax+1, ymax+1])
+    plt.plot(xwerte, ywerte, linewidth=2)
+    plt.suptitle(titel, usetex=True)
+    fig.tight_layout()
+    return plt.savefig(name, dpi=200)
 
-    def Graph(a, b, xwert, f, titel, n, name):
-        ax = plt.gca()
-        ax.spines['top'].set_color('none')
-        ax.spines['right'].set_color('none')
-        ax.spines['bottom'].set_position(('data', 0))
-        ax.spines['left'].set_position(('data', 0))
-        ax.set_xlabel('Ost', size=10, labelpad=-24, x=1.03)
-        ax.set_ylabel('Höhe', size=10, labelpad=-21, y=1.02, rotation=0)
-        ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-        arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-        ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-        ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-        plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
-                     fontsize=12)
-        plt.grid(True)
-        plt.xticks(np.linspace(0, 8, 9, endpoint=True))
-        plt.yticks(np.linspace(1, 5, 5, endpoint=True))
-        plt.axis([-1, 9, 0, 6])
-        plt.plot(a, b, linewidth=2)
-        plt.suptitle(titel, usetex=True)
-        return plt.savefig(name, dpi=200)
+def erstellen(Teil):
+    print(f'\n\033[1;35m{Teil}\033[0m')
 
     def kurvendiskussion(nr, teilaufg):
+        liste_teilaufg = [a, b, c, d, e, f, g]
         i = 0
         Punkte = 0
-        xwert_Extrema = zzahl(1,4)
-        ywert_Extrema = zzahl(1,4)
-        if xwert_Extrema < 0:
-            xwert_Wendepunkt = xwert_Extrema + nzahl(1,3)
+
+        if random.random() < 0.5:
+            nst_f_1 = zzahl(0,2)
+            nst_f_2 = nst_f_1 + nzahl(1, 2) + 0.5
+            nst_f_3 = nst_f_1 - nzahl(2, 3) - 0.5
+            faktor_f = zzahl(2,8) / 2
+
+            fkt_f = expand(faktor_f * (x - nst_f_1) * (x - nst_f_2) * (x - nst_f_3))
+            fkt_f_a1 = faktor_f
+            fkt_f_a2 = -1 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3)
+            fkt_f_a3 = faktor_f * ((nst_f_1 * nst_f_2) + (nst_f_1 * nst_f_3) + (nst_f_2 * nst_f_3))
+            fkt_f_a4 = -1 * faktor_f * nst_f_1 * nst_f_2 * nst_f_3
+
+            fkt_f_partial = expand(faktor_f * (x - nst_f_2) * (x - nst_f_3))
+            fkt_f_partial_pq = expand((x - nst_f_2) * (x - nst_f_3))
+            fkt_f_partial_p = -1 * (nst_f_2 + nst_f_3)
+            fkt_f_partial_q = (nst_f_2 * nst_f_3)
+
+            fkt_f_1 = expand(diff(fkt_f, x, 1))
+            fkt_f_1_pq = 'x^2' + vorz_str(Rational(-2 * (nst_f_1 + nst_f_2 + nst_f_3), 3)) + \
+                         'x~' + vorz_str(Rational((nst_f_1 * (nst_f_2 + nst_f_3)) + (nst_f_2 * nst_f_3), 3))
+            p_fkt_f_1_pq = Rational(-2 * (nst_f_1 + nst_f_2 + nst_f_3), 3)
+            q_fkt_f_1_pq = Rational((nst_f_1 * (nst_f_2 + nst_f_3)) + (nst_f_2 * nst_f_3), 3)
+            s_fkt_f = -1 * faktor_f * nst_f_1 * nst_f_2 * nst_f_3
+
         else:
-            xwert_Wendepunkt = xwert_Extrema - nzahl(1,3)
+            nst_f_1 = zzahl(0,2)
+            quadr_nst_23 = nzahl(2, 25)
+            nst_f_2 = math.sqrt(quadr_nst_23)
+            nst_f_3 = -1 * nst_f_2
+            faktor_f = zzahl(2,8) / 2
+
+            fkt_f = expand(faktor_f * (x - nst_f_1) * (x - nst_f_2) * (x - nst_f_3))
+            fkt_f_a1 = faktor_f
+            fkt_f_a2 = -1 * faktor_f * nst_f_1
+            fkt_f_a3 = faktor_f * (-1 * quadr_nst_23)
+            fkt_f_a4 = faktor_f * nst_f_1 * quadr_nst_23
+
+            fkt_f_partial = faktor_f * (x ** 2 - quadr_nst_23)
+            fkt_f_partial_pq = x ** 2 - quadr_nst_23
+            fkt_f_partial_p = 0
+            fkt_f_partial_q = -1 * quadr_nst_23
+
+            fkt_f_1 = expand(diff(fkt_f, x, 1))
+            fkt_f_1_pq = 'x^2' + vorz_str(Rational(-2 * nst_f_1, 3)) + \
+                         'x~' + vorz_str(Rational(quadr_nst_23, -3))
+            p_fkt_f_1_pq = Rational((-2 * nst_f_1), 3)
+            q_fkt_f_1_pq = Rational(-1 * quadr_nst_23, 3)
+            s_fkt_f = - 1 * faktor_f * nst_f_1 * quadr_nst_23
+
+        fkt_f_b2 = nst_f_1 * fkt_f_a1
+        fkt_f_c2 = fkt_f_a2 + fkt_f_b2
+        fkt_f_b3 = nst_f_1 * fkt_f_c2
+        fkt_f_c3 = fkt_f_a3 + fkt_f_b3
+        fkt_f_b4 = nst_f_1 * fkt_f_c3
+        fkt_f_c4 = fkt_f_a4 + fkt_f_b4
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
+                   r' f(x)~=~' + latex(fkt_f)]
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         if a in teilaufg:
-            A = numpy.array([[xwert_Extrema ** 3, xwert_Extrema ** 2, xwert_Extrema, 1],
-                             [xwert_Wendepunkt ** 3, xwert_Wendepunkt ** 2, xwert_Wendepunkt, 1],
-                             [3 * (xwert_Extrema ** 2), 2 * xwert_Extrema, 1, 0],
-                             [6* xwert_Wendepunkt, 2, 0, 0]])
-            lv = numpy.array([ywert_Extrema, 0, 0, 0])
+            grenzwert_f_min = limit(fkt_f, x, -oo)
+            grenzwert_f_pos = limit(fkt_f, x, oo)
 
-            Punkte += 6
+            aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + latex(fkt_f) + '~=~' + \
+                           latex(grenzwert_f_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} ' + \
+                           latex(fkt_f) + '~=~' + latex(grenzwert_f_min) + r' \quad (2P) \\')
+            Punkte += 2
             i += 1
+
+        if b in teilaufg:
+            fkt_f_sym = fkt_f.subs(x, -x)
+            if fkt_f_sym == fkt_f:
+                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3P) \\')
+            elif fkt_f_sym == -1 * fkt_f:
+                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3P) \\')
+            else:
+                lsg = (r') \quad f(-x)~=~' + latex(fkt_f_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
+                                                         r'\mathrm{nicht~symmetrisch} \quad (3P) \\')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + lsg)
+
+            Punkte += 3
+            i += 1
+
+        if c in teilaufg:
+            table2 = Tabular('c|c|c|c', row_height=1.2)
+            table2.add_row(' ', fkt_f_a2, fkt_f_a3, fkt_f_a4)
+            table2.add_hline(1, 4)
+            table2.add_row(' ', fkt_f_b2, fkt_f_b3, fkt_f_b4)
+            table2.add_hline(1, 4)
+            table2.add_row(fkt_f_a1, fkt_f_c2, fkt_f_c3, fkt_f_c4)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i])+ r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + latex(fkt_f)
+                                             + r' \quad \mathrm{durch~probieren:~x_1~=~}' + latex(nst_f_1)
+                                             + r' \quad (2P) \\')
+            loesung.append('(' + latex(fkt_f) + r')~ \div ~(x' + vorz_str(-1 * nst_f_1) + ')~=~'
+                           + latex(fkt_f_partial) + r' \quad (4P) \\')
+            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) + \
+                          r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
+            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' + \
+                          r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) + \
+                          r'} \quad (2P) \\')
+            loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' + \
+                          latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
+            loesung.append(r'S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad S_{x_1}(' + latex(nst_f_1) + \
+                          r' \vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3)) + r' \vert 0) \quad S_y(0 \vert ' + \
+                          latex(s_fkt_f) + r') \quad (4P) \\')
+
+            Punkte += 16
+            i += 1
+
+        if d in teilaufg:
+            x_12_fkt_f_1 = solve(fkt_f_1, x)
+            x_1_fkt_f_1 = round(x_12_fkt_f_1[0], 3)
+            x_2_fkt_f_1 = round(x_12_fkt_f_1[1], 3)
+
+            fkt_f_2 = expand(diff(fkt_f, x, 2))
+            fkt_f_2_str = latex(6 * faktor_f) + 'x~' + vorz_str(-2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3))
+            fkt_f_3 = expand(diff(fkt_f, x, 3))
+
+            print('x_1: ' + str(nst_f_1))
+            print('x_2: ' + str(nst_f_2))
+            print('x_3: ' + str(nst_f_3))
+            print('Funktion: f(x)=' + str(fkt_f))
+            print('1. Ableitung: f_1(x)=' + str(fkt_f_1))
+            print('pq - Form: 0=' + str(fkt_f_1_pq))
+            print('p-Wert 1. Ableitung: ' + str(p_fkt_f_1_pq))
+            print('q-Wert 1. Ableitung: ' + str(q_fkt_f_1_pq))
+            print('Loesung der pq-Formel -> x_1=' + str(x_1_fkt_f_1))
+            print('Loesung der pq-Formel -> x_2=' + str(x_2_fkt_f_1))
+            print('2. Ableitung: ' + str(fkt_f_2))
+            print('3. Ableitung: f_1(x)=' + str(fkt_f_3))
+
+            if fkt_f_2.subs(x, x_1_fkt_f_1) < 0:
+                loesung_f_monotonie_1 = r'~<~0~ \to HP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\'
+            else:
+                loesung_f_monotonie_1 = r'~>~0~ \to TP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\'
+
+            if fkt_f_2.subs(x, x_2_fkt_f_1) < 0:
+                loesung_f_monotonie_2 = r'~<~0~ \to HP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\'
+            else:
+                loesung_f_monotonie_2 = r'~>~0~ \to TP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\'
+
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrema der Funktion f und deren Art'
+                                              ' mithilfe des hinreichenden Kriteriums. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime }(x) ~=~' + latex(fkt_f_1)
+                           + r' \quad f^{ \prime \prime }(x) ~=~' + latex(fkt_f_2)
+                           + r' \quad f^{ \prime \prime \prime } (x) ~=~' + latex(fkt_f_3) + r' \quad (3P) \\')
+            loesung.append(r' f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + latex(fkt_f_1) + r' \vert ~ \div '
+                           + vorz_str_minus(3 * faktor_f) + r' \quad (1P) \\')
+            loesung.append(r' 0~=~ ' + fkt_f_1_pq + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
+                           + vorz_str_minus(p_fkt_f_1_pq) + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
+                           + latex(p_fkt_f_1_pq) + r'}{2} \Big)^2-' + vorz_str_minus(q_fkt_f_1_pq) + r'} \quad (3P) \\')
+            loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
+                           + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
+            loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
+                           + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
+            loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
+                           + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
+            Punkte += 12
+            i += 1
+
+        # Graphen zeichen
+
+        if abs(fkt_f.subs(x, x_1_fkt_f_1)) > abs(fkt_f.subs(x, x_2_fkt_f_1)):
+            ymax = int(abs(fkt_f.subs(x, x_1_fkt_f_1)))
+        else:
+            ymax = int(abs(fkt_f.subs(x, x_2_fkt_f_1)))
+        xwerte = [-6 + n / 20 for n in range(240)]
+        ywerte = [fkt_f.subs(x, xwerte[i]) for i in range(240)]
+        Graph(xwerte,ywerte, ymax, nst_f_1,fkt_f,r'Dargestellt ist der Graph von: '
+              r'\ $f(x) =' + latex(fkt_f) + '$', 'f', 'Aufgabe_1')
+        # plt.show()
 
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [kurvendiskussion(1, [a])]
+    aufgaben = [kurvendiskussion(1, [d])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -86,7 +253,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Anwendungen der Ableitung'
+    Art = 'HAK 05 - Kurvendiskussion von Polynomen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -117,10 +284,6 @@ def erstellen(Teil):
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-        Aufgabe.append(' \n\n')
-        with Aufgabe.create(Figure(position='h!')) as graph:
-            graph.add_image(r'Aufgabe_3.png', width='400px')
-            # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png' wechseln
 
         Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
@@ -140,15 +303,13 @@ def erstellen(Teil):
 
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
-        plt.cla()
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-
-anzahl_HAKs = 1
-probe = True
+anzahl_HAKs = 2
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:

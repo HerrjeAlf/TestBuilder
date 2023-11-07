@@ -85,7 +85,6 @@ def erstellen(Teil):
         if a in teilaufg:
             aufgabe.append(str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
                                               f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
-
             dy = y_wert_2 - y_wert_1
             dx = x_wert_2 - x_wert_1
             fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
