@@ -189,12 +189,19 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     print('Aufgabe 3 - Länge Seite b: ' + str(l_b))
     print('Aufgabe 3 - Länge Seite c: ' + str(l_c))
     auswahl_beschriftung = random.randint(0, 6)
-    seitenbezeichnung = ([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'k', 'l'],
-                          ['m', 'n', 'p'], ['r', 's', 't'], ['u', 'v', 'w'], ['x', 'y', 'z']])
-    punktbezeichung = ([['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'K', 'L'],
-                         ['M', 'N', 'P'], ['R', 'S', 'T'], ['U', 'V', 'W'], ['X', 'Y', 'Z']])
-    st = seitenbezeichnung[auswahl_beschriftung]
-    pkt_bez = punktbezeichung[auswahl_beschriftung]
+    bezeichnungen = [
+        {'Punkte' : ['A', 'B', 'C'] ,'Seiten' : ['a', 'b', 'c'], 'Winkel' : [r'\alpha',r'\beta',r'90^{ \circ}']},
+        {'Punkte' : ['D', 'E', 'F'] ,'Seiten' : ['d', 'e', 'f'], 'Winkel' : [r'\delta',r'\epsilon',r'90^{ \circ}']},
+        {'Punkte' : ['G', 'K', 'L'] ,'Seiten' : ['g', 'k', 'l'], 'Winkel' : [r'\zeta',r'\eta',r'90^{ \circ}']},
+        {'Punkte' : ['M', 'N', 'P'] ,'Seiten' : ['m', 'n', 'p'], 'Winkel' : [r'\mu',r'\nu',r'90^{ \circ}']},
+        {'Punkte' : ['R', 'S', 'T'] ,'Seiten' : ['r', 's', 't'], 'Winkel' : [r'\rho',r'\sigma',r'90^{ \circ}']},
+        {'Punkte' : ['U', 'V', 'W'] ,'Seiten' : ['u', 'v', 'w'], 'Winkel' : [r'\upsilon',r'\phi',r'90^{ \circ}']},
+        {'Punkte' : ['X', 'Y', 'Z'] ,'Seiten' : ['x', 'y', 'z'], 'Winkel' : [r'\chi',r'\psi',r'90^{ \circ}']}]
+
+
+    pkt_bez = bezeichnungen[auswahl_beschriftung]['Punkte']
+    st = bezeichnungen[auswahl_beschriftung]['Seiten']
+    wk = [r'\alpha', r'\beta', r'90^{ \circ}' ]
 
     name = 'Aufgabe_' + str(nr)
     grafik = 'Aufgabe_' + str(nr) + '.png'
@@ -203,17 +210,22 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        dreieck_zeichnen(pkt, pkt_bez, st, [r'\alpha', r'\beta', r'90^{ \circ}'], name)
-        auswahl_winkel = random.choice(['Alpha', 'Beta'])
-        if auswahl_winkel == 'Alpha':
-            loesungen = (r' \mathrm{sin \alpha ~=~ \frac{' + st[0] + '}{' + st[2] + r'}, \quad cos \alpha ~=~ \frac{'
-                         + st[1] + '}{' + st[2] + r'}, \quad tan \alpha ~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
+        aufgabe.append(str(teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
+        dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
+        p = random.choice([0,1])
+        if p == 0:
+            aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
+            loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
+                         + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
+                         + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
         else:
-            loesungen = (r' \mathrm{sin \beta ~=~ \frac{' + st[1] + '}{' + st[2] + r'}, \quad cos \beta ~=~ \frac{'
-                         + st[0] + '}{' + st[2] + r'}, \quad tan \beta ~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
+            aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
+            loesungen = (r' \mathrm{sin(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[2]
+                         + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
+                         + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
 
-        aufgabe.append(str(
-            teilaufg[i]) + f') Gib den Sinus, Kosinus und Tangens von {auswahl_winkel} als Seitenverhältnis an. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
 
         i += 1

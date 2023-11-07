@@ -324,7 +324,7 @@ def vektorrechnung(nr, teilaufg):
                             + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
         ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
         laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
-                            + latex(N(sqrt(sum(a*a for a in vektor_tb)),3))
+                            + latex(N(sqrt(sum(a*a for a in vektor_tb)),3)))
         ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
         # print('vektor A = ' + str(vektor_a))
         # print('vektor B = ' + str(vektor_b))
@@ -356,7 +356,7 @@ def vektorrechnung(nr, teilaufg):
         vektor_at = vektor_t - np.array(vektor_a)
         vektor_tb = vektor_b - vektor_t
         laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),3)) + '} ~=~'
-                            + latex(N(sqrt(sum(a*a for a in vektor_at)),3))
+                            + latex(N(sqrt(sum(a*a for a in vektor_at)),3)))
         laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
