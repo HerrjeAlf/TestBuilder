@@ -227,7 +227,7 @@ def erstellen(Teil):
                            + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
             loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
                            + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
-            Punkte += 12
+            Punkte += 15
             i += 1
 
         if e in teilaufg:
@@ -248,14 +248,15 @@ def erstellen(Teil):
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}]. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') Die folgende Abbildung zeigt die Lösung. (5P) \\')
-            grafik = plot(fkt_f, (x,xmin_f,xmax_f) ,show=True)
-
+            plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
+            plt.savefig(f'Aufgabe_{nr}', dpi=200)
+            grafik = f'Aufgabe_{nr}'
             Punkte += 5
             i += 1
 
         return [aufgabe, loesung, Punkte, grafik]
 
-    aufgaben = [kurvendiskussion(1, [a,b,c,d,e])]
+    aufgaben = [kurvendiskussion(1, [a,b,c,d,e,f])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -313,6 +314,8 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.append(NewPage())
+        with Loesung.create(Figure(position='h!')) as graph:
+            graph.add_image(loesung[3], width='300px')
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
