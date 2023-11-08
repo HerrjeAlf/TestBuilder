@@ -10,6 +10,7 @@ from sympy import *
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 fig = plt.Figure()
 
 def zzahl(p, q):
@@ -57,7 +58,6 @@ def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
 
     def kurvendiskussion(nr, teilaufg):
-        liste_teilaufg = [a, b, c, d, e, f, g]
         i = 0
         Punkte = 0
 
