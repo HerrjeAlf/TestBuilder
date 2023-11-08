@@ -31,29 +31,6 @@ def vorz_str_minus(k):
     else:
         return latex(k)
 
-def Graph(xwerte, ywerte, ymax, xwert, f, titel, n, name):
-    fig, ax = plt.subplots()
-    ax.spines['top'].set_color('none')
-    ax.spines['right'].set_color('none')
-    ax.spines['bottom'].set_position(('data', 0))
-    ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
-    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
-                 fontsize=12)
-    plt.grid(True)
-    plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
-    plt.yticks(np.linspace(- ymax, ymax, 11, endpoint=True))
-    plt.axis([-6, 6, -ymax+1, ymax+1])
-    plt.plot(xwerte, ywerte, linewidth=2)
-    plt.suptitle(titel, usetex=True)
-    fig.tight_layout()
-    return plt.savefig(name, dpi=200)
-
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
 
@@ -116,7 +93,7 @@ def erstellen(Teil):
         fkt_f_c3 = fkt_f_a3 + fkt_f_b3
         fkt_f_b4 = nst_f_1 * fkt_f_c3
         fkt_f_c4 = fkt_f_a4 + fkt_f_b4
-        grafik = ' '
+
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
                    r' f(x)~=~' + latex(fkt_f)]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
@@ -243,14 +220,30 @@ def erstellen(Teil):
             Punkte += 5
             i += 1
         if f in teilaufg:
-            xmin_f = round(nst_f_3 - 0.1, 0)
-            xmax_f = round(nst_f_2 + 0.1, 0)
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}]. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') Die folgende Abbildung zeigt die Lösung. (5P) \\')
-            plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
+            xmin_f = round(nst_f_3 - 0.4, 0)
+            xmax_f = round(nst_f_2 + 0.4, 0)
+            xwerte = np.arange(xmin_f,xmax_f,0.01)
+            ywerte = [fkt_f.subs(x, elements) for elements in xwerte]
+            # plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
+            fig, ax = plt.subplots()
+            ax.spines['top'].set_color('none')
+            ax.spines['right'].set_color('none')
+            ax.spines['bottom'].set_position(('data', 0))
+            ax.spines['left'].set_position(('data', 0))
+            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+            plt.plot(xwerte,ywerte)
+            plt.grid(True)
             plt.savefig(f'Aufgabe_{nr}', dpi=200)
             grafik = f'Aufgabe_{nr}'
+            plt.figure().clear()
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}]. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)} \\')
+
             Punkte += 5
             i += 1
 
@@ -309,13 +302,12 @@ def erstellen(Teil):
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 for elements in loesung[1]:
                     agn.append(elements)
+        with Loesung.create(Figure(position='h!')) as graph:
+            graph.add_image(loesung[3], width='300px')
 
         Loesung.append('\n\n')
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.append(NewPage())
-        with Loesung.create(Figure(position='h!')) as graph:
-            graph.add_image(loesung[3], width='300px')
 
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
