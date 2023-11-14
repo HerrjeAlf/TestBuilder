@@ -10,6 +10,7 @@ from flaechen_konstruieren import dreieck_zeichnen
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n']
 fig = plt.Figure()
 
 
@@ -92,14 +93,14 @@ def kongruente_Dreiecke(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + str(auswahl[0]) + r' \quad (1P) ~')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[0]) + r' \quad (1P) ~')
         Punkte += 1
         i += 1
     if b in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
         loesung.append(
-            str(teilaufg[i]) + r') \quad \mathrm{Planskizze} ~(2P), \quad ' + str(auswahl[1]) + '~(1P),~' + str(
+            str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~(2P), \quad ' + str(auswahl[1]) + '~(1P),~' + str(
                 auswahl[2]) + '~(1P),~' +
             str(auswahl[3]) + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} '
                               r' ~(2P)')
@@ -164,9 +165,15 @@ def rechtwinkliges_dreieck(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(
-            teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + loesung_1)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC.'
+                                          'Fertige dazu eine Planskizze an. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1)
+        Punkte += 5
+        i += 1
+
+    if b in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{noch~zu~programmmieren} ')
         Punkte += 5
         i += 1
 
@@ -183,6 +190,10 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     l_a = (m ** 2 - n ** 2) / 10
     l_b = 2 * m * n / 10
     l_c = (m ** 2 + n ** 2) / 10
+    # hier werden die Winkel berechnet
+    w_c = 90
+    w_a = int(math.degrees(math.asin(l_b / l_c)))
+    w_b = w_c - w_a
     # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
     pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
     print('Aufgabe 3 - Länge Seite a: ' + str(l_a))
@@ -201,7 +212,9 @@ def verhaeltnisgleichgungen(nr, teilaufg):
 
     pkt_bez = bezeichnungen[auswahl_beschriftung]['Punkte']
     st = bezeichnungen[auswahl_beschriftung]['Seiten']
+    st_werte = [l_a,l_b,l_c]
     wk = [r'\alpha', r'\beta', r'90^{ \circ}' ]
+    wk_werte = [w_a,w_b,w_c]
 
     name = 'Aufgabe_' + str(nr)
     grafik = 'Aufgabe_' + str(nr) + '.png'
@@ -209,10 +222,11 @@ def verhaeltnisgleichgungen(nr, teilaufg):
                'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
+    p = random.choice([0, 1])
+
     if a in teilaufg:
-        aufgabe.append(str(teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
         dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
-        p = random.choice([0,1])
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
@@ -226,19 +240,42 @@ def verhaeltnisgleichgungen(nr, teilaufg):
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
 
-        loesung.append(str(teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
 
         i += 1
         Punkte += 3
 
+    if b in teilaufg:
+        auswahl_seiten = random.choice([[0,1],[1,2],[0,2]])
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen im Dreieck, wenn folgende Größen gegeben sind:')
+        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p]) + r' ~, \quad ' + st[auswahl_seiten[0]] + '~=~'
+                       + latex(st_werte[auswahl_seiten[0]]) + r' \quad \mathrm{und} ~' + st[auswahl_seiten[1]] + '~=~'
+                       + latex(st_werte[auswahl_seiten[1]]) + r' \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{noch~zu~programmmieren}')
+        Punkte += 5
+        i += 1
+
     return aufgabe, loesung, Punkte, grafik
+
+def sachaufgabe(nr, teilaufg):
+    i = 0
+    Punkte = 0
+
+    for a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad')
+        Punkte += 5
+        i += 1
+
+    return aufgabe, loesung, Punkte,
 
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
-            rechtwinkliges_dreieck(2, [a]),
-            verhaeltnisgleichgungen(3, [a])]
+            rechtwinkliges_dreieck(2, [a,b]),
+            verhaeltnisgleichgungen(3, [a,b])
+            sachaufgabe(4, [a])]
 
-Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
+Punkte = str(sum(element[2] for element in aufgaben))
 
 # Angaben für den Test im pdf-Dokument
 

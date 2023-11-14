@@ -37,6 +37,7 @@ def erstellen(Teil):
     def kurvendiskussion(nr, teilaufg):
         i = 0
         Punkte = 0
+        grafik = 'No'
 
         if random.random() < 0.5:
             nst_f_1 = zzahl(0,2)
@@ -249,7 +250,7 @@ def erstellen(Teil):
 
         return [aufgabe, loesung, Punkte, grafik]
 
-    aufgaben = [kurvendiskussion(1, [a,b,c,d,e,f])]
+    aufgaben = [kurvendiskussion(1, [d,e])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -258,7 +259,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'HAK 05 - Kurvendiskussion von Polynomen'
+    Art = 'HAK 06 - Kurvendiskussion von Polynomen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -302,8 +303,12 @@ def erstellen(Teil):
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                 for elements in loesung[1]:
                     agn.append(elements)
-        with Loesung.create(Figure(position='h!')) as graph:
-            graph.add_image(loesung[3], width='300px')
+
+        if loesung[3] == 'No':
+            pass
+        else:
+            with Loesung.create(Figure(position='h!')) as graph:
+                graph.add_image(loesung[3], width='300px')
 
         Loesung.append('\n\n')
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
@@ -315,8 +320,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_HAKs = 2
-probe = False
+anzahl_HAKs = 3
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:
