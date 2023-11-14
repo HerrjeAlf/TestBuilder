@@ -24,6 +24,7 @@ def Ableitungen(fkt):
     return fkt_1, fkt_2, fkt_3
 
 def Extrema(fkt):
+    i = 0
     fkt_1 = diff(fkt, x, 1)
     fkt_2 = diff(fkt, x, 2)
     xwerte_extrema_alle = solve(fkt_1,x)
@@ -34,20 +35,21 @@ def Extrema(fkt):
         wert_in_fkt_2 = fkt_2.subs(x,xwert)
         if wert_in_fkt_2 < 0:
             ywert = fkt.subs(x,xwert)
-            print('Hochpunkt bei ( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            print('Hochpunkt bei H_{' + str(i) +  '}( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            i += 1
         elif wert_in_fkt_2 > 0:
             ywert = fkt.subs(x,xwert)
-            print('Tiefpunkt bei ( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            print('Tiefpunkt bei  T_{' + str(i) +  '}( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            i += 1
         else:
             ywert = fkt.subs(x, xwert)
-            print('Eventuell ein Sattelpunkt bei S( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            print('Eventuell ein Sattelpunkt bei S_{' + str(i) +  '} (' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+            i += 1
 
 # def Wendepunkte(fkt):
 
 
-def Graph(x_min, x_max, fkt):
-    xwerte = np.arange(x_min,x_max,0.01)
-    ywerte = [fkt.subs(x, elements) for elements in xwerte]
+def Graph(x_min, x_max, *funktionen):
     fig, ax = plt.subplots()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -59,9 +61,31 @@ def Graph(x_min, x_max, fkt):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.plot(xwerte, ywerte)
+    xwerte = np.arange(x_min, x_max, 0.01)
+    for fkt in funktionen:
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
     plt.grid(True)
-    return plt.show(), plt.savefig('Graph der Funktion', dpi=300)
+    return plt.show()
 
-Extrema(-2.5*x**3-7.5*x**2+8.125*x+13.125)
-Graph(-5,5,-2.5*x**3-7.5*x**2+8.125*x+13.125)
+def integral(a,b,fkt):
+    Fkt = integrate(fkt,x)
+    flaeche = Fkt.subs(x,b)-Fkt.subs(x,a)
+    print('F(x)=' + str(Fkt))
+    print('Fläche unter dem Graphen von ' + str(a) + ' bis ' + str(b) + ' ist A= ' + str(flaeche) + ' FE.')
+
+
+def schnittpunkte(fkt_1,fkt_2):
+    i = 0
+    xwerte = solve(Eq(fkt_1,fkt_2),x)
+    for xwert in xwerte:
+        ywert = fkt_1.subs(x, xwert)
+        print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
+        i += 1
+
+# schnittpunkte(4*x**3-16*x**2-5*x+42,3/79*x+16.28)
+Graph(-2, 4,4*x**3-16*x**2-5*x+42, -3/79*x+16.32)
+# integral(0,4/3,4*x**3-16*x**2-398/79*x+25.68)
+
+# print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
+# print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
