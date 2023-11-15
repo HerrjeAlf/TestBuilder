@@ -165,7 +165,7 @@ def rechtwinkliges_dreieck(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC.'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. '
                                           'Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1)
         Punkte += 5
@@ -229,7 +229,7 @@ def verhaeltnisgleichgungen(nr, teilaufg):
         dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
-                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
             loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
@@ -238,7 +238,7 @@ def verhaeltnisgleichgungen(nr, teilaufg):
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
             loesungen = (r' \mathrm{sin(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
-                         + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + '}}')
+                         + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
 
@@ -246,11 +246,11 @@ def verhaeltnisgleichgungen(nr, teilaufg):
         Punkte += 3
 
     if b in teilaufg:
-        auswahl_seiten = random.choice([[0,1],[1,2],[0,2]])
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen im Dreieck, wenn folgende Größen gegeben sind:')
-        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p]) + r' ~, \quad ' + st[auswahl_seiten[0]] + '~=~'
-                       + latex(st_werte[auswahl_seiten[0]]) + r' \quad \mathrm{und} ~' + st[auswahl_seiten[1]] + '~=~'
-                       + latex(st_werte[auswahl_seiten[1]]) + r' \\')
+        auswahl_seite = random.randint(0,2)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, wenn außer dem rechten Winkel noch folgendes gegeben ist:')
+        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p])
+                       + r' ^{ \circ } ~, \quad ' + st[auswahl_seite] + '~=~'
+                       + latex(st_werte[auswahl_seite]) + r' cm \\')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{noch~zu~programmmieren}')
         Punkte += 5
         i += 1
@@ -260,10 +260,12 @@ def verhaeltnisgleichgungen(nr, teilaufg):
 def sachaufgabe(nr, teilaufg):
     i = 0
     Punkte = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     for a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Hier kommt noch eine Sachaufgabe!')
+        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Lösung~Sachaufgabe} \quad ')
         Punkte += 5
         i += 1
 
@@ -272,7 +274,7 @@ def sachaufgabe(nr, teilaufg):
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
-            verhaeltnisgleichgungen(3, [a,b])
+            verhaeltnisgleichgungen(3, [a,b]),
             sachaufgabe(4, [a])]
 
 Punkte = str(sum(element[2] for element in aufgaben))
@@ -284,8 +286,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 04 - Verhältnisgleichungen im rechtw. Dreieck'
-Teil = 'Gr. A'
+Art = 'Klassenarbeit über rechtwinklige Dreiecke'
+Teil = 'Probe 02'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
