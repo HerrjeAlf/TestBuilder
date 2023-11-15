@@ -192,7 +192,7 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     l_c = (m ** 2 + n ** 2) / 10
     # hier werden die Winkel berechnet
     w_c = 90
-    w_a = int(math.degrees(math.asin(l_b / l_c)))
+    w_a = int(math.degrees(math.asin(l_a / l_c)))
     w_b = w_c - w_a
     # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
     pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
