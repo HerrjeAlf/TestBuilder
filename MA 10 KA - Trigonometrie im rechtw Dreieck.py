@@ -108,9 +108,10 @@ def kongruente_Dreiecke(nr, teilaufg):
         i += 1
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze~(siehe~Abbildung)~(2P)} \\')
-        loesung.append(str(auswahl[1]) + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
-                       + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
+                       + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+                       + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)')
+        loesung.append('Abbildung')
         dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
         plt.figure().clear()
         Punkte += 7
@@ -142,30 +143,30 @@ def rechtwinkliges_dreieck(nr, teilaufg):
                              ['c', 'b', 'a', r' \gamma ', r' \beta ', r' \alpha ']])
     print(auswahl)
     if random.random() < 0.33:
-        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[1]) + '~=~' + str(
-            s_2) + r'cm, ~ \mathrm{und} ~'
-                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[1])
+                     + '~=~' + str(s_2) + r'cm, ~ \mathrm{und} ~' + str(auswahl[5])
+                     + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
                      + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(auswahl[2])
                      + r'~=~ \sqrt{ (' + str(s_1) + r'cm)^2 ~+~ (' + str(s_2) + r'cm)^2 } ~=~'
                      + str(s_3) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
     elif random.random() < 0.66:
-        aufgabe_1 = (str(auswahl[1]) + '~=~' + str(s_2) + r'cm,~' + str(auswahl[2]) + '~=~' + str(
-            s_3) + r'cm, ~ \mathrm{und} ~'
-                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[1]) + '~=~' + str(s_2) + r'cm,~' + str(auswahl[2])
+                     + '~=~' + str(s_3) + r'cm, ~ \mathrm{und} ~' + str(auswahl[5])
+                     + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
-                     + r'^2 \quad \vert -' + str(auswahl[1]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(
-                    auswahl[0])
-                     + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ (' + str(s_2) + r'cm)^2 } ~=~' + str(s_1)
-                     + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+                     + r'^2 \quad \vert -' + str(auswahl[1]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
+                     + str(auswahl[0]) + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ ('
+                     + str(s_2) + r'cm)^2 } ~=~' + str(s_1) + r'cm \quad (3P) \\'
+                     + r' \mathrm{Planskizze} \quad (2P)')
     else:
-        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[2]) + '~=~' + str(
-            s_3) + r'cm, ~ \mathrm{und} ~'
-                     + str(auswahl[5]) + '~=~' + str(w_3) + r' ^{  \circ} .')
+        aufgabe_1 = (str(auswahl[0]) + '~=~' + str(s_1) + r'cm,~' + str(auswahl[2])
+                     + '~=~' + str(s_3) + r'cm, ~ \mathrm{und} ~' + str(auswahl[5])
+                     + '~=~' + str(w_3) + r' ^{  \circ} .')
         loesung_1 = (str(auswahl[2]) + '^2 ~=~' + str(auswahl[0]) + '^2 ~+~' + str(auswahl[1])
-                     + r'^2 \quad \vert -' + str(auswahl[0]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + str(
-                    auswahl[1])
-                     + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ (' + str(s_1) + r'cm)^2 } ~=~' + str(s_2)
+                     + r'^2 \quad \vert -' + str(auswahl[0]) + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
+                     + str(auswahl[1]) + r'~=~ \sqrt{ (' + str(s_3) + r'cm)^2 ~-~ ('
+                     + str(s_1) + r'cm)^2 } ~=~' + str(s_2)
                      + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
@@ -175,14 +176,25 @@ def rechtwinkliges_dreieck(nr, teilaufg):
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. '
-                                          'Fertige dazu eine Planskizze an. \n\n')
+                                                'Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1)
         Punkte += 5
         i += 1
 
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{noch~zu~programmmieren} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~}' + str(auswahl[0]) + '~=~' + str(s_1)
+                                                + 'cm,~' + str(auswahl[1]) + '~=~' + str(s_2) + 'cm,~'
+                                                + str(auswahl[2]) + '~=~' + str(s_3) + r'cm ~ \mathrm{und} ~'
+                                                + str(auswahl[5]) + '~=~' + str(w_3)
+                                                + r' ^{  \circ} \quad \mathrm{ges:} ~' + str(auswahl[3])
+                                                + ',~' + str(auswahl[4]) + r' ~ (1P) \\'
+                       + r' sin(' + str(auswahl[3]) + r')~=~ \frac{' + str(auswahl[0]) + '}{' + str(auswahl[2])
+                       + r'} ~=~ \frac{' + str(s_1) + '}{' + str(s_3)
+                       + r'} \quad \vert ~ sin^{-1}() \quad \to \quad' + str(auswahl[3])
+                       + r'~=~ sin^{-1} \Big( \frac{' + str(s_1) + '}{' + str(s_3) + r'} \Big) ~=~' + str(w_1)
+                       + r' ^{ \circ} \quad (3P) \\' + str(auswahl[4]) + '~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
+                       + str(w_1) + r'^{ \circ} ~=~ ' + str(w_2) + r'^{ \circ} \quad (2P)')
         Punkte += 5
         i += 1
 
@@ -277,7 +289,7 @@ def sachaufgabe(nr, teilaufg):
         Punkte += 5
         i += 1
 
-    return aufgabe, loesung, Punkte,
+    return aufgabe, loesung, Punkte
 
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
@@ -348,9 +360,8 @@ def Erwartungshorizont():
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Abbildung' in elements:
-                loesung.append(elements)
-                with loesung.create(Figure(position='h!')) as graph:
-                    graph.add_image(loesung[3], width='300px')
+                with Loesung.create(Figure(position='h!')) as graph:
+                    graph.add_image(loesung[3], width='200px')
             else:
                 Loesung.append(elements)
 
