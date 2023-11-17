@@ -47,35 +47,45 @@ def kongruente_Dreiecke(nr, teilaufg):
 
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
-    a_d = (m ** 2 - n ** 2) / 10
-    b_d = 2 * m * n / 10
-    c_d = (m ** 2 + n ** 2) / 10
+    l_a = (m ** 2 - n ** 2) / 10
+    l_b = 2 * m * n / 10
+    l_c = (m ** 2 + n ** 2) / 10
     gamma = 90
-    beta = int(math.degrees(math.asin(b_d / c_d)))
+    beta = int(math.degrees(math.asin(l_b / l_c)))
     alpha = gamma - beta
 
-    auswahl = random.choice([['sss', 'a~=~' + str(a_d) + 'cm', 'b~=~' + str(b_d) + 'cm', 'c~=~' + str(c_d) + 'cm'],
-                             ['sws', 'a~=~' + str(a_d) + 'cm', 'b~=~' + str(b_d) + 'cm',
+    pkt_bez = ['A', 'B', 'C']
+    st = ['a', 'b', 'c']
+    st_werte = [l_a,l_b,l_c]
+    wk = [r'\alpha', r'\beta', r'90^{ \circ}' ]
+    wk_werte = [alpha,beta,gamma]
+    pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+
+    name = 'Aufgabe_' + str(nr)
+    grafik = 'Aufgabe_' + str(nr) + '.png'
+
+    auswahl = random.choice([['sss', 'a~=~' + str(l_a) + 'cm', 'b~=~' + str(l_b) + 'cm', 'c~=~' + str(l_c) + 'cm'],
+                             ['sws', 'a~=~' + str(l_a) + 'cm', 'b~=~' + str(l_b) + 'cm',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['sws', 'b~=~' + str(b_d) + 'cm', 'c~=~' + str(c_d) + 'cm',
+                             ['sws', 'b~=~' + str(l_b) + 'cm', 'c~=~' + str(l_c) + 'cm',
                               r' \alpha ~=~' + str(alpha) + r' ^{  \circ}'],
-                             ['sws', 'c~=~' + str(c_d) + 'cm', 'a~=~' + str(a_d) + 'cm',
+                             ['sws', 'c~=~' + str(l_c) + 'cm', 'a~=~' + str(l_a) + 'cm',
                               r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
-                             ['wsw', 'a~=~' + str(a_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
+                             ['wsw', 'a~=~' + str(l_a) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['wsw', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                             ['wsw', 'b~=~' + str(l_b) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
                               r' \gamma ~=~ ' + str(gamma) + r' ^{  \circ}'],
-                             ['wsw', 'c~=~' + str(c_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                             ['wsw', 'c~=~' + str(l_c) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
                               r' \beta ~=~ ' + str(beta) + r' ^{  \circ}'],
-                             ['sww', 'b~=~' + str(b_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                             ['sww', 'b~=~' + str(l_b) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
                               r' \beta ~=~' + str(beta) + r' ^{  \circ}'],
-                             ['sww', 'c~=~' + str(c_d) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
+                             ['sww', 'c~=~' + str(l_c) + 'cm', r' \beta ~=~' + str(beta) + r' ^{  \circ}',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['sww', 'a~=~' + str(a_d) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
+                             ['sww', 'a~=~' + str(l_a) + 'cm', r' \alpha ~=~' + str(alpha) + r' ^{  \circ}',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['Ssw', 'b~=~' + str(b_d) + 'cm', ' c ~=~' + str(c_d) + 'cm',
+                             ['Ssw', 'b~=~' + str(l_b) + 'cm', ' c ~=~' + str(l_c) + 'cm',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['Ssw', 'a~=~' + str(a_d) + 'cm', ' c ~=~' + str(c_d) + 'cm',
+                             ['Ssw', 'a~=~' + str(l_a) + 'cm', ' c ~=~' + str(l_c) + 'cm',
                               r' \gamma ~=~' + str(gamma) + r' ^{  \circ}']])
 
     # print('a = ' + str(a))
@@ -91,7 +101,6 @@ def kongruente_Dreiecke(nr, teilaufg):
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
     aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~' + str(auswahl[3]) + r'.')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[0]) + r' \quad (1P) ~')
@@ -99,14 +108,14 @@ def kongruente_Dreiecke(nr, teilaufg):
         i += 1
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
-        loesung.append(
-            str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~(2P), \quad ' + str(auswahl[1]) + '~(1P),~' + str(
-                auswahl[2]) + '~(1P),~' +
-            str(auswahl[3]) + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} '
-                              r' ~(2P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze~(siehe~Abbildung)~(2P)} \\')
+        loesung.append(str(auswahl[1]) + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+                       + r'~(1P),~ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)')
+        dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
+        plt.figure().clear()
         Punkte += 7
         i += 1
-    return aufgabe, loesung, Punkte
+    return aufgabe, loesung, Punkte, grafik
 
 
 def rechtwinkliges_dreieck(nr, teilaufg):
@@ -213,8 +222,8 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     pkt_bez = bezeichnungen[auswahl_beschriftung]['Punkte']
     st = bezeichnungen[auswahl_beschriftung]['Seiten']
     st_werte = [l_a,l_b,l_c]
-    wk = [r'\alpha', r'\beta', r'90^{ \circ}' ]
-    wk_werte = [w_a,w_b,w_c]
+    wk = [r'\alpha', r'\beta', r'90^{ \circ}']
+    wk_werte = [w_a, w_b, w_c]
 
     name = 'Aufgabe_' + str(nr)
     grafik = 'Aufgabe_' + str(nr) + '.png'
@@ -231,8 +240,8 @@ def verhaeltnisgleichgungen(nr, teilaufg):
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
             loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
-                         + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
-                         + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
+                        + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
+                        + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
         else:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
@@ -248,8 +257,7 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     if b in teilaufg:
         auswahl_seite = random.randint(0,2)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, wenn außer dem rechten Winkel noch folgendes gegeben ist:')
-        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p])
-                       + r' ^{ \circ } ~, \quad ' + st[auswahl_seite] + '~=~'
+        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p]) + r' ^{ \circ } ~, \quad ' + st[auswahl_seite] + '~=~'
                        + latex(st_werte[auswahl_seite]) + r' cm \\')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{noch~zu~programmmieren}')
         Punkte += 5
@@ -276,7 +284,11 @@ aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
             verhaeltnisgleichgungen(3, [a,b]),
             sachaufgabe(4, [a])]
-
+# print(kongruente_Dreiecke(1, [a, b]))
+# print(rechtwinkliges_dreieck(2, [a,b]))
+# print(verhaeltnisgleichgungen(3, [a,b]))
+# print(sachaufgabe(4, [a]))
+# print(aufgaben)
 Punkte = str(sum(element[2] for element in aufgaben))
 
 # Angaben für den Test im pdf-Dokument
@@ -335,6 +347,10 @@ def Erwartungshorizont():
             if '~' in elements:
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(elements)
+            elif 'Abbildung' in elements:
+                loesung.append(elements)
+                with loesung.create(Figure(position='h!')) as graph:
+                    graph.add_image(loesung[3], width='300px')
             else:
                 Loesung.append(elements)
 
