@@ -364,17 +364,50 @@ def verhaeltnisgleichgungen(nr, teilaufg):
 
     return aufgabe, loesung, Punkte, grafik
 
-def sachaufgabe(nr, teilaufg):
+def sachaufgabe_01(nr, teilaufg):
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+    abstand_beob_warte = (m ** 2 - n ** 2) / 10
+    hoehe = 2 * m * n / 10
+    abstand_beob_ballon = (m ** 2 + n ** 2) / 10
+    # hier werden die Winkel berechnet
+    w_warte = 90
+    w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_warte)))
+    w_b = w_warte - w_beob
     i = 0
     Punkte = 0
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               f'In einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
+               f' Ein Beobachter befindet sich {abstand_beob_warte}km von der Wetterwarte entfernt und der Ballon hat eine Höhe von {hoehe}km erreicht. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
-    for a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + r') Hier kommt noch eine Sachaufgabe!')
-        loesung.append(str(liste_teilaufg[i]) + r') \mathrm{Lösung~Sachaufgabe} \quad ')
-        Punkte += 5
+    if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Winkel, unter dem der Beobachter'
+                                                f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
+                                                 + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
+                                                 + r'km, \quad ges: \alpha \quad (1P)} \\'
+                                                 + r' tan( \alpha ) ~=~ \frac{a}{c} \quad \vert tan^{-1}()'
+                                                   r'\quad \to \quad \alpha ~=~ tan^{-1} \Big( \frac{a}{c} \Big) ~=~'
+                                                   r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
+                                                 + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
+                                                 + r' ^{ \circ} \quad (3P)'))
+        Punkte += 6
         i += 1
+    if b in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~a~=~'
+                                                 + str(hoehe) + r'km, \quad ges: b \quad (1P)} \\'
+                                                 + r' sin( \alpha ) ~=~ \frac{a}{b}'
+                                                   r' \quad \vert \cdot b \quad \vert \div tan( \alpha ) '
+                                                   r' \quad \to \quad b ~=~ \frac{a}{ tan( \alpha )} ~=~'
+                                                   r' \frac{' + str(hoehe) + r'km }{ tan( ' + str(w_beob)
+                                                 + ' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3P)'))
+        Punkte += 4
+        i += 1
+
+
 
     return aufgabe, loesung, Punkte
 
@@ -382,7 +415,7 @@ def sachaufgabe(nr, teilaufg):
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
             verhaeltnisgleichgungen(3, [a,b]),
-            sachaufgabe(4, [a])]
+            sachaufgabe_01(4, [a])]
 # print(kongruente_Dreiecke(1, [a, b]))
 # print(rechtwinkliges_dreieck(2, [a,b]))
 # print(verhaeltnisgleichgungen(3, [a,b]))
@@ -398,7 +431,7 @@ Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
 Art = 'Klassenarbeit über rechtwinklige Dreiecke'
-Teil = 'Probe 02'
+Teil = 'Gr. A'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
@@ -423,7 +456,7 @@ def Hausaufgabenkontrolle():
             elif 'Abbildung' in elements:
                 Aufgabe.append(elements)
                 with Aufgabe.create(Figure(position='h!')) as graph:
-                    graph.add_image(aufgabe[3], width='300px')
+                    graph.add_image(aufgabe[3], width='200px')
             else:
                 Aufgabe.append(elements)
 

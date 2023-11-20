@@ -175,7 +175,7 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
 
     line1, = ax.plot(*zip(*l1), 'k')
     name_line1 = ax.annotate(st[2], xy=((pkt[1][0]+pkt[0][0])/2,(pkt[1][1]+pkt[0][1])/2), xycoords='data',
-                             xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+                             xytext=(+8,+8),  textcoords='offset points', fontsize=12)
     line2, = ax.plot(*zip(*l2), 'k')
     name_line2 = ax.annotate(st[0], xy=((pkt[2][0]+pkt[1][0])/2,(pkt[2][1]+pkt[1][1])/2), xycoords='data',
                              xytext=(+4,+4),  textcoords='offset points', fontsize=12)
