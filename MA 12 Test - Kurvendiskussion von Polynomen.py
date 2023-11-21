@@ -242,15 +242,15 @@ def erstellen(Teil):
             plt.savefig(f'Aufgabe_{nr}', dpi=200)
             grafik = f'Aufgabe_{nr}'
             plt.figure().clear()
-            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}]. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{~Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)} \\')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f im Intervall [{xmin_f};{xmax_f}].')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}')
 
             Punkte += 5
             i += 1
 
         return [aufgabe, loesung, Punkte, grafik]
 
-    aufgaben = [kurvendiskussion(1, [d,e])]
+    aufgaben = [kurvendiskussion(1, [a,b,c,d,e,f])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -308,9 +308,8 @@ def erstellen(Teil):
             pass
         else:
             with Loesung.create(Figure(position='h!')) as graph:
-                graph.add_image(loesung[3], width='300px')
+                graph.add_image(loesung[3], width='250px')
 
-        Loesung.append('\n\n')
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
 
@@ -321,7 +320,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 anzahl_HAKs = 2
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:
