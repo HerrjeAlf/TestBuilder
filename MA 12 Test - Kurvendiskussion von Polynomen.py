@@ -86,7 +86,7 @@ def erstellen(Teil):
                          'x~' + vorz_str(Rational(quadr_nst_23, -3))
             p_fkt_f_1_pq = Rational((-2 * nst_f_1), 3)
             q_fkt_f_1_pq = Rational(-1 * quadr_nst_23, 3)
-            s_fkt_f = - 1 * faktor_f * nst_f_1 * quadr_nst_23
+            s_fkt_f = faktor_f * nst_f_1 * quadr_nst_23
 
         fkt_f_b2 = nst_f_1 * fkt_f_a1
         fkt_f_c2 = fkt_f_a2 + fkt_f_b2
@@ -146,9 +146,9 @@ def erstellen(Teil):
                           r'} \quad (2P) \\')
             loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
-            loesung.append(r'S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad S_{x_1}(' + latex(nst_f_1) +
-                          r' \vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3)) + r' \vert 0) \quad S_y(0 \vert ' +
-                          latex(s_fkt_f) + r') \quad (4P) \\\\')
+            loesung.append(r'S_{x_1}(' + latex(nst_f_1) + r'\vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3))
+                           + r' \vert 0) \quad S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad  S_y(0 \vert ' +
+                           latex(s_fkt_f) + r') \quad (4P) \\\\')
 
             Punkte += 16
             i += 1
