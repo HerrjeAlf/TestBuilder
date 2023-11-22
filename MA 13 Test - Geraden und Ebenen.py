@@ -22,9 +22,9 @@ def nzahl(p, q):
 
 def vorz_str(k):
     if k < 0:
-        return latex(k)
+        return f'~-~{latex(abs(k))}'
     else:
-        return f'+{latex(k)}'
+        return f'~+~{latex(k)}'
 
 def vorz_str_minus(k):
     if k < 0:
@@ -43,36 +43,33 @@ def gerade(nr, teilaufg):
     i = 0
     Punkte = 0
 
-    def zf_vorz(q):
-        return random.choice([-1, 1]) * q
-
     punkt_a = [a_x, a_y, a_z] = punkt_vektor(3)
-    punkt_b = [b_x, b_y, b_z] = [N(a_x + zzahl(1, 3),3), N(a_y + zzahl(1, 3),3), N(a_z + zzahl(1, 3),3)]
+    punkt_b = [b_x, b_y, b_z] = [a_x + zzahl(1, 3), a_y + zzahl(1, 3), a_z + zzahl(1, 3)]
     v_ab = [v_ab_x, v_ab_y, v_ab_z] =  np.array(punkt_a) + np.array(punkt_b)
     p = random.choice([0,1])
     if p == 0:
-        punkt_t = [t_x, t_y, t_z] = np.array(punkt_a) + (zzahl(1,30)/10)*v_ab
+        punkt_t = [t_x, t_y, t_z] = np.array(punkt_a) + zzahl(1,30)/5*v_ab
     else:
-        punkt_t = [t_x, t_y, t_z] = np.array(punkt_b) + [(zzahl(1,30)/10)*v_ab_y,0,-1*(zzahl(1,30)/10)*v_ab_z]
+        punkt_t = [t_x, t_y, t_z] = np.array(punkt_a) + (zzahl(1,30)/5)*v_ab + [1, 1, 1]
 
     lsg_x, lsg_y, lsg_z = [(t_x-a_x)/v_ab_x, (t_y-a_y)/v_ab_y, (t_z-a_z)/v_ab_z]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-               'A( ' + str(a_x)  + ' | ' + str(a_y) + ' | ' + str(a_z) + ' ), ' 
-               'B( ' + str(b_x)  + ' | ' + str(b_y) + ' | ' + str(b_z) + ' ) und '
+               'A( ' + latex(a_x)  + ' | ' + latex(a_y) + ' | ' + latex(a_z) + ' ), ' 
+               'B( ' + latex(b_x)  + ' | ' + latex(b_y) + ' | ' + latex(b_z) + ' ) und '
                'T( ' + str(N(t_x,3))  + ' | ' + str(N(t_y,3)) + ' | ' + str(N(t_z,3)) + ' ).  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
         loesung_1 = (r' \overrightarrow{AB} ~=~'
                      r' \begin{pmatrix} '
-                     + str(v_ab[0]) + r' \\' + str(v_ab[1]) + r' \\' + str(v_ab[2]) + r' \\'
+                     + latex(v_ab[0]) + r' \\' + latex(v_ab[1]) + r' \\' + latex(v_ab[2]) + r' \\'
                      r' \end{pmatrix} \quad \to \quad '
                      r' g: \overrightarrow{x} \ ~=~'
                      r' \begin{pmatrix} '
-                     + str(a_x) + r' \\' + str(a_y) + r' \\' + str(a_z) + r' \\'
+                     + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
                      r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                     + str(v_ab[0]) + r' \\' + str(v_ab[1]) + r' \\' + str(v_ab[2]) + r' \\'
+                     + latex(v_ab[0]) + r' \\' + latex(v_ab[1]) + r' \\' + latex(v_ab[2]) + r' \\'
                      r' \end{pmatrix} \quad (4P) \\')
 
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
@@ -85,29 +82,149 @@ def gerade(nr, teilaufg):
         if lsg_x == lsg_y == lsg_z:
             loesung_0 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} '
         else:
-            loesung_0 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} '
+            loesung_0 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} '
         loesung_1 =  (r' \begin{pmatrix} '
-                     + str(N(t_x,3)) + r' \\' + str(N(t_y,3)) + r' \\' + str(N(t_z,3)) + r' \\'
+                     + latex(N(t_x,3)) + r' \\' + latex(N(t_y,3)) + r' \\' + latex(N(t_z,3)) + r' \\'
                      r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                     + str(a_x) + r' \\' + str(a_y) + r' \\' + str(a_z) + r' \\'
+                     + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
                      r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                     + str(v_ab[0]) + r' \\' + str(v_ab[1]) + r' \\' + str(v_ab[2]) + r' \\'
+                     + latex(v_ab[0]) + r' \\' + latex(v_ab[1]) + r' \\' + latex(v_ab[2]) + r' \\'
                      r' \end{pmatrix} \to \begin{matrix} '
-                     + str(N(t_x,3)) + '=' + str(a_x) + 'r \cdot ' + str(v_ab_x) + r' \\'
-                     + str(N(t_y,3)) + '=' + str(a_y) + 'r \cdot ' + str(v_ab_y) + r' \\'
-                     + str(N(t_z,3)) + '=' + str(a_z) + 'r \cdot ' + str(v_ab_z) + r' \\'
-                     r' \end{matrix} \to \begin{matrix} '
-                     + 'r=' + str(N(lsg_x,3)) + r' \\' + 'r=' + str(N(lsg_y,3)) + r' \\'
-                     + 'r=' + str(N(lsg_z,3)) + r' \\'
-                     r' \end{matrix} \to' + loesung_0 + r'\quad (4P) \\')
+                     + latex(N(t_x,3)) + '~=~' + latex(a_x) + vorz_str(v_ab_x) + r' \cdot r' + r' \\'
+                     + latex(N(t_y,3)) + '~=~' + latex(a_y) + vorz_str(v_ab_y) + r' \cdot r' + r' \\'
+                     + latex(N(t_z,3)) + '~=~' + latex(a_z) + vorz_str(v_ab_z) + r' \cdot r' + r' \\'
+                     r' \end{matrix} \quad \to \quad \begin{matrix} '
+                     + 'r=' + latex(N(lsg_x,3)) + r' \\' + 'r=' + latex(N(lsg_y,3)) + r' \\'
+                     + 'r=' + latex(N(lsg_z,3)) + r' \\'
+                     r' \end{matrix} \\'
+                     + loesung_0 + r'\quad (4P) \\')
         aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
         i +=1
-        Punkte += 8
+        Punkte += 4
 
     return aufgabe, loesung, Punkte
 
-aufgaben = [gerade(1, [a, b])]
+def lagebeziehung(nr, teilaufg):
+    i = 0
+    Punkte = 0
+    v_ab_teiler = zzahl(1, 3)
+    punkt_a = [a_x, a_y, a_z] = punkt_vektor(3)
+    v_ab = [v_ab_x, v_ab_y, v_ab_z] = [v_ab_teiler, v_ab_teiler * zzahl(1,6)/2, v_ab_teiler * zzahl(1,6)/2]
+    v_q_ab_x, v_q_ab_y = zzahl(1, 3), zzahl(1,3)
+    v_q_ab = [v_q_ab_x, v_q_ab_y, v_q_ab_z] =  [v_q_ab_x, v_q_ab_y, - 1 * (v_ab_x*v_q_ab_x + v_ab_y * v_q_ab_y)/v_ab_z]
+
+    auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+    # auswahl = 'parallel'
+    if auswahl == 'identisch':
+        punkt_c = [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v_ab)
+        v_cd = [v_cd_x, v_cd_y, v_cd_z] = zzahl(1,30)/10 * np.array(v_ab)
+        loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                     r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+                     r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     'r~=~' + latex(N(v_ab_x/v_cd_x,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_y/v_cd_y,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_z/v_cd_z,3)) + r' \\'
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~parallel} \quad (3P) \\\\'
+                     r' \mathrm{Überprüfen~ob~Stützvektor~von~g_1~auf~g_1~liegt.} \hspace{15em} \\'
+                     r' \begin{pmatrix} '
+                     + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                     + latex(c_x) + r' \\' + latex(c_y) + r' \\' + latex(c_z) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     + latex(a_x) + '~=~' + latex(c_x) + vorz_str(v_cd_x) + r' \cdot r' + r' \\'
+                     + latex(a_y) + '~=~' + latex(c_y) + vorz_str(v_cd_y) + r' \cdot r' + r' \\'
+                     + latex(a_z) + '~=~' + latex(c_z) + vorz_str(v_cd_z) + r' \cdot r' + r' \\'
+                     r' \end{matrix} \quad \to \quad \begin{matrix} '
+                     + 'r=' + latex(N((a_x-c_x)/v_cd_x,3)) + r' \\' + 'r=' + latex(N((a_y-c_y)/v_cd_y,3)) + r' \\'
+                     + 'r=' + latex(N((a_z-c_z)/v_cd_z,3)) + r' \\ \end{matrix} \\'
+                     r' \mathrm{Die~Geraden~g_1~und~g_2~sind~identisch.} \quad (4P) \\')
+        Punkte += 7
+    elif auswahl == 'parallel':
+        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v_q_ab)
+        v_cd = [v_cd_x, v_cd_y, v_cd_z] = zzahl(1,30)/10* np.array(v_ab)
+        loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                     r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+                     r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     'r~=~' + latex(N(v_ab_x/v_cd_x,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_y/v_cd_y,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_z/v_cd_z,3)) + r' \\'
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~parallel} \quad (3P) \\\\'
+                     r' \mathrm{Überprüfen~ob~Stützvektor~von~g_1~auf~g_1~liegt.} \hspace{15em} \\'
+                     r' \begin{pmatrix} '
+                     + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                     + latex(c_x) + r' \\' + latex(c_y) + r' \\' + latex(c_z) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     + latex(a_x) + '~=~' + latex(c_x) + vorz_str(v_cd_x) + r' \cdot r' + r' \\'
+                     + latex(a_y) + '~=~' + latex(c_y) + vorz_str(v_cd_y) + r' \cdot r' + r' \\'
+                     + latex(a_z) + '~=~' + latex(c_z) + vorz_str(v_cd_z) + r' \cdot r' + r' \\'
+                     r' \end{matrix} \quad \to \quad \begin{matrix} '
+                     + 'r=' + latex(N((a_x-c_x)/v_cd_x,3)) + r' \\' + 'r=' + latex(N((a_y-c_y)/v_cd_y,3)) + r' \\'
+                     + 'r=' + latex(N((a_z-c_z)/v_cd_z,3)) + r' \\ \end{matrix} \\'
+                     r' \mathrm{Die~Geraden~g_1~und~g_2~sind~echt~parallel.} \quad (4P) \\')
+        Punkte += 7
+    elif auswahl == 'windschief':
+        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
+        punkt_d =  [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
+        v_cd = [v_cd_x, v_cd_y, v_cd_z] = np.array(punkt_d) - np.array(punkt_c)
+        loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                     r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+                     r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     'r~=~' + latex(N(v_ab_x/v_cd_x,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_y/v_cd_y,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_z/v_cd_z,3)) + r' \\'
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\')
+        Punkte += 12
+    else:
+        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_ab)
+        punkt_d = [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
+        v_cd = [v_cd_x, v_cd_y, v_cd_z] = np.array(punkt_d) - np.array(punkt_c)
+        loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                     r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+                     r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     'r~=~' + latex(N(v_ab_x/v_cd_x,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_y/v_cd_y,3)) + r' \\'
+                     'r~=~' + latex(N(v_ab_z/v_cd_z,3)) + r' \\'
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\')
+        Punkte += 12
+    # print(v_ab), print(v_cd), print(punkt_c)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               r'Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
+               r'g_1: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+               + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
+               r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+               r' \end{pmatrix} \quad \mathrm{und} \quad g_2: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+               + latex(c_x) + r' \\' + latex(c_y) + r' \\' + latex(c_z) + r' \\'
+               r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+               r' \end{pmatrix}\\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
+        loesung.append(str(teilaufg[i]) + ') \quad' + loesung_1)
+        i += 1
+
+    return aufgabe, loesung, Punkte
+
+
+aufgaben = [gerade(1, [a, b]),
+            lagebeziehung(2, [a])]
 Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
 # Angaben für den Test im pdf-Dokument
@@ -118,7 +235,7 @@ Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 05 - mit Geraden rechnen'
-Teil = 'Gr. A'
+Teil = 'Gr. C'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
     geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
