@@ -47,19 +47,20 @@ def gerade(nr, teilaufg):
         return random.choice([-1, 1]) * q
 
     punkt_a = [a_x, a_y, a_z] = punkt_vektor(3)
-    punkt_b = [b_x, b_y, b_z] = [a_x + zzahl(1, 3), a_y + zzahl(1, 3), a_z + zzahl(1, 3)]
+    punkt_b = [b_x, b_y, b_z] = [N(a_x + zzahl(1, 3),3), N(a_y + zzahl(1, 3),3), N(a_z + zzahl(1, 3),3)]
     v_ab = [v_ab_x, v_ab_y, v_ab_z] =  np.array(punkt_a) + np.array(punkt_b)
     p = random.choice([0,1])
     if p == 0:
         punkt_t = [t_x, t_y, t_z] = np.array(punkt_a) + (zzahl(1,30)/10)*v_ab
     else:
-        punkt_t = [t_x, t_y, t_z] = np.array(punkt_b) + (zzahl(1,30)/10)*[v_ab_y,0,-1*v_ab_z]
+        punkt_t = [t_x, t_y, t_z] = np.array(punkt_b) + [(zzahl(1,30)/10)*v_ab_y,0,-1*(zzahl(1,30)/10)*v_ab_z]
 
+    lsg_x, lsg_y, lsg_z = [(t_x-a_x)/v_ab_x, (t_y-a_y)/v_ab_y, (t_z-a_z)/v_ab_z]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                'A( ' + str(a_x)  + ' | ' + str(a_y) + ' | ' + str(a_z) + ' ), ' 
                'B( ' + str(b_x)  + ' | ' + str(b_y) + ' | ' + str(b_z) + ' ) und '
-               'T( ' + str(t_x)  + ' | ' + str(t_y) + ' | ' + str(t_z) + ' ).  \n\n']
+               'T( ' + str(N(t_x,3))  + ' | ' + str(N(t_y,3)) + ' | ' + str(N(t_z,3)) + ' ).  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
@@ -81,13 +82,24 @@ def gerade(nr, teilaufg):
         Punkte += 4
 
     if b in teilaufg:
+        if lsg_x == lsg_y == lsg_z:
+            loesung_0 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} '
+        else:
+            loesung_0 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} '
         loesung_1 =  (r' \begin{pmatrix} '
-                     + str(t_x) + r' \\' + str(t_y) + r' \\' + str(t_z) + r' \\'
+                     + str(N(t_x,3)) + r' \\' + str(N(t_y,3)) + r' \\' + str(N(t_z,3)) + r' \\'
                      r' \end{pmatrix} ~=~ \begin{pmatrix} '
                      + str(a_x) + r' \\' + str(a_y) + r' \\' + str(a_z) + r' \\'
                      r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                      + str(v_ab[0]) + r' \\' + str(v_ab[1]) + r' \\' + str(v_ab[2]) + r' \\'
-                     r' \end{pmatrix} \quad (4P) \\')
+                     r' \end{pmatrix} \to \begin{matrix} '
+                     + str(N(t_x,3)) + '=' + str(a_x) + 'r \cdot ' + str(v_ab_x) + r' \\'
+                     + str(N(t_y,3)) + '=' + str(a_y) + 'r \cdot ' + str(v_ab_y) + r' \\'
+                     + str(N(t_z,3)) + '=' + str(a_z) + 'r \cdot ' + str(v_ab_z) + r' \\'
+                     r' \end{matrix} \to \begin{matrix} '
+                     + 'r=' + str(N(lsg_x,3)) + r' \\' + 'r=' + str(N(lsg_y,3)) + r' \\'
+                     + 'r=' + str(N(lsg_z,3)) + r' \\'
+                     r' \end{matrix} \to' + loesung_0 + r'\quad (4P) \\')
         aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
         i +=1
