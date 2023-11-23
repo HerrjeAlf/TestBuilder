@@ -244,7 +244,6 @@ def verhaeltnisgleichgungen(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     p = random.choice([0, 1])
-    p = 1
 
     if a in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
@@ -269,7 +268,6 @@ def verhaeltnisgleichgungen(nr, teilaufg):
 
     if b in teilaufg:
         auswahl_seite = random.randint(0,2)
-        auswahl_seite = 2
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, wenn außer dem rechten Winkel noch folgendes gegeben ist:')
         aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p]) + r' ^{ \circ } ~, \quad ' + st[auswahl_seite] + '~=~'
                        + latex(st_werte[auswahl_seite]) + r' cm \\')
@@ -345,8 +343,8 @@ def verhaeltnisgleichgungen(nr, teilaufg):
             else:
                 loesung_1 = (' sin(' + wk[p] + r')~=~ \frac{' + st[1] + '}{' + st[auswahl_seite] + '}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[1]
-                             + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite] + '~=~'
-                             + r'=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
+                             + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
+                             + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
                              + 'cm~=~' + str(st_werte[1]) + r'cm \quad (2P) \\'
 
                              + ' cos(' + wk[p] + r')~=~ \frac{' + st[0] + '}{' + st[auswahl_seite] + '}'

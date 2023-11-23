@@ -111,8 +111,8 @@ def lagebeziehung(nr, teilaufg):
     v_ab_teiler = zzahl(1, 3)
     punkt_a = [a_x, a_y, a_z] = punkt_vektor(3)
     v_ab = [v_ab_x, v_ab_y, v_ab_z] = [v_ab_teiler, v_ab_teiler * zzahl(1,6)/2, v_ab_teiler * zzahl(1,6)/2]
-    v_q_ab_x, v_q_ab_y = zzahl(1, 3), zzahl(1,3)
-    v_q_ab = [v_q_ab_x, v_q_ab_y, v_q_ab_z] =  [v_q_ab_x, v_q_ab_y, - 1 * (v_ab_x*v_q_ab_x + v_ab_y * v_q_ab_y)/v_ab_z]
+    v_o_ab_x, v_o_ab_y = zzahl(1, 3), zzahl(1,3)
+    v_o_ab = [v_o_ab_x, v_o_ab_y, v_o_ab_z] =  [v_o_ab_x, v_o_ab_y, - 1 * (v_ab_x*v_o_ab_x + v_ab_y * v_o_ab_y)/v_ab_z]
 
     auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
     # auswahl = 'parallel'
@@ -145,7 +145,7 @@ def lagebeziehung(nr, teilaufg):
                      r' \mathrm{Die~Geraden~g_1~und~g_2~sind~identisch.} \quad (4P) \\')
         Punkte += 7
     elif auswahl == 'parallel':
-        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v_q_ab)
+        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v_o_ab)
         v_cd = [v_cd_x, v_cd_y, v_cd_z] = zzahl(1,30)/10* np.array(v_ab)
         loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                      r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
@@ -173,8 +173,8 @@ def lagebeziehung(nr, teilaufg):
                      r' \mathrm{Die~Geraden~g_1~und~g_2~sind~echt~parallel.} \quad (4P) \\')
         Punkte += 7
     elif auswahl == 'windschief':
-        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
-        punkt_d =  [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
+        punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_o_ab)
+        punkt_d =  [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_o_ab)
         v_cd = [v_cd_x, v_cd_y, v_cd_z] = np.array(punkt_d) - np.array(punkt_c)
         loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                      r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
@@ -215,7 +215,7 @@ def lagebeziehung(nr, teilaufg):
         Punkte += 12
     else:
         punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_ab)
-        punkt_d = [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_q_ab)
+        punkt_d = [d_x,d_y,d_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_o_ab)
         v_cd = [v_cd_x, v_cd_y, v_cd_z] = np.array(punkt_d) - np.array(punkt_c)
         loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                      r'\begin{pmatrix}' + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
