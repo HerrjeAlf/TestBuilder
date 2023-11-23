@@ -45,7 +45,7 @@ def gerade(nr, teilaufg):
 
     punkt_a = [a_x, a_y, a_z] = punkt_vektor(3)
     punkt_b = [b_x, b_y, b_z] = [a_x + zzahl(1, 3), a_y + zzahl(1, 3), a_z + zzahl(1, 3)]
-    v_ab = [v_ab_x, v_ab_y, v_ab_z] =  np.array(punkt_a) + np.array(punkt_b)
+    v_ab = [v_ab_x, v_ab_y, v_ab_z] =  np.array(punkt_b) - np.array(punkt_a)
     p = random.choice([0,1])
     if p == 0:
         punkt_t = [t_x, t_y, t_z] = np.array(punkt_a) + zzahl(1,30)/5*v_ab
@@ -88,7 +88,7 @@ def gerade(nr, teilaufg):
                      r' \end{pmatrix} ~=~ \begin{pmatrix} '
                      + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
                      r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                     + latex(v_ab[0]) + r' \\' + latex(v_ab[1]) + r' \\' + latex(v_ab[2]) + r' \\'
+                     + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
                      r' \end{pmatrix} \to \begin{matrix} '
                      + latex(N(t_x,3)) + '~=~' + latex(a_x) + vorz_str(v_ab_x) + r' \cdot r' + r' \\'
                      + latex(N(t_y,3)) + '~=~' + latex(a_y) + vorz_str(v_ab_y) + r' \cdot r' + r' \\'
@@ -184,7 +184,34 @@ def lagebeziehung(nr, teilaufg):
                      'r~=~' + latex(N(v_ab_x/v_cd_x,3)) + r' \\'
                      'r~=~' + latex(N(v_ab_y/v_cd_y,3)) + r' \\'
                      'r~=~' + latex(N(v_ab_z/v_cd_z,3)) + r' \\'
-                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\')
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\'
+                     r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g_1~=~g_2} \hspace{5em} \\'
+                     r'\begin{pmatrix} ' + latex(a_x) + r' \\' + latex(a_y) + r' \\' + latex(a_z) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + latex(v_ab_x) + r' \\' + latex(v_ab_y) + r' \\' + latex(v_ab_z) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                     + latex(c_x) + r' \\' + latex(c_y) + r' \\' + latex(c_z) + r' \\'
+                     r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                     + latex(v_cd_x) + r' \\' + latex(v_cd_y) + r' \\' + latex(v_cd_z) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \beginn{matrix} '
+                     'I: ~~' + latex(a_x) + vorz_str(v_ab_x) + r'~ \cdot ~r \\'
+                     'II: ~' + latex(a_y) + vorz_str(v_ab_y) + r'~ \cdot ~r \\'
+                     'III: ~' + latex(a_z) + vorz_str(v_ab_z) + r'~ \cdot ~r \\'
+                     r' \end{pmatrix} \quad ~=~ \quad \beginn{matrix} '
+                     + latex(c_x) + vorz_str(v_cd_x) + r'~ \cdot ~s \\'
+                     + latex(c_y) + vorz_str(v_cd_y) + r'~ \cdot ~s \\'
+                     + latex(c_z) + vorz_str(v_cd_z) + r'~ \cdot ~s \\'
+                     r' \end{pmatrix} \\\\')
+        if v_ab_x != 0 and v_cd_x != 0:
+            loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(a_x) + vorz_str(v_ab_x) + r'~ \cdot ~r ~=~'
+                         + latex(c_x) + vorz_str(v_cd_x) + r'~ \cdot ~s \vert ~' + vorz_str(-1*c_x)
+                         + r' ~ \vert ~ \div ' + vorz_str_minus(v_cd_x) + r'~ \to ~ s ~=~ '
+                         + latex(Rational((a_x-c_x)/v_cd_x)) + r'\quad (2P) \\')
+            if v_ab_y != 0 and v_cd_y != 0:
+                loesung_3 = ((r' \mathrm{s~in~II~einsetzen:} \quad ' + str(a_y) + vorz_str(v_ab_y) + r'~ \cdot ~r ~=~'
+                             + latex(c_y) + vorz_str(v_cd_y) + r'~ \cdot ~ \big( ' + latex(Rational((a_x-c_x)/v_cd_x))
+                             + r' \big) ~ \vert ' + vorz_str(-1*a_y) + r'~ \vert ~ \div ' + str(v_ab_y))
+                             + r' \quad \to \quad ' +
         Punkte += 12
     else:
         punkt_c =  [c_x,c_y,c_z] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v_ab)
