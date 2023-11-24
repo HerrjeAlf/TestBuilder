@@ -37,10 +37,9 @@ def erstellen(Teil):
     def kurvendiskussion(nr, teilaufg):
         i = 0
         Punkte = 0
-        grafik = False
+        grafik = 'No'
 
-        auswahl = random.choice(['rationale_Nst', 'irrationale_Nst'])
-        if auswahl == 'rationale_Nst':
+        if random.random() < 0.5:
             nst_f_1 = zzahl(0,2)
             nst_f_2 = nst_f_1 + nzahl(1, 2) + 0.5
             nst_f_3 = nst_f_1 - nzahl(2, 3) - 0.5
@@ -105,9 +104,9 @@ def erstellen(Teil):
             grenzwert_f_pos = limit(fkt_f, x, oo)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + latex(fkt_f) + '~=~'
-                           + latex(grenzwert_f_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                           + latex(fkt_f) + '~=~' + latex(grenzwert_f_min) + r' \quad (2P) \\\\')
+            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + latex(fkt_f) + '~=~' + \
+                           latex(grenzwert_f_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} ' + \
+                           latex(fkt_f) + '~=~' + latex(grenzwert_f_min) + r' \quad (2P) \\\\')
             Punkte += 2
             i += 1
 
@@ -177,18 +176,18 @@ def erstellen(Teil):
             print('3. Ableitung: f_1(x)=' + str(fkt_f_3))
 
             if fkt_f_2.subs(x, x_1_fkt_f_1) < 0:
-                loesung_f_monotonie_1 = (r'~<~0~ \to HP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~'
-                                        + latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\')
+                loesung_f_monotonie_1 = r'~<~0~ \to HP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\'
             else:
-                loesung_f_monotonie_1 = (r'~>~0~ \to TP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~'
-                                        + latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\')
+                loesung_f_monotonie_1 = r'~>~0~ \to TP(~' + latex(x_1_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_1_fkt_f_1), 3)) + r') \quad (3P) \\'
 
             if fkt_f_2.subs(x, x_2_fkt_f_1) < 0:
-                loesung_f_monotonie_2 = (r'~<~0~ \to HP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~'
-                                        + latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\')
+                loesung_f_monotonie_2 = r'~<~0~ \to HP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\'
             else:
-                loesung_f_monotonie_2 = (r'~>~0~ \to TP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~'
-                                        + latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\')
+                loesung_f_monotonie_2 = r'~>~0~ \to TP(~' + latex(x_2_fkt_f_1) + r'~ \vert ~' + \
+                                        latex(round(fkt_f.subs(x, x_2_fkt_f_1), 3)) + r') \quad (3P) \\\\'
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrema der Funktion f und deren Art'
                                               ' mithilfe des hinreichenden Kriteriums. \n\n')
@@ -305,7 +304,7 @@ def erstellen(Teil):
                 for elements in loesung[1]:
                     agn.append(elements)
 
-        if loesung[3] == False:
+        if loesung[3] == 'No':
             pass
         else:
             with Loesung.create(Figure(position='h!')) as graph:
@@ -321,7 +320,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 anzahl_HAKs = 2
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:

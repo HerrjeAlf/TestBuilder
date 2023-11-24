@@ -250,13 +250,13 @@ def verhaeltnisgleichgungen(nr, teilaufg):
         dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
-                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\\\')
             loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                         + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                         + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
         else:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
-                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em}')
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\\\')
             loesungen = (r' \mathrm{sin(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')

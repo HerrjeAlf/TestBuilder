@@ -71,7 +71,7 @@ class AngleAnnotation(Arc):
         self.text = ax.annotate(text, xy=self._center, **self.kw)
 
     def get_size(self):
-        factor = 1.
+        factor = 1
         if self.unit == "points":
             factor = self.ax.figure.dpi / 72.
         elif self.unit[:4] == "axes":
@@ -185,9 +185,9 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
 
     # point, = ax.plot(*p1, marker="o")
 
-    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=200, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels')
-    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=200, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
-    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=200, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
+    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=500, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels')
+    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=500, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
+    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
 
