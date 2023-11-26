@@ -149,10 +149,13 @@ def erstellen(Teil):
             loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
             loesung.append(r'S_{x_1}(' + latex(nst_f_1) + r'\vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3))
-                           + r' \vert 0) \quad S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0) \quad  S_y(0 \vert ' +
-                           latex(s_fkt_f) + r') \quad (4P) \\\\')
-
-            Punkte += 16
+                           + r' \vert 0) \quad S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0)')
+            if nst_f_1 == 0 or nst_f_2 == 0 or nst_f_3 == 0:
+                loesung.append(r' \quad (3P) \\\\')
+                Punkte += 15
+            else:
+                loesung.append(r' \quad S_y(0 \vert' + latex(s_fkt_f) + r') \quad (4P) \\\\')
+                Punkte += 16
             i += 1
 
         if d in teilaufg:
