@@ -431,7 +431,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Ableitungen entdecken'
+    Art = 'Klausur - Teil I'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -498,8 +498,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_HAKs = 2
-probe = False
+anzahl_HAKs = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:

@@ -139,6 +139,8 @@ def erstellen(Teil):
                                              + r' \quad (2P) \\')
             loesung.append('(' + latex(fkt_f) + r')~ \div ~(x' + vorz_str(-1 * nst_f_1) + ')~=~'
                            + latex(fkt_f_partial) + r' \quad (4P) \\')
+            loesung.append(table2)
+            loesung.append(r'\hspace{10em} \\')
             loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) +
                           r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
             loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
@@ -259,7 +261,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'HAK 06 - Kurvendiskussion von Polynomen'
+    Art = 'Test - Kurvendiskussion von Polynomen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -319,7 +321,7 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_HAKs = 2
+anzahl_HAKs = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
