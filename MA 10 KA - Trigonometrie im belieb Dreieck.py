@@ -45,13 +45,54 @@ def beliebiges_dreieck(nr, teilaufg):
     i = 0
     Punkte = 0
 
+    seite_b = nzahl(3,12)
+    seite_a = seite_b + nzahl(2,8)
+    gamma = nzahl(30,59)
+    seite_c = round(math.sqrt(seite_a**2+seite_b**2-2*seite_a*seite_b*cos(math.radians(gamma))),1)
+    alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
+    beta = int(180-gamma-alpha)
+    auswahl_seite_1 = random.randint(0,2)
+    auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
+    auswahl_liste = {'Seite_bez' : ['a', 'b', 'c'],
+                'Seite_wert' : [seite_a, seite_b, seite_c],
+                'Winkel_bez' : [r' \alpha', r' \beta', r' \gamma'],
+                'Winkel_wert' : [alpha, beta, gamma]}
+
+    seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
+    seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
+    seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
+    seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
+    winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
+    winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
+    winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
+    winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+
+    print(str(seite_1) + ' = ' + str(seite_1_wert)), print(str(seite_2) + ' = ' + str(seite_2_wert)), print(str(winkel_1) + ' = ' + str(winkel_1_wert)),print(str(winkel_2) + ' = ' + str(winkel_2_wert))
+    # print(seite_a), print(seite_b), print(seite_c), print(beta), print(alpha), print(gamma)
+
+
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die gesuchte Seitenlänge mit dem Sinussatz.')
+        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad'
+                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ }, \quad'
+                       + winkel_2 + '~ = ~' + latex(winkel_2_wert) + r' ^{ \circ }, \quad'
+                       + r' \mathrm{gesucht:~} ' + str(seite_2))
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \quad '
+                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
+                                                 + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
+                                                 + r')} \quad \vert \cdot sin(' + winkel_2 + r') \quad \to \quad '
+                                                 + str(seite_2) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
+                                                 + winkel_2 + ') }{ sin(' + winkel_1 + r')} \quad (2P) \\' + str(seite_2)
+                                                 + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
+                                                 + latex(winkel_2_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
+                                                 + r' ^{ \circ } )} ~=~' + latex(seite_2_wert) + r'cm \quad (2P) \\'))
+        i += 1
+        Punkte += 6
 
-         i += 1
-
-    return aufgabe, loesung, Punkte, grafik
+    return aufgabe, loesung, Punkte
 
 
 aufgaben = [beliebiges_dreieck(1,[a])]
@@ -65,8 +106,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'Klassenarbeit über rechtwinklige Dreiecke'
-Teil = 'Probe 02'
+Art = 'HAK 07 - Sinussatz'
+Teil = 'Gr. A'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
