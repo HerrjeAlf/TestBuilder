@@ -409,11 +409,52 @@ def sachaufgabe_01(nr, teilaufg):
 
     return aufgabe, loesung, Punkte
 
+def sachaufgabe_02(nr, teilaufg):
+    # hier wird die Länge der Leiter und die Deckenhöhe berechnet
+    laenge_leiter = nzahl(23,50)/10
+    deckenhoehe = N(laenge_leiter - nzahl(5,10)/10,2)
+    # hier werden die Winkel berechnet
+    anstellwinkel = int(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
+    i = 0
+    Punkte = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar.'
+               f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m.'
+               f'Die Leiter ist gut zu begehen, wenn die Leiter mit dem Fußboden höchstens einen Winkel von 61° bildet. \n',
+               'Fertige dazu eine Planskizze an. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
+                                                 + str(deckenhoehe) + 'm,~b~=~' + str(laenge_leiter)
+                                                 + r'm, \quad ges: \alpha \quad (1P)} \\'
+                                                 + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert sin^{-1}()'
+                                                   r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
+                                                   r' sin^{-1} \Big( \frac{' + str(deckenhoehe) + 'm }{'
+                                                 + str(laenge_leiter) + r'm } \Big) ~=~' + str(N(anstellwinkel,2))
+                                                 + r' ^{ \circ} \quad (3P)'))
+        Punkte += 6
+        i += 1
+    if b in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
+        if anstellwinkel <= 61:
+            loesung.append(str(liste_teilaufg[i])
+                           + (r') \quad  Der Anstellwinkel ist kleiner als 61° und somit der Dachboden gut zu begehen. (1P)'))
+        else:
+            loesung.append(str(liste_teilaufg[i])
+                           + (r') \quad  Der Anstellwinkel ist größer als 61° und somit der Dachboden nicht gut zu begehen. (1P)'))
+        Punkte += 1
+        i += 1
+
+
+
+    return aufgabe, loesung, Punkte
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
             verhaeltnisgleichgungen(3, [a,b]),
-            sachaufgabe_01(4, [a])]
+            sachaufgabe_02(4, [a,b])]
 # print(kongruente_Dreiecke(1, [a, b]))
 # print(rechtwinkliges_dreieck(2, [a,b]))
 # print(verhaeltnisgleichgungen(3, [a,b]))
@@ -429,7 +470,7 @@ Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
 Art = 'Klassenarbeit über rechtwinklige Dreiecke'
-Teil = 'Gr. A'
+Teil = 'Nachschreiber'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
