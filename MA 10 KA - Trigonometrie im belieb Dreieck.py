@@ -72,10 +72,10 @@ def beliebiges_dreieck(nr, teilaufg):
 
 
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist ein beliebiges Dreieck. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die gesuchte Seitenlänge mit dem Sinussatz.')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. Fertige dazu eine Planskizze an.')
         aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad'
                        + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ }, \quad'
                        + winkel_2 + '~ = ~' + latex(winkel_2_wert) + r' ^{ \circ }, \quad'
@@ -106,8 +106,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 07 - Sinussatz'
-Teil = 'Gr. A'
+Art = 'HAK 05 - Sinussatz'
+Teil = 'Gr. B'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird

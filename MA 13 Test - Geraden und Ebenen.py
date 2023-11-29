@@ -1,4 +1,4 @@
-import random
+import random, sys
 import numpy as np
 from sympy import *
 from numpy.linalg import solve as slv
@@ -38,6 +38,8 @@ def punkt_vektor(p):
 def faktorliste(n, p=1,q=10):
     return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
+def vektor_runden(vec):
+    return [N(elements,2) for elements in vec]
 # Berechnung für die Aufgaben
 def gerade(nr, teilaufg):
     i = 0
@@ -96,7 +98,7 @@ def gerade(nr, teilaufg):
         if lx == ly == lz:
             loesung_2 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4P) \\'
         else:
-            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} '
+            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4P) \\'
 
         aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1 + loesung_2)
@@ -110,13 +112,13 @@ def lagebeziehung(nr, teilaufg):
     Punkte = 0
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-    v = [vx, vy, vz] = [v_teiler, v_teiler * zzahl(1,6)/2, v_teiler * zzahl(1,6)/2] # Vektor v ist der Richtungsvektor von Geraden g_1
+    v = [vx, vy, vz] = punkt_vektor(4) # Vektor v ist der Richtungsvektor von Geraden g_1
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
-    u = [ux, uy, uz] =  [ux, uy, - 1 * (vx*ux + vy * uy)/vz] 
-
+    uz = - 1 * (vx*ux + vy * uy)/vz
+    u = [ux, uy, uz]
     auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-    auswahl = 'windschief'
+    auswahl = 'schneiden'
     if auswahl == 'identisch':
         punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf g_2
         w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von g_2
@@ -174,11 +176,11 @@ def lagebeziehung(nr, teilaufg):
                      r' \mathrm{Die~Geraden~g_1~und~g_2~sind~echt~parallel.} \quad (4P) \\')
         Punkte += 7
     elif auswahl == 'windschief':
-        punkt_c =  [cx,cy,cz] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(u) # Punkte C und D liegen auf g_2
-        punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(u)
+        punkt_c =  [cx,cy,cz] = np.array(punkt_a) + nzahl(1,6)/2 * np.array(u) # Punkte C und D liegen auf g_2
+        punkt_d =  [dx,dy,dz] = np.array(punkt_c) - nzahl(1,6)/2 * np.cross(np.array(u),np.array(v))/10
         w = [wx, wy, wz] = np.array(punkt_d) - np.array(punkt_c) # Vektor w ist der Richtungsvektor von g_2
-        lsg_r = latex(N((wx*(ay-cy)-wy*(ax-cx))/(vx*wy-vy*wx),3))
-        lsg_s = latex(N((ax-cx)/wx + (vx/wx)*(wx*(ay-cy)-wy*(ax-cx))/(vy*wy-vy*wx),3))
+        lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
+        lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
         if vx != 0 and wx != 0:
             loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                          + latex(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
@@ -192,10 +194,26 @@ def lagebeziehung(nr, teilaufg):
                              + vorz_str(N(wy*vx/wx,3)) + r' \cdot r \quad \vert ~'
                              + vorz_str(-1*vy) + r' \cdot r \quad \vert ~'
                              + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
-                             + latex(N((wx*(ay-cy)+wx*(ax-cx))/wx,3)) + '~=~' + latex(N((vx*wy-vy*wx)/wx,3))
+                             + latex(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + latex(N((vx*wy-vy*wx)/wx,3))
                              + r' \cdot r \quad \vert \div ' + vorz_str_minus(N((vx*wy-vy*wx)/wx,3))
-                             + r' \quad \to \quad r~=~' + lsg_r + r' \quad \mathrm{und} \quad s ~=~'
-                             + lsg_s + r' \quad (3P) \\')
+                             + r' \quad \to \quad r~=~' + latex(N(lsgr,3))
+                             + r' \quad \mathrm{und} \quad s ~=~'
+                             + latex(N(lsgs,3)) + r' \quad (3P) \\')
+                if vz != 0 and wz != 0:
+                    loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + latex(az) + vorz_str(vz)
+                                 + r' \cdot (' + latex(N(lsgr,3)) + r') ~=~ ' + latex(cz) + vorz_str(wz)
+                                 + r' \cdot (' + latex(N(lsgs,3)) + r') \quad \to \quad ' + latex(N(az+vz*lsgr,3))
+                                 + '~=~' + latex(N(cz+wz*lsgs,3))
+                                 + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
+                                   r'\mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
+                else:
+                    sys.exit('vz oder wz ist null.')
+            else:
+                sys.exit('vy oder wy ist null.')
+        else:
+            sys.exit('va oder wa ist null.')
+
+
         loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                      r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                      r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -214,21 +232,84 @@ def lagebeziehung(nr, teilaufg):
                      r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
                      + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
                      r' \end{pmatrix} \quad \to \quad \begin{matrix}'
-                     'I: ~~' + latex(ax) + vorz_str(vx) + r' \cdot r' + r' \\'
-                     'II: ~' + latex(ay) + vorz_str(vy) + r' \cdot r' + r' \\'
-                     'III: ~' + latex(az) + vorz_str(vz) + r' \cdot r' + r' \\'
-                     r' \end{matrix} ~=~ \begin{matrix} '
+                     'I: ~~' + latex(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
+                     'II: ~' + latex(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
+                     'III: ~' + latex(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
+                     r' \end{matrix} \begin{matrix} '
                      + latex(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
                      + latex(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
                      + latex(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                     r' \end{matrix} \\\\'  + loesung_2 + loesung_3)
-        Punkte += 12
-    else:
-        punkt_c =  [cx,cy,cz] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(v) # Punkte C und D liegen auf g_2
-        punkt_d = [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 30) / 5 * np.array(u)
-        w = [wx, wy, wz] = np.array(punkt_d) - np.array(punkt_c) # Vektor w ist der Richtungsvektor von g_2
+                     r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4)
+        Punkte += 15
 
-        Punkte += 12
+    else:
+        punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf g_2
+        punkt_c = [cx,cy,cz] = np.array(punkt_d) + zzahl(1, 7) / 2 * np.array(u)
+        w = [wx, wy, wz] = np.array(punkt_d) - np.array(punkt_c) # Vektor w ist der Richtungsvektor von g_2
+        lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
+        lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
+        if vx != 0 and wx != 0:
+            loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
+                         + latex(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
+                         + r' ~ \vert \div ' + vorz_str_minus(wx) + r' \quad \to \quad s ~=~ '
+                         + latex(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2P) \\')
+            if vy != 0 and wy != 0:
+                loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
+                             + latex(cy) + vorz_str(wy) + r' \cdot \big( ' + latex(N((ax - cx) / wx, 3))
+                             + vorz_str(N(vx / wx, 3)) + r' \cdot r \big) \\'
+                             + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + latex(N((wx * cy + wy * (ax - cx)) / wx, 3))
+                             + vorz_str(N(wy * vx / wx, 3)) + r' \cdot r \quad \vert ~'
+                             + vorz_str(-1 * vy) + r' \cdot r \quad \vert ~'
+                             + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2P) \\'
+                             + latex(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
+                             + latex(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
+                             + vorz_str_minus(N((vx * wy - vy * wx) / wx, 3))
+                             + r' \quad \to \quad r~=~' + latex(N(lsgr, 3))
+                             + r' \quad \mathrm{und} \quad s ~=~'
+                             + latex(N(lsgs, 3)) + r' \quad (3P) \\')
+                if vz != 0 and wz != 0:
+                    loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + latex(az) + vorz_str(vz)
+                                 + r' \cdot (' + latex(N(lsgr, 3)) + r') ~=~ ' + latex(cz) + vorz_str(wz)
+                                 + r' \cdot (' + latex(N(lsgs, 3)) + r') \quad \to \quad ' + latex(N(az + vz * lsgr, 3))
+                                 + '~=~' + latex(N(cz + wz * lsgs, 3))
+                                 + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
+                                   r'\mathrm{Die~Geraden~schneiden~sich.} \quad (1P)')
+                else:
+                    sys.exit('vz oder wz ist null.')
+            else:
+                sys.exit('vy oder wy ist null.')
+        else:
+            sys.exit('va oder wa ist null.')
+
+
+        loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                     r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
+                     r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                     + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                     'r~=~' + latex(N(vx/wx,3)) + r' \\'
+                     'r~=~' + latex(N(vy/wy,3)) + r' \\'
+                     'r~=~' + latex(N(vz/wz,3)) + r' \\'
+                     r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\'
+                     r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g_1~=~g_2} \hspace{5em} \\'
+                     r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                     + latex(cx) + r' \\' + latex(cy) + r' \\' + latex(cz) + r' \\'
+                     r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
+                     + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad \begin{matrix}'
+                     'I: ~~' + latex(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
+                     'II: ~' + latex(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
+                     'III: ~' + latex(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
+                     r' \end{matrix} \begin{matrix} '
+                     + latex(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
+                     + latex(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
+                     + latex(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
+                     r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4)
+
+        Punkte += 15
     # print(v), print(w), print(punkt_c)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),

@@ -250,13 +250,13 @@ def verhaeltnisgleichgungen(nr, teilaufg):
         dreieck_zeichnen(pkt, pkt_bez, st, wk, name)
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
-                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\\\')
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
             loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                         + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                         + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
         else:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
-                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\\\')
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
             loesungen = (r' \mathrm{sin(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[2]
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
@@ -412,7 +412,7 @@ def sachaufgabe_01(nr, teilaufg):
 def sachaufgabe_02(nr, teilaufg):
     # hier wird die Länge der Leiter und die Deckenhöhe berechnet
     laenge_leiter = nzahl(23,50)/10
-    deckenhoehe = N(laenge_leiter - nzahl(5,10)/10,2)
+    deckenhoehe = N(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
     anstellwinkel = int(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
     i = 0
@@ -440,10 +440,10 @@ def sachaufgabe_02(nr, teilaufg):
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
             loesung.append(str(liste_teilaufg[i])
-                           + (r') \quad  Der Anstellwinkel ist kleiner als 61° und somit der Dachboden gut zu begehen. (1P)'))
+                           + (r') Der Anstellwinkel ist kleiner als 61° und somit der Dachboden gut zu begehen. (1P)'))
         else:
             loesung.append(str(liste_teilaufg[i])
-                           + (r') \quad  Der Anstellwinkel ist größer als 61° und somit der Dachboden nicht gut zu begehen. (1P)'))
+                           + (r') Der Anstellwinkel ist größer als 61° und somit der Dachboden nicht gut zu begehen. (1P)'))
         Punkte += 1
         i += 1
 

@@ -315,7 +315,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Klausur - Teil II'
+    Art = 'Test - Anwendung der Ableitung'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -377,7 +377,7 @@ def erstellen(Teil):
 
 
 anzahl_HAKs = 1
-probe = True
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:
