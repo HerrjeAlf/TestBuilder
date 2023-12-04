@@ -116,7 +116,7 @@ def lagebeziehung(nr, teilaufg):
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
     uz = - 1 * (vx*ux + vy * uy)/vz
-    u = [ux, uy, uz]
+    u = np.array([ux, uy, uz])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Gegeben sind die beiden Geraden mit folgenden Gleichungen:']
@@ -124,6 +124,7 @@ def lagebeziehung(nr, teilaufg):
 
     if a in teilaufg:
         auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+        auswahl = 'windschief'
         if auswahl == 'identisch':
             punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf g_2
             w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von g_2
@@ -183,7 +184,7 @@ def lagebeziehung(nr, teilaufg):
         elif auswahl == 'windschief':
             punkt_c =  [cx,cy,cz] = np.array(punkt_a) + nzahl(1,6)/2 * np.array(u) # Punkte C und D liegen auf g_2
             punkt_d =  [dx,dy,dz] = np.array(punkt_c) - nzahl(1,6)/2 * np.cross(np.array(u),np.array(v))
-            w = [wx, wy, wz] = np.array(punkt_d) - np.array(punkt_c) # Vektor w ist der Richtungsvektor von g_2
+            w = [wx, wy, wz] = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von g_2
             lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
             if vx != 0 and wx != 0:
@@ -250,11 +251,11 @@ def lagebeziehung(nr, teilaufg):
         else:
             punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf g_2
             punkt_c = [cx,cy,cz] = np.array(punkt_d) + zzahl(1, 7) / 2 * np.array(u)
-            w = np.array(punkt_d) - np.array(punkt_c) # Vektor w ist der Richtungsvektor von g_2
+            w = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von g_2
             [wx, wy, wz] = vektor_runden(w,3)
             lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
-            schnittpunkt_s = np.array(punkt_c) + lsgr*np.array(w)
+            schnittpunkt_s = punkt_c + lsgr*w
             [sx, sy, sz] = vektor_runden(schnittpunkt_s,3)
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
@@ -338,12 +339,12 @@ def lagebeziehung(nr, teilaufg):
 
     if b in teilaufg:
         punkt_f =  [fx,fy,fz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf g_2
-        punkt_e =  [ex,ey,ez] = np.array(punkt_f) - nzahl(1,7) / 2 * np.cross(np.array(u),np.array(v))/10
+        punkt_e =  [ex,ey,ez] = np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4))
         p = np.array(punkt_f) - np.array(punkt_e) # Vektor w ist der Richtungsvektor von g_2
         [px, py, pz] = vektor_runden(p, 3)
         sp_vp = np.vdot(v,p)
-        l_v =
-        l_p =
+        l_v = np.linalg.norm(v)
+        l_p = np.linalg.norm(p)
 
         aufgabe.append('Gegeben ist eine weitere Gerade g_3, die g_1 schneidet, mit der folgenden Gleichung.')
         aufgabe.append(r'g_3: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -357,7 +358,7 @@ def lagebeziehung(nr, teilaufg):
                                            r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
                                            r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
                                            r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                                           r' \vert \overrightarrow{u} \vert } \quad (1P) \\'
+                                           r' \vert \overrightarrow{u} \vert } \Big] \quad (1P) \\'
                                            r' \vert \overrightarrow{v} \vert \cdot \vert \overrightarrow{u} \vert'
                                            r'~=~ \vert ' + vorz_str_minus(vx) + r' \cdot ' + vorz_str_minus(px)
                                            + '+' + vorz_str_minus(vy) + r' \cdot ' + vorz_str_minus(py)
@@ -365,12 +366,12 @@ def lagebeziehung(nr, teilaufg):
                                            + latex(abs(N(sp_vp,3))) + r' \quad (2P) \\'
                                            r' \vert \overrightarrow{v} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
                                            + str(vy) + ')^2 ~=~(' + str(vz) + ')} ~=~ ' + latex(N(l_v,3))
-                                           + r' \qaud \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
+                                           + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
                                            + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~=~(' + str(pz)
                                            + ')} ~=~ ' + latex(N(l_p,3)) + r' \quad (2P) \\'
                                            + r' \gamma ~=~ cos^{-1} \Big( \frac{' + latex(abs(N(sp_vp,3))) + '}{'
                                            + latex(N(l_v,3)) + r' \cdot ' + latex(N(l_p,3))
-                                           + r'} \Big) ~=~')
+                                           + r'} \Big) ~=~' + latex(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3)) + r' \quad (2P) \\'))
 
     return aufgabe, loesung, Punkte
 
