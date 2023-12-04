@@ -126,8 +126,8 @@ def lagebeziehung(nr, teilaufg):
         auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
         auswahl = 'windschief'
         if auswahl == 'identisch':
-            punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf g_2
-            w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von g_2
+            punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf h
+            w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -136,8 +136,8 @@ def lagebeziehung(nr, teilaufg):
                          'r~=~' + latex(N(vx/wx,3)) + r' \\'
                          'r~=~' + latex(N(vy/wy,3)) + r' \\'
                          'r~=~' + latex(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~parallel} \quad (3P) \\\\'
-                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g_1~auf~g_2~liegt.} \hspace{15em} \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
                          r' \begin{pmatrix} '
                          + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -151,11 +151,11 @@ def lagebeziehung(nr, teilaufg):
                          r' \end{matrix} \quad \to \quad \begin{matrix} '
                          + 'r=' + latex(N((ax-cx)/wx,3)) + r' \\' + 'r=' + latex(N((ay-cy)/wy,3)) + r' \\'
                          + 'r=' + latex(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g_1~und~g_2~sind~identisch.} \quad (4P) \\')
+                         r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4P) \\')
             Punkte += 7
         elif auswahl == 'parallel':
-            punkt_c =  [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(u) # Punkt C liegt auf g_2
-            w = [wx, wy, wz] = zzahl(1,30)/10* np.array(v) # Vektor w ist der Richtungsvektor von g_2
+            punkt_c =  [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(u) # Punkt C liegt auf h
+            w = [wx, wy, wz] = zzahl(1,30)/10* np.array(v) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -164,8 +164,8 @@ def lagebeziehung(nr, teilaufg):
                          'r~=~' + latex(N(vx/wx,3)) + r' \\'
                          'r~=~' + latex(N(vy/wy,3)) + r' \\'
                          'r~=~' + latex(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~parallel} \quad (3P) \\\\'
-                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g_1~auf~g_1~liegt.} \hspace{15em} \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
                          r' \begin{pmatrix} '
                          + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -179,12 +179,12 @@ def lagebeziehung(nr, teilaufg):
                          r' \end{matrix} \quad \to \quad \begin{matrix} '
                          + 'r=' + latex(N((ax-cx)/wx,3)) + r' \\' + 'r=' + latex(N((ay-cy)/wy,3)) + r' \\'
                          + 'r=' + latex(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g_1~und~g_2~sind~echt~parallel.} \quad (4P) \\')
+                         r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4P) \\')
             Punkte += 7
         elif auswahl == 'windschief':
-            punkt_c =  [cx,cy,cz] = np.array(punkt_a) + nzahl(1,6)/2 * np.array(u) # Punkte C und D liegen auf g_2
+            punkt_c =  [cx,cy,cz] = np.array(punkt_a) + nzahl(1,6)/2 * np.array(u) # Punkte C und D liegen auf h
             punkt_d =  [dx,dy,dz] = np.array(punkt_c) - nzahl(1,6)/2 * np.cross(np.array(u),np.array(v))
-            w = [wx, wy, wz] = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von g_2
+            w = [wx, wy, wz] = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von h
             lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
             if vx != 0 and wx != 0:
@@ -228,8 +228,8 @@ def lagebeziehung(nr, teilaufg):
                          'r~=~' + latex(N(vx/wx,3)) + r' \\'
                          'r~=~' + latex(N(vy/wy,3)) + r' \\'
                          'r~=~' + latex(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\'
-                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g_1~=~g_2} \hspace{5em} \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
                          r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                          + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
@@ -249,9 +249,9 @@ def lagebeziehung(nr, teilaufg):
             Punkte += 15
 
         else:
-            punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf g_2
+            punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf h
             punkt_c = [cx,cy,cz] = np.array(punkt_d) + zzahl(1, 7) / 2 * np.array(u)
-            w = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von g_2
+            w = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von h
             [wx, wy, wz] = vektor_runden(w,3)
             lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
@@ -300,8 +300,8 @@ def lagebeziehung(nr, teilaufg):
                          'r~=~' + latex(N(vx/wx,3)) + r' \\'
                          'r~=~' + latex(N(vy/wy,3)) + r' \\'
                          'r~=~' + latex(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g_1~und~g_2~sind~nicht~parallel} \quad (3P) \\\\'
-                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g_1~=~g_2} \hspace{5em} \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
                          r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                          + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
@@ -322,11 +322,11 @@ def lagebeziehung(nr, teilaufg):
             Punkte += 16
             # print(v), print(w), print(punkt_c)
 
-        aufgabe.append(r'g_1: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+        aufgabe.append(r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                        + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                        r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
-                       r' \end{pmatrix} \quad \mathrm{und} \quad g_2: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                       r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                        + latex(cx) + r' \\' + latex(cy) + r' \\' + latex(cz) + r' \\'
                        r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
@@ -338,21 +338,21 @@ def lagebeziehung(nr, teilaufg):
 
 
     if b in teilaufg:
-        punkt_f =  [fx,fy,fz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf g_2
+        punkt_f =  [fx,fy,fz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf h
         punkt_e =  [ex,ey,ez] = np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4))
-        p = np.array(punkt_f) - np.array(punkt_e) # Vektor w ist der Richtungsvektor von g_2
+        p = np.array(punkt_f) - np.array(punkt_e) # Vektor w ist der Richtungsvektor von h
         [px, py, pz] = vektor_runden(p, 3)
         sp_vp = np.vdot(v,p)
         l_v = np.linalg.norm(v)
         l_p = np.linalg.norm(p)
 
-        aufgabe.append('Gegeben ist eine weitere Gerade g_3, die g_1 schneidet, mit der folgenden Gleichung.')
-        aufgabe.append(r'g_3: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+        aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
+        aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                + latex(ex) + r' \\' + latex(ey) + r' \\' + latex(ez) + r' \\'
                r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                + latex(px) + r' \\' + latex(py) + r' \\' + latex(pz) + r' \\'
                r' \end{pmatrix} \quad ')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g_1 und g_3. \n\n')
+        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
         loesung.append(str(teilaufg[i]) + (r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                                            r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                                            r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
