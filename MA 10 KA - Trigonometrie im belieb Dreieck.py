@@ -1,5 +1,5 @@
 import pylatex, math, random, sympy, numpy, matplotlib
-from random import randrange, randint, choice
+from random import randrange, randint, choice, shuffle
 from sympy import *
 from numpy.linalg import solve as slv
 import matplotlib.pyplot as plt
@@ -52,9 +52,12 @@ def beliebiges_dreieck(nr, teilaufg):
         seite_c = round(math.sqrt(seite_a**2+seite_b**2-2*seite_a*seite_b*cos(math.radians(gamma))),1)
         alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
         beta = int(180-gamma-alpha)
-        auswahl_liste = {'Seite_bez' : ['a', 'b', 'c'],
+        auswahl = random.sample([0, 1, 2], 3)
+        bezeichnung = ['a', 'b', 'c']
+        winkel = [r' \alpha', r' \beta', r' \gamma']
+        auswahl_liste = {'Seite_bez' : [bezeichnung[x] for x in auswahl],
                     'Seite_wert' : [seite_a, seite_b, seite_c],
-                    'Winkel_bez' : [r' \alpha', r' \beta', r' \gamma'],
+                    'Winkel_bez' : [winkel[x] for x in auswahl],
                     'Winkel_wert' : [alpha, beta, gamma]}
 
         return auswahl_liste
@@ -62,17 +65,15 @@ def beliebiges_dreieck(nr, teilaufg):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist jeweils ein beliebiges Dreieck. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
-        auswahl_seite_1 = random.randint(0,2)
-        auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
         auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
-        seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
-        seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
-        seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
-        winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
-        winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+        seite_1 = auswahl_liste['Seite_bez'][1]
+        seite_1_wert = auswahl_liste['Seite_wert'][1]
+        seite_2 = auswahl_liste['Seite_bez'][2]
+        seite_2_wert = auswahl_liste['Seite_wert'][2]
+        winkel_1 = auswahl_liste['Winkel_bez'][1]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][1]
+        winkel_2 = auswahl_liste['Winkel_bez'][2]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][2]
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. '
                                                 'Fertige dazu eine Planskizze an.')
@@ -92,17 +93,15 @@ def beliebiges_dreieck(nr, teilaufg):
         i += 1
         Punkte += 6
     if b in teilaufg:
-        auswahl_seite_1 = random.randint(0,2)
-        auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
         auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
-        seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
-        seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
-        seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
-        winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
-        winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+        seite_1 = auswahl_liste['Seite_bez'][1]
+        seite_1_wert = auswahl_liste['Seite_wert'][1]
+        seite_2 = auswahl_liste['Seite_bez'][2]
+        seite_2_wert = auswahl_liste['Seite_wert'][2]
+        winkel_1 = auswahl_liste['Winkel_bez'][1]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][1]
+        winkel_2 = auswahl_liste['Winkel_bez'][2]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][2]
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den gesuchten Winkel. '
                                                 'Fertige dazu eine Planskizze an. ')

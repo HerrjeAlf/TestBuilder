@@ -6,6 +6,7 @@ from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
 from sympy import *
+from random import shuffle
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 def zzahl(p, q):
@@ -84,7 +85,7 @@ def schnittpunkte(fkt_1,fkt_2):
         i += 1
 
 # schnittpunkte(4*x**3-16*x**2-5*x+42,3/79*x+16.28)
-Graph(0, 5,60*x**3-60*x**2 + 720, 720*x)
+# Graph(0, 5,60*x**3-60*x**2 + 720, 720*x)
 # integral(0,4/3,4*x**3-16*x**2-398/79*x+25.68)
 
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
