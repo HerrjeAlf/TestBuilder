@@ -53,11 +53,9 @@ def beliebiges_dreieck(nr, teilaufg):
         alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
         beta = int(180-gamma-alpha)
         auswahl = random.sample([0, 1, 2], 3)
-        bezeichnung = ['a', 'b', 'c']
-        winkel = [r' \alpha', r' \beta', r' \gamma']
-        auswahl_liste = {'Seite_bez' : [bezeichnung[x] for x in auswahl],
+        auswahl_liste = {'Seite_bez' : [['a', 'b', 'c'][x] for x in auswahl],
                     'Seite_wert' : [seite_a, seite_b, seite_c],
-                    'Winkel_bez' : [winkel[x] for x in auswahl],
+                    'Winkel_bez' : [[r' \alpha', r' \beta', r' \gamma'][x] for x in auswahl],
                     'Winkel_wert' : [alpha, beta, gamma]}
 
         return auswahl_liste
