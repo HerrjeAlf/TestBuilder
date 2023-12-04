@@ -45,41 +45,41 @@ def beliebiges_dreieck(nr, teilaufg):
     i = 0
     Punkte = 0
 
-    seite_b = nzahl(3,12)
-    seite_a = seite_b + nzahl(2,8)
-    gamma = nzahl(30,59)
-    seite_c = round(math.sqrt(seite_a**2+seite_b**2-2*seite_a*seite_b*cos(math.radians(gamma))),1)
-    alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
-    beta = int(180-gamma-alpha)
-    auswahl_seite_1 = random.randint(0,2)
-    auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
-    auswahl_liste = {'Seite_bez' : ['a', 'b', 'c'],
-                'Seite_wert' : [seite_a, seite_b, seite_c],
-                'Winkel_bez' : [r' \alpha', r' \beta', r' \gamma'],
-                'Winkel_wert' : [alpha, beta, gamma]}
+    def werte_bel_dreieck():
+        seite_b = nzahl(3,12)
+        seite_a = seite_b + nzahl(2,8)
+        gamma = nzahl(30,59)
+        seite_c = round(math.sqrt(seite_a**2+seite_b**2-2*seite_a*seite_b*cos(math.radians(gamma))),1)
+        alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
+        beta = int(180-gamma-alpha)
+        auswahl_liste = {'Seite_bez' : ['a', 'b', 'c'],
+                    'Seite_wert' : [seite_a, seite_b, seite_c],
+                    'Winkel_bez' : [r' \alpha', r' \beta', r' \gamma'],
+                    'Winkel_wert' : [alpha, beta, gamma]}
 
-    seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
-    seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
-    seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
-    seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
-    winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
-    winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
-    winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
-    winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+        return auswahl_liste
 
-    print(str(seite_1) + ' = ' + str(seite_1_wert)), print(str(seite_2) + ' = ' + str(seite_2_wert)), print(str(winkel_1) + ' = ' + str(winkel_1_wert)),print(str(winkel_2) + ' = ' + str(winkel_2_wert))
-    # print(seite_a), print(seite_b), print(seite_c), print(beta), print(alpha), print(gamma)
-
-
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist ein beliebiges Dreieck. \n\n']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist jeweils ein beliebiges Dreieck. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. Fertige dazu eine Planskizze an.')
+        auswahl_seite_1 = random.randint(0,2)
+        auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
+        auswahl_liste = werte_bel_dreieck()
+        seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
+        seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
+        seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
+        seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
+        winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
+        winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. '
+                                                'Fertige dazu eine Planskizze an.')
         aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad'
                        + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ }, \quad'
                        + winkel_2 + '~ = ~' + latex(winkel_2_wert) + r' ^{ \circ }, \quad'
-                       + r' \mathrm{gesucht:~} ' + str(seite_2))
+                       + r' \mathrm{und~gesucht~ist:~} ' + str(seite_2))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \quad '
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
@@ -91,11 +91,48 @@ def beliebiges_dreieck(nr, teilaufg):
                                                  + r' ^{ \circ } )} ~=~' + latex(seite_2_wert) + r'cm \quad (2P) \\'))
         i += 1
         Punkte += 6
+    if b in teilaufg:
+        auswahl_seite_1 = random.randint(0,2)
+        auswahl_seite_2 = (auswahl_seite_1 + 1) % 3
+        auswahl_liste = werte_bel_dreieck()
+        seite_1 = auswahl_liste['Seite_bez'][auswahl_seite_1]
+        seite_1_wert = auswahl_liste['Seite_wert'][auswahl_seite_1]
+        seite_2 = auswahl_liste['Seite_bez'][auswahl_seite_2]
+        seite_2_wert = auswahl_liste['Seite_wert'][auswahl_seite_2]
+        winkel_1 = auswahl_liste['Winkel_bez'][auswahl_seite_1]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][auswahl_seite_1]
+        winkel_2 = auswahl_liste['Winkel_bez'][auswahl_seite_2]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][auswahl_seite_2]
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den gesuchten Winkel. '
+                                                'Fertige dazu eine Planskizze an. ')
+        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
+                       + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
+                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad '
+                       + r' \mathrm{und~gesucht~ist:~} ' + str(winkel_2))
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \quad '
+                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
+                                                 + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
+                                                 + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
+                                                 + winkel_1 + r')} ~=~ \frac{' + str(seite_2) + '}{'
+                                                 + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
+                                                 + r') \quad (2P) \\ sin(' + winkel_2 + r')~=~ \frac{' + str(seite_2)
+                                                 + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
+                                                 + r') \quad \vert ~ arcsin() \quad \to \quad ' + winkel_2
+                                                 + r' ~=~ arcsin \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
+                                                 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
+                                                 + winkel_2 + r' ~=~ arcsin \Big( \frac{'
+                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert) + r'cm} \cdot sin('
+                                                 + latex(winkel_1_wert) + r' ^{ \circ } ) \Big) ~=~' + latex(winkel_2_wert)
+                                                 + r' ^{ \circ } \quad (2P) \\'))
+        i += 1
+        Punkte += 7
+
 
     return aufgabe, loesung, Punkte
 
 
-aufgaben = [beliebiges_dreieck(1,[a])]
+aufgaben = [beliebiges_dreieck(1,[a,b])]
 
 Punkte = str(sum(element[2] for element in aufgaben))
 
@@ -106,8 +143,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 05 - Sinussatz'
-Teil = 'Gr. B'
+Art = 'HAK 06 - Sinussatz II'
+Teil = 'Gr. A'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
