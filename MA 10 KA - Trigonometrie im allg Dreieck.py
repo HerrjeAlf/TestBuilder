@@ -64,14 +64,14 @@ def beliebiges_dreieck(nr, teilaufg):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
         auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][1]
-        seite_1_wert = auswahl_liste['Seite_wert'][1]
-        seite_2 = auswahl_liste['Seite_bez'][2]
-        seite_2_wert = auswahl_liste['Seite_wert'][2]
-        winkel_1 = auswahl_liste['Winkel_bez'][1]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][1]
-        winkel_2 = auswahl_liste['Winkel_bez'][2]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][2]
+        seite_1 = auswahl_liste['Seite_bez'][0]
+        seite_1_wert = auswahl_liste['Seite_wert'][0]
+        seite_2 = auswahl_liste['Seite_bez'][1]
+        seite_2_wert = auswahl_liste['Seite_wert'][1]
+        winkel_1 = auswahl_liste['Winkel_bez'][0]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
+        winkel_2 = auswahl_liste['Winkel_bez'][1]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. '
                                                 'Fertige dazu eine Planskizze an.')
@@ -92,14 +92,14 @@ def beliebiges_dreieck(nr, teilaufg):
         Punkte += 6
     if b in teilaufg:
         auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][1]
-        seite_1_wert = auswahl_liste['Seite_wert'][1]
-        seite_2 = auswahl_liste['Seite_bez'][2]
-        seite_2_wert = auswahl_liste['Seite_wert'][2]
-        winkel_1 = auswahl_liste['Winkel_bez'][1]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][1]
-        winkel_2 = auswahl_liste['Winkel_bez'][2]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][2]
+        seite_1 = auswahl_liste['Seite_bez'][0]
+        seite_1_wert = auswahl_liste['Seite_wert'][0]
+        seite_2 = auswahl_liste['Seite_bez'][1]
+        seite_2_wert = auswahl_liste['Seite_wert'][1]
+        winkel_1 = auswahl_liste['Winkel_bez'][0]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
+        winkel_2 = auswahl_liste['Winkel_bez'][1]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den gesuchten Winkel. '
                                                 'Fertige dazu eine Planskizze an. ')
