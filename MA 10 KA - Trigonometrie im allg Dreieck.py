@@ -79,13 +79,17 @@ def beliebiges_dreieck(nr, teilaufg):
                        + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ }, \quad'
                        + winkel_2 + '~ = ~' + latex(winkel_2_wert) + r' ^{ \circ }, \quad'
                        + r' \mathrm{und~gesucht~ist:~} ' + str(seite_2))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \quad '
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
+                                                 + r'cm, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
+                                                 + r' ^{ \circ }, \quad' + winkel_2 + '~ = ~' + latex(winkel_2_wert)
+                                                 + r' ^{ \circ } \mathrm{ges:~}' + str(seite_2)
+                                                 + r' \quad (1P) \quad mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
                                                  + r')} \quad \vert \cdot sin(' + winkel_2 + r') \quad \to \quad '
                                                  + str(seite_2) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
-                                                 + winkel_2 + ') }{ sin(' + winkel_1 + r')} \quad (2P) \\' + str(seite_2)
-                                                 + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
+                                                 + winkel_2 + ') }{ sin(' + winkel_1 + r')} \quad (2P) \\'
+                                                 + str(seite_2) + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
                                                  + latex(winkel_2_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
                                                  + r' ^{ \circ } )} ~=~' + latex(seite_2_wert) + r'cm \quad (2P) \\'))
         i += 1
@@ -106,8 +110,12 @@ def beliebiges_dreieck(nr, teilaufg):
         aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
                        + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
                        + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad '
-                       + r' \mathrm{und~gesucht~ist:~} ' + str(winkel_2))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \quad '
+                       + r' \mathrm{und~gesucht~ist:~} ' + winkel_2)
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
+                                                 + r'cm, \quad' + str(seite_2) + '~ = ~' + latex(seite_2_wert)
+                                                 + r' ^{ \circ }, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
+                                                 + r' ^{ \circ } \mathrm{ges:~}' + winkel_2
+                                                 + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
                                                  + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
