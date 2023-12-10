@@ -375,9 +375,17 @@ def sachaufgabe_01(nr, teilaufg):
     w_b = w_warte - w_beob
     i = 0
     Punkte = 0
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-               f'In einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
-               f' Ein Beobachter befindet sich {abstand_beob_warte}km von der Wetterwarte entfernt und der Ballon hat eine Höhe von {hoehe}km erreicht. \n\n']
+    if a not in teilaufg:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+                   f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
+                   f' Wenn der Ballon eine Höhe von {hoehe}km erreicht hat, '
+                   f'sieht ein Beobachter den Ballon unter einem Winkel von {w_beob}°. \n\n']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+                   f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
+                   f' Ein Beobachter befindet sich {abstand_beob_warte}km von der Wetterwarte entfernt '
+                   f'und der Ballon hat eine Höhe von {hoehe}km erreicht. \n\n']
+
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
@@ -393,19 +401,18 @@ def sachaufgabe_01(nr, teilaufg):
                                                  + r' ^{ \circ} \quad (3P)'))
         Punkte += 6
         i += 1
+
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~a~=~'
                                                  + str(hoehe) + r'km, \quad ges: b \quad (1P)} \\'
                                                  + r' sin( \alpha ) ~=~ \frac{a}{b}'
-                                                   r' \quad \vert \cdot b \quad \vert \div tan( \alpha ) '
-                                                   r' \quad \to \quad b ~=~ \frac{a}{ tan( \alpha )} ~=~'
-                                                   r' \frac{' + str(hoehe) + r'km }{ tan( ' + str(w_beob)
+                                                   r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
+                                                   r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
+                                                   r' \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
                                                  + ' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3P)'))
         Punkte += 4
         i += 1
-
-
 
     return aufgabe, loesung, Punkte
 
@@ -436,6 +443,7 @@ def sachaufgabe_02(nr, teilaufg):
                                                  + r' ^{ \circ} \quad (3P)'))
         Punkte += 6
         i += 1
+
     if b in teilaufg:
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
@@ -447,14 +455,43 @@ def sachaufgabe_02(nr, teilaufg):
         Punkte += 1
         i += 1
 
+    return aufgabe, loesung, Punkte
 
+def sachaufgabe_03(nr, teilaufg):
+    n = random.randint(2, 5)
+    m = n + random.randint(2, 5)
+    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+    abstand_beob_turm = (m ** 2 - n ** 2)
+    hoehe = 2 * m * n
+    abstand_beob_spitze = (m ** 2 + n ** 2)
+    # hier werden die Winkel berechnet
+    w_warte = 90
+    w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_turm)))
+    w_b = w_warte - w_beob
+    i = 0
+    Punkte = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               f'Ein Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
+               f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    if a in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Höhe des Turms.')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~'
+                                                 + str(abstand_beob_turm) + r'm, \quad ges: a \quad (1P)} \\'
+                                                 + r' tan( \alpha ) ~=~ \frac{a}{b}'
+                                                   r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
+                                                 ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob)
+                                                 + ' ^{ \circ}  ) ~=~' + str(hoehe) + r'm  \quad (3P)'))
+        Punkte += 4
+        i += 1
 
     return aufgabe, loesung, Punkte
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
             verhaeltnisgleichgungen(3, [a,b]),
-            sachaufgabe_02(4, [a,b])]
+            sachaufgabe_03(4, [a])]
 # print(kongruente_Dreiecke(1, [a, b]))
 # print(rechtwinkliges_dreieck(2, [a,b]))
 # print(verhaeltnisgleichgungen(3, [a,b]))
