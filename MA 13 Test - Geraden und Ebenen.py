@@ -124,7 +124,7 @@ def lagebeziehung(nr, teilaufg):
 
     if a in teilaufg:
         auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-        auswahl = 'windschief'
+        # auswahl = 'windschief'
         if auswahl == 'identisch':
             punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf h
             w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von h
@@ -218,7 +218,6 @@ def lagebeziehung(nr, teilaufg):
                     sys.exit('vy oder wy ist null.')
             else:
                 sys.exit('va oder wa ist null.')
-
 
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
@@ -319,7 +318,7 @@ def lagebeziehung(nr, teilaufg):
                          + latex(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
                          r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4)
 
-            Punkte += 16
+            Punkte += 17
             # print(v), print(w), print(punkt_c)
 
         aufgabe.append(r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -332,8 +331,8 @@ def lagebeziehung(nr, teilaufg):
                        + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
                        r' \end{pmatrix}\\')
         aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
-        loesung.append(
-            str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + auswahl + r'} \hspace{25em} \\' + loesung_1)
+        loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~'
+                       + auswahl + r'} \hspace{25em} \\' + loesung_1)
         i += 1
 
 
@@ -372,6 +371,7 @@ def lagebeziehung(nr, teilaufg):
                                            + r' \gamma ~=~ cos^{-1} \Big( \frac{' + latex(abs(N(sp_vp,3))) + '}{'
                                            + latex(N(l_v,3)) + r' \cdot ' + latex(N(l_p,3))
                                            + r'} \Big) ~=~' + latex(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3)) + r' \quad (2P) \\'))
+        Punkte += 7
 
     return aufgabe, loesung, Punkte
 
