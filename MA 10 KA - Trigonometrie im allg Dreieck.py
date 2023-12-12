@@ -75,123 +75,72 @@ def beliebiges_dreieck(nr, teilaufg):
     winkel_3_wert = auswahl_liste['Winkel_wert'][2]
 
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist jeweils ein beliebiges Dreieck. \n\n']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Von einem allgemeinen Dreieck, sind folgende Daten gegeben: ',
+               str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
+               + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
+               + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+
     if a in teilaufg:
-        auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][0]
-        seite_1_wert = auswahl_liste['Seite_wert'][0]
-        seite_2 = auswahl_liste['Seite_bez'][1]
-        seite_2_wert = auswahl_liste['Seite_wert'][1]
-        winkel_1 = auswahl_liste['Winkel_bez'][0]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
-        winkel_2 = auswahl_liste['Winkel_bez'][1]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die gesuchte Seitenlänge mit dem Sinussatz. '
-                                                'Fertige dazu eine Planskizze an.')
-        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad'
-                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ }, \quad'
-                       + winkel_2 + '~ = ~' + latex(winkel_2_wert) + r' ^{ \circ }, \quad'
-                       + r' \mathrm{und~gesucht~ist:~} ' + str(seite_2))
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
+                                                'Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
-                                                 + r'cm, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
-                                                 + r' ^{ \circ }, \quad' + winkel_2 + '~ = ~' + latex(winkel_2_wert)
-                                                 + r' ^{ \circ } \mathrm{ges:~}' + str(seite_2)
-                                                 + r' \quad (1P) \quad mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
-                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
-                                                 + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
-                                                 + r')} \quad \vert \cdot sin(' + winkel_2 + r') \quad \to \quad '
-                                                 + str(seite_2) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
-                                                 + winkel_2 + ') }{ sin(' + winkel_1 + r')} \quad (2P) \\'
-                                                 + str(seite_2) + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
-                                                 + latex(winkel_2_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
-                                                 + r' ^{ \circ } )} ~=~' + latex(seite_2_wert) + r'cm \quad (2P) \\'))
-        i += 1
-        Punkte += 6
-    if b in teilaufg:
-        auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][0]
-        seite_1_wert = auswahl_liste['Seite_wert'][0]
-        seite_2 = auswahl_liste['Seite_bez'][1]
-        seite_2_wert = auswahl_liste['Seite_wert'][1]
-        winkel_1 = auswahl_liste['Winkel_bez'][0]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
-        winkel_2 = auswahl_liste['Winkel_bez'][1]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den gesuchten Winkel. '
-                                                'Fertige dazu eine Planskizze an. ')
-        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
-                       + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
-                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad '
-                       + r' \mathrm{und~gesucht~ist:~} ' + winkel_2)
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
-                                                 + r'cm, \quad' + str(seite_2) + '~ = ~' + latex(seite_2_wert)
-                                                 + r' ^{ \circ }, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
-                                                 + r' ^{ \circ } \mathrm{ges:~}' + winkel_2
+                                                 + r'cm, \quad ' + str(seite_2) + '~=~' + latex(seite_2_wert)
+                                                 + r'cm, \quad ' + winkel_1 + '~=~' + latex(winkel_1_wert)
+                                                 + r'^{ \circ } \quad \mathrm{ges:~}' + winkel_2
                                                  + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
                                                  + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
                                                  + winkel_1 + r')} ~=~ \frac{' + str(seite_2) + '}{'
                                                  + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
-                                                 + r') \quad (2P) \\ sin(' + winkel_2 + r')~=~ \frac{' + str(seite_2)
-                                                 + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
+                                                 + r') \quad (2P) \\' + 'sin(' + winkel_2 + r') ~=~ \frac{'
+                                                 + str(seite_2) + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
                                                  + r') \quad \vert ~ arcsin() \quad \to \quad ' + winkel_2
                                                  + r' ~=~ arcsin \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
                                                  + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
                                                  + winkel_2 + r' ~=~ arcsin \Big( \frac{'
-                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert) + r'cm} \cdot sin('
-                                                 + latex(winkel_1_wert) + r' ^{ \circ } ) \Big) ~=~' + latex(winkel_2_wert)
-                                                 + r' ^{ \circ } \quad (2P) \\'))
+                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert)
+                                                 + r'cm} \cdot sin(' + latex(winkel_1_wert) + r'^{ \circ } ) \Big) ~=~'
+                                                 + latex(winkel_2_wert) + r'^{ \circ } \quad (2P) \\'
+                                                 + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_1_wert)
+                                                 + r'^{ \circ} ~-~ ' + str(winkel_2_wert) + r'^{ \circ} ~=~ '
+                                                 + str(winkel_3_wert) + r'^{ \circ} \quad (2P)'))
         i += 1
-        Punkte += 7
+        Punkte += 10
+
+    if b in teilaufg:
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Länge der Seite {seite_3} mit dem Sinussatz. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{aus~der~Planskizze~folgt:~} \hspace{15em} \\'
+                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
+                                                 + r' \frac{' + str(seite_3) + '}{~sin(' + winkel_3
+                                                 + r')} \quad \vert \cdot sin(' + winkel_3 + r') \quad \to \quad '
+                                                 + str(seite_3) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
+                                                 + winkel_3 + ') }{ sin(' + winkel_1 + r') } \quad (2P) \\'
+                                                 + str(seite_3) + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
+                                                 + latex(winkel_3_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
+                                                 + r' ^{ \circ } )} ~=~' + latex(seite_3_wert) + r'cm \quad (2P) \\'))
+        i += 1
+        Punkte += 4
 
     if c in teilaufg:
-        auswahl_liste = werte_bel_dreieck()
-        seite_1 = auswahl_liste['Seite_bez'][0]
-        seite_1_wert = auswahl_liste['Seite_wert'][0]
-        seite_2 = auswahl_liste['Seite_bez'][1]
-        seite_2_wert = auswahl_liste['Seite_wert'][1]
-        winkel_1 = auswahl_liste['Winkel_bez'][0]
-        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
-        winkel_2 = auswahl_liste['Winkel_bez'][1]
-        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. '
-                                                'Fertige dazu eine Planskizze an. ')
-        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
-                       + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
-                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad '
-                       + r' \mathrm{und~gesucht~ist:~} ' + winkel_2)
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
-                                                 + r'cm, \quad' + str(seite_2) + '~ = ~' + latex(seite_2_wert)
-                                                 + r' ^{ \circ }, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
-                                                 + r' ^{ \circ } \mathrm{ges:~}' + winkel_2
-                                                 + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
-                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
-                                                 + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
-                                                 + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
-                                                 + winkel_1 + r')} ~=~ \frac{' + str(seite_2) + '}{'
-                                                 + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
-                                                 + r') \quad (2P) \\ sin(' + winkel_2 + r')~=~ \frac{' + str(seite_2)
-                                                 + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
-                                                 + r') \quad \vert ~ arcsin() \quad \to \quad ' + winkel_2
-                                                 + r' ~=~ arcsin \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
-                                                 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
-                                                 + winkel_2 + r' ~=~ arcsin \Big( \frac{'
-                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert) + r'cm} \cdot sin('
-                                                 + latex(winkel_1_wert) + r' ^{ \circ } ) \Big) ~=~' + latex(winkel_2_wert)
-                                                 + r' ^{ \circ } \quad (2P) \\'))
+        flaeche = 0.5*seite_1_wert*seite_2_wert*math.sin(math.radians(winkel_3_wert))
+        print(N(flaeche,3))
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad A ~ = ~ \frac{1}{2} \cdot ' + seite_1 + r' \cdot ' + seite_2
+                                                 + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot '
+                                                 + latex(seite_1_wert) + r'cm \cdot ' + latex(seite_2_wert)
+                                                 + r'cm \cdot sin(' + latex(winkel_3_wert) + '^{ \circ } ) ~=~ '
+                                                 + latex(N(flaeche,3)) + r'cm^2 \quad (3P) \\'))
         i += 1
-        Punkte += 7
+        Punkte += 3
 
 
     return aufgabe, loesung, Punkte
 
 
-aufgaben = [beliebiges_dreieck(1,[a,b])]
+aufgaben = [beliebiges_dreieck(1,[a,b,c])]
 
 Punkte = str(sum(element[2] for element in aufgaben))
 
@@ -202,8 +151,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 06 - Sinussatz II'
-Teil = 'Gr. A'
+Art = 'HAK 07 - Fläche berechnen'
+Teil = 'Gr. B'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird

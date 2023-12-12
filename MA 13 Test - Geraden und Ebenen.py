@@ -124,7 +124,7 @@ def lagebeziehung(nr, teilaufg):
 
     if a in teilaufg:
         auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-        # auswahl = 'windschief'
+        auswahl = 'windschief'
         if auswahl == 'identisch':
             punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf h
             w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von h
@@ -218,6 +218,7 @@ def lagebeziehung(nr, teilaufg):
                     sys.exit('vy oder wy ist null.')
             else:
                 sys.exit('va oder wa ist null.')
+
 
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
@@ -387,7 +388,7 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 05 - mit Geraden rechnen'
+Art = 'HAK 05 - Schnittwinkel von Geraden berechnen'
 Teil = 'Gr. A'
 # der Teil in dem die PDF-Datei erzeugt wird
 def Hausaufgabenkontrolle():
