@@ -48,19 +48,31 @@ def erstellen(Teil):
         nst_1 = zzahl(1, 5)
         nst_2 = nst_1 + nzahl(2, 8)/2
         nst_3 = nst_1 - nzahl(1, 8)/2
+        while nst_3 == 0:
+            nst_3 = nst_1 - nzahl(1, 8) / 2
         faktor = zzahl(3, 8) / 2
         # Aufstellen der Funktionsgleichung
-        fkt = expand(faktor * (x - nst_1) * (x - nst_2) * (x - a))
+        fkt = expand(faktor * (x - nst_1) * (x - a) * (x - nst_3))
         # Koeffizienten der Funktion
         fkt_a3 = faktor
-        fkt_a2 = (faktor*(-1)*(nst_1 + nst_2) - a*faktor)
-        fkt_a1 = (a*faktor*(nst_1 + nst_2) + faktor*nst_1*nst_2)
-        fkt_a0 = -1*faktor*nst_1*nst_2
+        fkt_a2 = (-1*faktor*a - faktor*(nst_1 + nst_3))
+        fkt_a1 = (faktor*(nst_1 + nst_3)*a + faktor*nst_1*nst_3)
+        fkt_a0 = -1*faktor*nst_1*nst_3*a
 
-        fkt_str = (latex(fkt_a3) + 'x^3 ~' + vorz(-1 * faktor / abs(faktor)) + '(' + latex(nst_1+nst_2*abs(faktor))
-                   + vorz_str(abs(faktor)) + 'a) \cdot x^2 ~' + vorz(faktor/abs(faktor)) + '('
-                   + latex(abs(faktor)*(nst_1 + nst_2)) + r'a' + vorz_str(nst_1*nst_2*abs(faktor))
-                   + r') \cdot x ~' + vorz_str(-1*faktor*nst_1*nst_2))
+        # Koeffizienten der Funktion als String und der richtigen Darstellung
+        fkt_a3_str = latex(faktor)
+        if faktor < 0:
+            fkt_a2_str = '+(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(faktor*(nst_1 + nst_3)) + ')'
+        else:
+            fkt_a2_str = '-(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(-1*faktor*(nst_1 + nst_3)) + ')'
+
+        if faktor*(nst_1 + nst_3) < 0:
+            fkt_a1_str = '-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(-1*faktor * nst_1 * nst_3) + ')'
+        else:
+            fkt_a1_str = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(faktor * nst_1 * nst_3) + ')'
+        fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' \cdot a'
+
+        fkt_str = fkt_a3_str + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
 
         print(fkt)
         print(fkt_str)
@@ -82,6 +94,64 @@ def erstellen(Teil):
             i += 1
         print(grenzwert_pos)
         print(grenzwert_neg)
+
+        if b in teilaufg:
+            fkt_a3_str_neg = latex(-1*faktor)
+            if faktor * (nst_1 + nst_3) > 0:
+                fkt_a1_str_neq = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
+                    -1 * faktor * nst_1 * nst_3) + ')'
+            else:
+                fkt_a1_str_neq = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
+                    faktor * nst_1 * nst_3) + ')'
+            fkt_sym = (fkt_a3_str_neq + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neq
+                       + r' \cdot x ~' + fkt_a0_str)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + latex(fkt_sym)
+                                                     + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
+                                                       r'\mathrm{nicht~symmetrisch} \quad (3P) \\\\')
+
+        if c in teilaufg:
+            
+
+
+            table2 = Tabular('c|c|c|c', row_height=1.2)
+            table2.add_row(' ', fkt_f_a2, fkt_f_a3, fkt_f_a4)
+            table2.add_hline(1, 4)
+            table2.add_row(' ', fkt_f_b2, fkt_f_b3, fkt_f_b4)
+            table2.add_hline(1, 4)
+            table2.add_row(fkt_f_a1, fkt_f_c2, fkt_f_c3, fkt_f_c4)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+            loesung.append(
+                str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + latex(fkt_f)
+                + r' \quad \mathrm{durch~probieren:~x_1~=~}' + latex(nst_f_1)
+                + r' \quad (2P) \\')
+            loesung.append('(' + latex(fkt_f) + r')~ \div ~(x' + vorz_str(-1 * nst_f_1) + ')~=~'
+                           + latex(fkt_f_partial) + r' \quad (4P) \\')
+            loesung.append(table2)
+            loesung.append(r'\hspace{10em} \\')
+            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) +
+                           r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
+            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
+                           r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) +
+                           r'} \quad (2P) \\')
+            loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
+                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
+            loesung.append(r'S_{x_1}(' + latex(nst_f_1) + r'\vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3))
+                           + r' \vert 0) \quad S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0)')
+            if nst_f_1 == 0 or nst_f_2 == 0 or nst_f_3 == 0:
+                loesung.append(r' \quad (3P) \\\\')
+            Punkte += 15
+            else:
+            loesung.append(r' \quad S_y(0 \vert' + latex(s_fkt_f) + r') \quad (4P) \\\\')
+            Punkte += 16
+            i += 1
+
+            print(fkt)
+            print(fkt_sym)
+
+            Punkte += 3
+            i += 1
 
         return [aufgabe, loesung, Punkte, grafik]
 

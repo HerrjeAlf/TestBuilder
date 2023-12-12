@@ -60,6 +60,21 @@ def beliebiges_dreieck(nr, teilaufg):
 
         return auswahl_liste
 
+    auswahl_liste = werte_bel_dreieck()
+    seite_1 = auswahl_liste['Seite_bez'][0]
+    seite_1_wert = auswahl_liste['Seite_wert'][0]
+    seite_2 = auswahl_liste['Seite_bez'][1]
+    seite_2_wert = auswahl_liste['Seite_wert'][1]
+    seite_3 = auswahl_liste['Seite_bez'][2]
+    seite_3_wert = auswahl_liste['Seite_wert'][2]
+    winkel_1 = auswahl_liste['Winkel_bez'][0]
+    winkel_1_wert = auswahl_liste['Winkel_wert'][0]
+    winkel_2 = auswahl_liste['Winkel_bez'][1]
+    winkel_2_wert = auswahl_liste['Winkel_wert'][1]
+    winkel_3 = auswahl_liste['Winkel_bez'][2]
+    winkel_3_wert = auswahl_liste['Winkel_wert'][2]
+
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist jeweils ein beliebiges Dreieck. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     if a in teilaufg:
@@ -106,6 +121,45 @@ def beliebiges_dreieck(nr, teilaufg):
         winkel_2_wert = auswahl_liste['Winkel_wert'][1]
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne den gesuchten Winkel. '
+                                                'Fertige dazu eine Planskizze an. ')
+        aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
+                       + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
+                       + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad '
+                       + r' \mathrm{und~gesucht~ist:~} ' + winkel_2)
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
+                                                 + r'cm, \quad' + str(seite_2) + '~ = ~' + latex(seite_2_wert)
+                                                 + r' ^{ \circ }, \quad' + winkel_1 + '~ = ~' + latex(winkel_1_wert)
+                                                 + r' ^{ \circ } \mathrm{ges:~}' + winkel_2
+                                                 + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
+                                                 + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
+                                                 + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
+                                                 + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
+                                                 + winkel_1 + r')} ~=~ \frac{' + str(seite_2) + '}{'
+                                                 + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
+                                                 + r') \quad (2P) \\ sin(' + winkel_2 + r')~=~ \frac{' + str(seite_2)
+                                                 + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
+                                                 + r') \quad \vert ~ arcsin() \quad \to \quad ' + winkel_2
+                                                 + r' ~=~ arcsin \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
+                                                 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
+                                                 + winkel_2 + r' ~=~ arcsin \Big( \frac{'
+                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert) + r'cm} \cdot sin('
+                                                 + latex(winkel_1_wert) + r' ^{ \circ } ) \Big) ~=~' + latex(winkel_2_wert)
+                                                 + r' ^{ \circ } \quad (2P) \\'))
+        i += 1
+        Punkte += 7
+
+    if c in teilaufg:
+        auswahl_liste = werte_bel_dreieck()
+        seite_1 = auswahl_liste['Seite_bez'][0]
+        seite_1_wert = auswahl_liste['Seite_wert'][0]
+        seite_2 = auswahl_liste['Seite_bez'][1]
+        seite_2_wert = auswahl_liste['Seite_wert'][1]
+        winkel_1 = auswahl_liste['Winkel_bez'][0]
+        winkel_1_wert = auswahl_liste['Winkel_wert'][0]
+        winkel_2 = auswahl_liste['Winkel_bez'][1]
+        winkel_2_wert = auswahl_liste['Winkel_wert'][1]
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. '
                                                 'Fertige dazu eine Planskizze an. ')
         aufgabe.append(str(seite_1) + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
                        + str(seite_2) + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
