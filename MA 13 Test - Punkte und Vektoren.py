@@ -312,14 +312,22 @@ def vektorrechnung(nr, teilaufg):
 
     if e in teilaufg:
         vektor_a = punkt_vektor(5)
-        vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
-        vektor_ab = vektor_b - np.array(vektor_a)
+        vektor_ab = punkt_vektor(5)
+        vektor_b = np.array(vektor_a) + np.array(vektor_ab)
         faktor = nzahl(1,9)/10
         vektor_t = [N(vektor_a[0] + vektor_ab[0]*faktor,3),
                     N(vektor_a[1] + vektor_ab[1]*faktor,3),
                     N(vektor_a[2] + vektor_ab[2]*faktor,3)]
+        print('Aufgabe 1e')
+        print('a =' + str(vektor_a))
+        print('ab = ' + str(vektor_ab))
+        print('b = ' + str(vektor_b))
+        print('faktor = ' + str(faktor))
+        print('vektor t = ' + str(vektor_t))
         vektor_at = np.array(vektor_t) - np.array(vektor_a)
         vektor_tb = vektor_b - np.array(vektor_t)
+        print('at = ' + str(vektor_at))
+        print('tb = ' + str(vektor_tb))
         laenge_vektor_at = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
                             + latex(sqrt(N(sum(a*a for a in vektor_at),3))))
         ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
@@ -337,10 +345,10 @@ def vektorrechnung(nr, teilaufg):
                        + ' | ' + latex(N(vektor_t[2],3)) + ' ). \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + str(vektor_t[0]) + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + str(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + str(vektor_t[2])
-                       + vorz_str(-1*vektor_a[1]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
+                       + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
                        + r' \mathrm{d(T,B)~=~} \sqrt{(' + str(vektor_b[0]) + vorz_str(-1*vektor_t[0])
                        + ')^2 ~+~(' + str(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + str(vektor_b[2])
-                       + vorz_str(-1*vektor_t[1]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (2P) \\'
+                       + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (2P) \\'
                        + r' r~=~ \frac{ ' + latex(ergebnis_at) + '}{' + latex(ergebnis_tb) + '} ~=~'
                        + latex(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\')
         i += 1
