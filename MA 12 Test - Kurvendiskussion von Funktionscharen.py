@@ -45,31 +45,26 @@ def erstellen(Teil):
         i = 0
         Punkte = 0
         # Berechnung der Nullstellen und des Faktors
-        nst_1 = random.choice([-1,1])
-        nst_2 = nst_1 + nzahl(2, 8)/2
-        nst_3 = nst_1 - nzahl(1, 8)/2
+        nst_1 = zzahl(1, 5)
+        nst_2 = nst_1 + nzahl(2, 8) / 2
+        nst_3 = nst_1 - nzahl(2, 8) / 2
         while nst_3 == 0:
-            nst_3 = nst_1 - nzahl(1, 8) / 2
+            nst_3 = nst_1 - nzahl(2, 8) / 2
         faktor = zzahl(3, 8) / 2
-        print(faktor)
-        print(nst_1)
-        print(nst_3)
-        print(faktor*(x-nst_1)*(x-a)*(x-nst_3))
-
         # Aufstellen der Funktionsgleichung
         fkt = collect(expand(faktor * (x - nst_1) * (x - a) * (x - nst_3)),x)
         # Koeffizienten der Funktion
         fkt_a3 = faktor
-        fkt_a2 = (-1*faktor*a - faktor*(nst_1 + nst_3))
+        fkt_a2 = -1* (faktor*a + faktor*(nst_1 + nst_3))
         fkt_a1 = (faktor*(nst_1 + nst_3)*a + faktor*nst_1*nst_3)
         fkt_a0 = -1*faktor*nst_1*nst_3*a
 
         # Koeffizienten der Funktion als String und der richtigen Darstellung
         fkt_a3_str = latex(faktor)
         if faktor < 0:
-            fkt_a2_str = '+(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(faktor*(nst_1 + nst_3)) + ')'
+            fkt_a2_str = '+(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(-1*faktor*(nst_1 + nst_3)) + ')'
         else:
-            fkt_a2_str = '-(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(-1*faktor*(nst_1 + nst_3)) + ')'
+            fkt_a2_str = '-(' + latex(abs(faktor)) + r' \cdot a ' + vorz_str(faktor*(nst_1 + nst_3)) + ')'
 
         if faktor*(nst_1 + nst_3) < 0:
             fkt_a1_str = '-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(-1*faktor * nst_1 * nst_3) + ')'
@@ -83,7 +78,7 @@ def erstellen(Teil):
         print(fkt_str)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
-                   r' f(x)~=~' + latex(fkt_str) + r' \quad \mathrm{mit~a \in \Re und a > ' + str(nst_1) + ' }']
+                   r' f(x)~=~' + latex(fkt_str) + r' \quad \mathrm{mit~a \in \Re ^{ + } }']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
         grafik = 'Aufgabe ' + str(nr)
 
@@ -102,15 +97,13 @@ def erstellen(Teil):
 
         if b in teilaufg:
             fkt_a3_str_neg = latex(-1*faktor)
-
             if faktor * (nst_1 + nst_3) > 0:
-                fkt_a1_str_neq = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
+                fkt_a1_str_neg = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
                     -1 * faktor * nst_1 * nst_3) + ')'
             else:
-                fkt_a1_str_neq = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
+                fkt_a1_str_neg = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
                     faktor * nst_1 * nst_3) + ')'
-
-            fkt_sym = (fkt_a3_str_neg + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neq
+            fkt_sym = (fkt_a3_str_neg + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neg
                        + r' \cdot x ~' + fkt_a0_str)
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + latex(fkt_sym)
@@ -118,7 +111,7 @@ def erstellen(Teil):
                                                        r'\mathrm{nicht~symmetrisch} \quad (3P) \\\\'))
 
         if c in teilaufg:
-            
+
 
 
             table2 = Tabular('c|c|c|c', row_height=1.2)
@@ -150,10 +143,8 @@ def erstellen(Teil):
                 loesung.append(r' \quad (3P) \\\\')
                 Punkte += 15
             else:
-                pass
-
-            loesung.append(r' \quad S_y(0 \vert' + latex(s_fkt_f) + r') \quad (4P) \\\\')
-            Punkte += 16
+                loesung.append(r' \quad S_y(0 \vert' + latex(s_fkt_f) + r') \quad (4P) \\\\')
+                Punkte += 16
             i += 1
 
             print(fkt)
