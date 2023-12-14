@@ -74,13 +74,18 @@ def erstellen(Teil):
 
         fkt_str = fkt_a3_str + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
 
-        print(fkt)
-        print(fkt_str)
+        print(fkt), print(fkt_str)
+
+        if nst_1 < 0:
+            db_bereich = r'\mathrm{mit~a \in \Re ~und~ a > 0}'
+        else:
+            db_bereich = r'\mathrm{mit~a \in \Re ~und~ a > ' + latex(nst_1) + '}'
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
-                   r' f(x)~=~' + latex(fkt_str) + r' \quad \mathrm{mit~a \in \Re ^{ + } }']
+                   r' f(x)~=~' + latex(fkt_str) + r' \quad ' + db_bereich]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafik = 'Aufgabe ' + str(nr)
+
+
 
         if a in teilaufg:
             grenzwert_neg = limit(fkt, x, -oo)
@@ -112,14 +117,12 @@ def erstellen(Teil):
 
         if c in teilaufg:
 
-
-
             table2 = Tabular('c|c|c|c', row_height=1.2)
-            table2.add_row(' ', fkt_f_a2, fkt_f_a3, fkt_f_a4)
+            table2.add_row(' ', fkt_a2, fkt_a1, fkt_a0)
             table2.add_hline(1, 4)
             table2.add_row(' ', fkt_f_b2, fkt_f_b3, fkt_f_b4)
             table2.add_hline(1, 4)
-            table2.add_row(fkt_f_a1, fkt_f_c2, fkt_f_c3, fkt_f_c4)
+            table2.add_row(fkt_a3, fkt_f_c2, fkt_f_c3, fkt_f_c4)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
             loesung.append(
