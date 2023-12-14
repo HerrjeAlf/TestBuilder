@@ -472,26 +472,52 @@ def sachaufgabe_03(nr, teilaufg):
     Punkte = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Ein Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
-               f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n\n']
+               f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n',
+               'Berechne aus den gegebenen Werte die Höhe des Turms.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~'
+                                             + str(abstand_beob_turm) + r'm, \quad ges: a \quad (1P)} \\'
+                                             + r' tan( \alpha ) ~=~ \frac{a}{b}'
+                                               r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
+                                             ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob)
+                                             + ' ^{ \circ}  ) ~=~' + str(hoehe) + r'm  \quad (3P)'))
+    Punkte += 4
+    i += 1
+    return aufgabe, loesung, Punkte
 
-    if a in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Höhe des Turms.')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~'
-                                                 + str(abstand_beob_turm) + r'm, \quad ges: a \quad (1P)} \\'
-                                                 + r' tan( \alpha ) ~=~ \frac{a}{b}'
-                                                   r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
-                                                 ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob)
-                                                 + ' ^{ \circ}  ) ~=~' + str(hoehe) + r'm  \quad (3P)'))
-        Punkte += 4
-        i += 1
+def sachaufgabe_04(nr, teilaufg):
+    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+    hoehe = nzahl(30,60)
+    tiefe_rampe = hoehe + nzahl(30, 120)
+    # hier werden die Winkel berechnet
+    w_haus = 90
+    w_rampe = int(math.degrees(math.atan(hoehe / tiefe_rampe)))
+    w_haus = w_haus - w_rampe
+    laenge_rampe = N(hoehe/math.sin(math.radians(w_rampe)),4)
 
+    i = 0
+    Punkte = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               f'Eine Rollstuhlrampe in einem öffentlichen Gebäude soll eine Höhe von {hoehe}cm überwinden. \n'
+               f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. \n'
+               f'Wie lang muss die Strecke sein, auf der der Rollstuhl nach unten fährt? '
+               'Fertige dazu eine Planskizze an.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_rampe) + r' ^{ \circ},~a~=~'
+                                                 + str(hoehe) + r'cm, \quad ges: b \quad (1P)} \\'
+                                                 + r' sin( \alpha ) ~=~ \frac{a}{b}'
+                                                   r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
+                                                   r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
+                                                   r' \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
+                                                 + ' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)'))
+    Punkte += 4
+    i += 1
     return aufgabe, loesung, Punkte
 
 aufgaben = [kongruente_Dreiecke(1, [a, b]),
             rechtwinkliges_dreieck(2, [a,b]),
             verhaeltnisgleichgungen(3, [a,b]),
-            sachaufgabe_03(4, [a])]
+            sachaufgabe_04(4, [a])]
 # print(kongruente_Dreiecke(1, [a, b]))
 # print(rechtwinkliges_dreieck(2, [a,b]))
 # print(verhaeltnisgleichgungen(3, [a,b]))
