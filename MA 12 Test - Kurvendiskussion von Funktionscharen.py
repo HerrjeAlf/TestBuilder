@@ -81,8 +81,8 @@ def erstellen(Teil):
         else:
             db_bereich = r'\mathrm{mit~a \in \Re ~und~ a > ' + latex(nst_1) + '}'
 
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:',
-                   r' f(x)~=~' + latex(fkt_str) + r' \quad ' + db_bereich]
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:']
+        aufgabe.append(r' f(x)~=~' + latex(fkt_str) + r' \quad ' + db_bereich)
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
 
@@ -92,9 +92,9 @@ def erstellen(Teil):
             grenzwert_pos = limit(fkt, x, oo)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + latex(fkt_str) + '~=~' + \
-                           latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} ' + \
-                           latex(fkt) + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\\\')
+            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~' + \
+                           latex(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} ' + \
+                           fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\\\')
             Punkte += 2
             i += 1
         print(grenzwert_pos)
@@ -111,52 +111,31 @@ def erstellen(Teil):
             fkt_sym = (fkt_a3_str_neg + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neg
                        + r' \cdot x ~' + fkt_a0_str)
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + latex(fkt_sym)
-                                                     + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
-                                                       r'\mathrm{nicht~symmetrisch} \quad (3P) \\\\'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
+                                                     + r' \neq  f(x)  \neq -f(x) \\'
+                                                       r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
 
         if c in teilaufg:
+            fkt_b2 = nst_1 * fkt_a3
+            fkt_c2 = fkt_a2 + fkt_b2
+            fkt_b1 = nst_1 * fkt_c2
+            fkt_c1 = fkt_a1 + fkt_b1
+            fkt_b0 = nst_1 * fkt_c1
+            fkt_c0 = fkt_a0 + fkt_b0
 
             table2 = Tabular('c|c|c|c', row_height=1.2)
             table2.add_row(' ', fkt_a2, fkt_a1, fkt_a0)
             table2.add_hline(1, 4)
-            table2.add_row(' ', fkt_f_b2, fkt_f_b3, fkt_f_b4)
+            table2.add_row(' ', fkt_b2, fkt_b1, fkt_b0)
             table2.add_hline(1, 4)
-            table2.add_row(fkt_a3, fkt_f_c2, fkt_f_c3, fkt_f_c4)
+            table2.add_row(fkt_a3, fkt_c2, fkt_c1, fkt_c0)
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
-            loesung.append(
-                str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + latex(fkt_f)
-                + r' \quad \mathrm{durch~probieren:~x_1~=~}' + latex(nst_f_1)
-                + r' \quad (2P) \\')
-            loesung.append('(' + latex(fkt_f) + r')~ \div ~(x' + vorz_str(-1 * nst_f_1) + ')~=~'
-                           + latex(fkt_f_partial) + r' \quad (4P) \\')
             loesung.append(table2)
-            loesung.append(r'\hspace{10em} \\')
-            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) +
-                           r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
-            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
-                           r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) +
-                           r'} \quad (2P) \\')
-            loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
-                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
-            loesung.append(r'S_{x_1}(' + latex(nst_f_1) + r'\vert 0) \quad S_{x_2}(' + latex(round(nst_f_2, 3))
-                           + r' \vert 0) \quad S_{x_3}(' + latex(round(nst_f_3, 3)) + r' \vert 0)')
-            if nst_f_1 == 0 or nst_f_2 == 0 or nst_f_3 == 0:
-                loesung.append(r' \quad (3P) \\\\')
-                Punkte += 15
-            else:
-                loesung.append(r' \quad S_y(0 \vert' + latex(s_fkt_f) + r') \quad (4P) \\\\')
-                Punkte += 16
-            i += 1
-
-            print(fkt)
-            print(fkt_sym)
 
             Punkte += 3
             i += 1
 
-        return [aufgabe, loesung, Punkte, grafik]
+        return [aufgabe, loesung, Punkte]
 
     aufgaben = [kurvendiskussion(1, [a,b])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
@@ -167,7 +146,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Kurvendiskussion von Polynomen'
+    Art = 'Test - Kurvendiskussion von Funktionscharen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -230,7 +209,7 @@ def erstellen(Teil):
 
     # Druck der Seiten
     # Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Erwartungshorizont()
 
 anzahl_HAKs = 1
 probe = True
