@@ -70,6 +70,7 @@ def erstellen(Teil):
             fkt_a1_str = '-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(-1*faktor * nst_1 * nst_3) + ')'
         else:
             fkt_a1_str = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(faktor * nst_1 * nst_3) + ')'
+
         fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' \cdot a'
 
         fkt_str = fkt_a3_str + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
@@ -77,12 +78,12 @@ def erstellen(Teil):
         print(fkt), print(fkt_str)
 
         if nst_1 < 0:
-            db_bereich = r'\mathrm{mit~a \in \Re ~und~ a > 0}'
+            db_bereich = r' \mathrm{mit~a \in \Re ~und~ a > 0}'
         else:
-            db_bereich = r'\mathrm{mit~a \in \Re ~und~ a > ' + latex(nst_1) + '}'
+            db_bereich = r' \mathrm{mit~a \in \Re ~und~ a > ' + latex(nst_1) + r'}'
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:']
-        aufgabe.append(r' f(x)~=~' + latex(fkt_str) + r' \quad ' + db_bereich)
+        aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad ' + db_bereich)
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
 
@@ -97,47 +98,83 @@ def erstellen(Teil):
                            fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\\\')
             Punkte += 2
             i += 1
-        print(grenzwert_pos)
-        print(grenzwert_neg)
 
         if b in teilaufg:
             fkt_a3_str_neg = latex(-1*faktor)
             if faktor * (nst_1 + nst_3) > 0:
-                fkt_a1_str_neg = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
-                    -1 * faktor * nst_1 * nst_3) + ')'
+                fkt_a1_str_neg = ('-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+                                  + vorz_str(-1*faktor * nst_1 * nst_3) + ')')
             else:
-                fkt_a1_str_neg = '+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a' + vorz_str(
-                    faktor * nst_1 * nst_3) + ')'
+                fkt_a1_str_neg = ('+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+                                  + vorz_str(faktor * nst_1 * nst_3) + ')')
             fkt_sym = (fkt_a3_str_neg + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neg
                        + r' \cdot x ~' + fkt_a0_str)
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
                                                      + r' \neq  f(x)  \neq -f(x) \\'
                                                        r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
+            Punkte += 3
+            i += 1
 
         if c in teilaufg:
-            fkt_b2 = nst_1 * fkt_a3
-            fkt_c2 = fkt_a2 + fkt_b2
-            fkt_b1 = nst_1 * fkt_c2
-            fkt_c1 = fkt_a1 + fkt_b1
-            fkt_b0 = nst_1 * fkt_c1
-            fkt_c0 = fkt_a0 + fkt_b0
+            # hier werden die Koeffizenten für das Hornerschema berechnet
+            fkt_b2 = nst_1 * faktor
+            fkt_c2 = -1 * faktor * a - faktor * nst_3
+            fkt_b1 = -1 * faktor * nst_1 * a - faktor * nst_1 * nst_3
+            fkt_c1 = faktor * nst_3 * a
+            fkt_b0 = faktor * nst_1 * nst_3 * a
 
-            table2 = Tabular('c|c|c|c', row_height=1.2)
-            table2.add_row(' ', fkt_a2, fkt_a1, fkt_a0)
-            table2.add_hline(1, 4)
-            table2.add_row(' ', fkt_b2, fkt_b1, fkt_b0)
-            table2.add_hline(1, 4)
-            table2.add_row(fkt_a3, fkt_c2, fkt_c1, fkt_c0)
+            fkt_partial = faktor * x**2 + fkt_c2 *x + fkt_c1
 
+            # hier werden die Koeffizenten als String für das Hornerschema berechnet
+            if faktor < 0:
+                fkt_c2_str = '+(' + latex(-1*faktor) + r' \cdot a' + vorz_str(-1*faktor*nst_3) + r') \cdot x'
+            else:
+                fkt_c2_str = '-(' + latex(faktor) + r' \cdot a' + vorz_str(faktor*nst_3) + r') \cdot x'
+            fkt_c1_str = vorz_str(faktor*nst_3) + r' \cdot a'
+
+            fkt_p = -1*a - nst_3    # -(a+x_3)
+            fkt_q = nst_3 * a
+            fkt_disk = ((fkt_p/2)**2)-fkt_q
+            fkt_p_str = '-(a' + vorz_str(nst_3) + ')'
+
+            fkt_q_str = vorz_str(nst_3) + r' \cdot a'
+
+            fkt_partial_str = latex(faktor) + r' \cdot x^2' + fkt_c2_str + fkt_c1_str
+            fkt_pq_str = 'x^2' + fkt_p_str + r' \cdot x' + fkt_q_str
+            fkt_disk_str = r' \frac{a^2' + vorz_str(-1*2*nst_3) + r' \cdot a' + vorz_str(nst_3**2) + '}{4}'
+
+
+
+            table2 = Tabular('c c|c|c|c', row_height=1.2)
+            table2.add_row('',fkt_a3 latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
+            table2.add_hline(2, 5)
+            table2.add_row('Partialpolynom mit Horner Schema berechnen: ',' ', latex(collect(fkt_b2,a)), latex(collect(fkt_b1,a)), latex(collect(fkt_b0,a)))
+            table2.add_hline(2, 5)
+            table2.add_row('',fkt_a3, latex(collect(fkt_c2,a)), latex(collect(fkt_c1,a)), '0')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
+                                                     + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
+                                                     + latex(nst_1) + r' \quad (1P) \\'
+                                                     + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
+                                                     + r')~= \\ =~' + fkt_partial_str + ' \quad (4P)'))
             loesung.append(table2)
+            loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + vorz_str_minus(faktor) +
+                           r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
+                           r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
+                           r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
+                           r')} ~=~ ' + latex(-1*fkt_p/2) + r' \pm \sqrt{'
+                           + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + latex(-1*fkt_p/2) + r' \pm ('
+                           + latex((a-nst_3)/2) + r') \quad x_2~=~' + latex(nst_3)
+                           + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\')
 
-            Punkte += 3
+            Punkte += 15
             i += 1
 
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [kurvendiskussion(1, [a,b])]
+    aufgaben = [kurvendiskussion(1, [a,b,c])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -161,8 +198,6 @@ def erstellen(Teil):
         table1.add_hline(2, 6)
         Aufgabe.append(table1)
         Aufgabe.append(' \n\n')
-        Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
-
         Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
         for aufgabe in aufgaben:
             for elements in aufgabe[0]:
@@ -208,7 +243,7 @@ def erstellen(Teil):
         Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
-    # Hausaufgabenkontrolle()
+    Hausaufgabenkontrolle()
     Erwartungshorizont()
 
 anzahl_HAKs = 1
