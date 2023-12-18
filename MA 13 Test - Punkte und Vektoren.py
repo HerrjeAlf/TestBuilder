@@ -334,10 +334,6 @@ def vektorrechnung(nr, teilaufg):
         laenge_vektor_tb = (r' \sqrt{' + latex(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
                             + latex(N(sqrt(sum(a*a for a in vektor_tb)),3)))
         ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
-        # print('vektor A = ' + str(vektor_a))
-        # print('vektor B = ' + str(vektor_b))
-        # print('vektor_ab' + str(vektor_ab))
-        # print('vektor T = ' + str(vektor_t))
         aufgabe.append(str(teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB? \n\n')
         aufgabe.append('A( ' + str(vektor_a[0]) + ' | ' + str(vektor_a[1]) + ' | ' + str(vektor_a[2]) + ' ), '
                        'B( ' + str(vektor_b[0]) + ' | ' + str(vektor_b[1]) + ' | ' + str(vektor_b[2]) + ' ) und '

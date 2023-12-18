@@ -171,6 +171,72 @@ def erstellen(Teil):
 
             Punkte += 15
             i += 1
+        if d in teilaufg:
+            fkt_1 = collect(diff(fkt,x,1),x)
+            fkt_2 = collect(diff(fkt,x,2),x)
+            fkt_3 = collect(diff(fkt,x,3),x)
+            x_12_fkt_1 = solve(fkt_1, x)
+            x_1_fkt_1 = round(x_12_fkt_1[0], 3)
+            x_2_fkt_1 = round(x_12_fkt_1[1], 3)
+
+            # Koeffizienten der ersten Ableitung
+            fkt_1_a2 = 3*faktor
+            fkt_1_a1 = (-2*faktor*a -2*faktor*(nst_1 + nst_3))
+            fkt_1_a0 = (faktor*(nst_1+nst_3)*a+faktor*nst_1*nst_3)
+            fkt_1_p = (-2/3*a -2/3*(nst_1*nst_3))
+            fkt_1_q = (1/3*(nst_1+nst_3)*a + 1/3*nst_1*nst_3)
+
+            fkt_1 = fkt_1_a2 * x**2 + fkt_1_a1 * x + fkt_1_a0
+
+            # Koeffizienten der ersten Ableitung als string
+
+            fkt_1_a2_str = latex(3*faktor)
+            if faktor < 0:
+                fkt_1_a1_str = '+(' + latex(-2*faktor) + r' \cdot a' + vorz_str(-2*faktor*(nst_1+nst_3)) + ')'
+            else:
+                fkt_1_a1_str = '-(' + latex(2*faktor) + r' \cdot a' + vorz_str(2*faktor*(nst_1+nst_3)) + ')'
+
+            if faktor * (nst_1 + nst_3) < 0:
+                fkt_1_a0_str = ('-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+                                + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
+            else:
+                fkt_1_a0_str = ('+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+                                + vorz_str(faktor * nst_1 * nst_3) + ')')
+            fkt_1_p_str = r'-( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')'
+            if (nst_1 + nst_3) < 0:
+                fkt_1_q_str = ('-(' + latex(Rational(-1*(nst_1 + nst_3),3)) + r' \cdot a'
+                                + vorz_str(Rational(-1*(nst_1 * nst_3),3)) + ')')
+            else:
+                fkt_1_q_str = ('+('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
+                                + vorz_str(Rational((nst_1 * nst_3),3)) + ')')
+
+            fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
+            fkt_1_pq_str = fkt_1_p_str + r' \cdot x' + fkt_1_q_str
+            fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1
+            fkt_3_str = latex(6*faktor)
+
+
+
+
+
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extremstellen der Funktion f und deren Art'
+                                                    ' mithilfe des hinreichenden Kriteriums. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \quad (3P) \\'
+                           r'f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_str + r' \vert ~ \div '
+                           + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
+                           r'0~=~ ' + fkt_1_pq_str + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
+                           + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
+                           + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q_str + r')} \quad (3P) \\')
+            loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
+                           + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
+            loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
+                           + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
+            loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
+                           + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
+            Punkte += 15
+            i += 1
 
         return [aufgabe, loesung, Punkte]
 

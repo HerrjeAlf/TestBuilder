@@ -152,7 +152,7 @@ Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 07 - Fläche berechnen'
-Teil = 'Gr. B'
+Teil = 'Gr. A'
 
 
 # der Teil in dem die PDF-Datei erzeugt wird
