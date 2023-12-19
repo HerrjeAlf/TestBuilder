@@ -147,7 +147,7 @@ def erstellen(Teil):
 
 
             table2 = Tabular('c c|c|c|c', row_height=1.2)
-            table2.add_row('',fkt_a3 latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
+            table2.add_row('',fkt_a3,latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
             table2.add_hline(2, 5)
             table2.add_row('Partialpolynom mit Horner Schema berechnen: ',' ', latex(collect(fkt_b2,a)), latex(collect(fkt_b1,a)), latex(collect(fkt_b0,a)))
             table2.add_hline(2, 5)
@@ -176,8 +176,8 @@ def erstellen(Teil):
             fkt_2 = collect(diff(fkt,x,2),x)
             fkt_3 = collect(diff(fkt,x,3),x)
             x_12_fkt_1 = solve(fkt_1, x)
-            x_1_fkt_1 = round(x_12_fkt_1[0], 3)
-            x_2_fkt_1 = round(x_12_fkt_1[1], 3)
+            x_1_fkt_1 = x_12_fkt_1[0]
+            x_2_fkt_1 = x_12_fkt_1[1]
 
             # Koeffizienten der ersten Ableitung
             fkt_1_a2 = 3*faktor
@@ -202,6 +202,7 @@ def erstellen(Teil):
             else:
                 fkt_1_a0_str = ('+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
                                 + vorz_str(faktor * nst_1 * nst_3) + ')')
+            # p und q in der pq-Formel
             fkt_1_p_str = r'-( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')'
             if (nst_1 + nst_3) < 0:
                 fkt_1_q_str = ('-(' + latex(Rational(-1*(nst_1 + nst_3),3)) + r' \cdot a'
@@ -209,10 +210,23 @@ def erstellen(Teil):
             else:
                 fkt_1_q_str = ('+('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
                                 + vorz_str(Rational((nst_1 * nst_3),3)) + ')')
+            # p und q in umgeformter pq-Formel
+            fkt_1_p2_str = r'( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')^2'
+            if (nst_1 + nst_3) < 0:
+                fkt_1_q2_str = (r' \frac{+4 \cdot (' + latex(Rational(abs(nst_1 + nst_3),3)) + r' \cdot a'
+                                + vorz_str(Rational(-1*(nst_1 * nst_3),3)) + ') }{4}')
+            else:
+                fkt_1_q_str = (r' \frac{-4 \cdot ('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
+                                + vorz_str(Rational((nst_1 * nst_3),3)) + ')}{4}')
+            # Diskriminante der Wurzel
+            fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
+                              + vorz_str(-4*nst_1*nst_3) + ')')
+
+
 
             fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
             fkt_1_pq_str = fkt_1_p_str + r' \cdot x' + fkt_1_q_str
-            fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1
+            fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1_str
             fkt_3_str = latex(6*faktor)
 
 
@@ -228,19 +242,22 @@ def erstellen(Teil):
                            + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
                            r'0~=~ ' + fkt_1_pq_str + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
                            + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                           + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q_str + r')} \quad (3P) \\')
-            loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
-                           + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
-            loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
-                           + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
-            loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
-                           + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
+                           + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q_str + r')} \quad (3P) \\ =~ '
+                           + latex(-1*fkt_1_p/2) + r' \pm \sqrt{' + r' \frac{'
+                           + fkt_1_p2_str + r'}{4}' + fkt_1_q2_str + r')} ~=~' + latex(-1*fkt_1_p/2)
+                           + r' \pm \sqrt{' + fkt_1_disk_str + r'} \quad (4P) \\')
+            #loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
+            #               + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
+            #loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
+            #               + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
+            #loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
+            #               + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
             Punkte += 15
             i += 1
 
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [kurvendiskussion(1, [a,b,c])]
+    aufgaben = [kurvendiskussion(1, [a,b,c,d])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -249,7 +266,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Kurvendiskussion von Funktionscharen'
+    Art = 'Test - Kurvendiskussion von Parameterfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -290,7 +307,7 @@ def erstellen(Teil):
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
+        Loesung.append(LargeText(bold(f'Loesung für {Art} \n {Teil} \n\n')))
 
         for loesung in aufgaben:
             for elements in loesung[1]:
