@@ -212,17 +212,16 @@ def erstellen(Teil):
                                 + vorz_str(Rational((nst_1 * nst_3),3)) + ')')
             # p und q in umgeformter pq-Formel
             fkt_1_p2_str = r'( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')^2'
+            fkt_1_p3_str = r' \frac{1}{3} \cdot a' + vorz_str(Rational(nst_1 * nst_3, 3))
             if (nst_1 + nst_3) < 0:
                 fkt_1_q2_str = (r' \frac{+4 \cdot (' + latex(Rational(abs(nst_1 + nst_3),3)) + r' \cdot a'
                                 + vorz_str(Rational(-1*(nst_1 * nst_3),3)) + ') }{4}')
             else:
-                fkt_1_q_str = (r' \frac{-4 \cdot ('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
+                fkt_1_q2_str = (r' \frac{-4 \cdot ('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
                                 + vorz_str(Rational((nst_1 * nst_3),3)) + ')}{4}')
             # Diskriminante der Wurzel
             fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
                               + vorz_str(-4*nst_1*nst_3) + ')')
-
-
 
             fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
             fkt_1_pq_str = fkt_1_p_str + r' \cdot x' + fkt_1_q_str
@@ -243,11 +242,11 @@ def erstellen(Teil):
                            r'0~=~ ' + fkt_1_pq_str + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
                            + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
                            + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q_str + r')} \quad (3P) \\ =~ '
-                           + latex(-1*fkt_1_p/2) + r' \pm \sqrt{' + r' \frac{'
-                           + fkt_1_p2_str + r'}{4}' + fkt_1_q2_str + r')} ~=~' + latex(-1*fkt_1_p/2)
-                           + r' \pm \sqrt{' + fkt_1_disk_str + r'} \quad (4P) \\')
-            #loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
-            #               + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
+                           + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
+                           + r'}{4}' + fkt_1_q2_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
+                           + r'} \quad (4P) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
+                           + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
+                           + fkt_1_disk_str + r'}  \quad (2P) \\')
             #loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
             #               + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
             #loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
