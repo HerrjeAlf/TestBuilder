@@ -166,7 +166,7 @@ def erstellen(Teil):
                            r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
                            r')} ~=~ ' + latex(-1*fkt_p/2) + r' \pm \sqrt{'
                            + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + latex(-1*fkt_p/2) + r' \pm ('
-                           + latex((a-nst_3)/2) + r') \quad x_2~=~' + latex(nst_3)
+                           + latex((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + latex(nst_3)
                            + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\')
 
             Punkte += 15
@@ -203,30 +203,37 @@ def erstellen(Teil):
                 fkt_1_a0_str = ('+(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
                                 + vorz_str(faktor * nst_1 * nst_3) + ')')
             # p und q in der pq-Formel
-            fkt_1_p_str = r'-( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')'
+            fkt_1_p_str = r'-( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
             if (nst_1 + nst_3) < 0:
                 fkt_1_q_str = ('-(' + latex(Rational(-1*(nst_1 + nst_3),3)) + r' \cdot a'
                                 + vorz_str(Rational(-1*(nst_1 * nst_3),3)) + ')')
+                fkt_1_q2_str = (latex(Rational((nst_1 + nst_3),3)) + r' \cdot a'
+                                + vorz_str(Rational((nst_1 * nst_3),3)))
             else:
-                fkt_1_q_str = ('+('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
+                fkt_1_q_str = ('+(' + latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
                                 + vorz_str(Rational((nst_1 * nst_3),3)) + ')')
+                fkt_1_q2_str = (latex(Rational(nst_1 + nst_3, 3)) + r' \cdot a'
+                               + vorz_str(Rational((nst_1 * nst_3), 3)))
+
             # p und q in umgeformter pq-Formel
-            fkt_1_p2_str = r'( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * nst_1 * nst_3, 3)) + ')^2'
-            fkt_1_p3_str = r' \frac{1}{3} \cdot a' + vorz_str(Rational(nst_1 * nst_3, 3))
+            fkt_1_p2_str = r'( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
+            fkt_1_p3_str = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1 + nst_3), 3))
             if (nst_1 + nst_3) < 0:
-                fkt_1_q2_str = (r' \frac{+4 \cdot (' + latex(Rational(abs(nst_1 + nst_3),3)) + r' \cdot a'
+                fkt_1_q3_str = (r'+ \frac{4 \cdot (' + latex(Rational(abs(nst_1 + nst_3),3)) + r' \cdot a'
                                 + vorz_str(Rational(-1*(nst_1 * nst_3),3)) + ') }{4}')
             else:
-                fkt_1_q2_str = (r' \frac{-4 \cdot ('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
+                fkt_1_q3_str = (r'- \frac{4 \cdot ('+ latex(Rational(nst_1 + nst_3,3)) + r' \cdot a'
                                 + vorz_str(Rational((nst_1 * nst_3),3)) + ')}{4}')
             # Diskriminante der Wurzel
             fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
                               + vorz_str(-4*nst_1*nst_3) + ')')
 
             fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
-            fkt_1_pq_str = fkt_1_p_str + r' \cdot x' + fkt_1_q_str
+            fkt_1_pq_str = 'x^2' + fkt_1_p_str + r' \cdot x' + fkt_1_q_str
             fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1_str
             fkt_3_str = latex(6*faktor)
+            fkt_1_x1 = fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str + r'}'
+            fkt_1_x2 = fkt_1_p3_str + r' - \sqrt{' + fkt_1_disk_str + r'}'
 
 
 
@@ -235,28 +242,55 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extremstellen der Funktion f und deren Art'
                                                     ' mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
-                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                           + r' \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \quad (3P) \\'
-                           r'f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_str + r' \vert ~ \div '
-                           + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
-                           r'0~=~ ' + fkt_1_pq_str + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
+                           + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
+                           + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                           + fkt_1_str + r' \vert ~ \div ' + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
+                           r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
                            + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                           + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q_str + r')} \quad (3P) \\ =~ '
+                           + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2P) \\ =~ '
                            + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
-                           + r'}{4}' + fkt_1_q2_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
+                           + r'}{4}' + fkt_1_q3_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
                            + r'} \quad (4P) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
                            + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
-                           + fkt_1_disk_str + r'}  \quad (2P) \\')
-            #loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
-            #               + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
-            #loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
-            #               + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
-            Punkte += 15
+                           + fkt_1_disk_str + r'}  \quad (2P) \\'
+                           + r'f^{ \prime \prime } (x_2) ~=~' + latex(6*faktor)
+                           + r' \cdot \Big( ' + fkt_1_x1 + r' \Big) ' + fkt_1_a1_str
+                           + r' \quad (1P) \\ ~=~ + \sqrt{' + fkt_1_disk_str
+                           + r'} \quad \mathrm{>~0} \quad \to TP \quad (2P) \\ f^{ \prime \prime } (x_2) ~=~'
+                           + latex(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
+                           + r' \Big) ' + fkt_1_a1_str + r' \quad (1P) \\ ~=~ - \sqrt{' + fkt_1_disk_str
+                           + r'} \quad \mathrm{<~0} \quad \to HP \quad (2P)')
+            Punkte += 19
+            i += 1
+
+        if e in teilaufg:
+            if faktor < 0:
+                fkt_1_a1_str = '+(' + latex(-2*faktor) + r' \cdot a' + vorz_str(-2*faktor*(nst_1+nst_3)) + ')'
+            else:
+                fkt_1_a1_str = '-(' + latex(2*faktor) + r' \cdot a' + vorz_str(2*faktor*(nst_1+nst_3)) + ')'
+
+            if faktor < 0:
+                fkt_1_a1_str_neg = '-(' + latex(-2 * faktor) + r' \cdot a' + vorz_str(-2 * faktor * (nst_1 + nst_3)) + ')'
+            else:
+                fkt_1_a1_str_neg = '+(' + latex(2 * faktor) + r' \cdot a' + vorz_str(2 * faktor * (nst_1 + nst_3)) + ')'
+            xwert_wendepunkt = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1+nst_3),3))
+            fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1_str
+            fkt_3_str = latex(6*faktor)
+
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                           + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
+                           + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
+                           + vorz_str(Rational((nst_1+nst_3),3))
+                           + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
+                           + r') ~=~ ' + latex(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\\\')
+            Punkte += 5
             i += 1
 
         return [aufgabe, loesung, Punkte]
 
-    aufgaben = [kurvendiskussion(1, [a,b,c,d])]
+    aufgaben = [kurvendiskussion(1, [a,b,c,d,e])]
     Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
 
     # Angaben für den Test im pdf-Dokument
@@ -265,7 +299,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Kurvendiskussion von Parameterfunktionen'
+    Art = 'HAK 08'
+    Titel = 'Kurvendiskussion von Parameterfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -280,7 +315,7 @@ def erstellen(Teil):
         table1.add_hline(2, 6)
         Aufgabe.append(table1)
         Aufgabe.append(' \n\n')
-        Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
+        Aufgabe.append(LargeText(bold(f'\n {Art} {Titel} \n\n')))
         for aufgabe in aufgaben:
             for elements in aufgabe[0]:
                 if '~' in elements:
@@ -300,13 +335,13 @@ def erstellen(Teil):
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
-        Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.append(LargeText(bold(f'Loesung für {Art} \n {Teil} \n\n')))
+        Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
         for loesung in aufgaben:
             for elements in loesung[1]:
@@ -322,7 +357,7 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
 
-        Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+        Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
