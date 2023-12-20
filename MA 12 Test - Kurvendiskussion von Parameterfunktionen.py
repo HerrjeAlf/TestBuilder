@@ -158,7 +158,7 @@ def erstellen(Teil):
                                                      + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
                                                      + latex(nst_1) + r' \quad (1P) \\'
                                                      + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
-                                                     + r')~= \\ =~' + fkt_partial_str + ' \quad (4P)'))
+                                                     + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
             loesung.append(table2)
             loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + vorz_str_minus(faktor) +
                            r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
@@ -363,7 +363,7 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_HAKs = 1
+anzahl_HAKs = 2
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
