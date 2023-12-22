@@ -306,7 +306,7 @@ def erstellen(Teil):
         i = 0
         Punkte = 0
         # Berechnung der Nullstellen und des Faktors
-        nst_1 = zzahl(1, 5)
+         faktor_1 = zzahl(1, 5)
         nst_2 = nst_1 + nzahl(2, 8) / 2
         nst_3 = nst_1 - nzahl(2, 8) / 2
         while nst_3 == 0:
