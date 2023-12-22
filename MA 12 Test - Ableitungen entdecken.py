@@ -499,7 +499,7 @@ def erstellen(Teil):
 
 
 anzahl_HAKs = 1
-probe = false
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:

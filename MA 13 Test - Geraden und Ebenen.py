@@ -397,61 +397,56 @@ def Hausaufgabenkontrolle():
     # erste Seite
     table1 = Tabular('c|c|c|c|c|c|', row_height=1.2)
     table1.add_hline(2, 6)
-    table1.add_row(MediumText(bold('Torhorst - Gesamtschule')), 'Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:')
+    table1.add_row(MediumText(bold('Torhorst - Gesamtschule')), 'Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:',
+                   'Datum:')
     table1.add_row(SmallText('mit gymnasialer Oberstufe'), Klasse, Fach, Kurs, Lehrer, Datum)
     table1.add_hline(2, 6)
     Aufgabe.append(table1)
     Aufgabe.append(' \n\n')
-
-    Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
+    Aufgabe.append(LargeText(bold(f'\n {Art} {Titel} \n\n')))
     for aufgabe in aufgaben:
         for elements in aufgabe[0]:
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
+            elif 'Abbildung' in elements:
+                Aufgabe.append(elements)
+                with Aufgabe.create(Figure(position='h!')) as graph:
+                    graph.add_image(aufgabe[3], width='200px')
             else:
                 Aufgabe.append(elements)
 
     Aufgabe.append('\n\n')
-    Aufgabe.append(MediumText(bold(f'Du hast .......... von {Punkte} möglichen Punkten erhalten. \n\n')))
+    Aufgabe.append(
+        MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
 
     Aufgabe.append(NewPage())
-
     Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-    Aufgabe.append(' \n\n')
 
-#     aufgabe = aufgaben[0]
-#     elemente = aufgabe[0]
-#     punkte = elemente[1]
-#     Aufgabe.append(punkte)
-
-#     with Aufgabe.create(Figure(position='h!')) as koordinasystem:
-#         koordinasystem.add_image(r'3dim_Koordinatensystem.png', width='400px')
-
-    Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+    Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil}', clean_tex=true)
 
 # Erwartungshorizont
 def Erwartungshorizont():
     geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
     Loesung = Document(geometry_options=geometry_options)
-    Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
+    Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
     for loesung in aufgaben:
         for elements in loesung[1]:
             if '~' in elements:
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(elements)
+            elif 'Abbildung' in elements:
+                with Loesung.create(Figure(position='h!')) as graph:
+                    graph.add_image(loesung[3], width='200px')
             else:
                 Loesung.append(elements)
 
-    Loesung.append('\n\n')
     Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-#     Loesung.append(NewPage())
-#     with Loesung.create(Figure(position='h!')) as koordinasystem:
-#         koordinasystem.add_image(r'3dim_Koordinatensystem.png', width='400px')
 
-    Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+    Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil} - Lsg', clean_tex=true)
+
 # Druck der Seiten
 Hausaufgabenkontrolle()
 Erwartungshorizont()
