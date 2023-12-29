@@ -83,10 +83,9 @@ def schnittpunkte(fkt_1,fkt_2):
         ywert = fkt_1.subs(x, xwert)
         print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
         i += 1
-print(expand(-2*(x+1)*(x+2)*(x-a)))
+print(collect(expand(a*(x-b)*(x-c)*(x+d)),x))
 # schnittpunkte(4*x**3-16*x**2-5*x+42,3/79*x+16.28)
 # Graph(0, 5,60*x**3-60*x**2 + 720, 720*x)
 # integral(0,4/3,4*x**3-16*x**2-398/79*x+25.68)
-
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
