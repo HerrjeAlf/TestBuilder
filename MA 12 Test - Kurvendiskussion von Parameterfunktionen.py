@@ -505,6 +505,10 @@ def erstellen(Teil):
             Punkte += 6
             i += 1
 
+        if g in teilaufg:
+            # hier soll die Ortskurve des Wendepunktes berechnet werden
+            pass
+
         return [aufgabe, loesung, Punkte]
 
     aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e])]
