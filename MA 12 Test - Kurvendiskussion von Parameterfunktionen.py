@@ -3,7 +3,8 @@ import numpy as np
 import random, math
 import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
-from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
+from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
+                     MultiColumn, MultiRow)
 from pylatex.utils import bold
 from sympy import *
 
@@ -11,6 +12,8 @@ from sympy import *
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+liste_bez = ['Aufgabe']
+liste_punkte = ['Punkte']
 
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -49,7 +52,6 @@ def erstellen(Teil):
 
     def kurvendiskussion_01(nr, teilaufg):
         i = 0
-        Punkte = 0
         # Berechnung der Nullstellen und des Faktors
         nst_1 = zzahl(1, 5)
         nst_2 = nst_1 + nzahl(2, 8) / 2
@@ -95,18 +97,25 @@ def erstellen(Teil):
 
 
         if a in teilaufg:
-            Punkte += 2
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            print(liste_punkte_aufg)
             grenzwert_neg = limit(fkt, x, -oo)
             grenzwert_pos = limit(fkt, x, oo)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                            + latex(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} '
-                           + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\')
+                           + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            Punkte += punkte_aufg
             i += 1
 
         if b in teilaufg:
-            Punkte += 3
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_a3_str_neg = latex(-1*faktor)
             if faktor * (nst_1 + nst_3) > 0:
                 fkt_a1_str_neg = ('-(' + latex(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
@@ -122,6 +131,9 @@ def erstellen(Teil):
                                                      + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
             i += 1
         if c in teilaufg:
+            punkte_aufg = 15
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             # hier werden die Koeffizenten für das Hornerschema berechnet
             fkt_b2 = nst_1 * faktor
             fkt_c2 = -1 * faktor * a - faktor * nst_3
@@ -167,10 +179,13 @@ def erstellen(Teil):
                            + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + latex(-1*fkt_p/2) + r' \pm ('
                            + latex((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + latex(nst_3)
                            + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
-                           + r'\mathrm{insgesamt~15~Punkte} \\')
-            Punkte += 15
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            Punkte += punkte_aufg
             i += 1
         if d in teilaufg:
+            punkte_aufg = 19
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_1 = collect(diff(fkt,x,1),x)
             fkt_2 = collect(diff(fkt,x,2),x)
             fkt_3 = collect(diff(fkt,x,3),x)
@@ -256,11 +271,13 @@ def erstellen(Teil):
                            + latex(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
                            + r' \Big) ' + fkt_1_a1_str + r' \quad (1P) \\ ~=~ - \sqrt{' + fkt_1_disk_str
                            + r'} \quad \mathrm{<~0} \quad \to HP \quad (2P) \\'
-                           + r'\mathrm{insgesamt~19~Punkte} \\')
-            Punkte += 19
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if e in teilaufg:
+            punkte_aufg = 5
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             if faktor < 0:
                 fkt_1_a1_str = '+(' + latex(-2*faktor) + r' \cdot a' + vorz_str(-2*faktor*(nst_1+nst_3)) + ')'
             else:
@@ -281,10 +298,13 @@ def erstellen(Teil):
                            + vorz_str(Rational((nst_1+nst_3),3))
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
                            + r') ~=~ ' + latex(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
-                           + r'\mathrm{insgesamt~5~Punkte} \\')
-            Punkte += 5
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
+
         if f in teilaufg:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             wert_a_wp = random.randint(1,5)
             xwert_wp = Rational((wert_a_wp + nst_1 + nst_3),3)
             xwert_wendepunkt = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1 + nst_3), 3))
@@ -293,20 +313,23 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + latex(xwert_wp) + '~=~' + xwert_wendepunkt
                                                      + r' \quad \vert ~' + vorz_str(Rational(-1 * (nst_1 + nst_3), 3))
                                                      + r' \quad \vert \cdot 3 \quad \to \quad a~=~'
-                                                     + str(wert_a_wp) + r' \quad (3P) \\\\'))
-            Punkte += 3
+                                                     + str(wert_a_wp) + r' \quad (3P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
-        return [aufgabe, loesung, Punkte]
+        return [aufgabe, loesung]
 
     def kurvendiskussion_02(nr, teilaufg):
         i = 0
-        Punkte = 0
         # Berechnung der Nullstellen und des Faktors
         faktor = zzahl(1, 5)
         faktor_1 = -1*nzahl(3,10)/2
         faktor_2 = random.choice([-1,1])
         faktor_3 = nzahl(3,10)/2
+        while faktor_1 + faktor_2 + faktor_3 == 0:
+            faktor_1 = -1 * nzahl(3, 10) / 2
+            faktor_2 = random.choice([-1, 1])
+            faktor_3 = nzahl(3, 10) / 2
 
         # Aufstellen der Funktionsgleichung
         fkt = collect(expand(faktor * (x - faktor_1 * a) * (x - faktor_2 * a) * (x - faktor_3 * a)),x)
@@ -329,17 +352,23 @@ def erstellen(Teil):
 
 
         if a in teilaufg:
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grenzwert_neg = limit(fkt, x, -oo)
             grenzwert_pos = limit(fkt, x, oo)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~' + \
                            latex(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} ' + \
-                           fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\\\')
-            Punkte += 2
+                           fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if b in teilaufg:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_sym = fkt.subs(x, -x)
             fkt_sym_str = (latex(-1 * fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + r' \cdot a \cdot x^2 ~'
                            + vorz_str(-1 * fkt_a1) + r' \cdot a^2 \cdot x ~' + vorz_str(fkt_a0) + r' \cdot a^3')
@@ -353,12 +382,13 @@ def erstellen(Teil):
                 lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad'
                                                            r'\mathrm{nicht~symmetrisch} \quad (3P) \\')
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Symmetrie der Funktion f. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (lsg))
-
-            Punkte += 3
+            loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if c in teilaufg:
+            punkte_aufg = 18
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             # hier werden die Koeffizenten für das Hornerschema berechnet
             fkt_b2 = faktor * faktor_2
             fkt_c2 = -1 * faktor * (faktor_1 + faktor_3)
@@ -415,10 +445,13 @@ def erstellen(Teil):
                            + latex(faktor_3) + r'a \quad (3P) \\ S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
                            + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad \mathrm{sowie}'
                            r' \quad S_y(0 \vert' + latex(fkt_a0) + r'a^3) \quad (4P) \\'
-                           + r'\mathrm{insgesamt~18~Punkte} \\')
-            Punkte += 18
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
+
         if d in teilaufg:
+            punkte_aufg = 14
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_1 = collect(diff(fkt,x,1),x)
             fkt_2 = collect(diff(fkt,x,2),x)
             x_12_fkt_1 = solve(fkt_1, x)
@@ -482,38 +515,82 @@ def erstellen(Teil):
                            + ')' + vorz_str(fkt_1_a1) + r' \cdot a ~=~' + latex(N(x_1_fkt_2,3)) + r' \quad (1P)'
                            + lsg_extrema_1 + r' f^{ \prime \prime } (x_2) ~=~' + latex(6 * faktor) + r' \cdot ('
                            + latex(N(x_2_fkt_1,3)) + ')' + latex(fkt_1_a1) + 'a  ~=~' + latex(N(x_2_fkt_2,3))
-                           + r' \quad (1P)' + lsg_extrema_2 + r' \mathrm{insgesamt~14~Punkte} \\')
-            Punkte += 14
+                           + r' \quad (1P)' + lsg_extrema_2 + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if e in teilaufg:
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_2_a0 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
             fkt_2_str = latex(6*faktor) + 'x' + latex(fkt_2_a0) + 'a'
-            xwert_wp_bruch = latex(Rational((faktor_1 + faktor_2 + faktor_3),3))
-            xwert_wp_dezimal = latex(N((faktor_1 + faktor_2 + faktor_3)/3))
+            xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3),3)
+            xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3)/3,3)
+            ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
             fkt_3_str = latex(6*faktor)
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                           + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                           + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
-                           + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~' + xwert_wp_bruch + 'a ~=~'
-                           + xwert_wp_dezimal + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }('
-                           + xwert_wp_bruch + ') ~=~ ' + fkt_3_str
-                           + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
-                           + r' \mathrm{insgesamt:~6~Punkte} \\')
-            Punkte += 6
+                           + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~' + latex(xwert_wp_bruch) + 'a ~=~'
+                           + latex(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }('
+                           + latex(xwert_wp_bruch) + ') ~=~ ' + fkt_3_str
+                           + r' \quad \neq 0 \quad \to \quad \mathrm{Wendepunkt} (' + latex(xwert_wp_bruch)
+                           + r'a \vert ' + latex(ywert_wp_dezimal) + r') \quad (4P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if g in teilaufg:
-            # hier soll die Ortskurve des Wendepunktes berechnet werden
-            pass
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3), 3)
+            xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3) / 3)
+            ywert_wp_dezimal = N(fkt.subs(x, xwert_wp_bruch*a), 3)
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Ortskurve der Wendepunkte der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (latex(xwert_wp_bruch)) + r'a \vert \div '
+                           + latex(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
+                           + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
+                           + r'x \quad \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
+                           + latex(ywert_wp_dezimal/a**3) + r' \Big(' + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
+                           + r'x \Big)^3 ~=~' + latex(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,3))
+                           + r'x^3 \quad (4P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
 
-        return [aufgabe, loesung, Punkte]
+        return [aufgabe, loesung]
 
-    aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e])]
-    Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
+    aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e,g])]
 
+    # erstellen der Tabelle zur Punkteübersicht
+    Punkte = (sum(liste_punkte[1:]))
+    liste_bez.append('Summe')
+    liste_punkte.append(str(Punkte))
+    anzahl_spalten = len(liste_punkte)
+    liste_ergebnis_z1 = ['erhaltene']
+    for p in range(anzahl_spalten - 1):
+        liste_ergebnis_z1.append('')
+    liste_ergebnis_z2 = ['Punkte']
+    for p in range(anzahl_spalten - 1):
+        liste_ergebnis_z2.append('')
+
+    spalten = '|'
+    for p in liste_punkte:
+        spalten += 'c|'
+
+    table2 = Tabular(spalten, row_height=1.2)
+    table2.add_hline()
+    table2.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben'),))
+    table2.add_hline()
+    table2.add_row(liste_bez)
+    table2.add_hline()
+    table2.add_row(liste_punkte)
+    table2.add_hline()
+    table2.add_row(liste_ergebnis_z1)
+    table2.add_row(liste_ergebnis_z2)
+    table2.add_hline()
+
+    print(table2)
     # Angaben für den Test im pdf-Dokument
     Datum = NoEscape(r' \today')
     Kurs = 'Leistungskurs'
@@ -550,8 +627,10 @@ def erstellen(Teil):
                     Aufgabe.append(elements)
 
         Aufgabe.append('\n\n')
-        Aufgabe.append(
-            MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
+        Aufgabe.append(table2)
+        Aufgabe.append('\n\n\n\n')
+
+        Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
@@ -582,7 +661,7 @@ def erstellen(Teil):
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
-    Erwartungshorizont()
+    # Erwartungshorizont()
 
 anzahl_HAKs = 1
 probe = True
