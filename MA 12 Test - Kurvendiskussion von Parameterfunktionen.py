@@ -597,7 +597,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'HAK 08'
+    Art = 'Hausaufgabenkontrolle 08'
     Titel = 'Kurvendiskussion von Parameterfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -605,15 +605,17 @@ def erstellen(Teil):
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
         # erste Seite
-        table1 = Tabular('c|c|c|c|c|c|', row_height=1.2)
-        table1.add_hline(2, 6)
-        table1.add_row(MediumText(bold('Torhorst - Gesamtschule')), 'Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:',
-                       'Datum:')
-        table1.add_row(SmallText('mit gymnasialer Oberstufe'), Klasse, Fach, Kurs, Lehrer, Datum)
-        table1.add_hline(2, 6)
+        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
+        table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
+        table1.add_hline()
+        table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', 'Art:')
+        table1.add_hline()
+        table1.add_row(Klasse, Fach, Kurs, Lehrer, Datum, Art)
+        table1.add_hline()
         Aufgabe.append(table1)
-        Aufgabe.append(' \n\n')
-        Aufgabe.append(LargeText(bold(f'\n {Art} {Titel} \n\n')))
+        Aufgabe.append(' \n\n\n\n')
+        Aufgabe.append(LargeText(bold(f' {Titel} \n\n')))
         for aufgabe in aufgaben:
             for elements in aufgabe[0]:
                 if '~' in elements:
@@ -635,7 +637,7 @@ def erstellen(Teil):
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
-        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil}', clean_tex=true)
+        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
     def Erwartungshorizont():
@@ -657,16 +659,17 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
 
-        Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Titel} {Teil} - Lsg', clean_tex=true)
+        Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Erwartungshorizont()
 
-anzahl_HAKs = 1
-probe = True
+
+anzahl_Arbeiten = 1
+probe = False
 alphabet = string.ascii_uppercase
-for teil_id in range(anzahl_HAKs):
+for teil_id in range(anzahl_Arbeiten):
     if probe:
         erstellen('Probe {:02d}'.format(teil_id + 1))
     else:
