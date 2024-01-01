@@ -1,3 +1,4 @@
+import math
 import random, sys, string
 import numpy as np
 from sympy import *
@@ -11,7 +12,7 @@ from threading import Thread
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
-liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n']
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
 liste_bez = ['Aufgabe']
 liste_punkte = ['Punkte']
 
@@ -39,7 +40,7 @@ def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
 
     def punkt_vektor(p):
-        return [zzahl(1,p), zzahl(1,p), zzahl(1,p)]
+        return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
 
     def faktorliste(n, p=1,q=10):
         return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
@@ -133,7 +134,6 @@ def erstellen(Teil):
 
         if a in teilaufg:
             auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-            auswahl = 'windschief'
             if auswahl == 'identisch':
                 punkte_aufg = 7
                 liste_punkte.append(punkte_aufg)
@@ -410,21 +410,58 @@ def erstellen(Teil):
         ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
         uz = - 1 * (vx*ux + vy * uy)/vz
         u = np.array([ux, uy, uz])
-        punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf h
-        punkt_c = [cx,cy,cz] = np.array(punkt_d) + zzahl(1, 7) / 2 * np.array(u)
-        w = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von h
+        punkt_b = [bx,by,bz] = np.array(punkt_a) + np.array(v) # Punkte C und D liegen auf h
+        punkt_c = [cx,cy,cz] = np.array(punkt_b) + zzahl(1, 7) / 2 * np.array(u)
+        w = punkt_c - punkt_a # Vektor w ist der Richtungsvektor von h
         [wx, wy, wz] = vektor_runden(w,3)
+        n = [nx, ny, nz] = np.cross(v,w)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-                   'A( ' + latex(ax)  + ' | ' + latex(ay) + ' | ' + latex(az) + ' ), ' 
-                   'B( ' + latex(dx)  + ' | ' + latex(dy) + ' | ' + latex(dz) + ' ) und '
-                   'C( ' + latex(cx)  + ' | ' + latex(cy) + ' | ' + latex(cz) + ' ).  \n\n']
+                   'A( ' + str(ax) + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
+                   'B( ' + str(bx) + ' | ' + str(by) + ' | ' + str(bz) + ' ) und '
+                   'C( ' + str(cx) + ' | ' + str(cy) + ' | ' + str(cz) + ' ).  \n\n']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+        if a in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
+                                              f'welche die Punkte A, B und C enthält. \n\n')
+            loesung.append(str(teilaufg[i]) + r') E: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                           + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                           r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                           + latex(bx - ax) + r' \\' + latex(by - ay) + r' \\' + latex(bz - az) + r' \\'
+                           r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                           + latex(cx - ax) + r' \\' + latex(cy - ay) + r' \\' + latex(cz - az) + r' \\'
+                           r' \end{pmatrix}\\'
+                           + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
+
+        if a and b in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in'
+                                              f'Normalen- und Koordinatenformn um. \n\n')
+            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+                           + latex(vy*wz) + '-' + vorz_str_minus(vz*wy) + r' \\'
+                           + latex(vz*wx) + '-' + vorz_str_minus(vx*wz) + r' \\'
+                           + latex(vx*wy) + '-' + vorz_str_minus(vy*wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
+                           + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                           r' \end{pmatrix} \quad (2P) \quad \to \quad E: \begin{bmatrix} \overrightarrow{x} ~-~'
+                           r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                           r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                           + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                           r' \end{pmatrix} ~=~0 \quad (2P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+
 
         return aufgabe, loesung
 
     aufgaben = [gerade(1, [a, b]),
-                lagebeziehung(2, [a,b])]
+                lagebeziehung(2, [a,b]),
+                ebenen(3,[a,b])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
