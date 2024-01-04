@@ -487,20 +487,59 @@ def erstellen(Teil):
                                                + latex(np.dot(n,punkt_d)) + '~=~' + latex(np.dot(punkt_a,n)) + lsg))
             i += 1
 
-        if d in teilaufg:
+        return aufgabe, loesung
+
+    def ebenen_umformen(nr, teilaufg):
+        i = 0
+        v_teiler = zzahl(1, 3)
+        punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
+        v = [vx, vy, vz] = punkt_vektor(4) # Vektor v ist der Richtungsvektor von Geraden g_1
+        # Vektor u steht orthogonal auf v
+        ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
+        uz = - 1 * (vx*ux + vy * uy)/vz
+        u = np.array([ux, uy, uz])
+        punkt_b = [bx,by,bz] = np.array(punkt_a) + np.array(v) # Punkte C und D liegen auf h
+        punkt_c = [cx,cy,cz] = np.array(punkt_b) + zzahl(1, 7) / 2 * np.array(u)
+        w = punkt_c - punkt_a # Vektor w ist der Richtungsvektor von h
+        [wx, wy, wz] = vektor_runden(w,3)
+        n = [nx, ny, nz] = vektor_runden(np.cross(v,w),3)
+
+        normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                        + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                        r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                        + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                        r' \end{pmatrix}')
+        koordinatenform = ('E:' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y'
+                           + vorz_str(nz) + r' \cdot z') + '~=~' + latex(np.dot(punkt_a,n))
+
+        auswahl = random.choice([1,2])
+        if auswahl == 1:
+            ebenengleichung = normalenform
+            lsg = ''
+        else:
+            ebenengleichung = koordinatenform
+            lsg = ''
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Gegeben ist die Ebene E mit der folgenden Gleichung:']
+        aufgabe.append(ebenengleichung)
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+        if a in teilaufg:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-
-
-
+            aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
+                                              f'anderen beiden Darstellungsarten um. \n\n ')
+            loesung.append(str(teilaufg[i]) + r') \\')
             i += 1
 
         return aufgabe, loesung
 
     aufgaben = [gerade(1, [a, b]),
                 lagebeziehung(2, [a,b]),
-                ebenen(3,[a,b,c])]
+                ebenen(3,[a,b,c]),
+                ebenen_umformen(4, [a])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
