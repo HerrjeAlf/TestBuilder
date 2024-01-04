@@ -100,7 +100,6 @@ def erstellen(Teil):
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            print(liste_punkte_aufg)
             grenzwert_neg = limit(fkt, x, -oo)
             grenzwert_pos = limit(fkt, x, oo)
 
@@ -109,7 +108,6 @@ def erstellen(Teil):
                            + latex(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} '
                            + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-            Punkte += punkte_aufg
             i += 1
 
         if b in teilaufg:
@@ -180,7 +178,6 @@ def erstellen(Teil):
                            + latex((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + latex(nst_3)
                            + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-            Punkte += punkte_aufg
             i += 1
         if d in teilaufg:
             punkte_aufg = 19
@@ -560,7 +557,7 @@ def erstellen(Teil):
 
         return [aufgabe, loesung]
 
-    aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e,g])]
+    aufgaben = [kurvendiskussion_01(1, [a,b,c,d,e,g])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))

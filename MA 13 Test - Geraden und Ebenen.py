@@ -11,7 +11,7 @@ from threading import Thread
 
 # Definition der Funktionen
 
-a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
 liste_bez = ['Aufgabe']
 liste_punkte = ['Punkte']
@@ -51,13 +51,13 @@ def erstellen(Teil):
     def gerade(nr, teilaufg):
         i = 0
         punkt_a = [ax, ay, az] = punkt_vektor(3)
-        punkt_b = [bx, by, bz] = [ax + zzahl(1, 3), ay + zzahl(1, 3), az + zzahl(1, 3)]
+        punkt_b = [bx, by, bz] = punkt_a + punkt_vektor(3)
         v = [vx, vy, vz] =  np.array(punkt_b) - np.array(punkt_a)
         p = random.choice([0,1])
         if p == 0:
-            punkt_t = [tx, ty, tz] = np.array(punkt_a) + zzahl(1,30)/5*v
+            punkt_t = [tx, ty, tz] = punkt_a + zzahl(1,30)/5*v
         else:
-            punkt_t = [tx, ty, tz] = np.array(punkt_a) + (zzahl(1,30)/5)*v + [1, 1, 1]
+            punkt_t = [tx, ty, tz] = punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1]
 
         lx, ly, lz = [(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz]
 
@@ -414,7 +414,7 @@ def erstellen(Teil):
         punkt_c = [cx,cy,cz] = np.array(punkt_b) + zzahl(1, 7) / 2 * np.array(u)
         w = punkt_c - punkt_a # Vektor w ist der Richtungsvektor von h
         [wx, wy, wz] = vektor_runden(w,3)
-        n = [nx, ny, nz] = np.cross(v,w)
+        n = [nx, ny, nz] = vektor_runden(np.cross(v,w),3)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                    'A( ' + str(ax) + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
@@ -434,34 +434,73 @@ def erstellen(Teil):
                            + latex(bx - ax) + r' \\' + latex(by - ay) + r' \\' + latex(bz - az) + r' \\'
                            r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                            + latex(cx - ax) + r' \\' + latex(cy - ay) + r' \\' + latex(cz - az) + r' \\'
-                           r' \end{pmatrix}\\'
-                           + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           r' \end{pmatrix} \quad (2P) \\'
+                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if a and b in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in'
-                                              f'Normalen- und Koordinatenformn um. \n\n')
+            aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
+                                              f'Normalen- und Koordinatenform um. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                            + latex(vy*wz) + '-' + vorz_str_minus(vz*wy) + r' \\'
                            + latex(vz*wx) + '-' + vorz_str_minus(vx*wz) + r' \\'
                            + latex(vx*wy) + '-' + vorz_str_minus(vy*wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
                            + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
-                           r' \end{pmatrix} \quad (2P) \quad \to \quad E: \begin{bmatrix} \overrightarrow{x} ~-~'
-                           r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                           r' \end{pmatrix} \quad (2P) \quad \mathrm{und}'
+                           r'\quad E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                            r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                            + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
                            r' \end{pmatrix} ~=~0 \quad (2P) \\'
+                           r'E:' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y' + vorz_str(nz) + r' \cdot z'
+                           + '~=~' + latex(np.dot(punkt_a,n)) + r' \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
 
+        if a and b and c in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            parameter_r = zzahl(1,6)/2
+            parameter_s = zzahl(1,6)/2
+            zufallszahl = random.randint(1,2)
+            if zufallszahl == 1:
+                punkt_d = [dx,dy,dz] = punkt_a + parameter_r*v + parameter_s*w
+            else:
+                punkt_d = [dx,dy,dz] = punkt_a + punkt_vektor(1) + parameter_r * v + parameter_s * w
+            print(punkt_d)
+            print(punkt_a + parameter_r * v + parameter_s * w)
+            if np.array_equal(punkt_d, punkt_a + parameter_r * v + parameter_s * w):
+                lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~D~liegt~auf~der~Geraden.} \quad (3P) \\'
+            else:
+                lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~D~liegt~nicht~auf~der~Geraden.} \quad (3P) \\'
+            aufgabe.append('Gegeben ist ein weiterer Punkt D( ' + str(ax) + ' | ' + str(ay) + ' | '
+                           + str(az) + ' ), \n\n')
+            aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt D in der Ebene E liegt. \n\n')
+            loesung.append(str(teilaufg[i]) + (r') \quad E:~' + latex(nx) + r' \cdot (' + latex(dx) + ')'
+                                               + vorz_str(ny) + r' \cdot (' + latex(dy) + ')'
+                                               + vorz_str(nz) + r' \cdot (' + latex(dz) + ') ~=~'
+                                               + latex(np.dot(punkt_a,n)) + r' \quad \to \quad '
+                                               + latex(np.dot(n,punkt_d)) + '~=~' + latex(np.dot(punkt_a,n)) + lsg))
+            i += 1
+
+        if d in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+
+
+
+            i += 1
 
         return aufgabe, loesung
 
     aufgaben = [gerade(1, [a, b]),
                 lagebeziehung(2, [a,b]),
-                ebenen(3,[a,b])]
+                ebenen(3,[a,b,c])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
