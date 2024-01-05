@@ -1,3 +1,4 @@
+import datetime
 import string
 import numpy as np
 import random, math
@@ -395,7 +396,7 @@ def erstellen(Teil):
             # hier werden das Partialpolynom (Ergebnis Hornerschema) und die Gleichung für die pq-Formel berechnet
             fkt_partial = faktor * x**2 + fkt_c2 * a * x + fkt_c1 * a**2
             fkt_partial_str = (latex(faktor) + r' \cdot x^2' + vorz_str(fkt_c2) + r' \cdot a \cdot x'
-                               + vorz_str(fkt_c1) + ' \cdot a^2')
+                               + vorz_str(fkt_c1) + r' \cdot a^2')
             fkt_p = -1 * (faktor_1 + faktor_3)
             fkt_q = faktor_1 * faktor_3
             fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' \cdot a \cdot x' + vorz_str(fkt_q) + r' \cdot a^2'
@@ -433,7 +434,7 @@ def erstellen(Teil):
             loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + vorz_str_minus(faktor) +
                            r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
                            r' x_{2/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
-                           r' \frac{-(' + latex(fkt_p) + r')a}{2} \Big)^2-(' + latex(fkt_q) +
+                           r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                            r'a^2)} ~=~ ' + latex(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
                            + latex(fkt_disk) + r' \cdot a^2} \quad (4P) \\ x_{2/3}~=~'
                            + latex(Rational(faktor_1 + faktor_3,2)) + r' \cdot a \pm \Big('
@@ -526,7 +527,7 @@ def erstellen(Teil):
             ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
             fkt_3_str = latex(6*faktor)
 
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')  # Wäre "Überprüfe rechnerisch auf Wendepunkte der Funktion f mithilfe des hinreichenden Kriteriums." nicht angepasster für die Aufgabe?
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
@@ -538,7 +539,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if g in teilaufg:
+        if f in teilaufg:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -557,7 +558,7 @@ def erstellen(Teil):
 
         return [aufgabe, loesung]
 
-    aufgaben = [kurvendiskussion_01(1, [a,b,c,d,e,g])]
+    aufgaben = [kurvendiskussion_01(1, [a,b,c,d,e,f])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -589,7 +590,7 @@ def erstellen(Teil):
 
     print(table2)
     # Angaben für den Test im pdf-Dokument
-    Datum = NoEscape(r' \today')
+    Datum = datetime.date.today().strftime('%d.%m.%Y')
     Kurs = 'Leistungskurs'
     Fach = 'Mathematik'
     Klasse = '12'
