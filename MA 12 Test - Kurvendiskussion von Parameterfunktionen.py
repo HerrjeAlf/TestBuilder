@@ -13,8 +13,6 @@ from sympy import *
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-liste_bez = ['Aufgabe']
-liste_punkte = ['Punkte']
 
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -49,7 +47,10 @@ def vorz_Str_minus(k):
         return latex(k)
 
 def erstellen(Teil):
-    print(f'\n\033[1;35m{Teil}\033[0m')
+    print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
+
+    liste_bez = ['Aufgabe']
+    liste_punkte = ['Punkte']
 
     def kurvendiskussion_01(nr, teilaufg):
         i = 0
@@ -636,6 +637,7 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
+        print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
     def Erwartungshorizont():
@@ -656,8 +658,8 @@ def erstellen(Teil):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
+        print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
@@ -672,3 +674,4 @@ for teil_id in range(anzahl_Arbeiten):
         erstellen('Probe {:02d}'.format(teil_id + 1))
     else:
         erstellen(f'Gr. {alphabet[teil_id]}')
+    print() # Abstand zwischen den Arbeiten (im Terminal)
