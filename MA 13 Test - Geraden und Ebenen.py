@@ -48,22 +48,31 @@ def erstellen(Teil):
     def vektor_runden(vec,p):
         return [N(elements,p) for elements in vec]
     # Berechnung für die Aufgaben
+    def vektor_ganzzahl(vec):
+        vec_neu = []
+        for element in vec:
+            if element%1 == 0:
+                vec_neu.append(int(element))
+            else:
+                vec_neu.append(element)
+        return np.array(vec_neu)
+
     def gerade(nr, teilaufg):
         i = 0
         punkt_a = [ax, ay, az] = punkt_vektor(3)
         punkt_b = [bx, by, bz] = punkt_a + punkt_vektor(3)
-        v = [vx, vy, vz] =  np.array(punkt_b) - np.array(punkt_a)
+        v = [vx, vy, vz] = vektor_ganzzahl((punkt_b) - (punkt_a))
         p = random.choice([0,1])
         if p == 0:
-            punkt_t = [tx, ty, tz] = punkt_a + zzahl(1,30)/5*v
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + zzahl(1,30)/5*v)
         else:
-            punkt_t = [tx, ty, tz] = punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1]
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1])
 
-        lx, ly, lz = [(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz]
+        lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-                   'A( ' + latex(ax)  + ' | ' + latex(ay) + ' | ' + latex(az) + ' ), ' 
-                   'B( ' + latex(bx)  + ' | ' + latex(by) + ' | ' + latex(bz) + ' ) und '
+                   'A( ' + str(ax)  + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
+                   'B( ' + str(bx)  + ' | ' + str(by) + ' | ' + str(bz) + ' ) und '
                    'T( ' + str(N(tx,3))  + ' | ' + str(N(ty,3)) + ' | ' + str(N(tz,3)) + ' ).  \n\n']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
@@ -122,11 +131,12 @@ def erstellen(Teil):
         i = 0
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-        v = [vx, vy, vz] = punkt_vektor(4) # Vektor v ist der Richtungsvektor von Geraden g_1
+        v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
+                                                     zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
         # Vektor u steht orthogonal auf v
         ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
         uz = - 1 * (vx*ux + vy * uy)/vz
-        u = np.array([ux, uy, uz])
+        u = vektor_ganzzahl([ux, uy, uz])
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Gegeben sind die beiden Geraden mit folgenden Gleichungen:']
@@ -134,12 +144,13 @@ def erstellen(Teil):
 
         if a in teilaufg:
             auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+            # auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkte_aufg = 7
                 liste_punkte.append(punkte_aufg)
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-                punkt_c = [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(v) # Punkt C liegt auf h
-                w = [wx, wy, wz] = zzahl(1,30)/10 * np.array(v) # Vektor w ist der Richtungsvektor von h
+                punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
+                w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
                 loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                              r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                              r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -169,8 +180,8 @@ def erstellen(Teil):
                 punkte_aufg = 7
                 liste_punkte.append(punkte_aufg)
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-                punkt_c =  [cx,cy,cz] = np.array(punkt_a) + zzahl(1,30)/5*np.array(u) # Punkt C liegt auf h
-                w = [wx, wy, wz] = zzahl(1,30)/10* np.array(v) # Vektor w ist der Richtungsvektor von h
+                punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
+                w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
                 loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                              r'\begin{pmatrix}' + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                              r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -200,9 +211,10 @@ def erstellen(Teil):
                 punkte_aufg = 15
                 liste_punkte.append(punkte_aufg)
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-                punkt_c =  [cx,cy,cz] = np.array(punkt_a) + nzahl(1,6)/2 * np.array(u) # Punkte C und D liegen auf h
-                punkt_d =  [dx,dy,dz] = np.array(punkt_c) - nzahl(1,6)/2 * np.cross(np.array(u),np.array(v))
-                w = [wx, wy, wz] = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von h
+                punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + nzahl(1,6)/2 * np.array(u)) # Punkte C und D liegen auf h
+                punkt_d =  [dx,dy,dz] = vektor_ganzzahl((punkt_c) - nzahl(1,6)/2
+                                                        * np.cross(np.array(u),np.array(v)))
+                w = [wx, wy, wz] = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
                 lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
                 lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
                 if vx != 0 and wx != 0:
@@ -271,10 +283,10 @@ def erstellen(Teil):
                 punkte_aufg = 17
                 liste_punkte.append(punkte_aufg)
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-                punkt_d =  [dx,dy,dz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf h
-                punkt_c = [cx,cy,cz] = np.array(punkt_d) + zzahl(1, 7) / 2 * np.array(u)
-                w = punkt_d - punkt_c # Vektor w ist der Richtungsvektor von h
-                [wx, wy, wz] = vektor_runden(w,3)
+                punkt_d =  [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
+                punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+                w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+                [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
                 lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
                 lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
                 schnittpunkt_s = punkt_c + lsgr*w
@@ -363,10 +375,10 @@ def erstellen(Teil):
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            punkt_f =  [fx,fy,fz] = np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v) # Punkte C und D liegen auf h
-            punkt_e =  [ex,ey,ez] = np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4))
-            p = np.array(punkt_f) - np.array(punkt_e) # Vektor w ist der Richtungsvektor von h
-            [px, py, pz] = vektor_runden(p, 3)
+            punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
+            punkt_e =  [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
+            p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
+            [px, py, pz] = vektor_ganzzahl(vektor_runden(p, 3))
             sp_vp = np.vdot(v,p)
             l_v = np.linalg.norm(v)
             l_p = np.linalg.norm(p)
@@ -405,16 +417,17 @@ def erstellen(Teil):
         i = 0
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-        v = [vx, vy, vz] = punkt_vektor(4) # Vektor v ist der Richtungsvektor von Geraden g_1
+        v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler,
+                            v_teiler])) # Vektor v ist der Richtungsvektor von Geraden g_1
         # Vektor u steht orthogonal auf v
         ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
         uz = - 1 * (vx*ux + vy * uy)/vz
-        u = np.array([ux, uy, uz])
-        punkt_b = [bx,by,bz] = np.array(punkt_a) + np.array(v) # Punkte C und D liegen auf h
-        punkt_c = [cx,cy,cz] = np.array(punkt_b) + zzahl(1, 7) / 2 * np.array(u)
-        w = punkt_c - punkt_a # Vektor w ist der Richtungsvektor von h
+        u = vektor_ganzzahl([ux, uy, uz])
+        punkt_b = [bx,by,bz] = vektor_ganzzahl(punkt_a + v) # Punkte C und D liegen auf h
+        punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(u))
+        w = vektor_ganzzahl(punkt_c - punkt_a) # Vektor w ist der Richtungsvektor von h
         [wx, wy, wz] = vektor_runden(w,3)
-        n = [nx, ny, nz] = vektor_runden(np.cross(v,w),3)
+        n = [nx, ny, nz] = vektor_ganzzahl(vektor_runden(np.cross(v,w),3))
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                    'A( ' + str(ax) + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
@@ -428,7 +441,7 @@ def erstellen(Teil):
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
                                               f'welche die Punkte A, B und C enthält. \n\n')
-            loesung.append(str(teilaufg[i]) + r') E: \overrightarrow{x} ~=~ \begin{pmatrix} '
+            loesung.append(str(teilaufg[i]) + r') \quad E: \overrightarrow{x} ~=~ \begin{pmatrix} '
                            + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                            r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                            + latex(bx - ax) + r' \\' + latex(by - ay) + r' \\' + latex(bz - az) + r' \\'
@@ -468,11 +481,9 @@ def erstellen(Teil):
             parameter_s = zzahl(1,6)/2
             zufallszahl = random.randint(1,2)
             if zufallszahl == 1:
-                punkt_d = [dx,dy,dz] = punkt_a + parameter_r*v + parameter_s*w
+                punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + parameter_r*v + parameter_s*w)
             else:
-                punkt_d = [dx,dy,dz] = punkt_a + punkt_vektor(1) + parameter_r * v + parameter_s * w
-            print(punkt_d)
-            print(punkt_a + parameter_r * v + parameter_s * w)
+                punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + punkt_vektor(1) + parameter_r * v + parameter_s * w)
             if np.array_equal(punkt_d, punkt_a + parameter_r * v + parameter_s * w):
                 lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~D~liegt~auf~der~Geraden.} \quad (3P) \\'
             else:
@@ -491,34 +502,31 @@ def erstellen(Teil):
 
     def ebenen_umformen(nr, teilaufg):
         i = 0
-        v_teiler = zzahl(1, 3)
-        punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-        v = [vx, vy, vz] = punkt_vektor(4) # Vektor v ist der Richtungsvektor von Geraden g_1
-        # Vektor u steht orthogonal auf v
-        ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
-        uz = - 1 * (vx*ux + vy * uy)/vz
-        u = np.array([ux, uy, uz])
-        punkt_b = [bx,by,bz] = np.array(punkt_a) + np.array(v) # Punkte C und D liegen auf h
-        punkt_c = [cx,cy,cz] = np.array(punkt_b) + zzahl(1, 7) / 2 * np.array(u)
-        w = punkt_c - punkt_a # Vektor w ist der Richtungsvektor von h
-        [wx, wy, wz] = vektor_runden(w,3)
-        n = [nx, ny, nz] = vektor_runden(np.cross(v,w),3)
+        punkt_a = [ax, ay, az] = punkt_vektor(4)
+        n = [nx, ny, nz] = punkt_vektor(3)
 
         normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                         + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                         r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                         + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
-                        r' \end{pmatrix}')
+                        r' \end{pmatrix} ~=~ 0')
         koordinatenform = ('E:' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y'
                            + vorz_str(nz) + r' \cdot z') + '~=~' + latex(np.dot(punkt_a,n))
 
         auswahl = random.choice([1,2])
         if auswahl == 1:
             ebenengleichung = normalenform
-            lsg = ''
+            andere_darstellungsform = koordinatenform
+            lsg = (r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\ \end{pmatrix}')
         else:
             ebenengleichung = koordinatenform
-            lsg = ''
+            andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                                       + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
+                                       + r' \\' + latex(0) + r' \\ \end{pmatrix} \cdot \begin{pmatrix} '
+                                       + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                                       r' \end{pmatrix} ~=~ 0')
+            lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
+                   + r' \\' + latex(0) + r' \\ \end{pmatrix}')
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Gegeben ist die Ebene E mit der folgenden Gleichung:']
@@ -526,12 +534,24 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
         if a in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                               f'anderen beiden Darstellungsarten um. \n\n ')
-            loesung.append(str(teilaufg[i]) + r') \\')
+            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+                           + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                           r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
+                           r' \overrightarrow{u} ~=~ \begin{pmatrix}'
+                           + latex(-1*ny) + r' \\' + latex(nx) + r' \\' + latex(0) + r' \\'
+                           r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{v} ~=~ \begin{pmatrix}'
+                           + latex(0) + r' \\' + latex(-1*nz) + r' \\' + latex(ny) + r' \\'
+                           r' \end{pmatrix} \quad \to\ \quad E: \overrightarrow{x} ~=~ '
+                           + lsg + r' ~+~r \cdot \begin{pmatrix} '
+                           + latex(-1*ny) + r' \\' + latex(nx) + r' \\' + latex(0) + r' \\'
+                           r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                           + latex(0) + r' \\' + latex(-1*nz) + r' \\' + latex(ny) + r' \\'
+                           r' \end{pmatrix} \quad (4P) \\')
             i += 1
 
         return aufgabe, loesung
