@@ -57,6 +57,32 @@ def erstellen(Teil):
                 vec_neu.append(element)
         return np.array(vec_neu)
 
+    def vektor_kürzen(vec):
+        faktor = [x + 1 for x in range(50)]
+        list = np.array(vec)
+        i = 0
+        for element in vec:
+            k = 0
+            if list[i] % 1 == 0:
+                i += 1
+            else:
+                while (list[i] * faktor[k]) % 1 != 0 and k <= len(faktor):
+                    k += 1
+                list = list * faktor[k]
+                i += 1
+        # print('erweitert: ' + str(list))
+        teiler = [x + 1 for x in range(100)]
+        i = 0
+        maxwert = max(list)
+        teiler = [x + 1 for x in range(int(maxwert / 2))]
+        for zahl in teiler:
+            treffer = [1 for x in list if x % zahl == 0]
+            if sum(treffer) == 3:
+                list = list / zahl
+        # print('gekürzt: ' + str(list))
+        list = [int(element) for element in list]
+        return np.array(list)
+
     def gerade(nr, teilaufg):
         i = 0
         punkt_a = [ax, ay, az] = punkt_vektor(3)
@@ -427,7 +453,8 @@ def erstellen(Teil):
         punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(u))
         w = vektor_ganzzahl(punkt_c - punkt_a) # Vektor w ist der Richtungsvektor von h
         [wx, wy, wz] = vektor_runden(w,3)
-        n = [nx, ny, nz] = vektor_ganzzahl(vektor_runden(np.cross(v,w),3))
+        n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v,w))
+        n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                    'A( ' + str(ax) + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
@@ -466,10 +493,10 @@ def erstellen(Teil):
                            r'\quad E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                            + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                            r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                           + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                           + latex(nx_gk) + r' \\' + latex(ny_gk) + r' \\' + latex(nz_gk) + r' \\'
                            r' \end{pmatrix} ~=~0 \quad (2P) \\'
-                           r'E:' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y' + vorz_str(nz) + r' \cdot z'
-                           + '~=~' + latex(np.dot(punkt_a,n)) + r' \quad (2P) \\'
+                           r'E:~' + latex(nx_gk) + r' \cdot x' + vorz_str(ny_gk) + r' \cdot y' + vorz_str(nz_gk) + r' \cdot z'
+                           + '~=~' + latex(np.dot(punkt_a,n_gk)) + r' \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
@@ -488,14 +515,14 @@ def erstellen(Teil):
                 lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~D~liegt~auf~der~Geraden.} \quad (3P) \\'
             else:
                 lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~D~liegt~nicht~auf~der~Geraden.} \quad (3P) \\'
-            aufgabe.append('Gegeben ist ein weiterer Punkt D( ' + str(ax) + ' | ' + str(ay) + ' | '
-                           + str(az) + ' ), \n\n')
+            aufgabe.append('Gegeben ist ein weiterer Punkt D( ' + str(dx) + ' | ' + str(dy) + ' | '
+                           + str(dz) + ' ), \n\n')
             aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt D in der Ebene E liegt. \n\n')
-            loesung.append(str(teilaufg[i]) + (r') \quad E:~' + latex(nx) + r' \cdot (' + latex(dx) + ')'
-                                               + vorz_str(ny) + r' \cdot (' + latex(dy) + ')'
-                                               + vorz_str(nz) + r' \cdot (' + latex(dz) + ') ~=~'
-                                               + latex(np.dot(punkt_a,n)) + r' \quad \to \quad '
-                                               + latex(np.dot(n,punkt_d)) + '~=~' + latex(np.dot(punkt_a,n)) + lsg))
+            loesung.append(str(teilaufg[i]) + (r') \quad E:~' + latex(nx_gk) + r' \cdot (' + latex(dx) + ')'
+                                               + vorz_str(ny_gk) + r' \cdot (' + latex(dy) + ')'
+                                               + vorz_str(nz_gk) + r' \cdot (' + latex(dz) + ') ~=~'
+                                               + latex(np.dot(punkt_a,n_gk)) + r' \quad \to \quad '
+                                               + latex(np.dot(n_gk,punkt_d)) + '~=~' + latex(np.dot(punkt_a,n_gk)) + lsg))
             i += 1
 
         return aufgabe, loesung
@@ -510,7 +537,7 @@ def erstellen(Teil):
                         r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                         + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
                         r' \end{pmatrix} ~=~ 0')
-        koordinatenform = ('E:' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y'
+        koordinatenform = ('E:~' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y'
                            + vorz_str(nz) + r' \cdot z') + '~=~' + latex(np.dot(punkt_a,n))
 
         auswahl = random.choice([1,2])
@@ -522,7 +549,7 @@ def erstellen(Teil):
             ebenengleichung = koordinatenform
             andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                                        + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
-                                       + r' \\' + latex(0) + r' \\ \end{pmatrix} \cdot \begin{pmatrix} '
+                                       + r' \\' + latex(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                                        + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
                                        r' \end{pmatrix} ~=~ 0')
             lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
@@ -538,7 +565,7 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
-                                              f'anderen beiden Darstellungsarten um. \n\n ')
+                                              f'anderen beiden Darstellungsformen um. \n\n ')
             loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                            + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
                            r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
@@ -628,9 +655,6 @@ def erstellen(Teil):
 
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
-        Aufgabe.append('\n\n\n\n')
-
-        Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
