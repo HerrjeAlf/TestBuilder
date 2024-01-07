@@ -114,7 +114,8 @@ def erstellen(Teil):
                                                      + latex(winkel_2_wert) + r'^{ \circ } \quad (2P) \\'
                                                      + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_1_wert)
                                                      + r'^{ \circ} ~-~ ' + str(winkel_2_wert) + r'^{ \circ} ~=~ '
-                                                     + str(winkel_3_wert) + r'^{ \circ} \quad (2P)'))
+                                                     + str(winkel_3_wert) + r'^{ \circ} \quad (2P)'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if b in teilaufg:
@@ -130,7 +131,8 @@ def erstellen(Teil):
                                                      + winkel_3 + ') }{ sin(' + winkel_1 + r') } \quad (2P) \\'
                                                      + str(seite_3) + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
                                                      + latex(winkel_3_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
-                                                     + r' ^{ \circ } )} ~=~' + latex(seite_3_wert) + r'cm \quad (2P) \\'))
+                                                     + r' ^{ \circ } )} ~=~' + latex(seite_3_wert) + r'cm \quad (2P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if c in teilaufg:
@@ -144,7 +146,8 @@ def erstellen(Teil):
                                                      + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot '
                                                      + latex(seite_1_wert) + r'cm \cdot ' + latex(seite_2_wert)
                                                      + r'cm \cdot sin(' + latex(winkel_3_wert) + '^{ \circ } ) ~=~ '
-                                                     + latex(N(flaeche,3)) + r'cm^2 \quad (3P) \\'))
+                                                     + latex(N(flaeche,3)) + r'cm^2 \quad (3P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         return aufgabe, loesung
