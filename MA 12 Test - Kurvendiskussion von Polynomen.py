@@ -210,7 +210,7 @@ def erstellen(Teil):
                            + latex(round(fkt_f_2.subs(x, x_1_fkt_f_1), 3)) + loesung_f_monotonie_1)
             loesung.append(r' f^{ \prime \prime }(' + latex(x_2_fkt_f_1) + ')~=~'
                            + latex(round(fkt_f_2.subs(x, x_2_fkt_f_1), 3)) + loesung_f_monotonie_2)
-            Punkte += 15
+            Punkte += 16
             i += 1
 
         if e in teilaufg:

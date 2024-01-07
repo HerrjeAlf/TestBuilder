@@ -527,7 +527,8 @@ def erstellen(Teil):
             ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
             fkt_3_str = latex(6*faktor)
 
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')  # Wäre "Überprüfe rechnerisch auf Wendepunkte der Funktion f mithilfe des hinreichenden Kriteriums." nicht angepasster für die Aufgabe?
+            aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe rechnerisch auf Wendepunkte der Funktion f '
+                                                    'mithilfe des hinreichenden Kriteriums.. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
