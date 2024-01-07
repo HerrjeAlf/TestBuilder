@@ -48,7 +48,6 @@ def vorz_Str_minus(k):
 
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
-
     liste_bez = ['Aufgabe']
     liste_punkte = ['Punkte']
 
@@ -666,7 +665,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

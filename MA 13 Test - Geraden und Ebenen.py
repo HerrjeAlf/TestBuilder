@@ -38,6 +38,8 @@ def vorz_str_minus(k):
 
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
+    liste_bez = ['Aufgabe']
+    liste_punkte = ['Punkte']
 
     def punkt_vektor(p):
         return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
@@ -49,13 +51,8 @@ def erstellen(Teil):
         return [N(elements,p) for elements in vec]
     # Berechnung für die Aufgaben
     def vektor_ganzzahl(vec):
-        vec_neu = []
-        for element in vec:
-            if element%1 == 0:
-                vec_neu.append(int(element))
-            else:
-                vec_neu.append(element)
-        return np.array(vec_neu)
+        return np.array([int(element) if element % 1 == 0 else element for element in vec])
+
 
     def vektor_kürzen(vec):
         faktor = [x + 1 for x in range(50)]
@@ -73,14 +70,13 @@ def erstellen(Teil):
         # print('erweitert: ' + str(list))
         teiler = [x + 1 for x in range(100)]
         i = 0
-        maxwert = max(list)
-        teiler = [x + 1 for x in range(int(maxwert / 2))]
+        teiler = [x + 1 for x in range(int(max(list)/2))]
         for zahl in teiler:
             treffer = [1 for x in list if x % zahl == 0]
             if sum(treffer) == 3:
                 list = list / zahl
         # print('gekürzt: ' + str(list))
-        list = [int(element) for element in list]
+        list = np.array([int(element) if element % 1 == 0 else element for element in list])
         return np.array(list)
 
     def gerade(nr, teilaufg):
@@ -90,7 +86,7 @@ def erstellen(Teil):
         v = [vx, vy, vz] = vektor_ganzzahl((punkt_b) - (punkt_a))
         p = random.choice([0,1])
         if p == 0:
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + zzahl(1,30)/5*v)
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
         else:
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1])
 
