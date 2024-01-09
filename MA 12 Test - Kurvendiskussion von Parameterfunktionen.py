@@ -11,7 +11,7 @@ from sympy import *
 
 # Definition der Funktionen
 
-a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
+a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
 def zzahl(p, q):
@@ -29,18 +29,30 @@ def vorz(k):
         pass
 
 def vorz_str(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
         return latex(k)
     else:
         return f'+{latex(k)}'
 
+def gzahl(k):
+    if k%1 == 0:
+        return latex(int(k))
+    else:
+        return latex(k)
+
 def vorz_str_minus(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
         return f'({latex(k)})'
     else:
         return latex(k)
 
 def vorz_Str_minus(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
         return r' \Big( ' + latex(k) + r' \Big)'
     else:
@@ -321,13 +333,31 @@ def erstellen(Teil):
         i = 0
         # Berechnung der Nullstellen und des Faktors
         faktor = zzahl(1, 5)
-        faktor_1 = -1*nzahl(3,10)/2
-        faktor_2 = random.choice([-1,1])
-        faktor_3 = nzahl(3,10)/2
+        faktor_1 = -1*nzahl(5,10)/2
+        faktor_2 = zzahl(1,2)
+        if faktor_1%1 == 0:
+            faktor_3 = nzahl(2,5)+0.5
+        else:
+            faktor_3 = nzahl(2,5)
         while faktor_1 + faktor_2 + faktor_3 == 0:
-            faktor_1 = -1 * nzahl(3, 10) / 2
-            faktor_2 = random.choice([-1, 1])
-            faktor_3 = nzahl(3, 10) / 2
+            faktor_1 = -1 * nzahl(5, 10) / 2
+            faktor_2 = zzahl(1,2)
+            if faktor_1 % 1 == 0:
+                faktor_3 = nzahl(2, 5) + 0.5
+            else:
+                faktor_3 = nzahl(2, 5)
+
+        nst_1_str = latex(faktor_1) + 'a'
+        if faktor_2 == 1:
+            nst_2_str = 'a'
+            nst_2_str_neg = '-a'
+        elif faktor_2 == -1:
+            nst_2_str = '-a'
+            nst_2_str_neg = 'a'
+        else:
+            nst_2_str = gzahl(faktor_2) + 'a'
+            nst_2_str_neg = gzahl(-1 * faktor_2) + 'a'
+        nst_3_str = latex(faktor_3) + 'a'
 
         # Aufstellen der Funktionsgleichung
         fkt = collect(expand(faktor * (x - faktor_1 * a) * (x - faktor_2 * a) * (x - faktor_3 * a)),x)
@@ -347,7 +377,11 @@ def erstellen(Teil):
         aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{mit~a \in \Re ~und~ a > 0}')
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
-
+        # Auswahl des Wertes von a für Teilaufgabe g und h
+        a1 = nzahl(1, 5)
+        a2 = nzahl(1,10)/2
+        while a1 == a2:
+            a2 = nzahl(1, 10) / 2
 
         if a in teilaufg:
             punkte_aufg = 2
@@ -410,19 +444,6 @@ def erstellen(Teil):
             table2.add_hline(2, 5)
             table2.add_row('', latex(fkt_a3), latex(fkt_c2*a), latex(fkt_c1*a**2), '0')
 
-            nst_1_str = latex(faktor_1) + 'a'
-            if faktor_2 == -1:
-                nst_2_str = '-a'
-            else:
-                nst_2_str = 'a'
-
-            if faktor_2 == -1:
-                nst_2_str_neg = '+a'
-            else:
-                nst_2_str_neg = '-a'
-
-            nst_3_str = latex(faktor_3) + 'a'
-
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f, '
                                                     f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
             loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
@@ -461,17 +482,17 @@ def erstellen(Teil):
             x_2_fkt_2 = fkt_2.subs(x,x_2_fkt_1)
             # print(x_1_fkt_2), print(x_2_fkt_2)
             if x_1_fkt_2.subs(a,1) < 0:
-                lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad HP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
+                lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>1} \quad \to \quad HP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
             else:
-                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
 
             if x_2_fkt_2.subs(a,1) < 0:
-                lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad HP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>1} \quad \to \quad HP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
                                  + latex(N(y_2_fkt,3)) + r') \quad (2P) \\')
             else:
-                lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
                                  + latex(N(y_2_fkt,3)) + r') \quad (2P) \\')
 
             # Koeffizienten der ersten Ableitung
@@ -553,13 +574,85 @@ def erstellen(Teil):
                            + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                            + r'x \quad \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
                            + latex(ywert_wp_dezimal/a**3) + r' \Big(' + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
-                           + r'x \Big)^3 ~=~' + latex(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,3))
+                           + r'x \Big)^3 ~=~' + latex(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
                            + r'x^3 \quad (4P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        return [aufgabe, loesung]
+        if g in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            nst_1_a1 = faktor_1 * a1
+            nst_3_a1 = faktor_3 * a1
+            fkt_a1 = expand(faktor * (x - faktor_1 * a1) * (x - faktor_2 * a1) * (x - faktor_3 * a1))
+            xmin_f = int(nst_1_a1 - 1)
+            xmax_f = int(nst_3_a1 + 1)
+            xwerte = np.arange(xmin_f, xmax_f, 0.01)
+            ywerte = [fkt_a1.subs(x, elements) for elements in xwerte]
+            # plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
+            fig, ax = plt.subplots()
+            ax.spines['top'].set_color('none')
+            ax.spines['right'].set_color('none')
+            ax.spines['bottom'].set_position(('data', 0))
+            ax.spines['left'].set_position(('data', 0))
+            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+            plt.plot(xwerte, ywerte)
+            plt.grid(True)
+            plt.savefig(f'Aufgabe_{nr}', dpi=200)
+            grafik = f'Aufgabe_{nr}'
+            plt.figure().clear()
+            aufgabe.append('In der folgenden Abbildung ist ein Graph der Parameterfunktion dargestellt. '
+                           'Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt.')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den zugehörigen Wert von a ab. '
+                                                    f'Begründe deine Aussage. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~zweite~Nullstelle~des'
+                                                     r'~Graphen~liegt~bei~ca.~x_2=' + str(faktor_2*a1)
+                           + r'.~} \mathrm{Die~berechnete~Nullstelle~liegt~bei~x_2=' + nst_2_str
+                           + r'.~} \\ \mathrm{Damit~gilt:~}' + str(faktor_2*a1) + '~=~' + nst_2_str
+                           + r' \quad \to \quad a~=~' + str(a1) + r'. \\'
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
 
-    aufgaben = [kurvendiskussion_01(1, [a,b,c,d,e,f])]
+        if h in teilaufg:
+            punkte_aufg = 5
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            nst_1_a2 = faktor_1 * a2
+            nst_3_a2 = faktor_3 * a2
+            fkt_a1 = expand(faktor * (x - faktor_1 * a2) * (x - faktor_2 * a2) * (x - faktor_3 * a2))
+            xmin_f = int(nst_1_a2 - 1)
+            xmax_f = int(nst_3_a2 + 1)
+            xwerte = np.arange(xmin_f, xmax_f, 0.01)
+            ywerte = [fkt_a1.subs(x, elements) for elements in xwerte]
+            # plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
+            fig, ax = plt.subplots()
+            ax.spines['top'].set_color('none')
+            ax.spines['right'].set_color('none')
+            ax.spines['bottom'].set_position(('data', 0))
+            ax.spines['left'].set_position(('data', 0))
+            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+            plt.plot(xwerte, ywerte)
+            plt.grid(True)
+            plt.savefig(f'Loesung_{nr}', dpi=200)
+            grafik = f'Loesung_{nr}'
+            plt.figure().clear()
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f für a={gzahl(a2)} im Intervall [{xmin_f};{xmax_f}].')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}'
+                                                     + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
+            i += 1
+        return [aufgabe, loesung, grafik]
+
+    aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e,f,g,h])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -589,7 +682,6 @@ def erstellen(Teil):
     table2.add_row(liste_ergebnis_z2)
     table2.add_hline()
 
-    print(table2)
     # Angaben für den Test im pdf-Dokument
     Datum = datetime.date.today().strftime('%d.%m.%Y')
     Kurs = 'Leistungskurs'
@@ -623,7 +715,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[3], width='200px')
+                        graph.add_image(aufgabe[2], width='200px')
                 else:
                     Aufgabe.append(elements)
 
@@ -652,7 +744,7 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3], width='200px')
+                        graph.add_image(loesung[2], width='200px')
                 else:
                     Loesung.append(elements)
 
@@ -666,7 +758,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
