@@ -8,6 +8,7 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
                      MultiColumn, MultiRow)
 from pylatex.utils import bold
 from sympy import *
+from flaechen_konstruieren import dreieck_zeichnen_mit_hoehe, dreieck_zeichnen
 
 # Definition der Funktionen
 
@@ -48,8 +49,6 @@ def erstellen(Teil):
     # Berechnung für die Aufgaben
     def beliebiges_dreieck(nr, teilaufg):
         i = 0
-        Punkte = 0
-
         def werte_bel_dreieck():
             seite_b = nzahl(3,12)
             seite_a = seite_b + nzahl(2,8)
@@ -152,7 +151,45 @@ def erstellen(Teil):
 
         return aufgabe, loesung
 
-    aufgaben = [beliebiges_dreieck(1,[a,b,c])]
+    def pruefungsaufgaben_01(nr, teilaufg):
+        i = 0
+        seite_a = nzahl(3, 12)
+        seite_c = seite_a + nzahl(2, 8)
+        beta = nzahl(30, 59)
+        seite_b = round(math.sqrt(seite_c ** 2 + seite_a ** 2 - 2 * seite_c * seite_a * cos(math.radians(beta))), 1)
+        gamma = int(math.degrees(math.acos(((seite_c) ** 2 - (seite_a) ** 2 - (seite_b) ** 2) / (-2 * seite_a * seite_b))))
+        alpha = int(180 - gamma - beta)
+        seite_h = seite_a * math.sin(alpha)
+        gamma_1 = 90 - alpha
+        gamma_2 = 90 - gamma
+        # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
+        pkt = [[0, 0], [seite_a, 0], [(seite_b ** 2) / seite_c, seite_a * seite_b / seite_c],[(seite_b ** 2) / seite_c,0]]
+        pkt_bez = ['A', 'B', 'C', 'F']
+        st = ['a', 'b', 'c', 'h']
+        st_werte = [seite_a, seite_b, seite_c, seite_h]
+        wk = [r' \alpha ', r' \beta ', r' \gamma_1 ', r' \gamma_2 ', r'90^{ \circ}']
+        wk_werte = [alpha, beta, gamma_1, gamma_2, 90]
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+                   'Die folgende Abbildung stellt ein beliebiges Dreieck dar.']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+        if a in teilaufg:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken = [f'Grafik_{nr}{liste_teilaufg[i]}']
+            dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, grafiken[0])
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite a. \n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad (3P)')
+            i += 1
+
+        return aufgabe, loesung, grafiken
+
+    aufgaben = (beliebiges_dreieck(1,[a,b,c]),
+                pruefungsaufgaben_01(2, [a]))
+
+    print(aufgaben[1][2])
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -182,7 +219,6 @@ def erstellen(Teil):
     table2.add_row(liste_ergebnis_z2)
     table2.add_hline()
 
-    print(table2)
     # Angaben für den Test im pdf-Dokument
     Datum = datetime.date.today().strftime('%d.%m.%Y')
     Kurs = 'Grundkurs'
@@ -217,7 +253,8 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[3], width='200px')
+                        graph.add_image(aufgabe[2][0], width='250px')
+                    del aufgabe[2][0]
                 else:
                     Aufgabe.append(elements)
 
@@ -243,7 +280,7 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3], width='200px')
+                        graph.add_image(loesung[2][0], width='200px')
                 else:
                     Loesung.append(elements)
 
@@ -257,7 +294,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

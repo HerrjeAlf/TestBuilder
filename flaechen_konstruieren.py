@@ -191,3 +191,48 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
 
+
+def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
+    fig, ax = plt.subplots()
+    fig.canvas.draw()  # Need to draw the figure to define renderer
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.axis('off')
+    ax.set_aspect(1)
+    fig.tight_layout()
+    grid.SubplotSpec(gridspec=0,num1=0,num2=0)
+    # Plot two crossing lines and label each angle between them with the above
+    # ``AngleAnnotation`` tool.
+    l1 = [pkt[1],pkt[2]]
+    l2 = [pkt[0],pkt[2]]
+    l3 = [pkt[0],pkt[1]]
+    l4 = [pkt[2],pkt[3]]
+
+    name_pkt1 = ax.annotate(pkt_bez[0], xy=pkt[0], xycoords='data', xytext=(-10,0),  textcoords='offset points', fontsize=12)
+    name_pkt2 = ax.annotate(pkt_bez[1], xy=pkt[1], xycoords='data', xytext=(+2,0),  textcoords='offset points', fontsize=12)
+    name_pkt3 = ax.annotate(pkt_bez[2], xy=pkt[2], xycoords='data', xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+    name_pkt4 = ax.annotate(pkt_bez[3], xy=pkt[3], xycoords='data', xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+
+    line1, = ax.plot(*zip(*l1), 'k')
+    name_line1 = ax.annotate(st[2], xy=((pkt[1][0]+pkt[0][0])/2,(pkt[1][1]+pkt[0][1])/2), xycoords='data',
+                             xytext=(+8,+8),  textcoords='offset points', fontsize=12)
+    line2, = ax.plot(*zip(*l2), 'k')
+    name_line2 = ax.annotate(st[0], xy=((pkt[2][0]+pkt[1][0])/2,(pkt[2][1]+pkt[1][1])/2), xycoords='data',
+                             xytext=(+4,+4),  textcoords='offset points', fontsize=12)
+    line3 = ax.plot(*zip(*l3), 'k')
+    name_line3 = ax.annotate(st[1], xy=((pkt[0][0]+pkt[2][0])/2,(pkt[0][1]+pkt[2][1])/2), xycoords='data',
+                             xytext=(+4,+4),  textcoords='offset points', fontsize=12)
+    line4 = ax.plot(*zip(*l4), 'k')
+    name_line4 = ax.annotate(st[3], xy=((pkt[2][0]+pkt[3][0])/2,(pkt[2][1]+pkt[3][1])/2), xycoords='data',
+                             xytext=(+4,+4),  textcoords='offset points', fontsize=12)
+    # point, = ax.plot(*p1, marker="o")
+
+    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=500, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels')
+    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=500, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
+    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
+    am4 = AngleAnnotation(pkt[3], l4[0], l3[0], ax=ax, size=500, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels')
+    # plt.show()
+    return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
+
