@@ -384,7 +384,7 @@ def erstellen(Teil):
                            + latex(vx) + r' \\' + latex(vy) + r' \\' + latex(vz) + r' \\'
                            r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                            + latex(cx) + r' \\' + latex(cy) + r' \\' + latex(cz) + r' \\'
-                           r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                           r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                            + latex(wx) + r' \\' + latex(wy) + r' \\' + latex(wz) + r' \\'
                            r' \end{pmatrix}\\')
             aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
@@ -408,7 +408,7 @@ def erstellen(Teil):
             aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
             aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                    + latex(ex) + r' \\' + latex(ey) + r' \\' + latex(ez) + r' \\'
-                   r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                   r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                    + latex(px) + r' \\' + latex(py) + r' \\' + latex(pz) + r' \\'
                    r' \end{pmatrix} \quad ')
             aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
@@ -683,8 +683,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
-probe = False
+anzahl_Arbeiten = 2
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:

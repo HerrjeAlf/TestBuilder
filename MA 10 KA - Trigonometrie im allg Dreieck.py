@@ -258,7 +258,7 @@ def erstellen(Teil):
 
 
 anzahl_Arbeiten = 2
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
