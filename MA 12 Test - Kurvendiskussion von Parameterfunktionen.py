@@ -3,6 +3,7 @@ import string
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as grid
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
@@ -109,7 +110,7 @@ def erstellen(Teil):
 
 
 
-        if a in teilaufg:
+        if 'a' in teilaufg:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -123,7 +124,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if b in teilaufg:
+        if 'b' in teilaufg:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -141,7 +142,7 @@ def erstellen(Teil):
                                                      + r' \neq  f(x)  \neq -f(x) \\'
                                                      + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
             i += 1
-        if c in teilaufg:
+        if 'c' in teilaufg:
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -192,7 +193,7 @@ def erstellen(Teil):
                            + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
-        if d in teilaufg:
+        if 'd' in teilaufg:
             punkte_aufg = 19
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -284,7 +285,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if e in teilaufg:
+        if 'e' in teilaufg:
             punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -311,7 +312,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if f in teilaufg:
+        if 'f' in teilaufg:
             punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -338,14 +339,14 @@ def erstellen(Teil):
         if faktor_1%1 == 0:
             faktor_3 = nzahl(2,5)+0.5
         else:
-            faktor_3 = nzahl(2,5)
+            faktor_3 = nzahl(3,5)
         while faktor_1 + faktor_2 + faktor_3 == 0:
             faktor_1 = -1 * nzahl(5, 10) / 2
             faktor_2 = zzahl(1,2)
             if faktor_1 % 1 == 0:
                 faktor_3 = nzahl(2, 5) + 0.5
             else:
-                faktor_3 = nzahl(2, 5)
+                faktor_3 = nzahl(3, 5)
 
         nst_1_str = latex(faktor_1) + 'a'
         if faktor_2 == 1:
@@ -368,8 +369,8 @@ def erstellen(Teil):
         fkt_a1 = faktor*(faktor_1*faktor_2 + faktor_2*faktor_3 + faktor_1*faktor_3)
         fkt_a0 = -1*faktor*faktor_1*faktor_2*faktor_3
 
-        fkt_str = (latex(fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + r' \cdot a \cdot x^2 ~' + vorz_str(fkt_a1)
-                   + r' \cdot a^2 \cdot x ~' + vorz_str(fkt_a0) + r' \cdot a^3')
+        fkt_str = (latex(fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + 'a \cdot x^2 ~' + vorz_str(fkt_a1)
+                   + r'a^2 \cdot x ~' + vorz_str(fkt_a0) + r'a^3')
 
         print(fkt), print(fkt_str)
 
@@ -378,12 +379,14 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         # Auswahl des Wertes von a für Teilaufgabe g und h
-        a1 = nzahl(1, 5)
-        a2 = nzahl(1,10)/2
+        a1 = nzahl(1, 4)
+        a2 = nzahl(1,6)/2
         while a1 == a2:
-            a2 = nzahl(1, 10) / 2
+            a2 = nzahl(1, 6) / 2
 
-        if a in teilaufg:
+        grafiken = []
+
+        if 'a' in teilaufg:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -397,13 +400,13 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if b in teilaufg:
+        if 'b' in teilaufg:
             punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_sym = fkt.subs(x, -x)
-            fkt_sym_str = (latex(-1 * fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + r' \cdot a \cdot x^2 ~'
-                           + vorz_str(-1 * fkt_a1) + r' \cdot a^2 \cdot x ~' + vorz_str(fkt_a0) + r' \cdot a^3')
+            fkt_sym_str = (latex(-1 * fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + r'a \cdot x^2 ~'
+                           + vorz_str(-1 * fkt_a1) + r'a^2 \cdot x ~' + vorz_str(fkt_a0) + r'a^3')
             if fkt_sym == fkt:
                 lsg = (r') \quad f(-x)~=~' + fkt_sym_str
                        + r'~=~f(x) \\ \to \quad \mathrm{Achsensymmetrie} \quad (3P) \\')
@@ -417,7 +420,7 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if c in teilaufg:
+        if 'c' in teilaufg:
             punkte_aufg = 18
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -467,7 +470,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if d in teilaufg:
+        if 'd' in teilaufg:
             punkte_aufg = 14
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -509,10 +512,10 @@ def erstellen(Teil):
             fkt_1_sqrt = sqrt((faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9)
 
             # Funktionsgleichung und Partialpolynomne
-            fkt_1_str = (latex(fkt_1_a2) + 'x^2' + vorz_str(fkt_1_a1) + r'\cdot a \cdot x'
-                         + vorz_str(fkt_1_a0) + r' \cdot a^2')
-            fkt_1_pq_str = 'x^2' + vorz_str(fkt_1_p) + r' \cdot a \cdot x' + vorz_str(fkt_1_q) + r' \cdot a^2'
-            fkt_2_str = latex(6*faktor) + 'x' + vorz_str(fkt_1_a1) + r' \cdot a'
+            fkt_1_str = (latex(fkt_1_a2) + 'x^2' + vorz_str(fkt_1_a1) + r'a \cdot x'
+                         + vorz_str(fkt_1_a0) + r'a^2')
+            fkt_1_pq_str = 'x^2' + vorz_str(fkt_1_p) + r'a \cdot x' + vorz_str(fkt_1_q) + r'a^2'
+            fkt_2_str = latex(6*faktor) + 'x' + vorz_str(fkt_1_a1) + r'a'
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrempunkte der Funktion f und deren Art'
                                                     ' mithilfe des hinreichenden Kriteriums. \n\n')
@@ -537,7 +540,7 @@ def erstellen(Teil):
                            + r' \quad (1P)' + lsg_extrema_2 + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if e in teilaufg:
+        if 'e' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -561,7 +564,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if f in teilaufg:
+        if 'f' in teilaufg:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -578,7 +581,7 @@ def erstellen(Teil):
                            + r'x^3 \quad (4P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if g in teilaufg:
+        if 'g' in teilaufg:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -603,12 +606,13 @@ def erstellen(Teil):
             ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
             plt.plot(xwerte, ywerte)
             plt.grid(True)
-            plt.savefig(f'Aufgabe_{nr}', dpi=200)
-            grafik = f'Aufgabe_{nr}'
+            fig.tight_layout()
+            plt.savefig(f'Grafik_{nr}{liste_teilaufg[i]}', dpi=250)
+            grafiken = [f'Grafik_{nr}{liste_teilaufg[i]}']
             plt.figure().clear()
-            aufgabe.append('In der folgenden Abbildung ist ein Graph der Parameterfunktion dargestellt. '
-                           'Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt.')
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den zugehörigen Wert von a ab. '
+            aufgabe.append('In der folgenden Abbildung ist ein Graph der Parameterfunktion dargestellt.')
+            aufgabe.append('Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimme aus dem Graphen den zugehörigen Wert von a. '
                                                     f'Begründe deine Aussage. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~zweite~Nullstelle~des'
                                                      r'~Graphen~liegt~bei~ca.~x_2=' + str(faktor_2*a1)
@@ -618,17 +622,17 @@ def erstellen(Teil):
                            + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if h in teilaufg:
+        if 'h' in teilaufg:
             punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             nst_1_a2 = faktor_1 * a2
             nst_3_a2 = faktor_3 * a2
-            fkt_a1 = expand(faktor * (x - faktor_1 * a2) * (x - faktor_2 * a2) * (x - faktor_3 * a2))
+            fkt_a2 = expand(faktor * (x - faktor_1 * a2) * (x - faktor_2 * a2) * (x - faktor_3 * a2))
             xmin_f = int(nst_1_a2 - 1)
             xmax_f = int(nst_3_a2 + 1)
             xwerte = np.arange(xmin_f, xmax_f, 0.01)
-            ywerte = [fkt_a1.subs(x, elements) for elements in xwerte]
+            ywerte = [fkt_a2.subs(x, elements) for elements in xwerte]
             # plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
             fig, ax = plt.subplots()
             ax.spines['top'].set_color('none')
@@ -643,16 +647,17 @@ def erstellen(Teil):
             ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
             plt.plot(xwerte, ywerte)
             plt.grid(True)
-            plt.savefig(f'Loesung_{nr}', dpi=200)
-            grafik = f'Loesung_{nr}'
+            fig.tight_layout()
+            plt.savefig(f'Grafik_{nr}{liste_teilaufg[i]}', dpi=200)
+            grafiken.append(f'Grafik_{nr}{liste_teilaufg[i]}')
             plt.figure().clear()
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f für a={gzahl(a2)} im Intervall [{xmin_f};{xmax_f}].')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}'
-                                                     + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}'))
+            loesung.append('Abbildung')
             i += 1
-        return [aufgabe, loesung, grafik]
+        return [aufgabe, loesung, grafiken]
 
-    aufgaben = [kurvendiskussion_02(1, [a,b,c,d,e,f,g,h])]
+    aufgaben = [kurvendiskussion_02(1, ['a','b','c','d','e','f','g','h'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -715,15 +720,13 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2], width='200px')
+                        graph.add_image(aufgabe[2][0], width='250px')
+                    del aufgabe[2][0]
                 else:
                     Aufgabe.append(elements)
 
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
-        Aufgabe.append('\n\n\n\n')
-
-        Aufgabe.append(MediumText(bold(f'Du hast ........ von {Punkte} möglichen Punkten erhalten. \n\n')))
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
@@ -744,7 +747,8 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[2], width='200px')
+                        graph.add_image(loesung[2][0], width='400px')
+                    del loesung[2][0]
                 else:
                     Loesung.append(elements)
 
