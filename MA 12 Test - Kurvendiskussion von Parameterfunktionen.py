@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as grid
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, MultiRow)
+                     MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
 
@@ -100,9 +100,9 @@ def erstellen(Teil):
         print(fkt), print(fkt_str)
 
         if nst_1 < 0:
-            db_bereich = r' \mathrm{mit~a \in \Re ~und~ a > 0}'
+            db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > 0}'
         else:
-            db_bereich = r' \mathrm{mit~a \in \Re ~und~ a > ' + latex(nst_1) + r'}'
+            db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > ' + latex(nst_1) + r'}'
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:']
         aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad ' + db_bereich)
@@ -369,13 +369,13 @@ def erstellen(Teil):
         fkt_a1 = faktor*(faktor_1*faktor_2 + faktor_2*faktor_3 + faktor_1*faktor_3)
         fkt_a0 = -1*faktor*faktor_1*faktor_2*faktor_3
 
-        fkt_str = (latex(fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + 'a \cdot x^2 ~' + vorz_str(fkt_a1)
+        fkt_str = (latex(fkt_a3) + r' \cdot x^3 ~' + vorz_str(fkt_a2) + r'a \cdot x^2 ~' + vorz_str(fkt_a1)
                    + r'a^2 \cdot x ~' + vorz_str(fkt_a0) + r'a^3')
 
         print(fkt), print(fkt_str)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben ist die Funktion:']
-        aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{mit~a \in \Re ~und~ a > 0}')
+        aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{mit~a \in \mathbb{R} ~und~ a > 0}')
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         # Auswahl des Wertes von a für Teilaufgabe g und h
@@ -552,7 +552,7 @@ def erstellen(Teil):
             fkt_3_str = latex(6*faktor)
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe rechnerisch auf Wendepunkte der Funktion f '
-                                                    'mithilfe des hinreichenden Kriteriums.. \n\n')
+                                                    'mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
@@ -700,6 +700,7 @@ def erstellen(Teil):
     def Hausaufgabenkontrolle():
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
+        Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
         table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
