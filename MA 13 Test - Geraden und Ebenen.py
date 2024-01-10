@@ -154,7 +154,7 @@ def erstellen(Teil):
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
         v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
-                                                     zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
+                                            zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
         # Vektor u steht orthogonal auf v
         ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
         uz = - 1 * (vx*ux + vy * uy)/vz
@@ -394,7 +394,7 @@ def erstellen(Teil):
 
 
         if b in teilaufg:
-            punkte_aufg = 17
+            punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
@@ -423,15 +423,16 @@ def erstellen(Teil):
                            + '+' + vorz_str_minus(vy) + r' \cdot ' + vorz_str_minus(py)
                            + '+' + vorz_str_minus(vz) + r' \cdot ' + vorz_str_minus(pz) + r' \vert ~=~'
                            + latex(abs(N(sp_vp,3))) + r' \quad (2P) \\'
-                           r' \vert \overrightarrow{v} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
-                           + str(vy) + ')^2 ~=~(' + str(vz) + ')} ~=~ ' + latex(N(l_v,3))
+                           r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
+                           + str(vy) + ')^2 ~+~(' + str(vz) + ')^2} ~=~ ' + latex(N(l_v,3))
                            + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
-                           + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~=~(' + str(pz)
-                           + ')} ~=~ ' + latex(N(l_p,3)) + r' \quad (2P) \\'
+                           + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
+                           + ')^2} ~=~ ' + latex(N(l_p,3)) + r' \quad (2P) \\'
                            + r' \gamma ~=~ cos^{-1} \Big( \frac{' + latex(abs(N(sp_vp,3))) + '}{'
                            + latex(N(l_v,3)) + r' \cdot ' + latex(N(l_p,3))
                            + r'} \Big) ~=~' + latex(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3))
                            + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
 
         return aufgabe, loesung
 
@@ -683,7 +684,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

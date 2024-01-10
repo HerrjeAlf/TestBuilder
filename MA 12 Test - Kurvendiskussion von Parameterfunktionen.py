@@ -464,7 +464,7 @@ def erstellen(Teil):
                            + latex(Rational(faktor_1 + faktor_3,2)) + r' \cdot a \pm \Big('
                            + latex(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) \cdot a \quad \to \quad x_2~=~'
                            + latex(faktor_1) + r'a \quad \mathrm{und} \quad x_3~=~'
-                           + latex(faktor_3) + r'a \quad (3P) \\ S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
+                           + latex(faktor_3) + r'a \quad (3P) \\ S_{x_2}(' + nst_1_str + r'\vert 0) \quad S_{x_1}('
                            + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad \mathrm{sowie}'
                            r' \quad S_y(0 \vert' + latex(fkt_a0) + r'a^3) \quad (4P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
@@ -488,7 +488,7 @@ def erstellen(Teil):
                 lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>1} \quad \to \quad HP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
             else:
-                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
 
             if x_2_fkt_2.subs(a,1) < 0:
@@ -629,8 +629,8 @@ def erstellen(Teil):
             nst_1_a2 = faktor_1 * a2
             nst_3_a2 = faktor_3 * a2
             fkt_a2 = expand(faktor * (x - faktor_1 * a2) * (x - faktor_2 * a2) * (x - faktor_3 * a2))
-            xmin_f = int(nst_1_a2 - 1)
-            xmax_f = int(nst_3_a2 + 1)
+            xmin_f = int(round(nst_1_a2 - 0.5,0))
+            xmax_f = int(round(nst_3_a2 + 0.5,0))
             xwerte = np.arange(xmin_f, xmax_f, 0.01)
             ywerte = [fkt_a2.subs(x, elements) for elements in xwerte]
             # plot(fkt_f, (x,xmin_f,xmax_f) ,show=False)
@@ -693,7 +693,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Hausaufgabenkontrolle 08'
+    Art = 'Test'
     Titel = 'Kurvendiskussion von Parameterfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -763,8 +763,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
-probe = False
+anzahl_Arbeiten = 2
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
