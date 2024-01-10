@@ -440,8 +440,8 @@ def erstellen(Teil):
         i = 0
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-        v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler,
-                            v_teiler])) # Vektor v ist der Richtungsvektor von Geraden g_1
+        v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
+                                                     zzahl(1, 6) / 2 * v_teiler, v_teiler])) # Vektor v ist der Richtungsvektor von Geraden g_1
         # Vektor u steht orthogonal auf v
         ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
         uz = - 1 * (vx*ux + vy * uy)/vz

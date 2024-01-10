@@ -153,41 +153,75 @@ def erstellen(Teil):
 
     def pruefungsaufgaben_01(nr, teilaufg):
         i = 0
-        seite_a = nzahl(3, 12)
-        seite_c = seite_a + nzahl(2, 8)
-        beta = nzahl(30, 59)
-        seite_b = round(math.sqrt(seite_c ** 2 + seite_a ** 2 - 2 * seite_c * seite_a * cos(math.radians(beta))), 1)
-        gamma = int(math.degrees(math.acos(((seite_c) ** 2 - (seite_a) ** 2 - (seite_b) ** 2) / (-2 * seite_a * seite_b))))
-        alpha = int(180 - gamma - beta)
-        seite_h = seite_a * math.sin(alpha)
+        alpha = nzahl(30,60)
+        beta = nzahl(70,110)- alpha
+        gamma = 180 - alpha - beta
+        print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+        seite_c = nzahl(6,12)
+        seite_a = round(seite_c * math.sin(math.radians(alpha))/math.sin(math.radians(gamma)),1)
+        seite_b = round(seite_c * math.sin(math.radians(beta))/math.sin(math.radians(gamma)),1)
+        seite_h = round(seite_a * math.sin(math.radians(beta)),1)
+        print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
         gamma_1 = 90 - alpha
-        gamma_2 = 90 - gamma
-        # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
-        pkt = [[0, 0], [seite_a, 0], [(seite_b ** 2) / seite_c, seite_a * seite_b / seite_c],[(seite_b ** 2) / seite_c,0]]
+        xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,3)
+        ywert_punkt_c = round(math.sin(math.radians(alpha))*seite_b,3)
+        flaeche = round(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),2)
+        # Listen für die Zeichung des Dreiecks
+        pkt = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c],[xwert_punkt_c,0]]
+        print(pkt)
         pkt_bez = ['A', 'B', 'C', 'F']
         st = ['a', 'b', 'c', 'h']
         st_werte = [seite_a, seite_b, seite_c, seite_h]
-        wk = [r' \alpha ', r' \beta ', r' \gamma_1 ', r' \gamma_2 ', r'90^{ \circ}']
-        wk_werte = [alpha, beta, gamma_1, gamma_2, 90]
+        wk = [r' \alpha ', r' \beta ', r' \gamma_1 ',  r' ^{ \circ}']
+        wk_werte = [alpha, beta, gamma_1, 90]
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                    'Die folgende Abbildung stellt ein beliebiges Dreieck dar.']
+        aufgabe.append(r' \mathrm{es~gilt: \quad h~=~' + str(seite_h) + r'cm, \quad a~=~' + str(seite_a)
+                       + r'cm, \quad \mathrm{und} \quad \gamma_1~=~' + str(gamma_1) + r'^{ \circ}}')
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
         if a in teilaufg:
-            punkte_aufg = 3
+            punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken = [f'Grafik_{nr}{liste_teilaufg[i]}']
             dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, grafiken[0])
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite a. \n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad (3P)')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Strecke FB. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \overline{FB} ~=~' + str(seite_c - xwert_punkt_c)
+                                                     + r'cm \quad (4P)'))
+            i += 1
+        if b in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel Alpha und Beta. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \beta ~=~' + str(beta)
+                                                     + r'^{ \circ} \quad \mathrm{und} \quad \alpha ~=~' + str(alpha)
+                                                     + r'^{ \circ} \quad (4P)'))
             i += 1
 
+        if c in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad b ~=~' + str(seite_b)
+                                                     + r'cm \quad (4P)'))
+            i += 1
+
+        if d in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad A ~=~' + str(flaeche)
+                                                     + r'cm^2 \quad (4P) \\'))
+            i += 1
         return aufgabe, loesung, grafiken
 
     aufgaben = (beliebiges_dreieck(1,[a,b,c]),
-                pruefungsaufgaben_01(2, [a]))
+                pruefungsaufgaben_01(2, [a,b,c,d,e,f]))
 
     print(aufgaben[1][2])
 
@@ -231,7 +265,7 @@ def erstellen(Teil):
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
+        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
         Aufgabe = Document(geometry_options=geometry_options)
         # erste Seite
         table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
@@ -269,7 +303,7 @@ def erstellen(Teil):
 
     # Erwartungshorizont
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
+        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
         Loesung = Document(geometry_options=geometry_options)
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
