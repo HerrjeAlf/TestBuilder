@@ -302,7 +302,8 @@ def erstellen(Teil):
             fkt_2_str = latex(6*faktor) + 'x' + fkt_1_a1_str
             fkt_3_str = latex(6*faktor)
 
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe rechnerisch auf Wendepunkte der Funktion f '
+                                                    'mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
                            + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
@@ -551,8 +552,7 @@ def erstellen(Teil):
             ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
             fkt_3_str = latex(6*faktor)
 
-            aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe rechnerisch auf Wendepunkte der Funktion f '
-                                                    'mithilfe des hinreichenden Kriteriums. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
@@ -565,20 +565,25 @@ def erstellen(Teil):
             i += 1
 
         if 'f' in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3), 3)
             xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3) / 3)
             ywert_wp_dezimal = N(fkt.subs(x, xwert_wp_bruch*a), 3)
+            if Rational(3,(faktor_1 + faktor_2 + faktor_3)) > 0:
+                abhängigkeit = r'\mathrm{mit~x \in \mathbb{R} ~und~ x > 0}'
+            else:
+                abhängigkeit = r'\mathrm{mit~x \in \mathbb{R} ~und~ x < 0}'
+
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Ortskurve der Wendepunkte der Funktion f. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (latex(xwert_wp_bruch)) + r'a \vert \div '
-                           + latex(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
-                           + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
-                           + r'x \quad \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (latex(xwert_wp_bruch)) + r'a \quad \vert \div'
+                           + vorz_Str_minus(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
+                           + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad' + abhängigkeit
+                           + r'\quad (3P) \\ \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
                            + latex(ywert_wp_dezimal/a**3) + r' \Big(' + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                            + r'x \Big)^3 ~=~' + latex(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
-                           + r'x^3 \quad (4P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + r'x^3 \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if 'g' in teilaufg:
@@ -739,6 +744,7 @@ def erstellen(Teil):
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
+        Loesung.packages.append(Package('amsfonts'))
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
         for loesung in aufgaben:
@@ -771,4 +777,4 @@ for teil_id in range(anzahl_Arbeiten):
         erstellen('Probe {:02d}'.format(teil_id + 1))
     else:
         erstellen(f'Gr. {alphabet[teil_id]}')
-    print() # Abstand zwischen den Arbeiten (im Terminal)
+    print()  # Abstand zwischen den Arbeiten (im Terminal)
