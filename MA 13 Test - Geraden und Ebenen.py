@@ -1,5 +1,5 @@
 import math
-import random, sys, string
+import random, sys, string, datetime
 import numpy as np
 from sympy import *
 from numpy.linalg import solve as slv
@@ -418,7 +418,7 @@ def erstellen(Teil):
                            r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
                            r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                            r' \vert \overrightarrow{u} \vert } \Big] \quad (1P) \\'
-                           r' \vert \overrightarrow{v} \vert \cdot \vert \overrightarrow{u} \vert'
+                           r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
                            r'~=~ \vert ' + vorz_str_minus(vx) + r' \cdot ' + vorz_str_minus(px)
                            + '+' + vorz_str_minus(vy) + r' \cdot ' + vorz_str_minus(py)
                            + '+' + vorz_str_minus(vz) + r' \cdot ' + vorz_str_minus(pz) + r' \vert ~=~'
@@ -614,7 +614,7 @@ def erstellen(Teil):
     table2.add_hline()
 
     # Angaben für den Test im pdf-Dokument
-    Datum = NoEscape(r' \today')
+    Datum = datetime.date.today().strftime('%d.%m.%Y')
     Kurs = 'Grundkurs'
     Fach = 'Mathematik'
     Klasse = '13'
@@ -683,9 +683,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-
-anzahl_Arbeiten = 1
-probe = True
+anzahl_Arbeiten = 2
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:

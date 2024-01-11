@@ -24,6 +24,12 @@ def nzahl(p, q):
     k = random.randint(p, q)
     return k
 
+def gzahl(k):
+    if k%1 == 0:
+        return latex(int(k))
+    else:
+        return latex(k)
+
 
 def vorz_str(k):
     if k < 0:
@@ -50,12 +56,13 @@ def erstellen(Teil):
     def beliebiges_dreieck(nr, teilaufg):
         i = 0
         def werte_bel_dreieck():
-            seite_b = nzahl(3,12)
-            seite_a = seite_b + nzahl(2,8)
-            gamma = nzahl(30,59)
-            seite_c = round(math.sqrt(seite_a**2+seite_b**2-2*seite_a*seite_b*cos(math.radians(gamma))),1)
-            alpha = int(math.degrees(math.acos(((seite_a)**2 - (seite_b)**2 - (seite_c)**2)/(-2*seite_b*seite_c))))
-            beta = int(180-gamma-alpha)
+            beta = nzahl(30, 60)
+            gamma = nzahl(30,60)
+            alpha = 180 - gamma - beta
+            print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+            seite_a = nzahl(6, 12)
+            seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
+            seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
             auswahl = random.sample([0, 1, 2], 3)
             auswahl_liste = {'Seite_bez' : [['a', 'b', 'c'][x] for x in auswahl],
                         'Seite_wert' : [seite_a, seite_b, seite_c],
@@ -113,7 +120,7 @@ def erstellen(Teil):
                                                      + latex(winkel_2_wert) + r'^{ \circ } \quad (2P) \\'
                                                      + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_1_wert)
                                                      + r'^{ \circ} ~-~ ' + str(winkel_2_wert) + r'^{ \circ} ~=~ '
-                                                     + str(winkel_3_wert) + r'^{ \circ} \quad (2P)'
+                                                     + str(winkel_3_wert) + r'^{ \circ} \quad (2P) \\'
                                                      + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
@@ -182,23 +189,35 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
         if a in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken = [f'Grafik_{nr}{liste_teilaufg[i]}']
             dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, grafiken[0])
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Strecke FB. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \overline{FB} ~=~' + str(seite_c - xwert_punkt_c)
-                                                     + r'cm \quad (4P)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + str(seite_a) + r'cm,~ h~=~'
+                                                     + str(seite_h) + r' \quad ges: \quad \overline{FB} \quad (1P)} \\'
+                                                     + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
+                                                       r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
+                                                       r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2P) \\'
+                                                     r' \overline{FB} ~=~ \sqrt{(' + str(seite_a) + 'cm)^2 - ('
+                                                     + str(seite_h) + 'cm)^2 } ~=~'
+                                                     + gzahl(N(seite_c - xwert_punkt_c,1)) + r'cm \quad (2P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
+
         if b in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel Alpha und Beta. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \beta ~=~' + str(beta)
-                                                     + r'^{ \circ} \quad \mathrm{und} \quad \alpha ~=~' + str(alpha)
-                                                     + r'^{ \circ} \quad (4P)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } -' + str(beta)
+                                                     + r'^{ \circ} ~=~' + str(alpha)  + r'^{ \circ} \quad (2P) \\'
+                                                     r' sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad'
+                                                     r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
+                                                     r'sin^{-1} \Big( \frac{' + str(seite_h) + '}{' + str(seite_a)
+                                                     + '} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if c in teilaufg:
@@ -206,17 +225,28 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad b ~=~' + str(seite_b)
-                                                     + r'cm \quad (4P)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
+                                                     r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
+                                                     r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
+                                                     + str(seite_a) + r'cm \cdot sin(' + str(beta) + r'^{ \circ})}'
+                                                     r'{sin(' + str(alpha) + r'^{ \circ})} ~=~' + str(seite_b)
+                                                     + r'cm \quad (4P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if d in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad A ~=~' + str(flaeche)
-                                                     + r'cm^2 \quad (4P) \\'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
+                                                     r'180^{ \circ } - ' + str(alpha) + r'^{ \circ } - ' + str(beta)
+                                                     + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2P) \\'
+                                                     r' A ~=~ \frac{1}{2} \cdot a \cdot b \cdot sin( \gamma ) ~=~'
+                                                     r' \frac{1}{2} \cdot ' + str(seite_a) + r'cm \cdot '
+                                                     + str(seite_b) + r'cm \cdot sin(' + str(gamma)
+                                                     + r'^{ \circ }) ~=~' + str(flaeche) + r'cm^2 \quad (3P) \\'
+                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
         return aufgabe, loesung, grafiken
 
@@ -259,8 +289,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = 'Hausaufgabenkontrolle 07'
-    Titel = 'Flächen berechnen'
+    Art = 'Klassenarbeit'
+    Titel = 'Trigonometrie in allgemeinen Dreiecken'
 
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -328,7 +358,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

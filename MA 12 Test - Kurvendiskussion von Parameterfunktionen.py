@@ -179,7 +179,7 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
                                                      + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
-                                                     + latex(nst_1) + r' \quad (1P) \\'
+                                                     + vorz_str(nst_1) + r' \quad (1P) \\'
                                                      + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
                                                      + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
             loesung.append(table2)

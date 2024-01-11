@@ -232,7 +232,7 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     am1 = AngleAnnotation(pkt[0], pkt[0], pkt[2], ax=ax, size=300, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels')
     am2 = AngleAnnotation(pkt[1], pkt[2], pkt[0], ax=ax, size=300, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
     am3 = AngleAnnotation(pkt[2], pkt[0], pkt[3], ax=ax, size=300, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
-    am4 = AngleAnnotation(pkt[3], pkt[1], pkt[2], ax=ax, size=200, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels')
+    am4 = AngleAnnotation(pkt[3], pkt[1], pkt[2], ax=ax, size=100, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels')
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
 
