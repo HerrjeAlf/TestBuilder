@@ -99,7 +99,7 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
         if a in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             loesung_1 = (r' \overrightarrow{AB} ~=~'
@@ -111,7 +111,7 @@ def erstellen(Teil):
                          + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                          + latex(v[0]) + r' \\' + latex(v[1]) + r' \\' + latex(v[2]) + r' \\'
-                         r' \end{pmatrix} \quad (4P) \\')
+                         r' \end{pmatrix} \quad (3P) \\')
 
             aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
                                               f' welche die Punkte A und B enthält. \n\n')
@@ -465,7 +465,11 @@ def erstellen(Teil):
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
                                               f'welche die Punkte A, B und C enthält. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad E: \overrightarrow{x} ~=~ \begin{pmatrix} '
+            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + latex(bx-ax) + r' \\' + latex(by-ay) + r' \\' + latex(bz-az) + r' \\'
+                           r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ \begin{pmatrix} '
+                           + latex(cx-ax) + r' \\' + latex(cy-ay) + r' \\' + latex(cz-az) + r' \\'
+                           r' \end{pmatrix} \quad \to \quad E: \overrightarrow{x} ~=~ \begin{pmatrix} '
                            + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                            r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                            + latex(bx - ax) + r' \\' + latex(by - ay) + r' \\' + latex(bz - az) + r' \\'
@@ -498,7 +502,7 @@ def erstellen(Teil):
             i += 1
 
         if a and b and c in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             parameter_r = zzahl(1,6)/2
