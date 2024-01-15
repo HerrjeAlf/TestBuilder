@@ -211,12 +211,12 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel Alpha und Beta. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } -' + str(beta)
-                                                     + r'^{ \circ} ~=~' + str(alpha)  + r'^{ \circ} \quad (2P) \\'
-                                                     r' sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad'
+            loesung.append(str(liste_teilaufg[i]) + (r') \quadsin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad'
                                                      r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
                                                      r'sin^{-1} \Big( \frac{' + str(seite_h) + '}{' + str(seite_a)
-                                                     + '} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\'
+                                                     + '} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\ '
+                                                     r'\alpha ~=~180^{ \circ } - 90^{ \circ } -' + str(beta)
+                                                     + r'^{ \circ} ~=~' + str(alpha)  + r'^{ \circ} \quad (2P) \\'
                                                      + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
