@@ -111,10 +111,10 @@ def erstellen(Teil):
                                                      + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
                                                      + r') \quad (2P) \\' + 'sin(' + winkel_2 + r') ~=~ \frac{'
                                                      + str(seite_2) + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
-                                                     + r') \quad \vert ~ arcsin() \quad \to \quad ' + winkel_2
-                                                     + r' ~=~ arcsin \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
+                                                     + r') \quad \vert ~ sin^{ -1}() \quad \to \quad ' + winkel_2
+                                                     + r' ~=~ sin^{ -1} \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
                                                      + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
-                                                     + winkel_2 + r' ~=~ arcsin \Big( \frac{'
+                                                     + winkel_2 + r' ~=~ sin^{ -1} \Big( \frac{'
                                                      + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert)
                                                      + r'cm} \cdot sin(' + latex(winkel_1_wert) + r'^{ \circ } ) \Big) ~=~'
                                                      + latex(winkel_2_wert) + r'^{ \circ } \quad (2P) \\'
