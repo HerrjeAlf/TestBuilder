@@ -486,17 +486,17 @@ def erstellen(Teil):
             x_2_fkt_2 = fkt_2.subs(x,x_2_fkt_1)
             # print(x_1_fkt_2), print(x_2_fkt_2)
             if x_1_fkt_2.subs(a,1) < 0:
-                lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>1} \quad \to \quad HP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
+                lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad HP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
             else:
-                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
+                lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad TP(' + latex(N(x_1_fkt_1,3)) + r' \vert '
                                  + latex(N(y_1_fkt,3)) + r') \quad (2P) \\')
 
             if x_2_fkt_2.subs(a,1) < 0:
-                lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>1} \quad \to \quad HP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad HP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
                                  + latex(N(y_2_fkt,3)) + r') \quad (2P) \\')
             else:
-                lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>1} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
+                lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad TP(' + latex(N(x_2_fkt_1,3)) + r' \vert '
                                  + latex(N(y_2_fkt,3)) + r') \quad (2P) \\')
 
             # Koeffizienten der ersten Ableitung
