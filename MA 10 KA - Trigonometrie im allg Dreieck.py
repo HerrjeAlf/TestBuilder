@@ -198,8 +198,8 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + str(seite_a) + r'cm,~ h~=~'
                                                      + str(seite_h) + r' \quad ges: \quad \overline{FB} \quad (1P)} \\'
                                                      + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
-                                                       r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
-                                                       r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2P) \\'
+                                                     r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
+                                                     r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2P) \\'
                                                      r' \overline{FB} ~=~ \sqrt{(' + str(seite_a) + 'cm)^2 - ('
                                                      + str(seite_h) + 'cm)^2 } ~=~'
                                                      + gzahl(N(seite_c - xwert_punkt_c,1)) + r'cm \quad (2P) \\'
@@ -214,7 +214,7 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + (r') \quadsin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad'
                                                      r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
                                                      r'sin^{-1} \Big( \frac{' + str(seite_h) + '}{' + str(seite_a)
-                                                     + '} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\ '
+                                                     + r'} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\ '
                                                      r'\alpha ~=~180^{ \circ } - 90^{ \circ } -' + str(beta)
                                                      + r'^{ \circ} ~=~' + str(alpha)  + r'^{ \circ} \quad (2P) \\'
                                                      + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
