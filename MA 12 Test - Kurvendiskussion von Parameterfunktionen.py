@@ -546,7 +546,7 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_2_a0 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
-            fkt_2_str = latex(6*faktor) + 'x' + latex(fkt_2_a0) + 'a'
+            fkt_2_str = latex(6*faktor) + 'x' + vorz_str(fkt_2_a0) + 'a'
             xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3),3)
             xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3)/3,3)
             ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
@@ -770,7 +770,7 @@ def erstellen(Teil):
 
 
 anzahl_Arbeiten = 2
-probe = True
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:

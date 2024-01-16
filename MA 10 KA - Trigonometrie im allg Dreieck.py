@@ -165,8 +165,8 @@ def erstellen(Teil):
         gamma = 180 - alpha - beta
         print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
         seite_c = nzahl(6,12)
-        seite_a = round(seite_c * math.sin(math.radians(alpha))/math.sin(math.radians(gamma)),3)
-        seite_b = round(seite_c * math.sin(math.radians(beta))/math.sin(math.radians(gamma)),3)
+        seite_a = round(seite_c * math.sin(math.radians(alpha))/math.sin(math.radians(gamma)),1)
+        seite_b = round(seite_c * math.sin(math.radians(beta))/math.sin(math.radians(gamma)),1)
         seite_h = round(seite_a * math.sin(math.radians(beta)),1)
         print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
         gamma_1 = 90 - alpha
@@ -202,7 +202,7 @@ def erstellen(Teil):
                                                      r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2P) \\'
                                                      r' \overline{FB} ~=~ \sqrt{(' + str(seite_a) + 'cm)^2 - ('
                                                      + str(seite_h) + 'cm)^2 } ~=~'
-                                                     + gzahl(N(seite_c - xwert_punkt_c,1)) + r'cm \quad (2P) \\'
+                                                     + gzahl(N(seite_c - xwert_punkt_c,3)) + r'cm \quad (2P) \\'
                                                      + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
@@ -211,8 +211,9 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel Alpha und Beta. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } -' + str(gamma_1)
-                                                     + r'^{ \circ} ~=~' + str(alpha)  + r'^{ \circ} \quad (2P) \\'
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
+                                                     r' ~=~180^{ \circ } - 90^{ \circ } -' + str(gamma_1)
+                                                     + r'^{ \circ} ~=~' + str(alpha) + r'^{ \circ} \quad (2P) \\'
                                                      r' sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad'
                                                      r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
                                                      r'sin^{-1} \Big( \frac{' + str(seite_h) + '}{' + str(seite_a)
@@ -359,7 +360,7 @@ def erstellen(Teil):
 
 
 anzahl_Arbeiten = 2
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
