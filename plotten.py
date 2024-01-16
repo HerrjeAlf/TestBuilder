@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.gridspec as grid
 from matplotlib.patches import Arc
 from matplotlib.transforms import Bbox, IdentityTransform, TransformedBbox
+from sympy import *
+
+a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 
 class AngleAnnotation(Arc):
     """
@@ -235,4 +238,56 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     am4 = AngleAnnotation(pkt[3], pkt[1], pkt[2], ax=ax, size=100, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels')
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
+
+
+def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, titel='grafische Darstellung der Funktion(en)', name='Graph'):
+    fig = plt.Figure()
+    ax = plt.gca()
+    # lswerte sind für die Werte für die Lösungen
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['left'].set_position(('data', 0))
+    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    xwerte = np.arange(-6, 6, 0.01)
+    plt.annotate(bezn, xy=(stl, fkt.subs(x, stl)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+                 fontsize=12)
+    plt.grid(True)
+    plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
+    plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
+    plt.axis([-6, 6, -6, 6])
+    ywerte = [fkt.subs(x, elements) for elements in xwerte]
+    plt.plot(xwerte, ywerte, linewidth=2)
+    for fkt in funktionen:
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
+    plt.suptitle(titel, usetex=True)
+    return plt.savefig(name, dpi=200)
+
+def Graph(x_min, x_max, *funktionen):
+    fig, ax = plt.subplots()
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['left'].set_position(('data', 0))
+    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    xwerte = np.arange(x_min, x_max, 0.01)
+    for fkt in funktionen:
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
+    plt.grid(True)
+    return plt.show()
+
+def loeschen():
+    plt.figure().clear()
 

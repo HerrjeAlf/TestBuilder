@@ -8,7 +8,7 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
                      MultiColumn, MultiRow)
 from pylatex.utils import bold
 from sympy import *
-from flaechen_konstruieren import dreieck_zeichnen_mit_hoehe, dreieck_zeichnen
+from plotten import dreieck_zeichnen_mit_hoehe, dreieck_zeichnen
 
 # Definition der Funktionen
 
