@@ -355,10 +355,13 @@ def erstellen(Teil):
             nst_2_str_neg = '-a'
         elif faktor_2 == -1:
             nst_2_str = '-a'
-            nst_2_str_neg = 'a'
+            nst_2_str_neg = '+a'
         else:
             nst_2_str = gzahl(faktor_2) + 'a'
-            nst_2_str_neg = gzahl(-1 * faktor_2) + 'a'
+            if int(gzahl(-1 * faktor_2)) > 0:
+                nst_2_str_neg = f'+{gzahl(-1 * faktor_2)}a'
+            else:
+                nst_2_str_neg = f'{gzahl(-1 * faktor_2)}a'
         nst_3_str = latex(faktor_3) + 'a'
 
         # Aufstellen der Funktionsgleichung
