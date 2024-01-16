@@ -3,18 +3,18 @@ import string
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as grid
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, MultiRow)
+                     MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
 from plotten import graph_xyfix, loeschen
+from Zeichnung import Graph
 
 # Definition der Funktionen
-
 a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
-
 
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -62,11 +62,12 @@ def erstellen(Teil):
     # Berechnung für die Aufgaben
     def lineare_funktionen(nr, teilaufg):
         i = 0
-
+        grafiken = ['Graph_Aufgabe']
         def wertetabelle(xwerte, ywerte=[]):
             spalten = '|c|'
             for element in xwerte:
                 spalten += 'c|'
+
             if ywerte == []:
                 ywerte = ['y']
                 if xwerte[0] != 'x':
@@ -78,6 +79,7 @@ def erstellen(Teil):
             else:
                 if ywerte[0] != 'y':
                     ywerte.insert(0, 'y')
+
             if xwerte[0] != 'x':
                 xwerte.insert(0, 'x')
 
@@ -91,35 +93,30 @@ def erstellen(Teil):
             return table1
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
-        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+        loesung = [r' \mathbf{Lösung~Aufgabe~} ' + str(nr) + r' \hspace{35em} \\']
 
         if 'a' in teilaufg:
             punkte_aufg = 10
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken = ['Graph_Aufgabe']
+            grafiken = [f'Grafik_{nr}{liste_teilaufg[i]}']
             # Werte für den Funktionsgraphen
             steigung = zzahl(2,8)/2
             schnittpunkt_y = zzahl(1,8)/2
             fkt = steigung *x + schnittpunkt_y
             fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
             print(fkt), print(fkt_str)
-
-            wertetabelle_aufgabe = wertetabelle([x-2 for x in range(5)])
-            graph_xyfix(fkt, name='Graph_Aufgabe')
-            print(wertetabelle_aufgabe)
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung ab'
-                                                    f' und vervollständige die Wertetabelle.')
-            aufgabe.append(wertetabelle_aufgabe)
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \\quad (2P) \\'
+            graph_xyfix(fkt, name=f'Grafik_{nr}{liste_teilaufg[i]}')
+            aufgabe.append(str(liste_teilaufg[i]) + (f') Lies die Funktionsgleichung des Graphen'
+                                                     f' aus der folgenden Abbildung ab. '))
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad (2P) \\'
                                                      + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
+        return (aufgabe, loesung, grafiken)
 
-        return aufgabe, loesung, grafiken
 
-    aufgaben = (lineare_funktionen(1,['a','b','c']))
+    aufgaben = [lineare_funktionen(1, ['a'])]
 
 
     # erstellen der Tabelle zur Punkteübersicht
@@ -159,11 +156,10 @@ def erstellen(Teil):
     Art = 'Hausaufgabenkontrolle 08'
     Titel = 'Wiederholung der lineare Funktionen'
 
-
-    # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
+        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
+        Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
         table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
@@ -184,7 +180,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2][0], width='250px')
+                        graph.add_image(aufgabe[2][0], width='200px')
                     del aufgabe[2][0]
                 else:
                     Aufgabe.append(elements)
@@ -198,10 +194,11 @@ def erstellen(Teil):
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
         print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
-    # Erwartungshorizont
+
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
+        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
+        Loesung.packages.append(Package('amsfonts'))
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
         for loesung in aufgaben:
@@ -211,8 +208,9 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[2][0], width='200px')
-                else:s
+                        graph.add_image(loesung[2][0], width='300px')
+                    del loesung[2][0]
+                else:
                     Loesung.append(elements)
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
@@ -233,5 +231,6 @@ for teil_id in range(anzahl_Arbeiten):
         erstellen('Probe {:02d}'.format(teil_id + 1))
     else:
         erstellen(f'Gr. {alphabet[teil_id]}')
-    print() # Abstand zwischen den Arbeiten (im Terminal)
+    print()  # Abstand zwischen den Arbeiten (im Terminal)
+
 

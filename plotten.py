@@ -240,10 +240,13 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
 
 
-def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, titel='grafische Darstellung der Funktion(en)', name='Graph'):
-    fig = plt.Figure()
-    ax = plt.gca()
-    # lswerte sind für die Werte für die Lösungen
+def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
+    # fig = plt.Figure()
+    # ax = plt.gca()
+    fig, ax = plt.subplots()
+    fig.canvas.draw()
+    fig.tight_layout()
+    grid.SubplotSpec(gridspec=0, num1=0, num2=0)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
@@ -266,7 +269,6 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, titel='grafische Darstellung
     for fkt in funktionen:
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
-    plt.suptitle(titel, usetex=True)
     return plt.savefig(name, dpi=200)
 
 def Graph(x_min, x_max, *funktionen):

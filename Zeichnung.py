@@ -6,7 +6,7 @@ a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 fig = plt.Figure()
 
 
-def Graph(a_1, b_1, xwert, f, titel, n, name, *lswerte):
+def Graph(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     # lswerte sind für die Werte für die Lösungen
     ax = plt.gca()
     ax.spines['top'].set_color('none')
