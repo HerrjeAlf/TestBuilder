@@ -63,38 +63,11 @@ def erstellen(Teil):
     def lineare_funktionen(nr, teilaufg):
         i = 0
 
-        def wertetabelle(xwerte, ywerte=[]):
-            spalten = '|c|'
-            for element in xwerte:
-                spalten += 'c|'
-            if ywerte == []:
-                ywerte = ['y']
-                if xwerte[0] != 'x':
-                    for element in xwerte:
-                        ywerte.append('')
-                else:
-                    for x in range(len(xwerte)-1):
-                        ywerte.append('')
-            else:
-                if ywerte[0] != 'y':
-                    ywerte.insert(0, 'y')
-            if xwerte[0] != 'x':
-                xwerte.insert(0, 'x')
-
-            table1 = Tabular(spalten, row_height=1.2)
-            table1.add_hline()
-            table1.add_row(xwerte)
-            table1.add_hline()
-            table1.add_row(ywerte)
-            table1.add_hline()
-
-            return table1
-
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
 
         if 'a' in teilaufg:
-            punkte_aufg = 10
+            punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken = ['Graph_Aufgabe']
@@ -105,21 +78,36 @@ def erstellen(Teil):
             fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
             print(fkt), print(fkt_str)
 
-            wertetabelle_aufgabe = wertetabelle([x-2 for x in range(5)])
+            table1aA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+            table1aA.add_hline(start=2)
+            table1aA.add_row(
+                (MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1', 'x = 0', 'x = 1', 'x = 2'))
+            table1aA.add_hline(start=2)
+            table1aA.add_row(('', MultiRow(2, data='y Werte'), '', '', '', '', ''))
+            table1aA.add_empty_row()
+            table1aA.add_hline(start=2)
+
+            table1aB = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+            table1aB.add_hline(start=2)
+            table1aB.add_row(
+                (MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1', 'x = 0', 'x = 1', 'x = 2'))
+            table1aB.add_hline(start=2)
+            table1aB.add_row(('', 'y Werte', gzahl(N(fkt.subs(x,-2),3)),
+                              gzahl(N(fkt.subs(x,-1),3)), gzahl(N(fkt.subs(x,0),3)),gzahl(N(fkt.subs(x,1),3)),
+                              gzahl(N(fkt.subs(x,2),3))))
+            table1aB.add_hline(start=2)
+
             graph_xyfix(fkt, name='Graph_Aufgabe')
-            print(wertetabelle_aufgabe)
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung ab'
-                                                    f' und vervollständige die Wertetabelle.')
-            aufgabe.append(wertetabelle_aufgabe)
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad \\quad (2P) \\'
-                                                     + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung'
+                                                    f' ab und vervollständige die Wertetabelle.')
+            aufgabe.append(table1aA)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str +  r' \quad (2P)')
+            loesung.append(table1aB)
+            loesung.append(r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
+        return [aufgabe, loesung, grafiken]
 
-
-        return aufgabe, loesung, grafiken
-
-    aufgaben = (lineare_funktionen(1,['a','b','c']))
+    aufgaben = [lineare_funktionen(1,['a'])]
 
 
     # erstellen der Tabelle zur Punkteübersicht
@@ -212,7 +200,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
                         graph.add_image(loesung[2][0], width='200px')
-                else:s
+                else:
                     Loesung.append(elements)
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
