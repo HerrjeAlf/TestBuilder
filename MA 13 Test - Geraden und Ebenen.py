@@ -13,8 +13,7 @@ from threading import Thread
 
 a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
-liste_bez = ['Aufgabe']
-liste_punkte = ['Punkte']
+
 
 def zzahl(p, q):
     k = random.choice([-1, 1]) * random.randint(p, q)
@@ -24,13 +23,31 @@ def nzahl(p, q):
     k = random.randint(p, q)
     return k
 
-def vorz_str(k):
-    if k < 0:
-        return f'~-~{latex(abs(k))}'
+def vorz(k):
+    if k == -1:
+        return '-'
+    elif k == 1:
+        return '+'
     else:
-        return f'~+~{latex(k)}'
+        pass
+
+def vorz_str(k):
+    if k%1 == 0:
+        k = int(k)
+    if k < 0:
+        return latex(k)
+    else:
+        return f'+{latex(k)}'
+
+def gzahl(k):
+    if k%1 == 0:
+        return latex(int(k))
+    else:
+        return latex(k)
 
 def vorz_str_minus(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
         return f'({latex(k)})'
     else:
@@ -63,17 +80,15 @@ def erstellen(Teil):
             if list[i] % 1 == 0:
                 i += 1
             else:
-                while (list[i] * faktor[k]) % 1 != 0 and k <= len(faktor):
+                while (list[i] * faktor[k]) % 1 != 0 and k < 49:
                     k += 1
                 list = list * faktor[k]
                 i += 1
         # print('erweitert: ' + str(list))
-        teiler = [x + 1 for x in range(100)]
-        i = 0
         teiler = [x + 1 for x in range(int(max(list)/2))]
         for zahl in teiler:
             treffer = [1 for x in list if x % zahl == 0]
-            if sum(treffer) == 3:
+            if sum(treffer) == len(vec):
                 list = list / zahl
         # print('gekürzt: ' + str(list))
         list = np.array([int(element) if element % 1 == 0 else element for element in list])
@@ -530,31 +545,37 @@ def erstellen(Teil):
 
     def ebenen_umformen(nr, teilaufg):
         i = 0
-        punkt_a = [ax, ay, az] = punkt_vektor(4)
-        n = [nx, ny, nz] = punkt_vektor(3)
-
+        teiler = zzahl(1,3)
+        schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
+        fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kürzen([1/sx,1/sy,1/sz,e])
+        n = [nx,ny,nz] = vektor_kürzen([int(kfx),int(kfy),int(kfz)])
+        print(schnittpunkte)
+        print(fkt_kf)
+        print(n)
+        punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
+        print(punkt_a)
         normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                        + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                         r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                        + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                         r' \end{pmatrix} ~=~ 0')
-        koordinatenform = ('E:~' + latex(nx) + r' \cdot x' + vorz_str(ny) + r' \cdot y'
-                           + vorz_str(nz) + r' \cdot z') + '~=~' + latex(np.dot(punkt_a,n))
+        koordinatenform = ('E:~' + gzahl(nx) + 'x' + vorz_str(ny) + 'y'
+                           + vorz_str(nz) + 'z') + '~=~' + gzahl(np.dot(punkt_a,n))
 
         auswahl = random.choice([1,2])
         if auswahl == 1:
             ebenengleichung = normalenform
             andere_darstellungsform = koordinatenform
-            lsg = (r' \begin{pmatrix} ' + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\ \end{pmatrix}')
+            lsg = (r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ \end{pmatrix}')
         else:
             ebenengleichung = koordinatenform
             andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                                       + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
-                                       + r' \\' + latex(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                                       + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                                       + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+                                       + r' \\' + gzahl(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                                       + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                                        r' \end{pmatrix} ~=~ 0')
-            lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + latex(0)
-                   + r' \\' + latex(0) + r' \\ \end{pmatrix}')
+            lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+                   + r' \\' + gzahl(0) + r' \\ \end{pmatrix}')
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Gegeben ist die Ebene E mit der folgenden Gleichung:']
@@ -568,18 +589,32 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                               f'anderen beiden Darstellungsformen um. \n\n ')
             loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
-                           + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
+                           + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
                            r' \overrightarrow{u} ~=~ \begin{pmatrix}'
-                           + latex(-1*ny) + r' \\' + latex(nx) + r' \\' + latex(0) + r' \\'
+                           + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
                            r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{v} ~=~ \begin{pmatrix}'
-                           + latex(0) + r' \\' + latex(-1*nz) + r' \\' + latex(ny) + r' \\'
+                           + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
                            r' \end{pmatrix} \quad \to\ \quad E: \overrightarrow{x} ~=~ '
                            + lsg + r' ~+~r \cdot \begin{pmatrix} '
-                           + latex(-1*ny) + r' \\' + latex(nx) + r' \\' + latex(0) + r' \\'
+                           + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
                            r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
-                           + latex(0) + r' \\' + latex(-1*nz) + r' \\' + latex(ny) + r' \\'
+                           + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
                            r' \end{pmatrix} \quad (4P) \\')
+            i += 1
+
+        if b in teilaufg:
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform der Ebenengleichung'
+                                              f' auf und Sie ein Schrägbild der Ebene. \n\n ')
+            loesung.append(str(teilaufg[i]) + (r') \quad ' + koordinatenform + r' \quad \vert \div '
+                                               + gzahl(kfe) + r' \quad \to \quad '
+                                               + r'E:~ \frac{x}{' + vorz_str_minus(sx) + r'} + '
+                                               r' \frac{y}{' + vorz_str_minus(sy) + r'} + '
+                                               r' \frac{z}{' + vorz_str_minus(sz) + r'} ~=~' + str(1)
+                                               + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (3P)} \\'))
             i += 1
 
         return aufgabe, loesung
@@ -587,7 +622,7 @@ def erstellen(Teil):
     aufgaben = [gerade(1, [a, b]),
                 lagebeziehung(2, [a,b]),
                 ebenen(3,[a,b,c]),
-                ebenen_umformen(4, [a])]
+                ebenen_umformen(4, [a,b])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -623,8 +658,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = 'Hausaufgabenkontrolle 08'
-    Titel = 'Ebenen aufstellen und umformen'
+    Art = 'Test II'
+    Titel = 'Achsenabschnittsform'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -654,11 +689,18 @@ def erstellen(Teil):
                 else:
                     Aufgabe.append(elements)
 
-        Aufgabe.append('\n\n')
-        Aufgabe.append(table2)
 
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
+        Aufgabe.append('\n\n')
+        Aufgabe.append('\n\n')
+
+        Aufgabe.append(table2)
+
+        Aufgabe.append('\n\n')
+        Aufgabe.append('\n\n')
+        with Aufgabe.create(Figure(position='h!')) as koordinatensystem:
+            koordinatensystem.add_image('3dim_Koordinatensystem.png', width='400px')
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
 
@@ -680,6 +722,9 @@ def erstellen(Teil):
                     Loesung.append(elements)
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
+
+        # with Loesung.create(Figure(position='h!')) as koordinasystem:
+        #     koordinasystem.add_image('3dim_Koordinatensystem.png', width='400px')
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 

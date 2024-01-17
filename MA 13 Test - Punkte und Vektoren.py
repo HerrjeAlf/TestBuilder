@@ -443,8 +443,7 @@ def Hausaufgabenkontrolle():
     Aufgabe.append(punkte)
 
     with Aufgabe.create(Figure(position='h!')) as koordinasystem:
-        koordinasystem.add_image(r'C:\Users\aherr\OneDrive\Schule\Mathe\!Klassen\Klasse 13\Klasse 13 - 00 Klausur\HAK\3dim_Koordinatensystem.png',
-                                 width='400px')
+        koordinasystem.add_image('3dim_Koordinatensystem.png', width='400px')
 
     Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
 
@@ -467,9 +466,7 @@ def Erwartungshorizont():
     Loesung.append(NewPage())
 
     with Loesung.create(Figure(position='h!')) as koordinasystem:
-        koordinasystem.add_image(
-            r'C:\Users\aherr\OneDrive\Schule\Mathe\!Klassen\Klasse 13\Klasse 13 - 00 Klausur\HAK\3dim_Koordinatensystem.png',
-            width='400px')
+        koordinasystem.add_image('3dim_Koordinatensystem.png',width='400px')
 
     Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
 # Druck der Seiten
