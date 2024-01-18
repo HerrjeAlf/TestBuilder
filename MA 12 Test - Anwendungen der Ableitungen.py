@@ -315,11 +315,12 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test - Anwendung der Ableitung'
+    Art = 'Test II'
+    Titel = 'Anwendung der Ableitung'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
+        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
         Aufgabe = Document(geometry_options=geometry_options)
         # erste Seite
         table1 = Tabular('c|c|c|c|c|c|', row_height=1.2)
@@ -330,7 +331,7 @@ def erstellen(Teil):
         table1.add_hline(2, 6)
         Aufgabe.append(table1)
         Aufgabe.append(' \n\n')
-        Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
+        Aufgabe.append(LargeText(bold(f'\n {Titel} \n\n')))
 
         for aufgabe in aufgaben:
             for elements in aufgabe[0]:
@@ -351,13 +352,13 @@ def erstellen(Teil):
             graph.add_image(r'Aufgabe_3.png', width='400px')
             # falls es nicht funktioniert wieder zu 'C:\Users\aherr\Documents\GitHub\Aufgabe_1.png' wechseln
 
-        Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
+        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
+        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
+        Loesung.append(LargeText(bold(f'Loesung für {Titel} {Teil} \n\n')))
 
         for loesung in aufgaben:
             with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
@@ -368,7 +369,7 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
 
-        Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
+        Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
         plt.cla()
 
     # Druck der Seiten

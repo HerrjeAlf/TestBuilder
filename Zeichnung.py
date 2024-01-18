@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
-from sympy import *
 import numpy
+import matplotlib.gridspec as grid
+from matplotlib.patches import Arc
+from matplotlib.transforms import Bbox, IdentityTransform, TransformedBbox
+from sympy import *
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 fig = plt.Figure()
@@ -19,7 +22,7 @@ def Graph(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(n, xy=(xwert, f.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+    plt.annotate(n, xy=(xwert, fkt.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
                  fontsize=12)
     plt.grid(True)
     plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))

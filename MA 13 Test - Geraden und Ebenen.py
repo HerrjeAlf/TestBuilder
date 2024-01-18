@@ -432,7 +432,7 @@ def erstellen(Teil):
                            r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
                            r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
                            r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                           r' \vert \overrightarrow{u} \vert } \Big] \quad (1P) \\'
+                           r' \vert \overrightarrow{u} \vert } \Big) \quad (1P) \\'
                            r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
                            r'~=~ \vert ' + vorz_str_minus(vx) + r' \cdot ' + vorz_str_minus(px)
                            + '+' + vorz_str_minus(vy) + r' \cdot ' + vorz_str_minus(py)
@@ -604,17 +604,17 @@ def erstellen(Teil):
             i += 1
 
         if b in teilaufg:
-            punkte_aufg = 7
+            punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform der Ebenengleichung'
-                                              f' auf und Sie ein Schrägbild der Ebene. \n\n ')
+                                              f' auf und zeichnen Sie ein Schrägbild der Ebene. \n\n ')
             loesung.append(str(teilaufg[i]) + (r') \quad ' + koordinatenform + r' \quad \vert \div '
                                                + gzahl(kfe) + r' \quad \to \quad '
                                                + r'E:~ \frac{x}{' + vorz_str_minus(sx) + r'} + '
                                                r' \frac{y}{' + vorz_str_minus(sy) + r'} + '
                                                r' \frac{z}{' + vorz_str_minus(sz) + r'} ~=~' + str(1)
-                                               + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (3P)} \\'))
+                                               + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (2P)} \\'))
             i += 1
 
         return aufgabe, loesung

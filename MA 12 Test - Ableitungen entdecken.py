@@ -472,7 +472,8 @@ def erstellen(Teil):
 
     # Erwartungshorizont
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
+        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
+
         Loesung = Document(geometry_options=geometry_options)
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
 
