@@ -610,7 +610,7 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform der Ebenengleichung'
                                               f' auf und zeichnen Sie ein Schrägbild der Ebene. \n\n ')
             loesung.append(str(teilaufg[i]) + (r') \quad ' + koordinatenform + r' \quad \vert \div '
-                                               + gzahl(kfe) + r' \quad \to \quad '
+                                               + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad '
                                                + r'E:~ \frac{x}{' + vorz_str_minus(sx) + r'} + '
                                                r' \frac{y}{' + vorz_str_minus(sy) + r'} + '
                                                r' \frac{z}{' + vorz_str_minus(sz) + r'} ~=~' + str(1)

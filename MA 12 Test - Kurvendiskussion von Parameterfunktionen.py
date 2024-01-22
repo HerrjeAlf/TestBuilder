@@ -425,7 +425,7 @@ def erstellen(Teil):
             i += 1
 
         if 'c' in teilaufg:
-            punkte_aufg = 18
+            punkte_aufg = 14
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             # hier werden die Koeffizenten für das Hornerschema berechnet
@@ -464,18 +464,18 @@ def erstellen(Teil):
                            r' x_{2/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
                            r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                            r'a^2)} ~=~ ' + latex(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
-                           + latex(fkt_disk) + r' \cdot a^2} \quad (4P) \\ x_{2/3}~=~'
+                           + latex(fkt_disk) + r' \cdot a^2} \quad (2P) \\ x_{2/3}~=~'
                            + latex(Rational(faktor_1 + faktor_3,2)) + r' \cdot a \pm \Big('
                            + latex(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) \cdot a \quad \to \quad x_2~=~'
                            + latex(faktor_1) + r'a \quad \mathrm{und} \quad x_3~=~'
                            + latex(faktor_3) + r'a \quad (3P) \\ S_{x_2}(' + nst_1_str + r'\vert 0) \quad S_{x_1}('
                            + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad \mathrm{sowie}'
-                           r' \quad S_y(0 \vert' + latex(fkt_a0) + r'a^3) \quad (4P) \\'
+                           r' \quad S_y(0 \vert' + latex(fkt_a0) + r'a^3) \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if 'd' in teilaufg:
-            punkte_aufg = 14
+            punkte_aufg = 16
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_1 = collect(diff(fkt,x,1),x)
@@ -536,16 +536,18 @@ def erstellen(Teil):
                            + r'x_1~=~' + latex(-1*fkt_1_p/2) + r' \cdot a ~-~' + latex(N(fkt_1_sqrt,3))
                            + r' \cdot a~=~' + latex(N(x_1_fkt_1,3)) + r' \quad \mathrm{und} \quad '
                            + r'x_2~=~' + latex(-1*fkt_1_p/2) + r' \cdot a~+~' + latex(N(fkt_1_sqrt,3))
-                           + r' \cdot a~=~' + latex(N(x_2_fkt_1,3)) + r' \quad (1P) \\'
-                           + r'f^{ \prime \prime } (x_1) ~=~' + latex(6*faktor) + r' \cdot (' + latex(N(x_1_fkt_1,3))
-                           + ')' + vorz_str(fkt_1_a1) + r' \cdot a ~=~' + latex(N(x_1_fkt_2,3)) + r' \quad (1P)'
-                           + lsg_extrema_1 + r' f^{ \prime \prime } (x_2) ~=~' + latex(6 * faktor) + r' \cdot ('
-                           + latex(N(x_2_fkt_1,3)) + ')' + latex(fkt_1_a1) + 'a  ~=~' + latex(N(x_2_fkt_2,3))
-                           + r' \quad (1P)' + lsg_extrema_2 + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + r' \cdot a~=~' + latex(N(x_2_fkt_1,3)) + r' \quad (2P) \\'
+                           + r'f^{ \prime \prime } (' + latex(N(x_1_fkt_1,3)) +') ~=~' + latex(6*faktor) + r' \cdot ('
+                           + latex(N(x_1_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + r' \cdot a ~=~'
+                           + latex(N(x_1_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_1
+                           + r' f^{ \prime \prime } (' + latex(N(x_1_fkt_2,3)) + ') ~=~' + latex(6 * faktor)
+                           + r' \cdot (' + latex(N(x_2_fkt_1,3)) + ')' + latex(fkt_1_a1) + 'a  ~=~'
+                           + latex(N(x_2_fkt_2,3)) + r' \quad (2P)' + lsg_extrema_2
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if 'e' in teilaufg:
-            punkte_aufg = 7
+            punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_2_a0 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
@@ -557,13 +559,13 @@ def erstellen(Teil):
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                           + r' \quad (1P) \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                           + r' \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
                            + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~' + latex(xwert_wp_bruch) + 'a ~=~'
                            + latex(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }('
                            + latex(xwert_wp_bruch) + ') ~=~ ' + fkt_3_str
                            + r' \quad \neq 0 \quad \to \quad \mathrm{Wendepunkt} (' + latex(xwert_wp_bruch)
-                           + r'a \vert ' + latex(ywert_wp_dezimal) + r') \quad (4P) \\'
+                           + r'a \vert ' + latex(ywert_wp_dezimal) + r') \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
@@ -583,10 +585,10 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (latex(xwert_wp_bruch)) + r'a \quad \vert \div'
                            + vorz_Str_minus(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                            + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad' + abhängigkeit
-                           + r'\quad (3P) \\ \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
+                           + r'\quad (2P) \\ \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
                            + latex(ywert_wp_dezimal/a**3) + r' \Big(' + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                            + r'x \Big)^3 ~=~' + latex(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
-                           + r'x^3 \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + r'x^3 \quad (3P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if 'g' in teilaufg:

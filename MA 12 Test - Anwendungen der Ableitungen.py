@@ -104,7 +104,7 @@ def erstellen(Teil):
                            + str(x_wert_x2) + r'} \quad (1P) \quad \mathbf{P_1(' + str(x_wert_x1)
                            + r' \vert 0)} \quad \mathrm{und} \quad \mathbf{P_2(' + str(x_wert_x2)
                            + r' \vert 0)} \quad (1P) \\\\')
-            Punkte += 6
+            Punkte += 5
             i += 1
 
         if b in teilaufg:
