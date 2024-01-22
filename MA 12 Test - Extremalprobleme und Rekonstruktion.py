@@ -3,13 +3,15 @@ import string
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
 import matplotlib.gridspec as grid
+
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
-
+from plotten import Graph
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -52,14 +54,6 @@ def vorz_str_minus(k):
     else:
         return latex(k)
 
-def vorz_Str_minus(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return r' \Big( ' + latex(k) + r' \Big)'
-    else:
-        return latex(k)
-
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
@@ -68,30 +62,75 @@ def erstellen(Teil):
     def extremalproblem_01(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
-        sp_yachse = nzahl(3,8)
-        steigung = -1 * nzahl(1,7)/2
-        fkt = steigung * x + sp_yachse
-        fkt_str = latex(steigung) + 'x' + vorz_str(sp_yachse)
+        auswahl = random.choice([0,1])
+        auswahl = 1
+        if auswahl == 0:
+            sp_yachse = nzahl(3,8)
+            steigung = -1 * nzahl(1,10)/4
+            fkt = steigung * x + sp_yachse
+            fkt_str = gzahl(steigung) + 'x' + vorz_str(sp_yachse)
+            xmax = gzahl(-1*sp_yachse/steigung)
+        elif auswahl == 1:
+            faktor = -1*nzahl(10,40)
+            sp_yachse = nzahl(3,8)
+            print(faktor/50)
+            fkt = faktor/50*x**2 + sp_yachse
+            fkt_str = latex(Rational(faktor,50)) + 'x^2' + vorz_str(sp_yachse)
+            print(solve(fkt,x))
+            xmax = solve(fkt,x)[1]
 
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
+                   'Rechtecks auf dem Graphen von f.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafiken_aufgaben = []
+        grafiken_aufgaben = ['','']
         grafiken_loesung = []
 
         if 'a' in teilaufg:
-            punkte_aufg = 2
+            punkte_aufg = 10
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')öäüp-l.ö
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') \quad . \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            nr_aufgabe += 1
+            # grafische Darstellung des Sachverhaltes
+            xwert_p = int(xmax/3 + 0.5)
+            ywert_p = fkt.subs(x,xwert_p)
+            fig, ax = plt.subplots()
+            fig.canvas.draw()
+            fig.tight_layout()
+            ax.spines['top'].set_color('none')
+            ax.spines['right'].set_color('none')
+            ax.spines['bottom'].set_position(('data', 0))
+            ax.spines['left'].set_position(('data', 0))
+            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+            plt.annotate(r'$ P(x \vert y ) $', xy=(xwert_p, ywert_p), xycoords='data',
+                         xytext=(+10, +10), textcoords='offset points', fontsize=16)
+            plt.grid()
+            xwerte = np.arange(0, xmax, 0.01)
+            ywerte = [fkt.subs(x, elements) for elements in xwerte]
+            plt.plot(xwerte, ywerte)
+            plt.plot([0,xwert_p], [ywert_p,ywert_p])
+            plt.plot([xwert_p,xwert_p],[ywert_p,0])
+            plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
+            plt.savefig(f'Aufgabe_{nr}{liste_teilaufg[i]}', dpi=200)
+            plt.show()
+
+            # Aufgaben und Lösungen
+            aufgabe.append('Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird, wenn ')
+            aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
+            loesung.append(str(teilaufg[i]) + r') \quad geg: f(x)~=~' + fkt_str
+                           + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{20em} \\'
+                           + r' \mathrm{es~gilt: \quad HB.: A~=~x \cdot y \quad und \quad NB.:f(x)~=~'
+                           + fkt_str + r' \quad (2P) } \\'
+                           + r' \\')
             i += 1
-            print(nr_aufgabe)
-            print(i)
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -131,8 +170,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test 4'
-    Titel = 'Kurvendiskussion von Parameterfunktionen'
+    Art = '8. Hausaufgabenkontrolle'
+    Titel = 'Extremalprobleme und Rekonstruktion von Funktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -161,7 +200,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2][k], width='250px')
+                        graph.add_image(aufgabe[2][k], width='200px')
                 else:
                     Aufgabe.append(elements)
 
@@ -191,7 +230,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Loesung.append(elements)
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3][k], width='400px')
+                        graph.add_image(loesung[3][k], width='200px')
                 else:
                     Loesung.append(elements)
 
@@ -201,8 +240,8 @@ def erstellen(Teil):
         print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
-    # Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Hausaufgabenkontrolle()
+    Erwartungshorizont()
 
 
 anzahl_Arbeiten = 1

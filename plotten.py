@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.gridspec as grid
 from matplotlib.patches import Arc
 from matplotlib.transforms import Bbox, IdentityTransform, TransformedBbox
+from matplotlib.patches import Polygon
 from sympy import *
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
@@ -270,7 +271,7 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-2, name='Graph'):
         plt.plot(xwerte, ywerte)
     return plt.savefig(name, dpi=200)
 
-def Graph(x_min, x_max, *funktionen):
+def Graph(x_min, x_max, name, *funktionen):
     fig, ax = plt.subplots()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -282,12 +283,12 @@ def Graph(x_min, x_max, *funktionen):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    xwerte = np.arange(x_min, x_max, 0.01)
     for fkt in funktionen:
+        xwerte = np.arange(x_min, x_max, 0.01)
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
     plt.grid(True)
-    return plt.show()
+    return plt.savefig(name, dpi=200)
 
 
 def loeschen():
