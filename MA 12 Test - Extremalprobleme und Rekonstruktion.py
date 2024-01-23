@@ -129,7 +129,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             # Aufgaben und Lösungen
-            aufgabe.append(str(teilaufg[i]) + r') Berechene den maximalen Flächeninhalt. ')
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den maximalen Flächeninhalt. ')
             loesung.append(str(teilaufg[i]) + r') \quad \\')
             i += 1
 
@@ -205,7 +205,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             # Aufgaben und Lösungen
-            aufgabe.append(str(teilaufg[i]) + r') Berechene den maximalen Flächeninhalt. ')
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den maximalen Flächeninhalt. ')
             loesung.append(str(teilaufg[i]) + r') \quad \\')
             i += 1
 
