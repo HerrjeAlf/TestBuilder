@@ -5,7 +5,7 @@ import random, math
 import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, MultiRow)
+                     MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
 from plotten import graph_xyfix, loeschen
@@ -65,15 +65,15 @@ def erstellen(Teil):
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafiken_aufgaben = ['','']
-        grafiken_loesung = []
+        grafiken_aufgaben = ['']
+        grafiken_loesung = ['']
 
         if 'a' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
 
             # Werte für den Funktionsgraphen
             steigung = zzahl(2,8)/2
@@ -102,20 +102,18 @@ def erstellen(Teil):
             table1aB.add_hline(start=2)
 
             graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung'
-                                                    f' ab und vervollständige die Wertetabelle.')
-            aufgabe.append(table1aA)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str +  r' \quad (2P)')
-            loesung.append(table1aB)
-            loesung.append(r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung '
+                                                    f'ab und vervollständige die Wertetabelle.', table1aA))
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str + r' \quad (2P) \hspace{15em} ', table1aB,
+                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if 'b' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}'))
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}'))
 
             # Werte für den Funktionsgraphen
             steigung = zzahl(2,8)/2
@@ -124,22 +122,11 @@ def erstellen(Teil):
             fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
             print(fkt), print(fkt_str)
 
-            table1aA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
-            table1aA.add_hline(start=2)
-            table1aA.add_row(
-                (MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1', 'x = 0', 'x = 1', 'x = 2'))
-            table1aA.add_hline(start=2)
-            table1aA.add_row(('', MultiRow(2, data='y Werte'), '', '', '', '', ''))
-            table1aA.add_empty_row()
-            table1aA.add_hline(start=2)
 
-            graph_xyfix(fkt, name='Graph_Aufgabe')
+            graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
             aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung'
                                                     f' ab und vervollständige die Wertetabelle.')
-            aufgabe.append(table1aA)
             loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str +  r' \quad (2P)')
-            loesung.append(table1aB)
-            loesung.append(r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -187,8 +174,7 @@ def erstellen(Teil):
     def Hausaufgabenkontrolle():
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
-        Aufgabe.packages.append(
-            Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
+        Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
         table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
@@ -204,7 +190,6 @@ def erstellen(Teil):
         for aufgabe in aufgaben:
             k = 0
             for elements in aufgabe[0]:
-                k += 1
                 if '~' in elements:
                     with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                         agn.append(elements)
@@ -214,6 +199,7 @@ def erstellen(Teil):
                         graph.add_image(aufgabe[2][k], width='200px')
                 else:
                     Aufgabe.append(elements)
+                k += 1
 
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
@@ -236,7 +222,6 @@ def erstellen(Teil):
         for loesung in aufgaben:
             k = 0
             for elements in loesung[1]:
-                k += 1
                 if '~' in elements:
                     with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                         agn.append(elements)
@@ -246,6 +231,7 @@ def erstellen(Teil):
                         graph.add_image(loesung[3][k], width='200px')
                 else:
                     Loesung.append(elements)
+                k += 1
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
