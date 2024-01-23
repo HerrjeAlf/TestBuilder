@@ -111,7 +111,9 @@ def erstellen(Teil):
             plt.show()
 
             # Aufgaben und Lösungen
-            aufgabe.append('Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird.')
+            aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
+                                              r' wenn')
+            aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
             loesung.append(str(teilaufg[i]) + r') \quad geg: f(x)~=~' + fkt_str
                            + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{20em} \\'
                            + r' \mathrm{es~gilt: \quad HB.: A~=~x \cdot y \quad und \quad NB.:f(x)~=~'
@@ -119,22 +121,35 @@ def erstellen(Teil):
                            + r' \\')
             i += 1
 
+        if 'a' and 'b' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            # Aufgaben und Lösungen
+            aufgabe.append(str(teilaufg[i]) + r') Berechene den maximalen Flächeninhalt. ')
+            loesung.append(str(teilaufg[i]) + r') \quad \\')
+            i += 1
+
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     def extremalproblem_02(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
-        faktor = -1*nzahl(10,40)
-        sp_yachse = nzahl(3,8)
-        fkt = faktor/50*x**2 + sp_yachse
-        fkt_str = latex(Rational(faktor,50)) + 'x^2' + vorz_str(sp_yachse)
-        xmax = solve(fkt,x)[1]
+
+        faktor = -1 * nzahl(10, 40)
+        sp_yachse = nzahl(3, 8)
+        fkt = faktor / 50 * x ** 2 + sp_yachse
+        fkt_str = latex(Rational(faktor, 50)) + 'x^2' + vorz_str(sp_yachse)
+        xmax = solve(fkt, x)[1]
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
                    'Rechtecks auf dem Graphen von f.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafiken_aufgaben = ['','']
+        grafiken_aufgaben = ['', '']
         grafiken_loesung = []
 
         if 'a' in teilaufg:
@@ -145,8 +160,8 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             # grafische Darstellung des Sachverhaltes
-            xwert_p = int(xmax/3 + 0.5)
-            ywert_p = fkt.subs(x,xwert_p)
+            xwert_p = int(xmax / 3 + 0.5)
+            ywert_p = fkt.subs(x, xwert_p)
             fig, ax = plt.subplots()
             fig.canvas.draw()
             fig.tight_layout()
@@ -166,90 +181,40 @@ def erstellen(Teil):
             xwerte = np.arange(0, xmax, 0.01)
             ywerte = [fkt.subs(x, elements) for elements in xwerte]
             plt.plot(xwerte, ywerte)
-            plt.plot([0,xwert_p], [ywert_p,ywert_p])
-            plt.plot([xwert_p,xwert_p],[ywert_p,0])
+            plt.plot([0, xwert_p], [ywert_p, ywert_p])
+            plt.plot([xwert_p, xwert_p], [ywert_p, 0])
             plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
             plt.savefig(f'Aufgabe_{nr}{liste_teilaufg[i]}', dpi=200)
             plt.show()
 
             # Aufgaben und Lösungen
-            aufgabe.append('Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird, wenn ')
+            aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
+                                              r' wenn')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
             loesung.append(str(teilaufg[i]) + r') \quad geg: f(x)~=~' + fkt_str
-                           + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{20em} \\'
+                           + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{10em} \\'
                            + r' \mathrm{es~gilt: \quad HB.: A~=~x \cdot y \quad und \quad NB.:f(x)~=~'
                            + fkt_str + r' \quad (2P) } \\'
                            + r' \\')
             i += 1
-
-        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
-
-    def extremalproblem_02(nr, teilaufg):
-        i = 0
-        # hier wird die Funktion erstellt.
-
-        faktor = -1*nzahl(10,40)
-        sp_yachse = nzahl(3,8)
-        fkt = faktor/50*x**2 + sp_yachse
-        fkt_str = latex(Rational(faktor,50)) + 'x^2' + vorz_str(sp_yachse)
-        xmax = solve(fkt,x)[1]
-
-
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-                   f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
-                   'Rechtecks auf dem Graphen von f.']
-        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafiken_aufgaben = ['','']
-        grafiken_loesung = []
-
-        if 'a' in teilaufg:
-            punkte_aufg = 10
+        if 'a' and 'b' in teilaufg:
+            punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            # grafische Darstellung des Sachverhaltes
-            xwert_p = int(xmax/3 + 0.5)
-            ywert_p = fkt.subs(x,xwert_p)
-            fig, ax = plt.subplots()
-            fig.canvas.draw()
-            fig.tight_layout()
-            ax.spines['top'].set_color('none')
-            ax.spines['right'].set_color('none')
-            ax.spines['bottom'].set_position(('data', 0))
-            ax.spines['left'].set_position(('data', 0))
-            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
-            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-            plt.annotate(r'$ P(' + str(xwert_p) + r' \vert ' + gzahl(N(ywert_p,2)) + ') $', xy=(xwert_p, ywert_p),
-                         xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
-            plt.grid()
-            xwerte = np.arange(0, xmax, 0.01)
-            ywerte = [fkt.subs(x, elements) for elements in xwerte]
-            plt.plot(xwerte, ywerte)
-            plt.plot([0,xwert_p], [ywert_p,ywert_p])
-            plt.plot([xwert_p,xwert_p],[ywert_p,0])
-            plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
-            plt.savefig(f'Aufgabe_{nr}{liste_teilaufg[i]}', dpi=200)
-            plt.show()
-
             # Aufgaben und Lösungen
-            aufgabe.append('Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird, wenn ')
-            aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
-            loesung.append(str(teilaufg[i]) + r') \quad geg: f(x)~=~' + fkt_str
-                           + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{20em} \\'
-                           + r' \mathrm{es~gilt: \quad HB.: A~=~x \cdot y \quad und \quad NB.:f(x)~=~'
-                           + fkt_str + r' \quad (2P) } \\'
-                           + r' \\')
+            aufgabe.append(str(teilaufg[i]) + r') Berechene den maximalen Flächeninhalt. ')
+            loesung.append(str(teilaufg[i]) + r') \quad \\')
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [extremalproblem_01(1, ['a'])]
+    aufgaben = [extremalproblem_02(1, ['a'])]
+
+
+aufgaben = [extremalproblem_02(1, ['a'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
