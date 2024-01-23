@@ -95,9 +95,8 @@ def erstellen(Teil):
         list = np.array([int(element) if element % 1 == 0 else element for element in list])
         return np.array(list)
 
-    def punkte_eben(nr, teilaufg):
+    def punkte_ebene(nr, teilaufg):
         i = 0
-
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt auf Gerade g_1
         v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
@@ -108,7 +107,7 @@ def erstellen(Teil):
         uz = - 1 * (vx * ux + vy * uy) / vz
         u = vektor_ganzzahl([ux, uy, uz])
         punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(u))
+        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
         w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
         [wx, wy, wz] = vektor_runden(w, 3)
         n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
@@ -119,9 +118,11 @@ def erstellen(Teil):
                    'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
                    'C( ' + gzahl(cx) + ' | ' + gzahl(cy) + ' | ' + gzahl(cz) + ' ).  \n\n']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = ['']
+        grafiken_loesung = []
 
         if 'a' in teilaufg:
-            punkte_aufg = 10
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -139,12 +140,12 @@ def erstellen(Teil):
                            + gzahl(bx - ax) + r' \\' + gzahl(by - ay) + r' \\' + gzahl(bz - az) + r' \\'
                            r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                            + gzahl(cx - ax) + r' \\' + gzahl(cy - ay) + r' \\' + gzahl(cz - az) + r' \\'
-                           r' \end{pmatrix} \quad (2P) \\'
+                           r' \end{pmatrix} \quad (5P) \\'
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if a and b in teilaufg:
-            punkte_aufg = 10
+        if 'a' and 'b' in teilaufg:
+            punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -157,21 +158,56 @@ def erstellen(Teil):
                            + gzahl(vz * wx) + '-' + vorz_str_minus(vx * wz) + r' \\'
                            + gzahl(vx * wy) + '-' + vorz_str_minus(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
                            + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                           + r' \end{pmatrix} \quad (2P) \quad \mathrm{und}'
-                           + r'\quad E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                           + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
+                           + r' \end{pmatrix} ~=~ ' + gzahl(Rational(ny,ny_gk)) + r' \cdot \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \quad (3P) \\\\'
+                           + r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                           + latex(nx_gk) + r' \\' + latex(ny_gk) + r' \\' + latex(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0 \quad (2P) \\'
-                           + r'E:~' + latex(nx_gk) + r' \cdot x' + vorz_str(ny_gk) + r' \cdot y' + vorz_str(nz_gk) + r' \cdot z'
-                           + '~=~' + latex(np.dot(punkt_a, n_gk)) + r' \quad (2P) \\'
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} ~=~0 \quad (2P) \\\\' + r'E:~' + gzahl(nx_gk) + r' \cdot x'
+                           + vorz_str(ny_gk) + r' \cdot y' + vorz_str(nz_gk) + r' \cdot z' + '~=~'
+                           + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
+
+        if 'a' and 'b' and 'c' in teilaufg:
+            parameter_r = zzahl(1,4)
+            parameter_s = zzahl(1,4)
+            auswahl = random.choice([0,1])
+            if auswahl == 0:
+                punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
+                                        + parameter_s * np.array(w))
+            else:
+                punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
+                                        + parameter_s * np.array(w) + zzahl(1, 7) / 2 * np.array(n_gk))
+            if np.array_equal(punkt_t, punkt_c + parameter_r * v + parameter_s * w):
+                lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~auf~der~Geraden.} \quad (3P) \\'
+            else:
+                lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~auf~der~Geraden.} \quad (3P) \\'
+            punkte_aufg = 3
+
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append('')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            aufgabe.append('Gegeben ist ein weiterer Punkt T( ' + gzahl(tx) + ' | ' + gzahl(ty) + ' | '
+                           + gzahl(tz) + ' ), \n\n')
+            aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T in der Ebene E liegt. \n\n')
+            loesung.append(str(teilaufg[i]) + (r') \quad E:~' + gzahl(nx_gk) + r' \cdot (' + gzahl(tx) + ')'
+                                               + vorz_str(ny_gk) + r' \cdot (' + gzahl(ty) + ')'
+                                               + vorz_str(nz_gk) + r' \cdot (' + gzahl(tz) + ') ~=~'
+                                               + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
+                                               + gzahl(np.dot(n_gk, punkt_t)) + '~=~'
+                                               + gzahl(np.dot(punkt_a, n_gk)) + lsg
+                                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [extremalproblem_02(1, ['a'])]
+    aufgaben = [punkte_ebene(1, ['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -203,12 +239,12 @@ def erstellen(Teil):
 
     # Angaben für den Test im pdf-Dokument
     Datum = datetime.date.today().strftime('%d.%m.%Y')
-    Kurs = 'Leistungskurs'
+    Kurs = 'Grundkurs'
     Fach = 'Mathematik'
-    Klasse = '12'
+    Klasse = '13'
     Lehrer = 'Herr Herrys'
     Art = '8. Hausaufgabenkontrolle'
-    Titel = 'Extremalprobleme und Rekonstruktion von Funktionen'
+    Titel = 'Lagebeziehung Punkt Ebene'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
