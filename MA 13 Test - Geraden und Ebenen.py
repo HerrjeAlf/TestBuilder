@@ -70,7 +70,6 @@ def erstellen(Teil):
     def vektor_ganzzahl(vec):
         return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
-
     def vektor_kürzen(vec):
         faktor = [x + 1 for x in range(50)]
         list = np.array(vec)

@@ -30,21 +30,29 @@ def gzahl(k):
     else:
         return latex(k)
 
+def vorz(k):
+    if k == -1:
+        return '-'
+    elif k == 1:
+        return '+'
+    else:
+        pass
 
 def vorz_str(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
-        k = latex(k)
+        return latex(k)
     else:
-        k = '+' + latex(k)
-    return k
-
+        return f'+{latex(k)}'
 
 def vorz_str_minus(k):
+    if k%1 == 0:
+        k = int(k)
     if k < 0:
-        k = '(' + latex(k) + ')'
+        return f'({latex(k)})'
     else:
-        k = latex(k)
-    return k
+        return latex(k)
 
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
@@ -359,8 +367,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
-probe = True
+anzahl_Arbeiten = 1
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
