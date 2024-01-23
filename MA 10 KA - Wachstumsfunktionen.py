@@ -14,6 +14,7 @@ from plotten import graph_xyfix, loeschen
 
 a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
+nr_aufgabe = 0
 
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -64,12 +65,16 @@ def erstellen(Teil):
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+        grafiken_aufgaben = ['','']
+        grafiken_loesung = []
 
         if 'a' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken = ['Graph_Aufgabe']
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
             # Werte für den Funktionsgraphen
             steigung = zzahl(2,8)/2
             schnittpunkt_y = zzahl(1,8)/2
@@ -96,6 +101,38 @@ def erstellen(Teil):
                               gzahl(N(fkt.subs(x,2),3))))
             table1aB.add_hline(start=2)
 
+            graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung'
+                                                    f' ab und vervollständige die Wertetabelle.')
+            aufgabe.append(table1aA)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str +  r' \quad (2P)')
+            loesung.append(table1aB)
+            loesung.append(r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
+
+        if 'b' in teilaufg:
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            # Werte für den Funktionsgraphen
+            steigung = zzahl(2,8)/2
+            schnittpunkt_y = zzahl(1,8)/2
+            fkt = steigung *x + schnittpunkt_y
+            fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+            print(fkt), print(fkt_str)
+
+            table1aA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+            table1aA.add_hline(start=2)
+            table1aA.add_row(
+                (MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1', 'x = 0', 'x = 1', 'x = 2'))
+            table1aA.add_hline(start=2)
+            table1aA.add_row(('', MultiRow(2, data='y Werte'), '', '', '', '', ''))
+            table1aA.add_empty_row()
+            table1aA.add_hline(start=2)
+
             graph_xyfix(fkt, name='Graph_Aufgabe')
             aufgabe.append(str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der folgenden Abbildung'
                                                     f' ab und vervollständige die Wertetabelle.')
@@ -104,7 +141,7 @@ def erstellen(Teil):
             loesung.append(table1aB)
             loesung.append(r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
-        return [aufgabe, loesung, grafiken]
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     aufgaben = [lineare_funktionen(1,['a'])]
 
@@ -148,8 +185,10 @@ def erstellen(Teil):
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
+        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
+        Aufgabe.packages.append(
+            Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
         table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
@@ -163,15 +202,16 @@ def erstellen(Teil):
         Aufgabe.append(' \n\n\n\n')
         Aufgabe.append(LargeText(bold(f' {Titel} \n\n')))
         for aufgabe in aufgaben:
+            k = 0
             for elements in aufgabe[0]:
+                k += 1
                 if '~' in elements:
                     with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2][0], width='250px')
-                    del aufgabe[2][0]
+                        graph.add_image(aufgabe[2][k], width='200px')
                 else:
                     Aufgabe.append(elements)
 
@@ -184,20 +224,26 @@ def erstellen(Teil):
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
         print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
-    # Erwartungshorizont
+        # Erwartungshorizont
+
+
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "1cm", "lmargin": "2cm", "bmargin": "1cm", "rmargin": "1cm"}
+        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
+        Loesung.packages.append(Package('amsfonts'))
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
         for loesung in aufgaben:
+            k = 0
             for elements in loesung[1]:
+                k += 1
                 if '~' in elements:
                     with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                         agn.append(elements)
                 elif 'Abbildung' in elements:
+                    Loesung.append(elements)
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[2][0], width='200px')
+                        graph.add_image(loesung[3][k], width='200px')
                 else:
                     Loesung.append(elements)
 
@@ -210,14 +256,14 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-
 anzahl_Arbeiten = 1
-probe = True
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
         erstellen('Probe {:02d}'.format(teil_id + 1))
     else:
         erstellen(f'Gr. {alphabet[teil_id]}')
-    print() # Abstand zwischen den Arbeiten (im Terminal)
+    print()  # Abstand zwischen den Arbeiten (im Terminal)
+
 
