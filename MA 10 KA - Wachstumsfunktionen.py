@@ -69,6 +69,8 @@ def erstellen(Teil):
         grafiken_aufgaben = ['', f'Aufgabe_{nr}{liste_teilaufg[i]}']
         grafiken_loesung = ['']
 
+        steigung_1a = 1
+
         if 'a' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
@@ -77,10 +79,10 @@ def erstellen(Teil):
             grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
 
             # Werte für den Funktionsgraphen
-            steigung = zzahl(2,8)/2
+            steigung_1a = zzahl(2,8)/2
             schnittpunkt_y = zzahl(1,8)/2
-            fkt = steigung *x + schnittpunkt_y
-            fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+            fkt = steigung_1a *x + schnittpunkt_y
+            fkt_str = gzahl(steigung_1a) + 'x' + vorz_str(schnittpunkt_y)
             print(fkt), print(fkt_str)
 
             table1aA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
@@ -110,15 +112,17 @@ def erstellen(Teil):
             i += 1
 
         if 'b' in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', '', ''))
             grafiken_loesung.extend(('', f'Loesung_{nr}{liste_teilaufg[i]}'))
 
             # Werte für den Funktionsgraphen
-            steigung = zzahl(2,8)/2
-            schnittpunkt_y = zzahl(1,8)/2
+            steigung = zzahl(1,3)
+            while vorz(steigung) == vorz(steigung_1a):
+                steigung = zzahl(1,3)
+            schnittpunkt_y = zzahl(1,3)
             fkt = steigung *x + schnittpunkt_y
             fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
             print(fkt), print(fkt_str)
@@ -137,10 +141,9 @@ def erstellen(Teil):
             aufgabe.extend((str(liste_teilaufg[i]) + f') Zeichne zur folgenden Wertetabelle den Graphen'
                                                      f' der Funktion h und lies die Gleichung h(x) ab. \n\n',
                                                      table1bA,' \n\n\n\n'))
-            loesung.extend((str(liste_teilaufg[i]) + (r') \quad \mathrm{Graph~siehe~Koordinatensystem'
-                           r'\quad (2P) \quad und \quad f(x)~=~ ' + fkt_str + r' \quad (2P)} \\'
-                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
-                           , 'Abbildung'))
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~unten~im~Koordinatensystem'
+                           r'\quad (3P) \quad und \quad f(x)~=~ ' + fkt_str + r' \quad (2P)} \\'
+                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}','Abbildung'))
             graph_xyfix(fkt, bezn='h', name=f'Loesung_{nr}{liste_teilaufg[i]}')
             i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -256,8 +259,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
