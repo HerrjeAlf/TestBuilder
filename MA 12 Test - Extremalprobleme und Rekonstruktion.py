@@ -143,9 +143,11 @@ def erstellen(Teil):
     def extremalproblem_02(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
-        faktor = -1 * nzahl(10, 40)/10
         xwert_s = nzahl(1,4)
         ywert_s = nzahl(5, 10)
+        ywert = ywert_s - nzahl(1,4)
+        faktor = N((ywert-ywert_s)/xwert_s**2,2)
+        print(faktor)
         fkt = faktor*(x**2) - 2*faktor*xwert_s*x + faktor*(xwert_s**2)+ywert_s
         fkt_str = gzahl(faktor) + 'x^2' + vorz_str(-2*faktor*xwert_s) + 'x' + vorz_str(faktor*(xwert_s**2)+ywert_s)
         fkt_a = faktor*(x**3) - 2*faktor*xwert_s*(x**2) + (faktor*(xwert_s**2)+ywert_s)*x
@@ -167,6 +169,7 @@ def erstellen(Teil):
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
             # zwischenrechnungen
             fkt_1_a = 3 * faktor * (x ** 2) - 4 * faktor * xwert_s * (x) + (faktor * (xwert_s ** 2) + ywert_s)
             fkt_1_a_str = (gzahl(3 * faktor) + 'x^2' + vorz_str(-4 * faktor * xwert_s) + 'x'
@@ -178,8 +181,9 @@ def erstellen(Teil):
             fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
             fkt_1_a_lsg = solve(fkt_1_a, x)
             fkt_2_a = 6 * faktor * (x) - 4 * faktor * xwert_s
-            fkt_2_a_xo = N(fkt.subs(x,re(fkt_1_a_lsg[1])),3)
+            fkt_2_a_xo = N(fkt_2_a.subs(x,re(fkt_1_a_lsg[1])),3)
             fkt_2_a_str = gzahl(6 * faktor) + 'x' + vorz_str(-4 * faktor * xwert_s)
+            flaeche = N(fkt_a.subs(x,re(fkt_1_a_lsg[1])),3)
             # grafische Darstellung des Sachverhaltes
             xwert_p = int(xmax / 3 + 0.5)
             ywert_p = fkt.subs(x, xwert_p)
@@ -188,27 +192,28 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
                                               r' wenn')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
-            loesung.append(str(teilaufg[i]) + r') \quad \mathrmn{geg: \quad f(x)~=~' + fkt_str
-                           + r' \quad ges: x,y~für~A_{max} \quad (1P) \hspace{10em} \\'
-                           + r'es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
-                           + fkt_str + r' \quad (2P) \\'
-                           + r' \to \quad HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
-                           + r' \quad (1P) \\ A^{ \prime }(x)~=~' + fkt_1_a_str
-                           + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) \\'
-                           + r'A^{ \prime}(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
-                           + latex(3*faktor) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) \\'
-                           + r' x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)~=~' + fkt_str
+                           + r' \quad ges: x,y~für~A_{max} \quad (1P) } \\'
+                           + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
+                           + fkt_str + r' \quad (2P)}  \\'
+                           + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
+                           + r' \quad (1P) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
+                           + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) } \\'
+                           + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
+                           + vorz_str_minus(3*faktor) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
+                           + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
                            + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + vorz_str_minus(fkt_1_a_q) + '} ~=~'
-                           + gzahl(-1*fkt_1_a_p2) + r' \pm ' + vorz_str(fkt_1_a_sqrt_disk) + r' \quad (2P) \\'
-                           + r'x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
-                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) \\ A^{ \prime \prime }('
+                           + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2P) } \\'
+                           + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
+                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) } \\ \mathrm{A^{ \prime \prime }('
                            + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*faktor) + r' \cdot '
                            + vorz_str_minus(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(-4*faktor*xwert_s) + r'~=~'
-                           + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) \\'
-                           + r'} \\')
+                           + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) } \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
+
         if 'a' and 'b' in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -216,7 +221,11 @@ def erstellen(Teil):
 
             # Aufgaben und Lösungen
             aufgabe.append(str(teilaufg[i]) + r') Berechne den maximalen Flächeninhalt. ')
-            loesung.append(str(teilaufg[i]) + r') \quad \\')
+            loesung.append(str(teilaufg[i]) + r') \quad A(' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~'
+                           + gzahl(faktor) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
+                           + vorz_str(-2*faktor*xwert_s) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
+                           + vorz_str(faktor*(xwert_s**2)+ywert_s) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
+                           + ') ~=~' + gzahl(flaeche) + r' \quad (2P) \\')
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -319,7 +328,7 @@ def erstellen(Teil):
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [rekonstruktion_extremalproblem(1, ['a', 'b', 'c'])]
+    aufgaben = [extremalproblem_02(1, ['a', 'b'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -425,8 +434,8 @@ def erstellen(Teil):
         print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
-    # Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Hausaufgabenkontrolle()
+    Erwartungshorizont()
 
 
 anzahl_Arbeiten = 1
