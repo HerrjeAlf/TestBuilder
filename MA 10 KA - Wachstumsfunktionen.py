@@ -60,7 +60,7 @@ def erstellen(Teil):
     liste_punkte = ['Punkte']
 
     # Berechnung für die Aufgaben
-    def lineare_funktionen_einstieg(nr, teilaufg):
+    def lineare_funktionen(nr, teilaufg):
         i = 0
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -69,7 +69,12 @@ def erstellen(Teil):
         grafiken_aufgaben = ['', f'Aufgabe_{nr}{liste_teilaufg[i]}']
         grafiken_loesung = ['']
 
-        steigung_1a = 1
+        # Werte für den Funktionsgraphen
+        steigung = zzahl(2, 8) / 2
+        schnittpunkt_y = zzahl(1, 8) / 2
+        fkt = steigung * x + schnittpunkt_y
+        fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+        print(fkt), print(fkt_str)
 
         if 'a' in teilaufg:
             punkte_aufg = 7
@@ -78,13 +83,7 @@ def erstellen(Teil):
             grafiken_aufgaben.extend(('', '', ''))
             grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
 
-            # Werte für den Funktionsgraphen
-            steigung_1a = zzahl(2,8)/2
-            schnittpunkt_y = zzahl(1,8)/2
-            fkt = steigung_1a *x + schnittpunkt_y
-            fkt_str = gzahl(steigung_1a) + 'x' + vorz_str(schnittpunkt_y)
-            print(fkt), print(fkt_str)
-
+            # Tabelle zum Eintragen der Werte
             table1aA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
             table1aA.add_hline(start=2)
             table1aA.add_row(
@@ -94,6 +93,7 @@ def erstellen(Teil):
             table1aA.add_empty_row()
             table1aA.add_hline(start=2)
 
+            # Tabelle mit den Lösungen
             table1aB = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
             table1aB.add_hline(start=2)
             table1aB.add_row(
@@ -107,24 +107,22 @@ def erstellen(Teil):
             graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies die Funktionsgleichung f(x) aus der Darstellung '
                                                     f' ab und vervollständige die Wertetabelle. \n\n', table1aA,' \n\n\n\n'))
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str + r' \quad (2P) \hspace{15em} ', table1aB,
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str + r' \quad (2P) \hspace{5em} ', table1aB,
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
             i += 1
 
         if 'b' in teilaufg:
-            punkte_aufg = 5
+            punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', '', ''))
             grafiken_loesung.extend(('', f'Loesung_{nr}{liste_teilaufg[i]}'))
 
             # Werte für den Funktionsgraphen
-            steigung = zzahl(1,3)
-            while vorz(steigung) == vorz(steigung_1a):
-                steigung = zzahl(1,3)
-            schnittpunkt_y = zzahl(1,3)
-            fkt = steigung *x + schnittpunkt_y
-            fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+            steigung_b = zzahl(2,8)/2
+            schnittpunkt_y_b = zzahl(1,8)/2
+            fkt = steigung_b *x + schnittpunkt_y_b
+            fkt_str = gzahl(steigung_b) + 'x' + vorz_str(schnittpunkt_y_b)
             print(fkt), print(fkt_str)
 
             table1bA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
@@ -141,14 +139,33 @@ def erstellen(Teil):
             aufgabe.extend((str(liste_teilaufg[i]) + f') Zeichne zur folgenden Wertetabelle den Graphen'
                                                      f' der Funktion h und lies die Gleichung h(x) ab. \n\n',
                                                      table1bA,' \n\n\n\n'))
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~unten~im~Koordinatensystem'
-                           r'\quad (3P) \quad und \quad f(x)~=~ ' + fkt_str + r' \quad (2P)} \\'
-                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}','Abbildung'))
+            loesung.extend((str(liste_teilaufg[i]) + (r') \quad \mathrm{Graph~siehe~Koordinatensystem'
+                           r'\quad (2P) \quad und \quad f(x)~=~ ' + fkt_str + r' \quad (2P)} \\'
+                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           , 'Abbildung'))
             graph_xyfix(fkt, bezn='h', name=f'Loesung_{nr}{liste_teilaufg[i]}')
+            i += 1
+
+        if 'c' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', '', ''))
+            grafiken_loesung.extend(('', f'Loesung_{nr}{liste_teilaufg[i]}'))
+
+            nst = gzahl(N(-1 * schnittpunkt_y / steigung, 2))
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle und gib die Schnittpunkte'
+                                                    f' mit den Achsen an. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ x_{0} ~=~ - \frac{n}{m} ~=~ - \frac{'
+                           + gzahl(schnittpunkt_y) + r'}{' + gzahl(steigung) + r'} ~=~ '
+                           + nst + r' \quad (2P) \quad \to \quad S_x(' + nst + r' \vert 0) \quad und \quad S_y(0 \vert '
+                           + gzahl(schnittpunkt_y) +  r') \quad (2P) } \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [lineare_funktionen_einstieg(1,['a', 'b'])]
+    aufgaben = [lineare_funktionen(1,['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -214,7 +231,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2][k], width='350px')
+                        graph.add_image(aufgabe[2][k], width='300px')
                 else:
                     Aufgabe.append(elements)
                 k += 1
@@ -245,7 +262,7 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3][k], width='300px')
+                        graph.add_image(loesung[3][k], width='250px')
                 else:
                     Loesung.append(elements)
                 k += 1
