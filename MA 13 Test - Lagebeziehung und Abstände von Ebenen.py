@@ -112,11 +112,27 @@ def erstellen(Teil):
         [wx, wy, wz] = vektor_runden(w, 3)
         n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
         n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
-
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-                   'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
-                   'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
-                   'C( ' + gzahl(cx) + ' | ' + gzahl(cy) + ' | ' + gzahl(cz) + ' ).  \n\n']
+        if 'a' in teilaufg:
+            aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
+                       'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
+                       'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
+                       'C( ' + gzahl(cx) + ' | ' + gzahl(cy) + ' | ' + gzahl(cz) + ' ).  \n\n']
+        elif 'b' in teilaufg and 'a' not in teilaufg:
+            aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                       r' \mathrm{Gegeben~ist~die~Ebene} \quad E: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                       + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(bx - ax) + r' \\' + gzahl(by - ay) + r' \\' + gzahl(bz - az) + r' \\'
+                       r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                       + gzahl(cx - ax) + r' \\' + gzahl(cy - ay) + r' \\' + gzahl(cz - az) + r' \\'
+                       r' \end{pmatrix}']
+        elif 'a' and 'b' not in teilaufg:
+            aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                       r' \mathrm{Gegeben~ist~die~Ebene} \quad E: \begin{bmatrix} \overrightarrow{x}'
+                       r'~-~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                       + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                       r' \end{pmatrix} ~=~0']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
         grafiken_aufgaben = ['']
         grafiken_loesung = []
@@ -144,7 +160,7 @@ def erstellen(Teil):
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if 'a' and 'b' in teilaufg:
+        if 'b' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -171,7 +187,7 @@ def erstellen(Teil):
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
-        if 'a' and 'b' and 'c' in teilaufg:
+        if 'c' in teilaufg:
             parameter_r = zzahl(1,4)
             parameter_s = zzahl(1,4)
             auswahl = random.choice([0,1])
