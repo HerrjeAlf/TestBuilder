@@ -258,13 +258,13 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-2, name='Graph'):
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
     xwerte = np.arange(-6, 6, 0.01)
+    ywerte = [fkt.subs(x, elements) for elements in xwerte]
     plt.annotate(bezn, xy=(stl, fkt.subs(x, stl)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
                  fontsize=12)
     plt.grid(True)
     plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
-    ywerte = [fkt.subs(x, elements) for elements in xwerte]
     plt.plot(xwerte, ywerte)
     for fkt in funktionen:
         ywerte = [fkt.subs(x, elements) for elements in xwerte]

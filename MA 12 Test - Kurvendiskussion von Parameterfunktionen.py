@@ -475,7 +475,7 @@ def erstellen(Teil):
             i += 1
 
         if 'd' in teilaufg:
-            punkte_aufg = 16
+            punkte_aufg = 14
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             fkt_1 = collect(diff(fkt,x,1),x)

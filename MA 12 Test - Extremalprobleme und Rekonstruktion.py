@@ -11,6 +11,8 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
                      MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
+from sympy.plotting import plot as symplot
+
 from plotten import Graph
 # Definition der Funktionen
 
@@ -59,6 +61,32 @@ def erstellen(Teil):
     liste_bez = ['Aufgabe']
     liste_punkte = ['Punkte']
 
+    def Graph(fkt, xmax, xwert_p, ywert_p, name):
+        fig, ax = plt.subplots()
+        fig.canvas.draw()
+        fig.tight_layout()
+        plt.grid()
+        ax.spines['top'].set_color('none')
+        ax.spines['right'].set_color('none')
+        ax.spines['bottom'].set_position(('data', 0))
+        ax.spines['left'].set_position(('data', 0))
+        ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+        ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+        ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+        arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+        ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+        ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+        plt.annotate(r'$ P(' + str(xwert_p) + r' \vert ' + gzahl(N(ywert_p, 2)) + ') $', xy=(xwert_p, ywert_p),
+                     xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
+        xwerte = np.arange(0, xmax, 0.01)
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
+        plt.plot([0, xwert_p], [ywert_p, ywert_p])
+        plt.plot([xwert_p, xwert_p], [ywert_p, 0])
+        plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
+        return plt.savefig(name, dpi=200)
+
+
     def extremalproblem_01(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
@@ -85,30 +113,7 @@ def erstellen(Teil):
             # grafische Darstellung des Sachverhaltes
             xwert_p = int(xmax/3 + 0.5)
             ywert_p = fkt.subs(x,xwert_p)
-            fig, ax = plt.subplots()
-            fig.canvas.draw()
-            fig.tight_layout()
-            ax.spines['top'].set_color('none')
-            ax.spines['right'].set_color('none')
-            ax.spines['bottom'].set_position(('data', 0))
-            ax.spines['left'].set_position(('data', 0))
-            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
-            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-            plt.annotate(r'$ P(' + str(xwert_p) + r' \vert ' + gzahl(N(ywert_p, 2)) + ') $', xy=(xwert_p, ywert_p),
-                         xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
-            plt.grid()
-            xwerte = np.arange(0, xmax, 0.01)
-            ywerte = [fkt.subs(x, elements) for elements in xwerte]
-            plt.plot(xwerte, ywerte)
-            plt.plot([0,xwert_p], [ywert_p,ywert_p])
-            plt.plot([xwert_p,xwert_p],[ywert_p,0])
-            plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
-            plt.savefig(f'Aufgabe_{nr}{liste_teilaufg[i]}', dpi=200)
-            plt.show()
+            Graph(fkt, xmax, xwert_p,ywert_p,f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             # Aufgaben und Lösungen
             aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
@@ -138,11 +143,15 @@ def erstellen(Teil):
     def extremalproblem_02(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
+        faktor = -1 * nzahl(10, 40)/10
+        xwert_s = nzahl(1,4)
+        ywert_s = nzahl(5, 10)
+        fkt = faktor*(x**2) - 2*faktor*xwert_s*x + faktor*(xwert_s**2)+ywert_s
+        fkt_str = gzahl(faktor) + 'x^2' + vorz_str(-2*faktor*xwert_s) + 'x' + vorz_str(faktor*(xwert_s**2)+ywert_s)
+        fkt_a = faktor*(x**3) - 2*faktor*xwert_s*(x**2) + (faktor*(xwert_s**2)+ywert_s)*x
+        fkt_a_str = (gzahl(faktor) + 'x^3' + vorz_str(-2*faktor*xwert_s) + 'x^2'
+                     + vorz_str(faktor*(xwert_s**2)+ywert_s) + 'x')
 
-        faktor = -1 * nzahl(10, 40)
-        sp_yachse = nzahl(3, 8)
-        fkt = faktor / 50 * x ** 2 + sp_yachse
-        fkt_str = latex(Rational(faktor, 50)) + 'x^2' + vorz_str(sp_yachse)
         xmax = solve(fkt, x)[1]
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -153,49 +162,50 @@ def erstellen(Teil):
         grafiken_loesung = []
 
         if 'a' in teilaufg:
-            punkte_aufg = 10
+            punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-
+            # zwischenrechnungen
+            fkt_1_a = 3 * faktor * (x ** 2) - 4 * faktor * xwert_s * (x) + (faktor * (xwert_s ** 2) + ywert_s)
+            fkt_1_a_str = (gzahl(3 * faktor) + 'x^2' + vorz_str(-4 * faktor * xwert_s) + 'x'
+                           + vorz_str(faktor * (xwert_s ** 2) + ywert_s))
+            fkt_1_a_p = Rational(-4 * xwert_s, 3)
+            fkt_1_a_p2 = Rational(-2 * xwert_s, 3)
+            fkt_1_a_q = Rational(faktor * (xwert_s ** 2) + ywert_s, 3 * faktor)
+            fkt_1_a_pq = 'x^2' + vorz_str(fkt_1_a_p) + 'x' + vorz_str(fkt_1_a_q)
+            fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
+            fkt_1_a_lsg = solve(fkt_1_a, x)
+            fkt_2_a = 6 * faktor * (x) - 4 * faktor * xwert_s
+            fkt_2_a_xo = N(fkt.subs(x,re(fkt_1_a_lsg[1])),3)
+            fkt_2_a_str = gzahl(6 * faktor) + 'x' + vorz_str(-4 * faktor * xwert_s)
             # grafische Darstellung des Sachverhaltes
             xwert_p = int(xmax / 3 + 0.5)
             ywert_p = fkt.subs(x, xwert_p)
-            fig, ax = plt.subplots()
-            fig.canvas.draw()
-            fig.tight_layout()
-            ax.spines['top'].set_color('none')
-            ax.spines['right'].set_color('none')
-            ax.spines['bottom'].set_position(('data', 0))
-            ax.spines['left'].set_position(('data', 0))
-            ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-            ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
-            ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
-            arrow_fmt = dict(markersize=4, color='black', clip_on=False)
-            ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
-            ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-            plt.annotate(r'$ P(' + str(xwert_p) + r' \vert ' + gzahl(N(ywert_p, 2)) + ') $', xy=(xwert_p, ywert_p),
-                         xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
-            plt.grid()
-            xwerte = np.arange(0, xmax, 0.01)
-            ywerte = [fkt.subs(x, elements) for elements in xwerte]
-            plt.plot(xwerte, ywerte)
-            plt.plot([0, xwert_p], [ywert_p, ywert_p])
-            plt.plot([xwert_p, xwert_p], [ywert_p, 0])
-            plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
-            plt.savefig(f'Aufgabe_{nr}{liste_teilaufg[i]}', dpi=200)
-            plt.show()
-
+            Graph(fkt, xmax, xwert_p,ywert_p,f'Aufgabe_{nr}{liste_teilaufg[i]}')
             # Aufgaben und Lösungen
             aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
                                               r' wenn')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
-            loesung.append(str(teilaufg[i]) + r') \quad geg: f(x)~=~' + fkt_str
-                           + r' \quad ges: \mathrm{x,y~für~A_{max}} \quad (1P) \hspace{10em} \\'
-                           + r' \mathrm{es~gilt: \quad HB.: A~=~x \cdot y \quad und \quad NB.:f(x)~=~'
-                           + fkt_str + r' \quad (2P) } \\'
-                           + r' \\')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrmn{geg: \quad f(x)~=~' + fkt_str
+                           + r' \quad ges: x,y~für~A_{max} \quad (1P) \hspace{10em} \\'
+                           + r'es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
+                           + fkt_str + r' \quad (2P) \\'
+                           + r' \to \quad HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
+                           + r' \quad (1P) \\ A^{ \prime }(x)~=~' + fkt_1_a_str
+                           + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) \\'
+                           + r'A^{ \prime}(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
+                           + latex(3*faktor) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) \\'
+                           + r' x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
+                           + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + vorz_str_minus(fkt_1_a_q) + '} ~=~'
+                           + gzahl(-1*fkt_1_a_p2) + r' \pm ' + vorz_str(fkt_1_a_sqrt_disk) + r' \quad (2P) \\'
+                           + r'x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
+                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) \\ A^{ \prime \prime }('
+                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*faktor) + r' \cdot '
+                           + vorz_str_minus(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(-4*faktor*xwert_s) + r'~=~'
+                           + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) \\'
+                           + r'} \\')
             i += 1
         if 'a' and 'b' in teilaufg:
             punkte_aufg = 4
@@ -211,10 +221,105 @@ def erstellen(Teil):
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [extremalproblem_02(1, ['a'])]
+    def rekonstruktion(nr, teilaufg):
+        i = 0
+        # hier wird die Funktion erstellt.
+        faktor = -1 * nzahl(2,10)/5
+        while faktor == -1:
+            faktor = -1 * nzahl(1, 10)/5
+        nst = nzahl(5,8)
+        xvers = nzahl(1,3)
+        yvers = nzahl(2,6)  * (-1*faktor)
 
+        # Funktionen und Ableitungen
 
-aufgaben = [extremalproblem_02(1, ['a'])]
+        fkt = collect(expand(faktor*((x + xvers)*(x + xvers - nst) * (x + xvers + nst)) + yvers),x)
+        fkt_str = (gzahl(faktor) + 'x^(3)' + vorz_str(3*faktor*xvers) + 'x^(2)'
+                   + vorz_str(3*faktor*(xvers**2)-faktor*(nst**2)) + 'x'
+                   + vorz_str(-1*faktor*(nst**2)*xvers + faktor*(xvers**3)+yvers))
+        fkt_a = collect(expand((faktor*((x + xvers)*(x + xvers - nst) * (x + xvers + nst)) + yvers)*x),x)
+        fkt_a_str = (gzahl(faktor) + 'x^(4)' + vorz_str(3*faktor*xvers) + 'x^(3)'
+                     + vorz_str(3*faktor*(xvers**2)-faktor*(nst**2)) + 'x^2'
+                     + vorz_str(-1*faktor*(nst**2)*xvers + faktor*(xvers**3)+yvers) + 'x')
+        fkt_1_a = diff(fkt_a,x)
+        fkt_1_a_str = (gzahl(4*faktor) + 'x^(3)' + vorz_str(9*faktor*xvers) + 'x^(2)'
+                   + vorz_str(6*faktor*(xvers**2)-2*faktor*(nst**2)) + 'x'
+                   + vorz_str(-1*faktor*(nst**2)*xvers + faktor*(xvers**3)+yvers))
+        fkt_2_a = diff(fkt_a,x,2)
+        fkt_2_a_str = (gzahl(12*faktor) + 'x^(2)' + vorz_str(18*faktor*xvers) + 'x'
+                       + vorz_str(6*faktor*(xvers**2)-2*faktor*(nst**2)))
+        fkt_1_a_x0 =  solve(fkt_1_a, x)
+        print(fkt_1_a_x0)
+        # Werte für Horner-Schema
+        fkt_1_a_a1 = gzahl(4*faktor)
+        fkt_1_a_a2 = gzahl(9*faktor*xvers)
+        fkt_1_a_a3 = gzahl(6*faktor*(xvers**2)-2*faktor*(nst**2))
+        fkt_1_a_a4 = gzahl(6*faktor*(xvers**2)-2*faktor*(nst**2))
+
+        # print(fkt), print(fkt_str), print(xmax), print(fkt_a), print(fkt_a_str), print(fkt_1_a), print(fkt_1_a_str), print(fkt_2_a), print(fkt_2_a_str), symplot(fkt)
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
+                   'Rechtecks auf dem Graphen von f.']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+        grafiken_aufgaben = ['', f'Aufgabe_{nr}']
+        grafiken_loesung = ['']
+
+        # grafische Darstellung des Sachverhaltes
+        xmax = nst - xvers
+        xwert_p = int(xmax / 3 + 0.5)
+        ywert_p = fkt.subs(x, xwert_p)
+        Graph(fkt, xmax, xwert_p, ywert_p, f'Aufgabe_{nr}')
+
+        if 'a' in teilaufg:
+            punkte_aufg = 10
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            # Aufgaben und Lösungen
+            aufgabe.append(str(teilaufg[i]) + r') ')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrmn{} \\')
+            i += 1
+
+        if 'b' in teilaufg:
+
+            punkte_aufg = 10
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+             # Aufgaben und Lösungen
+            aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, '
+                                              r'damit die Rechtecksfläche maximal wird, wenn')
+            aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrmn{geg: \quad f(x)~=~' + fkt_str
+                           + r' \quad ges: x,y~für~A_{max} \quad (1P) \hspace{10em} \\'
+                           + r'es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
+                           + fkt_str + r' \quad (2P) \\'
+                           + r' \to \quad HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
+                           + r' \quad (1P) \\ A^{ \prime }(x)~=~' + fkt_1_a_str
+                           + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) \\'
+                           + r'A^{ \prime}(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r''
+                           + r'} \\')
+            i += 1
+        if 'b' and 'c' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            # Aufgaben und Lösungen
+            aufgabe.append(str(teilaufg[i]) + r') Berechne den maximalen Flächeninhalt des Rechtecks. ')
+            loesung.append(str(teilaufg[i]) + r') \quad \\')
+            i += 1
+
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+
+    aufgaben = [rekonstruktion_extremalproblem(1, ['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -320,8 +425,8 @@ aufgaben = [extremalproblem_02(1, ['a'])]
         print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
-    Hausaufgabenkontrolle()
-    Erwartungshorizont()
+    # Hausaufgabenkontrolle()
+    # Erwartungshorizont()
 
 
 anzahl_Arbeiten = 1

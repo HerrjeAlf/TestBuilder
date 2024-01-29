@@ -60,7 +60,7 @@ def erstellen(Teil):
     liste_punkte = ['Punkte']
 
     # Berechnung für die Aufgaben
-    def lineare_funktionen(nr, teilaufg):
+    def lineare_funktionen_einstieg(nr, teilaufg):
         i = 0
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -148,7 +148,7 @@ def erstellen(Teil):
             i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [lineare_funktionen(1,['a', 'b'])]
+    aufgaben = [lineare_funktionen_einstieg(1,['a', 'b'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -214,7 +214,7 @@ def erstellen(Teil):
                 elif 'Abbildung' in elements:
                     Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
-                        graph.add_image(aufgabe[2][k], width='250px')
+                        graph.add_image(aufgabe[2][k], width='350px')
                 else:
                     Aufgabe.append(elements)
                 k += 1
@@ -245,7 +245,7 @@ def erstellen(Teil):
                         agn.append(elements)
                 elif 'Abbildung' in elements:
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3][k], width='250px')
+                        graph.add_image(loesung[3][k], width='300px')
                 else:
                     Loesung.append(elements)
                 k += 1
