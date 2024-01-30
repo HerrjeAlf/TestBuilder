@@ -3,9 +3,6 @@ import string
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon
-import matplotlib.gridspec as grid
-
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow, Package)
@@ -55,6 +52,20 @@ def vorz_str_minus(k):
         return f'({latex(k)})'
     else:
         return latex(k)
+
+def vektor_rational(vec,p):
+    vec_p = [element*p for element in vec]
+    print(vec_p)
+    k = 0
+    for element in vec_p:
+        if element % 1 == 0:
+            k += 1
+    if k == 3:
+        pruefung = True
+    else:
+        pruefung = False
+    print(pruefung)
+    return pruefung
 
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
@@ -143,16 +154,28 @@ def erstellen(Teil):
     def extremalproblem_02(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
-        xwert_s = nzahl(5,10)
-        ywert_s = nzahl(5, 10)
-        ywert = ywert_s - nzahl(1,ywert_s-1)
-        faktor = (ywert-ywert_s)/xwert_s**2
-        fkt = faktor*(x**2) - 2*faktor*xwert_s*x + ywert
-        fkt_str = gzahl(faktor) + 'x^2' + vorz_str(-2*faktor*xwert_s) + 'x' + vorz_str(ywert)
-        if abs(faktor) == 1:
-            fkt_str = vorz(faktor) + 'x^2' + vorz_str(-2 * faktor * xwert_s) + 'x' + vorz_str(ywert)
-        fkt_a = faktor*(x**3) - 2*faktor*xwert_s*(x**2) + ywert * x
-        fkt_a_str = gzahl(faktor) + 'x^3' + vorz_str(-2*faktor*xwert_s) + 'x^2' + vorz_str(ywert) + 'x'
+        loesung_vektor = [1/3,1/5,1/7]
+        k = 0
+        while vektor_rational(loesung_vektor,10) != True or k < 100:
+            xwert_1 = -1 * nzahl(1,3)
+            ywert_1 = nzahl(3,8)
+            xwert_2 = nzahl(1,3)
+            ywert_2 = ywert_1 + nzahl(2,6)
+            xwert_3 = xwert_2 + nzahl(1,3)
+            ywert_3 = nzahl (2,8)
+
+            A = np.array([[xwert_1 ** 2, xwert_1, 1],
+                             [xwert_2 ** 2, xwert_2, 1],
+                             [xwert_3 ** 2, xwert_3, 1]])
+
+            b = np.array([ywert_1, ywert_2, ywert_3])
+            loesung_vektor = slv(A, b)
+            k += 1
+        [x_1, x_2, x_3] = loesung_vektor
+        fkt = x_1 * x**2 + x_2 * x + x_3
+        fkt_str = gzahl(x_1) + 'x^2' + vorz_str(x_2) + 'x' + vorz_str(x_3)
+        fkt_a = fkt*x
+        fkt_a_str = gzahl(x_1) + 'x^3' + vorz_str(x_2) + 'x^2' + vorz_str(x_3) + 'x'
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
@@ -161,29 +184,107 @@ def erstellen(Teil):
         grafiken_aufgaben = ['', f'Aufgabe_{nr}']
         grafiken_loesung = ['']
         # grafische Darstellung des Sachverhaltes
-        xwert_p0 = nzahl(1, 3)
-        ywert_p0 = N(fkt.subs(x, xwert_p0),4)
-        xwert_p1 = -1 * nzahl(1, 3)
-        ywert_p1 = N(fkt.subs(x, xwert_p1),4)
-        xwert_p2 = xwert_p0 + nzahl(1, 3)
-        ywert_p2 = N(fkt.subs(x, xwert_p2),4)
         xmax = solve(fkt, x)[1]
-        Graph(fkt,xmax, xwert_p0, ywert_p0,f'Aufgabe_{nr}')
+        Graph(fkt,xmax, xwert_2, ywert_2,f'Aufgabe_{nr}')
 
         if 'a' in teilaufg:
-            punkte_aufg = 10
+            punkte_aufg = 19
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
+            # Rekonstruktion der Funktion
+            # Zeilen 1 bis 3 vom LGS:
+
+            a1 = xwert_1 ** 2
+            b1 = xwert_1
+            c1 = 1
+            d1 = ywert_1
+
+
+            a2 = xwert_2 ** 2
+            b2 = xwert_2
+            c2 = 1
+            d2 = ywert_2
+
+            a3 = xwert_3 ** 2
+            b3 = xwert_3
+            c3 = 1
+            d3 = ywert_3
+
+            # Zeile 4 und 5 vom LGS:
+
+            z4 = gzahl(a1) + '*II - ' + vorz_str_minus(a2) + '*I'
+            a4 = 0
+            b4 = a1 * b2 - a2 * b1
+            c4 = a1 - a2
+            d4 = a1 * d2 - a2 * d1
+
+            z5 = gzahl(a1) + '*III - ' + vorz_str_minus(a3) + '*I'
+            a5 = 0
+            b5 = a1 * b3 - a3 * b1
+            c5 = a1 - a3
+            d5 = a1 * d3 - a3 * d1
+
+            # Zeile 6 vom LGS:
+
+            z6 = gzahl(b5) + '*III - ' + vorz_str_minus(b4) + '*II'
+            b6 = 0
+            c6 = b5 * c4 - b4 * c5
+            d6 = b5 * d4 - b4 * d5
+
+            # Lösungen des LGS:
+
+            lsg_c = d6 / c6
+            lsg_b = (d4 - (c4 * lsg_c)) / b4
+            lsg_a = (d1 - (c1 * lsg_c) - (b1 * lsg_b)) / a1
+
+            table2 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
+            table2.add_hline(2, 7)
+            table2.add_row('Berechnung mit Gauß-Algorithmus','Nr.', 'Berechnung', 'a', 'b', 'c', 'lsg', '')
+            table2.add_hline(2, 7)
+            table2.add_row('','I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '(1P)')
+            table2.add_row('', 'II', ' ', gzahl(a2), gzahl(b2), gzahl(c2), gzahl(d2), '(1P)')
+            table2.add_row('', 'III', ' ', gzahl(a3), gzahl(b3), gzahl(c3), gzahl(d3), '(1P)')
+            table2.add_hline(2, 7)
+            table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
+            table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1P)')
+            table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1P)')
+            table2.add_hline(2, 7)
+            table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
+            table2.add_row('', 'II', ' ', gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '')
+            table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1P)')
+            table2.add_hline(2, 7)
+
             # Aufgaben und Lösungen
-            aufgabe.append('Vom Graphen sind folgende Punkte gegeben:  S( ' + gzahl(xwert_p1) + ' | '
-                           + gzahl(ywert_p1) + ' ),  P( ' + gzahl(xwert_p0) +  r' | '
-                           + gzahl(ywert_p0) + ' ) und Q( ' + gzahl(xwert_p2)
-                           + ' | ' + gzahl(ywert_p2) + ' ) \n\n')
+            aufgabe.append('Vom Graphen sind folgende Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
+                           + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
+                           + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
+                           + ' | ' + gzahl(ywert_3) + ' ) \n\n')
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Funktionsgleichung von f. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad (2P) \\')
+            loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
+                           + r'~f(x)~=~ax^2~+~bx~c \quad (1P) } \\'
+                           + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
+                           + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
+                           + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
+                           + r' \quad (2P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                           + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
+                           + gzahl(ywert_2) + r' \quad (2P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                           + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
+                           + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
+            loesung.append(table2)
+            loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
+                           + vorz_str_minus(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
+                           + r' \cdot ~' + vorz_str_minus(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
+                           + vorz_str_minus(c4 * lsg_c) + r' \quad \vert \div ' + vorz_str_minus(b4)
+                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
+                           + vorz_str_minus(lsg_b) + vorz_str(c1) + r' \cdot ' + vorz_str_minus(lsg_c) + '~=~'
+                           + gzahl(d1) + r' \quad \vert ~-~' + vorz_str_minus(b1 * lsg_b + c1 * lsg_c)
+                           + r' \quad \vert \div ' + vorz_str_minus(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
+                           + r' \quad (2P) } \\')
             i += 1
 
         if 'b' in teilaufg:
@@ -194,17 +295,17 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             # zwischenrechnungen
-            fkt_1_a = 3 * faktor * (x ** 2) - 4 * faktor * xwert_s * (x) + ywert
-            fkt_1_a_str = gzahl(3 * faktor) + 'x^2' + vorz_str(-4 * faktor * xwert_s) + 'x' + vorz_str(ywert)
-            fkt_1_a_p = Rational(-4 * xwert_s, 3)
-            fkt_1_a_p2 = Rational(-2 * xwert_s, 3)
-            fkt_1_a_q = Rational(ywert, 3 * faktor)
+            fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
+            fkt_1_a_str = gzahl(3 * x_1) + 'x^2' + vorz_str(2 * x_2) + 'x' + vorz_str(x_3)
+            fkt_1_a_p = Rational(2 * x_2, 3 * x_1)
+            fkt_1_a_p2 = Rational(x_2, 3 * x_1)
+            fkt_1_a_q = Rational(x_3, 3 * x_1)
             fkt_1_a_pq = 'x^2' + vorz_str(fkt_1_a_p) + 'x' + vorz_str(fkt_1_a_q)
             fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
             fkt_1_a_lsg = solve(fkt_1_a, x)
-            fkt_2_a = 6 * faktor * (x) - 4 * faktor * xwert_s
+            fkt_2_a = 6 * x_1 * x + 2 * x_2
             fkt_2_a_xo = N(fkt_2_a.subs(x,re(fkt_1_a_lsg[1])),3)
-            fkt_2_a_str = gzahl(6 * faktor) + 'x' + vorz_str(-4 * faktor * xwert_s)
+            fkt_2_a_str = gzahl(6 * x_1) + 'x' + vorz_str(x_2)
             flaeche = N(fkt_a.subs(x,re(fkt_1_a_lsg[1])),3)
 
             # Aufgaben und Lösungen
@@ -219,14 +320,14 @@ def erstellen(Teil):
                            + r' \quad (1P) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
                            + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) } \\'
                            + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
-                           + vorz_str_minus(3*faktor) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
+                           + vorz_str_minus(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
                            + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
                            + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + vorz_str_minus(fkt_1_a_q) + '} ~=~'
                            + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2P) } \\'
                            + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
                            + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) } \\ \mathrm{A^{ \prime \prime }('
-                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*faktor) + r' \cdot '
-                           + vorz_str_minus(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(-4*faktor*xwert_s) + r'~=~'
+                           + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
+                           + vorz_str_minus(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
                            + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) } \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
@@ -239,12 +340,12 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             # Aufgaben und Lösungen
-            aufgabe.append(str(teilaufg[i]) + r') Berechne den maximalen Flächeninhalt. ')
+            aufgabe.append(str(teilaufg[i]) + ') Berechne den maximalen Flächeninhalt. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad A(' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~'
-                           + gzahl(faktor) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
-                           + vorz_str(-2*faktor*xwert_s) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
-                           + vorz_str(faktor*(xwert_s**2)+ywert_s) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
-                           + ') ~=~' + gzahl(flaeche) + r' \quad (2P) \\\\')
+                           + gzahl(x_1) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
+                           + vorz_str(x_2) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
+                           + vorz_str(x_3) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
+                           + ') ~=~' + gzahl(flaeche) + r' \quad (2P) \\')
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
