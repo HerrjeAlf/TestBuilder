@@ -161,7 +161,7 @@ def erstellen(Teil):
 
             nst = gzahl(N(-1 * schnittpunkt_y / steigung, 2))
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle und gib die Schnittpunkte'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle der Funktion f und gib die Schnittpunkte'
                                                     f' mit den Achsen an. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ x_{0} ~=~ - \frac{n}{m} ~=~ - \frac{'
                            + gzahl(schnittpunkt_y) + r'}{' + gzahl(steigung) + r'} ~=~ '
