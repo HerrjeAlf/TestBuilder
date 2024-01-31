@@ -201,8 +201,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = 'Hausaufgabenkontrolle 08'
-    Titel = 'Wiederholung der lineare Funktionen'
+    Art = 'Hausaufgabenkontrolle 09'
+    Titel = 'Nullstellen von linearen Funktionen'
 
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -276,8 +276,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 1
-probe = True
+anzahl_Arbeiten = 2
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
