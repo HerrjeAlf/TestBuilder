@@ -119,8 +119,14 @@ def erstellen(Teil):
             grafiken_loesung.extend(('', f'Loesung_{nr}{liste_teilaufg[i]}'))
 
             # Werte für den Funktionsgraphen
-            steigung_b = zzahl(2,8)/2
-            schnittpunkt_y_b = zzahl(1,8)/2
+            if steigung > 0:
+                steigung_b = -1*nzahl(2, 8) / 2
+                schnittpunkt_y_b = nzahl(1, 8) / 2
+            else:
+                steigung_b = nzahl(2, 8) / 2
+                schnittpunkt_y_b = -1 * nzahl(1, 8) / 2
+
+
             fkt = steigung_b *x + schnittpunkt_y_b
             fkt_str = gzahl(steigung_b) + 'x' + vorz_str(schnittpunkt_y_b)
             print(fkt), print(fkt_str)
