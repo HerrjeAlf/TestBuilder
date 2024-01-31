@@ -155,8 +155,7 @@ def erstellen(Teil):
         i = 0
         # hier wird die Funktion erstellt.
         loesung_vektor = [1/3,1/5,1/7]
-        k = 0
-        while vektor_rational(loesung_vektor,10) != True or k < 100:
+        while vektor_rational(loesung_vektor,10) != True:
             xwert_1 = -1 * nzahl(1,3)
             ywert_1 = nzahl(3,8)
             xwert_2 = nzahl(1,3)
@@ -170,7 +169,6 @@ def erstellen(Teil):
 
             b = np.array([ywert_1, ywert_2, ywert_3])
             loesung_vektor = slv(A, b)
-            k += 1
         [x_1, x_2, x_3] = loesung_vektor
         fkt = x_1 * x**2 + x_2 * x + x_3
         fkt_str = gzahl(x_1) + 'x^2' + vorz_str(x_2) + 'x' + vorz_str(x_3)
@@ -192,7 +190,7 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}','',''))
 
             # Rekonstruktion der Funktion
             # Zeilen 1 bis 3 vom LGS:
@@ -215,13 +213,13 @@ def erstellen(Teil):
 
             # Zeile 4 und 5 vom LGS:
 
-            z4 = gzahl(a1) + '*II - ' + vorz_str_minus(a2) + '*I'
+            z4 = gzahl(a1) + '*II' + vorz_str(-1*a2) + '*I'
             a4 = 0
             b4 = a1 * b2 - a2 * b1
             c4 = a1 - a2
             d4 = a1 * d2 - a2 * d1
 
-            z5 = gzahl(a1) + '*III - ' + vorz_str_minus(a3) + '*I'
+            z5 = gzahl(a1) + '*III' + vorz_str(-1*a3) + '*I'
             a5 = 0
             b5 = a1 * b3 - a3 * b1
             c5 = a1 - a3
@@ -229,10 +227,10 @@ def erstellen(Teil):
 
             # Zeile 6 vom LGS:
 
-            z6 = gzahl(b5) + '*III - ' + vorz_str_minus(b4) + '*II'
+            z6 = gzahl(b4) + '*III' + vorz_str(-1*b5) + '*II'
             b6 = 0
-            c6 = b5 * c4 - b4 * c5
-            d6 = b5 * d4 - b4 * d5
+            c6 = b4 * c5 - b5 * c4
+            d6 = b4 * d5 - b5 * d4
 
             # Lösungen des LGS:
 
@@ -258,13 +256,13 @@ def erstellen(Teil):
             table2.add_hline(2, 7)
 
             # Aufgaben und Lösungen
-            aufgabe.append('Vom Graphen sind folgende Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
+            aufgabe.append('Von einer Funktion 3. Grades sind die folgenden Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
                            + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
                            + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
                            + ' | ' + gzahl(ywert_3) + ' ) \n\n')
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Funktionsgleichung von f. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
-                           + r'~f(x)~=~ax^2~+~bx~c \quad (1P) } \\'
+                           + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
                            + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                            + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                            + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
@@ -305,7 +303,7 @@ def erstellen(Teil):
             fkt_1_a_lsg = solve(fkt_1_a, x)
             fkt_2_a = 6 * x_1 * x + 2 * x_2
             fkt_2_a_xo = N(fkt_2_a.subs(x,re(fkt_1_a_lsg[1])),3)
-            fkt_2_a_str = gzahl(6 * x_1) + 'x' + vorz_str(x_2)
+            fkt_2_a_str = gzahl(6 * x_1) + 'x' + vorz_str(2*x_2)
             flaeche = N(fkt_a.subs(x,re(fkt_1_a_lsg[1])),3)
 
             # Aufgaben und Lösungen
@@ -484,7 +482,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '8. Hausaufgabenkontrolle'
+    Art = 'Test I (2. Semester)'
     Titel = 'Extremalprobleme und Rekonstruktion von Funktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -558,7 +556,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
