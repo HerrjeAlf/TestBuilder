@@ -311,7 +311,7 @@ def erstellen(Teil):
                                               r' wenn')
             aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
             loesung.append(str(teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)~=~' + fkt_str
-                           + r' \quad ges: x,y~für~A_{max} \quad (1P) } \\'
+                           + r' \quad ges: x~für~A_{max} \quad (1P) } \\'
                            + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
                            + fkt_str + r' \quad (2P)}  \\'
                            + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
