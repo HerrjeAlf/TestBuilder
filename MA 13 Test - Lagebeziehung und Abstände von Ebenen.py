@@ -258,7 +258,6 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-            auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
                 punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(w))
@@ -276,11 +275,10 @@ def erstellen(Teil):
                        + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
             else:
                 punkt_s = [sx, sy, sz] = vektor_ganzzahl(punkt_a + zzahl(1, 5)/2 * np.array(v))
-                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 5)/2 * np.array(u)
-                                                         + zzahl(1, 5)/2 * np.array(n_gk))
-                g_v = [g_vx, g_vy, g_vz] = np.array([fx - sx, fy - sy, fz - sz])
-                ergebnis_r = zzahl(1,5)/2
-                punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
+                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 5)/2 * np.array(n_gk))
+                ergebnis_r = random.choice([-1,1]) * random.choice([0.5,1.5,2,2.5,3,3.5])
+                punkt_e = [ex, ey, ez] = punkt_s + ergebnis_r * (punkt_f - punkt_s)
+                g_v = [g_vx, g_vy, g_vz] = np.array([fx - ex, fy - ey, fz - ez])
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
                        + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
@@ -297,18 +295,20 @@ def erstellen(Teil):
                        + gzahl(ex + ergebnis_r*g_vx) + r' \vert ' + gzahl(ey + ergebnis_r*g_vy) + r' \vert '
                        + gzahl(ez + ergebnis_r*g_vz) + r') \quad (3P) \\')
 
+
                 punkte_aufg += 3
 
 
             print('punkt_e: ' + str(punkt_e))
             print('punkt_f: ' + str(punkt_f))
             print('Vektor g_v: ' + str(g_v))
-            print('ergebnis: ')
+            print('ergebnis: ' + str(ergebnis_r))
 
 
             aufgabe.extend(('und die Punkte: A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
-                            str(teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden, die A und B enthält, zur Ebene E. \n\n'))
+                            str(teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden, die A und B enthält, '
+                                               f'zur Ebene E. Berechne ggf. den Schnittpunkt. \n\n'))
             loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                            r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -365,7 +365,7 @@ def erstellen(Teil):
     Klasse = '13'
     Lehrer = 'Herr Herrys'
     Art = '9. Hausaufgabenkontrolle'
-    Titel = 'Lagebeziehung Punkt Ebene'
+    Titel = 'Lagebeziehung Gerade Ebene'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -437,7 +437,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 4
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
