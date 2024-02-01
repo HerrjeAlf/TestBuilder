@@ -256,7 +256,7 @@ def erstellen(Teil):
             table2.add_hline(2, 7)
 
             # Aufgaben und Lösungen
-            aufgabe.append('Von einer Funktion 3. Grades sind die folgenden Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
+            aufgabe.append('Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
                            + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
                            + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
                            + ' | ' + gzahl(ywert_3) + ' ) \n\n')
