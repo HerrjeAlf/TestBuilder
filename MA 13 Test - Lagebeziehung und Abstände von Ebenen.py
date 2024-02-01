@@ -274,7 +274,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-            auswahl = 'schneiden'
+            # auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
                 punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(w))
