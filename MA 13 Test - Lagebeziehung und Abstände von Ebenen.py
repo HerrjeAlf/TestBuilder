@@ -28,12 +28,16 @@ def gzahl(k):
         return latex(k)
 
 def vorz(k):
-    if k == -1:
+    if k < 0:
         return '-'
-    elif k == 1:
-        return '+'
     else:
-        pass
+        return '+'
+
+def vorz_fakt(k):
+    if k < 0:
+        return -1
+    else:
+        return 1
 
 def vorz_str(k):
     if k%1 == 0:
@@ -50,6 +54,18 @@ def vorz_str_minus(k):
         return f'({latex(k)})'
     else:
         return latex(k)
+
+def vektor_rational(vec,p):
+    vec_p = [element*p for element in vec]
+    print(vec_p)
+    k = 0
+    for element in vec_p:
+        if element % 1 == 0:
+            k += 1
+    if k == 3:
+        return True
+    else:
+        return False
 
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
@@ -69,8 +85,8 @@ def erstellen(Teil):
     def vektor_ganzzahl(vec):
         return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
-    def vektor_kürzen(vec):
-        faktor = [x + 1 for x in range(50)]
+    def vektor_kürzen(vec, p = 50):
+        faktor = [x + 1 for x in range(p)]
         list = np.array(vec)
         i = 0
         for element in vec:
@@ -78,7 +94,7 @@ def erstellen(Teil):
             if list[i] % 1 == 0:
                 i += 1
             else:
-                while (list[i] * faktor[k]) % 1 != 0 and k < 49:
+                while (list[i] * faktor[k]) % 1 != 0 and k+1 < p:
                     k += 1
                 list = list * faktor[k]
                 i += 1
@@ -258,6 +274,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
+            auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
                 punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(w))
@@ -274,11 +291,16 @@ def erstellen(Teil):
                        + gzahl(np.dot(punkt_a, n_gk))
                        + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
             else:
-                punkt_s = [sx, sy, sz] = vektor_ganzzahl(punkt_a + zzahl(1, 5)/2 * np.array(v))
-                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 5)/2 * np.array(n_gk))
-                ergebnis_r = random.choice([-1,1]) * random.choice([0.5,1.5,2,2.5,3,3.5])
-                punkt_e = [ex, ey, ez] = punkt_s + ergebnis_r * (punkt_f - punkt_s)
-                g_v = [g_vx, g_vy, g_vz] = np.array([fx - ex, fy - ey, fz - ez])
+                g_v = [1/7,1/3,1/5]
+                while vektor_rational(g_v,10) != True:
+                    punkt_s = [sx, sy, sz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
+                    punkt_t = vektor_ganzzahl(punkt_a + zzahl(1, 5)/2 * np.array(n_gk))
+                    g_v = [g_vx, g_vy, g_vz] = punkt_t - punkt_s
+                    ergebnis_r = zzahl(1, 6) / 2
+                    punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
+                    punkt_f = [fx, fy, fz] = punkt_e - vorz_fakt(ergebnis_r)*g_v
+
+
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
                        + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
@@ -299,11 +321,12 @@ def erstellen(Teil):
                 punkte_aufg += 3
 
 
-            print('punkt_e: ' + str(punkt_e))
+
+            print('punkt_s: ' + str(punkt_s))
             print('punkt_f: ' + str(punkt_f))
             print('Vektor g_v: ' + str(g_v))
-            print('ergebnis: ' + str(ergebnis_r))
-
+            print('r: ' + str(ergebnis_r))
+            print('punkt_e: ' + str(punkt_e))
 
             aufgabe.extend(('und die Punkte: A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
