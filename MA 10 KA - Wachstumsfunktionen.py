@@ -128,6 +128,7 @@ def erstellen(Teil):
 
 
             fkt = steigung_b *x + schnittpunkt_y_b
+            fkt_a = steigung*x+schnittpunkt_y
             fkt_str = gzahl(steigung_b) + 'x' + vorz_str(schnittpunkt_y_b)
             print(fkt), print(fkt_str)
 
@@ -141,7 +142,6 @@ def erstellen(Teil):
                               gzahl(N(fkt.subs(x,2),3))))
             table1bA.add_hline(start=2)
 
-            graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
             aufgabe.extend((str(liste_teilaufg[i]) + f') Zeichne zur folgenden Wertetabelle den Graphen'
                                                      f' der Funktion h und lies die Gleichung h(x) ab. \n\n',
                                                      table1bA,' \n\n\n\n'))
@@ -149,7 +149,7 @@ def erstellen(Teil):
                            r'\quad (2P) \quad und \quad f(x)~=~ ' + fkt_str + r' \quad (2P)} \\'
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
                            , 'Abbildung'))
-            graph_xyfix(fkt, bezn='h', name=f'Loesung_{nr}{liste_teilaufg[i]}')
+            graph_xyfix(fkt,fkt_a, bezn='h', name=f'Loesung_{nr}{liste_teilaufg[i]}')
             i += 1
 
         if 'c' in teilaufg:
