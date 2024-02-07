@@ -207,7 +207,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = 'Hausaufgabenkontrolle 09'
+    Art = '9. Hausaufgabenkontrolle'
     Titel = 'Nullstellen von linearen Funktionen'
 
 
