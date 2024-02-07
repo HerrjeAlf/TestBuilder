@@ -290,6 +290,47 @@ def Graph(x_min, x_max, name, *funktionen):
     plt.grid(True)
     return plt.savefig(name, dpi=200)
 
+def Baumdiagramm(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
+    fig, ax = plt.subplots()
+    fig.canvas.draw()  # Need to draw the figure to define renderer
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.axis('off')
+    ax.set_aspect(1/stf)
+    fig.tight_layout()
+    grid.SubplotSpec(gridspec=0,num1=0,num2=0)
+    ywerte_ende = [2**stf]
+    k = 0
+    for stufe in range(stf):
+        xwerte = [k+ 2,k + 2**(1 + stf-stufe)]
+        k += 2**(1 + stf-stufe)
+        ywerte_start = ywerte_ende
+        ywerte_ende = []
+        for element in ywerte_start:
+            ywerte_1 = [element,element + 2**(stf-stufe+1)]
+            ywerte_2 = [element,element - 2**(stf-stufe+1)]
+            ywerte_ende.extend((element + 2**(stf-stufe+1), element - + 2**(stf-stufe+1)))
+            plt.annotate(str(wkt), xy=(xwerte[0]/2 + xwerte[1]/2, ywerte_1[0]/2 + ywerte_1[1]/2), xycoords='data',
+                         xytext=(-3*stf,+20/stf), textcoords='offset points', fontsize=12-stufe)
+            plt.annotate(bz, xy=(xwerte[1], ywerte_1[1]), xycoords='data',xytext=(+20/stf,-(stf-stufe)),
+                         textcoords='offset points', fontsize=12-stufe)
+            plt.annotate(str(1-wkt), xy=(xwerte[0]/2 + xwerte[1]/2, ywerte_2[0]/2 + ywerte_2[1]/2), xycoords='data',
+                         xytext=(-3*stf,-50/stf), textcoords='offset points', fontsize=12-stufe)
+            plt.annotate(bz2, xy=(xwerte[1], ywerte_2[1]), xycoords='data',xytext=(+20/stf,-(stf-stufe)),
+                         textcoords='offset points', fontsize=12-stufe)
+            plt.plot(xwerte, ywerte_1, 'k')
+            plt.plot(xwerte, ywerte_2, 'k')
+            print('Stufe: ' + str(stufe))
+            print('xwerte: ' + str(xwerte))
+            print('ywerte_1: ' + str(ywerte_1))
+            print('ywerte_2: ' + str(ywerte_2))
+    plt.show()
+
+Baumdiagramm(2,0.3,'E')
+
+
 
 def loeschen():
     plt.figure().clear()
