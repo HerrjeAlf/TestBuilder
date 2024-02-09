@@ -328,10 +328,7 @@ def Baumdiagramm(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
             print('ywerte_2: ' + str(ywerte_2))
     plt.show()
 
-Baumdiagramm(2,0.3,'E')
-
-
-
 def loeschen():
     plt.figure().clear()
 
+# Baumdiagramm(2,0.3,'E')
