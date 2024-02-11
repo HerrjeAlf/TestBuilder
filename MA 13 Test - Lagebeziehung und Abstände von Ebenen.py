@@ -119,6 +119,13 @@ def erstellen(Teil):
         list = np.array([int(element) if element % 1 == 0 else element for element in list])
         return np.array(list)
 
+    def vektor_kollinear(vec1, vec2):
+        lsg = [element1 / element2 for element1 in vec1 for element2 in vec2]
+        for element in lsg:
+            if element / lsg[0] != 1:
+                return False
+        return True
+
     def punkte_ebene(nr, teilaufg):
         i = 0
         v_teiler = zzahl(1, 3)
@@ -246,21 +253,24 @@ def erstellen(Teil):
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
     def gerade_ebene(nr, teilaufg):
         i = 0
-        v_teiler = zzahl(1, 3)
-        punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
-        v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
-                                                     zzahl(1, 6) / 2 * v_teiler,
-                                                     v_teiler]))  # Vektor v ist der Richtungsvektor von Geraden g_1
+        # v_teiler = zzahl(1, 3)
+        # v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
+        #                                              zzahl(1, 6) / 2 * v_teiler,
+        #                                             v_teiler]))  # Vektor v ist der Richtungsvektor von Geraden g_1
         # Vektor u steht orthogonal auf v
-        ux, uy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
-        uz = - 1 * (vx * ux + vy * uy) / vz
-        u = vektor_ganzzahl([ux, uy, uz])
-        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
-        w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
-        [wx, wy, wz] = vektor_runden(w, 3)
-        n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
-        n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
+        # ux, uy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
+        # uz = - 1 * (vx * ux + vy * uy) / vz
+        # u = vektor_ganzzahl([ux, uy, uz])
+        # punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
+        # punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
+        # w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
+        # [wx, wy, wz] = vektor_runden(w, 3)
+        # n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
+        n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
+        punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
+        v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
+        u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
+
 
         # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
         # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
@@ -281,26 +291,24 @@ def erstellen(Teil):
             auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
             # auswahl = 'schneiden'
             if auswahl == 'identisch':
-                punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
-                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(w))
-                g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
+                punkt_e = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
+                g_v = zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                        + gzahl(np.dot(punkt_a,n_gk))
                        + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
             elif auswahl == 'parallel':
                 abstand = zzahl(1, 7) / 2 * np.array(n_gk)
                 punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
-                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_b + zzahl(1, 7) / 2 * np.array(w) + abstand)
+                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
                 g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
                 lsg = (gzahl(np.dot(n_gk,punkt_e)) + '~=~'
                        + gzahl(np.dot(punkt_a, n_gk))
                        + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
             else:
-                g_v = [1/7,1/3,1/5]
-                while vektor_rational(g_v,10) != True:
-                    punkt_s = [sx, sy, sz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
-                    punkt_t = vektor_ganzzahl(punkt_a + zzahl(1, 5)/2 * np.array(n_gk))
-                    g_v = [g_vx, g_vy, g_vz] = punkt_t - punkt_s
+                g_v = n_gk
+                while vektor_kollinear(g_v, n_gk) == True :
+                    punkt_s = punkt_a + zzahl(1,7)/2 * v + zzahl(1,7)/2*u
+                    g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
                     ergebnis_r = zzahl(1, 6) / 2
                     punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
                     punkt_f = [fx, fy, fz] = punkt_e - vorz_fakt(ergebnis_r)*g_v
@@ -389,12 +397,6 @@ def erstellen(Teil):
             punkte_aufg = 10
             n = [nx, ny, nz] = punkt_vektor(4)
             punkt_a = [ax, ay, az] = punkt_vektor(3)
-            def vektor_kollinear(vec1, vec2):
-                lsg = [element1/element2 for element1 in vec1 for element2 in vec2]
-                for element in lsg:
-                    if element/lsg[0]!=1:
-                        return False
-                return True
             while vektor_kollinear(n, n_gk) == True or np.dot(n,n_gk) == 0:
                 n = [nx, ny, nz] = punkt_vektor(4)
 
