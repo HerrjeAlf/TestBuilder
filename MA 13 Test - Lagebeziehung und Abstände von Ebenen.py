@@ -50,8 +50,6 @@ def vorz_fakt(k):
 def vorz_str(k):
     if k%1 == 0:
         k = int(k)
-    if abs(k) == 1:
-        return vorz(k)
     if k < 0:
         return latex(k)
     else:
@@ -65,14 +63,17 @@ def vorz_str_minus(k):
     else:
         return latex(k)
 
-def vektor_rational(vec,p):
+def vektor_rational(vec,p,q=1000):
     vec_p = [element*p for element in vec]
     print(vec_p)
     k = 0
+    i = 0
     for element in vec_p:
         if element % 1 == 0:
             k += 1
-    if k == 3:
+        if int(k/q) == 0:
+            i += 1
+    if k == 3 and i == 3:
         return True
     else:
         return False
@@ -261,14 +262,8 @@ def erstellen(Teil):
         n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
         n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
 
-        print('a: ' + str(punkt_a))
-        print('b: ' + str(punkt_b))
-        print('c: ' + str(punkt_c))
-        print('vektor v: ' + str(v))
-        print('vektor u: ' + str(u))
-        print('vektor w: ' + str(w))
-        print('vektor n: ' + str(n))
-        print('vektor n_gk: ' + str(n_gk))
+        # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
+        # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), ' Gegeben ist die Ebene E in der Koordinatenform ',
                    r' E:~ ' + gzahl(nx_gk) + 'x' + vorz_str(ny_gk) + 'y'
@@ -353,50 +348,103 @@ def erstellen(Teil):
 
     def ebene_ebene(nr, teilaufg):
         i = 0
-        v_teiler = zzahl(1, 3)
-        punkt_d = [dx, dy, dz] = punkt_vektor(3)  # Punkt D liegt in Ebene E
-        v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
-                                                     zzahl(1, 6) / 2 * v_teiler,
-                                                     v_teiler]))  # Vektor v ist der Richtungsvektor von Geraden g_1
-        # Vektor u steht orthogonal auf v
-        ux, uy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
-        uz = - 1 * (vx * ux + vy * uy) / vz
-        u = vektor_ganzzahl([ux, uy, uz])
-        punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_d + v)  # Punkte e und f liegen auf h
-        punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_e + zzahl(1, 4) * np.array(u))
-        w = vektor_ganzzahl(punkt_f - punkt_d)  # Vektor w ist der Richtungsvektor von h
-        [wx, wy, wz] = vektor_runden(w, 3)
-        n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
-        n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
+        n_gk = [nx_gk,ny_gk,nz_gk] = punkt_vektor(4)
+        punkt_d = punkt_vektor(3)
+        v =  np.array([ny_gk, -1*nx_gk, 0])
+        u = np.array([0, nz_gk, -1*ny_gk])
+        print('n_gk: ' + str(n_gk))
+        print('Punkt D: ' + str(punkt_d))
+        print('Vektor v: ' + str(v))
+        print('Vektor u: ' + str(u))
+
 
         auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-        auswahl = 'identisch'
+        # auswahl = 'schneiden'
         if auswahl == 'identisch':
             punkte_aufg = 4
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
             punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
-            punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b - zzahl(1, 3) * np.array(w))
+            punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 3) * np.array(u))
             g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
             k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
             lsg = (gzahl(np.dot(punkt_a,n_gk)) + '~=~' + gzahl(np.dot(punkt_d,n_gk))
-                   + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\')
+                   + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
+                   + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
 
         elif auswahl == 'parallel':
             punkte_aufg = 6
-            abstand == zzahl(1, 7) / 2
+            abstand = zzahl(1, 7) / 2
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
             punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
             punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
             g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
             k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
+            lsg = (gzahl(np.dot(punkt_a,n_gk)) + '~=~' + gzahl(np.dot(punkt_d,n_gk))
+                   + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2P) } \\'
+                   + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+
+        else:
+            punkte_aufg = 10
+            n = [nx, ny, nz] = punkt_vektor(4)
+            punkt_a = [ax, ay, az] = punkt_vektor(3)
+            def vektor_kollinear(vec1, vec2):
+                lsg = [element1/element2 for element1 in vec1 for element2 in vec2]
+                for element in lsg:
+                    if element/lsg[0]!=1:
+                        return False
+                return True
+            while vektor_kollinear(n, n_gk) == True or np.dot(n,n_gk) == 0:
+                n = [nx, ny, nz] = punkt_vektor(4)
+
+            g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1,7)/2 * np.array([nz, 0, -1*nx]))
+            k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1,7)/2 * np.array([-1*ny, nx, 0]))
+            while np.dot(n_gk,k_v) == 0 or np.dot(n_gk,g_v) == 0:
+                g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+                k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+
+            print('Vektor n: ' + str(n))
+            print('Vektor g_v: ' + str(g_v))
+            print('Vektor k_v: ' + str(k_v))
+            print(-1*np.dot(n_gk,k_v))
+            print(np.dot(n_gk,g_v))
+            # g_v, k_v = [1/3,1/5,1/7], [1/3,1/5,1/7]
+            # while vektor_rational(g_v,10,100) == False and vektor_rational(k_v,10,100) == False:
+              #   punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1,3) * np.array(n_gk)
+                #                                          + zzahl(1,3) * np.array(u))
+                # punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1,3) * np.array(n_gk)
+                #                                          + zzahl(1, 3) * np.array(v))
+                # punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + zzahl(1, 3) * np.array(v))
+                # g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
+                # k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
+            g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a,n_gk),np.dot(n_gk,g_v))*g_v
+            g_richtung = [g_rx, g_ry, g_rz] = Rational(-1*np.dot(n_gk,k_v), np.dot(n_gk,g_v))*g_v + k_v
+
             lsg = (gzahl(np.dot(punkt_a,n_gk)) + vorz_str(np.dot(n_gk,g_v)) + 'r'
                    + vorz_str(np.dot(n_gk,k_v)) + 's ~=~' + gzahl(np.dot(punkt_d,n_gk)) + r' \quad \vert '
                    + vorz_str(-1*np.dot(punkt_a,n_gk)) + r' \quad \vert '+ vorz_str(-1 * np.dot(n_gk,k_v))
-                   + r's \quad \to \quad ' + vorz_str(np.dot(n_gk,g_v)) + 'r ~=~'
+                   + r's \quad \to \quad ' + gzahl(np.dot(n_gk,g_v)) + 'r ~=~'
                    + gzahl(np.dot(punkt_d - punkt_a,n_gk)) + vorz_str(np.dot(n_gk,k_v))
-                   + 's'r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\')
+                   + r's \quad \vert \div' + vorz_str_minus(np.dot(n_gk,g_v)) + r' \quad (2P) \\ r ~=~'
+                   + gzahl(Rational(np.dot(punkt_d - punkt_a,n_gk), np.dot(n_gk,g_v)))
+                   + vorz_str(Rational(-1*np.dot(n_gk,k_v), np.dot(n_gk,g_v)))
+                   + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
+                   + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
+                   + r' \overrightarrow{x} ~=~ \begin{pmatrix} '
+                   + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                   r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a,n_gk), np.dot(n_gk,g_v)))
+                   + vorz_str(Rational(np.dot(n_gk,k_v), np.dot(n_gk,g_v)))
+                   + r's) \cdot \begin{pmatrix} '
+                   + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                   r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                   + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
+                   + r' \end{pmatrix} ~=~ \begin{pmatrix}'
+                   + gzahl(g_sx) + r' \\' + gzahl(g_sy) + r' \\' + gzahl(g_sz) + r' \\'
+                   r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                   + gzahl(g_rx) + r' \\' + gzahl(g_ry) + r' \\' + gzahl(g_rz) + r' \\'
+                   + r' \end{pmatrix} \quad (2P) \\'
+                   + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Ebenen E und F mit',
                    r' E: ~' + vorz_gzahl(nx_gk) + 'x' + vorz_str(ny_gk) + 'y' + vorz_str(nz_gk) + 'z ='
@@ -414,7 +462,6 @@ def erstellen(Teil):
 
 
         if 'a' in teilaufg:
-            punkte_aufg = 4
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -422,8 +469,8 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F sowie'
                                               f' ggf. die Schnittgerade. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
-                           + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + r' \cdot (' + gzahl(ay)
-                           + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + gzahl(nz_gk) + r' \cdot (' + gzahl(az)
+                           + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
+                           + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
                            + vorz_str(g_vz) + 'r' + vorz_str(k_vz) + 's) ~=~ ' + gzahl(np.dot(punkt_d,n_gk))
                            + r' \quad (1P) \\' + gzahl(nx_gk * ax) + vorz_str(nx_gk * g_vx) + 'r'
                            + vorz_str(nx_gk * k_vx) + 's' + vorz_str(ny_gk * ay) + vorz_str(ny_gk * g_vy) + 'r'
