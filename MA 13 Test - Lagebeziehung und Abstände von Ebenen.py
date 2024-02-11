@@ -120,9 +120,15 @@ def erstellen(Teil):
         return np.array(list)
 
     def vektor_kollinear(vec1, vec2):
-        lsg = [element1 / element2 for element1 in vec1 for element2 in vec2]
+        i = 0
+        lsg = []
+        for element in vec1:
+            lsg.append(element/vec2[i])
+            i += 1
+        print(lsg)
         for element in lsg:
             if element / lsg[0] != 1:
+                print(element/lsg[0])
                 return False
         return True
 
@@ -253,24 +259,10 @@ def erstellen(Teil):
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
     def gerade_ebene(nr, teilaufg):
         i = 0
-        # v_teiler = zzahl(1, 3)
-        # v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
-        #                                              zzahl(1, 6) / 2 * v_teiler,
-        #                                             v_teiler]))  # Vektor v ist der Richtungsvektor von Geraden g_1
-        # Vektor u steht orthogonal auf v
-        # ux, uy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
-        # uz = - 1 * (vx * ux + vy * uy) / vz
-        # u = vektor_ganzzahl([ux, uy, uz])
-        # punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
-        # punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
-        # w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
-        # [wx, wy, wz] = vektor_runden(w, 3)
-        # n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
         n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
         punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
         v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
         u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
-
 
         # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
         # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
@@ -289,7 +281,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
             auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-            # auswahl = 'schneiden'
+            auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkt_e = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 g_v = zzahl(1,7)/2*v + zzahl(1,7)/2*u
@@ -306,12 +298,12 @@ def erstellen(Teil):
                        + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
             else:
                 g_v = n_gk
-                while vektor_kollinear(g_v, n_gk) == True :
+                while vektor_kollinear(g_v, n_gk) == True:
                     punkt_s = punkt_a + zzahl(1,7)/2 * v + zzahl(1,7)/2*u
                     g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
                     ergebnis_r = zzahl(1, 6) / 2
                     punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
-                    punkt_f = [fx, fy, fz] = punkt_e - vorz_fakt(ergebnis_r)*g_v
+                    punkt_f = [fx, fy, fz] = punkt_e + g_v
 
 
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
@@ -367,7 +359,7 @@ def erstellen(Teil):
 
 
         auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-        # auswahl = 'schneiden'
+        auswahl = 'schneiden'
         if auswahl == 'identisch':
             punkte_aufg = 4
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
@@ -411,15 +403,6 @@ def erstellen(Teil):
             print('Vektor k_v: ' + str(k_v))
             print(-1*np.dot(n_gk,k_v))
             print(np.dot(n_gk,g_v))
-            # g_v, k_v = [1/3,1/5,1/7], [1/3,1/5,1/7]
-            # while vektor_rational(g_v,10,100) == False and vektor_rational(k_v,10,100) == False:
-              #   punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1,3) * np.array(n_gk)
-                #                                          + zzahl(1,3) * np.array(u))
-                # punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1,3) * np.array(n_gk)
-                #                                          + zzahl(1, 3) * np.array(v))
-                # punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + zzahl(1, 3) * np.array(v))
-                # g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
-                # k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
             g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a,n_gk),np.dot(n_gk,g_v))*g_v
             g_richtung = [g_rx, g_ry, g_rz] = Rational(-1*np.dot(n_gk,k_v), np.dot(n_gk,g_v))*g_v + k_v
 
