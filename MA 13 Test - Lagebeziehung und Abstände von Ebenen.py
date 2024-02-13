@@ -123,12 +123,12 @@ def erstellen(Teil):
         i = 0
         lsg = []
         for element in vec1:
-            lsg.append(element/vec2[i])
+            lsg.append(element / vec2[i])
             i += 1
-        print(lsg)
+        # print(lsg)
         for element in lsg:
+            # print(element / lsg[0])
             if element / lsg[0] != 1:
-                print(element/lsg[0])
                 return False
         return True
 
