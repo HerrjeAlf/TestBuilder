@@ -181,9 +181,9 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
+            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
                                               f'welche die Punkte A, B und C enthält. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(bx-ax) + r' \\' + gzahl(by-ay) + r' \\' + gzahl(bz-az) + r' \\'
                            r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ \begin{pmatrix} '
                            + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az) + r' \\'
@@ -204,9 +204,9 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
+            aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
                                               f'Normalen- und Koordinatenform um. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                            + gzahl(vy * wz) + '-' + vorz_str_minus(vz * wy) + r' \\'
                            + gzahl(vz * wx) + '-' + vorz_str_minus(vx * wz) + r' \\'
                            + gzahl(vx * wy) + '-' + vorz_str_minus(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -247,8 +247,8 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
             aufgabe.append('Gegeben ist ein weiterer Punkt T( ' + gzahl(tx) + ' | ' + gzahl(ty) + ' | '
                            + gzahl(tz) + ' ), \n\n')
-            aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T in der Ebene E liegt. \n\n')
-            loesung.append(str(teilaufg[i]) + (r') \quad E:~' + gzahl(nx_gk) + r' \cdot (' + gzahl(tx) + ')'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T in der Ebene E liegt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad E:~' + gzahl(nx_gk) + r' \cdot (' + gzahl(tx) + ')'
                                                + vorz_str(ny_gk) + r' \cdot (' + gzahl(ty) + ')'
                                                + vorz_str(nz_gk) + r' \cdot (' + gzahl(tz) + ') ~=~'
                                                + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
@@ -327,9 +327,9 @@ def erstellen(Teil):
 
             aufgabe.extend(('und die Punkte: A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
-                            str(teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden, die A und B enthält, '
+                            str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden, die A und B enthält, '
                                                f'zur Ebene E. Berechne ggf. den Schnittpunkt. \n\n'))
-            loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                            r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
@@ -389,7 +389,7 @@ def erstellen(Teil):
             punkte_aufg = 10
             n = [nx, ny, nz] = punkt_vektor(4)
             punkt_a = [ax, ay, az] = punkt_vektor(3)
-            while vektor_kollinear(n, n_gk) == True or np.dot(n,n_gk) == 0:
+            while vektor_kollinear(n, n_gk) == True:
                 n = [nx, ny, nz] = punkt_vektor(4)
 
             g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1,7)/2 * np.array([nz, 0, -1*nx]))
@@ -451,9 +451,9 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F sowie'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F sowie'
                                               f' ggf. die Schnittgerade. \n\n')
-            loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
                            + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
                            + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
                            + vorz_str(g_vz) + 'r' + vorz_str(k_vz) + 's) ~=~ ' + gzahl(np.dot(punkt_d,n_gk))
