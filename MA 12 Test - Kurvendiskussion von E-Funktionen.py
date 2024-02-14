@@ -184,7 +184,6 @@ def erstellen(Teil):
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
-                print(wert, Wachstumsfaktor)
                 if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
                     Liste.append(int(wert))
                 else:
@@ -197,8 +196,8 @@ def erstellen(Teil):
 
         def Aufgabe_Variante_2():
 
-            Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse '
-                    'wurden in der folgenden Tabelle festgehalten: \n\n')
+            Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse'
+                    ' wurden in der folgenden Tabelle festgehalten: \n\n')
 
             Grundwert = nzahl(80, 200)
             Prozentwert = zzahl(2,20) / 10
@@ -206,7 +205,6 @@ def erstellen(Teil):
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
-                print(wert, Wachstumsfaktor)
                 if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
                     Liste.append(int(wert))
                 else:
@@ -235,7 +233,7 @@ def erstellen(Teil):
 
         table3 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
         table3.add_hline(2, 7)
-        table3.add_row('Ergebnisse: ','Quotient der Werte', 'a1/a0', 'a2/a1', 'a3/a2', 'a4/a3', 'a5/a4')
+        table3.add_row('Ergebnisse: ', 'Quotient der Werte', 'a1/a0', 'a2/a1', 'a3/a2', 'a4/a3', 'a5/a4')
         table3.add_hline(2, 7)
         table3.add_row('','Quotienten', N(Aufg_Liste[1] / Aufg_Liste[0], 4), N(Aufg_Liste[2] / Aufg_Liste[1], 4),
                        N(Aufg_Liste[3] / Aufg_Liste[2], 4), N(Aufg_Liste[4] / Aufg_Liste[3], 4),
