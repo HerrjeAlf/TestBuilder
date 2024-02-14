@@ -1,5 +1,6 @@
 import datetime
 import string
+import time
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
@@ -16,6 +17,27 @@ from plotten import Graph
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
+
+
+def timer(func):
+    """
+    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
+    """
+    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
+        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
+        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
+        end_time = time.perf_counter()  # Zeit nachm ausführen
+        execution_time = end_time - start_time  # Vergangene Zeit berechnen
+
+        if func.__name__ == 'Hausaufgabenkontrolle':
+            print(f'\033[38;2;0;220;120m\033[1mKontrolle in {round(execution_time, 2)} Sekunden erstellt\033[0m')
+        elif func.__name__ == 'Erwartungshorizont':
+            print(f'\033[38;2;0;220;120m\033[1mErwartungshorizont in {round(execution_time, 2)} Sekunden erstellt\033[0m')
+        else:
+            print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
+        return result
+    return wrapper
+
 
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -162,7 +184,8 @@ def erstellen(Teil):
             Liste = [N(Grundwert * Wachstumsfaktor ** i, 3) for i in range(20)]
             Einheit_y = 'mg/l'
             Einheit_x = 'Stunden'
-            return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x
+            Tabelle_beschriftung = 'Wirkungsentwicklung:'
+            return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
 
         def Aufgabe_Variante_2():
 
@@ -175,12 +198,13 @@ def erstellen(Teil):
             Liste = [N(Grundwert * Wachstumsfaktor ** i, 4) for i in range(20)]
             Einheit_y = 'Millionen'
             Einheit_x = 'Jahren'
-            return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x
+            Tabelle_beschriftung = 'Bevölkerungsentwicklung:'
+            return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
 
         if random.random() < 0.5:
-            Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x = Aufgabe_Variante_1()
+            Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_1()
         else:
-            Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x = Aufgabe_Variante_2()
+            Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_2()
 
         Aufg_t = nzahl(7, 10)
         Aufg_wert_y = int(N(Aufg_Liste[Aufg_t], 2))
@@ -188,9 +212,9 @@ def erstellen(Teil):
 
         table2 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
         table2.add_hline(2, 7)
-        table2.add_row('Tabelle mit Werten ',f'Zeit in {Aufg_Einheit_x}', '0', '1', '2', '3', '4')
+        table2.add_row(Tab_beschr, f'Zeit in {Aufg_Einheit_x}', '0', '1', '2', '3', '4')
         table2.add_hline(2, 7)
-        table2.add_row('',f'Wert in {Aufg_Einheit_y}', Aufg_Liste[0], Aufg_Liste[1], Aufg_Liste[2],
+        table2.add_row('', f'Wert in {Aufg_Einheit_y}', Aufg_Liste[0], Aufg_Liste[1], Aufg_Liste[2],
                        Aufg_Liste[3], Aufg_Liste[4])
         table2.add_hline(2, 7)
 
@@ -218,8 +242,8 @@ def erstellen(Teil):
             # grafische Darstellung des Sachverhaltes
 
             # Aufgaben und Lösungen
-            aufgabe.extend((str(teilaufg[i]) + ') Weisen Sie nach, das es sich um exponentielles '
-                                                'Wachstum handelt. \n\n', table2, ' \n\n\n'))
+            aufgabe.extend((table2, '\n\n\n', str(teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
+                                                'Wachstum handelt.\n\n'))
             loesung.extend((str(teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
                                                r'um~exponentielles~Wachstum. \quad (3P)}', table3))
             i += 1
@@ -324,6 +348,7 @@ def erstellen(Teil):
     Titel = 'Wachstumsfunktionen und Logarithmus'
 
     # der Teil in dem die PDF-Datei erzeugt wird
+    @timer
     def Hausaufgabenkontrolle():
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
@@ -361,9 +386,10 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
-        print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
+        # print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
+    @timer
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
@@ -387,7 +413,7 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
-        print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
+        # print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
