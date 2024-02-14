@@ -97,16 +97,16 @@ def erstellen(Teil):
     def logarithmusgesetze(nr, teilaufg):
         i = 0
         # hier wird die Funktion erstellt.
-        regeln_aufgabe = {r'log_a(u \cdot v) ~=~ \hspace{10em}': r'log_a(u \cdot v) ~=~ log_a u + log_a v',
-                          r'log_a \frac{u}{v} ~=~ \hspace{10em}': r'log_a \frac{u}{v} ~=~ log_a u - log_a v',
-                          r'log_a u^r ~=~ \hspace{10em}': r' r \cdot log_a u',
-                          r'log_a \sqrt[n]{u} ~=~ \hspace{10em}': r'log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot log_a u',
-                          r'log_c b ~=~ \hspace{10em}': r'log_c b ~=~ \frac{log_a b}{log_a c} ~=~ \frac{ln b}{ln c}',
-                          r'a^{log_a b} ~=~ \hspace{10em}': r'a^{log_a b} ~=~ b',
-                          r'log_a 1 ~=~ \hspace{10em}': r'log_a 1 ~=~ 0',
-                          r'log_a a ~=~ \hspace{10em}': r'log_a 1 ~=~ 1',
-                          r'log_e ~=~ \hspace{10em}': r'log_e ~=~ ln',
-                          r'log_{10} ~=~ \hspace{10em}': r'log_{10} ~=~ lg'}
+        regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{10em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                          r'\log_a \frac{u}{v} ~=~ \hspace{10em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                          r'\log_a u^r ~=~ \hspace{10em}': r'\log_a u^r ~=~ r \cdot \log_a u',
+                          r'\log_a \sqrt[n]{u} ~=~ \hspace{10em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                          r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{ln b}{ln c}',
+                          r'a^{\log_a b} ~=~ \hspace{10em}': r'a^{\log_a b} ~=~ b',
+                          r'\log_a 1 ~=~ \hspace{10em}': r'\log_a 1 ~=~ 0',
+                          r'\log_a a ~=~ \hspace{10em}': r'\log_a 1 ~=~ 1',
+                          r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ ln',
+                          r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ lg'}
         auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -154,15 +154,15 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
-                           + r' \quad ' + str(liste_teilaufg[i+1]) + r') \quad ' + gzahl(faktor) + r' \cdot '
+                           + r' \hspace{5em} ' + str(liste_teilaufg[i+1]) + r') \quad ' + gzahl(faktor) + r' \cdot '
                            + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(faktor*ergebnis_2)
                            + r' \hspace{5em}')
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
-                           + r' \quad \vert log_{' + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1)
+                           + r' \quad \vert \log_{' + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1)
                            + r' \quad (2P) \\' + str(liste_teilaufg[i+1]) + r') \quad ' + gzahl(faktor) + r' \cdot '
                            + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(faktor*ergebnis_2)
                            + r' \quad \vert \div ' + vorz_str_minus(faktor) + r' \quad \to \quad ' + gzahl(basis_2)
-                           + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2) + r' \quad \vert log_{'
+                           + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2) + r' \quad \vert \log_{'
                            + gzahl(basis_2) + r'} \quad (2P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                            + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
                            + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2) + r' \quad (2P) \\')
@@ -175,27 +175,42 @@ def erstellen(Teil):
         # hier wird die Funktion erstellt.
         def Aufgabe_Variante_1():
 
-            Text = ('Ein Patient nimmt ein Medikament ein. Anschließend wird die Konzentration des Medikaments  im Blut'
+            Text = ('Ein Patient nimmt ein Medikament ein. Anschließend wird die Konzentration des Medikaments im Blut'
                     ' jede Stunde in mg/l gemessen. Die Messwerte ergeben folgende Tabelle: \n\n')
 
             Grundwert = nzahl(10, 20) * 10
             Prozentwert = nzahl(5, 15)
             Wachstumsfaktor = 1 - Prozentwert / 100
-            Liste = [N(Grundwert * Wachstumsfaktor ** i, 3) for i in range(20)]
+            Liste = []
+            for j in range(20):
+                wert = N(Grundwert * Wachstumsfaktor ** j, 4)
+                print(wert, Wachstumsfaktor)
+                if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
+                    Liste.append(int(wert))
+                else:
+                    Liste.append(wert)
+
             Einheit_y = 'mg/l'
             Einheit_x = 'Stunden'
-            Tabelle_beschriftung = 'Wirkungsentwicklung:'
+            Tabelle_beschriftung = 'Konzentrationsentwicklung:'
             return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
 
         def Aufgabe_Variante_2():
 
-            Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse'
-                   ' wurden in der folgenden Tabelle festgehalten: \n\n')
+            Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse '
+                    'wurden in der folgenden Tabelle festgehalten: \n\n')
 
             Grundwert = nzahl(80, 200)
             Prozentwert = zzahl(2,20) / 10
             Wachstumsfaktor = 1 + Prozentwert / 100
-            Liste = [N(Grundwert * Wachstumsfaktor ** i, 4) for i in range(20)]
+            Liste = []
+            for j in range(20):
+                wert = N(Grundwert * Wachstumsfaktor ** j, 4)
+                print(wert, Wachstumsfaktor)
+                if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
+                    Liste.append(int(wert))
+                else:
+                    Liste.append(wert)
             Einheit_y = 'Millionen'
             Einheit_x = 'Jahren'
             Tabelle_beschriftung = 'Bevölkerungsentwicklung:'
@@ -259,7 +274,7 @@ def erstellen(Teil):
 
             # Aufgaben und Lösungen
             aufgabe.append(str(teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
-            loesung.append(str(teilaufg[i]) + (r') \quad (x)~=~' + str(Aufg_c0) + r' \cdot '
+            loesung.append(str(teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
                                                + str(Aufg_a) + r'^x \quad (2P)'))
             i += 1
 
@@ -279,7 +294,7 @@ def erstellen(Teil):
             loesung.append(str(teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
                                                + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
                                                + r' \quad \to \quad ' + latex(Rational(Aufg_wert_y,Aufg_c0))
-                                               + r'~=~'+ str(Aufg_a) + r'^x \quad \vert log_{' + str(Aufg_a)
+                                               + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
                                                + r'} \quad \to \quad x~=~'
                                                + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
                                                + r' \quad (3P)'))
