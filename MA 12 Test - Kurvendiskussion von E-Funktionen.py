@@ -283,8 +283,8 @@ def erstellen(Teil):
 
 
     aufgaben = [logarithmusgesetze(1, ['a', 'b']),
-                wachstumsfunktion(2,['a','b','c','d']),
-                exponentialgleichungen(3, ['a'])]
+                exponentialgleichungen(2, ['a']),
+                wachstumsfunktion(3,['a','b','c','d'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
