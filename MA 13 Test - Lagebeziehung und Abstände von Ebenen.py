@@ -35,7 +35,10 @@ def gzahl(k):
 
 def vorz_gzahl(k):
     if abs(k) == 1:
-        return vorz(k)
+        if k < 0:
+            return '-'
+        else:
+            return ''
     if k%1 == 0:
         return latex(int(k))
     else:
