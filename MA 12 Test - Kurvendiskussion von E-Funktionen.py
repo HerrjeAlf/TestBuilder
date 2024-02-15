@@ -104,9 +104,9 @@ def erstellen(Teil):
                           r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{ln b}{ln c}',
                           r'a^{\log_a b} ~=~ \hspace{10em}': r'a^{\log_a b} ~=~ b',
                           r'\log_a 1 ~=~ \hspace{10em}': r'\log_a 1 ~=~ 0',
-                          r'\log_a a ~=~ \hspace{10em}': r'\log_a 1 ~=~ 1',
-                          r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ ln',
-                          r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ lg'}
+                          r'\log_a a ~=~ \hspace{10em}': r'\log_a a ~=~ 1',
+                          r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ \ln',
+                          r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ \lg'}
         auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -231,13 +231,17 @@ def erstellen(Teil):
                        Aufg_Liste[3], Aufg_Liste[4])
         table2.add_hline(2, 7)
 
-        table3 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+        table3 = Tabular('c|c|c|c|c|c|c|', row_height=1.5)
         table3.add_hline(2, 7)
-        table3.add_row('Ergebnisse: ', 'Quotient der Werte', 'a1/a0', 'a2/a1', 'a3/a2', 'a4/a3', 'a5/a4')
+        table3.add_row('Ergebnisse: ', 'Quotient der Werte', NoEscape(r'$\frac{a1}{a0}$'),
+                       NoEscape(r'$\frac{a2}{a1}$'), NoEscape(r'$\frac{a3}{a2}$'), NoEscape(r'$\frac{a4}{a3}$'),
+                       NoEscape(r'$\frac{a5}{a4}$'))
         table3.add_hline(2, 7)
-        table3.add_row('','Quotienten', N(Aufg_Liste[1] / Aufg_Liste[0], 4), N(Aufg_Liste[2] / Aufg_Liste[1], 4),
-                       N(Aufg_Liste[3] / Aufg_Liste[2], 4), N(Aufg_Liste[4] / Aufg_Liste[3], 4),
-                       N(Aufg_Liste[5] / Aufg_Liste[4], 4))
+        table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip('0'),
+                       str(N(Aufg_Liste[2] / Aufg_Liste[1], 4)).rstrip('0'),
+                       str(N(Aufg_Liste[3] / Aufg_Liste[2], 4)).rstrip('0'),
+                       str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip('0'),
+                       str(N(Aufg_Liste[5] / Aufg_Liste[4], 4)).rstrip('0'))
         table3.add_hline(2, 7)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
@@ -287,7 +291,7 @@ def erstellen(Teil):
             # grafische Darstellung des Sachverhaltes
 
             # Aufgaben und Lösungen
-            aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie die Zeit bis  {Aufg_wert_y} {Aufg_Einheit_y}'
+            aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie die Zeit bis {Aufg_wert_y} {Aufg_Einheit_y}'
                                               ' erreicht werden. \n\n')
             loesung.append(str(teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
                                                + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
@@ -309,7 +313,7 @@ def erstellen(Teil):
             # grafische Darstellung des Sachverhaltes
 
             # Aufgaben und Lösungen
-            aufgabe.append(str(teilaufg[i]) + f') Berechne den Wert der nach {Aufg_wert_t} {Aufg_Einheit_x}'
+            aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den Wert der nach {Aufg_wert_t} {Aufg_Einheit_x}'
                                               f' erreicht wird. \n\n')
             loesung.append(str(teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
                                                + r' \cdot '+ str(Aufg_a) + r'^{'+ str(Aufg_wert_t)+ r'} ~=~ '
