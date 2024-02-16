@@ -134,7 +134,9 @@ def erstellen(Teil):
             if element / lsg[0] != 1:
                 return False
         return True
-
+    auswahl_punkt_ebene = random.choice(['liegt in der Ebene', 'liegt nicht in der Ebene'])
+    auswahl_gerade_ebene = random.choice(['identisch','parallel','schneiden'])
+    auswahl_ebene_ebene = random.choice(['identisch','parallel','schneiden'])
     def punkte_ebene(nr, teilaufg):
         i = 0
         v_teiler = zzahl(1, 3)
@@ -152,6 +154,23 @@ def erstellen(Teil):
         [wx, wy, wz] = vektor_runden(w, 3)
         n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
         n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
+        n_betrag = np.linalg.norm(n_gk)
+        if n_betrag%1 == 0:
+            ergebnis_n0 = gzahl(n_betrag)
+        else:
+            ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk**2 + ny_gk**2 + nz_gk**2) + r'}'
+        n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
+        parameter_r = zzahl(1, 4)
+        parameter_s = zzahl(1, 4)
+        if auswahl_punkt_ebene == 'liegt in der Ebene':
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v) + parameter_s * np.array(w))
+            lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3P) \\'
+        else:
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
+                                                     + parameter_s * np.array(w)
+                                                     + zzahl(1, 7) / 2 * np.array(n_gk))
+            lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3P) \\'
+
         if 'a' in teilaufg:
             aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                        'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
@@ -228,21 +247,7 @@ def erstellen(Teil):
             i += 1
 
         if 'c' in teilaufg:
-            parameter_r = zzahl(1,4)
-            parameter_s = zzahl(1,4)
-            auswahl = random.choice([0,1])
-            if auswahl == 0:
-                punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
-                                        + parameter_s * np.array(w))
-            else:
-                punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
-                                        + parameter_s * np.array(w) + zzahl(1, 7) / 2 * np.array(n_gk))
-            if np.array_equal(punkt_t, punkt_c + parameter_r * v + parameter_s * w):
-                lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~auf~der~Geraden.} \quad (3P) \\'
-            else:
-                lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~auf~der~Geraden.} \quad (3P) \\'
             punkte_aufg = 3
-
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append('')
@@ -258,8 +263,44 @@ def erstellen(Teil):
                                                + gzahl(np.dot(n_gk, punkt_t)) + '~=~'
                                                + gzahl(np.dot(punkt_a, n_gk)) + lsg
                                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
+
             i += 1
+        if auswahl_punkt_ebene == 'liegt nicht in der Ebene':
+            if 'd' in teilaufg:
+                punkte_aufg = 4
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+
+                aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                               + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
+                               + ergebnis_n0 + r' \quad \to \quad '
+                               + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~0')
+                i += 1
+
+            if 'e' in teilaufg:
+                punkte_aufg = 3
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes T zur Ebene E. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix} \begin{pmatrix} '
+                               + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
+                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~' + gzahl((np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)), 3)))
+                i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+
     def gerade_ebene(nr, teilaufg):
         i = 0
         n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
@@ -267,6 +308,7 @@ def erstellen(Teil):
         v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
         u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
 
+        # auswahl = 'schneiden'
         # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
         # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
 
@@ -283,18 +325,17 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
-            # auswahl = 'schneiden'
-            if auswahl == 'identisch':
+
+            if auswahl_gerade_ebene == 'identisch':
                 punkt_e = [ex, ey, ez] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 punkt_f = [fx, fy, fz] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
-                while punkt_e == punkt_f:
+                while punkt_e.any() == punkt_f.any():
                     punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
                 g_v = zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                        + gzahl(np.dot(punkt_a,n_gk))
                        + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
-            elif auswahl == 'parallel':
+            elif auswahl_gerade_ebene == 'parallel':
                 abstand = zzahl(1, 7) / 2 * np.array(n_gk)
                 punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
                 punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
@@ -349,6 +390,8 @@ def erstellen(Teil):
                            + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             liste_punkte.append(punkte_aufg)
             i += 1
+        if auswahl_gerade_ebene == 'parallel':
+            pass
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -368,10 +411,8 @@ def erstellen(Teil):
         print('Vektor v: ' + str(v))
         print('Vektor u: ' + str(u))
 
-
-        auswahl = random.choice(['identisch', 'parallel', 'schneiden'])
         # auswahl = 'schneiden'
-        if auswahl == 'identisch':
+        if auswahl_ebene_ebene == 'identisch':
             punkte_aufg = 4
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
             punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
@@ -383,7 +424,7 @@ def erstellen(Teil):
                    + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
                    + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
 
-        elif auswahl == 'parallel':
+        elif auswahl_ebene_ebene == 'parallel':
             punkte_aufg = 6
             abstand = zzahl(1, 7) / 2
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
@@ -476,48 +517,44 @@ def erstellen(Teil):
 
             liste_punkte.append(punkte_aufg)
             i += 1
+        if not auswahl_gerade_ebene == 'parallel' and auswahl_punkt_ebene != 'liegt in der Ebene':
+            if 'b' in teilaufg:
+                punkte_aufg = 4
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+                punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d,n_gk),nx_gk),0,0])
+                aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{(' + gzahl(nx_gk) + ')^2 + ('
+                               + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ ' + ergebnis_n0
+                               + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                               + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~0')
+                i += 1
 
-        if 'b' in teilaufg:
-            punkte_aufg = 4
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-            liste_punkte.append(punkte_aufg)
-            punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d,n_gk),nx_gk),0,0])
-            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{(' + gzahl(nx_gk) + ')^2 + ('
-                           + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ ' + ergebnis_n0
-                           + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0')
-            i += 1
-
-        if 'c' in teilaufg:
-            punkte_aufg = 3
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.extend(( '', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-            liste_punkte.append(punkte_aufg)
-            punkt_pE = [px_E, py_E,pz_E] = (punkt_d + zzahl(1, 7) / 2 * u + zzahl(1, 7) / 2 * v
-                                            + zzahl(1, 7) / 2 * n_gk)
-            aufgabe.extend(('Gegeben ist ein Punkt P( ' + gzahl(px_E) + ' | ' + gzahl(py_E) + ' | ' + gzahl(pz_E)
-                            + ' ) \n\n', str(liste_teilaufg[i])
-                            + f') Berechnen Sie den Abstand des Punktes P zur Ebene E. \n\n'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix}'
-                           + r' \begin{pmatrix}' + gzahl(px_E) + r' \\' + gzahl(py_E) + r' \\' + gzahl(pz_E) + r' \\ '
-                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_pE-punkt_aE),1/n_betrag*n_gk),3)))
-            i += 1
+            if 'c' in teilaufg:
+                punkte_aufg = 3
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append( f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes P zur Ebene E. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix}'
+                               + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
+                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                               + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_t-punkt_aE),1/n_betrag*n_gk),3)))
+                i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [punkte_ebene(1, ['a', 'b', 'c']),
+    aufgaben = [punkte_ebene(1, ['a', 'b', 'c', 'd', 'e']),
                 gerade_ebene(2,['a']),
                 ebene_ebene(3,['a','b','c'])]
 
