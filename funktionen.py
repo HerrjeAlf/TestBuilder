@@ -1,4 +1,5 @@
-import random, sympy
+import random
+from sympy import *
 
 
 
