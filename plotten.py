@@ -241,7 +241,7 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
 
 
-def graph_xyfix(fkt, *funktionen, bezn='f', stl=-2, name='Graph'):
+def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     # fig = plt.Figure()
     # ax = plt.gca()
     fig, ax = plt.subplots()
@@ -257,10 +257,11 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-2, name='Graph'):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    plt.annotate(bezn, xy=(stl, fkt.subs(x, stl)), xycoords='data',
+                 xytext=(+5, +5), textcoords='offset points', fontsize=12)
     xwerte = np.arange(-6, 6, 0.01)
     ywerte = [fkt.subs(x, elements) for elements in xwerte]
-    plt.annotate(bezn, xy=(stl, fkt.subs(x, stl)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
-                 fontsize=12)
+
     plt.grid(True)
     plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
@@ -269,6 +270,7 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-2, name='Graph'):
     for fkt in funktionen:
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
+
     return plt.savefig(name, dpi=200)
 
 def Graph(x_min, x_max, name, *funktionen):
