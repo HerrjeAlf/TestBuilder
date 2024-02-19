@@ -7,51 +7,15 @@ from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
+from funktionen import *
 from sympy import *
-from plotten import graph_xyfix, loeschen
+from plotten import graph_xyfix
 
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
 nr_aufgabe = 0
-
-def zzahl(p, q):
-    return random.choice([-1, 1]) * random.randint(p, q)
-
-def nzahl(p, q):
-    return random.randint(p, q)
-
-def vorz(k):
-    if k == -1:
-        return '-'
-    elif k == 1:
-        return '+'
-    else:
-        return k
-
-def vorz_str(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
-def gzahl(k):
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def vorz_str_minus(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return f'({latex(k)})'
-    else:
-        return latex(k)
-
 
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
@@ -60,9 +24,8 @@ def erstellen(Teil):
     liste_punkte = ['Punkte']
 
     # Berechnung für die Aufgaben
-    def lineare_funktionen(nr, teilaufg):
+    def lineare_funktionen_einstieg(nr, teilaufg):
         i = 0
-
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Im folgenden Abbildung ist der Graph der Funktion f dargestellt.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
@@ -75,6 +38,7 @@ def erstellen(Teil):
         fkt = steigung * x + schnittpunkt_y
         fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
         print(fkt), print(fkt_str)
+
 
         if 'a' in teilaufg:
             punkte_aufg = 7
@@ -171,7 +135,64 @@ def erstellen(Teil):
             i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [lineare_funktionen(1,['a', 'b', 'c'])]
+    def wiederholung_funktionen(nr, teilaufg):
+        i = 0
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'In der folgenden Abbildung sind die Graphen der linearen Funktion f(x) '
+                   'und der quadratischen Funktion p(x) dargestellt.']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+        grafiken_aufgaben = ['', '']
+        grafiken_loesung = ['']
+        # Werte für den Funktionsgraphen
+        # lineare Funktion
+        steigung = zzahl(2, 8) / 2
+        schnittpunkt_y = zzahl(1, 8) / 2
+        fkt = steigung * x + schnittpunkt_y
+        fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+        # Parabel
+        xwert_sp = zzahl(1,4)
+        ywert_sp = zzahl(1,4)
+        fkt = collect(expand((x-xwert_sp)**2 + ywert_sp),x)
+        fkt_str = 'x^2' + vorz_str(-1*2*xwert_sp) + 'x' + vorz_str(ywert_sp + xwert_sp**2)
+
+        # Tabelle mit den Lösungen
+        table1aB = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+        table1aB.add_hline(start=2)
+        table1aB.add_row((MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1',
+                          'x = 0', 'x = 1', 'x = 2'))
+        table1aB.add_hline(start=2)
+        table1aB.add_row(('', 'y Werte', gzahl(N(fkt.subs(x, -2), 3)),
+                          gzahl(N(fkt.subs(x, -1), 3)), gzahl(N(fkt.subs(x, 0), 3)),
+                          gzahl(N(fkt.subs(x, 1), 3)), gzahl(N(fkt.subs(x, 2), 3))))
+        table1aB.add_hline(start=2)
+
+        if 'a' in teilaufg:
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
+
+            graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            aufgabe.append(str(liste_teilaufg[i]) + r') Bestimme aus dem Graphen die Funktionsgleichung f  '
+                                                     r' und erstelle die Wertetabelle von -2 bis 2. ')
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str + r' \quad (2P) \hspace{5em} ', table1aB,
+                 r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+            i += 1
+
+        if 'b' in teilaufg:
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
+
+
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+
+
+    aufgaben = [lineare_funktionen_einstieg(1,['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -282,8 +303,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
