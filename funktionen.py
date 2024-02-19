@@ -122,3 +122,29 @@ def vektor_kollinear(vec1, vec2):
         if element / lsg[0] != 1:
             return False
     return True
+
+def vektor_max(vec, p):
+    vec_p = [element / p for element in vec]
+    k = 0
+    for element in vec_p:
+        if element % 1 == 0:
+            k += 1
+    if k == 3:
+        return True
+    else:
+        return False
+
+def vektor_vergleich(vec1, vec2):
+    if len(vec1) != len(vec2):
+        return print('Vektoren verschieden lang.')
+    i = 0
+    for element in vec1:
+        if vec1[i] == vec2[i]:
+            i += 1
+        else:
+            return False
+    return True
+
+
+
+
