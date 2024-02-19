@@ -137,24 +137,24 @@ def erstellen(Teil):
 
     def wiederholung_funktionen(nr, teilaufg):
         i = 0
-
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-                   'In der folgenden Abbildung sind die Graphen der linearen Funktion f(x) '
-                   'und der quadratischen Funktion p(x) dargestellt.']
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr)))]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-        grafiken_aufgaben = ['', '']
+
+        grafiken_aufgaben = ['']
         grafiken_loesung = ['']
+
         # Werte für den Funktionsgraphen
         # lineare Funktion
         steigung = zzahl(2, 8) / 2
         schnittpunkt_y = zzahl(1, 8) / 2
-        fkt = steigung * x + schnittpunkt_y
-        fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+        fkt_f = steigung * x + schnittpunkt_y
+        fkt_f_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
         # Parabel
         xwert_sp = zzahl(1,4)
         ywert_sp = zzahl(1,4)
-        fkt = collect(expand((x-xwert_sp)**2 + ywert_sp),x)
-        fkt_str = 'x^2' + vorz_str(-1*2*xwert_sp) + 'x' + vorz_str(ywert_sp + xwert_sp**2)
+        fkt_p = collect(expand((x-xwert_sp)**2 + ywert_sp),x)
+        fkt_sp_str = '(x' + vorz_str(-1*xwert_sp) + ')^2' + vorz_str(ywert_sp)
+        fkt_p_str = 'x^2' + vorz_str(-1*2*xwert_sp) + 'x' + vorz_str(ywert_sp + xwert_sp**2)
 
         # Tabelle mit den Lösungen
         table1aB = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
@@ -162,37 +162,96 @@ def erstellen(Teil):
         table1aB.add_row((MultiRow(3, data='Wertetabelle der Funktion f:'), 'x Werte', 'x = -2', 'x = -1',
                           'x = 0', 'x = 1', 'x = 2'))
         table1aB.add_hline(start=2)
-        table1aB.add_row(('', 'y Werte', gzahl(N(fkt.subs(x, -2), 3)),
-                          gzahl(N(fkt.subs(x, -1), 3)), gzahl(N(fkt.subs(x, 0), 3)),
-                          gzahl(N(fkt.subs(x, 1), 3)), gzahl(N(fkt.subs(x, 2), 3))))
+        table1aB.add_row(('', 'y Werte', gzahl(N(fkt_f.subs(x, -2), 3)),
+                          gzahl(N(fkt_f.subs(x, -1), 3)), gzahl(N(fkt_f.subs(x, 0), 3)),
+                          gzahl(N(fkt_f.subs(x, 1), 3)), gzahl(N(fkt_f.subs(x, 2), 3))))
         table1aB.add_hline(start=2)
 
         if 'a' in teilaufg:
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
             grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
-
-            graph_xyfix(fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            aufgabe.append(str(liste_teilaufg[i]) + r') Bestimme aus dem Graphen die Funktionsgleichung f  '
-                                                     r' und erstelle die Wertetabelle von -2 bis 2. ')
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_str + r' \quad (2P) \hspace{5em} ', table1aB,
-                 r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+            graph_xyfix(fkt_f, fkt_p, bezn='f', name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            aufgabe.extend(('In der oberen Abbildung sind die Graphen der linearen Funktion f(x)'
+                            ' und der Parabel p(x) dargestellt. \n\n',
+                            str(liste_teilaufg[i]) + ') Bestimme aus dem Graphen die Funktionsgleichung f'
+                                                     ' und erstelle eine Wertetabelle von -2 bis 2. \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_f_str + r' \quad (2P) \hspace{5em} ',
+                            table1aB, r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
             i += 1
 
         if 'b' in teilaufg:
-            punkte_aufg = 2
+            punkte_aufg = 8
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt von p ab und bestimme aus dem Graphen'
+                                                    ' die Scheitelpunkt- und Normalform. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp) + r' \vert ' + gzahl(ywert_sp)
+                           + r') \quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_sp_str
+                           + r' \quad (4P) \hspace{5em} \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
 
+        if 'c' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
+            grafiken_loesung.extend(('','',f'Loesung_{nr}{liste_teilaufg[i]}'))
+
+            # Gleichung für die zweite Funktion, in Abhängkeit von der ersten
+            if steigung > 0:
+                steigung_b = -1 * nzahl(2, 8) / 2
+                schnittpunkt_y_b = nzahl(1, 4)
+            else:
+                steigung_b = nzahl(2, 8) / 2
+                schnittpunkt_y_b = -1 * nzahl(1, 4)
+
+            fkt = steigung_b * x + schnittpunkt_y_b
+            fkt_a = steigung * x + schnittpunkt_y
+            fkt_str = gzahl(steigung_b) + 'x' + vorz_str(schnittpunkt_y_b)
+            # Berechnung eines Punktes mit ganzzahligen Werten
+            werteliste = [[element,fkt.subs(x, element)] for element in [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]]
+            werteliste_gesiebt = []
+            for element in werteliste:
+                if element[1] % 1 == 0 and abs(element[1]) < 6:
+                    werteliste_gesiebt.append(element)
+                    print(element)
+
+            aufgabe.extend(('Gegeben sind die Punkte Q(' + gzahl(werteliste_gesiebt[0][0]) + ' | '
+                            + gzahl(werteliste_gesiebt[0][1]) + ') und P(' + gzahl(0) + ' | '
+                            + gzahl(schnittpunkt_y_b) + ') der linearen Funktion h(x). \n\n',
+                            str(liste_teilaufg[i]) + f') Zeichne den Graphen den Graphen durch die Punkte P und Q'
+                                                     f' der Funktion h und lies die Gleichung h(x) ab. \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~Koordinatensystem'
+                            r' \quad (2P) \quad und \quad f(x) ~=~ ' + fkt_str + r' \quad (2P) } \\'
+                            + r'\mathrm{insgesamt~' + str(punkte_aufg) + '~Punkte}', 'Abbildung'))
+            graph_xyfix(fkt, fkt_a, bezn='f', name=f'Loesung_{nr}{liste_teilaufg[i]}')
+            i += 1
+
+        if 'd' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            nst = gzahl(N(-1 * schnittpunkt_y / steigung, 2))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle der Funktion f und gib die Schnittpunkte'
+                                                    f' mit den Achsen an. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ x_{0} ~=~ - \frac{n}{m} ~=~ - \frac{'
+                           + gzahl(schnittpunkt_y) + r'}{' + gzahl(steigung) + r'} ~=~ '
+                           + nst + r' \quad (2P) \quad \to \quad S_x(' + nst + r' \vert 0) \quad und \quad S_y(0 \vert '
+                           + gzahl(schnittpunkt_y) + r') \quad (2P) } \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [lineare_funktionen_einstieg(1,['a', 'b', 'c'])]
+    aufgaben = [wiederholung_funktionen(1,['a', 'b', 'c', 'd'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -252,16 +311,17 @@ def erstellen(Teil):
         for aufgabe in aufgaben:
             k = 0
             for elements in aufgabe[0]:
+                k += 1
                 if '~' in elements:
                     with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                         agn.append(elements)
                 elif 'Abbildung' in elements:
-                    Aufgabe.append(elements)
                     with Aufgabe.create(Figure(position='h!')) as graph:
                         graph.add_image(aufgabe[2][k], width='300px')
+                    Aufgabe.append(elements)
                 else:
                     Aufgabe.append(elements)
-                k += 1
+
 
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
@@ -284,6 +344,7 @@ def erstellen(Teil):
         for loesung in aufgaben:
             k = 0
             for elements in loesung[1]:
+                k += 1
                 if '~' in elements:
                     with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                         agn.append(elements)
@@ -292,7 +353,6 @@ def erstellen(Teil):
                         graph.add_image(loesung[3][k], width='250px')
                 else:
                     Loesung.append(elements)
-                k += 1
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
