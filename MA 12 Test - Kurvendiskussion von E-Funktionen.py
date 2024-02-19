@@ -3,6 +3,7 @@ import string
 import time
 import numpy as np
 import random, math
+from funktionen import *
 import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -37,57 +38,6 @@ def timer(func):
             print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
         return result
     return wrapper
-
-
-def zzahl(p, q):
-    return random.choice([-1, 1]) * random.randint(p, q)
-
-def nzahl(p, q):
-    return random.randint(p, q)
-
-def gzahl(k):
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def vorz(k):
-    if k == -1:
-        return '-'
-    elif k == 1:
-        return '+'
-    else:
-        pass
-
-def vorz_str(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
-def vorz_str_minus(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return f'({latex(k)})'
-    else:
-        return latex(k)
-
-def vektor_rational(vec,p):
-    vec_p = [element*p for element in vec]
-    print(vec_p)
-    k = 0
-    for element in vec_p:
-        if element % 1 == 0:
-            k += 1
-    if k == 3:
-        pruefung = True
-    else:
-        pruefung = False
-    print(pruefung)
-    return pruefung
 
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
