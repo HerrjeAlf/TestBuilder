@@ -2,6 +2,7 @@ import datetime
 import string
 import numpy as np
 import random, math
+from funktionen import *
 import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -15,130 +16,30 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
-def zzahl(p, q):
-    return random.choice([-1, 1]) * random.randint(p, q)
-
-def nzahl(p, q):
-    return random.randint(p, q)
-
-def vorz(k):
-    if k < 0:
-        return '-'
-    else:
-        return '+'
-
-def gzahl(k):
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def vorz_gzahl(k):
-    if abs(k) == 1:
-        if k < 0:
-            return '-'
-        else:
-            return ''
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def vorz_fakt(k):
-    if k < 0:
-        return -1
-    else:
-        return 1
-
-def vorz_str(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
-def vorz_str_minus(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return f'({latex(k)})'
-    else:
-        return latex(k)
-
-def vektor_rational(vec,p,q=1000):
-    vec_p = [element*p for element in vec]
-    print(vec_p)
-    k = 0
-    i = 0
-    for element in vec_p:
-        if element % 1 == 0:
-            k += 1
-        if int(k/q) == 0:
-            i += 1
-    if k == 3 and i == 3:
-        return True
-    else:
-        return False
-
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
     liste_punkte = ['Punkte']
 
 
-    def punkt_vektor(p):
-        return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
-
-    def faktorliste(n, p=1,q=10):
-        return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
-
-    def vektor_runden(vec,p):
-        return [N(elements,p) for elements in vec]
-    # Berechnung für die Aufgaben
-    def vektor_ganzzahl(vec):
-        return np.array([int(element) if element % 1 == 0 else element for element in vec])
-
-    def vektor_kürzen(vec, p = 50):
-        faktor = [x + 1 for x in range(p)]
-        list = np.array(vec)
-        i = 0
-        for element in vec:
-            k = 0
-            if list[i] % 1 == 0:
-                i += 1
-            else:
-                while (list[i] * faktor[k]) % 1 != 0 and k+1 < p:
-                    k += 1
-                list = list * faktor[k]
-                i += 1
-        # print('erweitert: ' + str(list))
-        teiler = [x + 1 for x in range(int(max(list)/2))]
-        for zahl in teiler:
-            treffer = [1 for x in list if x % zahl == 0]
-            if sum(treffer) == len(vec):
-                list = list / zahl
-        # print('gekürzt: ' + str(list))
-        list = np.array([int(element) if element % 1 == 0 else element for element in list])
-        return np.array(list)
-
-    def vektor_kollinear(vec1, vec2):
-        i = 0
-        lsg = []
-        for element in vec1:
-            lsg.append(element / vec2[i])
-            i += 1
-        # print(lsg)
-        for element in lsg:
-            # print(element / lsg[0])
-            if element / lsg[0] != 1:
-                return False
-        return True
+    # Auswahl der Lagebeziehungen
     auswahl_punkt_ebene = random.choice(['liegt in der Ebene', 'liegt nicht in der Ebene'])
-    auswahl_gerade_ebene = random.choice(['identisch','parallel','schneiden'])
-    auswahl_ebene_ebene = random.choice(['identisch','parallel','schneiden'])
+    if auswahl_punkt_ebene == 'liegt in der Ebene':
+        auswahl_gerade_ebene = random.choice(['identisch', 'parallel', 'schneiden'])
+    else:
+        auswahl_gerade_ebene = random.choice(['identisch', 'schneiden'])
+    if not auswahl_gerade_ebene == 'parallel' and auswahl_punkt_ebene == 'liegt in der Ebene':
+        auswahl_ebene_ebene = 'parallel'
+    else:
+        auswahl_ebene_ebene = random.choice(['identisch', 'schneiden'])
+    print(auswahl_punkt_ebene)
+    print(auswahl_gerade_ebene)
+    print(auswahl_ebene_ebene)
+
+
     def punkte_ebene(nr, teilaufg):
         i = 0
+        n_gk = np.array([100,100,100])
         v_teiler = zzahl(1, 3)
         punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt auf Gerade g_1
         v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 6) / 2 * v_teiler,
@@ -159,11 +60,10 @@ def erstellen(Teil):
             ergebnis_n0 = gzahl(n_betrag)
         else:
             ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk**2 + ny_gk**2 + nz_gk**2) + r'}'
-        n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
-        parameter_r = zzahl(1, 4)
-        parameter_s = zzahl(1, 4)
+        parameter_r = zzahl(1, 7)/2
+        parameter_s = zzahl(1, 7)/2
         if auswahl_punkt_ebene == 'liegt in der Ebene':
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3P) \\'
         else:
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_c + parameter_r * np.array(v)
@@ -192,6 +92,8 @@ def erstellen(Teil):
                        r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                        r' \end{pmatrix} ~=~0']
+        else:
+            pass
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
         grafiken_aufgaben = ['','']
         grafiken_loesung = ['']
@@ -286,6 +188,7 @@ def erstellen(Teil):
 
             if 'e' in teilaufg:
                 punkte_aufg = 3
+                print()
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
                 grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
                 grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -297,7 +200,8 @@ def erstellen(Teil):
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~' + gzahl((np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)), 3)))
+                               + r' \end{pmatrix} ~=~'
+                               + gzahl(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
                 i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -307,7 +211,11 @@ def erstellen(Teil):
         punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
         v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
         u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
-
+        n_betrag = np.linalg.norm(n_gk)
+        if n_betrag % 1 == 0:
+            ergebnis_n0 = gzahl(n_betrag)
+        else:
+            ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk ** 2 + ny_gk ** 2 + nz_gk ** 2) + r'}'
         # auswahl = 'schneiden'
         # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
         # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
@@ -329,9 +237,9 @@ def erstellen(Teil):
             if auswahl_gerade_ebene == 'identisch':
                 punkt_e = [ex, ey, ez] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 punkt_f = [fx, fy, fz] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
-                while punkt_e.any() == punkt_f.any():
+                while vektor_vergleich(punkt_e, punkt_f) == True:
                     punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
-                g_v = zzahl(1,7)/2*v + zzahl(1,7)/2*u
+                g_v = [g_vx, g_vy, g_vz] = zzahl(1,7)/2*v + zzahl(1,7)/2*u
                 lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                        + gzahl(np.dot(punkt_a,n_gk))
                        + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
@@ -372,10 +280,11 @@ def erstellen(Teil):
 
                 punkte_aufg += 3
 
-            aufgabe.extend(('und die Punkte: A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
+            aufgabe.extend(('und die Gerade g durch die Punkte:'
+                            'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
-                            str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden, die A und B enthält, '
-                                               f'zur Ebene E. Berechne ggf. den Schnittpunkt. \n\n'))
+                            str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
+                                                     f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                            r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -391,7 +300,39 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             i += 1
         if auswahl_gerade_ebene == 'parallel':
-            pass
+            if 'b' in teilaufg:
+                punkte_aufg = 4
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                               + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
+                               + ergebnis_n0 + r' \quad \to \quad '
+                               + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                i += 1
+
+            if 'c' in teilaufg:
+                punkte_aufg = 3
+                liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+                grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+                grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix} \begin{pmatrix} '
+                               + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} ~=~' + latex((np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)), 3))
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -503,8 +444,8 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F sowie'
-                                              f' ggf. die Schnittgerade. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
+                                              f'und berechnen Sie ggf. die Schnittgerade. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
                            + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
                            + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
@@ -517,7 +458,7 @@ def erstellen(Teil):
 
             liste_punkte.append(punkte_aufg)
             i += 1
-        if not auswahl_gerade_ebene == 'parallel' and auswahl_punkt_ebene != 'liegt in der Ebene':
+        if not auswahl_gerade_ebene == 'parallel' and auswahl_punkt_ebene == 'liegt in der Ebene':
             if 'b' in teilaufg:
                 punkte_aufg = 4
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -548,15 +489,15 @@ def erstellen(Teil):
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_t-punkt_aE),1/n_betrag*n_gk),3)))
+                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3)))
                 i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
     aufgaben = [punkte_ebene(1, ['a', 'b', 'c', 'd', 'e']),
-                gerade_ebene(2,['a']),
-                ebene_ebene(3,['a','b','c'])]
+                gerade_ebene(2,['a', 'b', 'c']),
+                ebene_ebene(3,['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -665,8 +606,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
