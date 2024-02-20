@@ -99,7 +99,7 @@ def erstellen(Teil):
         grafiken_loesung = ['']
 
         if 'a' in teilaufg:
-            punkte_aufg = 5
+            punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
