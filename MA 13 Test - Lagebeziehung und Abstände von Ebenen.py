@@ -183,7 +183,8 @@ def erstellen(Teil):
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0')
+                               + r' \end{pmatrix} ~=~0'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
             if 'e' in teilaufg:
@@ -194,14 +195,15 @@ def erstellen(Teil):
                 grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
                 liste_punkte.append(punkte_aufg)
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes T zur Ebene E. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix} \begin{pmatrix} '
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~'
-                               + gzahl(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
+                               + r' \end{pmatrix} \vert ~=~'
+                               + gzahl(abs(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -324,13 +326,14 @@ def erstellen(Teil):
                 grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
                 liste_punkte.append(punkte_aufg)
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix} \begin{pmatrix} '
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~' + latex((np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)), 3))
+                               + r' \end{pmatrix} \vert ~=~'
+                               + latex(abs((np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)), 3)))
                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
@@ -483,13 +486,13 @@ def erstellen(Teil):
                 grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
                 liste_punkte.append(punkte_aufg)
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes P zur Ebene E. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \begin{bmatrix}'
+                loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix}'
                                + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3))
+                               + r' \end{pmatrix} \vert ~=~' + gzahl(abs(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3)))
                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
