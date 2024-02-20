@@ -534,8 +534,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = '11. Hausaufgabenkontrolle'
-    Titel = 'Lagebeziehung Ebene Ebene'
+    Art = 'Test'
+    Titel = 'Lagebeziehung und Abstände von Ebenen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
