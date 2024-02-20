@@ -458,7 +458,7 @@ def erstellen(Teil):
 
             liste_punkte.append(punkte_aufg)
             i += 1
-        if not auswahl_gerade_ebene == 'parallel' and auswahl_punkt_ebene == 'liegt in der Ebene':
+        if auswahl_ebene_ebene == 'parallel':
             if 'b' in teilaufg:
                 punkte_aufg = 4
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
@@ -473,7 +473,7 @@ def erstellen(Teil):
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0')
+                               + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
             if 'c' in teilaufg:
@@ -489,7 +489,8 @@ def erstellen(Teil):
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3)))
+                               + r' \end{pmatrix} ~=~' + gzahl(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3))
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -533,7 +534,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = '10. Hausaufgabenkontrolle'
+    Art = '11. Hausaufgabenkontrolle'
     Titel = 'Lagebeziehung Ebene Ebene'
 
     # der Teil in dem die PDF-Datei erzeugt wird
