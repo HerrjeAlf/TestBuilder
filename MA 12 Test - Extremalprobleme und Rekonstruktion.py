@@ -18,6 +18,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
+
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
@@ -437,6 +438,7 @@ def erstellen(Teil):
     Titel = 'Extremalprobleme und Rekonstruktion von Funktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
+    @timer
     def Hausaufgabenkontrolle():
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
@@ -474,9 +476,9 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
-        print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
+    @timer
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
@@ -500,7 +502,6 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
-        print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
