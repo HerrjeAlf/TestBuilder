@@ -485,7 +485,7 @@ def erstellen(Teil):
                 grafiken_aufgaben.append( f'Aufgabe_{nr}{liste_teilaufg[i]}')
                 grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
                 liste_punkte.append(punkte_aufg)
-                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes P zur Ebene E. \n\n')
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
                 loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix}'
                                + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
@@ -610,8 +610,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
-probe = True
+anzahl_Arbeiten = 3
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
