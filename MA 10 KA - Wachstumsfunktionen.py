@@ -183,16 +183,19 @@ def erstellen(Teil):
             i += 1
 
         if 'b' in teilaufg:
-            punkte_aufg = 8
+            punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-            aufgabe.append(str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt von p ab und bestimme aus dem Graphen'
-                                                    ' die Scheitelpunkt- und Normalform. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp) + r' \vert ' + gzahl(ywert_sp)
-                           + r') \quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_sp_str
-                           + r' \quad (4P) \hspace{5em} \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            nst = gzahl(N(-1 * schnittpunkt_y / steigung, 2))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle der Funktion f und gib die Schnittpunkte'
+                                                    f' mit den Achsen an. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ x_{0} ~=~ - \frac{n}{m} ~=~ - \frac{'
+                           + gzahl(schnittpunkt_y) + r'}{' + gzahl(steigung) + r'} ~=~ '
+                           + nst + r' \quad (2P) \quad \to \quad S_x(' + nst + r' \vert 0) \quad und \quad S_y(0 \vert '
+                           + gzahl(schnittpunkt_y) + r') \quad (2P) } \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
         if 'c' in teilaufg:
@@ -224,8 +227,8 @@ def erstellen(Teil):
             aufgabe.extend(('Gegeben sind die Punkte Q(' + gzahl(werteliste_gesiebt[0][0]) + ' | '
                             + gzahl(werteliste_gesiebt[0][1]) + ') und P(' + gzahl(0) + ' | '
                             + gzahl(schnittpunkt_y_b) + ') der linearen Funktion h(x). \n\n',
-                            str(liste_teilaufg[i]) + f') Zeichne den Graphen den Graphen durch die Punkte P und Q'
-                                                     f' der Funktion h und lies die Gleichung h(x) ab. \n\n'))
+                            str(liste_teilaufg[i]) + f') Zeichne den Graphen der linearen Funktion h durch die'
+                                                     f' Punkte P und Q und lies die Gleichung h(x) ab. \n\n'))
             loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~Koordinatensystem'
                             r' \quad (2P) \quad und \quad f(x) ~=~ ' + fkt_str + r' \quad (2P) } \\'
                             + r'\mathrm{insgesamt~' + str(punkte_aufg) + '~Punkte}', 'Abbildung'))
@@ -233,20 +236,19 @@ def erstellen(Teil):
             i += 1
 
         if 'd' in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 8
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-            nst = gzahl(N(-1 * schnittpunkt_y / steigung, 2))
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstelle der Funktion f und gib die Schnittpunkte'
-                                                    f' mit den Achsen an. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ x_{0} ~=~ - \frac{n}{m} ~=~ - \frac{'
-                           + gzahl(schnittpunkt_y) + r'}{' + gzahl(steigung) + r'} ~=~ '
-                           + nst + r' \quad (2P) \quad \to \quad S_x(' + nst + r' \vert 0) \quad und \quad S_y(0 \vert '
-                           + gzahl(schnittpunkt_y) + r') \quad (2P) } \\'
-                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt der Parabel p ab und bestimme die Scheitelpunkt- '
+                                                    'und Normalform von p. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp) + r' \vert ' + gzahl(ywert_sp)
+                           + r') \quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_p_str
+                           + r' \quad (4P) \hspace{5em} \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
+
+
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -287,8 +289,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = '9. Hausaufgabenkontrolle'
-    Titel = 'Nullstellen von linearen Funktionen'
+    Art = '10. Hausaufgabenkontrolle'
+    Titel = 'Parabelgleichungen'
 
 
     # der Teil in dem die PDF-Datei erzeugt wird

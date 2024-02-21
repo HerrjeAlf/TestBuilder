@@ -282,7 +282,7 @@ def erstellen(Teil):
 
                 punkte_aufg += 3
 
-            aufgabe.extend(('und die Gerade g durch die Punkte:'
+            aufgabe.extend(('und die Gerade g durch die Punkte: '
                             'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
                             str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
