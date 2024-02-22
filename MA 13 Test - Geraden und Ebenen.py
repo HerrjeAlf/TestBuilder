@@ -723,17 +723,14 @@ def erstellen(Teil):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        # with Loesung.create(Figure(position='h!')) as koordinasystem:
-        #     koordinasystem.add_image('3dim_Koordinatensystem.png', width='400px')
-
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 3
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
