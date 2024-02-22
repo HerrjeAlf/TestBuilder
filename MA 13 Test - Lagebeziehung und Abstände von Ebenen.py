@@ -117,7 +117,7 @@ def erstellen(Teil):
                            + gzahl(bx - ax) + r' \\' + gzahl(by - ay) + r' \\' + gzahl(bz - az) + r' \\'
                            r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                            + gzahl(cx - ax) + r' \\' + gzahl(cy - ay) + r' \\' + gzahl(cz - az) + r' \\'
-                           r' \end{pmatrix} \quad (5P) \\'
+                           r' \end{pmatrix} \quad (3P) \\'
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
@@ -470,13 +470,14 @@ def erstellen(Teil):
                 liste_punkte.append(punkte_aufg)
                 punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d,n_gk),nx_gk),0,0])
                 aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{(' + gzahl(nx_gk) + ')^2 + ('
-                               + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ ' + ergebnis_n0
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                               + gzahl(nx_gk) + ')^2 + ('+ gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
+                               + r')^2 } ~=~ ' + ergebnis_n0
                                + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                               + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
             if 'c' in teilaufg:
@@ -492,7 +493,8 @@ def erstellen(Teil):
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} \vert ~=~' + gzahl(abs(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3)))
+                               + r' \end{pmatrix} \vert ~=~'
+                               + gzahl(abs(N(np.dot((punkt_a-punkt_aE),1/n_betrag*n_gk),3))) + r' \\'
                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
@@ -610,7 +612,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 3
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
