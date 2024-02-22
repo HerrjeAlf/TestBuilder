@@ -17,17 +17,14 @@ def vorz(k):
         return '-'
     else:
         return '+'
+
+# Vorzeichen und Faktoren in Gleichungen oder Vektoren
 def vorz_fakt(k):
     if k < 0:
         return -1
     else:
         return 1
 
-def gzahl(k):
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
 def vorz_str(k):
     if k%1 == 0:
         k = int(k)
@@ -36,17 +33,6 @@ def vorz_str(k):
     else:
         return f'+{latex(k)}'
 
-def vorz_faktor(k):
-    if k%1 == 0:
-        k = int(k)
-    if k == -1:
-        return '-'
-    if k == 1:
-        return '+'
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
 
 def vorz_gzahl(k):
     if abs(k) == 1:
@@ -58,7 +44,44 @@ def vorz_gzahl(k):
         return latex(int(k))
     else:
         return latex(k)
-def vorz_str_minus(k):
+
+# Darstellung der Faktoren bzw. Vorzeichen neu
+
+def vorz_v_innen(k,v):
+    if k == 0:
+        return ''
+    if k == -1:
+        return '-' + latex(v)
+    if k == 1:
+        return '+' + latex(v)
+    if k%1 == 0:
+        k = int(k)
+    if k < 0:
+        return latex(k) + latex(v)
+    else:
+        return f'+{latex(k)}' + latex(v)
+
+def vorz_v_aussen(k,v):
+    if k == 0:
+        return ''
+    if k == -1:
+        return '-' + latex(v)
+    if k == 1:
+        return latex(v)
+    if k%1 == 0:
+        k = int(k)
+    if k < 0:
+        return latex(k) + latex(v)
+    else:
+        return f'+{latex(k)}' + latex(v)
+
+def gzahl(k):
+    if k%1 == 0:
+        return latex(int(k))
+    else:
+        return latex(k)
+
+def gzahl_klammer(k):
     if k%1 == 0:
         k = int(k)
     if k < 0:
