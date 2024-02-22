@@ -1,26 +1,8 @@
 import random
-import time
 import numpy as np
 from sympy import *
 
-def timer(func):
-    """
-    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
-    """
-    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
-        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
-        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
-        end_time = time.perf_counter()  # Zeit nachm ausführen
-        execution_time = end_time - start_time  # Vergangene Zeit berechnen
 
-        if func.__name__ == 'Hausaufgabenkontrolle':
-            print(f'\033[38;2;0;220;120m\033[1mKontrolle in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        elif func.__name__ == 'Erwartungshorizont':
-            print(f'\033[38;2;0;220;120m\033[1mErwartungshorizont in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        else:
-            print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
-        return result
-    return wrapper
 
 # Funktionen zur Darstellung von Zahlen
 
@@ -35,12 +17,36 @@ def vorz(k):
         return '-'
     else:
         return '+'
+def vorz_fakt(k):
+    if k < 0:
+        return -1
+    else:
+        return 1
 
 def gzahl(k):
     if k%1 == 0:
         return latex(int(k))
     else:
         return latex(k)
+def vorz_str(k):
+    if k%1 == 0:
+        k = int(k)
+    if k < 0:
+        return latex(k)
+    else:
+        return f'+{latex(k)}'
+
+def vorz_faktor(k):
+    if k%1 == 0:
+        k = int(k)
+    if k == -1:
+        return '-'
+    if k == 1:
+        return '+'
+    if k < 0:
+        return latex(k)
+    else:
+        return f'+{latex(k)}'
 
 def vorz_gzahl(k):
     if abs(k) == 1:
@@ -52,21 +58,6 @@ def vorz_gzahl(k):
         return latex(int(k))
     else:
         return latex(k)
-
-def vorz_fakt(k):
-    if k < 0:
-        return -1
-    else:
-        return 1
-
-def vorz_str(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
 def vorz_str_minus(k):
     if k%1 == 0:
         k = int(k)
