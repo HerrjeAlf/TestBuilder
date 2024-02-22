@@ -36,6 +36,10 @@ def erstellen(Teil):
         steigung = zzahl(2, 8) / 2
         schnittpunkt_y = zzahl(1, 8) / 2
         fkt = steigung * x + schnittpunkt_y
+        while abs(fkt.subs(x,1)) > 5:
+            steigung = zzahl(2, 8) / 2
+            schnittpunkt_y = zzahl(1, 8) / 2
+            fkt = steigung * x + schnittpunkt_y
         fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
         print(fkt), print(fkt_str)
 
@@ -148,6 +152,10 @@ def erstellen(Teil):
         steigung = zzahl(2, 8) / 2
         schnittpunkt_y = zzahl(1, 8) / 2
         fkt_f = steigung * x + schnittpunkt_y
+        while abs(fkt_f.subs(x,1)) > 5:
+            steigung = zzahl(2, 8) / 2
+            schnittpunkt_y = zzahl(1, 8) / 2
+            fkt_f = steigung * x + schnittpunkt_y
         fkt_f_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
         # Parabel
         xwert_sp = zzahl(1,4)
@@ -230,13 +238,13 @@ def erstellen(Teil):
                             str(liste_teilaufg[i]) + f') Zeichne den Graphen der linearen Funktion h durch die'
                                                      f' Punkte P und Q und lies die Gleichung h(x) ab. \n\n'))
             loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~Koordinatensystem'
-                            r' \quad (2P) \quad und \quad f(x) ~=~ ' + fkt_str + r' \quad (2P) } \\'
+                            r' \quad (2P) \quad und \quad h(x) ~=~ ' + fkt_str + r' \quad (2P) } \\'
                             + r'\mathrm{insgesamt~' + str(punkte_aufg) + '~Punkte}', 'Abbildung'))
             graph_xyfix(fkt, fkt_a, bezn='f', name=f'Loesung_{nr}{liste_teilaufg[i]}')
             i += 1
 
         if 'd' in teilaufg:
-            punkte_aufg = 8
+            punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -244,8 +252,8 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt der Parabel p ab und bestimme die Scheitelpunkt- '
                                                     'und Normalform von p. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp) + r' \vert ' + gzahl(ywert_sp)
-                           + r') \quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_p_str
-                           + r' \quad (4P) \hspace{5em} \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r') \quad (2P) \ quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_p_str + r' \quad (5P) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
 
