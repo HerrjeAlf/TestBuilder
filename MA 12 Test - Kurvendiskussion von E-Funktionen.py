@@ -20,6 +20,25 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 
+def timer(func):
+    """
+    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
+    """
+    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
+        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
+        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
+        end_time = time.perf_counter()  # Zeit nachm ausführen
+        execution_time = end_time - start_time  # Vergangene Zeit berechnen
+
+        if func.__name__ == 'Hausaufgabenkontrolle':
+            print(f'\033[38;2;0;220;120m\033[1mKontrolle in {round(execution_time, 2)} Sekunden erstellt\033[0m')
+        elif func.__name__ == 'Erwartungshorizont':
+            print(f'\033[38;2;0;220;120m\033[1mErwartungshorizont in {round(execution_time, 2)} Sekunden erstellt\033[0m')
+        else:
+            print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
+        return result
+    return wrapper
+
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
@@ -56,7 +75,8 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + r') ~' + auswahl[i] + str(liste_teilaufg[i+1])
                            + r') ~' + auswahl[i+1])
             loesung.append(str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \hspace{5em}'
-                           + str(liste_teilaufg[i+1]) + r') ~' + regeln_aufgabe[auswahl[i+1]] + r' \quad (1P)')
+                           + str(liste_teilaufg[i+1]) + r') ~' + regeln_aufgabe[auswahl[i+1]] + r' \quad (1P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 2
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -68,8 +88,11 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
         grafiken_aufgaben = ['', '']
         grafiken_loesung = ['']
+        liste_bez.append(str(nr))
+        punkte_aufg = 0
 
         if 'a' in teilaufg:
+            # Berechnungen für Aufgabe
             basis_1 = nzahl(2,8)
             exponent_1 = nzahl(3,5)
             ergebnis_1 = basis_1 ** exponent_1
@@ -78,10 +101,7 @@ def erstellen(Teil):
             exponent_2_summe = zzahl(1,3)
             faktor = zzahl(2,30)*20
             ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
-
-            punkte_aufg = 6
-            liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr))
+            punkte_aufg += 6
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
@@ -96,9 +116,59 @@ def erstellen(Teil):
                            + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2) + r' \quad \vert \log_{'
                            + gzahl(basis_2) + r'} \quad (2P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                            + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
-                           + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2) + r' \quad (2P) \\')
+                           + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2) + r' \quad (2P)')
             i += 2
 
+        if 'b' in teilaufg:
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+            def Aufgabe_1():
+                punkte = 3
+                faktor_exp = zzahl(1, 8) / 2
+                erg_gl = nzahl(2, 40) / 10
+                aufgabe = 'e^{' + vorz_gzahl(faktor_exp) + r'x} ~=~ ' + gzahl(erg_gl)
+                aufgabe_lsg = ('e^{' + vorz_gzahl(faktor_exp) + 'x} ~=~ ' + gzahl(erg_gl)
+                               + r' \quad \vert ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
+                               + gzahl(erg_gl) + r') \quad \vert \div ' + vorz_str_minus(faktor_exp)
+                               + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3)))
+                return [aufgabe, aufgabe_lsg, punkte]
+            def Aufgabe_2():
+                punkte = 4
+                faktor_exp_1 = zzahl(1,5)
+                faktor_exp_2 = zzahl(1,5)
+                while faktor_exp_1 == faktor_exp_2:
+                    faktor_exp_2 = zzahl(1, 5)
+                vorzeichen = random.choice([-1, 1])
+                faktor_1 = vorzeichen * nzahl(1,40)
+                faktor_2 = vorzeichen * nzahl(1,40)
+                aufgabe = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
+                           + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}')
+                aufgabe_lsg = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
+                               + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}'
+                               + r' \quad \vert \div ' + vorz_str_minus(faktor_1) + r' \quad \to \quad '
+                               + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~' + vorz_gzahl(Rational(faktor_2,faktor_1))
+                               + r' \cdot e^{' + vorz_gzahl(faktor_exp_2) + r'x} \quad \vert \div e^{'
+                               + vorz_gzahl(faktor_exp_2) + r'x} \\'
+                               + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
+                               + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
+                               + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
+                               + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
+                               + vorz_str_minus(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
+                               + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3)))
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            auswahl= np.random.choice([Aufgabe_1,Aufgabe_2], 2, False)
+            aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
+            aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
+            punkte_aufg += punkte_1 + punkte_2
+
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
+                           + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_2 + r' \hspace{5em}')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad (3P) \\'
+                           + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad (4P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 2
+        liste_punkte.append(punkte_aufg)
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     def wachstumsfunktion(nr, teilaufg):
@@ -178,7 +248,7 @@ def erstellen(Teil):
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
         grafiken_aufgaben = ['','']
-        grafiken_loesung = ['']
+        grafiken_loesung = ['', '', '']
 
         if 'a' in teilaufg:
             punkte_aufg = 3
@@ -193,7 +263,8 @@ def erstellen(Teil):
             aufgabe.extend((table2, '\n\n\n', str(teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
                                                 'Wachstum handelt.\n\n'))
             loesung.extend((str(teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
-                                               r'um~exponentielles~Wachstum. \quad (3P)}', table3))
+                                               r'um~exponentielles~Wachstum. \quad (3P)}', table3,
+                                                r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         if 'b' in teilaufg:
@@ -208,7 +279,8 @@ def erstellen(Teil):
             # Aufgaben und Lösungen
             aufgabe.append(str(teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
             loesung.append(str(teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
-                                               + str(Aufg_a) + r'^x \quad (2P)'))
+                                               + str(Aufg_a) + r'^x \quad (2P) \\'
+                                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
 
@@ -230,7 +302,8 @@ def erstellen(Teil):
                                                + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
                                                + r'} \quad \to \quad x~=~'
                                                + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
-                                               + r' \quad (3P)'))
+                                               + r' \quad (3P) \\'
+                                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
 
@@ -248,15 +321,65 @@ def erstellen(Teil):
                                               f' erreicht wird. \n\n')
             loesung.append(str(teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
                                                + r' \cdot '+ str(Aufg_a) + r'^{'+ str(Aufg_wert_t)+ r'} ~=~ '
-                                               + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2P)'))
+                                               + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2P) \\'
+                                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\'))
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
+    def exp_ableitungen(nr, teilaufg):
+        i = 0
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Berechnen Sie die Ableitung der folgenden Funktionen.']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = ['', '']
+        grafiken_loesung = ['']
+        liste_bez.append(str(nr))
+        punkte_aufg = 0
+
+        if 'a' in teilaufg:
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+
+            def Aufgabe_1():
+                punkte = 2
+                faktor_exp = zzahl(2, 8)
+                aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot e^{x}'
+                aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot e^{x} \quad \to \quad '
+                               + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
+                               + r'} \cdot e^{x} ~+~x^{' + gzahl(faktor_exp) + r'} \cdot e^{x} ~=~ e^{x} \cdot \big( '
+                               + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1) + '} + x^{' + gzahl(faktor_exp)
+                               + r'} \big) ')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            def Aufgabe_2():
+                punkte = 4
+                faktor_exp = zzahl(2, 8)
+                aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x)'
+                aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x) \quad \to \quad '
+                               + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
+                               + r'} \cdot ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
+                               + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
+                               + r' \cdot ln(x) ~+~ 1)')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            auswahl = np.random.choice([Aufgabe_1, Aufgabe_2], 2, False)
+            aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
+            aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
+            punkte_aufg += punkte_1 + punkte_2
+
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
+                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad (3P) \\'
+                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad (4P)')
+            i += 2
+        liste_punkte.append(punkte_aufg)
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     aufgaben = [logarithmusgesetze(1, ['a', 'b']),
-                exponentialgleichungen(2, ['a']),
-                wachstumsfunktion(3,['a','b','c','d'])]
+                exponentialgleichungen(2, ['a', 'b']),
+                wachstumsfunktion(3,['a','b','c','d']),
+                exp_ableitungen(4,['a'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -292,8 +415,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '10. Hausaufgabenkontrolle'
-    Titel = 'Wachstumsfunktionen und Logarithmus'
+    Art = '11. Hausaufgabenkontrolle'
+    Titel = 'Exponentialfunktionen und Produktregel'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
@@ -334,6 +457,7 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
+        # print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
     @timer
@@ -360,6 +484,7 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
+        # print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
