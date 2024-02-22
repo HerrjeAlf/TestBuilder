@@ -112,7 +112,7 @@ def erstellen(Teil):
                            + r' \quad \vert \log_{' + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1)
                            + r' \quad (2P) \\' + str(liste_teilaufg[i+1]) + r') \quad ' + gzahl(faktor) + r' \cdot '
                            + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(faktor*ergebnis_2)
-                           + r' \quad \vert \div ' + vorz_str_minus(faktor) + r' \quad \to \quad ' + gzahl(basis_2)
+                           + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad ' + gzahl(basis_2)
                            + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2) + r' \quad \vert \log_{'
                            + gzahl(basis_2) + r'} \quad (2P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                            + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
@@ -128,8 +128,8 @@ def erstellen(Teil):
                 erg_gl = nzahl(2, 40) / 10
                 aufgabe = 'e^{' + vorz_gzahl(faktor_exp) + r'x} ~=~ ' + gzahl(erg_gl)
                 aufgabe_lsg = ('e^{' + vorz_gzahl(faktor_exp) + 'x} ~=~ ' + gzahl(erg_gl)
-                               + r' \quad \vert ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
-                               + gzahl(erg_gl) + r') \quad \vert \div ' + vorz_str_minus(faktor_exp)
+                               + r' \quad \vert ln(ay<<) \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
+                               + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
                                + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3)))
                 return [aufgabe, aufgabe_lsg, punkte]
             def Aufgabe_2():
@@ -145,7 +145,7 @@ def erstellen(Teil):
                            + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}')
                 aufgabe_lsg = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
                                + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}'
-                               + r' \quad \vert \div ' + vorz_str_minus(faktor_1/10) + r' \quad \to \quad '
+                               + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
                                + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~' + vorz_gzahl(Rational(faktor_2,faktor_1))
                                + r' \cdot e^{' + vorz_gzahl(faktor_exp_2) + r'x} \quad \vert \div e^{'
                                + vorz_gzahl(faktor_exp_2) + r'x} \\'
@@ -153,7 +153,7 @@ def erstellen(Teil):
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
                                + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
-                               + vorz_str_minus(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
+                               + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3)))
                 return [aufgabe, aufgabe_lsg, punkte]
 
@@ -181,7 +181,7 @@ def erstellen(Teil):
 
             Grundwert = nzahl(10, 20) * 10
             Prozentwert = nzahl(5, 15)
-            Wachstumsfaktor = 1 - Prozentwert / 100
+            Wachstumsfaktor = N(1 - Prozentwert / 100,4)
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
@@ -202,7 +202,7 @@ def erstellen(Teil):
 
             Grundwert = nzahl(80, 200)
             Prozentwert = zzahl(2,20) / 10
-            Wachstumsfaktor = 1 + Prozentwert / 100
+            Wachstumsfaktor = N(1 + Prozentwert / 100,4)
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
@@ -349,7 +349,7 @@ def erstellen(Teil):
                                + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
                                + r'} \cdot e^{x} ~+~x^{' + gzahl(faktor_exp) + r'} \cdot e^{x} ~=~ e^{x} \cdot \big( '
                                + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1) + '} + x^{' + gzahl(faktor_exp)
-                               + r'} \big) ')
+                               + r'} \big) \quad (2P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
             def Aufgabe_2():
@@ -360,18 +360,35 @@ def erstellen(Teil):
                                + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
                                + r'} \cdot ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
                                + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
-                               + r' \cdot ln(x) ~+~ 1)')
+                               + r' \cdot ln(x) ~+~ 1) \quad (4P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
-            auswahl = np.random.choice([Aufgabe_1, Aufgabe_2], 2, False)
+            def Aufgabe_3():
+                punkte = 4
+                faktor_exp = zzahl(2, 8)
+                faktor_sqrt = nzahl(2, 8)
+                while abs(faktor_exp) == faktor_sqrt:
+                    faktor_sqrt = nzahl(2, 8)
+                aufgabe = 'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{' + gzahl(faktor_exp) + r'} \cdot e^{x}'
+                aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{' + gzahl(faktor_exp) + r'} \cdot e^{x} ~=~'
+                               + r' x^{' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r'} \cdot e^{x} \quad \to \quad '
+                               + r' f^{ \prime } (x) ~=~' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r' \cdot x^{'
+                               + gzahl(Rational(faktor_exp, faktor_sqrt)-1) + r'} \cdot e^{x} ~+~' + 'x^{'
+                               + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} ~=~ e^{x} \cdot ('
+                               + gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
+                               + gzahl(Rational(faktor_exp, faktor_sqrt)-1) + r'} ~+~ x^{'
+                               + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} ) \quad (4P) \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            auswahl = np.random.choice([Aufgabe_1, Aufgabe_2, Aufgabe_3], 2, False)
             aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
             aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
             punkte_aufg += punkte_1 + punkte_2
 
             aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
                            + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad (3P) \\'
-                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad (4P)')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
+                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
             i += 2
         liste_punkte.append(punkte_aufg)
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
