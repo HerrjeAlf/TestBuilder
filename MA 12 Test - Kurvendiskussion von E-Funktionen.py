@@ -101,7 +101,7 @@ def erstellen(Teil):
             exponent_2_summe = zzahl(1,3)
             faktor = zzahl(2,30)*20
             ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
-            punkte_aufg += 6
+            punkte_aufg += 5
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
@@ -114,7 +114,7 @@ def erstellen(Teil):
                            + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(faktor*ergebnis_2)
                            + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad ' + gzahl(basis_2)
                            + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2) + r' \quad \vert \log_{'
-                           + gzahl(basis_2) + r'} \quad (2P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
+                           + gzahl(basis_2) + r'} \quad (1P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                            + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
                            + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2) + r' \quad (2P)')
             i += 2
@@ -123,14 +123,15 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             def Aufgabe_1():
-                punkte = 3
+                punkte = 2
                 faktor_exp = zzahl(1, 8) / 2
                 erg_gl = nzahl(2, 40) / 10
                 aufgabe = 'e^{' + vorz_gzahl(faktor_exp) + r'x} ~=~ ' + gzahl(erg_gl)
                 aufgabe_lsg = ('e^{' + vorz_gzahl(faktor_exp) + 'x} ~=~ ' + gzahl(erg_gl)
                                + r' \quad \vert ln(ay<<) \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
                                + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
-                               + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3)))
+                               + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3))
+                               + r' \quad (2P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
             def Aufgabe_2():
                 punkte = 4
@@ -154,7 +155,8 @@ def erstellen(Teil):
                                + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
-                               + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3)))
+                               + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
+                               + r' \quad (4P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
             auswahl= np.random.choice([Aufgabe_1,Aufgabe_2], 2, False)
@@ -164,8 +166,8 @@ def erstellen(Teil):
 
             aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
                            + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_2 + r' \hspace{5em}')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad (3P) \\'
-                           + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad (4P) \\'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad \\'
+                           + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 2
         liste_punkte.append(punkte_aufg)
@@ -201,7 +203,7 @@ def erstellen(Teil):
                     ' wurden in der folgenden Tabelle festgehalten: \n\n')
 
             Grundwert = nzahl(80, 200)
-            Prozentwert = zzahl(2,20) / 10
+            Prozentwert = zzahl(10,50) / 10
             Wachstumsfaktor = N(1 + Prozentwert / 100,4)
             Liste = []
             for j in range(20):
@@ -353,14 +355,14 @@ def erstellen(Teil):
                 return [aufgabe, aufgabe_lsg, punkte]
 
             def Aufgabe_2():
-                punkte = 4
+                punkte = 3
                 faktor_exp = zzahl(2, 8)
                 aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x)'
                 aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x) \quad \to \quad '
                                + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
                                + r'} \cdot ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
                                + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
-                               + r' \cdot ln(x) ~+~ 1) \quad (4P) \\')
+                               + r' \cdot ln(x) ~+~ 1) \quad (3P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
             def Aufgabe_3():
