@@ -229,80 +229,90 @@ def erstellen(Teil):
         grafiken_aufgaben = ['', '']
         grafiken_loesung = ['']
 
+        if auswahl_gerade_ebene == 'identisch':
+            punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+            punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+            while vektor_vergleich(punkt_e, punkt_f) == True:
+                punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+            g_v = [g_vx, g_vy, g_vz] = punkt_f - punkt_e
+            lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
+                   + gzahl(np.dot(punkt_a, n_gk))
+                   + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
+        elif auswahl_gerade_ebene == 'parallel':
+            abstand = zzahl(1, 7) / 2 * np.array(n_gk)
+            punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
+            punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
+            g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
+            lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
+                   + gzahl(np.dot(punkt_a, n_gk))
+                   + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
+        else:
+            g_v = n_gk
+            while vektor_kollinear(g_v, n_gk) == True:
+                punkt_s = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+                g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
+                ergebnis_r = zzahl(1, 6) / 2
+                punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
+                punkt_f = [fx, fy, fz] = punkt_e + g_v
+
+            lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
+                   + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
+                   + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
+                   + vorz_str(-1 * (nx_gk * ex + ny_gk * ey + nz_gk * ez)) + r' \quad \vert \div '
+                   + vorz_str_minus(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
+                   + gzahl(ergebnis_r) + r' \quad (2P) \\'
+                   + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:}  \quad (1P) \\ \begin{pmatrix} '
+                   + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                   + r' \end{pmatrix}' + vorz_str(ergebnis_r) + r' \cdot \begin{pmatrix} '
+                   + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                   + r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                   + gzahl(ex + ergebnis_r * g_vx) + r' \\' + gzahl(ey + ergebnis_r * g_vy) + r' \\'
+                   + gzahl(ez + ergebnis_r * g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
+                   + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
+                   + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3P) \\')
+
         if 'a' in teilaufg:
-            punkte_aufg = 5
+            punkte_aufg = 2
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_aufgaben.extend(('',f'Aufgabe_{nr}{liste_teilaufg[i]}'))
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-
-
-            if auswahl_gerade_ebene == 'identisch':
-                punkt_e = [ex, ey, ez] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
-                punkt_f = [fx, fy, fz] = punkt_a + zzahl(1,7)/2*v + zzahl(1,7)/2*u
-                while vektor_vergleich(punkt_e, punkt_f) == True:
-                    punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
-                g_v = [g_vx, g_vy, g_vz] = zzahl(1,7)/2*v + zzahl(1,7)/2*u
-                lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
-                       + gzahl(np.dot(punkt_a,n_gk))
-                       + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
-            elif auswahl_gerade_ebene == 'parallel':
-                abstand = zzahl(1, 7) / 2 * np.array(n_gk)
-                punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
-                punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
-                g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
-                lsg = (gzahl(np.dot(n_gk,punkt_e)) + '~=~'
-                       + gzahl(np.dot(punkt_a, n_gk))
-                       + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
-            else:
-                g_v = n_gk
-                while vektor_kollinear(g_v, n_gk) == True:
-                    punkt_s = punkt_a + zzahl(1,7)/2 * v + zzahl(1,7)/2*u
-                    g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
-                    ergebnis_r = zzahl(1, 6) / 2
-                    punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
-                    punkt_f = [fx, fy, fz] = punkt_e + g_v
-
-
-                lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
-                       + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
-                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
-                       + vorz_str(-1 * (nx_gk * ex + ny_gk * ey + nz_gk * ez)) + r' \quad \vert \div '
-                       + vorz_str_minus(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
-                       + gzahl(ergebnis_r) + r' \quad (2P) \\'
-                       + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:} \\ \begin{pmatrix} '
-                       + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                       r' \end{pmatrix}' + vorz_str(ergebnis_r) + r' \cdot \begin{pmatrix} '
-                       + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-                       r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                       + gzahl(ex + ergebnis_r*g_vx) + r' \\' + gzahl(ey + ergebnis_r*g_vy) + r' \\'
-                       + gzahl(ez + ergebnis_r*g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
-                       + gzahl(ex + ergebnis_r*g_vx) + r' \vert ' + gzahl(ey + ergebnis_r*g_vy) + r' \vert '
-                       + gzahl(ez + ergebnis_r*g_vz) + r') \quad (3P) \\')
-
-
-                punkte_aufg += 3
 
             aufgabe.extend(('und die Gerade g durch die Punkte: '
                             'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                             'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
-                            str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
-                                                     f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n'))
+                            str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-                           r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                           + r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                           r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                           + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-                           r' \end{pmatrix} \quad (2P) \\ '
-                           + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
-                           + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
-                           + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
-                           + gzahl(np.dot(punkt_a,n_gk)) + r' \quad (1P) \\'
+                           + r' \end{pmatrix} \quad (2P) \\ '
                            + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             liste_punkte.append(punkte_aufg)
             i += 1
+
+        if 'b' in teilaufg:
+            punkte_aufg = 3
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
+                                                    f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad '
+                           + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
+                           + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
+                           + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
+                           + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1P) \\'
+                           + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            if auswahl_gerade_ebene == 'schneiden':
+                punkte_aufg += 3
+            liste_punkte.append(punkte_aufg)
+            i += 1
+
         if auswahl_gerade_ebene == 'parallel':
-            if 'b' in teilaufg:
+            if 'c' in teilaufg:
                 punkte_aufg = 4
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
                 grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -319,7 +329,7 @@ def erstellen(Teil):
                                + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
                 i += 1
 
-            if 'c' in teilaufg:
+            if 'd' in teilaufg:
                 punkte_aufg = 3
                 liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
                 grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -369,7 +379,7 @@ def erstellen(Teil):
                    + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
 
         elif auswahl_ebene_ebene == 'parallel':
-            punkte_aufg = 6
+            punkte_aufg = 4
             abstand = zzahl(1, 7) / 2
             punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
             punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
@@ -502,7 +512,7 @@ def erstellen(Teil):
 
 
     aufgaben = [punkte_ebene(1, ['a', 'b', 'c', 'd', 'e']),
-                gerade_ebene(2,['a', 'b', 'c']),
+                gerade_ebene(2,['a', 'b', 'c', 'd']),
                 ebene_ebene(3,['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
