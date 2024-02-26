@@ -22,21 +22,39 @@ def erstellen(Teil):
     liste_punkte = ['Punkte']
 
 
-    def ergeignisse_ergebnisse(nr, teilaufg):
+    def ereignisse_ergebnisse(nr, teilaufg):
         i = 0
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+        auswahl_farbe = np.random.choice(['weiße', 'schwarze', 'blaue', 'rote', 'gelbe', 'grüne'], 2, False)
+        farbe_1 = auswahl_farbe[0]
+        anzahl_1 = nzahl(5,15)
+        farbe_2 = auswahl_farbe[1]
+        anzahl_2 = 20 - anzahl_1
+        anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal'],[4,'viermal']])
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   f'In einer Urne befinden sich {anzahl_1} {farbe_1} Kugeln und {anzahl_2} {farbe_2} Kugeln. '
+                   f'Aus dieser Urne wird nun {anzahl_ziehen[1]} eine Kugel gezogen und '
+                   f'anschließend wieder zurückgelegt.']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-        grafiken_aufgaben = ['']
+        grafiken_aufgaben = ['','']
         grafiken_loesung = ['']
 
         if 'a' in teilaufg:
-            punkte_aufg = 5
+            punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f')  \n\n')
+            def ereig_1:
+                anzahl_kugel = nzahl(1,2)
+                text = f'Es werden {anzahl_kugel} {farbe_1} Kugeln gezogen'
+                for anzahl in range(anzahl_ziehen[0]):
+                    k = 0
+                    for
+
+            aufgabe.append(str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an. \n\n')
+
             loesung.append(str(liste_teilaufg[i]) + r') \quad \quad (3P) \\'
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
@@ -44,7 +62,7 @@ def erstellen(Teil):
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [ergeignisse_ergebnisse(1, ['a', 'b', 'c', 'd', 'e'])]
+    aufgaben = [ereignisse_ergebnisse(1, ['a', 'b', 'c', 'd', 'e'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -80,8 +98,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = 'Test'
-    Titel = 'Lagebeziehung und Abstände von Ebenen'
+    Art = '11. Hausaufgabenkontrolle'
+    Titel = 'Ergebnisse und Ereignisse im Urnenmodell'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
