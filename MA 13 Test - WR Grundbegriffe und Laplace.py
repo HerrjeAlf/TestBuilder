@@ -30,6 +30,7 @@ def erstellen(Teil):
         farbe_2 = auswahl_farbe[1]
         anzahl_2 = 20 - anzahl_1
         anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal'],[4,'viermal']])
+        ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farbe_1, farbe2=farbe_2)
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'In einer Urne befinden sich {anzahl_1} {farbe_1} Kugeln und {anzahl_2} {farbe_2} Kugeln. '
@@ -38,6 +39,7 @@ def erstellen(Teil):
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
         grafiken_aufgaben = ['','']
         grafiken_loesung = ['']
+
 
         if 'a' in teilaufg:
             punkte_aufg = 3
