@@ -24,22 +24,20 @@ def erstellen(Teil):
 
     def ereignisse_ergebnisse(nr, teilaufg):
         i = 0
-        auswahl_farbe = np.random.choice(['weiße', 'schwarze', 'blaue', 'rote', 'gelbe', 'grüne'], 2, False)
+        auswahl_farbe = np.random.choice(['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb', 'Grün'], 2, False)
         farbe_1 = auswahl_farbe[0]
         anzahl_1 = nzahl(5,15)
         farbe_2 = auswahl_farbe[1]
         anzahl_2 = 20 - anzahl_1
         anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal'],[4,'viermal']])
         ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farbe_1, farbe2=farbe_2)
-
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-                   f'In einer Urne befinden sich {anzahl_1} {farbe_1} Kugeln und {anzahl_2} {farbe_2} Kugeln. '
-                   f'Aus dieser Urne wird nun {anzahl_ziehen[1]} eine Kugel gezogen und '
-                   f'anschließend wieder zurückgelegt.']
+                   f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
+                   f' Kugeln der Farbe {farbe_2}. Aus dieser Urne wird nun {anzahl_ziehen[1]} eine Kugel gezogen und '
+                   f'anschließend wieder zurückgelegt. \n\n']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
         grafiken_aufgaben = ['','']
         grafiken_loesung = ['']
-
 
         if 'a' in teilaufg:
             punkte_aufg = 3
@@ -48,23 +46,35 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            def ereig_1:
+            def ereig_1():
                 anzahl_kugel = nzahl(1,2)
-                text = f'Es werden {anzahl_kugel} {farbe_1} Kugeln gezogen'
-                for anzahl in range(anzahl_ziehen[0]):
-                    k = 0
-                    for
+                if anzahl_kugel == 1:
+                    text = f'Die Kugel der Farbe {farbe_1} wird einmal gezogen'
+                else:
+                    text = f'Die Kugel der Farbe {farbe_1} wird zweimal gezogen'
+                lsg_menge = []
+                for element in ergebnisraum:
+                    i = 0
+                    for ergebnis in element:
+                        if ergebnis == farbe_1:
+                            i +=1
+                    if i == anzahl_kugel:
+                        lsg_menge.append(element)
+                print(lsg_menge)
+                return text, lsg_menge
 
-            aufgabe.append(str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an. \n\n')
+            ereignis_1, lsg_menge_1 = ereig_1()
 
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \quad (3P) \\'
+            aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
+                            r' \hspace{5em} ~E_1: \mathrm{' + ereignis_1 + r'}'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad {' + latex(lsg_menge_1) + r'} \quad (3P) \\'
                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [ereignisse_ergebnisse(1, ['a', 'b', 'c', 'd', 'e'])]
+    aufgaben = [ereignisse_ergebnisse(1, ['a'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -173,8 +183,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:

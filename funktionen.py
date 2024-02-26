@@ -194,10 +194,5 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
                     omega.append(tubel)
             i += 1
         k += 1
-    print(omega)
-    print(len(omega))
-
-
-
-ergebnisraum_zmZ(2,farbe1='blau',farbe2='rot')
+    return omega
 
