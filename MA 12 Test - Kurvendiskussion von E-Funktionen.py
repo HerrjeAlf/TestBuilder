@@ -126,14 +126,31 @@ def erstellen(Teil):
                 punkte = 2
                 faktor_exp = zzahl(1, 8) / 2
                 erg_gl = nzahl(2, 40) / 10
-                aufgabe = 'e^{' + vorz_gzahl(faktor_exp) + r'x} ~=~ ' + gzahl(erg_gl)
-                aufgabe_lsg = ('e^{' + vorz_gzahl(faktor_exp) + 'x} ~=~ ' + gzahl(erg_gl)
-                               + r' \quad \vert ln(ay<<) \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
+                aufgabe = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + r'} ~=~ ' + gzahl(erg_gl)
+                aufgabe_lsg = ('e^{' + vorz_v_aussen(faktor_exp,'x') + '} ~=~ ' + gzahl(erg_gl)
+                               + r' \quad \vert ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
                                + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
                                + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3))
                                + r' \quad (2P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
+
             def Aufgabe_2():
+                punkte = 3
+                faktor_exp = zzahl(1, 8) / 2
+                summand = zzahl(1,8)
+                erg_gl = nzahl(2, 40) / 10
+                aufgabe = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + r'} ~=~ ' + gzahl(erg_gl)
+                aufgabe_lsg = ('e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + '} ~=~ ' + gzahl(erg_gl)
+                               + r' \quad \vert ln() \quad \to \quad ' + vorz_v_aussen(faktor_exp, 'x')
+                               + vorz_str(summand) + ' ~=~ ln(' + gzahl(erg_gl) + r') \quad \vert '
+                               + vorz_str(-1*summand) + r' \quad (1P) \\' + vorz_v_aussen(faktor_exp,'x')
+                               + r' ~=~ ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
+                               + gzahl_klammer(faktor_exp) + r' \quad \to \quad x~=~'
+                               + vorz_gzahl(N((log(erg_gl) - summand)/ faktor_exp, 3))
+                               + r' \quad (2P) \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            def Aufgabe_3():
                 punkte = 4
                 faktor_exp_1 = zzahl(1,5)
                 faktor_exp_2 = zzahl(1,5)
@@ -149,22 +166,42 @@ def erstellen(Teil):
                                + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
                                + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~' + vorz_gzahl(Rational(faktor_2,faktor_1))
                                + r' \cdot e^{' + vorz_gzahl(faktor_exp_2) + r'x} \quad \vert \div e^{'
-                               + vorz_gzahl(faktor_exp_2) + r'x} \\'
+                               + vorz_gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
                                + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
                                + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
-                               + r' \quad (4P) \\')
+                               + r' \quad (3P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
-            auswahl= np.random.choice([Aufgabe_1,Aufgabe_2], 2, False)
+            def Aufgabe_4():
+                punkte = 3
+                faktor_exp_1 = zzahl(2, 8)
+                faktor_exp_2 = zzahl(2, 8)
+                summand = zzahl(1,7)
+                while faktor_exp_1 == faktor_exp_2:
+                    faktor_exp_2 = zzahl(1, 5)
+                aufgabe = (r' ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ ln(x^{' + gzahl(faktor_exp_2) + '})'
+                           + vorz_str(summand))
+                aufgabe_lsg = (r' ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ ln(x^{' + gzahl(faktor_exp_2) + '})'
+                               + vorz_str(summand) + r' \quad \vert ~-~ ln(x^{' + gzahl(faktor_exp_2) + '})'
+                               + r' \quad \to \quad ln(x^{' + gzahl(faktor_exp_1-faktor_exp_2) + '}) ~=~'
+                               + gzahl(summand) + r' \quad \vert e^{()} \quad (1P) \\ x^{'
+                               + gzahl(faktor_exp_1-faktor_exp_2) + '} ~=~ e^{' + gzahl(summand)
+                               + r'} \quad \vert \sqrt[' + gzahl(faktor_exp_1-faktor_exp_2)
+                               + r'] \quad \to \quad x ~=~'
+                               + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2P) \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            auswahl = np.random.choice([Aufgabe_1,Aufgabe_2, Aufgabe_3, Aufgabe_4], 2, False)
+
             aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
             aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
             punkte_aufg += punkte_1 + punkte_2
 
-            aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em}'
                            + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_2 + r' \hspace{5em}')
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1 + r' \quad \\'
                            + str(liste_teilaufg[i+1]) + r') \quad ' + aufgabe_lsg_2 + r' \quad \\'
@@ -371,8 +408,8 @@ def erstellen(Teil):
                 faktor_sqrt = nzahl(2, 8)
                 while abs(faktor_exp) == faktor_sqrt:
                     faktor_sqrt = nzahl(2, 8)
-                aufgabe = 'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{' + gzahl(faktor_exp) + r'} \cdot e^{x}'
-                aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{' + gzahl(faktor_exp) + r'} \cdot e^{x} ~=~'
+                aufgabe = 'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
+                aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x} ~=~'
                                + r' x^{' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r'} \cdot e^{x} \quad \to \quad '
                                + r' f^{ \prime } (x) ~=~' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r' \cdot x^{'
                                + gzahl(Rational(faktor_exp, faktor_sqrt)-1) + r'} \cdot e^{x} ~+~' + 'x^{'
@@ -392,13 +429,62 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
                            + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
             i += 2
+
+        if 'b' in teilaufg:
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+
+            def Aufgabe_1():
+                punkte = 3
+                exponent = zzahl(2, 8)
+                faktor_1 = zzahl(2, 8)
+                faktor_2 = zzahl(1,8)
+                aufgabe = ('f(x) ~=~ e^{' + vorz_v_aussen(faktor_1,'x') + '^{' + gzahl(exponent) + r'}'
+                           + vorz_v_innen(faktor_2,'x') +  '}')
+                aufgabe_lsg = (r' \mathrm{Noch~zu~programmieren! \quad (3P)} \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            def Aufgabe_2():
+                punkte = 3
+                exponent = zzahl(2, 8)
+                faktor_1 = zzahl(2, 8)
+                faktor_2 = zzahl(1, 8)
+                aufgabe = ('f(x) ~=~ ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                           + vorz_v_innen(faktor_2, 'x') + ')')
+                aufgabe_lsg = (r' \mathrm{Noch~zu~programmieren! \quad (3P)} \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            def Aufgabe_3():
+                punkte = 3
+                exponent = zzahl(2, 8)
+                wurzel = nzahl(2, 8)
+                faktor = zzahl(1,10)
+                while abs(exponent) == wurzel:
+                    wurzel = nzahl(2, 8)
+                summand = zzahl(1,8)
+                aufgabe = ('f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{(' + vorz_v_aussen(faktor,'x')
+                           + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r')} ')
+                aufgabe_lsg = (r' \mathrm{Noch~zu~programmieren! \quad (3P)} \\')
+                return [aufgabe, aufgabe_lsg, punkte]
+
+            auswahl = np.random.choice([Aufgabe_1, Aufgabe_2, Aufgabe_3], 2, False)
+            aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
+            aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
+            punkte_aufg += punkte_1 + punkte_2
+
+            aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em}'
+                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
+                           + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
+            i += 2
+
         liste_punkte.append(punkte_aufg)
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     aufgaben = [logarithmusgesetze(1, ['a', 'b']),
                 exponentialgleichungen(2, ['a', 'b']),
                 wachstumsfunktion(3,['a','b','c','d']),
-                exp_ableitungen(4,['a'])]
+                exp_ableitungen(4,['a', 'b'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -434,8 +520,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '11. Hausaufgabenkontrolle'
-    Titel = 'Exponentialfunktionen und Produktregel'
+    Art = '2. Test (2. Semester)'
+    Titel = 'Exponentialfunktionen und höhere Ableitungsregeln'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
@@ -444,7 +530,7 @@ def erstellen(Teil):
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
-        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
@@ -510,7 +596,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
