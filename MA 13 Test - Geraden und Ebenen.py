@@ -729,8 +729,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 3
-probe = True
+anzahl_Arbeiten = 1
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
