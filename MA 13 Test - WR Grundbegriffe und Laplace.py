@@ -29,7 +29,7 @@ def erstellen(Teil):
         anzahl_1 = nzahl(5,15)
         farbe_2 = auswahl_farbe[1]
         anzahl_2 = 20 - anzahl_1
-        anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal'],[4,'viermal']])
+        anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal']])
         ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farbe_1, farbe2=farbe_2)
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -40,7 +40,7 @@ def erstellen(Teil):
         grafiken_loesung = ['']
 
         if 'a' in teilaufg:
-            punkte_aufg = 3
+            punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -49,26 +49,67 @@ def erstellen(Teil):
             def ereig_1():
                 anzahl_kugel = nzahl(1,2)
                 if anzahl_kugel == 1:
-                    text = f'Die Kugel der Farbe {farbe_1} wird einmal gezogen'
+                    text = r' \mathrm{Die~Kugel~der~Farbe~' + latex(farbe_1) + '~wird~einmal~gezogen}'
                 else:
-                    text = f'Die Kugel der Farbe {farbe_1} wird zweimal gezogen'
+                    text = r' \mathrm{Die~Kugel~der~Farbe~' + latex(farbe_1) + '~wird~zweimal~gezogen}'
                 lsg_menge = []
                 for element in ergebnisraum:
                     i = 0
                     for ergebnis in element:
                         if ergebnis == farbe_1:
-                            i +=1
+                            i += 1
                     if i == anzahl_kugel:
                         lsg_menge.append(element)
                 print(lsg_menge)
                 return text, lsg_menge
 
+            def ereig_2():
+                auswahl = random.choice([farbe_1, farbe_2])
+                auswahl_kugel = random.choice(['erste','zweite'])
+                text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl) + '}'
+                lsg_menge = []
+                if auswahl_kugel == 'erste':
+                    for element in ergebnisraum:
+                        if element[0] == auswahl:
+                            lsg_menge.append(element)
+                else:
+                    for element in ergebnisraum:
+                        if element[1] == auswahl:
+                            lsg_menge.append(element)
+                return text, lsg_menge
+
             ereignis_1, lsg_menge_1 = ereig_1()
+            ereignis_2, lsg_menge_2 = ereig_2()
+
+            def vereinigung():
+                text = r' \mathrm{E_1 \cup E_2}'
+                lsg_menge = lsg_menge_1.copy()
+                for element2 in lsg_menge_2:
+                    if element2 not in lsg_menge:
+                        lsg_menge.append(element2)
+                return text, lsg_menge
+
+            def geschnitten():
+                text = r' \mathrm{E_1 \cap E_2}'
+                lsg_menge = []
+                for element1 in lsg_menge_1:
+                    for element2 in lsg_menge_2:
+                        if element2 == element1:
+                            lsg_menge.append(element2)
+                return text, lsg_menge
+
+            vereinigung, lsg_vereinigung = vereinigung()
+            schnittmenge, lsg_schnittmenge = geschnitten()
 
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                            r' \hspace{5em} ~E_1: \mathrm{' + ereignis_1 + r'}'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad {' + latex(lsg_menge_1) + r'} \quad (3P) \\'
-                           r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                            r' E_1: ' + ereignis_1 + r' \\'
+                            + r'E_2: ' + ereignis_2 + r' \hspace{7em} \\'
+                            + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge + r' \hspace{10em} \\'))
+            loesung.append(str(liste_teilaufg[i]) +') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n'
+                           + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n'
+                           + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n'
+                           + ' Lösung E1 und E2 geschnitten: ' + str(lsg_schnittmenge) + ' (1P) \n'
+                           + ' insgesamt ' + str(punkte_aufg) + ' Punkte \n\n')
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -119,7 +160,7 @@ def erstellen(Teil):
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
-        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
