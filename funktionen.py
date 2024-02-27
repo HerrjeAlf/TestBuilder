@@ -51,29 +51,26 @@ def vorz_v_innen(k,v):
     if k == 0:
         return ''
     if k == -1:
-        return '-' + latex(v)
+        return '-' + v
     if k == 1:
-        return '+' + latex(v)
+        return '+' + v
     if k%1 == 0:
         k = int(k)
     if k < 0:
-        return latex(k) + latex(v)
+        return latex(k) + v
     else:
-        return f'+{latex(k)}' + latex(v)
+        return f'+{latex(k)}' + v
 
 def vorz_v_aussen(k,v):
     if k == 0:
         return ''
     if k == -1:
-        return '-' + latex(v)
+        return '-' + v
     if k == 1:
-        return latex(v)
+        return v
     if k%1 == 0:
         k = int(k)
-    if k < 0:
-        return latex(k) + latex(v)
-    else:
-        return f'+{latex(k)}' + latex(v)
+        return latex(k) + v
 
 def gzahl(k):
     if k%1 == 0:
