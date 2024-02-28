@@ -442,7 +442,11 @@ def erstellen(Teil):
                 faktor_2 = zzahl(1,8)
                 aufgabe = ('f(x) ~=~ e^{' + vorz_v_aussen(faktor_1,'x') + '^{' + gzahl(exponent) + r'}'
                            + vorz_v_innen(faktor_2,'x') +  '}')
-                aufgabe_lsg = (r' \mathrm{Noch~zu~programmieren! \quad (3P)} \\')
+                aufgabe_lsg = (r' f(x) ~=~ e^{' + vorz_v_aussen(faktor_1,'x') + '^{' + gzahl(exponent) + r'}'
+                               + vorz_v_innen(faktor_2,'x') + r'} \quad \to \quad'
+                               + r' f^{ \prime } (x) ~=~e^{' + vorz_v_aussen(faktor_1,'x') + '^{' + gzahl(exponent) + r'}'
+                               + vorz_v_innen(faktor_2,'x') + r'} \cdot (' + vorz_v_aussen(faktor_1*exponent,'x')
+                               + '^{' + gzahl(exponent-1) + r'}' + vorz_str(faktor_2) + r')')
                 return [aufgabe, aufgabe_lsg, punkte]
 
             def Aufgabe_2():
