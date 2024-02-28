@@ -43,8 +43,8 @@ def erstellen(Teil):
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}',''))
 
             def ereig_1():
                 anzahl_kugel = nzahl(1,2)
@@ -102,8 +102,8 @@ def erstellen(Teil):
             schnittmenge, lsg_schnittmenge = geschnitten()
 
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                            r' E_1: ' + ereignis_1 + r' \quad E_2: ' + ereignis_2 + r' \quad '
-                            + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge + r' \hspace{10em} \\'))
+                            r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
+                            + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
             loesung.append(str(liste_teilaufg[i]) +') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n\n'
                            + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n\n'
                            + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n\n'
@@ -111,10 +111,34 @@ def erstellen(Teil):
                            + ' insgesamt ' + str(punkte_aufg) + ' Punkte \n\n')
             i += 1
 
+        if 'b' in teilaufg:
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
+            grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}',''))
+
+            auswahl = random.choice([farbe_1, farbe_2])
+            if auswahl == farbe_1:
+                auswahl_anzahl = anzahl_1
+            else:
+                auswahl_anzahl = anzahl_2
+
+            aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für'
+                                                     ' die folgenden Ereignisse.',
+                            r' \mathrm{i) \quad Die~erste~Kugel~ist~' + auswahl + '.}'))
+            loesung.extend((str(liste_teilaufg[i])
+                            + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
+                            r'i)  \quad P(' + auswahl + r') ~=~ \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
+                            + gzahl(auswahl_anzahl/20*100) + r' \% \quad (2P) \\'))
+            i += 1
+
+
+
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [ereignisse_ergebnisse(1, ['a'])]
+    aufgaben = [ereignisse_ergebnisse(1, ['a','b'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
