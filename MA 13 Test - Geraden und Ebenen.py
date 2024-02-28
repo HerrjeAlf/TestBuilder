@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Math)
 from pylatex.utils import bold
+from funktionen import *
 from threading import Thread
 
 # Definition der Funktionen
@@ -14,84 +15,10 @@ from threading import Thread
 a, b, c, d, e, f, g, r, s, x, y, z = symbols('a b c d e f g r s x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n' ]
 
-
-def zzahl(p, q):
-    k = random.choice([-1, 1]) * random.randint(p, q)
-    return k
-
-def nzahl(p, q):
-    k = random.randint(p, q)
-    return k
-
-def vorz(k):
-    if k == -1:
-        return '-'
-    elif k == 1:
-        return '+'
-    else:
-        pass
-
-def vorz_str(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
-def gzahl(k):
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def vorz_str_minus(k):
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return f'({latex(k)})'
-    else:
-        return latex(k)
-
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
     liste_punkte = ['Punkte']
-
-    def punkt_vektor(p):
-        return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
-
-    def faktorliste(n, p=1,q=10):
-        return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
-
-    def vektor_runden(vec,p):
-        return [N(elements,p) for elements in vec]
-    # Berechnung für die Aufgaben
-    def vektor_ganzzahl(vec):
-        return np.array([int(element) if element % 1 == 0 else element for element in vec])
-
-    def vektor_kürzen(vec):
-        faktor = [x + 1 for x in range(50)]
-        list = np.array(vec)
-        i = 0
-        for element in vec:
-            k = 0
-            if list[i] % 1 == 0:
-                i += 1
-            else:
-                while (list[i] * faktor[k]) % 1 != 0 and k < 49:
-                    k += 1
-                list = list * faktor[k]
-                i += 1
-        # print('erweitert: ' + str(list))
-        teiler = [x + 1 for x in range(int(max(list)/2))]
-        for zahl in teiler:
-            treffer = [1 for x in list if x % zahl == 0]
-            if sum(treffer) == len(vec):
-                list = list / zahl
-        # print('gekürzt: ' + str(list))
-        list = np.array([int(element) if element % 1 == 0 else element for element in list])
-        return np.array(list)
 
     def gerade(nr, teilaufg):
         i = 0
@@ -107,9 +34,9 @@ def erstellen(Teil):
         lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-                   'A( ' + str(ax)  + ' | ' + str(ay) + ' | ' + str(az) + ' ), ' 
-                   'B( ' + str(bx)  + ' | ' + str(by) + ' | ' + str(bz) + ' ) und '
-                   'T( ' + str(N(tx,3))  + ' | ' + str(N(ty,3)) + ' | ' + str(N(tz,3)) + ' ).  \n\n']
+                   'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
+                   'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
+                   'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
         if a in teilaufg:
@@ -138,7 +65,7 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             loesung_1 =  (r' \begin{pmatrix} '
-                         + latex(N(tx,3)) + r' \\' + latex(N(ty,3)) + r' \\' + latex(N(tz,3)) + r' \\'
+                         + gzahl(N(tx,3)) + r' \\' + gzahl(N(ty,3)) + r' \\' + gzahl(N(tz,3)) + r' \\'
                          r' \end{pmatrix} ~=~ \begin{pmatrix} '
                          + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -256,7 +183,7 @@ def erstellen(Teil):
                 if vx != 0 and wx != 0:
                     loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                                  + latex(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
-                                 + r' ~ \vert \div ' + vorz_str_minus(wx) + r' \quad \to \quad s ~=~ '
+                                 + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
                                  + latex(N((ax-cx)/wx,3)) + vorz_str(N(vx/wx,3)) + r' \cdot r \quad (2P) \\')
                     if vy != 0 and wy != 0:
                         loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
@@ -267,7 +194,7 @@ def erstellen(Teil):
                                      + vorz_str(-1*vy) + r' \cdot r \quad \vert ~'
                                      + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
                                      + latex(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + latex(N((vx*wy-vy*wx)/wx,3))
-                                     + r' \cdot r \quad \vert \div ' + vorz_str_minus(N((vx*wy-vy*wx)/wx,3))
+                                     + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
                                      + r' \quad \to \quad r~=~' + latex(N(lsgr,3))
                                      + r' \quad \mathrm{und} \quad s ~=~'
                                      + latex(N(lsgs,3)) + r' \quad (3P) \\')
@@ -330,7 +257,7 @@ def erstellen(Teil):
                 if vx != 0 and wx != 0:
                     loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                                  + latex(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
-                                 + r' ~ \vert \div ' + vorz_str_minus(wx) + r' \quad \to \quad s ~=~ '
+                                 + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
                                  + latex(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2P) \\')
                     if vy != 0 and wy != 0:
                         loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
@@ -342,7 +269,7 @@ def erstellen(Teil):
                                      + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2P) \\'
                                      + latex(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
                                      + latex(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
-                                     + vorz_str_minus(N((vx * wy - vy * wx) / wx, 3))
+                                     + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
                                      + r' \quad \to \quad r~=~' + latex(N(lsgr, 3))
                                      + r' \quad \mathrm{und} \quad s ~=~'
                                      + latex(N(lsgs, 3)) + r' \quad (3P) \\')
@@ -421,9 +348,9 @@ def erstellen(Teil):
 
             aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
             aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
-                   + latex(ex) + r' \\' + latex(ey) + r' \\' + latex(ez) + r' \\'
+                   + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
                    r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
-                   + latex(px) + r' \\' + latex(py) + r' \\' + latex(pz) + r' \\'
+                   + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
                    r' \end{pmatrix} \quad ')
             aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
@@ -433,9 +360,9 @@ def erstellen(Teil):
                            r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                            r' \vert \overrightarrow{u} \vert } \Big) \quad (1P) \\'
                            r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
-                           r'~=~ \vert ' + vorz_str_minus(vx) + r' \cdot ' + vorz_str_minus(px)
-                           + '+' + vorz_str_minus(vy) + r' \cdot ' + vorz_str_minus(py)
-                           + '+' + vorz_str_minus(vz) + r' \cdot ' + vorz_str_minus(pz) + r' \vert ~=~'
+                           r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
+                           + '+' + gzahl_klammer(vy) + r' \cdot ' + gzahl_klammer(py)
+                           + '+' + gzahl_klammer(vz) + r' \cdot ' + gzahl_klammer(pz) + r' \vert ~=~'
                            + latex(abs(N(sp_vp,3))) + r' \quad (2P) \\'
                            r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
                            + str(vy) + ')^2 ~+~(' + str(vz) + ')^2} ~=~ ' + latex(N(l_v,3))
@@ -501,12 +428,14 @@ def erstellen(Teil):
             aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
                                               f'Normalen- und Koordinatenform um. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
-                           + latex(vy*wz) + '-' + vorz_str_minus(vz*wy) + r' \\'
-                           + latex(vz*wx) + '-' + vorz_str_minus(vx*wz) + r' \\'
-                           + latex(vx*wy) + '-' + vorz_str_minus(vy*wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
+                           + latex(vy*wz) + '-' + gzahl_klammer(vz*wy) + r' \\'
+                           + latex(vz*wx) + '-' + gzahl_klammer(vx*wz) + r' \\'
+                           + latex(vx*wy) + '-' + gzahl_klammer(vy*wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
                            + latex(nx) + r' \\' + latex(ny) + r' \\' + latex(nz) + r' \\'
-                           r' \end{pmatrix} \quad (2P) \quad \mathrm{und}'
-                           r'\quad E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           r' \end{pmatrix}  ~=~ ' + gzahl(Rational(ny,ny_gk)) + r' \cdot \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \quad (2P) \quad \mathrm{und} '
+                           + r' \quad E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                            + latex(ax) + r' \\' + latex(ay) + r' \\' + latex(az) + r' \\'
                            r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                            + latex(nx_gk) + r' \\' + latex(ny_gk) + r' \\' + latex(nz_gk) + r' \\'
@@ -611,9 +540,9 @@ def erstellen(Teil):
                                               f' auf und zeichnen Sie ein Schrägbild der Ebene. \n\n ')
             loesung.append(str(teilaufg[i]) + (r') \quad ' + koordinatenform + r' \quad \vert \div '
                                                + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad '
-                                               + r'E:~ \frac{x}{' + vorz_str_minus(sx) + r'} + '
-                                               r' \frac{y}{' + vorz_str_minus(sy) + r'} + '
-                                               r' \frac{z}{' + vorz_str_minus(sz) + r'} ~=~' + str(1)
+                                               + r'E:~ \frac{x}{' + gzahl_klammer(sx) + r'} + '
+                                               r' \frac{y}{' + gzahl_klammer(sy) + r'} + '
+                                               r' \frac{z}{' + gzahl_klammer(sz) + r'} ~=~' + str(1)
                                                + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (2P)} \\'))
             i += 1
 
@@ -666,7 +595,7 @@ def erstellen(Teil):
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
         # erste Seite
-        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=LargeText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
@@ -730,7 +659,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 anzahl_Arbeiten = 2
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
