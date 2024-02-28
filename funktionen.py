@@ -26,6 +26,8 @@ def vorz_fakt(k):
         return 1
 
 def vorz_str(k):
+    if k == 0:
+        return ''
     if k%1 == 0:
         k = int(k)
     if k < 0:
@@ -70,7 +72,7 @@ def vorz_v_aussen(k,v):
         return v
     if k%1 == 0:
         k = int(k)
-        return latex(k) + v
+    return latex(k) + v
 
 def gzahl(k):
     if k%1 == 0:
