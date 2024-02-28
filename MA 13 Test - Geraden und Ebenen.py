@@ -528,9 +528,9 @@ def erstellen(Teil):
             else:
                 punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + punkt_vektor(1) + parameter_r * v + parameter_s * w)
             if np.array_equal(punkt_d, punkt_a + parameter_r * v + parameter_s * w):
-                lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~D~liegt~auf~der~Geraden.} \quad (3P) \\'
+                lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~D~liegt~in~in~der~Ebene~E.} \quad (3P) \\'
             else:
-                lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~D~liegt~nicht~auf~der~Geraden.} \quad (3P) \\'
+                lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~D~liegt~nicht~in~der~Ebene~E.} \quad (3P) \\'
             aufgabe.append('Gegeben ist ein weiterer Punkt D( ' + str(dx) + ' | ' + str(dy) + ' | '
                            + str(dz) + ' ), \n\n')
             aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt D in der Ebene E liegt. \n\n')
@@ -729,7 +729,7 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
