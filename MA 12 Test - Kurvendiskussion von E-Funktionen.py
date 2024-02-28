@@ -169,8 +169,8 @@ def erstellen(Teil):
                                + vorz_gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
                                + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
                                + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
-                               + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
-                               + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
+                               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ ln \Big('
+                               + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
                                + r' \quad (3P) \\')
@@ -220,7 +220,7 @@ def erstellen(Teil):
 
             Grundwert = nzahl(10, 20) * 10
             Prozentwert = nzahl(5, 15)
-            Wachstumsfaktor = N(1 - Prozentwert / 100,4)
+            Wachstumsfaktor = 1 - Rational(Prozentwert,100)
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
@@ -240,8 +240,9 @@ def erstellen(Teil):
                     ' wurden in der folgenden Tabelle festgehalten: \n\n')
 
             Grundwert = nzahl(80, 200)
-            Prozentwert = zzahl(10,50) / 10
-            Wachstumsfaktor = N(1 + Prozentwert / 100,4)
+            pwert = zzahl(10,50)
+            Prozentwert = Rational(pwert,10)
+            Wachstumsfaktor = 1 + Rational(pwert,1000)
             Liste = []
             for j in range(20):
                 wert = N(Grundwert * Wachstumsfaktor ** j, 4)
