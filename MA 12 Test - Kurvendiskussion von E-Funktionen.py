@@ -164,11 +164,11 @@ def erstellen(Teil):
                 aufgabe_lsg = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
                                + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}'
                                + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
-                               + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~' + vorz_gzahl(Rational(faktor_2,faktor_1))
-                               + r' \cdot e^{' + vorz_gzahl(faktor_exp_2) + r'x} \quad \vert \div e^{'
+                               + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Rational(faktor_2,faktor_1))
+                               + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
                                + vorz_gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
                                + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
-                               + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
+                               + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
                                + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + r'x ~=~ ln \Big('
                                + vorz_gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'

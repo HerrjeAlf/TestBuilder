@@ -49,9 +49,9 @@ def erstellen(Teil):
             def ereig_1():
                 anzahl_kugel = nzahl(1,2)
                 if anzahl_kugel == 1:
-                    text = r' \mathrm{Die~Kugel~der~Farbe~' + latex(farbe_1) + '~wird~einmal~gezogen}'
+                    text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
                 else:
-                    text = r' \mathrm{Die~Kugel~der~Farbe~' + latex(farbe_1) + '~wird~zweimal~gezogen}'
+                    text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
                 lsg_menge = []
                 for element in ergebnisraum:
                     i = 0
@@ -102,13 +102,12 @@ def erstellen(Teil):
             schnittmenge, lsg_schnittmenge = geschnitten()
 
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                            r' E_1: ' + ereignis_1 + r' \\'
-                            + r'E_2: ' + ereignis_2 + r' \hspace{7em} \\'
+                            r' E_1: ' + ereignis_1 + r' \quad E_2: ' + ereignis_2 + r' \quad '
                             + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge + r' \hspace{10em} \\'))
-            loesung.append(str(liste_teilaufg[i]) +') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n'
-                           + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n'
-                           + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n'
-                           + ' Lösung E1 und E2 geschnitten: ' + str(lsg_schnittmenge) + ' (1P) \n'
+            loesung.append(str(liste_teilaufg[i]) +') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n\n'
+                           + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n\n'
+                           + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n\n'
+                           + ' Lösung E1 und E2 geschnitten: ' + str(lsg_schnittmenge) + ' (1P) \n\n'
                            + ' insgesamt ' + str(punkte_aufg) + ' Punkte \n\n')
             i += 1
 

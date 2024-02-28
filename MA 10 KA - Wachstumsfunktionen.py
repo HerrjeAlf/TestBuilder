@@ -297,7 +297,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = '10. Hausaufgabenkontrolle'
+    Art = '11. Hausaufgabenkontrolle'
     Titel = 'Parabelgleichungen'
 
 
@@ -307,7 +307,7 @@ def erstellen(Teil):
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
-        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
@@ -373,8 +373,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 1
-probe = True
+anzahl_Arbeiten = 2
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
