@@ -84,6 +84,8 @@ def schnittpunkte(fkt_1,fkt_2):
         print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
         i += 1
 
+
+
 print(random.choice({2:'zweimal',3:'dreimal',4:'viermal'}))
 # schnittpunkte(4*x**3-16*x**2-5*x+42,3/79*x+16.28)
 # Graph(0, 5,60*x**3-60*x**2 + 720, 720*x)

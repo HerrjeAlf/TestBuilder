@@ -24,13 +24,27 @@ def erstellen(Teil):
 
     def ereignisse_ergebnisse(nr, teilaufg):
         i = 0
-        auswahl_farbe = np.random.choice(['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb', 'Grün'], 2, False)
-        farbe_1 = auswahl_farbe[0]
+        farben = ['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb']
+        farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
+        auswahl_farbe = np.random.choice([0,1,2,3,4], 2, False)
+        farbe_1 = farben[auswahl_farbe[0]]
         anzahl_1 = nzahl(5,15)
-        farbe_2 = auswahl_farbe[1]
+        farbe_2 = farben[auswahl_farbe[1]]
         anzahl_2 = 20 - anzahl_1
         anzahl_ziehen = random.choice([[2,'zweimal'],[3,'dreimal']])
         ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farbe_1, farbe2=farbe_2)
+        def wkt_baumdiagramm(p, anzahl_1, ):
+            k = 1
+            baumdiagramm_wkt = [Rational(anzahl_1, p), Rational((p-anzahl_1), p)]
+            while k < (anzahl_ziehen):
+                neues_element = []
+                for element in baumdiagramm_wkt[-1]:
+                    neues_element.append()
+                    neues_element.append()
+
+
+
+
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
                    f' Kugeln der Farbe {farbe_2}. Aus dieser Urne wird nun {anzahl_ziehen[1]} eine Kugel gezogen und '
