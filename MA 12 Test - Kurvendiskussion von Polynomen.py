@@ -25,7 +25,7 @@ def vorz_str(k):
     else:
         return f'+{latex(k)}'
 
-def vorz_str_minus(k):
+def gzahl_klammer(k):
     if k < 0:
         return f'({latex(k)})'
     else:
@@ -141,10 +141,10 @@ def erstellen(Teil):
                            + latex(fkt_f_partial) + r' \quad (4P) \\')
             loesung.append(table2)
             loesung.append(r'\hspace{10em} \\')
-            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + vorz_str_minus(faktor_f) +
+            loesung.append(latex(fkt_f_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(faktor_f) +
                           r' \quad \to \quad 0~=~' + latex(fkt_f_partial_pq) + r' \quad (2P) \\')
-            loesung.append(r' x_{2/3}~=~ - \frac{' + vorz_str_minus(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
-                          r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + vorz_str_minus(fkt_f_partial_q) +
+            loesung.append(r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_f_partial_p) + r'}{2} \pm \sqrt{ \Big(' +
+                          r' \frac{' + latex(fkt_f_partial_p) + r'}{2} \Big)^2-' + gzahl_klammer(fkt_f_partial_q) +
                           r'} \quad (2P) \\')
             loesung.append(r' x_2~=~' + latex(round(nst_f_2, 3)) + r' \quad \mathrm{und} \quad x_3~=~' +
                           latex(round(nst_f_3, 3)) + r' \quad (2P) \\')
@@ -200,10 +200,10 @@ def erstellen(Teil):
                            + r' \quad f^{ \prime \prime }(x) ~=~' + latex(fkt_f_2)
                            + r' \quad f^{ \prime \prime \prime } (x) ~=~' + latex(fkt_f_3) + r' \quad (3P) \\')
             loesung.append(r' f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + latex(fkt_f_1) + r' \vert ~ \div '
-                           + vorz_str_minus(3 * faktor_f) + r' \quad (1P) \\')
+                           + gzahl_klammer(3 * faktor_f) + r' \quad (1P) \\')
             loesung.append(r' 0~=~ ' + fkt_f_1_pq + r' \quad \to \quad ' + r' x_{1/2}~=~ - \frac{'
-                           + vorz_str_minus(p_fkt_f_1_pq) + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                           + latex(p_fkt_f_1_pq) + r'}{2} \Big)^2-' + vorz_str_minus(q_fkt_f_1_pq) + r'} \quad (3P) \\')
+                           + gzahl_klammer(p_fkt_f_1_pq) + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
+                           + latex(p_fkt_f_1_pq) + r'}{2} \Big)^2-' + gzahl_klammer(q_fkt_f_1_pq) + r'} \quad (3P) \\')
             loesung.append(r'x_1~=~' + latex(x_1_fkt_f_1) + r' \quad \mathrm{und} \quad x_2~=~'
                            + latex(x_2_fkt_f_1) + r' \quad (2P) \\')
             loesung.append(r' f^{ \prime \prime }(' + latex(x_1_fkt_f_1) + ')~=~'
@@ -217,8 +217,8 @@ def erstellen(Teil):
             xwert_Wendepunkt = Rational(2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3), 6 * faktor_f)
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                           + fkt_f_2_str + r' \quad \vert ~-~' + vorz_str_minus(-2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3))
-                           + r' \quad \vert \div ' + vorz_str_minus(6 * faktor_f) + r' \quad \to \quad x_1~=~'
+                           + fkt_f_2_str + r' \quad \vert ~-~' + gzahl_klammer(-2 * faktor_f * (nst_f_1 + nst_f_2 + nst_f_3))
+                           + r' \quad \vert \div ' + gzahl_klammer(6 * faktor_f) + r' \quad \to \quad x_1~=~'
                            + latex(xwert_Wendepunkt) + r' \quad (2P) \\')
             loesung.append(r' f^{ \prime \prime \prime }(' + latex(xwert_Wendepunkt) + r') \quad \neq 0 \quad \to \quad WP('
                            + latex(xwert_Wendepunkt) + r' \vert ' + latex(round(fkt_f.subs(x, xwert_Wendepunkt), 3))

@@ -131,9 +131,9 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
                                               f'Normalen- und Koordinatenform um. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
-                           + gzahl(vy * wz) + '-' + vorz_str_minus(vz * wy) + r' \\'
-                           + gzahl(vz * wx) + '-' + vorz_str_minus(vx * wz) + r' \\'
-                           + gzahl(vx * wy) + '-' + vorz_str_minus(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
+                           + gzahl(vy * wz) + '-' + gzahl_klammer(vz * wy) + r' \\'
+                           + gzahl(vz * wx) + '-' + gzahl_klammer(vx * wz) + r' \\'
+                           + gzahl(vx * wy) + '-' + gzahl_klammer(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
                            + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            + r' \end{pmatrix} ~=~ ' + gzahl(Rational(ny,ny_gk)) + r' \cdot \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
@@ -259,7 +259,7 @@ def erstellen(Teil):
                    + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
                    + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
                    + vorz_str(-1 * (nx_gk * ex + ny_gk * ey + nz_gk * ez)) + r' \quad \vert \div '
-                   + vorz_str_minus(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
+                   + gzahl_klammer(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
                    + gzahl(ergebnis_r) + r' \quad (2P) \\'
                    + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:}  \quad (1P) \\ \begin{pmatrix} '
                    + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
@@ -417,7 +417,7 @@ def erstellen(Teil):
                    + vorz_str(-1*np.dot(punkt_a,n_gk)) + r' \quad \vert '+ vorz_str(-1 * np.dot(n_gk,k_v))
                    + r's \quad \to \quad ' + gzahl(np.dot(n_gk,g_v)) + 'r ~=~'
                    + gzahl(np.dot(punkt_d - punkt_a,n_gk)) + vorz_str(np.dot(n_gk,k_v))
-                   + r's \quad \vert \div' + vorz_str_minus(np.dot(n_gk,g_v)) + r' \quad (2P) \\ r ~=~'
+                   + r's \quad \vert \div' + gzahl_klammer(np.dot(n_gk,g_v)) + r' \quad (2P) \\ r ~=~'
                    + gzahl(Rational(np.dot(punkt_d - punkt_a,n_gk), np.dot(n_gk,g_v)))
                    + vorz_str(Rational(-1*np.dot(n_gk,k_v), np.dot(n_gk,g_v)))
                    + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'

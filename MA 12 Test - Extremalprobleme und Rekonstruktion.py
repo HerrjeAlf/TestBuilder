@@ -1,5 +1,6 @@
 import datetime
 import string
+import time
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
@@ -123,9 +124,9 @@ def erstellen(Teil):
             loesung_vektor = slv(A, b)
         [x_1, x_2, x_3] = loesung_vektor
         fkt = x_1 * x**2 + x_2 * x + x_3
-        fkt_str = gzahl(x_1) + 'x^2' + vorz_str(x_2) + 'x' + vorz_str(x_3)
+        fkt_str = vorz_v_aussen(x_1,'x') + '^2' + vorz_v_innen(x_2,'x') + vorz_str(x_3)
         fkt_a = fkt*x
-        fkt_a_str = gzahl(x_1) + 'x^3' + vorz_str(x_2) + 'x^2' + vorz_str(x_3) + 'x'
+        fkt_a_str = vorz_v_aussen(x_1,'x') + '^3' + vorz_v_innen(x_2,'x') + '^2' + vorz_v_innen(x_3,'x')
 
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
@@ -225,15 +226,15 @@ def erstellen(Teil):
                            + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
             loesung.append(table2)
             loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                           + vorz_str_minus(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
                            + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
-                           + r' \cdot ~' + vorz_str_minus(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
-                           + vorz_str_minus(c4 * lsg_c) + r' \quad \vert \div ' + vorz_str_minus(b4)
+                           + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
+                           + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
                            + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
                            + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
-                           + vorz_str_minus(lsg_b) + vorz_str(c1) + r' \cdot ' + vorz_str_minus(lsg_c) + '~=~'
-                           + gzahl(d1) + r' \quad \vert ~-~' + vorz_str_minus(b1 * lsg_b + c1 * lsg_c)
-                           + r' \quad \vert \div ' + vorz_str_minus(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
+                           + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
+                           + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
+                           + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
                            + r' \quad (2P) } \\')
             i += 1
 
@@ -270,14 +271,14 @@ def erstellen(Teil):
                            + r' \quad (1P) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
                            + r' \quad und \quad A^{ \prime \prime } ~=~' + fkt_2_a_str + r' \quad (2P) } \\'
                            + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
-                           + vorz_str_minus(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
+                           + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
                            + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
-                           + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + vorz_str_minus(fkt_1_a_q) + '} ~=~'
+                           + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
                            + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2P) } \\'
                            + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
                            + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) } \\ \mathrm{A^{ \prime \prime }('
                            + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
-                           + vorz_str_minus(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
+                           + gzahl_klammer(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
                            + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) } \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
@@ -434,17 +435,16 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test I (2. Semester)'
+    Art = '1. Test (2. Semester)'
     Titel = 'Extremalprobleme und Rekonstruktion von Funktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
-    @timer
     def Hausaufgabenkontrolle():
         geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
         # erste Seite
-        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
@@ -478,7 +478,6 @@ def erstellen(Teil):
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
-    @timer
     def Erwartungshorizont():
         geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
@@ -508,8 +507,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
-probe = True
+anzahl_Arbeiten = 1
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:

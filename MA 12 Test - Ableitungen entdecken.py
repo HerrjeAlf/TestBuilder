@@ -28,7 +28,7 @@ def vorz_str(k):
         return f'+{latex(k)}'
 
 
-def vorz_str_minus(k):
+def gzahl_klammer(k):
     if k < 0:
         return f'({latex(k)})'
     else:

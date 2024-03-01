@@ -43,7 +43,7 @@ def gzahl(k):
     else:
         return latex(k)
 
-def vorz_str_minus(k):
+def gzahl_klammer(k):
     if k%1 == 0:
         k = int(k)
     if k < 0:
@@ -51,7 +51,7 @@ def vorz_str_minus(k):
     else:
         return latex(k)
 
-def vorz_Str_minus(k):
+def gzahl_klammer(k):
     if k%1 == 0:
         k = int(k)
     if k < 0:
@@ -183,7 +183,7 @@ def erstellen(Teil):
                                                      + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
                                                      + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
             loesung.append(table2)
-            loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + vorz_str_minus(faktor) +
+            loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                            r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
                            r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
                            r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
@@ -266,7 +266,7 @@ def erstellen(Teil):
                            + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
                            + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                           + fkt_1_str + r' \vert ~ \div ' + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
+                           + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
                            r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
                            + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
                            + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2P) \\ =~ '
@@ -306,7 +306,7 @@ def erstellen(Teil):
                                                     'mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
-                           + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
+                           + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
                            + vorz_str(Rational((nst_1+nst_3),3))
                            + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
                            + r') ~=~ ' + latex(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
@@ -459,7 +459,7 @@ def erstellen(Teil):
                                                      + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                      + r' \quad (4P)'))
             loesung.append(table2)
-            loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + vorz_str_minus(faktor) +
+            loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                            r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
                            r' x_{2/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
                            r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
@@ -526,7 +526,7 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
                            + r' \quad \mathrm{und} \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                           + fkt_1_str + r' \vert ~ \div ' + vorz_str_minus(3 * faktor) + r' \quad (1P) \\'
+                           + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
                            r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
                            + latex(fkt_1_p) + r' \cdot a}{2} \pm \sqrt{ \Big( \frac{'
                            + latex(fkt_1_p) + r' \cdot a}{2} \Big)^2 - \Big(' + latex(fkt_1_q)
@@ -561,7 +561,7 @@ def erstellen(Teil):
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
-                           + vorz_str_minus(6 * faktor) + r' \quad (1P) \\ x_1~=~' + latex(xwert_wp_bruch) + 'a ~=~'
+                           + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~' + latex(xwert_wp_bruch) + 'a ~=~'
                            + latex(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }('
                            + latex(xwert_wp_bruch) + ') ~=~ ' + fkt_3_str
                            + r' \quad \neq 0 \quad \to \quad \mathrm{Wendepunkt} (' + latex(xwert_wp_bruch)
@@ -583,7 +583,7 @@ def erstellen(Teil):
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Ortskurve der Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (latex(xwert_wp_bruch)) + r'a \quad \vert \div'
-                           + vorz_Str_minus(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
+                           + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                            + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad' + abhängigkeit
                            + r'\quad (2P) \\ \mathrm{einsetzen~in~y} ~=~' + latex(ywert_wp_dezimal) + '~=~'
                            + latex(ywert_wp_dezimal/a**3) + r' \Big(' + latex(Rational(3,(faktor_1 + faktor_2 + faktor_3)))

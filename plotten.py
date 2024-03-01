@@ -292,7 +292,7 @@ def Graph(x_min, x_max, name, *funktionen):
     plt.grid(True)
     return plt.savefig(name, dpi=200)
 
-def Baumdiagramm(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
+def Baumdiagramm_zmZ(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
     ax.spines['top'].set_visible(False)

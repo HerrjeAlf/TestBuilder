@@ -29,7 +29,7 @@ def vorz_str(k):
     return k
 
 
-def vorz_str_minus(k):
+def gzahl_klammer(k):
     if k < 0:
         k = '(' + latex(k) + ')'
     else:

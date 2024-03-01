@@ -24,7 +24,7 @@ def vorz_str(k):
     else:
         return f'+{latex(k)}'
 
-def vorz_str_minus(k):
+def gzahl_klammer(k):
     if k < 0:
         return f'({latex(k)})'
     else:
@@ -95,11 +95,11 @@ def erstellen(Teil):
         if a in teilaufg:
             aufgabe.append(str(teilaufg[i]) + ') Berechne die Fußpunkte des Hügels. \n\n')
             loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
-                           + r' \quad \vert ~ \div ~' + vorz_str_minus(faktor) + r' \\ 0~=~'
-                           + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt, 4))
+                           + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
+                           + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
-                           + vorz_str_minus(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
+                           + gzahl_klammer(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
                            + r' x_1 ~=~\mathbf{' + str(x_wert_x1) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
                            + str(x_wert_x2) + r'} \quad (1P) \quad \mathbf{P_1(' + str(x_wert_x1)
                            + r' \vert 0)} \quad \mathrm{und} \quad \mathbf{P_2(' + str(x_wert_x2)
@@ -139,11 +139,11 @@ def erstellen(Teil):
                            + r' \quad t(x)~=~' + str(N(m_tangente,3)) + r' \cdot x ' + vorz_str(N(-1 * m_tangente,3))
                            + r' \quad (2P) \\' + fkt_str + '~=~' + latex(fkt_tangente) + r'~ \vert -('
                            + latex(fkt_tangente) + r') \quad (1P) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
-                           + vorz_str_minus(faktor) + r' \quad \to \quad 0~=~'
-                           + fkt_tp_pq + r' \quad (1P) \\ x_{^1/_2} ~=~ - ~ \frac{' + vorz_str_minus(N(p_fkt_tp, 3))
+                           + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~'
+                           + fkt_tp_pq + r' \quad (1P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt_tp, 3))
                            + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
                            + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
-                           + vorz_str_minus(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
+                           + gzahl_klammer(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
                            + r' x_1 ~=~\mathbf{' + str(N(x_werte_tp[0],3)) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
                            + str(N(x_werte_tp[1],3)) + r'} \quad (1P) \quad \mathbf{P_1(' + str(N(x_werte_tp[0],3))
                            + r' \vert' + str(N(y_wert_tp,3)) + r')} \quad (1P) \\\\')
@@ -155,10 +155,10 @@ def erstellen(Teil):
             m_fkt_x_tp = fkt_abl.subs(x, x_werte_tp[0])
             winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
             winkel_beta = N(math.degrees(atan(m_tangente)),3)
-            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
+            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
                        + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
             if abs(winkel_beta-winkel_alpha) > 90:
-                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + vorz_str_minus(winkel_alpha)
+                loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
                            + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
                            + str(abs(winkel_beta - winkel_alpha)) + r'^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
                            + r'^\circ} \quad (2P) \\\\')
@@ -185,7 +185,7 @@ def erstellen(Teil):
                                             + str(N(m_fkt_x_tp,3)) + r' \mathrm{~und~} P_1('
                                             + str(N(x_werte_tp[0],3)) + r' \vert' + str(N(y_wert_tp,3))
                                             + r') \mathrm{~folgt~} \quad \to \quad' + str(N(y_wert_tp,3)) + '~=~'
-                                            + str(N(m_fkt_x_tp,3)) + r' \cdot ' + vorz_str_minus(N(x_werte_tp[0],3))
+                                            + str(N(m_fkt_x_tp,3)) + r' \cdot ' + gzahl_klammer(N(x_werte_tp[0],3))
                                             + r'+~n \quad \vert ' + vorz_str(N(-1*m_fkt_x_tp*x_werte_tp[0],3))
                                             + r' \quad n~=~' + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
                                             + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
@@ -261,14 +261,14 @@ def erstellen(Teil):
             print('diskrimante = ' + str(steigung/(-1*a1*e1)))
 
             loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
-                             + vorz_str_minus(a2) + r'~ \vert \div ' + vorz_str_minus(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
+                             + gzahl_klammer(a2) + r'~ \vert \div ' + gzahl_klammer(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
                              + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P) \\\\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                             + vorz_str_minus(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
+                             + gzahl_klammer(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
                              + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
                              + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3P) \\\\',
                              r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                             + vorz_str_minus(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
+                             + gzahl_klammer(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
                              + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
                              + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~\mathbf{'
                              + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P) \\\\']
@@ -292,7 +292,7 @@ def erstellen(Teil):
                            + r' \hspace{15em}')
             loesung.append(str(teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
                              + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
-                             + vorz_str_minus(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
+                             + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
                              + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
                              + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
                              + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
