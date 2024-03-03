@@ -315,7 +315,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test II'
+    Art = '2. Test (1. Semester)'
     Titel = 'Anwendung der Ableitung'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -377,8 +377,8 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_HAKs = 1
-probe = False
+anzahl_HAKs = 2
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_HAKs):
     if probe:

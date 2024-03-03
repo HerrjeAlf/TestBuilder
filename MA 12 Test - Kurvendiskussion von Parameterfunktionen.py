@@ -703,7 +703,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = 'Test 4'
+    Art = '4. Test (1. Semester)'
     Titel = 'Kurvendiskussion von Parameterfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -774,7 +774,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
