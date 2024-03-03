@@ -268,8 +268,12 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     plt.axis([-6, 6, -6, 6])
     plt.plot(xwerte, ywerte)
     for fkt in funktionen:
-        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        print(fkt)
+        print(fkt[0])
+        ywerte = [fkt[0].subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
+        plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
+                     xytext=(+5, +5), textcoords='offset points', fontsize=12)
 
     return plt.savefig(name, dpi=200)
 
@@ -388,8 +392,6 @@ def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, bz1='E', bz2= r'$ \overline{' + 'E
         wkt_liste_anzahl_2.extend(wkt_liste_anzahl_2_neu)
         wkt_liste_anzahl_1 = wkt_liste_anzahl_1_neu
     plt.show()
-
-Baumdiagramm_zoZ(4,5,15,'W', 'S')
 
 def loeschen():
     plt.figure().clear()
