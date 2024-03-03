@@ -40,7 +40,7 @@ def erstellen(Teil):
             steigung = zzahl(2, 8) / 2
             schnittpunkt_y = zzahl(1, 8) / 2
             fkt = steigung * x + schnittpunkt_y
-        fkt_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+        fkt_str = vorz_v_aussen(steigung, 'x') + vorz_str(schnittpunkt_y)
         print(fkt), print(fkt_str)
 
 
@@ -97,7 +97,7 @@ def erstellen(Teil):
 
             fkt = steigung_b *x + schnittpunkt_y_b
             fkt_a = steigung*x+schnittpunkt_y
-            fkt_str = gzahl(steigung_b) + 'x' + vorz_str(schnittpunkt_y_b)
+            fkt_str = vorz_v_aussen(steigung_b,'x') + vorz_str(schnittpunkt_y_b)
             print(fkt), print(fkt_str)
 
             table1bA = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
@@ -156,13 +156,21 @@ def erstellen(Teil):
             steigung = zzahl(2, 8) / 2
             schnittpunkt_y = zzahl(1, 8) / 2
             fkt_f = steigung * x + schnittpunkt_y
-        fkt_f_str = gzahl(steigung) + 'x' + vorz_str(schnittpunkt_y)
+        fkt_f_str = vorz_v_aussen(steigung,'x') + vorz_str(schnittpunkt_y)
         # Parabel
         xwert_sp = zzahl(1,4)
         ywert_sp = zzahl(1,4)
         fkt_p = collect(expand((x-xwert_sp)**2 + ywert_sp),x)
         fkt_sp_str = '(x' + vorz_str(-1*xwert_sp) + ')^2' + vorz_str(ywert_sp)
-        fkt_p_str = 'x^2' + vorz_str(-1*2*xwert_sp) + 'x' + vorz_str(ywert_sp + xwert_sp**2)
+        fkt_p_str = 'x^2' + vorz_v_innen(-1*2*xwert_sp,'x') + vorz_str(ywert_sp + xwert_sp**2)
+        # gestauchte/gestreckte allgemeine Parabel
+        xwert_sp2 = zzahl(1, 4)
+        while xwert_sp2 == xwert_sp:
+            xwert_sp2 = zzahl(1, 4)
+        ywert_sp2 = zzahl(1, 4)
+        faktor = zzahl(1,5)/2
+        fkt_p2 = collect(expand(faktor*(x-xwert_sp2)**2 + ywert_sp2),x)
+        fkt_sp2_str = vorz_v_aussen(faktor,'(x') + vorz_str(-1*xwert_sp2) + ')^2' + vorz_str(ywert_sp2)
 
         # Tabelle mit den Lösungen
         table1aB = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
@@ -181,9 +189,10 @@ def erstellen(Teil):
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
             grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
-            graph_xyfix(fkt_f, fkt_p, bezn='f', name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            graph_xyfix(fkt_f, [fkt_p,'p',xwert_sp],[fkt_p2,'k',xwert_sp2],
+                        bezn='f', name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
             aufgabe.extend(('In der oberen Abbildung sind die Graphen der linearen Funktion f(x)'
-                            ' und der Parabel p(x) dargestellt. \n\n',
+                            ' und der Parabeln p(x) sowie k(x) dargestellt. \n\n',
                             str(liste_teilaufg[i]) + ') Bestimme aus dem Graphen die Funktionsgleichung f'
                                                      ' und erstelle eine Wertetabelle von -2 bis 2. \n\n'))
             loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_f_str + r' \quad (2P) \hspace{5em} ',
@@ -240,7 +249,7 @@ def erstellen(Teil):
             loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Graph~siehe~Koordinatensystem'
                             r' \quad (2P) \quad und \quad h(x) ~=~ ' + fkt_str + r' \quad (2P) } \\'
                             + r'\mathrm{insgesamt~' + str(punkte_aufg) + '~Punkte}', 'Abbildung'))
-            graph_xyfix(fkt, fkt_a, bezn='f', name=f'Loesung_{nr}{liste_teilaufg[i]}')
+            graph_xyfix(fkt, [fkt_a,'h',0], bezn='f', name=f'Loesung_{nr}{liste_teilaufg[i]}')
             i += 1
 
         if 'd' in teilaufg:
@@ -256,12 +265,27 @@ def erstellen(Teil):
                            + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
+        if 'e' in teilaufg:
+            punkte_aufg = 5
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+            aufgabe.append(
+                str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt und den Faktor a der Parabel k ab und bestimme '
+                                         'die Scheitelpunktform von k. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp2) + r' \vert ' + gzahl(ywert_sp2)
+                           + r') \quad (2P) \quad \mathrm{und} \quad a~=~' + gzahl(faktor)
+                           + r' \quad \to \quad f(x)~=~ ' + fkt_sp2_str + r' \quad (2P) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
+
 
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [wiederholung_funktionen(1,['a', 'b', 'c', 'd'])]
+    aufgaben = [wiederholung_funktionen(1,['a', 'b', 'c', 'd', 'e'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -297,7 +321,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = '11. Hausaufgabenkontrolle'
+    Art = '12. Hausaufgabenkontrolle'
     Titel = 'Parabelgleichungen'
 
 
@@ -373,8 +397,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
