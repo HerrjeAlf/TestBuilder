@@ -180,8 +180,22 @@ def vektor_vergleich(vec1, vec2):
 # Wahrscheinlichkeitsrechnung
 
 def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
-    erstes_tubel = [farbe1 for element in range(anzahl_ziehen)]
-    omega = [erstes_tubel]
+    omega = [[farbe1 for element in range(anzahl_ziehen)]]
+    for anzahl in omega:
+        i = 0
+        for stelle in anzahl:
+            tubel = anzahl.copy()
+            tubel[i] = farbe2
+            for element in omega:
+                if tubel not in omega:
+                    omega.append(tubel)
+            i += 1
+    return omega
+
+# noch zu programmieren
+def ergebnisraum_zoZ(anzahl_ziehen, anzahl_1, anzahl_2, farbe1='weiß', farbe2='schwarz'):
+
+    omega = [[farbe1 for element in range(anzahl_1)]]
     for anzahl in omega:
         i = 0
         for stelle in anzahl:
