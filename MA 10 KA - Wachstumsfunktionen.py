@@ -168,7 +168,7 @@ def erstellen(Teil):
         while xwert_sp2 == xwert_sp:
             xwert_sp2 = zzahl(1, 4)
         ywert_sp2 = zzahl(1, 4)
-        faktor = zzahl(1,5)/2
+        faktor = random.choice([-1,1]) * random.choice([0.5,1.5,2,2.5,3])
         fkt_p2 = collect(expand(faktor*(x-xwert_sp2)**2 + ywert_sp2),x)
         fkt_sp2_str = vorz_v_aussen(faktor,'(x') + vorz_str(-1*xwert_sp2) + ')^2' + vorz_str(ywert_sp2)
 
