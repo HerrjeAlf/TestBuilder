@@ -10,6 +10,7 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
                      MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
+from plotten import *
 from sympy.plotting import plot as symplot
 
 from plotten import Graph
@@ -46,18 +47,28 @@ def erstellen(Teil):
 
     def exponentialfunktionen_01(nr, teilaufg):
         i = 0
-        extrema_xwert = zzahl(1,5)
-        extrema_ywert = zzahl(1,6)
+        extrema_xwert = zzahl(1,3)
+        extrema_ywert = zzahl(1,3)
+        print(extrema_xwert)
+        print(extrema_ywert)
         # rekonstruktion der exponentialfunktion
-        fkt = exp(b*x)*a*x**2
-        fkt_a1 = diff(fkt,x)
-        gleichung1 = Eq(fkt.subs(x,extrema_xwert),extrema_ywert)
+        fkt_v = exp(b*x+2)*a*x**2
+        fkt_a1 = diff(fkt_v,x)
+        gleichung1 = Eq(fkt_v.subs(x,extrema_xwert),extrema_ywert)
         gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
         lsg = solve((gleichung1,gleichung2),(a,b))
         print(lsg)
-        symplot()
-        plt.show()
-
+        fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2
+        ywerte = [(element,fkt.subs(x,element)) for element in range(-5,6)]
+        wertebereich = [element[0] for element in ywerte if abs(element[1]) < 6]
+        xmin = wertebereich[0]
+        xmax = wertebereich[-1]
+        print(fkt)
+        print(ywerte)
+        print(wertebereich)
+        print(xmin)
+        print(xmax)
+        graph_xyfix(fkt)
         # return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     aufgaben = [exponentialfunktionen_01(1, ['a', 'b'])]
