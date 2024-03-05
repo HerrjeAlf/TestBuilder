@@ -193,16 +193,24 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
     return omega
 
 # noch zu programmieren
-def ergebnisraum_zoZ(anzahl_ziehen, anzahl_1, anzahl_2, farbe1='weiß', farbe2='schwarz'):
-
-    omega = [[farbe1 for element in range(anzahl_1)]]
-    for anzahl in omega:
+def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
+    anz_ges = anz_1 + anz_2
+    if az > anz_ges:
+        az = anz_ges
+    omega1 = [[farbe1 for element in range(az)]]
+    if az > anz_1:
+        omega = []
+    else:
+        omega = [[farbe1 for element in range(az)]]
+    for anzahl in omega1:
         i = 0
         for stelle in anzahl:
             tubel = anzahl.copy()
             tubel[i] = farbe2
-            for element in omega:
-                if tubel not in omega:
-                    omega.append(tubel)
+            for element in omega1:
+                if tubel not in omega1:
+                    omega1.append(tubel)
+                    if tubel.count(farbe2) <= anz_2 and tubel.count(farbe1) <= anz_1:
+                        omega.append(tubel)
             i += 1
     return omega
