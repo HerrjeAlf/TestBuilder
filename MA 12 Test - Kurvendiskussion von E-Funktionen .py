@@ -58,17 +58,21 @@ def erstellen(Teil):
         gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
         lsg = solve((gleichung1,gleichung2),(a,b))
         print(lsg)
+        if extrema_xwert > 0:
+            verschiebung = -1*nzahl(0,2)
+        else:
+            verschiebung = nzahl(0,2)
         fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2
+        # fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2-verschiebung
+
+        # Werte für Angaben zum Zeichnen des Graphen
         ywerte = [(element,fkt.subs(x,element)) for element in range(-5,6)]
         wertebereich = [element[0] for element in ywerte if abs(element[1]) < 6]
         xmin = wertebereich[0]
         xmax = wertebereich[-1]
-        print(fkt)
-        print(ywerte)
-        print(wertebereich)
-        print(xmin)
-        print(xmax)
+        print(fkt), print(ywerte), print(wertebereich), print(xmin), print(xmax)
         graph_xyfix(fkt)
+
         # return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
     aufgaben = [exponentialfunktionen_01(1, ['a', 'b'])]
