@@ -296,7 +296,7 @@ def Graph(x_min, x_max, name, *funktionen):
     plt.grid(True)
     return plt.savefig(name, dpi=200)
 
-def Baumdiagramm_zmZ(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
+def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
     ax.spines['top'].set_visible(False)
@@ -332,10 +332,11 @@ def Baumdiagramm_zmZ(stf, wkt, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
             print('xwerte: ' + str(xwerte))
             print('ywerte_1: ' + str(ywerte_1))
             print('ywerte_2: ' + str(ywerte_2))
-    plt.show()
+    return plt.savefig(name, dpi=200)
 
 
-def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, bz1='E', bz2= r'$ \overline{' + 'E' + '} $'):
+
+def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
     ax.spines['top'].set_visible(False)
@@ -376,22 +377,13 @@ def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, bz1='E', bz2= r'$ \overline{' + 'E
             plt.plot(xwerte, ywerte_2, 'k')
             wkt_liste_anzahl_1_neu.append(wkt_liste_anzahl_1[i]-1)
             wkt_liste_anzahl_2_neu.append(wkt_liste_anzahl_2[-i]-1)
-            print('Stufe: ' + str(stufe))
-            print('xwerte: ' + str(xwerte))
-            print('ywerte_1: ' + str(ywerte_1))
-            print('ywerte_2: ' + str(ywerte_2))
-            print('ywerte_start: ' + str(ywerte_start))
-            print(wkt_liste_anzahl_1_neu)
-            print(wkt_liste_anzahl_2_neu)
+            # print('Stufe: ' + str(stufe)), print('xwerte: ' + str(xwerte)), print('ywerte_1: ' + str(ywerte_1)), print('ywerte_2: ' + str(ywerte_2)), print('ywerte_start: ' + str(ywerte_start)), print(wkt_liste_anzahl_1_neu), print(wkt_liste_anzahl_2_neu)
             i += 1
-        print(wkt_liste_anzahl_1_neu)
-        print(wkt_liste_anzahl_2_neu)
-        print(wkt_liste_anzahl_1)
-        print(wkt_liste_anzahl_2)
+        # print(wkt_liste_anzahl_1_neu), print(wkt_liste_anzahl_2_neu), print(wkt_liste_anzahl_1), print(wkt_liste_anzahl_2)
         wkt_liste_anzahl_1_neu.extend(wkt_liste_anzahl_1)
         wkt_liste_anzahl_2.extend(wkt_liste_anzahl_2_neu)
         wkt_liste_anzahl_1 = wkt_liste_anzahl_1_neu
-    plt.show()
+    return plt.savefig(name, dpi=200)
 
 def loeschen():
     plt.figure().clear()
