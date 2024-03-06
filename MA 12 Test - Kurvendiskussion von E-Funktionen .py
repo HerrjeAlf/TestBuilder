@@ -61,10 +61,13 @@ def erstellen(Teil):
         gleichung1 = Eq(fkt_v.subs(x,extrema_xwert),extrema_ywert)
         gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
         lsg = solve((gleichung1,gleichung2),(a,b))
+        lsg_a = lsg[0][0]
+        lsg_b = lsg[0][1]
         print(lsg)
-        fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2 + y_vers
-        fkt_str = (vorz_v_aussen(lsg[0][0],'x^2') + r' \cdot e^{' + vorz_v_innen(lsg[0][1],'x+2') + '}'
+        fkt = exp(lsg_b*x+2)*lsg_a*x**2 + y_vers
+        fkt_str = (vorz_v_aussen(lsg_a,'x^2') + r' \cdot e^{' + vorz_v_aussen(lsg_b,'x+2') + '}'
                    + vorz_str(y_vers))
+
 
         # Werte für Angaben zum Zeichnen des Graphen
         ywerte = [(element,fkt.subs(x,element)) for element in range(-5,6)]
@@ -74,10 +77,24 @@ def erstellen(Teil):
         print(fkt), print(ywerte), print(wertebereich), print(xmin), print(xmax)
         graph_xyfix(fkt)
 
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+        # Ableitung der Funktionen
+        fkt_a1 = fkt.diff(x,1)
+        fkt_a2 = fkt.diff(x,2)
+        fkt_a3 = fkt.diff(x,3)
+
+        fkt_a1_str = ('e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
+                      + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
+        fkt_a2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                      + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
+                      + vorz_str(2*lsg_a) + r' \Big)')
+        fkt_a3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                      + vorz_v_aussen(lsg_a * lsg_b**3, 'x^2') + vorz_v_innen(6 * lsg_a * lsg_b**2, 'x')
+                      + vorz_str(6*lsg_a*lsg_b) + r' \Big)')
+
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                    r' f(x)~=~' + fkt_str]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-        grafiken_aufgaben = ['','']
+        grafiken_aufgaben = ['','','']
         grafiken_loesung = ['']
 
         if 'a' in teilaufg:
@@ -95,10 +112,50 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                            + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                           + fkt_str + '~=~' + latex(grenzwert_min) + r' \quad (2P) \\\\')
+                           + fkt_str + '~=~' + latex(grenzwert_min) + r' \quad (2P) \\\\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
+        if 'b' in teilaufg:
+            liste_bez.append(str(nr))
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+            if y_vers == 0:
+                punkte_aufg = 4
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte der'
+                                                        f' Funktion f mit den Achsen . \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
+                               + r' \hspace{10em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                               + r' \quad da e^{' + vorz_v_innen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
+                               + r' \quad \to \quad ' + (vorz_v_innen(lsg[0][0],'x^2'))
+                               + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert sqrt{}() \\'
+                               + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4P) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            else:
+                punkte_aufg = 2
+                liste_punkte.append(punkte_aufg)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Schnittpunkt der'
+                                                        f' Funktion f mit der y-Achse . \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
+                               + r' \hspace{5em} \\ \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
+                               + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2P) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                i += 1
 
+        if 'c' in teilaufg:
+            punkte_aufg = 6
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr))
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{f^{ \prime }(x) ~=~' + fkt_a1_str
+                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
+                           + r' \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str + r'} \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
@@ -138,8 +195,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '2. Test (2. Semester)'
-    Titel = 'Exponentialfunktionen und höhere Ableitungsregeln'
+    Art = '12. Hausaufgabenkontrolle'
+    Titel = 'Kurvendiskussionen einer Exponentialfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
@@ -210,11 +267,11 @@ def erstellen(Teil):
         # print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
-    # Hausaufgabenkontrolle()
-    # Erwartungshorizont()
+    Hausaufgabenkontrolle()
+    Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
