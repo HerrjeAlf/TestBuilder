@@ -274,7 +274,7 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
         plt.plot(xwerte, ywerte)
         plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
-    plt.show()
+    # plt.show()
     return plt.savefig(name, dpi=200)
 
 def Graph(x_min, x_max, name, *funktionen):
