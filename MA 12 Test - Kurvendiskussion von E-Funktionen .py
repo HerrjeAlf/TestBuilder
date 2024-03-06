@@ -49,8 +49,12 @@ def erstellen(Teil):
         i = 0
         extrema_xwert = zzahl(1,3)
         extrema_ywert = zzahl(1,3)
-        print(extrema_xwert)
-        print(extrema_ywert)
+        if extrema_xwert > 0:
+            y_vers = -1*nzahl(0,2)
+        else:
+            y_vers = nzahl(0,2)
+        print(extrema_xwert), print(extrema_ywert), print(y_vers)
+
         # rekonstruktion der exponentialfunktion
         fkt_v = exp(b*x+2)*a*x**2
         fkt_a1 = diff(fkt_v,x)
@@ -58,12 +62,9 @@ def erstellen(Teil):
         gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
         lsg = solve((gleichung1,gleichung2),(a,b))
         print(lsg)
-        if extrema_xwert > 0:
-            verschiebung = -1*nzahl(0,2)
-        else:
-            verschiebung = nzahl(0,2)
-        fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2
-        # fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2-verschiebung
+        fkt = exp(lsg[0][1]*x+2)*lsg[0][0]*x**2 + y_vers
+        fkt_str = (vorz_v_aussen(lsg[0][0],'x^2') + r' \cdot e^{' + vorz_v_innen(lsg[0][1],'x+2') + '}'
+                   + vorz_str(y_vers))
 
         # Werte für Angaben zum Zeichnen des Graphen
         ywerte = [(element,fkt.subs(x,element)) for element in range(-5,6)]
@@ -73,9 +74,35 @@ def erstellen(Teil):
         print(fkt), print(ywerte), print(wertebereich), print(xmin), print(xmax)
         graph_xyfix(fkt)
 
-        # return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   r' f(x)~=~' + fkt_str]
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = ['','']
+        grafiken_loesung = ['']
 
-    aufgaben = [exponentialfunktionen_01(1, ['a', 'b'])]
+        if 'a' in teilaufg:
+            punkte_aufg = 2
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr))
+            grafiken_aufgaben.append(f'Aufgabe_{nr}')
+            grafiken_loesung.append(f'Loesung_{nr}')
+
+            grenzwert_min = limit(fkt, x, -oo)
+            grenzwert_pos = limit(fkt, x, oo)
+
+            print(grenzwert_min), print(grenzwert_pos)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
+                           + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
+                           + fkt_str + '~=~' + latex(grenzwert_min) + r' \quad (2P) \\\\')
+            i += 1
+
+
+
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+
+    aufgaben = [exponentialfunktionen_01(1, ['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
