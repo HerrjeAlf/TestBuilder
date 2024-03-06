@@ -587,8 +587,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = 'Test II'
-    Titel = 'Achsenabschnittsform'
+    Art = '1. Test (4. Semester)'
+    Titel = 'Lagebeziehung von Objekten im Raum'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     def Hausaufgabenkontrolle():
@@ -658,7 +658,7 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

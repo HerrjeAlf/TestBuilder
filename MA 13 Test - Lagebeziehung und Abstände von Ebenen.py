@@ -549,7 +549,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = 'Test'
+    Art = '2. Test (4. Semester)'
     Titel = 'Lagebeziehung und Abstände von Ebenen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -622,7 +622,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
