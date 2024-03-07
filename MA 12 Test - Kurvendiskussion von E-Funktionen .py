@@ -21,25 +21,6 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 
-def timer(func):
-    """
-    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
-    """
-    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
-        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
-        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
-        end_time = time.perf_counter()  # Zeit nachm ausführen
-        execution_time = end_time - start_time  # Vergangene Zeit berechnen
-
-        if func.__name__ == 'Hausaufgabenkontrolle':
-            print(f'\033[38;2;0;220;120m\033[1mKontrolle in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        elif func.__name__ == 'Erwartungshorizont':
-            print(f'\033[38;2;0;220;120m\033[1mErwartungshorizont in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        else:
-            print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
-        return result
-    return wrapper
-
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
@@ -100,7 +81,7 @@ def erstellen(Teil):
         if 'a' in teilaufg:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr))
+            liste_bez.append(f'{str(nr)}.a')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
 
@@ -117,14 +98,14 @@ def erstellen(Teil):
             i += 1
 
         if 'b' in teilaufg:
-            liste_bez.append(str(nr))
+            liste_bez.append(f'{str(nr)}.b')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             if y_vers == 0:
                 punkte_aufg = 4
                 liste_punkte.append(punkte_aufg)
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte der'
-                                                        f' Funktion f mit den Achsen . \n\n')
+                                                        f' Funktion f mit den Achsen. \n\n')
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
                                + r' \hspace{10em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                                + r' \quad da e^{' + vorz_v_innen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
@@ -136,21 +117,21 @@ def erstellen(Teil):
                 punkte_aufg = 2
                 liste_punkte.append(punkte_aufg)
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Schnittpunkt der'
-                                                        f' Funktion f mit der y-Achse . \n\n')
+                                                        f' Funktion f mit der y-Achse. \n\n')
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
                                + r' \hspace{5em} \\ \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
                                + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2P) \\'
                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-                i += 1
+            i += 1
 
         if 'c' in teilaufg:
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr))
+            liste_bez.append(f'{str(nr)}.c')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die ersten drei Ableitungen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \mathrm{f^{ \prime }(x) ~=~' + fkt_a1_str
                            + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
                            + r' \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str + r'} \\'
@@ -237,7 +218,6 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
-        # print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
     @timer
@@ -264,14 +244,13 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
-        # print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 2
+anzahl_Arbeiten = 1
 probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):

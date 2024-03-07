@@ -1,7 +1,23 @@
 import random
+import time
+
 import numpy as np
 from sympy import *
 
+# Timer Funktion
+def timer(func):
+    """
+    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
+    """
+    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
+        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
+        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
+        end_time = time.perf_counter()  # Zeit nachm ausführen
+        execution_time = end_time - start_time  # Vergangene Zeit berechnen
+
+        print(f'\033[38;2;0;220;120m\033[1m"{func.__name__}" wurde in {round(execution_time, 3)} Sekunden ausgeführt\033[0m')
+        return result
+    return wrapper
 
 
 # Funktionen zur Darstellung von Zahlen
