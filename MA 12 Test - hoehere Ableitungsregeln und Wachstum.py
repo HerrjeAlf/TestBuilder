@@ -20,25 +20,6 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 
-def timer(func):
-    """
-    Timer-Dekorator zur Messung der Ausführungszeit einer Funktion.
-    """
-    def wrapper(*args, **kwargs):  # Erklärung eines Dekorators -> https://t1p.de/lqn4d
-        start_time = time.perf_counter()  # Zeit vorm ausführen nehmen
-        result = func(*args, **kwargs)  # Aufruf der eigentlichen Funktion mit ihren Argumenten
-        end_time = time.perf_counter()  # Zeit nachm ausführen
-        execution_time = end_time - start_time  # Vergangene Zeit berechnen
-
-        if func.__name__ == 'Hausaufgabenkontrolle':
-            print(f'\033[38;2;0;220;120m\033[1mKontrolle in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        elif func.__name__ == 'Erwartungshorizont':
-            print(f'\033[38;2;0;220;120m\033[1mErwartungshorizont in {round(execution_time, 2)} Sekunden erstellt\033[0m')
-        else:
-            print(f'\033[38;2;0;220;120m\033[1m{func.__name__} in {round(execution_time, 2)} Sekunden ausgeführt\033[0m')
-        return result
-    return wrapper
-
 def erstellen(Teil):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
@@ -51,7 +32,7 @@ def erstellen(Teil):
                           r'\log_a \frac{u}{v} ~=~ \hspace{10em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
                           r'\log_a u^r ~=~ \hspace{10em}': r'\log_a u^r ~=~ r \cdot \log_a u',
                           r'\log_a \sqrt[n]{u} ~=~ \hspace{10em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
-                          r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{ln b}{ln c}',
+                          r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
                           r'a^{\log_a b} ~=~ \hspace{10em}': r'a^{\log_a b} ~=~ b',
                           r'\log_a 1 ~=~ \hspace{10em}': r'\log_a 1 ~=~ 0',
                           r'\log_a a ~=~ \hspace{10em}': r'\log_a a ~=~ 1',
@@ -128,7 +109,7 @@ def erstellen(Teil):
                 erg_gl = nzahl(2, 40) / 10
                 aufgabe = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + '} ~=~ ' + gzahl(erg_gl)
                 aufgabe_lsg = ('e^{' + vorz_v_aussen(faktor_exp,'x') + '} ~=~ ' + gzahl(erg_gl)
-                               + r' \quad \vert ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + 'x ~=~ ln('
+                               + r' \quad \vert \ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + r'x ~=~ \ln('
                                + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
                                + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3))
                                + r' \quad (2P) \\')
@@ -141,10 +122,10 @@ def erstellen(Teil):
                 erg_gl = nzahl(2, 40) / 10
                 aufgabe = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + r'} ~=~ ' + gzahl(erg_gl)
                 aufgabe_lsg = ('e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + '} ~=~ ' + gzahl(erg_gl)
-                               + r' \quad \vert ln() \quad \to \quad ' + vorz_v_aussen(faktor_exp, 'x')
-                               + vorz_str(summand) + ' ~=~ ln(' + gzahl(erg_gl) + r') \quad \vert '
+                               + r' \quad \vert \ln() \quad \to \quad ' + vorz_v_aussen(faktor_exp, 'x')
+                               + vorz_str(summand) + r' ~=~ \ln(' + gzahl(erg_gl) + r') \quad \vert '
                                + vorz_str(-1*summand) + r' \quad (1P) \\' + vorz_v_aussen(faktor_exp,'x')
-                               + r' ~=~ ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
+                               + r' ~=~ \ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
                                + gzahl_klammer(faktor_exp) + r' \quad \to \quad x~=~'
                                + vorz_gzahl(N((log(erg_gl) - summand)/ faktor_exp, 3))
                                + r' \quad (2P) \\')
@@ -168,8 +149,8 @@ def erstellen(Teil):
                                + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
                                + vorz_gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
                                + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
-                               + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert ln() \quad \to \quad '
-                               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ ln \Big('
+                               + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln() \quad \to \quad '
+                               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \Big('
                                + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
@@ -183,12 +164,12 @@ def erstellen(Teil):
                 summand = zzahl(1,7)
                 while faktor_exp_1 == faktor_exp_2:
                     faktor_exp_2 = zzahl(1, 5)
-                aufgabe = (r' ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ ln(x^{' + gzahl(faktor_exp_2) + '})'
+                aufgabe = (r' \ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
                            + vorz_str(summand))
-                aufgabe_lsg = (r' ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ ln(x^{' + gzahl(faktor_exp_2) + '})'
-                               + vorz_str(summand) + r' \quad \vert ~-~ ln(x^{' + gzahl(faktor_exp_2) + '})'
-                               + r' \quad \to \quad ln(x^{' + gzahl(faktor_exp_1-faktor_exp_2) + '}) ~=~'
-                               + gzahl(summand) + r' \quad \vert e^{()} \quad (1P) \\ x^{'
+                aufgabe_lsg = (r' \ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
+                               + vorz_str(summand) + r' \quad \vert ~-~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
+                               + r' \quad \to \quad \ln(x^{' + gzahl(faktor_exp_1-faktor_exp_2) + '}) ~=~'
+                               + gzahl(summand) + r' \quad \vert e^{\Box} \quad (1P) \\ x^{'
                                + gzahl(faktor_exp_1-faktor_exp_2) + '} ~=~ e^{' + gzahl(summand)
                                + r'} \quad \vert \sqrt[' + gzahl(faktor_exp_1-faktor_exp_2)
                                + r'] \quad \to \quad x ~=~'
@@ -394,12 +375,12 @@ def erstellen(Teil):
             def Aufgabe_2():
                 punkte = 3
                 faktor_exp = zzahl(2, 8)
-                aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x)'
-                aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot ln(x) \quad \to \quad '
+                aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot \ln(x)'
+                aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot \ln(x) \quad \to \quad '
                                + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
-                               + r'} \cdot ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
+                               + r'} \cdot \ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
                                + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
-                               + r' \cdot ln(x) ~+~ 1) \quad (3P) \\')
+                               + r' \cdot \ln(x) ~+~ 1) \quad (3P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
             def Aufgabe_3():
@@ -408,7 +389,7 @@ def erstellen(Teil):
                 faktor_sqrt = nzahl(2, 8)
                 while abs(faktor_exp) == faktor_sqrt:
                     faktor_sqrt = nzahl(2, 8)
-                aufgabe = 'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
+                aufgabe = r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
                 aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x} ~=~'
                                + r' x^{' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r'} \cdot e^{x} \quad \to \quad '
                                + r' f^{ \prime } (x) ~=~' + gzahl(Rational(faktor_exp,faktor_sqrt)) + r' \cdot x^{'
@@ -453,9 +434,9 @@ def erstellen(Teil):
                 exponent = zzahl(2, 8)
                 faktor_1 = zzahl(2, 8)
                 faktor_2 = zzahl(1, 8)
-                aufgabe = ('f(x) ~=~ ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                aufgabe = (r'f(x) ~=~ \ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
                            + vorz_v_innen(faktor_2, 'x') + ')')
-                aufgabe_lsg = ('f(x) ~=~ ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                aufgabe_lsg = (r'f(x) ~=~ \ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
                                + vorz_v_innen(faktor_2, 'x') + r') \quad \to \quad'
                                + r' f^{ \prime } (x) ~=~ \frac{1}{'+ vorz_v_aussen(faktor_1, 'x') + '^{'
                                + gzahl(exponent) + r'}' + vorz_v_innen(faktor_2, 'x') + r'} \cdot ('
@@ -471,7 +452,7 @@ def erstellen(Teil):
                 while abs(exponent) == wurzel:
                     wurzel = nzahl(2, 8)
                 summand = zzahl(1,8)
-                aufgabe = ('f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor,'x')
+                aufgabe = (r'f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor,'x')
                            + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r'} ')
                 aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor,'x')
                                + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r'} ~=~'
@@ -579,7 +560,6 @@ def erstellen(Teil):
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
-        # print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
 
     # Erwartungshorizont
     @timer
@@ -606,7 +586,6 @@ def erstellen(Teil):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
-        # print('\033[38;2;0;220;120m\033[1mErwartungshorizont erstellt\033[0m')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
