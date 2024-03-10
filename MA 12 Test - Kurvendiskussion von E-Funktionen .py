@@ -78,13 +78,13 @@ def erstellen(Teil):
         graph_xyfix(fkt)
 
         # Ableitung der Funktionen
-        fkt_a1 = fkt.diff(x,1)
-        fkt_a2 = fkt.diff(x,2)
-        fkt_a3 = fkt.diff(x,3)
+        fkt_a1 = diff(fkt,x)
+        fkt_a2 = (fkt, x,2)
+        fkt_a3 = diff(fkt, x,3)
 
         fkt_a1_str = ('e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                       + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
-        fkt_a2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+        fkt_diffa2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
                       + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
                       + vorz_str(2*lsg_a) + r' \Big)')
         fkt_a3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
@@ -100,7 +100,7 @@ def erstellen(Teil):
         if 'a' in teilaufg:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr))
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
 
@@ -117,7 +117,7 @@ def erstellen(Teil):
             i += 1
 
         if 'b' in teilaufg:
-            liste_bez.append(str(nr))
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
             if y_vers == 0:
@@ -146,7 +146,7 @@ def erstellen(Teil):
         if 'c' in teilaufg:
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr))
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}')
             grafiken_loesung.append(f'Loesung_{nr}')
 
@@ -195,7 +195,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '12. Hausaufgabenkontrolle'
+    Art = '10. Hausaufgabenkontrolle'
     Titel = 'Kurvendiskussionen einer Exponentialfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
