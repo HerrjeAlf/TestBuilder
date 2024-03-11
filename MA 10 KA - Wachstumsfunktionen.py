@@ -191,8 +191,8 @@ def erstellen(Teil):
             grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
             graph_xyfix(fkt_f, [fkt_p,'p',xwert_sp],[fkt_p2,'k',xwert_sp2],
                         bezn='f', name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            aufgabe.extend(('In der oberen Abbildung sind die Graphen der linearen Funktion f(x)'
-                            ' und der Parabeln p(x) sowie k(x) dargestellt. \n\n',
+            aufgabe.extend(('In der oberen Abbildung sind die Graphen der linearen Funktion f'
+                            ' und der Parabeln p sowie k dargestellt. \n\n',
                             str(liste_teilaufg[i]) + ') Bestimme aus dem Graphen die Funktionsgleichung f'
                                                      ' und erstelle eine Wertetabelle von -2 bis 2. \n\n'))
             loesung.extend((str(liste_teilaufg[i]) + r') \quad f(x)~=~ ' + fkt_f_str + r' \quad (2P) \hspace{5em} ',
@@ -261,8 +261,8 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + ') Lies den Scheitelpunkt der Parabel p ab und bestimme die Scheitelpunkt- '
                                                     'und Normalform von p. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp) + r' \vert ' + gzahl(ywert_sp)
-                           + r') \quad (2P) \ quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_p_str + r' \quad (5P) \\'
-                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r') \quad (2P) \quad \to \quad f(x)~=~ ' + fkt_sp_str + ' ~=~ ' + fkt_p_str
+                           + r' \quad (5P) \\' + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
         if 'e' in teilaufg:
@@ -280,12 +280,92 @@ def erstellen(Teil):
                            + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
+        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
+    def einheiten_flaechen(nr, teilaufg):
+        i = 0
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = ['']
+        grafiken_loesung = ['']
+
+        if 'a' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            laengen_einheiten = ['~mm', '~cm', '~dm', '~m']
+            auswahl_1, schritt_1 = random.randint(0,1), random.randint(1,2)
+            faktor_1 = nzahl(1,100) * 10**(schritt_1-1)
+            auswahl_2, schritt_2 = random.randint(0, 1), random.randint(1, 2)
+            faktor_2 = nzahl(1, 100) / 10**(schritt_2-1)
+
+            flaechen_einheiten = ['~mm^2', '~cm^2', '~dm^2', '~m^2', '~ar', '~ha', '~km^2']
+            auswahl_3, schritt_3 = random.randint(0,4), random.randint(1,2)
+            faktor_3 = nzahl(1,100) * 10**(schritt_1*2-1)
+            auswahl_4, schritt_4 = random.randint(0, 1), random.randint(1, 2)
+            faktor_4 = nzahl(1, 100) / 10**(schritt_2*2-1)
+
+            aufgabe.extend((str(liste_teilaufg[i]) + ') Rechne die gegebenen Größen in die angegebenen'
+                            + ' Einheiten um.',
+                            r'(1) \quad ' + gzahl(faktor_1) + laengen_einheiten[auswahl_1] + r'~=~ \hspace{5em}'
+                            + laengen_einheiten[auswahl_1+schritt_1] + r' \hspace{5em}'
+                            + r'(2) \quad ' + gzahl(faktor_2) + laengen_einheiten[auswahl_2 + schritt_2]
+                            + r'~=~ \hspace{5em}' + laengen_einheiten[auswahl_2] + r' \hspace{1em} \\\\'
+                            + r'(3) \quad ' + gzahl(faktor_3) + flaechen_einheiten[auswahl_3] + r'~=~ \hspace{5em}'
+                            + flaechen_einheiten[auswahl_3+schritt_3] + r' \hspace{5em}'
+                            + r'(4) \quad ' + gzahl(faktor_4) + flaechen_einheiten[auswahl_4 + schritt_4]
+                            + r'~=~ \hspace{5em}' + flaechen_einheiten[auswahl_4] + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad '
+                           + r'(1) \quad ' + gzahl(faktor_1) + laengen_einheiten[auswahl_1] + '~=~'
+                           + gzahl(faktor_1/10**(schritt_1*2))
+                           + laengen_einheiten[auswahl_1 + schritt_1] + r' \quad \mathrm{und} \quad '
+                           + r'(2) \quad ' + gzahl(faktor_2) + laengen_einheiten[auswahl_2 + schritt_2] + '~=~'
+                           + gzahl(faktor_2 * 10**(schritt_2*2)) + laengen_einheiten[auswahl_2] + r' \quad (2P) \\'
+                           + r'(3) \quad ' + gzahl(faktor_3) + flaechen_einheiten[auswahl_3] + '~=~'
+                           + gzahl(faktor_3/10**(schritt_3*2))
+                           + flaechen_einheiten[auswahl_3 + schritt_3] + r' \quad \mathrm{und} \quad '
+                           + r'(4) \quad ' + gzahl(faktor_4) + flaechen_einheiten[auswahl_4 + schritt_4] + '~=~'
+                           + gzahl(faktor_4 * 10**(schritt_4*2)) + flaechen_einheiten[auswahl_4] + r' \quad (2P) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
+
+        if 'b' in teilaufg:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+            auswahl_rechteck = random.choice(['Rechteck', 'Quadrat'])
+            auswahl_einheit = random.choice(['mm', 'cm', 'dm', 'm'])
+            laenge_1 = nzahl(6,14)/2
+            laenge_2 = nzahl(4,10)/2
+            if auswahl_rechteck == 'Rechteck':
+                aufg = (f') Es ist ein Rechteck mit den Kantenlängen a = {laenge_1} {auswahl_einheit} und '
+                        f'b = {laenge_2} {auswahl_einheit} gegeben. Berechne die Fläche.')
+                flaeche = laenge_1*laenge_2
+                lsg = (r' A~=~ a \cdot b ~=~' + gzahl(laenge_1) + '~' + auswahl_einheit + r' \cdot ' + gzahl(laenge_2)
+                       + '~' + auswahl_einheit + '~=~' + gzahl(flaeche) + '~' + auswahl_einheit + '^2')
+            else:
+                aufg = (f') Es ist ein Quadrat mit der Kantenlänge a = {laenge_1} {auswahl_einheit} gegeben.'
+                        f' Berechne die Fläche.')
+                flaeche = laenge_1 ** 2
+                lsg = (r' A~=~ a^2 ~=~(' + gzahl(laenge_1) + '~' + auswahl_einheit + ')^2 ~=~' + gzahl(flaeche)
+                       + '~' + auswahl_einheit + '^2')
+
+            aufgabe.append(str(liste_teilaufg[i]) + aufg)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + r' \\'
+                           + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-    aufgaben = [wiederholung_funktionen(1,['a', 'b', 'c', 'd', 'e'])]
+    aufgaben = [wiederholung_funktionen(1,['a', 'b', 'c', 'd', 'e']),
+                einheiten_flaechen(2, ['a', 'b'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -321,8 +401,8 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '10'
     Lehrer = 'Herr Herrys'
-    Art = '12. Hausaufgabenkontrolle'
-    Titel = 'Parabelgleichungen'
+    Art = '13. Hausaufgabenkontrolle'
+    Titel = 'Einheiten und Flächenberechnung'
 
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -356,12 +436,11 @@ def erstellen(Teil):
                 else:
                     Aufgabe.append(elements)
 
-
-        Aufgabe.append('\n\n')
-        Aufgabe.append(table2)
-
         Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
+
+        Aufgabe.append('\n\n \n\n')
+        Aufgabe.append(table2)
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
         print('\033[38;2;0;220;120m\033[1mKontrolle erstellt\033[0m')
@@ -397,8 +476,8 @@ def erstellen(Teil):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-anzahl_Arbeiten = 2
-probe = False
+anzahl_Arbeiten = 1
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
