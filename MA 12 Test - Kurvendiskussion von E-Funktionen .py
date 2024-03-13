@@ -186,8 +186,8 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
-            xwert_wp2 = (-2+ abs(sqrt(2)))/lsg_b
-            xwert_wp1 = (-2- abs(sqrt(2)))/lsg_b
+            xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
+            xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
@@ -197,7 +197,7 @@ def erstellen(Teil):
                            + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3P) \\'
                            + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
                            + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
-                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
+                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(-4/lsg_b) + r'}{2} \Big)^2'
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
                            + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (3P) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
@@ -221,8 +221,8 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
-            xwert_wp1 = N(-2 - abs(sqrt(2))/lsg_b,3)
-            ywert_wp1 = N(fkt.subs(x,-2 - abs(sqrt(2))/lsg_b),3)
+            xwert_wp1 = -2/lsg_b - sqrt(2)/abs(lsg_b)
+            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b),3)
             ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
             ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
 
