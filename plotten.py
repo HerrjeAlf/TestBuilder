@@ -277,8 +277,10 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     # plt.show()
     return plt.savefig(name, dpi=200)
 
-def Graph(x_min, x_max, name, *funktionen):
+def Graph(x_min, x_max, *funktionen, name='Graph'):
     fig, ax = plt.subplots()
+    fig.canvas.draw()
+    fig.tight_layout()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))

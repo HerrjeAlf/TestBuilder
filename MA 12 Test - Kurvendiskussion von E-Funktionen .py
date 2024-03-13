@@ -86,7 +86,6 @@ def erstellen(Teil):
 
             grenzwert_min = limit(fkt, x, -oo)
             grenzwert_pos = limit(fkt, x, oo)
-
             print(grenzwert_min), print(grenzwert_pos)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
@@ -249,7 +248,7 @@ def erstellen(Teil):
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
-            Graph(xmin, xmax, f'Aufgabe_{nr}{liste_teilaufg[i]}.png', fkt)
+            Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
             loesung.extend(( 'Abbildung', str(liste_teilaufg[i])
                              + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\'))
