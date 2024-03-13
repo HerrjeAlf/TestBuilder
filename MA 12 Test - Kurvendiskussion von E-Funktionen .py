@@ -229,13 +229,13 @@ def erstellen(Teil):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Tangente und Normale am Wendepunkt '
                                                     f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{WP}) \cdot '
-                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a2,'(x')
+                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
                            + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(ywert_wp1,'x') + vorz_str(ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1)
                            + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{WP})} \cdot '
-                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a2,'(x')
+                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
                            + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
-                           + vorz_v_aussen(-1/ywert_wp1,'x') + vorz_str(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1)
+                           + vorz_v_aussen(-1/ywert_wp1,'x') + vorz_str(-1*xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1)
                            + r' \quad (3P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
