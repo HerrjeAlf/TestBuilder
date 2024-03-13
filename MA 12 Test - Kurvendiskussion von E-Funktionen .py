@@ -228,14 +228,16 @@ def erstellen(Teil):
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Tangente und Normale am Wendepunkt '
                                                     f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{WP}) \cdot '
-                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
-                           + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
-                           + vorz_v_aussen(ywert_wp1,'x') + vorz_str(ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1)
-                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{WP})} \cdot '
-                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
-                           + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
-                           + vorz_v_aussen(-1/ywert_wp1,'x') + vorz_str(-1*xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
+                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
+                           + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
+                           + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
+                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
+                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
+                           + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'x')
+                           + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
                            + r' \quad (3P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
@@ -246,10 +248,11 @@ def erstellen(Teil):
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            grafiken_loesung.extend(('',f'Aufgabe_{nr}{liste_teilaufg[i]}'))
+            grafiken_loesung.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
             Graph(xmin, xmax , fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Abbildung'))
+            loesung.extend(( 'Abbildung', str(liste_teilaufg[i])
+                             + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\'))
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
@@ -347,9 +350,8 @@ def erstellen(Teil):
                     with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                         agn.append(elements)
                 elif 'Abbildung' in elements:
-                    Loesung.append(elements)
                     with Loesung.create(Figure(position='h!')) as graph:
-                        graph.add_image(loesung[3][k], width='200px')
+                        graph.add_image(loesung[3][k], width='300px')
                 else:
                     Loesung.append(elements)
                 k += 1
