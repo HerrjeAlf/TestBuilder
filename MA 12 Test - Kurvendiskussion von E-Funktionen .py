@@ -62,7 +62,7 @@ def erstellen(Teil):
         fkt_a2 = diff(fkt, x,2)
         fkt_a3 = diff(fkt, x,3)
 
-        fkt_a1_str = ('e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
+        fkt_a1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                       + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
         fkt_a2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
                       + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
@@ -107,9 +107,9 @@ def erstellen(Teil):
                                                         f' Funktion f mit den Achsen. \n\n')
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
                                + r' \hspace{10em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
-                               + r' \quad da e^{' + vorz_v_innen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
+                               + r' \quad da~e^{' + vorz_v_innen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
                                + r' \quad \to \quad ' + (vorz_v_innen(lsg[0][0],'x^2'))
-                               + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert sqrt{}() \\'
+                               + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert \sqrt{~} \\'
                                + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4P) \\'
                                + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             else:
@@ -131,10 +131,10 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die ersten drei Ableitungen der Funktion f. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \mathrm{f^{ \prime }(x) ~=~' + fkt_a1_str
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
                            + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                           + r' \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str + r'} \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
         if 'd' in teilaufg:
@@ -167,7 +167,7 @@ def erstellen(Teil):
                            + fkt_a1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                            + vorz_v_innen(2*lsg_a,'x') + r'\quad (3P) \\'
-                           + '0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
+                           + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
                            + vorz_v_innen(2*lsg_a,r' \Big)')
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
                            + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_v_innen(2*lsg_a,'') + r' \quad \vert \div '
@@ -197,7 +197,7 @@ def erstellen(Teil):
                            + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3P) \\'
                            + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
                            + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
-                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(-4/lsg_b) + r'}{2} \Big)^2'
+                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
                            + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (3P) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
@@ -221,8 +221,8 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
-            xwert_wp1 = -2/lsg_b - sqrt(2)/abs(lsg_b)
-            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)),3)
+            xwert_wp1 = N(-2/lsg_b - sqrt(2)/abs(lsg_b), 3)
+            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)), 3)
             ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
             ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
 
@@ -249,7 +249,7 @@ def erstellen(Teil):
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
-            Graph(xmin, xmax , fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            Graph(xmin, xmax, f'Aufgabe_{nr}{liste_teilaufg[i]}.png', fkt)
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
             loesung.extend(( 'Abbildung', str(liste_teilaufg[i])
                              + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\'))
@@ -293,7 +293,7 @@ def erstellen(Teil):
     Klasse = '12'
     Lehrer = 'Herr Herrys'
     Art = '3. Test (2. Semester)'
-    Titel = 'Kurvendiskussionen einer Exponentialfunktionen'
+    Titel = 'Kurvendiskussionen einer Exponentialfunktion'
 
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
