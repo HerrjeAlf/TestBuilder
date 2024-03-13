@@ -20,7 +20,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 
-def erstellen(Teil):
+def erstellen(Teil, in_tagen: int = 0):
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     liste_bez = ['Aufgabe']
     liste_punkte = ['Punkte']
@@ -286,7 +286,7 @@ def erstellen(Teil):
     table2.add_hline()
 
     # Angaben für den Test im pdf-Dokument
-    Datum = datetime.date.today().strftime('%d.%m.%Y')
+    Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
     Kurs = 'Leistungskurs'
     Fach = 'Mathematik'
     Klasse = '12'
@@ -366,10 +366,12 @@ def erstellen(Teil):
 
 anzahl_Arbeiten = 1
 probe = True
+datum = 1  # in zukünftigen Tagen (0 ist Heute und 1 wäre Morgen, 2 Übermorgen, usw.)
+
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
-        erstellen('Probe {:02d}'.format(teil_id + 1))
+        erstellen('Probe {:02d}'.format(teil_id + 1), datum)
     else:
-        erstellen(f'Gr. {alphabet[teil_id]}')
+        erstellen(f'Gr. {alphabet[teil_id]}', datum)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
