@@ -100,7 +100,10 @@ def gzahl_klammer(k):
     if k%1 == 0:
         k = int(k)
     if k < 0:
-        return f'({latex(k)})'
+        if k % 1 == 0:
+            return f'({latex(k)})'
+        else:
+            return r'\Big(' + latex(k) + r'\Big)'
     else:
         return latex(k)
 
