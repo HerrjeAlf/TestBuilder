@@ -222,7 +222,7 @@ def erstellen(Teil):
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             xwert_wp1 = -2/lsg_b - sqrt(2)/abs(lsg_b)
-            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b),3)
+            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)),3)
             ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
             ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
 
