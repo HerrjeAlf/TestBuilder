@@ -13,7 +13,6 @@ from sympy import *
 from plotten import *
 from sympy.plotting import plot as symplot
 
-from plotten import Graph
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -82,8 +81,8 @@ def erstellen(Teil):
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}')
-            grafiken_loesung.append(f'Loesung_{nr}')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             grenzwert_min = limit(fkt, x, -oo)
             grenzwert_pos = limit(fkt, x, oo)
@@ -99,8 +98,8 @@ def erstellen(Teil):
 
         if 'b' in teilaufg:
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}')
-            grafiken_loesung.append(f'Loesung_{nr}')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             if y_vers == 0:
                 punkte_aufg = 4
                 liste_punkte.append(punkte_aufg)
@@ -128,8 +127,8 @@ def erstellen(Teil):
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}')
-            grafiken_loesung.append(f'Loesung_{nr}')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die ersten drei Ableitungen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \mathrm{f^{ \prime }(x) ~=~' + fkt_a1_str
@@ -142,8 +141,8 @@ def erstellen(Teil):
             punkte_aufg = 11
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}')
-            grafiken_loesung.append(f'Loesung_{nr}')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
             if fkt_a2.subs(x,0) < 0:
                 lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
@@ -184,13 +183,13 @@ def erstellen(Teil):
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
-            grafiken_aufgaben.append(f'Aufgabe_{nr}')
-            grafiken_loesung.append(f'Loesung_{nr}')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
-            xwert_wp1 = -2+ abs(sqrt(2))/lsg_b
-            xwert_wp2 = -2- abs(sqrt(2))/lsg_b
+            xwert_wp2 = (-2+ abs(sqrt(2)))/lsg_b
+            xwert_wp1 = (-2- abs(sqrt(2)))/lsg_b
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
                            + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2')
@@ -202,23 +201,60 @@ def erstellen(Teil):
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
                            + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (3P) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                           + gzahl(N(-2- abs(sqrt(2))/lsg_b,3)) + r' \\'
-                           + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,4)) + ') ~=~ '
-                           + gzahl(N(fkt_a3.subs(x,xwert_wp1),4)) + r' \neq 0 \quad \to \quad WP(~'
-                           + gzahl(N(xwert_wp1,4)) + r'~ \vert ~ '
-                           + gzahl(N(fkt.subs(x,xwert_wp1),4))
-                           + r') \quad \mathrm{und} \quad f^{ \prime \prime \prime }('
-                           + gzahl(N(-2- abs(sqrt(2))/lsg_b,3)) + ') ~=~ '
-                           + gzahl(N(fkt_a3.subs(x,-2-abs(sqrt(2))/lsg_b),3)) + r' \neq 0 \quad \to \quad WP(~'
-                           + gzahl(N(-2- abs(sqrt(2))/lsg_b,3)) + r'~ \vert ~ '
-                           + gzahl(N(fkt.subs(x,-2- abs(sqrt(2))/lsg_b),2))+ r') \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + gzahl(N(xwert_wp2,3)) + r' \\'
+                           + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,3)) + ') ~=~ '
+                           + gzahl(N(fkt_a3.subs(x,xwert_wp1),3)) + r' \neq 0 \quad \to \quad WP(~'
+                           + gzahl(N(xwert_wp1,3)) + r'~ \vert ~ '
+                           + gzahl(N(fkt.subs(x,xwert_wp1),3))
+                           + r') \\ f^{ \prime \prime \prime }('
+                           + gzahl(N(xwert_wp2,3)) + ') ~=~ '
+                           + gzahl(N(fkt_a3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
+                           + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
+                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
+
+        if 'f' in teilaufg:
+            punkte_aufg = 6
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+
+            xwert_wp1 = N(-2 - abs(sqrt(2))/lsg_b,3)
+            ywert_wp1 = N(fkt.subs(x,-2 - abs(sqrt(2))/lsg_b),3)
+            ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
+            ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Tangente und Normale am Wendepunkt '
+                                                    f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{WP}) \cdot '
+                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a2,'(x')
+                           + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(ywert_wp1,'x') + vorz_str(ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1)
+                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{WP})} \cdot '
+                           r'(x - x_{WP}) + y_{WP} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a2,'(x')
+                           + vorz_v_innen(-1 * xwert_wp1,')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(-1/ywert_wp1,'x') + vorz_str(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1)
+                           + r' \quad (3P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            i += 1
+
+
+        if 'g' in teilaufg:
+            punkte_aufg = 4
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            grafiken_loesung.extend(('',f'Aufgabe_{nr}{liste_teilaufg[i]}'))
+            Graph(xmin, xmax , fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Abbildung'))
             i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [exponentialfunktionen_01(1, ['a', 'b', 'c', 'd', 'e'])]
-
+    aufgaben = [exponentialfunktionen_01(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
     liste_bez.append('Summe')
@@ -253,7 +289,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '12'
     Lehrer = 'Herr Herrys'
-    Art = '10. Hausaufgabenkontrolle'
+    Art = '3. Test (2. Semester)'
     Titel = 'Kurvendiskussionen einer Exponentialfunktionen'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -277,6 +313,7 @@ def erstellen(Teil):
         for aufgabe in aufgaben:
             k = 0
             for elements in aufgabe[0]:
+                k += 1
                 if '~' in elements:
                     with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                         agn.append(elements)
@@ -286,7 +323,6 @@ def erstellen(Teil):
                         graph.add_image(aufgabe[2][k], width='200px')
                 else:
                     Aufgabe.append(elements)
-                k +=1
 
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
@@ -328,7 +364,7 @@ def erstellen(Teil):
 
 
 anzahl_Arbeiten = 1
-probe = False
+probe = True
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
