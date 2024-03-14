@@ -366,12 +366,12 @@ def erstellen(Teil, in_tagen: int = 0):
 
 anzahl_Arbeiten = 1
 probe = True
-datum = 1  # in zukünftigen Tagen (0 ist Heute und 1 wäre Morgen, 2 Übermorgen, usw.)
+datum_delta = 1  # in zukünftigen Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
-        erstellen('Probe {:02d}'.format(teil_id + 1), datum)
+        erstellen('Probe {:02d}'.format(teil_id + 1), datum_delta)
     else:
-        erstellen(f'Gr. {alphabet[teil_id]}', datum)
+        erstellen(f'Gr. {alphabet[teil_id]}', datum_delta)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
