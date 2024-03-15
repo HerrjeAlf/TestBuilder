@@ -276,7 +276,7 @@ def erstellen(Teil):
                                          'die Scheitelpunktform von k. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad S(' + gzahl(xwert_sp2) + r' \vert ' + gzahl(ywert_sp2)
                            + r') \quad (2P) \quad \mathrm{und} \quad a~=~' + gzahl(faktor)
-                           + r' \quad \to \quad f(x)~=~ ' + fkt_sp2_str + r' \quad (2P) \\'
+                           + r' \Quad (1P) \quad \to \quad f(x)~=~ ' + fkt_sp2_str + r' \quad (2P) \\'
                            + r'\mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
