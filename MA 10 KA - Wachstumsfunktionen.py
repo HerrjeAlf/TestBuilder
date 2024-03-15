@@ -320,10 +320,10 @@ def erstellen(Teil):
                             + r'~=~ \hspace{5em}' + flaechen_einheiten[auswahl_4] + r' \\'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad '
                            + r'(1) \quad ' + gzahl(faktor_1) + laengen_einheiten[auswahl_1] + '~=~'
-                           + gzahl(faktor_1/10**(schritt_1*2))
+                           + gzahl(faktor_1/10**(schritt_1))
                            + laengen_einheiten[auswahl_1 + schritt_1] + r' \quad \mathrm{und} \quad '
                            + r'(2) \quad ' + gzahl(faktor_2) + laengen_einheiten[auswahl_2 + schritt_2] + '~=~'
-                           + gzahl(faktor_2 * 10**(schritt_2*2)) + laengen_einheiten[auswahl_2] + r' \quad (2P) \\'
+                           + gzahl(faktor_2 * 10**(schritt_2)) + laengen_einheiten[auswahl_2] + r' \quad (2P) \\'
                            + r'(3) \quad ' + gzahl(faktor_3) + flaechen_einheiten[auswahl_3] + '~=~'
                            + gzahl(faktor_3/10**(schritt_3*2))
                            + flaechen_einheiten[auswahl_3 + schritt_3] + r' \quad \mathrm{und} \quad '
