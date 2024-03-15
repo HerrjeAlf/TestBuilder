@@ -250,7 +250,7 @@ def erstellen(Teil, in_tagen: int = 0):
             grafiken_loesung.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
             Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
-            loesung.extend(( 'Abbildung', str(liste_teilaufg[i])
+            loesung.extend(('Abbildung', str(liste_teilaufg[i])
                              + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\'))
             i += 1
 

@@ -252,7 +252,7 @@ def erstellen(Teil):
                 [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
                 lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
                 lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
-                schnittpunkt_s = punkt_c + lsgr*w
+                schnittpunkt_s = punkt_c + lsgs*w
                 [sx, sy, sz] = vektor_runden(schnittpunkt_s,3)
                 if vx != 0 and wx != 0:
                     loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
@@ -587,7 +587,7 @@ def erstellen(Teil):
     Fach = 'Mathematik'
     Klasse = '13'
     Lehrer = 'Herr Herrys'
-    Art = 'Klausur (4. Semester)'
+    Art = '1. Test (4. Semester)'
     Titel = 'Lagebeziehung von Objekten im Raum'
 
     # der Teil in dem die PDF-Datei erzeugt wird
@@ -659,7 +659,7 @@ def erstellen(Teil):
     Erwartungshorizont()
 
 anzahl_Arbeiten = 1
-probe = True
+probe = False
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
     if probe:
