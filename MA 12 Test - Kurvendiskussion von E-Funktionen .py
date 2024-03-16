@@ -137,7 +137,7 @@ def erstellen(Teil, in_tagen: int = 0):
             i += 1
 
         if 'd' in teilaufg:
-            punkte_aufg = 11
+            punkte_aufg = 10
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -171,7 +171,7 @@ def erstellen(Teil, in_tagen: int = 0):
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
                            + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_v_innen(2*lsg_a,'') + r' \quad \vert \div '
                            + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
-                           + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (4P) \\'
+                           + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3P) \\'
                            + r' f^{ \prime \prime }(0) ~=~ ' + gzahl(N(fkt_a2.subs(x,0),2)) + lsg_extrema1
                            + r' \quad \mathrm{und} \quad f^{ \prime \prime }(' + gzahl(-2/lsg_b) + ') ~=~ '
                            + gzahl(N(fkt_a2.subs(x,-2/lsg_b),2)) + lsg_extrema2 + r' \\'
@@ -179,7 +179,7 @@ def erstellen(Teil, in_tagen: int = 0):
             i += 1
 
         if 'e' in teilaufg:
-            punkte_aufg = 6
+            punkte_aufg = 10
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -198,18 +198,18 @@ def erstellen(Teil, in_tagen: int = 0):
                            + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
                            + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
-                           + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (3P) \\'
+                           + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2P) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                           + gzahl(N(xwert_wp2,3)) + r' \\'
+                           + gzahl(N(xwert_wp2,3)) + r' \quad (1P) \\'
                            + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,3)) + ') ~=~ '
                            + gzahl(N(fkt_a3.subs(x,xwert_wp1),3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_wp1,3)) + r'~ \vert ~ '
                            + gzahl(N(fkt.subs(x,xwert_wp1),3))
-                           + r') \\ f^{ \prime \prime \prime }('
+                           + r') \quad (2P) \\ f^{ \prime \prime \prime }('
                            + gzahl(N(xwert_wp2,3)) + ') ~=~ '
                            + gzahl(N(fkt_a3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
-                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \\'
+                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quzad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
@@ -243,7 +243,7 @@ def erstellen(Teil, in_tagen: int = 0):
 
 
         if 'g' in teilaufg:
-            punkte_aufg = 4
+            punkte_aufg = 5
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}. {str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
