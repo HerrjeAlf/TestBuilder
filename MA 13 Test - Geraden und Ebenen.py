@@ -107,7 +107,7 @@ def erstellen(Teil):
 
         if a in teilaufg:
             auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-            # auswahl = 'schneiden'
+            auswahl = 'schneiden'
             if auswahl == 'identisch':
                 punkte_aufg = 7
                 liste_punkte.append(punkte_aufg)
@@ -251,9 +251,9 @@ def erstellen(Teil):
                 w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
                 [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
                 lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
-                lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
+                lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
                 schnittpunkt_s = punkt_c + lsgs*w
-                [sx, sy, sz] = vektor_runden(schnittpunkt_s,3)
+                [sx, sy, sz] = vektor_ganzzahl(vektor_runden(schnittpunkt_s,3))
                 if vx != 0 and wx != 0:
                     loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                                  + latex(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)

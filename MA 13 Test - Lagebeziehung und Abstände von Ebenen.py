@@ -297,7 +297,9 @@ def erstellen(Teil):
             liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-
+            if auswahl_gerade_ebene == 'schneiden':
+                punkte_aufg += 4
+            liste_punkte.append(punkte_aufg)
             aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
                                                     f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad '
@@ -306,9 +308,6 @@ def erstellen(Teil):
                            + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
                            + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1P) \\'
                            + lsg + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-            if auswahl_gerade_ebene == 'schneiden':
-                punkte_aufg += 3
-            liste_punkte.append(punkte_aufg)
             i += 1
 
         if auswahl_gerade_ebene == 'parallel':
