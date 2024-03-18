@@ -343,6 +343,11 @@ def erstellen(Teil):
             auswahl_einheit = random.choice(['mm', 'cm', 'dm', 'm'])
             laenge_1 = nzahl(6,14)/2
             laenge_2 = nzahl(4,10)/2
+            if str(laenge_1)[-1] == '.' or str(laenge_1)[-2:] == '.0':
+                laenge_1 = int(laenge_1)
+            if str(laenge_2)[-1] == '.' or str(laenge_2)[-2:] == '.0':
+                laenge_2 = int(laenge_2)
+
             if auswahl_rechteck == 'Rechteck':
                 aufg = (f') Es ist ein Rechteck mit den Kantenlängen a = {laenge_1} {auswahl_einheit} und '
                         f'b = {laenge_2} {auswahl_einheit} gegeben. Berechne die Fläche.')
