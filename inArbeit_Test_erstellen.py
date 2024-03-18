@@ -47,13 +47,9 @@ def seite(aufgaben):
 
 def erzeugen(Teil, liste_seiten, angaben):
     Kurs, Fach, Klasse, Lehrer, Art, Titel = angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5]
-    in_tagen = angaben[6]
-    liste_bez = angaben[7]
-    liste_punkte = angaben[8]
+    in_tagen, liste_bez, liste_punkte = angaben[6], angaben[7], angaben[8]
     print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
     Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
-
-
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
