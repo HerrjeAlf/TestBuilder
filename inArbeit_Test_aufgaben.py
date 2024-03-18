@@ -14,10 +14,10 @@ from plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
-liste_bez = ['Aufgabe']
-liste_punkte = ['Punkte']
 
 def ereignisse_ergebnisse(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
     i = 0
     farben = ['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
@@ -58,7 +58,6 @@ def ereignisse_ergebnisse(nr, teilaufg):
                         i += 1
                 if i == anzahl_kugel:
                     lsg_menge.append(element)
-            print(lsg_menge)
             return text, lsg_menge
 
         def ereig_2():
@@ -131,4 +130,5 @@ def ereignisse_ergebnisse(nr, teilaufg):
                         + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\'))
         i += 1
 
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

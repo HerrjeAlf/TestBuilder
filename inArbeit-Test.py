@@ -1,9 +1,9 @@
-from inArbeit-Test_erstellen import *
-from inArbeit-Test_aufgaben import *
+from inArbeit_Test_erstellen import *
+from inArbeit_Test_aufgaben import *
 import datetime, string, time
 
 # Angaben für den Test im pdf-Dokument
-wann = 1
+in_tagen = 1
 Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
@@ -11,13 +11,20 @@ Lehrer = 'Herr Herrys'
 Art = '3. Test (2. Semester)'
 Titel = 'Kurvendiskussionen einer Exponentialfunktion'
 in_tagen = 1
+liste_punkte = ['Punkte']
+liste_bez = ['Aufgabe']
 
-angaben = [Kurs, Fach, Klasse, Lehrer, Art, Titel, in_tagen]
+aufgaben_seite1 = [ereignisse_ergebnisse(1, ['a', 'b', 'c'])]
+for element in aufgaben_seite1:
+    liste_bez.extend(element[5])
+    liste_punkte.extend(element[4])
 
-print(angaben)
+aufgaben_seite2 = [ereignisse_ergebnisse(2, ['a', 'b', 'c'])]
+for element in aufgaben_seite2:
+    liste_bez.extend(element[5])
+    liste_punkte.extend(element[4])
 
-aufgaben = [ereignisse_ergebnisse(1, ['a', 'b', 'c'])]
+liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+angaben = [Kurs, Fach, Klasse, Lehrer, Art, Titel, in_tagen, liste_bez, liste_punkte]
 
-liste_seiten = [seite(aufgaben), seite(aufgaben)]
-
-pdf_erzeugen(liste_seiten, angaben, wann)
+pdf_erzeugen(liste_seiten, angaben)
