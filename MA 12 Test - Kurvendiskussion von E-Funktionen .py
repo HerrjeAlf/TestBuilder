@@ -209,7 +209,7 @@ def erstellen(Teil, in_tagen: int = 0):
                            + gzahl(N(xwert_wp2,3)) + ') ~=~ '
                            + gzahl(N(fkt_a3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
-                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quzad (2P) \\'
+                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
 
@@ -364,9 +364,9 @@ def erstellen(Teil, in_tagen: int = 0):
     Erwartungshorizont()
 
 
-anzahl_Arbeiten = 1
+anzahl_Arbeiten = 2
 probe = True
-datum_delta = 1  # in zukünftigen Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
+datum_delta = 0  # in zukünftigen Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 
 alphabet = string.ascii_uppercase
 for teil_id in range(anzahl_Arbeiten):
