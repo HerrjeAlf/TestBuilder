@@ -8,9 +8,9 @@ from pylatex.utils import bold
 from funktionen import *
 from plotten import *
 
+geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
 
 def seite(aufgaben):
-    geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
     Aufgabe = Document(geometry_options=geometry_options)
     Loesung = Document(geometry_options=geometry_options)
 
@@ -80,7 +80,6 @@ def erzeugen(Teil, liste_seiten, angaben):
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))
 
@@ -118,7 +117,6 @@ def erzeugen(Teil, liste_seiten, angaben):
     # Erwartungshorizont
     @timer
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
         Loesung.packages.append(Package('amsfonts'))
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
@@ -127,7 +125,6 @@ def erzeugen(Teil, liste_seiten, angaben):
         k = 0
         for element in liste_seiten:
             Loesung.extend(element[1])
-            Loesung.append(NewPage())
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
