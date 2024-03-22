@@ -1,18 +1,16 @@
-import datetime, string, time,  random, math
-import numpy as np
-from funktionen import *
-import matplotlib.pyplot as plt
-from numpy.linalg import solve as slv
-from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, MultiRow, Package)
-from pylatex.utils import bold
-from sympy import *
-from plotten import *
-from sympy.plotting import plot as symplot
+import datetime
+import string
 
+from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
+                     MultiColumn, Package)
+from pylatex.utils import bold
+
+from funktionen import *
+from plotten import *
+
+geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
 
 def seite(aufgaben):
-    geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
     Aufgabe = Document(geometry_options=geometry_options)
     Loesung = Document(geometry_options=geometry_options)
 
@@ -82,10 +80,10 @@ def erzeugen(Teil, liste_seiten, angaben):
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
     def Hausaufgabenkontrolle():
-        geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
         Aufgabe = Document(geometry_options=geometry_options)
-        Aufgabe.packages.append(Package('amsfonts'))  # fügt das Package 'amsfonts' hinzu, für das \mathbb{R} für reelle Zahlen
-        # erste Seite
+        Aufgabe.packages.append(Package('amsfonts'))
+
+        # Kopf erste Seite
         table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
@@ -97,6 +95,7 @@ def erzeugen(Teil, liste_seiten, angaben):
         Aufgabe.append(table1)
         Aufgabe.append(' \n\n\n\n')
         Aufgabe.append(LargeText(bold(f' {Titel} \n\n')))
+
         # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
         k = 0
         for element in liste_seiten:
@@ -107,8 +106,6 @@ def erzeugen(Teil, liste_seiten, angaben):
             Aufgabe.append('für Notizen und Rechnungen:')
             Aufgabe.append(NewPage())
 
-        Aufgabe.append('\n\n')
-        Aufgabe.append(NewPage())
         Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
 
         Aufgabe.append('\n\n')
@@ -120,16 +117,14 @@ def erzeugen(Teil, liste_seiten, angaben):
     # Erwartungshorizont
     @timer
     def Erwartungshorizont():
-        geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
         Loesung = Document(geometry_options=geometry_options)
         Loesung.packages.append(Package('amsfonts'))
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
 
-        # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+        # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
         k = 0
         for element in liste_seiten:
-            Loesung.extend(element[0])
-            Loesung.append(NewPage())
+            Loesung.extend(element[1])
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
@@ -139,16 +134,12 @@ def erzeugen(Teil, liste_seiten, angaben):
     Hausaufgabenkontrolle()
     Erwartungshorizont()
 
-def pdf_erzeugen(liste_seiten, angaben):
-    anzahl_Arbeiten = 1
-    probe = True
+
+def pdf_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     alphabet = string.ascii_uppercase
-    for teil_id in range(anzahl_Arbeiten):
+    for teil_id in range(anzahl):
         if probe:
-            erzeugen('Probe {:02d}'.format(teil_id + 1), liste_seiten, angaben)
+            erzeugen(f'Probe {teil_id + 1:02d}', liste_seiten, angaben)
         else:
             erzeugen(f'Gr. {alphabet[teil_id]}', liste_seiten, angaben)
         print()  # Abstand zwischen den Arbeiten (im Terminal)
-
-
-

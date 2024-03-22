@@ -1,24 +1,19 @@
-import datetime
-import string
-import numpy as np
-import random, math
-from funktionen import *
-import matplotlib.pyplot as plt
-from numpy.linalg import solve as slv
-from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, MultiRow, Package)
+from pylatex import (MediumText)
 from pylatex.utils import bold
-from sympy import *
+
+from funktionen import *
 from plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
+
 def ereignisse_ergebnisse(nr, teilaufg):
     liste_punkte = []
     liste_bez = []
     i = 0
+
     farben = ['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
     auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
@@ -129,6 +124,5 @@ def ereignisse_ergebnisse(nr, teilaufg):
                         r'i)  \quad P(' + auswahl + r') ~=~ \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
                         + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\'))
         i += 1
-
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
