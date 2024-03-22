@@ -152,7 +152,7 @@ def vektor_kürzen(vec, p = 50):
             list = list * faktor[k]
             i += 1
     # print('erweitert: ' + str(list))
-    teiler = [x + 1 for x in range(int(max(list)/2))]
+    teiler = [x + 1 for x in range(int(max(list)/2),-1,-1)]
     for zahl in teiler:
         treffer = [1 for x in list if x % zahl == 0]
         if sum(treffer) == len(vec):
