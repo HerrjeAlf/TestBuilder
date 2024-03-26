@@ -1,4 +1,4 @@
-from inArbeit_Test_aufgaben import *
+from Aufgaben_Wahrscheinlichkeitsrechnung import *
 from inArbeit_Test_erstellen import *
 
 # Angaben für den Test im pdf-Dokument
