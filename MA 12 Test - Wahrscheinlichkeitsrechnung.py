@@ -1,5 +1,5 @@
 from Aufgaben_Wahrscheinlichkeitsrechnung import *
-from inArbeit_Test_erstellen import *
+from Test_erstellen import *
 
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Leistungskurs'
