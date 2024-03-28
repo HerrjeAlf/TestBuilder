@@ -2,9 +2,9 @@ from Aufgaben_Differentialrechung import *
 from Test_erstellen import *
 
 # Angaben für den Test im pdf-Dokument
-Kurs = 'Kursart'
+Kurs = 'Grundkurs'
 Fach = 'Mathematik'
-Klasse = '13'
+Klasse = '13 Gk2'
 Lehrer = 'Herr Herrys'
 Art = 'Übung mündliche Prüfung'
 Titel = 'Aufgaben der Differentialrechnung'
@@ -15,10 +15,11 @@ probe = True    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-aufgaben_seite1 = [kurvendiskussion_polynome(1, ['a', 'b', 'c', 'd', 'e', 'f'])]
+aufgaben_seite1 = [kurvendiskussion_polynome(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
 for element in aufgaben_seite1:
     liste_bez.extend(element[5])
     liste_punkte.extend(element[4])
+
 # print(aufgaben_seite1[0][1][8])
 # print(aufgaben_seite1[0][3][8])
 # aufgaben_seite2 = []
