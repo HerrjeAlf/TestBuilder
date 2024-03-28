@@ -37,9 +37,11 @@ def seite(aufgaben):
             elif 'Abbildung' in elements:
                 with Loesung.create(Figure(position='h!')) as graph:
                     graph.add_image(loesung[3][k], width='300px')
+                Loesung.append(elements)
             else:
                 Loesung.append(elements)
             k += 1
+
 
     return Aufgabe, Loesung
 
