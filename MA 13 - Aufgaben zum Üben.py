@@ -15,7 +15,7 @@ probe = True    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-aufgaben_seite1 = [kurvendiskussion_polynome(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
+aufgaben_seite1 = [kurvendiskussion_polynome(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])]
 for element in aufgaben_seite1:
     liste_bez.extend(element[5])
     liste_punkte.extend(element[4])

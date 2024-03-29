@@ -296,7 +296,7 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
     plt.grid(True)
-    # plt.show()
+    plt.show()
     return plt.savefig(name, dpi=200)
 
 def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
