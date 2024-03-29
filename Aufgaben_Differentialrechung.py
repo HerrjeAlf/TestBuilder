@@ -262,7 +262,7 @@ def kurvendiskussion_polynome(nr, teilaufg):
                        + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\\\ \\\\')
         xmin = int(round(nst_3 - 0.4, 0))
         xmax = int(round(nst_2 + 0.4, 0))
-        Graph(xmin,xmax, fkt, 0*x+int(ywert_wp1) , name='latex(fkt_t)')
+        Graph(xmin,xmax, fkt, name='latex(fkt_t)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -295,16 +295,15 @@ def kurvendiskussion_polynome(nr, teilaufg):
         grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-        xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor),3)
-        ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
-        k = int(ywert_wp1)
-        fkt_k = 0*x + k
+        Fkt = integrate(fkt,x)
+        Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4),'x^4') + vorz_v_innen(Rational(fkt_a2,3),'x^3')
+               + vorz_v_innen(Rational(fkt_a3,2),'x^2') + vorz_v_innen(fkt_a4,'x'))
 
-        aufgabe.extend((f'Die Konstante Funktion k(x) = {k}, der Graph von f und die y-Achse schließen '
+
+        aufgabe.extend((f'Der Graph von f schließt, mit der x-Achse und der y_Achse '
                         + ' rechts vom Ursprung eine Fläche ein.',
                         str(liste_teilaufg[i]) + f') Berechne die eingeschlossen Fläche. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~berechnen: \quad f(x)= ' + gzahl(k)
-                       + r' \to ' + fkt_str + r'~=~' +  + r' \quad \vert -x} ' +  + '~=~0')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad F(x)~=~' + Fkt)
 
         liste_punkte.append(5)
         i += 1
