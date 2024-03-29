@@ -84,19 +84,19 @@ def schnittpunkte(fkt_1,fkt_2):
         print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
         i += 1
 
-
-wendepunkt_xwert = zzahl(1,3)
-wendepunkt_ywert = zzahl(1,3)
-nullstelle = zzahl(1,5)
-fkt_v = (a*x+b)*exp(x**c)
-fkt_a1 = diff(fkt_v,x)
-fkt_a2 = diff(fkt_a1,x)
-
-gleichung1 = Eq(fkt_v.subs(x,wendepunkt_xwert),wendepunkt_ywert)
-gleichung2 = Eq(fkt_a1.subs(x,wendepunkt_xwert),0)
-gleichung3 = Eq(fkt_v.subs(x,nullstelle),0)
-lsg = solve((gleichung1,gleichung2, gleichung3),(a,b,c))
-print(lsg)
+#
+# wendepunkt_xwert = zzahl(1,3)
+# wendepunkt_ywert = zzahl(1,3)
+# nullstelle = zzahl(1,5)
+# fkt_v = (a*x+b)*exp(x**c)
+# fkt_a1 = diff(fkt_v,x)
+# fkt_a2 = diff(fkt_a1,x)
+#
+# gleichung1 = Eq(fkt_v.subs(x,wendepunkt_xwert),wendepunkt_ywert)
+# gleichung2 = Eq(fkt_a1.subs(x,wendepunkt_xwert),0)
+# gleichung3 = Eq(fkt_v.subs(x,nullstelle),0)
+# lsg = solve((gleichung1,gleichung2, gleichung3),(a,b,c))
+# print(lsg)
 
 
 # schnittpunkte(4*x**3-16*x**2-5*x+42,3/79*x+16.28)
@@ -104,3 +104,4 @@ print(lsg)
 # integral(0,4/3,4*x**3-16*x**2-398/79*x+25.68)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
+
