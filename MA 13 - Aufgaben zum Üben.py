@@ -20,8 +20,8 @@ for element in aufgaben_seite1:
     liste_bez.extend(element[5])
     liste_punkte.extend(element[4])
 
-# print(aufgaben_seite1[0][1][8])
-# print(aufgaben_seite1[0][3][8])
+# print(aufgaben_seite1[0][1][10])
+# print(aufgaben_seite1[0][3][10])
 # aufgaben_seite2 = []
 # for element in aufgaben_seite2:
 #     liste_bez.extend(element[5])

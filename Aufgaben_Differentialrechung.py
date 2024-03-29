@@ -144,7 +144,7 @@ def kurvendiskussion_polynome(nr, teilaufg):
             lsg = r' \quad (3P) \\'
             punkte = 15
         else:
-            lsg = r' \quad S_y(0 \vert' + latex(s_fkt) + r') \quad (4P) \\'
+            lsg = r' \quad S_y(0 \vert' + gzahl(s_fkt) + r') \quad (4P) \\'
             punkte = 16
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
@@ -240,10 +240,10 @@ def kurvendiskussion_polynome(nr, teilaufg):
         ywert_wp1_fkt_1 = N(fkt_1.subs(x, xwert_wp1),3)
         fkt_t = ywert_wp1_fkt_1*(x-xwert_wp1) + ywert_wp1
         fkt_n = (-1/ywert_wp1_fkt_1)*(x-xwert_wp1) + ywert_wp1
-        print('Wendepunkt: ' + str(xwert_wp1))
-        print('f(x)=' + latex(fkt))
-        print('f`(x)=' + latex(fkt_1))
-        print('t(x)=' + latex(fkt_t))
+        # print('Wendepunkt: ' + str(xwert_wp1))
+        # print('f(x)=' + latex(fkt))
+        # print('f`(x)=' + latex(fkt_1))
+        # print('t(x)=' + latex(fkt_t))
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Wendetangente und die Wendenormale '
                                                 f'der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Steigung~der~Tangente~am~Wendepunkt~wird~'
@@ -260,9 +260,9 @@ def kurvendiskussion_polynome(nr, teilaufg):
                        + vorz_v_aussen(-1/ywert_wp1_fkt_1,'x')
                        + vorz_str(N(xwert_wp1/ywert_wp1_fkt_1 + ywert_wp1,3))
                        + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\\\ \\\\')
-        xmin = int(round(nst_3 - 0.4, 0))
-        xmax = int(round(nst_2 + 0.4, 0))
-        Graph(xmin,xmax, fkt, name='latex(fkt_t)')
+        # xmin = int(round(nst_3 - 0.4, 0))
+        # xmax = int(round(nst_2 + 0.4, 0))
+        # Graph(xmin,xmax, fkt, name='latex(fkt_t)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -275,16 +275,11 @@ def kurvendiskussion_polynome(nr, teilaufg):
         xmax = int(round(nst_2 + 0.4, 0))
         # plot(fkt, (x,xmin_f,xmax_f) ,show=False)
 
-        xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor),3)
-        ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
-        k = int(ywert_wp1)
-        fkt_k = 0*x + k
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Zeichne den Graphen von f sowie die konstante Funktion '
-                       + f'k(x) ~=~ {k}  im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ]' )
+        aufgabe.append(str(liste_teilaufg[i])
+                       + f') Zeichne den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ]')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2P) \quad Werte~(2P)'
                                                 r' \quad Graph~(1P) \to \quad insgesamt~(5P)}')
-        Graph(xmin, xmax, fkt, fkt_k, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
+        Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
         loesung.append('Abbildung')
 
         liste_punkte.append(5)
@@ -299,13 +294,28 @@ def kurvendiskussion_polynome(nr, teilaufg):
         Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4),'x^4') + vorz_v_innen(Rational(fkt_a2,3),'x^3')
                + vorz_v_innen(Rational(fkt_a3,2),'x^2') + vorz_v_innen(fkt_a4,'x'))
 
+        def erste_positive_nst(vec):
+            print(vec)
+            vec.sort()
+            print(vec)
+            for element in vec:
+                if element > 0:
+                    print(element)
+                    return element
+            exit('keine positive Nullstelle')
+
+        obere_grenze = N(erste_positive_nst([nst_1, nst_2, nst_3]),3)
+        loesung_integral = Fkt.subs(x, obere_grenze)
+
 
         aufgabe.extend((f'Der Graph von f schließt, mit der x-Achse und der y_Achse '
                         + ' rechts vom Ursprung eine Fläche ein.',
                         str(liste_teilaufg[i]) + f') Berechne die eingeschlossen Fläche. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad F(x)~=~' + Fkt)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \int \limits_0^{' + gzahl(obere_grenze) + '}' + fkt_str
+                       + r'~ \mathrm{d}x \right| ~=~ \left| \left(' + Fkt_str + r' \right)_{0}^{' + gzahl(obere_grenze)
+                       + r'} \right| ~=~' + latex(abs(N(loesung_integral,3))) + r' \quad (4P) \\')
 
-        liste_punkte.append(5)
+        liste_punkte.append(4)
         i += 1
 
 
