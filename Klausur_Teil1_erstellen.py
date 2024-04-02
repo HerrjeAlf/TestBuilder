@@ -1,7 +1,7 @@
 import datetime
 import string
 
-from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
+from pylatex import (Document, SmallText, HugeText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Package)
 from pylatex.utils import bold
 
@@ -44,11 +44,12 @@ def seite(aufgaben):
 
     return Aufgabe, Loesung
 
-def erzeugen(Teil, liste_seiten, angaben):
-    Kurs, Fach, Klasse, Lehrer, Art, Titel = angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5]
+def erzeugen_kl_hmft(liste_seiten, angaben):
+    Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase = (angaben[0], angaben[1], angaben[2], angaben[3],
+                                                           angaben[4], angaben[5])
     in_tagen, liste_bez, liste_punkte = angaben[6], angaben[7], angaben[8]
-    print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
-    Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+    print(f'\033[38;2;100;141;229m\033[1m\033[0m')
+    Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
@@ -80,40 +81,44 @@ def erzeugen(Teil, liste_seiten, angaben):
 
     # der Teil in dem die PDF-Datei erzeugt wird
     @timer
-    def Hausaufgabenkontrolle():
+    def klausur():
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('amsfonts'))
-
         # Kopf erste Seite
-        table1 = Tabular('|p{1.2cm}|p{2cm}|p{2cm}|p{2cm}|p{1.5cm}|p{5cm}|', row_height=1.2)
-        table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
-        table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
-        table1.add_hline()
-        table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', align=, 'Art:')
-        table1.add_hline()
-        table1.add_row(Klasse, Fach, Kurs, Lehrer, Datum, Art)
-        table1.add_hline()
+        with Aufgabe.create(Figure(position='h')) as kopf:
+            kopf.add_image('img/kopfzeile.png', width='480px')
+        # Tabelle erste Seite
+        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+        table1.add_row((MultiColumn(2, align='l',
+                                    data=MediumText(bold(f'Klausur im {Semester}. Semester der {Phase} am {Datum}'))),))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='c', data=HugeText(bold('Mathematik'))),))
+        table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(Kurs))),))
+        table1.add_empty_row()
+        table1.add_row(MediumText('Vorname, Name:'), '')
+        table1.add_hline(2, 2, color='gray')
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='l', data=MediumText(bold('Aufgaben'))),))
+        table1.add_hline(1, 2)
+        table1.add_row(MediumText('Hilfsmittel:'), 'Tafelwerk und Taschenrechner')
+        table1.add_row(MediumText('Bearbeitungszeit:'), Gesamtzeit)
+
         Aufgabe.append(table1)
-        Aufgabe.append(' \n\n\n\n')
-        Aufgabe.append(LargeText(bold(f' {Titel} \n\n')))
+        Aufgabe.append(' \n\n')
+        Aufgabe.append(NewPage())
+
 
         # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-        k = 0
+        k = 1
         for element in liste_seiten:
             Aufgabe.extend(element[0])
-            Aufgabe.append(NewPage())
-
-        if len(liste_seiten) % 2 == 0:
-            Aufgabe.append('für Notizen und Rechnungen:')
-            Aufgabe.append(NewPage())
-
-        Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-
-        Aufgabe.append('\n\n')
-        Aufgabe.append('\n\n')
+            if k < len(liste_seiten):
+                Aufgabe.append(NewPage())
+            k += 1
+        Aufgabe.append(' \n\n')
         Aufgabe.append(table2)
 
-        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
+        Aufgabe.generate_pdf(f'Ma {Klasse} - Klausur Teil I', clean_tex=true)
 
     # Erwartungshorizont
     @timer
@@ -132,15 +137,6 @@ def erzeugen(Teil, liste_seiten, angaben):
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
-    Hausaufgabenkontrolle()
-    Erwartungshorizont()
+    klausur()
+    # Erwartungshorizont()
 
-
-def pdf_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
-    alphabet = string.ascii_uppercase
-    for teil_id in range(anzahl):
-        if probe:
-            erzeugen(f'Probe {teil_id + 1:02d}', liste_seiten, angaben)
-        else:
-            erzeugen(f'Gr. {alphabet[teil_id]}', liste_seiten, angaben)
-        print()  # Abstand zwischen den Arbeiten (im Terminal)

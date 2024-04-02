@@ -3,7 +3,6 @@ from pylatex.utils import bold
 import string
 import numpy as np
 import random, math
-import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
