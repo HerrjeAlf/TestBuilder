@@ -51,9 +51,10 @@ def erzeugen(Teil, liste_seiten, angaben):
     Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
     # erstellen der Tabelle zur Punkteübersicht
+    print(liste_punkte)
     Punkte = (sum(liste_punkte[1:]))
     liste_bez.append('Summe')
-    liste_punkte.append(str(Punkte))
+    liste_punkte.append(Punkte)
     anzahl_spalten = len(liste_punkte)
     liste_ergebnis_z1 = ['erhaltene']
     for p in range(anzahl_spalten - 1):
@@ -89,7 +90,7 @@ def erzeugen(Teil, liste_seiten, angaben):
         table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
         table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
         table1.add_hline()
-        table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', align=, 'Art:')
+        table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', 'Art:')
         table1.add_hline()
         table1.add_row(Klasse, Fach, Kurs, Lehrer, Datum, Art)
         table1.add_hline()
@@ -134,13 +135,14 @@ def erzeugen(Teil, liste_seiten, angaben):
     # Druck der Seiten
     Hausaufgabenkontrolle()
     Erwartungshorizont()
+    del liste_bez[1:]
+    del liste_punkte[1:]
 
 
 def pdf_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     alphabet = string.ascii_uppercase
-    for teil_id in range(anzahl):
-        if probe:
-            erzeugen(f'Probe {teil_id + 1:02d}', liste_seiten, angaben)
-        else:
-            erzeugen(f'Gr. {alphabet[teil_id]}', liste_seiten, angaben)
-        print()  # Abstand zwischen den Arbeiten (im Terminal)
+    if probe:
+        erzeugen(f'Probe {anzahl + 1:02d}', liste_seiten, angaben)
+    else:
+        erzeugen(f'Gr. {alphabet[anzahl]}', liste_seiten, angaben)
+    print()  # Abstand zwischen den Arbeiten (im Terminal)
