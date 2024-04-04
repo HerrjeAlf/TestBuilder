@@ -1,6 +1,5 @@
 from Aufgaben_Differentialrechung import *
-from Test_erstellen import *
-
+from erstellen_test import *
 
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Grundkurs'
