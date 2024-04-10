@@ -1,4 +1,4 @@
-from Aufgaben_Differentialrechung import *
+from Aufgaben_Analysis import *
 from erstellen_klausur import *
 
 # Angaben für die Klausur im pdf-Dokument
