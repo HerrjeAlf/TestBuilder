@@ -1,5 +1,5 @@
 from Aufgaben.Aufgaben_Analysis import *
-from skripte.erstellen_test import *
+from skripte.erstellen import *
 
 
 
