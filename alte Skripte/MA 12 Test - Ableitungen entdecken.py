@@ -410,9 +410,9 @@ def erstellen(Teil):
             xwerte_d = [-6 + n / 5 for n in range(60)]
             ywerte_d = [fkt.subs(x, xwerte_d[i]) for i in range(60)]
             ywerte_abl_d = [fkt_abl.subs(x, xwerte_d[i]) for i in range(60)]
-            Zeichnung.loeschen()
-            Zeichnung.Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Funktionsgraph', 'f', 'Aufgabe_2')
-            Zeichnung.Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - '
+            loeschen()
+            Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Funktionsgraph', 'f', 'Aufgabe_2')
+            Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - '
                                                                'Graph und seine Ableitung', 'f',
                             'loesung_Aufgabe_2', xwerte_d, ywerte_abl_d)
             aufgabe.append(str(teilaufg[i]) + r') Skizziere im Koordinatensystem den Graphen der Ableitungsfunktion.')
