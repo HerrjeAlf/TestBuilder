@@ -37,7 +37,7 @@ def gzahl_klammer(k):
 
 def erstellen(Teil):
     print(f'\n\033[1;35m{Teil}\033[0m')
-    def aenderungsrate(nr, teilaufg):
+    def aenderungsrate(nr, teilaufg): # in Aufgaben Analysis übernommen
         i = 0
         Punkte = 0
 

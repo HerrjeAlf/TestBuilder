@@ -742,4 +742,5 @@ def exponentialfunktionen_01(nr, teilaufg):
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-kurvendiskussion_polynome(1,['f'])
+# Integralrechnungen
+

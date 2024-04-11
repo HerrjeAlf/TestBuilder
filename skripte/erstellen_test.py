@@ -5,8 +5,8 @@ from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabula
                      MultiColumn, Package)
 from pylatex.utils import bold
 
-from funktionen import *
-from plotten import *
+from skripte.funktionen import *
+from skripte.plotten import *
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
 
