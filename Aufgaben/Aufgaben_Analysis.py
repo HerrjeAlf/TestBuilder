@@ -63,17 +63,17 @@ def aenderungsrate(nr, teilaufg):
     xwerte_geraden = [-6, 6]
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
+        grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
         grafiken_loesung.append('')
 
         aufgabe.extend((str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
-                                          f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n', 'Abbildung'))
+                                          f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f.', 'Abbildung'))
         dy = y_wert_2 - y_wert_1
         dx = x_wert_2 - x_wert_1
         fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
         xwerte = [-6 + n / 5 for n in range(60)]
         ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-        graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: $f(x) =' + fkt_str + '$',
+        graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'',
                          'f', f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         xwerte_dy = [x_wert_2, x_wert_2]
@@ -87,10 +87,10 @@ def aenderungsrate(nr, teilaufg):
 
         loesung.append(str(teilaufg[i])
                        + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~'
-                         r'\mathbf{m=' + gzahl(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
+                         r'\mathbf{m=' + gzahl(steigung_dreieck) + r'}~bestimmt~(1P)}')
 
-        if c not in teilaufg:
-            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: $f(x) =' + fkt_str + '$',
+        if 'c' not in teilaufg:
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '',
                              'f',f'Loesung_{nr}{liste_teilaufg[i]}', xwerte_dy, ywerte_dy,
                              xwerte_dx, ywerte_dx, xwerte_geraden, ywerte_sekante)
             loesung.append('Abbildung')
@@ -111,16 +111,16 @@ def aenderungsrate(nr, teilaufg):
             + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + gzahl(x_wert_2)
             + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
             + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
-            + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
+            + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
         liste_punkte.append(4)
         i += 1
 
     if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append('')
         aufgabe.append(str(teilaufg[i])
-                       + f') Bestimme zeichnerisch die lsokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+                       + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
@@ -137,22 +137,25 @@ def aenderungsrate(nr, teilaufg):
         if 'a' not in teilaufg:
             xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$',
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'',
                              'f',f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            graph_xyfix_plus(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
-                            + fkt_str + '$', 'f', 'loesung_Aufgabe_1', f'Loesung_{nr}{liste_teilaufg[i]}',
+            graph_xyfix_plus(xwerte, ywerte, fkt, r'', 'f', 'loesung_Aufgabe_1', f'Loesung_{nr}{liste_teilaufg[i]}',
                              xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
+            grafiken_aufgaben.append('')
+            aufgabe.append('Abbildung')
 
         else:
-            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
-                                                          r'und ihre Steigungsdreiecke',
-                            'f', f'Loesung_{nr}{liste_teilaufg[i]}', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt,
+                             r'',
+                             'f', f'Loesung_{nr}{liste_teilaufg[i]}',
+                             xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
                             xwerte_geraden, ywerte_sekante, xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c,
                             xwerte_geraden, ywerte_tangente)
 
-        loesung.append(str(teilaufg[i])
+        loesung.extend((str(teilaufg[i])
                        + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~\mathbf{m='
-                       + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
+                       + str(steigung_dreieck) + r'}~bestimmt~(1P)}', 'Abbildung'))
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(3)
         i += 1
 
@@ -205,7 +208,7 @@ def aenderungsrate(nr, teilaufg):
         loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
                        + gzahl(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
                        r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
-                       r'\quad (1P) \\\\')
+                       r'\quad (1P)')
         liste_punkte.append(3)
         i += 1
 
@@ -513,6 +516,7 @@ def kurvendiskussion_polynome(nr, teilaufg):
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def exponentialfunktionen_01(nr, teilaufg):
     liste_punkte = []
     liste_bez = []
@@ -748,3 +752,36 @@ def exponentialfunktionen_01(nr, teilaufg):
 
 # Integralrechnungen
 
+def rechenregeln_integrale(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{10em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
+                      r' \int a \cdot f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
+                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C '}
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständige die folgenden Rechenregeln für unbestimmte Integrale']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = ['','']
+    grafiken_loesung = ['']
+
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        punkte_aufg = 2
+        liste_punkte.append(punkte_aufg)
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') ~' + auswahl[i] + str(liste_teilaufg[i+1])
+                       + r') ~' + auswahl[i+1])
+        loesung.append(str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \hspace{5em}'
+                       + str(liste_teilaufg[i+1]) + r') ~' + regeln_aufgabe[auswahl[i+1]] + r' \quad (1P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i += 2
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

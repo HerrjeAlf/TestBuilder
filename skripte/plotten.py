@@ -247,6 +247,7 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
+    ax.set_aspect(1)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
@@ -279,7 +280,9 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     # lswerte sind für die Werte für die Lösungen
-    ax = plt.gca()
+    fig, ax = plt.subplots()
+    fig.canvas.draw()
+    fig.tight_layout()
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
