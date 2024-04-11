@@ -6,7 +6,7 @@ from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
 from sympy import *
-import Zeichnung
+from skripte.plotten import *
 
 # Definition der Funktionen
 
