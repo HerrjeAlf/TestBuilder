@@ -16,20 +16,24 @@ def seite(aufgaben):
 
     for aufgabe in aufgaben:
         k = 0
+        i = 1
         for elements in aufgabe[0]:
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Abbildung' in elements:
-                Aufgabe.append(elements)
                 with Aufgabe.create(Figure(position='h!')) as graph:
-                    graph.add_image(aufgabe[2][k], width='200px')
+                    graph.add_image(aufgabe[2][k], width='300px')
+                Aufgabe.append(SmallText('Abbildung ' + str(i) + ' \n\n'))
+                i += 1
             else:
                 Aufgabe.append(elements)
             k += 1
 
+
     for loesung in aufgaben:
         k = 0
+        i = 1
         for elements in loesung[1]:
             if '~' in elements:
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
@@ -37,9 +41,12 @@ def seite(aufgaben):
             elif 'Abbildung' in elements:
                 with Loesung.create(Figure(position='h!')) as graph:
                     graph.add_image(loesung[3][k], width='300px')
+                Loesung.append(SmallText('Abbildung ' + str(i) + ' \n\n'))
+                i += 1
             else:
                 Loesung.append(elements)
             k += 1
+
 
     return Aufgabe, Loesung
 
