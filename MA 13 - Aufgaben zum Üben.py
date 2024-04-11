@@ -1,5 +1,6 @@
-from Aufgaben_Analysis import *
-from erstellen_test import *
+from Aufgaben.Aufgaben_Analysis import *
+from skripte.erstellen_test import *
+
 
 
 # Angaben für den Test im pdf-Dokument

@@ -8,13 +8,204 @@ from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPag
 from pylatex.utils import bold
 from sympy import *
 from sympy.plotting import plot
-
-from funktionen import *
-from plotten import *
+from skripte.funktionen import *
+from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
+
+
+def aenderungsrate(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    faktor = zzahl(1, 20) / 10
+    s_xwert = zzahl(1, 3)
+    s_ywert = zzahl(1, 3)
+    abstand = random.choice([[-1, 2], [-2, 1]])
+
+    x_wert_1 = s_xwert + abstand[0]
+    x_wert_2 = s_xwert + abstand[1]
+    y_wert_1 = faktor * (x_wert_1 - s_xwert) ** 2 + s_ywert
+    y_wert_2 = faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert
+    werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
+
+    while not all(abs(wert) < 6 for wert in werte):
+        s_xwert = zzahl(1, 3)
+        s_ywert = zzahl(1, 3)
+        abstand = random.choice([[-1, 2], [-2, 1]])
+
+        x_wert_1 = s_xwert + abstand[0]
+        x_wert_2 = s_xwert + abstand[1]
+        y_wert_1 = faktor * (x_wert_1 - s_xwert) ** 2 + s_ywert
+        y_wert_2 = faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert
+        werte = [x_wert_1, x_wert_2, y_wert_1, y_wert_2]
+
+    fkt = expand(faktor * (x - s_xwert) ** 2 + s_ywert)
+    fkt_abl = diff(fkt, x)
+    fkt_str = (latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert)
+               + 'x' + vorz_str((faktor * (s_xwert ** 2)) + s_ywert))
+    fkt_abl = diff(fkt, x)
+    fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
+
+    print("f(x)=" + str(fkt))
+    print("f'(x)=" + str(fkt_abl))
+    print("f'(x_0)=" + str(fkt_abl_x0))
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
+               r'f(x)~=~' + fkt_str]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = ['', '', '']
+    grafiken_loesung = ['']
+
+    xwerte_geraden = [-6, 6]
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+        aufgabe.append(str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
+                                          f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
+        dy = y_wert_2 - y_wert_1
+        dx = x_wert_2 - x_wert_1
+        fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
+        xwerte = [-6 + n / 5 for n in range(60)]
+        ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
+        graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: $f(x) =' + fkt_str + '$',
+                         'f', f'Aufgabe_{nr}{liste_teilaufg[i]}')
+
+        xwerte_dy = [x_wert_2, x_wert_2]
+        ywerte_dy = [y_wert_1, y_wert_2]
+        xwerte_dx = [x_wert_1, x_wert_2]
+        ywerte_dx = [y_wert_1, y_wert_1]
+
+        steigung_dreieck = N((y_wert_2 - y_wert_1) / (x_wert_2 - x_wert_1), 2)
+
+        ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
+
+        loesung.append(str(teilaufg[i])
+                       + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~'
+                         r'\mathbf{m=' + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
+
+        if c not in teilaufg:
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: $f(x) =' + fkt_str + '$',
+                             'f',f'Loesung_{nr}{liste_teilaufg[i]}', xwerte_dy, ywerte_dy,
+                             xwerte_dx, ywerte_dx, xwerte_geraden, ywerte_sekante)
+
+        liste_punkte.append(3)
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        aufgabe.append(str(teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval'
+                                          f'[ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2)
+            + ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) + str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{'
+            + latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2)
+            + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
+            + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
+            + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
+        liste_punkte.append(4)
+        i += 1
+
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        aufgabe.append(str(teilaufg[i])
+                       + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+
+        steigung_tangente = fkt_abl.subs(x, x_wert_2)
+        fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
+
+        x_wert_3 = x_wert_2 - 1
+        y_wert_3 = fkt_tangente.subs(x, x_wert_3)
+        steigung_dreieck = N((y_wert_2 - y_wert_3) / (x_wert_2 - x_wert_3), 2)
+        xwerte_dy_c = [x_wert_2, x_wert_2]
+        ywerte_dy_c = [y_wert_2, y_wert_3]
+        xwerte_dx_c = [x_wert_2, x_wert_3]
+        ywerte_dx_c = [y_wert_3, y_wert_3]
+        ywerte_tangente = [fkt_tangente.subs(x, -6), fkt_tangente.subs(x, 6)]
+
+        if 'a' not in teilaufg:
+            xwerte = [-6 + n / 5 for n in range(60)]
+            ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$',
+                             'f',f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            graph_xyfix_plus(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
+                            + fkt_str + '$', 'f', 'loesung_Aufgabe_1', f'Loesung_{nr}{liste_teilaufg[i]}',
+                             xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
+        else:
+            graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
+                                                          r'und ihre Steigungsdreiecke',
+                            'f', f'Loesung_{nr}{liste_teilaufg[i]}', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
+                            xwerte_geraden, ywerte_sekante, xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c,
+                            xwerte_geraden, ywerte_tangente)
+
+        loesung.append(str(teilaufg[i])
+                       + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~\mathbf{m='
+                       + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
+        liste_punkte.append(3)
+        i += 1
+
+    if 'd' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        aufgabe.append(str(teilaufg[i])
+                       + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
+                         f'mit einer Rechnung. \n\n')
+        a_3_re = faktor
+        b_1_re = -2 * faktor * s_xwert
+        b_2_re = faktor * x_wert_2
+        b_3_re = b_1_re + b_2_re
+        c_1_re = faktor * (s_xwert ** 2) + s_ywert - (faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert)
+        c_2_re = b_3_re * x_wert_2
+
+        a_1 = latex(N(faktor, 3))
+        a_3 = latex(N(a_3_re, 3))
+        b_1 = latex(N(b_1_re, 3))
+        b_2 = latex(N(b_2_re, 3))
+        b_3 = latex(N(b_3_re, 3))
+        c_1 = latex(N(c_1_re, 3))
+        c_2 = latex(N(c_2_re, 3))
+
+        table = Tabular('c|c|c', row_height=1.2)
+        table.add_row(a_1, b_1, c_1)
+        table.add_hline(1, 3)
+        table.add_row('', b_2, c_2)
+        table.add_hline(1, 3)
+        table.add_row(a_3, b_3, 0)
+
+        division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
+        partialbruch = latex(faktor) + 'x' + vorz_str(b_3_re)
+
+        print(division_fkt_linear)
+        print(partialbruch)
+
+        # loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2)
+        #               + r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
+        #               + r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
+        #               + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
+        #               + '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~'
+        #               + latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\'
+        #               + r'\to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\\\')
+        # loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
+        # loesung.append(table)
+        # loesung.append(r' \hspace{5em}')
+
+        loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
+                       + str(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
+                       r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
+                       r'\quad (1P) \\\\')
+        liste_punkte.append(3)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def kurvendiskussion_polynome(nr, teilaufg):
     liste_punkte = []

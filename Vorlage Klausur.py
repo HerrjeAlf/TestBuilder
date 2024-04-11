@@ -1,5 +1,5 @@
-from Aufgaben_Differentialrechung import *
-from erstellen_klausur import *
+from Aufgaben.Aufgaben_Analysis import *
+from skripte.erstellen_klausur import *
 
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'

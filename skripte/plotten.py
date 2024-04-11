@@ -156,6 +156,7 @@ class AngleAnnotation(Arc):
 
         # Erklärung nachzulesen bei https://matplotlib.org/stable/gallery/text_labels_and_annotations/angle_annotation.html
 
+# Geometrie
 def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
@@ -194,7 +195,6 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
-
 
 def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     fig, ax = plt.subplots()
@@ -240,7 +240,7 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     # plt.show()
     return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
 
-
+# Analysis
 def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     # fig = plt.Figure()
     # ax = plt.gca()
@@ -277,6 +277,34 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     # plt.show()
     return plt.savefig(name, dpi=200)
 
+def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
+    # lswerte sind für die Werte für die Lösungen
+    ax = plt.gca()
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['left'].set_position(('data', 0))
+    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+    arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+    ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+    ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    plt.annotate(n, xy=(xwert, fkt.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
+                 fontsize=12)
+    plt.grid(True)
+    plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
+    plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
+    plt.axis([-6, 6, -6, 6])
+    plt.plot(a_1, b_1, linewidth=2)
+    for i, werte in enumerate(lswerte):
+        if i % 2 != 0:  # überspringt ungerade Zahlen für das elif weiter unten
+            continue
+        elif werte is not None and lswerte[i + 1] is not None:  # Überprüft, ob es den Wert oder den nächsten Wert gibt
+            plt.plot(werte, lswerte[i + 1], linewidth=2)
+    plt.suptitle(titel, usetex=True)
+    return plt.savefig(name, dpi=200)
+
 def Graph(x_min, x_max, *funktionen, name='Graph'):
     fig, ax = plt.subplots()
     fig.canvas.draw()
@@ -299,6 +327,7 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
     # plt.show()
     return plt.savefig(name, dpi=200)
 
+# Wahrscheinlichkeit
 def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
@@ -336,8 +365,6 @@ def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $')
             print('ywerte_1: ' + str(ywerte_1))
             print('ywerte_2: ' + str(ywerte_2))
     return plt.savefig(name, dpi=200)
-
-
 
 def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
