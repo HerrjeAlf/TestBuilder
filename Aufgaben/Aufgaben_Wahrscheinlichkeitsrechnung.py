@@ -153,17 +153,17 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg):
     if 'a' in teilaufg:
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', ''))
+        grafiken_loesung.extend(('','',f'Loesung_{nr}{liste_teilaufg[i]}'))
         Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
                          bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
         aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
         if anzahl_ziehen[0] == 2:
-            loesung.extend((str(liste_teilaufg[i]) + r') Baumdiagramm wie in der folgenden Abbildung dargestellt.',
-                            '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
+                            '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P', 'Figure'))
             punkte_aufg = 5
         else:
-            loesung.extend((str(liste_teilaufg[i]) + r') Baumdiagramm wie in der folgenden Abbildung dargestellt.',
-                            '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
+                            '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P', 'Figure'))
             punkte_aufg = 6
 
         liste_punkte.append(punkte_aufg)
