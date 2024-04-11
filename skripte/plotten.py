@@ -293,8 +293,8 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     plt.annotate(n, xy=(xwert, fkt.subs(x, xwert)), xycoords='data', xytext=(+5, +5), textcoords='offset points',
                  fontsize=12)
     plt.grid(True)
-    plt.xticks(numpy.linspace(-5, 5, 11, endpoint=True))
-    plt.yticks(numpy.linspace(-5, 5, 11, endpoint=True))
+    plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
+    plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-6, 6, -6, 6])
     plt.plot(a_1, b_1, linewidth=2)
     for i, werte in enumerate(lswerte):

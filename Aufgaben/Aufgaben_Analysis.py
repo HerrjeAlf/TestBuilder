@@ -45,8 +45,8 @@ def aenderungsrate(nr, teilaufg):
 
     fkt = expand(faktor * (x - s_xwert) ** 2 + s_ywert)
     fkt_abl = diff(fkt, x)
-    fkt_str = (latex(faktor) + 'x^2' + vorz_str(-2 * faktor * s_xwert)
-               + 'x' + vorz_str((faktor * (s_xwert ** 2)) + s_ywert))
+    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * s_xwert,'x')
+               + vorz_str((faktor * (s_xwert ** 2)) + s_ywert))
     fkt_abl = diff(fkt, x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
@@ -63,11 +63,11 @@ def aenderungsrate(nr, teilaufg):
     xwerte_geraden = [-6, 6]
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
+        grafiken_loesung.append('')
 
-        aufgabe.append(str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
-                                          f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n')
+        aufgabe.extend((str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
+                                          f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f. \n\n', 'Abbildung'))
         dy = y_wert_2 - y_wert_1
         dx = x_wert_2 - x_wert_1
         fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
@@ -87,12 +87,15 @@ def aenderungsrate(nr, teilaufg):
 
         loesung.append(str(teilaufg[i])
                        + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~'
-                         r'\mathbf{m=' + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
+                         r'\mathbf{m=' + gzahl(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
 
         if c not in teilaufg:
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: $f(x) =' + fkt_str + '$',
                              'f',f'Loesung_{nr}{liste_teilaufg[i]}', xwerte_dy, ywerte_dy,
                              xwerte_dx, ywerte_dx, xwerte_geraden, ywerte_sekante)
+            loesung.append('Abbildung')
+            grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
 
         liste_punkte.append(3)
         i += 1
@@ -103,9 +106,9 @@ def aenderungsrate(nr, teilaufg):
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         aufgabe.append(str(teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval'
                                           f'[ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + str(x_wert_2)
-            + ') - f(' + str(x_wert_1) + ')}{' + str(x_wert_2) + str(vorz_str(-1 * x_wert_1)) + r'} ~=~ \frac{'
-            + latex(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + str(x_wert_2)
+        loesung.append(str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + gzahl(x_wert_2)
+            + ') - f(' + gzahl(x_wert_1) + ')}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~ \frac{'
+            + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + gzahl(x_wert_2)
             + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
             + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
             + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P) \\\\')
@@ -117,7 +120,7 @@ def aenderungsrate(nr, teilaufg):
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         aufgabe.append(str(teilaufg[i])
-                       + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
+                       + f') Bestimme zeichnerisch die lsokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
@@ -139,6 +142,7 @@ def aenderungsrate(nr, teilaufg):
             graph_xyfix_plus(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
                             + fkt_str + '$', 'f', 'loesung_Aufgabe_1', f'Loesung_{nr}{liste_teilaufg[i]}',
                              xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
+
         else:
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
                                                           r'und ihre Steigungsdreiecke',
@@ -187,11 +191,11 @@ def aenderungsrate(nr, teilaufg):
         print(division_fkt_linear)
         print(partialbruch)
 
-        # loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + str(x_wert_2)
-        #               + r'} ~ \frac{f(x)-f(' + str(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
-        #               + r'} ~=~ \lim \limits_{x \to ' + str(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
-        #               + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
-        #               + '} ~=~' + r' \lim \limits_{x \to ' + str(x_wert_2) + '}~' + partialbruch + '~=~'
+        # loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + gzahl(x_wert_2)
+        #               + r'} ~ \frac{f(x)-f(' + gzahl(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
+        #               + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
+        #               + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_gzahl(-1 * x_wert_2)
+        #               + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + '~=~'
         #               + latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\'
         #               + r'\to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\\\')
         # loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
@@ -199,7 +203,7 @@ def aenderungsrate(nr, teilaufg):
         # loesung.append(r' \hspace{5em}')
 
         loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
-                       + str(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
+                       + gzahl(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
                        r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
                        r'\quad (1P) \\\\')
         liste_punkte.append(3)
