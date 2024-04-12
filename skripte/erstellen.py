@@ -1,12 +1,11 @@
 import datetime
 import string
-import os
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Package)
 from pylatex.utils import bold
-
 from skripte.funktionen import *
 from skripte.plotten import *
+import os
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
 
@@ -120,6 +119,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
         Aufgabe.append(table2)
 
         Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
+        os.replace(f'Ma {Klasse} - {Art} {Teil}.pdf','pdf/' + f'Ma {Klasse} - {Art} {Teil}.pdf')
 
     # Erwartungshorizont
     @timer
@@ -136,6 +136,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
         Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
+        os.replace(f'Ma {Klasse} - {Art} {Teil} - Lsg.pdf','pdf/' + f'Ma {Klasse} - {Art} {Teil} - Lsg.pdf')
 
     # Druck der Seiten
     Hausaufgabenkontrolle()
