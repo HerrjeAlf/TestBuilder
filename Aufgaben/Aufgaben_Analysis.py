@@ -464,6 +464,19 @@ def rechenregeln_integrale(nr, teilaufg):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def stammfunktionen(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Bestimme die Stammfunktionen der folgenden Funktionen.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+
+
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
 def kurvendiskussion_polynome(nr, teilaufg):

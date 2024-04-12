@@ -1,5 +1,5 @@
 from Aufgaben.Aufgaben_Analysis import *
-from skripte.erstellen_test import *
+from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Kurs'
@@ -16,7 +16,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [rechenregeln_integrale(1, ['a'])]
+    aufgaben_seite1 = [rechenregeln_integrale(1, ['a']),]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
