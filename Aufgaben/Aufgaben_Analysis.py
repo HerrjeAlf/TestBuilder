@@ -57,14 +57,13 @@ def aenderungsrate(nr, teilaufg):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
                r'f(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-    grafiken_aufgaben = ['', '', '']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     xwerte_geraden = [-6, 6]
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
-        grafiken_loesung.append('')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         aufgabe.extend((str(teilaufg[i]) + f') Bestimme zeichnerisch die mittlere Änderungsrate im '
                                           f'Interval [ {x_wert_1} | {x_wert_2} ] vom Graphen f.', 'Figure'))
@@ -102,9 +101,7 @@ def aenderungsrate(nr, teilaufg):
 
     if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-        aufgabe.append(str(teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval'
+        aufgabe.append(str(teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval '
                                           f'[ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + gzahl(x_wert_2)
             + ') - f(' + gzahl(x_wert_1) + ')}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~ \frac{'
@@ -117,10 +114,6 @@ def aenderungsrate(nr, teilaufg):
 
     if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append('')
-        aufgabe.append(str(teilaufg[i])
-                       + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
         fkt_tangente = steigung_tangente * (x - x_wert_2) + y_wert_2
@@ -141,7 +134,9 @@ def aenderungsrate(nr, teilaufg):
                              'f',f'Aufgabe_{nr}{liste_teilaufg[i]}')
             graph_xyfix_plus(xwerte, ywerte, fkt, r'', 'f', 'loesung_Aufgabe_1', f'Loesung_{nr}{liste_teilaufg[i]}',
                              xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
-            grafiken_aufgaben.append('')
+            aufgabe.append(str(teilaufg[i])
+                           + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}.')
+            grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             aufgabe.append('Figure')
 
         else:
@@ -151,6 +146,8 @@ def aenderungsrate(nr, teilaufg):
                              xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
                             xwerte_geraden, ywerte_sekante, xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c,
                             xwerte_geraden, ywerte_tangente)
+            aufgabe.append(str(teilaufg[i])
+                           + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         loesung.extend((str(teilaufg[i])
                        + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~\mathbf{m='
@@ -161,8 +158,6 @@ def aenderungsrate(nr, teilaufg):
 
     if 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         aufgabe.append(str(teilaufg[i])
                        + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
                          f'mit einer Rechnung. \n\n')
@@ -265,15 +260,13 @@ def exponentialfunktionen_01(nr, teilaufg):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                r' f(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['','','']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         grenzwert_min = limit(fkt, x, -oo)
         grenzwert_pos = limit(fkt, x, oo)
@@ -288,8 +281,6 @@ def exponentialfunktionen_01(nr, teilaufg):
 
     if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         if y_vers == 0:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
@@ -317,8 +308,6 @@ def exponentialfunktionen_01(nr, teilaufg):
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die ersten drei Ableitungen der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
@@ -331,8 +320,6 @@ def exponentialfunktionen_01(nr, teilaufg):
         punkte_aufg = 10
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         if fkt_a2.subs(x,0) < 0:
             lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
@@ -373,8 +360,6 @@ def exponentialfunktionen_01(nr, teilaufg):
         punkte_aufg = 10
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
         xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
@@ -408,8 +393,6 @@ def exponentialfunktionen_01(nr, teilaufg):
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
         xwert_wp1 = N(-2/lsg_b - sqrt(2)/abs(lsg_b), 3)
         ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)), 3)
@@ -430,6 +413,7 @@ def exponentialfunktionen_01(nr, teilaufg):
                        + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
                        + r' \quad (3P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        loesung.append('neueSeite')
         i += 1
 
 
@@ -437,12 +421,11 @@ def exponentialfunktionen_01(nr, teilaufg):
         punkte_aufg = 5
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}',''))
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
-        loesung.extend(('Figure', str(liste_teilaufg[i])
-                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\'))
+        loesung.extend((str(liste_teilaufg[i])
+                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
         i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
@@ -463,14 +446,12 @@ def rechenregeln_integrale(nr, teilaufg):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vervollständige die folgenden Rechenregeln für unbestimmte Integrale']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['','']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
 
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
 
@@ -556,13 +537,11 @@ def kurvendiskussion_polynome(nr, teilaufg):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                r' f(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-    grafiken_aufgaben = ['', '', '']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         grenzwert_min = limit(fkt, x, -oo)
         grenzwert_pos = limit(fkt, x, oo)
@@ -576,8 +555,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
 
     if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         fkt_sym = fkt.subs(x, -x)
         if fkt_sym == fkt:
@@ -596,8 +573,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
 
     if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', '', ''))
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
         table2.add_row('', fkt_a1, fkt_a2, fkt_a3, fkt_a4)
@@ -634,8 +609,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
     if 'd' in teilaufg:
         punkte = 16
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         x_12_fkt_1 = solve(fkt_1, x)
         x_1_fkt_1 = round(x_12_fkt_1[0], 3)
@@ -680,8 +653,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
     if 'e' in teilaufg:
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion f. \n\n')
@@ -698,8 +669,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
     if 'f' in teilaufg:
         punkte = 6
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         ywert_wp1 = N(fkt.subs(x, xwert_wp1), 3)
@@ -725,7 +694,8 @@ def kurvendiskussion_polynome(nr, teilaufg):
                        + vorz_v_innen(-1 * N(xwert_wp1, 3), ')') + vorz_str(ywert_wp1) + '~=~'
                        + vorz_v_aussen(-1 / ywert_wp1_fkt_1, 'x')
                        + vorz_str(N(xwert_wp1 / ywert_wp1_fkt_1 + ywert_wp1, 3))
-                       + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\\\ \\\\')
+                       + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(6) + r'~Punkte}')
+        loesung.append('neueSeite')
         # xmin = int(round(nst_3 - 0.4, 0))
         # xmax = int(round(nst_2 + 0.4, 0))
         # Graph(xmin,xmax, fkt, name='latex(fkt_t)')
@@ -734,8 +704,7 @@ def kurvendiskussion_polynome(nr, teilaufg):
 
     if 'g' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.extend(('', f'Loesung_{nr}{liste_teilaufg[i]}'))
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         xmin = int(round(nst_3 - 0.4, 0))
         xmax = int(round(nst_2 + 0.4, 0))
@@ -753,8 +722,6 @@ def kurvendiskussion_polynome(nr, teilaufg):
 
     if 'h' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.extend(('', f'Aufgabe_{nr}{liste_teilaufg[i]}'))
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         Fkt = integrate(fkt, x)
         Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 4), 'x^4') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
@@ -777,7 +744,7 @@ def kurvendiskussion_polynome(nr, teilaufg):
                         + ' rechts vom Ursprung eine Fläche ein. \n\n',
                         str(liste_teilaufg[i]) + f') Berechne die eingeschlossen Fläche. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \int \limits_0^{' + gzahl(obere_grenze) + '}' + fkt_str
-                       + r'~ \mathrm{d}x \right| ~=~ \left| \left(' + Fkt_str + r' \right)_{0}^{' + gzahl(obere_grenze)
+                       + r'~ \mathrm{d}x \right| ~=~ \left| \left[' + Fkt_str + r' \right]_{0}^{' + gzahl(obere_grenze)
                        + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4P) \\')
 
         liste_punkte.append(4)

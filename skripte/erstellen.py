@@ -1,6 +1,6 @@
 import datetime
 import string
-
+import os
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Package)
 from pylatex.utils import bold
@@ -15,36 +15,36 @@ def seite(aufgaben):
     Loesung = Document(geometry_options=geometry_options)
 
     for aufgabe in aufgaben:
-        k = 0
-        i = 1
+        i = 0
         for elements in aufgabe[0]:
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Aufgabe.create(Figure(position='h!')) as graph:
-                    graph.add_image(aufgabe[2][k], width='300px')
-                Aufgabe.append(SmallText('Abbildung ' + str(i) + ' \n\n'))
+                    graph.add_image('img/temp/' + aufgabe[2][i], width='250px', placement=None)
+                Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
+            elif 'neueSeite' in elements:
+                Aufgabe.append(NewPage())
             else:
                 Aufgabe.append(elements)
-            k += 1
 
     for loesung in aufgaben:
-        k = 0
-        i = 1
+        i = 0
         for elements in loesung[1]:
             if '~' in elements:
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Loesung.create(Figure(position='h!')) as graph:
-                    graph.add_image(loesung[3][k], width='300px')
-                Loesung.append(SmallText('Abbildung ' + str(i) + ' \n\n'))
+                    graph.add_image('img/temp/' + loesung[3][i], width='250px')
                 i += 1
+            elif 'neueSeite' in elements:
+                Loesung.append(NewPage())
             else:
                 Loesung.append(elements)
-            k += 1
+
 
 
     return Aufgabe, Loesung

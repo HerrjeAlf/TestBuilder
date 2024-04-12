@@ -194,7 +194,7 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=500, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
     am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
     # plt.show()
-    return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
+    return plt.savefig('img/temp' + name, bbox_inches= 'tight', pad_inches = 0, dpi = 300)
 
 def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     fig, ax = plt.subplots()
@@ -238,7 +238,7 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     am3 = AngleAnnotation(pkt[2], pkt[0], pkt[3], ax=ax, size=300, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
     am4 = AngleAnnotation(pkt[3], pkt[1], pkt[2], ax=ax, size=100, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels')
     # plt.show()
-    return plt.savefig(name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
+    return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi = 200)
 
 # Analysis
 def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
@@ -276,18 +276,19 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
         plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
     # plt.show()
-    return plt.savefig(name, dpi=200)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     # lswerte sind für die Werte für die Lösungen
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
+    ax.set_aspect(1)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
     ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+    ax.set_xlabel('x', size=10, labelpad=-21, x=1.02)
     ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
     ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
@@ -304,9 +305,9 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
         if i % 2 != 0:  # überspringt ungerade Zahlen für das elif weiter unten
             continue
         elif werte is not None and lswerte[i + 1] is not None:  # Überprüft, ob es den Wert oder den nächsten Wert gibt
-            plt.plot(werte, lswerte[i + 1], linewidth=2)
+            plt.plot(werte, lswerte[i + 1], linewidth=1)
     plt.suptitle(titel, usetex=True)
-    return plt.savefig(name, dpi=200)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.03)
 
 def Graph(x_min, x_max, *funktionen, name='Graph'):
     fig, ax = plt.subplots()
@@ -328,7 +329,7 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
         plt.plot(xwerte, ywerte)
     plt.grid(True)
     # plt.show()
-    return plt.savefig(name, dpi=200)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 
 # Wahrscheinlichkeit
 def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
@@ -367,7 +368,7 @@ def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $')
             print('xwerte: ' + str(xwerte))
             print('ywerte_1: ' + str(ywerte_1))
             print('ywerte_2: ' + str(ywerte_2))
-    return plt.savefig(name, dpi=200)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 
 def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
@@ -416,7 +417,7 @@ def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{
         wkt_liste_anzahl_1_neu.extend(wkt_liste_anzahl_1)
         wkt_liste_anzahl_2.extend(wkt_liste_anzahl_2_neu)
         wkt_liste_anzahl_1 = wkt_liste_anzahl_1_neu
-    return plt.savefig(name, dpi=200)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 
 def loeschen():
     plt.figure().clear()
