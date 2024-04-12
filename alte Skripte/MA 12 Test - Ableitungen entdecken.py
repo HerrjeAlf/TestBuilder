@@ -90,8 +90,8 @@ def erstellen(Teil):
             fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
             xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-            Zeichnung.loeschen()
-            Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+            loeschen()
+            Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
                                                           r'\ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
 
             xwerte_dy = [x_wert_2, x_wert_2]
@@ -108,7 +108,7 @@ def erstellen(Teil):
                              r'\mathbf{m=' + str(steigung_dreieck) + r'}~bestimmt~(1P)} \\\\')
 
             if c not in teilaufg:
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+                Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
                                                               r'\ $f(x) =' + fkt_str + '$', 'f',
                                 'loesung_Aufgabe_1', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
                                 xwerte_geraden, ywerte_sekante)
@@ -137,7 +137,7 @@ def erstellen(Teil):
             if a not in teilaufg:
                 xwerte = [-6 + n / 5 for n in range(60)]
                 ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+                Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
                                                               r'\ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
 
             steigung_tangente = fkt_abl.subs(x, x_wert_2)
@@ -155,13 +155,13 @@ def erstellen(Teil):
             if a not in teilaufg:
                 xwerte = [-6 + n / 5 for n in range(60)]
                 ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt,
+                Graph(xwerte, ywerte, s_xwert, fkt,
                                 r'Dargestellt ist der Graph von: \ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
-                Zeichnung.Graph(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
+                Graph(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: \ $f(x) ='
                                 + fkt_str + '$', 'f', 'loesung_Aufgabe_1', '', xwerte_dy_c,
                                 ywerte_dy_c, xwerte_dx_c, ywerte_dx_c, xwerte_geraden, ywerte_tangente)
             else:
-                Zeichnung.Graph(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
+                Graph(xwerte, ywerte, s_xwert, fkt, r'Lösung für Aufgabe 1a/c - Geraden '
                                                               r'und ihre Steigungsdreiecke',
                                 'f', 'loesung_Aufgabe_1', xwerte_dy, ywerte_dy, xwerte_dx, ywerte_dx,
                                 xwerte_geraden, ywerte_sekante, xwerte_dy_c, ywerte_dy_c, xwerte_dx_c, ywerte_dx_c,
