@@ -475,6 +475,37 @@ def stammfunktionen(nr, teilaufg):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 2
+        liste_punkte.append(punkte_aufg)
+
+        # Funktion und Stammfunktion 1
+        konst_i = zzahl(2,20)
+        e1_i = nzahl(2,5)
+        e2_i = e1_i + nzahl(1,3)
+        fkt_str_i = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
+        Fkt_str_i = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
+                     + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x')
+
+        # Funktion und Stammfunktion 2
+        konst_ii = zzahl(2,20)
+        e1_ii = nzahl(2,5)
+        e2_ii = e1_ii + nzahl(2,4)
+        a1 = e1_ii * zzahl(1,10)/2
+        a2 = e2_ii * zzahl(1,10)/2
+        fkt_str_i = vorz_v_aussen(a1,'x^{' + gzahl(e1_ii) + '}')
+
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') ~' + fkt_str_i + str(liste_teilaufg[i+1])
+                       + r') ~' + fkt_str_ii)
+        loesung.append(str(liste_teilaufg[i]) + r') ~' + Fkt_str_i + r' \quad (1P) \\'
+                       + str(liste_teilaufg[i+1]) + r') ~' + Fkt_str_ii + r' \quad (1P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i += 2
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
@@ -741,12 +772,12 @@ def kurvendiskussion_polynome(nr, teilaufg):
                    + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
 
         def erste_positive_nst(vec):
-            print(vec)
+            # print(vec)
             vec.sort()
-            print(vec)
+            # print(vec)
             for element in vec:
                 if element > 0:
-                    print(element)
+                    # print(element)
                     return element
             exit('keine positive Nullstelle')
 
