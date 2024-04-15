@@ -1,11 +1,18 @@
 import datetime
+import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, Package)
+                     MultiColumn, Package, HugeText)
 from pylatex.utils import bold
 from skripte.funktionen import *
 from skripte.plotten import *
-import os
+
+# Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
+try:
+    os.mkdir('pdf')
+    os.mkdir('img/temp')
+except FileExistsError:
+    pass
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
 
@@ -21,7 +28,7 @@ def seite(aufgaben):
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Aufgabe.create(Figure(position='h!')) as graph:
-                    graph.add_image('img/temp/' + aufgabe[2][i], width='250px', placement=None)
+                    graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px', placement=None)
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
             elif 'neueSeite' in elements:
@@ -37,7 +44,7 @@ def seite(aufgaben):
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Loesung.create(Figure(position='h!')) as graph:
-                    graph.add_image('img/temp/' + loesung[3][i], width='250px')
+                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
                 i += 1
             elif 'neueSeite' in elements:
                 Loesung.append(NewPage())
@@ -118,8 +125,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
         Aufgabe.append('\n\n')
         Aufgabe.append(table2)
 
-        Aufgabe.generate_pdf(f'Ma {Klasse} - {Art} {Teil}', clean_tex=true)
-        os.replace(f'Ma {Klasse} - {Art} {Teil}.pdf','pdf/' + f'Ma {Klasse} - {Art} {Teil}.pdf')
+        Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - {Art} {Teil}', clean_tex=true)
 
     # Erwartungshorizont
     @timer
@@ -135,8 +141,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.generate_pdf(f'Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
-        os.replace(f'Ma {Klasse} - {Art} {Teil} - Lsg.pdf','pdf/' + f'Ma {Klasse} - {Art} {Teil} - Lsg.pdf')
+        Loesung.generate_pdf(f'pdf/Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
     # Druck der Seiten
     Hausaufgabenkontrolle()

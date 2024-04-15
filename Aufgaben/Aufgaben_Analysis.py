@@ -241,7 +241,7 @@ def exponentialfunktionen_01(nr, teilaufg):
     xmin = wertebereich[0]
     xmax = wertebereich[-1]
     print(fkt), print(ywerte), print(wertebereich), print(xmin), print(xmax)
-    graph_xyfix(fkt)
+    graph_xyfix(fkt, name='Funktionsgraph')
 
     # Ableitung der Funktionen
     fkt_a1 = diff(fkt,x)
