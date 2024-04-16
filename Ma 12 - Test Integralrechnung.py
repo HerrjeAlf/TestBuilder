@@ -4,9 +4,9 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Kurs'
 Fach = 'Mathematik'
-Klasse = 'Test'
+Klasse = '12'
 Lehrer = 'Herr Herrys'
-Art = 'HAK'
+Art = 'HAK 12'
 Titel = 'Rechenregeln und Stammfunktionen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2  # wie viele verschiedenen Tests sollen erzeugt werden
