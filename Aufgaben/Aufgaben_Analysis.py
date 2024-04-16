@@ -524,7 +524,7 @@ def unbestimmtes_integral(nr, teilaufg):
             e1 = zzahl(2,9)
             k1 = zzahl(1,19)/2
             fkt = gzahl(a1) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
-            Fkt = gzahl(Rational(a1,e1)) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+            Fkt = gzahl(Rational(a1,e1)) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '} + C'
             pkt = 2
             return fkt, Fkt, pkt
 
@@ -536,15 +536,15 @@ def unbestimmtes_integral(nr, teilaufg):
             fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
                    + vorz(a2) + r'\frac{' + str(abs(a2)) + '}{x}')
             Fkt = (gzahl(Rational(a1,-1*e1+1)) + 'x^{' + gzahl(-1*e1+1) + '}'
-                   + vorz_str(a2) + r' \cdot ln(x) + C')
+                   + vorz_str(a2) + r' \cdot \ln(x) + C')
             pkt = 3
             return fkt, Fkt, pkt
 
         # sin cos
         def trig_funktion():
             a1 = zzahl(2, 9)
-            auswahl = random.choice([[latex(a1) + r' \cdot sin(x)', latex(-1*a1) + r' \cdot cos(x) + C'],
-                                     [latex(a1) + r' \cdot cos(x)', latex(a1) + r' \cdot sin(x) + C']])
+            auswahl = random.choice([[latex(a1) + r' \cdot \sin(x)', latex(-1*a1) + r' \cdot \cos(x) + C'],
+                                     [latex(a1) + r' \cdot \cos(x)', latex(a1) + r' \cdot \sin(x) + C']])
             fkt = auswahl[0]
             Fkt = auswahl[1]
             pkt = 1
@@ -585,10 +585,10 @@ def unbestimmtes_integral(nr, teilaufg):
                                       + '} + C'],
                                      [gzahl(a1) + r' \cdot e^{' + innere + '}',
                                       gzahl(Rational(a1,i1)) + r' \cdot e^{' + innere + '} + C'],
-                                     [gzahl(a1) + r' \cdot sin(' + innere + ')' + vorz_str(k1),
-                                      gzahl(Rational(-1*a1,i1)) + r' \cdot cos(' + innere + ')' + vorz_v_innen(k1,'x + C')],
-                                     [gzahl(a1) + r' \cdot cos(' + innere + ')' + vorz_str(k1),
-                                      gzahl(Rational(a1,i1)) + r' \cdot sin(' + innere + ')' + vorz_v_innen(k1,'x + C')]])
+                                     [gzahl(a1) + r' \cdot \sin(' + innere + ')' + vorz_str(k1),
+                                      gzahl(Rational(-1*a1,i1)) + r' \cdot \cos(' + innere + ')' + vorz_v_innen(k1,'x + C')],
+                                     [gzahl(a1) + r' \cdot \cos(' + innere + ')' + vorz_str(k1),
+                                      gzahl(Rational(a1,i1)) + r' \cdot \sin(' + innere + ')' + vorz_v_innen(k1,'x + C')]])
             fkt = auswahl[0]
             Fkt = auswahl[1]
             punkte = 2
