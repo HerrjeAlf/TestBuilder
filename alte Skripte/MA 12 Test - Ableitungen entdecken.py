@@ -91,7 +91,7 @@ def erstellen(Teil):
             xwerte = [-6 + n / 5 for n in range(60)]
             ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
             loeschen()
-            Graph(xwerte, ywerte, s_xwert, fkt, r'Dargestellt ist der Graph von: '
+            Graph(xwerte, ywerte, fkt, r'Dargestellt ist der Graph von: '
                                                           r'\ $f(x) =' + fkt_str + '$', 'f', 'Aufgabe_1')
 
             xwerte_dy = [x_wert_2, x_wert_2]

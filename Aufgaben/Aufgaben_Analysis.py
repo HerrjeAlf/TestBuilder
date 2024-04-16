@@ -6,6 +6,7 @@ import random, math
 from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
 from pylatex.utils import bold
+from random import *
 from sympy import *
 from sympy.plotting import plot
 from skripte.funktionen import *
@@ -477,8 +478,7 @@ def unbestimmtes_integral(nr, teilaufg):
 
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 4
-        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
 
         # Funktion und Stammfunktion 1
         konst_i = zzahl(2,20)
@@ -487,6 +487,7 @@ def unbestimmtes_integral(nr, teilaufg):
         fkt_str_i = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
         Fkt_str_i = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
                      + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x + C')
+        punkte_i = 2
 
         # Funktion und Stammfunktion 2
         konst_ii = zzahl(2,20)
@@ -499,45 +500,123 @@ def unbestimmtes_integral(nr, teilaufg):
         Fkt_str_ii = (vorz_v_aussen(Rational(a2,e2_ii+1),'x^{' + gzahl(e2_ii +1) + '}')
                       + vorz_v_innen(Rational(a1,e1_ii + 1), 'x^{' + gzahl(e1_ii+1) + '}')
                       + vorz_v_innen(konst_ii,'x + C'))
-        
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \quad \to \quad F(x) ~=~'
-                       + Fkt_str_i + r' \quad (2P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \quad \to \quad H(x) ~=~'
-                       + Fkt_str_ii + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        punkte_ii = 2
+
+        punkte_aufg = punkte_i + punkte_ii
+        liste_punkte.extend((punkte_i, punkte_ii))
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
+                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
+                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
         i += 2
 
     if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 4
-        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
 
         # Integral e-Funktion
-        a1 = zzahl(2,9)
-        e1= zzahl(2,9)
-        k1 = zzahl(1,19)/2
-        fkt_str_e = gzahl(a1) + 'e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
-        Fkt_str_e = gzahl(Rational(a1,e1)) + '} \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+        def e_funktion():
+            a1 = zzahl(2,9)
+            e1 = zzahl(2,9)
+            k1 = zzahl(1,19)/2
+            fkt = gzahl(a1) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+            Fkt = gzahl(Rational(a1,e1)) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+            pkt = 2
+            return fkt, Fkt, pkt
 
         # Integral ln
+        def ln_funktion():
+            a1 = zzahl(2,9)
+            e1 = nzahl(2,9)
+            a2 = zzahl(2,9)
+            fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
+                   + vorz(a2) + r'\frac{' + str(abs(a2)) + '}{x}')
+            Fkt = (gzahl(Rational(a1,-1*e1+1)) + 'x^{' + gzahl(-1*e1+1) + '}'
+                   + vorz_str(a2) + r' \cdot ln(x) + C')
+            pkt = 3
+            return fkt, Fkt, pkt
 
         # sin cos
+        def trig_funktion():
+            a1 = zzahl(2, 9)
+            auswahl = random.choice([[latex(a1) + r' \cdot sin(x)', latex(-1*a1) + r' \cdot cos(x) + C'],
+                                     [latex(a1) + r' \cdot cos(x)', latex(a1) + r' \cdot sin(x) + C']])
+            fkt = auswahl[0]
+            Fkt = auswahl[1]
+            pkt = 1
+            return fkt, Fkt, pkt
+
+
+        auswahl = np.random.choice([e_funktion, ln_funktion, trig_funktion], 2, False)
+
+        fkt_str_i, Fkt_str_i, punkte_i = auswahl[0]()
+        fkt_str_ii, Fkt_str_ii, punkte_ii = auswahl[1]()
+        punkte_aufg = punkte_i + punkte_ii
+        liste_punkte.extend((punkte_i,punkte_ii))
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
+                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
+                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        i += 2
+
+    if 'e' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
+
+        # Integral e-Funktion
 
         # kettenregel potenzfunktion
+        def kettenregel():
+            a1 = zzahl(3,20)/2
+            i1 = zzahl(3,20)/2
+            k1 = zzahl(2,9)
+            e1 = nzahl(2,9)
+            innere = vorz_v_aussen(i1,'x') + vorz_str(k1)
+            auswahl = random.choice([[gzahl(a1) + r' \cdot (' + innere + ')^{' + latex(e1) + '}',
+                                      gzahl(Rational(a1,i1*(e1+1))) + r' \cdot (' + innere + ')^{' + latex(e1 + 1)
+                                      + '} + C'],
+                                     [gzahl(a1) + r' \cdot e^{' + innere + '}',
+                                      gzahl(Rational(a1,i1)) + r' \cdot e^{' + innere + '} + C'],
+                                     [gzahl(a1) + r' \cdot sin(' + innere + ')' + vorz_str(k1),
+                                      gzahl(Rational(-1*a1,i1)) + r' \cdot cos(' + innere + ')' + vorz_v_innen(k1,'x + C')],
+                                     [gzahl(a1) + r' \cdot cos(' + innere + ')' + vorz_str(k1),
+                                      gzahl(Rational(a1,i1)) + r' \cdot sin(' + innere + ')' + vorz_v_innen(k1,'x + C')]])
+            fkt = auswahl[0]
+            Fkt = auswahl[1]
+            punkte = 2
+            return fkt, Fkt, punkte
 
         # wurzel und negativer exponent
+        def wurzelfunktion():
+            a1 = nzahl(2,6)
+            e1 = a1 + nzahl(2,4)
+            fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
+            Fkt = gzahl(Rational(a1,a1+e1)) + 'x^{' + gzahl(Rational(a1+e1,a1)) + '} + C'
+            punkte = 3
+            return fkt, Fkt, punkte
 
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \quad \to \quad F(x) ~=~'
-                       + Fkt_str_i + r' \quad (2P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \quad \to \quad H(x) ~=~'
-                       + Fkt_str_ii + r' \quad (2P) \\'
+        fkt_str_i, Fkt_str_i, punkte_i = kettenregel()
+        fkt_str_ii, Fkt_str_ii, punkte_ii = wurzelfunktion()
+        punkte_aufg = punkte_i + punkte_ii
+        liste_punkte.extend((punkte_i,punkte_ii))
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
+                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
+                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
+                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i +=
+        i += 2
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 

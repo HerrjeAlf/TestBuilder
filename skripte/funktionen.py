@@ -34,6 +34,12 @@ def vorz(k):
     else:
         return '+'
 
+def vorz_aussen(k):
+    if k < 0:
+        return '-'
+    else:
+        return ''
+
 # Vorzeichen und Faktoren in Gleichungen oder Vektoren
 def vorz_fakt(k):
     if k < 0:
