@@ -464,7 +464,84 @@ def rechenregeln_integrale(nr, teilaufg):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def stammfunktionen(nr, teilaufg):
+def unbestimmtes_integral(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Bestimme die Stammfunktionen der folgenden Funktionen.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 4
+        liste_punkte.append(punkte_aufg)
+
+        # Funktion und Stammfunktion 1
+        konst_i = zzahl(2,20)
+        e1_i = nzahl(2,5)
+        e2_i = e1_i + nzahl(1,3)
+        fkt_str_i = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
+        Fkt_str_i = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
+                     + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x + C')
+
+        # Funktion und Stammfunktion 2
+        konst_ii = zzahl(2,20)
+        e1_ii = nzahl(2,5)
+        e2_ii = e1_ii + nzahl(2,4)
+        a1 = (e1_ii+1) * zzahl(1,10)/2
+        a2 = (e2_ii+1) * zzahl(1,10)/2
+        fkt_str_ii = (vorz_v_aussen(a2,'x^{' + gzahl(e2_ii) + '}') + vorz_v_innen(a1,'x^{' + gzahl(e1_ii) + '}')
+                      + vorz_str(konst_ii))
+        Fkt_str_ii = (vorz_v_aussen(Rational(a2,e2_ii+1),'x^{' + gzahl(e2_ii +1) + '}')
+                      + vorz_v_innen(Rational(a1,e1_ii + 1), 'x^{' + gzahl(e1_ii+1) + '}')
+                      + vorz_v_innen(konst_ii,'x + C'))
+        
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \hspace{10em} '
+                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \hspace{10em} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \quad \to \quad F(x) ~=~'
+                       + Fkt_str_i + r' \quad (2P) \\'
+                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \quad \to \quad H(x) ~=~'
+                       + Fkt_str_ii + r' \quad (2P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i += 2
+
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 4
+        liste_punkte.append(punkte_aufg)
+
+        # Integral e-Funktion
+        a1 = zzahl(2,9)
+        e1= zzahl(2,9)
+        k1 = zzahl(1,19)/2
+        fkt_str_e = gzahl(a1) + 'e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+        Fkt_str_e = gzahl(Rational(a1,e1)) + '} \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
+
+        # Integral ln
+
+        # sin cos
+
+        # kettenregel potenzfunktion
+
+        # wurzel und negativer exponent
+
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \hspace{10em} '
+                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \hspace{10em} ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \quad \to \quad F(x) ~=~'
+                       + Fkt_str_i + r' \quad (2P) \\'
+                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \quad \to \quad H(x) ~=~'
+                       + Fkt_str_ii + r' \quad (2P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i +=
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def bestimmtes_integral(nr, teilaufg):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -511,8 +588,6 @@ def stammfunktionen(nr, teilaufg):
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
