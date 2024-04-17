@@ -523,7 +523,7 @@ def unbestimmtes_integral(nr, teilaufg):
             a1 = zzahl(2,9)
             k1 = zzahl(1,19)/2
             fkt = gzahl(a1) + r' \cdot e^x' + vorz_str(k1)
-            Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1,'x')
+            Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1,'x + C')
             pkt = 2
             return fkt, Fkt, pkt
 
