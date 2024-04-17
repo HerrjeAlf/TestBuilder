@@ -1,49 +1,28 @@
-import pylatex, math, random, sympy, matplotlib
-import numpy as np
-from random import randrange, randint, choice
-from sympy import *
-from numpy.linalg import solve as slv
-import matplotlib.pyplot as plt
-from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure, Math
+from pylatex import (MediumText)
 from pylatex.utils import bold
-from threading import Thread
+import string
+import numpy as np
+import random, math
+from numpy.linalg import solve as slv
+from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
+from pylatex.utils import bold
+from random import *
+from sympy import *
+from sympy.plotting import plot
+from skripte.funktionen import *
+from skripte.plotten import *
 
 # Definition der Funktionen
 
-a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
-fig = plt.Figure()
-
-def zzahl(p, q):
-    k = random.choice([-1, 1]) * random.randint(p, q)
-    return k
-
-def nzahl(p, q):
-    k = random.randint(p, q)
-    return k
-
-def vorz_str(k):
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
-
-def gzahl_klammer(k):
-    if k < 0:
-        return f'({latex(k)})'
-    else:
-        return latex(k)
-
-def punkt_vektor(p):
-    return [zzahl(1,p), zzahl(1,p), zzahl(1,p)]
-
-def faktorliste(n, p=1,q=10):
-    return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
+a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+nr_aufgabe = 0
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg):
-    teilaufg = [a, b, c, d]
+def punkte_und_vektoren(nr, teilaufg, auswahl=None):
+    liste_punkte = []
+    liste_bez = []
     i = 0
-    Punkte = 0
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
@@ -51,7 +30,7 @@ def punkte_und_vektoren(nr, teilaufg):
     ortsvektor_a = punkt_vektor(3)
     a_x, a_y, a_z = punkt_vektor(4)
     vektor_ab = [a_x, a_y, a_z]
-    laenge_vektor_ab = r' \sqrt{' + str(sum(a*a for a in vektor_ab)) + '}' + '~=~' + str(sqrt(N(sum(a*a for a in vektor_ab),3)))
+    laenge_vektor_ab = r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}' + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_ab),3)))
     ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
     vektoren_auswahl = [[zf_vorz(a_x), zf_vorz(a_z), zf_vorz(a_y)],
                         [zf_vorz(a_y), zf_vorz(a_z), zf_vorz(a_x)],
@@ -62,58 +41,59 @@ def punkte_und_vektoren(nr, teilaufg):
         vektor_ac = random.choice(vektoren_auswahl)
         while vektor_ac == vektor_ab:
             vektor_ac = random.choice(vektoren_auswahl)
-        laenge_vektor_ac = r' \sqrt{' + str(sum(a*a for a in vektor_ac)) + '}' + '~=~' + str(sqrt(N(sum(a*a for a in vektor_ac),3)))
+        laenge_vektor_ac = r' \sqrt{' + gzahl(sum(a*a for a in vektor_ac)) + '}' + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_ac),3)))
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
         ortsvektor_d = np.array(ortsvektor_a) - np.array(vektor_ab)
-        loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + str(vektor_ac[0]) + r' \\' + str(vektor_ac[1]) + r' \\' + str(vektor_ac[2])
-                     + r' \\' + r' \end{pmatrix} \to \mathrm{d(A,C)~=~} \sqrt{(' + str(vektor_ac[0]) + ')^2 ~+~('
-                     + str(vektor_ac[1]) + ')^2 ~+~(' + str(vektor_ac[2]) + ')^2 } ~=~' + laenge_vektor_ac
+        loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2])
+                     + r' \\' + r' \end{pmatrix} \to \mathrm{d(A,C)~=~} \sqrt{(' + gzahl(vektor_ac[0]) + ')^2 ~+~('
+                     + gzahl(vektor_ac[1]) + ')^2 ~+~(' + gzahl(vektor_ac[2]) + ')^2 } ~=~' + laenge_vektor_ac
                      + r' \quad (3P) \\')
         loesung_2 =  (r') \quad \overrightarrow{OD} = \overrightarrow{OC} ~+~ \overrightarrow{BA} ~=~'
-                     r' \begin{pmatrix} ' + str(ortsvektor_a[0]) + r' \\'
-                                          + str(ortsvektor_a[1]) + r' \\'
-                                          + str(ortsvektor_a[2]) + r' \\'
-                     r' \end{pmatrix} ~+~ \begin{pmatrix} ' + str(-1*vektor_ab[0]) + r' \\'
-                                                            + str(-1*vektor_ab[1]) + r' \\'
-                                                            + str(-1*vektor_ab[2]) + r' \\'
-                     r' \end{pmatrix} ~=~ \begin{pmatrix} ' + str(ortsvektor_d[0]) + r' \\'
-                                                            + str(ortsvektor_d[1]) + r' \\'
-                                                            + str(ortsvektor_d[2]) + r' \\'
+                     r' \begin{pmatrix} ' + gzahl(ortsvektor_a[0]) + r' \\'
+                                          + gzahl(ortsvektor_a[1]) + r' \\'
+                                          + gzahl(ortsvektor_a[2]) + r' \\'
+                     r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(-1*vektor_ab[0]) + r' \\'
+                                                            + gzahl(-1*vektor_ab[1]) + r' \\'
+                                                            + gzahl(-1*vektor_ab[2]) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
+                                                            + gzahl(ortsvektor_d[1]) + r' \\'
+                                                            + gzahl(ortsvektor_d[2]) + r' \\'
                      r'\end{pmatrix}  \quad (3P) \\' + r' \\')
     else:
         vektor_bc = random.choice(vektoren_auswahl)
         while vektor_bc == vektor_ab:
             vektor_bc = random.choice(vektoren_auswahl)
-        laenge_vektor_bc = r' \sqrt{' + str(sum(a*a for a in vektor_bc)) + '}' + '~=~' + str(sqrt(N(sum(a*a for a in vektor_bc),3)))
+        laenge_vektor_bc = r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_bc),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
         vektor_ac = np.array(vektor_ab) + np.array(vektor_bc)
         ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_bc)
-        loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + str(vektor_bc[0]) + r' \\' + str(vektor_bc[1]) + r' \\' + str(vektor_bc[2])
-                     + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{(' + str(vektor_bc[0]) + ')^2 ~+~('
-                     + str(vektor_bc[1]) + ')^2 ~+~(' + str(vektor_bc[2]) + ')^2 } ~=~' + laenge_vektor_bc
+        loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + gzahl(vektor_bc[0]) + r' \\' + gzahl(vektor_bc[1]) + r' \\' + gzahl(vektor_bc[2])
+                     + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{(' + gzahl(vektor_bc[0]) + ')^2 ~+~('
+                     + gzahl(vektor_bc[1]) + ')^2 ~+~(' + gzahl(vektor_bc[2]) + ')^2 } ~=~' + laenge_vektor_bc
                      + r' \quad (3P) \\')
         loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OA} ~+~ \overrightarrow{BC} ~=~ '
-                    r' \begin{pmatrix} ' + str(ortsvektor_a[0]) + r' \\'
-                                         + str(ortsvektor_a[1]) + r' \\'
-                                         + str(ortsvektor_a[2]) + r' \\'
-                    r' \end{pmatrix} ~+~ \begin{pmatrix} ' + str(vektor_bc[0]) + r' \\'
-                                                           + str(vektor_bc[1]) + r' \\'
-                                                           + str(vektor_bc[2]) + r' \\'
-                    r' \end{pmatrix} ~=~ \begin{pmatrix} ' + str(ortsvektor_d[0]) + r' \\'
-                                                           + str(ortsvektor_d[1]) + r' \\'
-                                                           + str(ortsvektor_d[2]) + r' \\'
+                    r' \begin{pmatrix} ' + gzahl(ortsvektor_a[0]) + r' \\'
+                                         + gzahl(ortsvektor_a[1]) + r' \\'
+                                         + gzahl(ortsvektor_a[2]) + r' \\'
+                    r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_bc[0]) + r' \\'
+                                                           + gzahl(vektor_bc[1]) + r' \\'
+                                                           + gzahl(vektor_bc[2]) + r' \\'
+                    r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
+                                                           + gzahl(ortsvektor_d[1]) + r' \\'
+                                                           + gzahl(ortsvektor_d[2]) + r' \\'
                     r'\end{pmatrix}  \quad (3P) \\' + r' \\')
 
-    print('a=' + str(ortsvektor_a)), print('b=' + str(ortsvektor_b)), print('c=' + str(ortsvektor_c)), print('d=' + str(ortsvektor_d))
+    print('a=' + gzahl(ortsvektor_a)), print('b=' + gzahl(ortsvektor_b)), print('c=' + gzahl(ortsvektor_c)), print('d=' + gzahl(ortsvektor_d))
     print(vektor_ab), print(vektor_ac)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-               'A( ' + str(ortsvektor_a[0])  + ' | ' + str(ortsvektor_a[1]) + ' | ' + str(ortsvektor_a[2]) + ' ), ' 
-               'B( ' + str(ortsvektor_b[0])  + ' | ' + str(ortsvektor_b[1]) + ' | ' + str(ortsvektor_b[2]) + ' ) und ' 
-               'C( ' + str(ortsvektor_c[0])  + ' | ' + str(ortsvektor_c[1]) + ' | ' + str(ortsvektor_c[2]) + ' ). \n\n']
+               'A( ' + gzahl(ortsvektor_a[0])  + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), ' 
+               'B( ' + gzahl(ortsvektor_b[0])  + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und ' 
+               'C( ' + gzahl(ortsvektor_c[0])  + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
     if a in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie das Dreieck ABC im Koordinatensystem ein. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(2P),~Seiten~vom~Dreieck~(2P)}')
         i +=1
@@ -122,11 +102,11 @@ def punkte_und_vektoren(nr, teilaufg):
     if b in teilaufg:
         aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck gleichschenklig ist. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
-                                                + str(vektor_ab[0]) + r' \\'
-                                                + str(vektor_ab[1]) + r' \\'
-                                                + str(vektor_ab[2]) + r' \\'
-                                                r' \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + str(vektor_ab[0]) +
-                                                ')^2 ~+~(' + str(vektor_ab[1]) + ')^2 ~+~(' + str(vektor_ab[2]) + ')^2 } ~=~'
+                                                + gzahl(vektor_ab[0]) + r' \\'
+                                                + gzahl(vektor_ab[1]) + r' \\'
+                                                + gzahl(vektor_ab[2]) + r' \\'
+                                                r' \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + gzahl(vektor_ab[0]) +
+                                                ')^2 ~+~(' + gzahl(vektor_ab[1]) + ')^2 ~+~(' + gzahl(vektor_ab[2]) + ')^2 } ~=~'
                                                 + laenge_vektor_ab + r' \quad (3P) \\'
                                                 + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
                                                 r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\')
@@ -137,14 +117,14 @@ def punkte_und_vektoren(nr, teilaufg):
         aufgabe.append(str(teilaufg[i]) + f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
                                                 f' ein Parallelogramm bilden. \n\n')
         loesung.append(str(teilaufg[i]) + loesung_2 +
-                                               r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D(' + str(ortsvektor_d[0])  + ' | '
-                                                                                             + str(ortsvektor_d[1]) + ' | '
-                                                                                             + str(ortsvektor_d[2])
+                                               r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D(' + gzahl(ortsvektor_d[0])  + ' | '
+                                                                                             + gzahl(ortsvektor_d[1]) + ' | '
+                                                                                             + gzahl(ortsvektor_d[2])
                                                                                              + r') \quad (1P) \\')
         i += 1
         Punkte += 4
 
-    return [aufgabe, loesung, Punkte]
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def vektorrechnung(nr, teilaufg):
     i = 0
@@ -394,81 +374,3 @@ def vektorrechnung(nr, teilaufg):
         i += 1
         Punkte += 4
     return [aufgabe, loesung, Punkte]
-
-aufgaben = [punkte_und_vektoren(1, [a, b, c]), vektorrechnung(2, [a,b,c,d,e,f])]
-Punkte = str(sum(aufgabe[2] for aufgabe in aufgaben))
-
-# Angaben für den Test im pdf-Dokument
-
-Datum = NoEscape(r' \today')
-Kurs = 'Grundkurs'
-Fach = 'Mathematik'
-Klasse = '13'
-Lehrer = 'Herr Herrys'
-Art = 'Test - Einstieg Vektorrechnung'
-Teil = 'Probe 02'
-# der Teil in dem die PDF-Datei erzeugt wird
-def Hausaufgabenkontrolle():
-    geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
-    Aufgabe = Document(geometry_options=geometry_options)
-    # erste Seite
-    table1 = Tabular('c|c|c|c|c|c|', row_height=1.2)
-    table1.add_hline(2, 6)
-    table1.add_row(MediumText(bold('Torhorst - Gesamtschule')), 'Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:')
-    table1.add_row(SmallText('mit gymnasialer Oberstufe'), Klasse, Fach, Kurs, Lehrer, Datum)
-    table1.add_hline(2, 6)
-    Aufgabe.append(table1)
-    Aufgabe.append(' \n\n')
-
-    Aufgabe.append(LargeText(bold(f'\n {Art} \n\n')))
-    for aufgabe in aufgaben:
-        for elements in aufgabe[0]:
-            if '~' in elements:
-                with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
-                    agn.append(elements)
-            else:
-                Aufgabe.append(elements)
-
-    Aufgabe.append('\n\n')
-    Aufgabe.append(MediumText(bold(f'Du hast .......... von {Punkte} möglichen Punkten erhalten. \n\n')))
-
-    Aufgabe.append(NewPage())
-
-    Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
-    Aufgabe.append(' \n\n')
-
-    aufgabe = aufgaben[0]
-    elemente = aufgabe[0]
-    punkte = elemente[1]
-    Aufgabe.append(punkte)
-
-    with Aufgabe.create(Figure(position='h!')) as koordinasystem:
-        koordinasystem.add_image('3dim_Koordinatensystem.png', width='400px')
-
-    Aufgabe.generate_pdf(f'{Art} {Teil}', clean_tex=true)
-
-# Erwartungshorizont
-def Erwartungshorizont():
-    geometry_options = {"tmargin": "0.4in", "lmargin": "1in", "bmargin": "1in", "rmargin": "1in"}
-    Loesung = Document(geometry_options=geometry_options)
-    Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n')))
-
-    for loesung in aufgaben:
-        for elements in loesung[1]:
-            if '~' in elements:
-                with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
-                    agn.append(elements)
-            else:
-                Loesung.append(elements)
-
-    Loesung.append('\n\n')
-    Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
-    Loesung.append(NewPage())
-
-    with Loesung.create(Figure(position='h!')) as koordinasystem:
-        koordinasystem.add_image('3dim_Koordinatensystem.png',width='400px')
-
-    Loesung.generate_pdf(f'{Art} {Teil} - Lsg', clean_tex=true)
-# Druck der Seiten
-Hausaufgabenkontrolle()
-Erwartungshorizont()

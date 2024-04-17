@@ -132,7 +132,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
     def Erwartungshorizont():
         Loesung = Document(geometry_options=geometry_options)
         Loesung.packages.append(Package('amsfonts'))
-        Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n\n {Titel} \n\n')))
+        Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} - {Titel}')))
 
         # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
         k = 0
