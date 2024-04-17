@@ -2,7 +2,7 @@ from Aufgaben.Aufgaben_Analysis import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
-Kurs = 'Kurs'
+Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
 Lehrer = 'Herr Herrys'

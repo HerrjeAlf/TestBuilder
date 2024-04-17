@@ -521,10 +521,9 @@ def unbestimmtes_integral(nr, teilaufg):
         # Integral e-Funktion
         def e_funktion():
             a1 = zzahl(2,9)
-            e1 = zzahl(2,9)
             k1 = zzahl(1,19)/2
-            fkt = gzahl(a1) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '}'
-            Fkt = gzahl(Rational(a1,e1)) + r' \cdot e^{' + vorz_v_aussen(e1,'x') + vorz_str(k1) + '} + C'
+            fkt = gzahl(a1) + r' \cdot e^x' + vorz_str(k1)
+            Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1,'x')
             pkt = 2
             return fkt, Fkt, pkt
 
@@ -573,6 +572,7 @@ def unbestimmtes_integral(nr, teilaufg):
 
         # Integral e-Funktion
 
+        # kettenregel potenzfunktion
         # kettenregel potenzfunktion
         def kettenregel():
             a1 = zzahl(3,20)/2
