@@ -534,8 +534,8 @@ def unbestimmtes_integral(nr, teilaufg):
             a2 = zzahl(2,9)
             fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
                    + vorz(a2) + r'\frac{' + str(abs(a2)) + '}{x}')
-            Fkt = (gzahl(Rational(a1,-1*e1+1)) + 'x^{' + gzahl(-1*e1+1) + '}'
-                   + vorz_str(a2) + r' \cdot \ln(x) + C')
+            Fkt = (r' \int ' + gzahl(a1) + r' x^{' + gzahl(-1*e1) + '}' + vorz_str(a2) + r'x^{-1} \,dx ~=~'
+                   + gzahl(Rational(a1,-1*e1+1)) + 'x^{' + gzahl(-1*e1+1) + '}' + vorz_str(a2) + r' \cdot \ln(x) + C')
             pkt = 3
             return fkt, Fkt, pkt
 
@@ -599,7 +599,8 @@ def unbestimmtes_integral(nr, teilaufg):
             a1 = nzahl(2,6)
             e1 = a1 + nzahl(2,4)
             fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
-            Fkt = gzahl(Rational(a1,a1+e1)) + 'x^{' + gzahl(Rational(a1+e1,a1)) + '} + C'
+            Fkt = (r' \int x^{' + gzahl(Rational(e1,a1)) + r'} \,dx ~=~ ' + gzahl(Rational(a1,a1+e1))
+                   + 'x^{' + gzahl(Rational(a1+e1,a1)) + '} + C')
             punkte = 3
             return fkt, Fkt, punkte
 

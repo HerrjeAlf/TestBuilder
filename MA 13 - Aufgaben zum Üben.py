@@ -1,8 +1,6 @@
 from Aufgaben.Aufgaben_Analysis import *
 from skripte.erstellen import *
 
-
-
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Grundkurs'
 Fach = 'Mathematik'
