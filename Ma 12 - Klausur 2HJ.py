@@ -1,5 +1,5 @@
-from Aufgaben_Analysis import *
-from erstellen_klausur import *
+from Aufgaben.Aufgaben_Analysis import *
+from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
@@ -16,7 +16,7 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_hmft = ['Punkte']
 liste_bez_hmft = ['Aufgabe']
 
-aufgaben_hmft_seite2 = [kurvendiskussion_polynome(1,['a', 'b', 'c', 'd', 'e', 'f'])]
+aufgaben_hmft_seite2 = [rechenregeln_integrale(1,['a', 'b', 'c', 'd', 'e', 'f'])]
 # z.B. aufgaben_seite1 = [ereignisse_ergebnisse(1, ['a', 'b', 'c'])]
 for element in aufgaben_hmft_seite2:
     liste_bez_hmft.extend(element[5])
