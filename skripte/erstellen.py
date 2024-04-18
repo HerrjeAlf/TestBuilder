@@ -267,7 +267,7 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
         Aufgabe.append(' \n\n')
         Aufgabe.append(table3)
 
-        Aufgabe.generate_pdf(f'Ma {Klasse} - Klausur im {Semester}. Semester - Teil I', clean_tex=true)
+        Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil I', clean_tex=true)
 
     # Erwartungshorizont
     @timer
@@ -284,7 +284,7 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.generate_pdf(f'Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil I', clean_tex=true)
+        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil I', clean_tex=true)
 
     # Druck der Seiten
     Teil_1()
@@ -348,7 +348,7 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
         Aufgabe.append(' \n\n')
         Aufgabe.append(table3)
 
-        Aufgabe.generate_pdf(f'Ma {Klasse} - Klausur im {Semester}. Semester Teil II', clean_tex=true)
+        Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester Teil II', clean_tex=true)
 
     # Erwartungshorizont
     @timer
@@ -365,7 +365,7 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.generate_pdf(f'Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil II', clean_tex=true)
+        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil II', clean_tex=true)
 
     # Druck der Seiten
     Teil_2()

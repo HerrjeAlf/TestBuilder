@@ -17,7 +17,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     aufgaben_seite1 = [punkte_und_vektoren(1, ['a', 'b', 'c']),
-                       rechnen_mit_vektoren(2,['a', 'b', 'c'], linearkombination=True)]
+                       rechnen_mit_vektoren(2,['a', 'b', 'c', 'd', 'e', 'f'], linearkombination=True, kollinear=False)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
