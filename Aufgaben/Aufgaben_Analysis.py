@@ -300,12 +300,13 @@ def Ableitungen(nr, teilaufg):
     liste_bez = []
     i = 0
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               r'Berechne die Ableitung der folgenden Funktionen mithilfe der elementaren Ableitungsregeln.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'b' in teilaufg:
+    if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
@@ -324,76 +325,51 @@ def Ableitungen(nr, teilaufg):
         fkt_i, fkt_abl_1_i, fkt_abl_2_i = funktion(2)
         fkt_ii, fkt_abl_1_ii, fkt_abl_2_ii = funktion(3)
 
-        aufgabe.extend(r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
-                        + r'elementaren Ableitungsregeln.', str(teilaufg[i]) + r'i) \quad f_1 (x)~=~' + latex(fkt_i)
-                        + r' \hspace{10em} ' + str(teilaufg[i+1] + r'ii) \quad f_2 (x)~=~' + latex(fkt_ii)
-                                               + r' \hspace{5em} \\'))
+        aufgabe.append(str(teilaufg[i]) + r'i) \quad f_1 (x)~=~' + latex(fkt_i)
+                        + r' \hspace{10em} ' + str(teilaufg[i+1]) + r'ii) \quad f_2 (x)~=~' + latex(fkt_ii)
+                        + r' \hspace{5em} \\')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
                        + r'mithilfe~der~elementaren~Ableitungsregeln.} \\' + r'i) \quad f_1(x)~=~' + latex(fkt_i)
                        + r' \quad \to \quad f_1^{ \prime} (x) ~=~ ' + latex(fkt_abl_1_i) + r' \quad (2P) \\ '
                        + r' ii) \quad f_2(x)~=~' + latex(fkt_ii) + r' \quad \to \quad f_2^{ \prime} (x) ~=~ '
                        + latex(fkt_abl_1_ii) + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         liste_punkte.append(punkte)
-        i += 1
+        i += 2
 
-    if 'c' in teilaufg:
+    if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
 
         def polynom():
             faktor_i_a = zzahl(3, 15)
             exponent = nzahl(2, 6)
-            fkt = faktor_i_a / (x ** exponent)
-            fkt_str = r' \frac{' + str(faktor_i_a) + '}{x^{' + str(exponent) + '}}'
-            fkt_str_1 = str(faktor_i_a) + r'\cdot x^{' + str(-1 * exponent) + '}'
-            fkt_str_abl = str(-1 * faktor_i_a * exponent) + r' \cdot x^{' + str(-1 * exponent - 1) + '}'
-            return fkt, fkt_str, fkt_str_1, fkt_str_abl
+            fkt_str = r' \frac{' + gzahl(faktor_i_a) + '}{x^{' + gzahl(exponent) + '}}'
+            fkt_str_uf = gzahl(faktor_i_a) + r'\cdot x^{' + gzahl(-1 * exponent) + '}'
+            fkt_str_abl = gzahl(-1 * faktor_i_a * exponent) + r' \cdot x^{' + gzahl(-1 * exponent - 1) + '}'
+            return fkt_str, fkt_str_uf, fkt_str_abl
         def wurzel():
             faktor_ii_a = zzahl(2, 15)
             exp_ii_a, exp_ii_b = exponenten(2)
-            fkt = faktor_ii_a * x ** (exp_ii_a / exp_ii_b)
-            fkt_str = str(faktor_ii_a) + r' \sqrt[' + str(exp_ii_a) + ']{x^{' + str(exp_ii_b) + '}}'
-            fkt_str_1 = str(faktor_ii_a) + r' \cdot x^{ \frac{' + str(exp_ii_b) + '}{' + str(exp_ii_a) + '}}'
+            fkt_str = gzahl(faktor_ii_a) + r' \sqrt[' + gzahl(exp_ii_a) + ']{x^{' + gzahl(exp_ii_b) + '}}'
+            fkt_str_uf = gzahl(faktor_ii_a) + r' \cdot x^{ \frac{' + gzahl(exp_ii_b) + '}{' + gzahl(exp_ii_a) + '}}'
             fkt_str_abl = (gzahl(Rational(faktor_ii_a * exp_ii_b, exp_ii_a)) + r' \cdot x^{'
                               + gzahl(Rational(exp_ii_b, exp_ii_a) - 1) + '}')
-            return fkt, fkt_str, fkt_str_1, fkt_str_abl
+            return fkt_str, fkt_str_uf, fkt_str_abl
 
-        # Teilaufgabe iii
-        faktor_iii_a, faktor_iii_b, faktor_iii_c = faktorliste(2, 12, 3)
-        exp_iii_a, exp_iii_b, exp_iii_c = exponenten(3)
+        def poly_wurzel():
+            a1, a2, a3 = faktorliste(2, 12, 3)
+            e1, e2, e3 = exponenten(3)
+            fkt_str = (vorz_aussen(a1/a2) + r' \frac{' + gzahl(abs(a1)) + '}{' + gzahl(abs(a2)) + r'x^{'
+                       + gzahl(e1) + '}}' + vorz(a3) + r' \frac{' + gzahl(abs(a3)) + r'}{ \sqrt[' + gzahl(e2) + r']{'
+                       + gzahl(e3) + '}}')
+            fkt_str_uf = (vorz_v_aussen(Rational(a1, a2), 'x^{' + gzahl(-1 * e1) + '}')
+                          + vorz_v_innen(a3,'x^{' + gzahl(Rational(-1*e3,e2)) + '}'))
+            fkt_str_abl = (vorz_v_aussen(Rational(-1*a1*e1,a2)) + )
 
-        fkt_iii_str = (vorz_aussen(faktor_iii_a/faktor_iii_b) + r' \frac{' + str(abs(faktor_iii_a))
-                       + '}{' + str(abs(faktor_iii_b)) + r'x^{' + str(exp_iii_a) + '}}')
-        fkt_iii_str_einf = (vorz_aussen(faktor_iii_a/faktor_iii_b)
-                            + gzahl(Rational(abs(faktor_iii_a), abs(faktor_iii_b))) + r' \cdot x^{'
-                            + str(-1 * exp_iii_a) + '}')
-        fkt_iii_str_abl = (vorz_aussen(Rational(-1 * faktor_iii_a * exp_iii_a, faktor_iii_b))
-                           + gzahl(Rational(abs(faktor_iii_a * exp_iii_a), abs(faktor_iii_b)))
-                           + r' \cdot x^{' + str(-1 * exp_iii_a - 1) + '}')
-        if faktor_iii_c < 0:
-            fkt_iii_str = (fkt_iii_str + r'~-~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
-                           str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
-            exp_iii_c *= -1
-            fkt_iii_str_einf = (fkt_iii_str_einf + '~-~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
-                                + gzahl(Rational(exp_iii_c, exp_iii_b)) + '}')
-            fkt_iii_str_abl = (fkt_iii_str_abl + '~+~'
-                               + gzahl(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
-                               + r' \cdot x^{' + gzahl(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
-        else:
-            fkt_iii_str = (fkt_iii_str + r'~+~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
-                           str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
-            exp_iii_c *= -1
-            fkt_iii_str_einf = (fkt_iii_str_einf + '~+~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
-                                + gzahl(Rational(exp_iii_c, exp_iii_b)) + '}')
-            fkt_iii_str_abl = (fkt_iii_str_abl + '~-~'
-                               + gzahl(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
-                               + r' \cdot x^{' + gzahl(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
-        # print(faktor_iii_a), print(faktor_iii_b), print(faktor_iii_c), print(r'2c) fkt_iii_str = ' + str(fkt_iii_str))
-        # print(r'2c) fkt_iii_einf = ' + str(fkt_iii_str_einf)), print(r'2c) fkt_iii_abl = ' + str(fkt_iii_str_abl))
-        aufgabe.extend((str(teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
+        aufgabe.append(str(teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
                        r'elementaren Ableitungsregeln.', r'i) \quad f_1 (x)~=~' + fkt_i_str
                         + r' \hspace{5em} ' + r'ii) \quad f_2 (x)~=~' + fkt_ii_str
-                        + r' \hspace{5em} iii) \quad f_3(x)~=~' + fkt_iii_str + r' \\'))
+                        + r' \hspace{5em} iii) \quad f_3(x)~=~' + fkt_iii_str + r' \\')
         loesung .append(str(teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
                         + r'mithilfe~der~elementaren~Ableitungsregeln.}\\' + r'i) \quad f_1(x) ~=~' + fkt_i_str
                         + '~=~' + fkt_i_str_einf + r' \quad f_1^{ \prime} (x) ~=~\mathbf{' + fkt_i_str_abl
@@ -411,8 +387,6 @@ def Ableitungen(nr, teilaufg):
 
         liste_punkte.append(punkte)
         i += 2
-        liste_punkte.append(punkte)
-        i += 1
 
     if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
