@@ -217,6 +217,19 @@ def exponenten(n):
         menge.add(nzahl(2, 6 + n))
     return menge
 
+def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
+    fkt = random.choice([zzahl(1, 10), 0])
+    koeffizienten = faktorliste(1, 15, p)
+    potenzen = exponenten(p)
+
+    for koeffizient in koeffizienten:
+        fkt = koeffizient * (x ** potenzen.pop()) + fkt
+        fkt = collect(fkt, x)
+    fkt_abl_1 = collect(expand(diff(fkt, x)), x)
+    fkt_abl_2 = collect(expand(diff(fkt, x, 2)), x)
+
+    return fkt, fkt_abl_1, fkt_abl_2
+
 # noch zu programmieren
 def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
     anz_ges = anz_1 + anz_2
