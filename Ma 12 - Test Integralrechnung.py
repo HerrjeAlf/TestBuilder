@@ -18,6 +18,7 @@ liste_bez = ['Aufgabe']
 for i in range(anzahl):
     aufgaben_seite1 = [rechenregeln_integrale(1, ['a']),
                        unbestimmtes_integral(2,['a', 'b', 'c', 'd', 'e', 'f'])]
+
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

@@ -1,5 +1,3 @@
-from pylatex import (MediumText)
-from pylatex.utils import bold
 import string
 import numpy as np
 import random, math
@@ -17,7 +15,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 
 # Aufgaben zur Differenzialrechnung
-def aenderungsrate(nr, teilaufg):
+def aenderungsrate(nr, teilaufg, ableitung=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -51,9 +49,9 @@ def aenderungsrate(nr, teilaufg):
     fkt_abl = diff(fkt, x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
-    print("f(x)=" + str(fkt))
-    print("f'(x)=" + str(fkt_abl))
-    print("f'(x_0)=" + str(fkt_abl_x0))
+    # print("f(x)=" + str(fkt))
+    # print("f'(x)=" + str(fkt_abl))
+    # print("f'(x_0)=" + str(fkt_abl_x0))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
                r'f(x)~=~' + fkt_str]
@@ -108,7 +106,7 @@ def aenderungsrate(nr, teilaufg):
             + ') - f(' + gzahl(x_wert_1) + ')}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~ \frac{'
             + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + gzahl(x_wert_2)
             + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
-            + latex(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
+            + gzahl(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
             + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
         liste_punkte.append(4)
         i += 1
@@ -169,44 +167,411 @@ def aenderungsrate(nr, teilaufg):
         c_1_re = faktor * (s_xwert ** 2) + s_ywert - (faktor * (x_wert_2 - s_xwert) ** 2 + s_ywert)
         c_2_re = b_3_re * x_wert_2
 
-        a_1 = latex(N(faktor, 3))
-        a_3 = latex(N(a_3_re, 3))
-        b_1 = latex(N(b_1_re, 3))
-        b_2 = latex(N(b_2_re, 3))
-        b_3 = latex(N(b_3_re, 3))
-        c_1 = latex(N(c_1_re, 3))
-        c_2 = latex(N(c_2_re, 3))
+        a_1 = gzahl(N(faktor, 3))
+        a_3 = gzahl(N(a_3_re, 3))
+        b_1 = gzahl(N(b_1_re, 3))
+        b_2 = gzahl(N(b_2_re, 3))
+        b_3 = gzahl(N(b_3_re, 3))
+        c_1 = gzahl(N(c_1_re, 3))
+        c_2 = gzahl(N(c_2_re, 3))
 
-        table = Tabular('c|c|c', row_height=1.2)
-        table.add_row(a_1, b_1, c_1)
-        table.add_hline(1, 3)
-        table.add_row('', b_2, c_2)
-        table.add_hline(1, 3)
-        table.add_row(a_3, b_3, 0)
+        table = Tabular('c c|c|c', row_height=1.2)
+        table.add_row('', a_1, b_1, c_1)
+        table.add_hline( 2, 4)
+        table.add_row('alternative Berechnung des Partialbruches mit Hornerschema: ','', b_2, c_2)
+        table.add_hline(2, 4)
+        table.add_row('', a_3, b_3, 0)
 
         division_fkt_linear = (fkt - fkt.subs(x, x_wert_2)) / (x - x_wert_2)
-        partialbruch = latex(faktor) + 'x' + vorz_str(b_3_re)
+        partialbruch = gzahl(faktor) + 'x' + vorz_str(b_3_re)
 
-        print(division_fkt_linear)
-        print(partialbruch)
+        # print(division_fkt_linear)
+        # print(partialbruch)
 
-        # loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + gzahl(x_wert_2)
-        #               + r'} ~ \frac{f(x)-f(' + gzahl(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
-        #               + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
-        #               + latex(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_gzahl(-1 * x_wert_2)
-        #               + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + '~=~'
-        #               + latex(N(fkt_abl_x0, 3)) + r' \quad (3P) \\'
-        #               + r'\to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P) \\\\')
-        # loesung.append(r' \mathrm{Lösung~mit~Hornerschema~(2P):}  \hspace{3em} ')
-        # loesung.append(table)
-        # loesung.append(r' \hspace{5em}')
-
-        loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
-                       + gzahl(x_wert_2) + r')~=~\mathbf{' + latex(fkt_abl.subs(x, x_wert_2)) +
-                       r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
-                       r'\quad (1P)')
-        liste_punkte.append(3)
+        if ableitung == None:
+            loesung.append(str(teilaufg[i]) + r') \quad \lim \limits_{x \to ' + gzahl(x_wert_2)
+                           + r'} ~ \frac{f(x)-f(' + gzahl(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
+                           + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
+                           + gzahl(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
+                           + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + '~=~'
+                           + gzahl(N(fkt_abl_x0, 3)) + r' \quad (3P) \\'
+                           + r' \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P)')
+            loesung.append(table)
+            loesung.append(' \n\n')
+            liste_punkte.append(4)
+        else:
+            loesung.append(str(teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl) + r' \to f^{ \prime} ('
+                           + gzahl(x_wert_2) + r')~=~\mathbf{' + gzahl(fkt_abl.subs(x, x_wert_2)) +
+                           r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} '
+                           r'\quad (1P) \\')
+            liste_punkte.append(3)
         i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def differentialqoutient_ableitungen(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 8
+        a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
+        b1, b2, b3 = faktorliste(2, 12, 3)
+        fkt_str_a = str(a1) + 'x' + vorz_str(a2)
+        fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
+
+        aufgabe.append(str(teilaufg[i])
+                       + r') Berechne die Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.')
+        aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
+                       + fkt_str_b + r' \hspace{5em} \\')
+        loesung.append(str(teilaufg[i])
+                       + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~des~'
+                         r'Differentialquotienten}.')
+        loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
+                       + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
+                       + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
+                       + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
+                       + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
+                       + r'h~}{h} ~=~\mathbf{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
+        loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
+                       + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
+                       + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
+                       + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
+                       + r'x^2 ~' + vorz_str(2 * b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x~'
+                       + vorz_str(b2) + 'h~' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~'
+                       + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) + r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
+                       + str(2 * b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
+                       + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2 * b1) + r'x~' + vorz_str(b1)
+                       + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2 * b1) + r'x~'
+                       + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~ \mathbf{' + str(2 * b1) + 'x~' + vorz_str(b2)
+                       + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        liste_punkte.append(punkte)
+        i += 1
+    #
+    # if 'b' in teilaufg:
+    #     x_wert_1 = zzahl(1, 4)
+    #     y_wert_1 = zzahl(1, 4)
+    #
+    #     if x_wert_1 > 0:
+    #         x_wert_2 = x_wert_1 - nzahl(2, 5)
+    #     else:
+    #         x_wert_2 = x_wert_1 + nzahl(2, 5)
+    #
+    #     if y_wert_1 > 0:
+    #         y_wert_2 = y_wert_1 - nzahl(2, 5)
+    #     else:
+    #         y_wert_2 = y_wert_1 + nzahl(2, 5)
+    #
+    #     A = numpy.array([[x_wert_1 ** 3, x_wert_1 ** 2, x_wert_1, 1],
+    #                      [x_wert_2 ** 3, x_wert_2 ** 2, x_wert_2, 1],
+    #                      [3 * x_wert_1 ** 2, 2 * x_wert_1, 1, 0],
+    #                      [3 * x_wert_2 ** 2, 2 * x_wert_2, 1, 0]])
+    #     lv = numpy.array([y_wert_1, y_wert_2, 0, 0])
+    #
+    #     loesung_vektor = slv(A, lv)
+    #     # print('2d) lösungsvektor:' + str(loesung_vektor))
+    #     fkt = N(loesung_vektor[0], 2) * x ** 3 + N(loesung_vektor[1], 2) * x ** 2 + N(loesung_vektor[2],2) * x + N(loesung_vektor[3], 2)
+    #     fkt_abl = diff(fkt, x, 1)
+    #     xwerte_d = [-6 + n / 5 for n in range(60)]
+    #     ywerte_d = [fkt.subs(x, xwerte_d[i]) for i in range(60)]
+    #     ywerte_abl_d = [fkt_abl.subs(x, xwerte_d[i]) for i in range(60)]
+    #     loeschen()
+    #     Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Funktionsgraph', 'f', 'Aufgabe_2')
+    #     Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - '
+    #                                                        'Graph und seine Ableitung', 'f',
+    #                     'loesung_Aufgabe_2', xwerte_d, ywerte_abl_d)
+    #     aufgabe.append(str(teilaufg[i]) + r') Skizziere im Koordinatensystem den Graphen der Ableitungsfunktion.')
+    #     loesung.append(str(teilaufg[i]) + r') \quad \mathrm{~Graph~der~Ableitungsfunktion~(2P)} ')
+    #     liste_punkte.append(punkte)
+    #     i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+def Ableitungen(nr, teilaufg):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 5
+        def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
+            fkt = random.choice([zzahl(1, 10), 0])
+            koeffizienten = faktorliste(1, 15, p)
+            potenzen = exponenten(p)
+
+            for koeffizient in koeffizienten:
+                fkt = koeffizient * (x ** potenzen.pop()) + fkt
+                fkt = collect(fkt,x)
+            fkt_abl_1 = collect(expand(diff(fkt, x)),x)
+            fkt_abl_2 = collect(expand(diff(fkt, x, 2)),x)
+
+            return fkt, fkt_abl_1, fkt_abl_2
+
+        fkt_i, fkt_abl_1_i, fkt_abl_2_i = funktion(2)
+        fkt_ii, fkt_abl_1_ii, fkt_abl_2_ii = funktion(3)
+
+        aufgabe.extend(r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
+                        + r'elementaren Ableitungsregeln.', str(teilaufg[i]) + r'i) \quad f_1 (x)~=~' + latex(fkt_i)
+                        + r' \hspace{10em} ' + str(teilaufg[i+1] + r'ii) \quad f_2 (x)~=~' + latex(fkt_ii)
+                                               + r' \hspace{5em} \\'))
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
+                       + r'mithilfe~der~elementaren~Ableitungsregeln.} \\' + r'i) \quad f_1(x)~=~' + latex(fkt_i)
+                       + r' \quad \to \quad f_1^{ \prime} (x) ~=~ ' + latex(fkt_abl_1_i) + r' \quad (2P) \\ '
+                       + r' ii) \quad f_2(x)~=~' + latex(fkt_ii) + r' \quad \to \quad f_2^{ \prime} (x) ~=~ '
+                       + latex(fkt_abl_1_ii) + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+
+        def polynom():
+            faktor_i_a = zzahl(3, 15)
+            exponent = nzahl(2, 6)
+            fkt = faktor_i_a / (x ** exponent)
+            fkt_str = r' \frac{' + str(faktor_i_a) + '}{x^{' + str(exponent) + '}}'
+            fkt_str_1 = str(faktor_i_a) + r'\cdot x^{' + str(-1 * exponent) + '}'
+            fkt_str_abl = str(-1 * faktor_i_a * exponent) + r' \cdot x^{' + str(-1 * exponent - 1) + '}'
+            return fkt, fkt_str, fkt_str_1, fkt_str_abl
+        def wurzel():
+            faktor_ii_a = zzahl(2, 15)
+            exp_ii_a, exp_ii_b = exponenten(2)
+            fkt = faktor_ii_a * x ** (exp_ii_a / exp_ii_b)
+            fkt_str = str(faktor_ii_a) + r' \sqrt[' + str(exp_ii_a) + ']{x^{' + str(exp_ii_b) + '}}'
+            fkt_str_1 = str(faktor_ii_a) + r' \cdot x^{ \frac{' + str(exp_ii_b) + '}{' + str(exp_ii_a) + '}}'
+            fkt_str_abl = (gzahl(Rational(faktor_ii_a * exp_ii_b, exp_ii_a)) + r' \cdot x^{'
+                              + gzahl(Rational(exp_ii_b, exp_ii_a) - 1) + '}')
+            return fkt, fkt_str, fkt_str_1, fkt_str_abl
+
+        # Teilaufgabe iii
+        faktor_iii_a, faktor_iii_b, faktor_iii_c = faktorliste(2, 12, 3)
+        exp_iii_a, exp_iii_b, exp_iii_c = exponenten(3)
+
+        fkt_iii_str = (vorz_aussen(faktor_iii_a/faktor_iii_b) + r' \frac{' + str(abs(faktor_iii_a))
+                       + '}{' + str(abs(faktor_iii_b)) + r'x^{' + str(exp_iii_a) + '}}')
+        fkt_iii_str_einf = (vorz_aussen(faktor_iii_a/faktor_iii_b)
+                            + gzahl(Rational(abs(faktor_iii_a), abs(faktor_iii_b))) + r' \cdot x^{'
+                            + str(-1 * exp_iii_a) + '}')
+        fkt_iii_str_abl = (vorz_aussen(Rational(-1 * faktor_iii_a * exp_iii_a, faktor_iii_b))
+                           + gzahl(Rational(abs(faktor_iii_a * exp_iii_a), abs(faktor_iii_b)))
+                           + r' \cdot x^{' + str(-1 * exp_iii_a - 1) + '}')
+        if faktor_iii_c < 0:
+            fkt_iii_str = (fkt_iii_str + r'~-~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
+                           str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
+            exp_iii_c *= -1
+            fkt_iii_str_einf = (fkt_iii_str_einf + '~-~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
+                                + gzahl(Rational(exp_iii_c, exp_iii_b)) + '}')
+            fkt_iii_str_abl = (fkt_iii_str_abl + '~+~'
+                               + gzahl(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
+                               + r' \cdot x^{' + gzahl(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
+        else:
+            fkt_iii_str = (fkt_iii_str + r'~+~ \frac{' + str(abs(faktor_iii_c)) + r'}{ \sqrt[' +
+                           str(exp_iii_b) + ']{x^{' + str(exp_iii_c) + '}}}')
+            exp_iii_c *= -1
+            fkt_iii_str_einf = (fkt_iii_str_einf + '~+~' + str(abs(faktor_iii_c)) + r' \cdot x^{'
+                                + gzahl(Rational(exp_iii_c, exp_iii_b)) + '}')
+            fkt_iii_str_abl = (fkt_iii_str_abl + '~-~'
+                               + gzahl(Rational(abs(faktor_iii_c * exp_iii_c), abs(exp_iii_b)))
+                               + r' \cdot x^{' + gzahl(Rational(exp_iii_c - exp_iii_b, exp_iii_b)) + '}')
+        # print(faktor_iii_a), print(faktor_iii_b), print(faktor_iii_c), print(r'2c) fkt_iii_str = ' + str(fkt_iii_str))
+        # print(r'2c) fkt_iii_einf = ' + str(fkt_iii_str_einf)), print(r'2c) fkt_iii_abl = ' + str(fkt_iii_str_abl))
+        aufgabe.extend((str(teilaufg[i]) + r') Berechne die Ableitung der folgenden Funktionen mithilfe der '
+                       r'elementaren Ableitungsregeln.', r'i) \quad f_1 (x)~=~' + fkt_i_str
+                        + r' \hspace{5em} ' + r'ii) \quad f_2 (x)~=~' + fkt_ii_str
+                        + r' \hspace{5em} iii) \quad f_3(x)~=~' + fkt_iii_str + r' \\'))
+        loesung .append(str(teilaufg[i]) + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~'
+                        + r'mithilfe~der~elementaren~Ableitungsregeln.}\\' + r'i) \quad f_1(x) ~=~' + fkt_i_str
+                        + '~=~' + fkt_i_str_einf + r' \quad f_1^{ \prime} (x) ~=~\mathbf{' + fkt_i_str_abl
+                        + r'} \quad (1P) \\' + r'ii) \quad f_2(x) ~=~' + fkt_ii_str + '~=~' + fkt_ii_str_einf
+                        + r' \quad f_2^{ \prime} (x) ~=~\mathbf{' + fkt_ii_str_abl + r'} \quad (1P) \\'
+                        + r'iii) \quad f_3(x) ~=~' + fkt_iii_str + '~=~' + fkt_iii_str_einf +
+                        r' \quad f_3^{ \prime} (x) ~=~\mathbf{' + fkt_iii_str_abl + r'} \quad (2P) \\'
+                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em}'
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
+
+        liste_punkte.append(punkte)
+        i += 2
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        def Aufgabe_1():
+            punkte = 2
+            faktor_exp = zzahl(2, 8)
+            aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot e^{x}'
+            aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot e^{x} \quad \to \quad '
+                           + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
+                           + r'} \cdot e^{x} ~+~x^{' + gzahl(faktor_exp) + r'} \cdot e^{x} ~=~ e^{x} \cdot \big( '
+                           + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1) + '} + x^{' + gzahl(faktor_exp)
+                           + r'} \big) \quad (2P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        def Aufgabe_2():
+            punkte = 3
+            faktor_exp = zzahl(2, 8)
+            aufgabe = 'f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot \ln(x)'
+            aufgabe_lsg = ('f(x) ~=~ x^{' + gzahl(faktor_exp) + r'} \cdot \ln(x) \quad \to \quad '
+                           + r' f^{ \prime } (x) ~=~' + gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
+                           + r'} \cdot \ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
+                           + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
+                           + r' \cdot \ln(x) ~+~ 1) \quad (3P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        def Aufgabe_3():
+            punkte = 3
+            faktor_exp = zzahl(2, 8)
+            faktor_sqrt = nzahl(2, 8)
+            while abs(faktor_exp) == faktor_sqrt:
+                faktor_sqrt = nzahl(2, 8)
+            aufgabe = r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
+            aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x} ~=~'
+                           + r' x^{' + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} \quad \to \quad '
+                           + r' f^{ \prime } (x) ~=~' + gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
+                           + gzahl(Rational(faktor_exp, faktor_sqrt) - 1) + r'} \cdot e^{x} ~+~' + 'x^{'
+                           + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} ~=~ e^{x} \cdot ('
+                           + gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
+                           + gzahl(Rational(faktor_exp, faktor_sqrt) - 1) + r'} ~+~ x^{'
+                           + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} ) \quad (3P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        auswahl = np.random.choice([Aufgabe_1, Aufgabe_2, Aufgabe_3], 2, False)
+        aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
+        aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
+        punkte = punkte_1 + punkte_2
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em} '
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
+
+        liste_punkte.append(punkte)
+        i += 2
+
+    if 'd' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        def Aufgabe_1():
+            punkte = 3
+            exponent = zzahl(2, 8)
+            faktor_1 = zzahl(2, 8)
+            faktor_2 = zzahl(1, 8)
+            aufgabe = ('f(x) ~=~ e^{' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                       + vorz_v_innen(faktor_2, 'x') + '}')
+            aufgabe_lsg = (r' f(x) ~=~ e^{' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                           + vorz_v_innen(faktor_2, 'x') + r'} \quad \to \quad'
+                           + r' f^{ \prime } (x) ~=~e^{' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                           + vorz_v_innen(faktor_2, 'x') + r'} \cdot (' + vorz_v_aussen(faktor_1 * exponent, 'x')
+                           + '^{' + gzahl(exponent - 1) + r'}' + vorz_str(faktor_2) + r') \quad (3P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        def Aufgabe_2():
+            punkte = 3
+            exponent = zzahl(2, 8)
+            faktor_1 = zzahl(2, 8)
+            faktor_2 = zzahl(1, 8)
+            aufgabe = (r'f(x) ~=~ \ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                       + vorz_v_innen(faktor_2, 'x') + ')')
+            aufgabe_lsg = (r'f(x) ~=~ \ln(' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
+                           + vorz_v_innen(faktor_2, 'x') + r') \quad \to \quad'
+                           + r' f^{ \prime } (x) ~=~ \frac{1}{' + vorz_v_aussen(faktor_1, 'x') + '^{'
+                           + gzahl(exponent) + r'}' + vorz_v_innen(faktor_2, 'x') + r'} \cdot ('
+                           + vorz_v_aussen(faktor_1 * exponent, 'x') + '^{' + gzahl(exponent - 1) + r'}'
+                           + vorz_str(faktor_2) + r') \quad (3P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        def Aufgabe_3():
+            punkte = 3
+            exponent = zzahl(2, 8)
+            wurzel = nzahl(2, 8)
+            faktor = zzahl(1, 10)
+            while abs(exponent) == wurzel:
+                wurzel = nzahl(2, 8)
+            summand = zzahl(1, 8)
+            aufgabe = (r'f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor, 'x')
+                       + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r'} ')
+            aufgabe_lsg = (r'f(x) ~=~ \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor, 'x')
+                           + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r'} ~=~'
+                           + '(' + vorz_v_aussen(faktor, 'x') + '^{' + gzahl(exponent)
+                           + r'} ' + vorz_str(summand) + r')^{' + gzahl(Rational(1, wurzel))
+                           + r'} \quad \to \quad '
+                           + r' f^{ \prime } (x) ~=~ \Big(' + vorz_v_aussen(Rational(faktor * exponent, wurzel), 'x')
+                           + '^{' + gzahl(exponent - 1) + r'} \Big) \cdot (' + vorz_v_aussen(faktor, 'x')
+                           + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r')^{'
+                           + gzahl(Rational(1 - wurzel, wurzel)) + r'} \quad (3P) \\')
+            return [aufgabe, aufgabe_lsg, punkte]
+
+        auswahl = np.random.choice([Aufgabe_1, Aufgabe_2, Aufgabe_3], 2, False)
+        aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
+        aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
+        punkte = punkte_1 + punkte_2
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_1 + r' \hspace{5em}'
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_2)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + aufgabe_lsg_1
+                       + str(liste_teilaufg[i + 1]) + r') \quad ' + aufgabe_lsg_2)
+
+        liste_punkte.append(punkte)
+        i += 2
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+    #
+    # if d in teilaufg:
+    #     x_wert_1 = zzahl(1, 4)
+    #     y_wert_1 = zzahl(1, 4)
+    #
+    #     if x_wert_1 > 0:
+    #         x_wert_2 = x_wert_1 - nzahl(2, 5)
+    #     else:
+    #         x_wert_2 = x_wert_1 + nzahl(2, 5)
+    #
+    #     if y_wert_1 > 0:
+    #         y_wert_2 = y_wert_1 - nzahl(2, 5)
+    #     else:
+    #         y_wert_2 = y_wert_1 + nzahl(2, 5)
+    #
+    #     A = numpy.array([[x_wert_1 ** 3, x_wert_1 ** 2, x_wert_1, 1],
+    #                      [x_wert_2 ** 3, x_wert_2 ** 2, x_wert_2, 1],
+    #                      [3 * x_wert_1 ** 2, 2 * x_wert_1, 1, 0],
+    #                      [3 * x_wert_2 ** 2, 2 * x_wert_2, 1, 0]])
+    #     lv = numpy.array([y_wert_1, y_wert_2, 0, 0])
+    #
+    #     loesung_vektor = slv(A, lv)
+    #     # print('2d) lösungsvektor:' + str(loesung_vektor))
+    #     fkt = N(loesung_vektor[0], 2) * x ** 3 + N(loesung_vektor[1], 2) * x ** 2 + N(loesung_vektor[2],2) * x + N(loesung_vektor[3], 2)
+    #     fkt_abl = diff(fkt, x, 1)
+    #     xwerte_d = [-6 + n / 5 for n in range(60)]
+    #     ywerte_d = [fkt.subs(x, xwerte_d[i]) for i in range(60)]
+    #     ywerte_abl_d = [fkt_abl.subs(x, xwerte_d[i]) for i in range(60)]
+    #     loeschen()
+    #     Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Funktionsgraph', 'f', 'Aufgabe_2')
+    #     Graph(xwerte_d, ywerte_d, x_wert_1, fkt, 'Lösung für Aufgabe 2d - '
+    #                                                        'Graph und seine Ableitung', 'f',
+    #                     'loesung_Aufgabe_2', xwerte_d, ywerte_abl_d)
+    #     aufgabe.append(str(teilaufg[i]) + r') Skizziere im Koordinatensystem den Graphen der Ableitungsfunktion.')
+    #     loesung.append(str(teilaufg[i]) + r') \quad \mathrm{~Graph~der~Ableitungsfunktion~(2P)} ')
+    #     liste_punkte.append(punkte)
+    #     i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
@@ -220,7 +585,7 @@ def exponentialfunktionen_01(nr, teilaufg):
         y_vers = -1*nzahl(0,2)
     else:
         y_vers = nzahl(0,2)
-    print(extrema_xwert), print(extrema_ywert), print(y_vers)
+    # print(extrema_xwert), # print(extrema_ywert), # print(y_vers)
 
     # rekonstruktion der exponentialfunktion
     fkt_v = exp(b*x+2)*a*x**2
@@ -230,7 +595,7 @@ def exponentialfunktionen_01(nr, teilaufg):
     lsg = solve((gleichung1,gleichung2),(a,b))
     lsg_a = lsg[0][0]
     lsg_b = lsg[0][1]
-    print(lsg)
+    # print(lsg)
     fkt = exp(lsg_b*x+2)*lsg_a*x**2 + y_vers
     fkt_str = (vorz_v_aussen(lsg_a,'x^2') + r' \cdot e^{' + vorz_v_aussen(lsg_b,'x+2') + '}'
                + vorz_str(y_vers))
@@ -241,7 +606,7 @@ def exponentialfunktionen_01(nr, teilaufg):
     wertebereich = [element[0] for element in ywerte if abs(element[1]) < 6]
     xmin = wertebereich[0]
     xmax = wertebereich[-1]
-    print(fkt), print(ywerte), print(wertebereich), print(xmin), print(xmax)
+    # print(fkt), # print(ywerte), # print(wertebereich), # print(xmin), # print(xmax)
     graph_xyfix(fkt, name='Funktionsgraph')
 
     # Ableitung der Funktionen
@@ -271,7 +636,7 @@ def exponentialfunktionen_01(nr, teilaufg):
 
         grenzwert_min = limit(fkt, x, -oo)
         grenzwert_pos = limit(fkt, x, oo)
-        print(grenzwert_min), print(grenzwert_pos)
+        # print(grenzwert_min), # print(grenzwert_pos)
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
@@ -424,9 +789,9 @@ def exponentialfunktionen_01(nr, teilaufg):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I({xmin}|{xmax}). \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I [{xmin}|{xmax}]. \n\n')
         loesung.extend((str(liste_teilaufg[i])
-                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
+                        + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
         i += 1
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

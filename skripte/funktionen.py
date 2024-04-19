@@ -58,17 +58,6 @@ def vorz_str(k):
         return f'+{latex(k)}'
 
 
-def vorz_gzahl(k):
-    if abs(k) == 1:
-        if k < 0:
-            return '-'
-        else:
-            return ''
-    if k%1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
 # Darstellung der Faktoren bzw. Vorzeichen neu
 
 def vorz_v_innen(k,v):
@@ -216,6 +205,17 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
                     omega.append(tubel)
             i += 1
     return omega
+
+# Funktionen zur Analysis
+
+def faktorliste(p, q, n):
+    return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
+
+def exponenten(n):
+    menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
+    while len(menge) < n:
+        menge.add(nzahl(2, 6 + n))
+    return menge
 
 # noch zu programmieren
 def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):

@@ -183,7 +183,7 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
 
     table3 = Tabular(spalten, row_height=1.2)
     table3.add_hline()
-    table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben'),))
+    table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil I'),))
     table3.add_hline()
     table3.add_row(liste_bez)
     table3.add_hline()
@@ -200,7 +200,7 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
         Aufgabe.packages.append(Package('amsfonts'))
         # Kopf erste Seite
         with Aufgabe.create(Figure(position='h')) as kopf:
-            kopf.add_image('img/kopfzeile.png', width='480px')
+            kopf.add_image('../img/kopfzeile.png', width='480px')
         # Tabelle erste Seite
         table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
         table1.add_row((MultiColumn(2, align='l',
@@ -284,7 +284,7 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil I', clean_tex=true)
+        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil I', clean_tex=true)
 
     # Druck der Seiten
     Teil_1()
@@ -314,7 +314,7 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
 
     table3 = Tabular(spalten, row_height=1.2)
     table3.add_hline()
-    table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben'),))
+    table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil II'),))
     table3.add_hline()
     table3.add_row(liste_bez)
     table3.add_hline()
@@ -365,7 +365,7 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
 
         Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Lsg Teil II', clean_tex=true)
+        Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil II', clean_tex=true)
 
     # Druck der Seiten
     Teil_2()
