@@ -17,16 +17,15 @@ liste_punkte_hmft = ['Punkte']
 liste_bez_hmft = ['Aufgabe']
 
 aufgaben_hmft_seite2 = [aenderungsrate(1,['a', 'b', 'c', 'd', 'e', 'f'],ableitung=None),
-                        differentialqoutient_ableitungen(2,['a', 'b', 'c'])]
-# z.B. aufgaben_seite1 = [ereignisse_ergebnisse(1, ['a', 'b', 'c'])]
+                        ableitungen(2,['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])]
 for element in aufgaben_hmft_seite2:
     liste_bez_hmft.extend(element[5])
     liste_punkte_hmft.extend(element[4])
 
-# aufgaben_hmft_seite3 = []
-# for element in aufgaben_seite2:
-#     liste_bez_hmft.extend(element[5])
-#     liste_punkte_hmft.extend(element[4])
+aufgaben_hmft_seite3 = [differentialqoutient(3,['a']), grafisches_ableiten(4,['a', 'b'])]
+for element in aufgaben_hmft_seite3:
+    liste_bez_hmft.extend(element[5])
+    liste_punkte_hmft.extend(element[4])
 
 
 liste_seiten_hmft = [seite(aufgaben_hmft_seite2)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]

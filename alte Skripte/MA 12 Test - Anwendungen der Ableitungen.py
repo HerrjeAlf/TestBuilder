@@ -131,7 +131,8 @@ def erstellen(Teil):
             x_werte_tp = solve(fkt_tp,x)
             y_wert_tp = fkt.subs(x, x_werte_tp[0])
             #print(x_werte_tp[0], x_werte_tp[1])
-            aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
+            aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0).'
+                           +'Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
             aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente_str) + r' \mathrm{~beträgt}. \hspace{38em}')
             loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
                            + r' 0 ~=~' + latex(N(m_tangente,3)) + r' \cdot 1 ~+~n \quad \vert '

@@ -269,8 +269,6 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     plt.axis([-6, 6, -6, 6])
     plt.plot(xwerte, ywerte)
     for fkt in funktionen:
-        print(fkt)
-        print(fkt[0])
         ywerte = [fkt[0].subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte)
         plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
@@ -326,7 +324,7 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
     for fkt in funktionen:
         xwerte = np.arange(x_min, x_max, 0.01)
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
-        plt.plot(xwerte, ywerte)
+        plt.plot(xwerte, ywerte, linewidth=2)
     plt.grid(True)
     # plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
