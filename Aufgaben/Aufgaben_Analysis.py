@@ -527,8 +527,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot'
                      + vorz_v_innen(lsg_a,'x^2') + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot'
                      + vorz_v_innen(2*lsg_a,'x'))
-    fkt_a2_str_zw = ''
-    fkt_a3_str_zw = ''
+    fkt_a2_str_zw = 'noch programmieren'
+    fkt_a3_str_zw = 'noch programmieren'
 
 
     fkt_a1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
