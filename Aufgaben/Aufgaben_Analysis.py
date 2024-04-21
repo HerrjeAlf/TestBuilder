@@ -485,7 +485,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
+def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],ableitung=False):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -524,6 +524,13 @@ def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     fkt_a2 = diff(fkt, x,2)
     fkt_a3 = diff(fkt, x,3)
 
+    fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot'
+                     + vorz_v_innen(lsg_a,'x^2') + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot'
+                     + vorz_v_innen(2*lsg_a,'x'))
+    fkt_a2_str_zw = ''
+    fkt_a3_str_zw = ''
+
+
     fkt_a1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                   + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
     fkt_a2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
@@ -548,7 +555,7 @@ def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         grenzwert_pos = limit(fkt, x, oo)
         # print(grenzwert_min), # print(grenzwert_pos)
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuche das Verhalten der Funktion im Unendlichen. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
                        + fkt_str + '~=~' + latex(grenzwert_min) + r' \quad (2P) \\'
@@ -560,7 +567,7 @@ def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         if y_vers == 0:
             punkte_aufg = 4
             liste_punkte.append(punkte_aufg)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte der'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der'
                                                     f' Funktion f mit den Achsen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
                            + r' \hspace{10em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
@@ -581,16 +588,31 @@ def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         i += 1
 
     if 'c' in teilaufg:
-        punkte_aufg = 6
-        liste_punkte.append(punkte_aufg)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if ableitung == False:
+            punkte_aufg = 6
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die ersten drei Ableitungen der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
-                       + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                       + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
-                       + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i += 1
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
+                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
+        else:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Geben Sie den Zwischenschritt bei der Berechnung'
+                           + f'der folgenden Ableitungen an- \n\n', r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
+                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str_zw + '~=~' + fkt_a1_str
+                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str_zw + '~=~' + fkt_a2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str_zw  + '~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            i += 1
+
 
     if 'd' in teilaufg:
         punkte_aufg = 10
