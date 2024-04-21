@@ -1,16 +1,19 @@
 from pylatex import (MediumText)
 from pylatex.utils import bold
 
-from funktionen import *
-from plotten import *
+from skripte.funktionen import *
+from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 
-def ereignisse_ergebnisse(nr, teilaufg):
+def ereignisse_ergebnisse(nr, teilaufg=['a', 'b', 'c']):
+    liste_punkte = []
+    liste_bez = []
     i = 0
+
     farben = ['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
     auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
@@ -26,15 +29,13 @@ def ereignisse_ergebnisse(nr, teilaufg):
                f' Kugeln der Farbe {farbe_2}. Aus dieser Urne wird nun {anzahl_ziehen[1]} eine Kugel gezogen und '
                f'anschließend wieder zurückgelegt. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['', '']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
-        grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', ''))
 
         def ereig_1():
             anzahl_kugel = nzahl(1, 2)
@@ -105,8 +106,6 @@ def ereignisse_ergebnisse(nr, teilaufg):
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
-        grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', ''))
 
         auswahl = random.choice([farbe_1, farbe_2])
         if auswahl == farbe_1:
@@ -126,8 +125,11 @@ def ereignisse_ergebnisse(nr, teilaufg):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
 
-def wahrscheinlichkeit_zoZ(nr, teilaufg):
+def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
+    liste_punkte = []
+    liste_bez = []
     i = 0
+
     farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
     auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
@@ -147,13 +149,12 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg):
                f' Kugeln der Farbe {farbe_2}. Aus dieser Urne wird ohne Zurücklegen {anzahl_ziehen[1]}'
                f' eine Kugel gezogen. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['', '']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        grafiken_loesung.extend(('','',f'Loesung_{nr}{liste_teilaufg[i]}'))
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
                          bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
         aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
@@ -173,8 +174,6 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg):
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         def ereig_1(p):
             if p == 1:
@@ -243,8 +242,6 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg):
 
     if 'c' in teilaufg:
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
-        grafiken_aufgaben.extend((f'Aufgabe_{nr}{liste_teilaufg[i]}', ''))
-        grafiken_loesung.extend((f'Loesung_{nr}{liste_teilaufg[i]}', ''))
 
         def aufgabe_1():
             auswahl = random.choice([farbe_1, farbe_2])

@@ -16,13 +16,13 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_hmft = ['Punkte']
 liste_bez_hmft = ['Aufgabe']
 
-aufgaben_hmft_seite2 = [aenderungsrate(1,['a', 'b', 'c', 'd', 'e', 'f'],ableitung=None),
-                        ableitungen(2,['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])]
+aufgaben_hmft_seite2 = [aenderungsrate(1,ableitung=None),
+                        ableitungen(2)]
 for element in aufgaben_hmft_seite2:
     liste_bez_hmft.extend(element[5])
     liste_punkte_hmft.extend(element[4])
 
-aufgaben_hmft_seite3 = [differentialqoutient(3,['a']), grafisches_ableiten(4,['a', 'b'])]
+aufgaben_hmft_seite3 = [differentialqoutient(3), grafisches_ableiten(4)]
 for element in aufgaben_hmft_seite3:
     liste_bez_hmft.extend(element[5])
     liste_punkte_hmft.extend(element[4])
@@ -34,7 +34,7 @@ liste_seiten_hmft = [seite(aufgaben_hmft_seite2)] # z.b. liste_seiten = [seite(a
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-aufgaben_seite1 = [kurvendiskussion_polynome(1,['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'])]
+aufgaben_seite1 = [kurvendiskussion_polynome(1)]
 # z.B. aufgaben_seite1 = [exponentialfunktionen_01(1,['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
 for element in aufgaben_seite1:
     print(element[5])

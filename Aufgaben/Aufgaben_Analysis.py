@@ -15,7 +15,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 
 # Aufgaben zur Differenzialrechnung
-def aenderungsrate(nr, teilaufg, ableitung=None):
+def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -211,7 +211,7 @@ def aenderungsrate(nr, teilaufg, ableitung=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def differentialqoutient(nr, teilaufg):
+def differentialqoutient(nr, teilaufg=['a', 'b']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -257,7 +257,7 @@ def differentialqoutient(nr, teilaufg):
         liste_punkte.append(punkte)
         i += 1
 
-def grafisches_ableiten(nr, teilaufg):
+def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -294,10 +294,24 @@ def grafisches_ableiten(nr, teilaufg):
         if 'b' in teilaufg:
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 3
+            fkt_1 = collect(expand(diff(fkt, x, 1)), x)
             fkt_2 = collect(expand(diff(fkt, x, 2)), x)
-            extrema = solve(fkt_2,x)
+            fkt_3 = collect(expand(diff(fkt, x, 3)), x)
+            extrema = solve(fkt_1,x)
+            wendepkt = solve(fkt_1,x)
+            wendepkt_art = fkt_3.subs(x,wendepkt)
+            if wendepkt > 0:
+                art = (r'  \mathrm{Es~ist~ein links-rechts-Wendepunkt,~deswegen~ist~das~Extrema~ein~Hochpunkt}'
+                       + r' \quad (1P) \\')
+            else:
+                art = (r'  \mathrm{Es~ist~ein rechts-links-Wendepunkt,~deswegen~ist~das~Extrema~ein~Tiefpunkt}'
+                       + r' \quad (1P) \\')
             aufgabe.append(str(liste_teilaufg[i]) + f') Begründen Sie Ihre Skizze. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad (2P) \\'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~x_1~=~'
+                           + gzahl(N(extrema[0],3)) + 'und~x_2 ~=~' + gzahl(N(extrema[1],3))
+                           + r' sind Nullstellen der Ableitung \quad (1P)} \\'
+                           + r' \mathrm{Wendepunkte~an~Stelle~x_w~=~' + gzahl(N(wendepunkt[0]))
+                           + r'ist~Extrema~der~Ableitung \quad (1P) \\' + art
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
 
             liste_punkte.append(punkte)
@@ -305,7 +319,7 @@ def grafisches_ableiten(nr, teilaufg):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ableitungen(nr, teilaufg):
+def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -471,7 +485,7 @@ def ableitungen(nr, teilaufg):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def exponentialfunktionen_01(nr, teilaufg):
+def exponentialfunktionen_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -694,9 +708,9 @@ def exponentialfunktionen_01(nr, teilaufg):
 
 # Aufgaben zur Integralrechnung
 
-def rechenregeln_integrale(nr, teilaufg):
-    liste_punkte = []
-    liste_bez = []
+def rechenregeln_integrale(nr, teilaufg=['a','b']):
+    liste_punkte = [len(teilaufg)]
+    liste_bez = [f'{nr}']
     i = 0
     regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{10em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
                       r' \int a \cdot f(x) \,dx ~=~ \hspace{10em}':
@@ -713,22 +727,19 @@ def rechenregeln_integrale(nr, teilaufg):
 
 
     if 'a' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 2
-        liste_punkte.append(punkte_aufg)
+        aufgabe.append(str(liste_teilaufg[i]) + r') ~' + auswahl[i])
+        loesung.append(str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\')
+        i += 1
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') ~' + auswahl[i] + str(liste_teilaufg[i+1])
-                       + r') ~' + auswahl[i+1])
-        loesung.append(str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
-                       + str(liste_teilaufg[i+1]) + r') ~' + regeln_aufgabe[auswahl[i+1]] + r' \quad (1P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i += 2
-
+    if 'b' in teilaufg:
+        aufgabe.append(r' \hspace{5em}' + str(liste_teilaufg[i]) + r') ~' + auswahl[i + 1])
+        loesung.append(str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i+1]] + r' \quad (1P) \\'
+                       + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte} \\')
+        i += 1
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def unbestimmtes_integral(nr, teilaufg):
-    liste_punkte = []
-    liste_bez = []
+def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
+    liste_bez = [nr]
     i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -737,152 +748,125 @@ def unbestimmtes_integral(nr, teilaufg):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
 
-        # Funktion und Stammfunktion 1
+    def polynom_01():
         konst_i = zzahl(2,20)
         e1_i = nzahl(2,5)
         e2_i = e1_i + nzahl(1,3)
-        fkt_str_i = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
-        Fkt_str_i = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
-                     + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x + C')
-        punkte_i = 2
+        fkt = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
+        fkt_uf = ''
+        Fkt = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
+               + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x + C')
+        pkt = 2
+        return fkt, fkt_uf, Fkt, pkt
 
-        # Funktion und Stammfunktion 2
-        konst_ii = zzahl(2,20)
-        e1_ii = nzahl(2,5)
-        e2_ii = e1_ii + nzahl(2,4)
-        a1 = (e1_ii+1) * zzahl(1,10)/2
-        a2 = (e2_ii+1) * zzahl(1,10)/2
-        fkt_str_ii = (vorz_v_aussen(a2,'x^{' + gzahl(e2_ii) + '}') + vorz_v_innen(a1,'x^{' + gzahl(e1_ii) + '}')
+    def polynom_02():
+        konst_ii = zzahl(2, 20)
+        e1_ii = nzahl(2, 5)
+        e2_ii = e1_ii + nzahl(2, 4)
+        a1 = (e1_ii + 1) * zzahl(1, 10) / 2
+        a2 = (e2_ii + 1) * zzahl(1, 10) / 2
+        fkt = (vorz_v_aussen(a2, 'x^{' + gzahl(e2_ii) + '}') + vorz_v_innen(a1, 'x^{' + gzahl(e1_ii) + '}')
                       + vorz_str(konst_ii))
-        Fkt_str_ii = (vorz_v_aussen(Rational(a2,e2_ii+1),'x^{' + gzahl(e2_ii +1) + '}')
-                      + vorz_v_innen(Rational(a1,e1_ii + 1), 'x^{' + gzahl(e1_ii+1) + '}')
-                      + vorz_v_innen(konst_ii,'x + C'))
-        punkte_ii = 2
+        fkt_uf = ''
+        Fkt = (vorz_v_aussen(Rational(a2, e2_ii + 1), 'x^{' + gzahl(e2_ii + 1) + '}')
+                      + vorz_v_innen(Rational(a1, e1_ii + 1), 'x^{' + gzahl(e1_ii + 1) + '}')
+                      + vorz_v_innen(konst_ii, 'x + C'))
+        pkt = 2
+        return fkt, fkt_uf, Fkt, pkt
 
-        punkte_aufg = punkte_i + punkte_ii
-        liste_punkte.extend((punkte_i, punkte_ii))
+    def e_funktion():
+        a1 = zzahl(2, 9)
+        k1 = zzahl(1, 19) / 2
+        fkt = gzahl(a1) + r' \cdot e^x' + vorz_str(k1)
+        fkt_uf = ''
+        Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1, 'x + C')
+        pkt = 2
+        return fkt, fkt_uf, Fkt, pkt
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
-                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
-                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
-        i += 2
+    def trig_funktion():
+        a1 = zzahl(2, 9)
+        auswahl = random.choice([[latex(a1) + r' \cdot \sin(x)', latex(-1 * a1) + r' \cdot \cos(x) + C'],
+                                 [latex(a1) + r' \cdot \cos(x)', latex(a1) + r' \cdot \sin(x) + C']])
+        fkt = auswahl[0]
+        fkt_uf = ''
+        Fkt = auswahl[1]
+        pkt = 1
+        return fkt, fkt_uf, Fkt, pkt
 
-    if 'c' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
+    def ln_funktion():
+        a1 = zzahl(2, 9)
+        e1 = nzahl(2, 9)
+        a2 = zzahl(2, 9)
+        fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
+               + vorz(a2) + r'\frac{' + str(abs(a2)) + '}{x}')
+        fkt_uf = r'~=~ \int ' + gzahl(a1) + r' x^{' + gzahl(-1 * e1) + '}' + vorz_str(a2) + r'x^{-1} \,dx'
+        Fkt = (gzahl(Rational(a1, -1 * e1 + 1)) + 'x^{' + gzahl(-1 * e1 + 1) + '}' + vorz_str(a2)
+               + r' \cdot \ln(x) + C')
+        pkt = 3
+        return fkt, fkt_uf, Fkt, pkt
 
-        # Integral e-Funktion
-        def e_funktion():
-            a1 = zzahl(2,9)
-            k1 = zzahl(1,19)/2
-            fkt = gzahl(a1) + r' \cdot e^x' + vorz_str(k1)
-            Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1,'x + C')
-            pkt = 2
-            return fkt, Fkt, pkt
+    def kettenregel():
+        a1 = zzahl(3, 20) / 2
+        i1 = zzahl(3, 20) / 2
+        k1 = zzahl(2, 9)
+        e1 = nzahl(2, 9)
+        innere = vorz_v_aussen(i1, 'x') + vorz_str(k1)
+        auswahl = random.choice([[gzahl(a1) + r' \cdot (' + innere + ')^{' + latex(e1) + '}',
+                                  gzahl(Rational(a1, i1 * (e1 + 1))) + r' \cdot (' + innere + ')^{' + latex(e1 + 1)
+                                  + '} + C'],
+                                 [gzahl(a1) + r' \cdot e^{' + innere + '}',
+                                  gzahl(Rational(a1, i1)) + r' \cdot e^{' + innere + '} + C'],
+                                 [gzahl(a1) + r' \cdot \sin(' + innere + ')' + vorz_str(k1),
+                                  gzahl(Rational(-1 * a1, i1)) + r' \cdot \cos(' + innere + ')'
+                                  + vorz_v_innen(k1,'x + C')],
+                                 [gzahl(a1) + r' \cdot \cos(' + innere + ')' + vorz_str(k1),
+                                  gzahl(Rational(a1, i1)) + r' \cdot \sin(' + innere + ')'
+                                  + vorz_v_innen(k1,'x + C')]])
+        fkt = auswahl[0]
+        fkt_uf = ''
+        Fkt = auswahl[1]
+        pkt = 2
+        return fkt, fkt_uf, Fkt, pkt
 
-        # Integral ln
-        def ln_funktion():
-            a1 = zzahl(2,9)
-            e1 = nzahl(2,9)
-            a2 = zzahl(2,9)
-            fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
-                   + vorz(a2) + r'\frac{' + str(abs(a2)) + '}{x}')
-            Fkt = (r' \int ' + gzahl(a1) + r' x^{' + gzahl(-1*e1) + '}' + vorz_str(a2) + r'x^{-1} \,dx ~=~'
-                   + gzahl(Rational(a1,-1*e1+1)) + 'x^{' + gzahl(-1*e1+1) + '}' + vorz_str(a2) + r' \cdot \ln(x) + C')
-            pkt = 3
-            return fkt, Fkt, pkt
-
-        # sin cos
-        def trig_funktion():
-            a1 = zzahl(2, 9)
-            auswahl = random.choice([[latex(a1) + r' \cdot \sin(x)', latex(-1*a1) + r' \cdot \cos(x) + C'],
-                                     [latex(a1) + r' \cdot \cos(x)', latex(a1) + r' \cdot \sin(x) + C']])
-            fkt = auswahl[0]
-            Fkt = auswahl[1]
-            pkt = 1
-            return fkt, Fkt, pkt
-
-
-        auswahl = np.random.choice([e_funktion, ln_funktion, trig_funktion], 2, False)
-
-        fkt_str_i, Fkt_str_i, punkte_i = auswahl[0]()
-        fkt_str_ii, Fkt_str_ii, punkte_ii = auswahl[1]()
-        punkte_aufg = punkte_i + punkte_ii
-        liste_punkte.extend((punkte_i,punkte_ii))
-
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
-                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
-                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
-        i += 2
-
-    if 'e' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i+1])})')
-
-        # Integral e-Funktion
-
-        # kettenregel potenzfunktion
-        # kettenregel potenzfunktion
-        def kettenregel():
-            a1 = zzahl(3,20)/2
-            i1 = zzahl(3,20)/2
-            k1 = zzahl(2,9)
-            e1 = nzahl(2,9)
-            innere = vorz_v_aussen(i1,'x') + vorz_str(k1)
-            auswahl = random.choice([[gzahl(a1) + r' \cdot (' + innere + ')^{' + latex(e1) + '}',
-                                      gzahl(Rational(a1,i1*(e1+1))) + r' \cdot (' + innere + ')^{' + latex(e1 + 1)
-                                      + '} + C'],
-                                     [gzahl(a1) + r' \cdot e^{' + innere + '}',
-                                      gzahl(Rational(a1,i1)) + r' \cdot e^{' + innere + '} + C'],
-                                     [gzahl(a1) + r' \cdot \sin(' + innere + ')' + vorz_str(k1),
-                                      gzahl(Rational(-1*a1,i1)) + r' \cdot \cos(' + innere + ')' + vorz_v_innen(k1,'x + C')],
-                                     [gzahl(a1) + r' \cdot \cos(' + innere + ')' + vorz_str(k1),
-                                      gzahl(Rational(a1,i1)) + r' \cdot \sin(' + innere + ')' + vorz_v_innen(k1,'x + C')]])
-            fkt = auswahl[0]
-            Fkt = auswahl[1]
-            punkte = 2
-            return fkt, Fkt, punkte
-
-        # wurzel und negativer exponent
-        def wurzelfunktion():
-            a1 = nzahl(2,6)
-            e1 = a1 + nzahl(2,4)
-            fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
-            Fkt = (r' \int x^{' + gzahl(Rational(e1,a1)) + r'} \,dx ~=~ ' + gzahl(Rational(a1,a1+e1))
-                   + 'x^{' + gzahl(Rational(a1+e1,a1)) + '} + C')
-            punkte = 3
-            return fkt, Fkt, punkte
+    def wurzelfunktion():
+        a1 = nzahl(2, 6)
+        e1 = a1 + nzahl(2, 4)
+        fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
+        fkt_uf = r' ~=~ \int x^{' + gzahl(Rational(e1, a1)) + r'} \,dx '
+        Fkt = (gzahl(Rational(a1, a1 + e1)) + 'x^{' + gzahl(Rational(a1 + e1, a1)) + '} + C')
+        pkt = 3
+        return fkt, fkt_uf, Fkt, pkt
 
 
-        fkt_str_i, Fkt_str_i, punkte_i = kettenregel()
-        fkt_str_ii, Fkt_str_ii, punkte_ii = wurzelfunktion()
-        punkte_aufg = punkte_i + punkte_ii
-        liste_punkte.extend((punkte_i,punkte_ii))
+    aufgaben = {'a': polynom_01(), 'b': polynom_02(), 'c': e_funktion(), 'd': trig_funktion(), 'e': ln_funktion(),
+                'f': kettenregel(), 'g': wurzelfunktion()}
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~ \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \int ' + fkt_str_i + r' \,dx ~=~ '
-                       + Fkt_str_i + r' \quad (' + str(punkte_i) + r'P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad \int ' + fkt_str_ii + r' \,dx ~=~'
-                       + Fkt_str_ii + r' \quad (' + str(punkte_ii) + r'P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i += 2
+    aufg = ''
+    lsg = (r' \mathrm{~Bestimme~die~Stammfunktionen~der~gegebenen~Funktionen.} \\')
+    punkte = 0
+    for element in teilaufg:
+        fkt, fkt_uf, Fkt, pkt = aufgaben[element]
+        if (i + 1) % 3 != 0:
+            aufg = aufg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx '
+            if i + 1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+        else:
+            aufg = aufg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx \\\\'
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx ' + fkt_uf
+               + r' \quad \to \quad F(x)~=~' + Fkt + r' \quad (' + str(pkt) + r'P) \\')
+        punkte += pkt
+        i += 1
+
+    lsg = lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
+    liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def bestimmtes_integral(nr, teilaufg):
+def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -932,7 +916,7 @@ def bestimmtes_integral(nr, teilaufg):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
-def kurvendiskussion_polynome(nr, teilaufg):
+def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']):
     liste_punkte = []
     liste_bez = []
     i = 0

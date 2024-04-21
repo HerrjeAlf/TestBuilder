@@ -19,7 +19,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -127,7 +127,7 @@ def punkte_und_vektoren(nr, teilaufg):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechnen_mit_vektoren(nr, teilaufg, linearkombination=None, kollinear=None):
+def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None):
     liste_punkte = []
     liste_bez = []
     i = 0
