@@ -835,7 +835,7 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
         fkt_uf = r' ~=~ \int x^{' + gzahl(Rational(e1, a1)) + r'} \,dx '
         Fkt = (gzahl(Rational(a1, a1 + e1)) + 'x^{' + gzahl(Rational(a1 + e1, a1)) + '} + C')
-        pkt = 3
+        pkt = 2
         return fkt, fkt_uf, Fkt, pkt
 
 
