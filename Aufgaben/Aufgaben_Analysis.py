@@ -55,7 +55,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Funktion:',
                r'f(x)~=~' + fkt_str]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -217,7 +217,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
     i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -263,7 +263,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -485,7 +485,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],ableitung=False):
+def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], ableitung=False):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1010,7 +1010,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                r' f(x)~=~' + fkt_str]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
