@@ -452,7 +452,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -467,27 +467,42 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
     uz = - 1 * (vx*ux + vy * uy)/vz
     u = vektor_ganzzahl([ux, uy, uz])
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Gegeben sind die beiden Geraden mit folgenden Gleichungen:']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
     if 'a' in teilaufg: # lagebeziehungen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_punkte.append(2)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie alle möglichen Lagebeziehungen zweier Geraden und'
-                       + 'die daraus folgenden Gemeinsamkeiten bzw. Unterschiede. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{parrallel,~d.h.~Richtungsvektor~'
-                       + r'kollinear,~aber~keine~gemeinsamen~Punkte} \quad (1P) \\}'
-                       + r') \mathrm{identisch,~d.h.~Richtungsvektor~kollinear~und~alle~Punkte~gemeinsam}'
-                       + r'\quad (1P) \\}' + r' schneiden' + r' windschief')
+        punkte = 4
+        liste_punkte.append(punkte)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
+                                          'deren Eigenschaften. \n\n')
+        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
+                       + 'haben alle Punkte gem. (1P) \n'
+                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
+                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
         i += 1
 
     if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_punkte.append(2)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier Geraden überprüfen kann. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad ')
+        punkte = 2
+        liste_punkte.append(punkte)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
+                                          'Geraden mathematisch überprüfen kann. \n\n')
+        loesung.append(str(teilaufg[i]) + ') Zuerst prüft man ob die Geraden parallel sind, '
+                       + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt. (1P)  \n'
+                       + 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), setzt man '
+                       + 'einen Stützvektor in die andere Geradengleichung ein. Ist dieser in der anderen Geraden '
+                       + 'enthalten, sind die Geraden identisch, ansonsten "echt" parallel. (1P) \n'
+                       + 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
+                       + 'löst das Gleichungssystem. Erhält man eine Lösung für r und s, schneiden sich die Geraden. '
+                       + 'Erhält man keine Lösung, sind die Geraden windschief. (1P) \n'
+                       + 'insgesamt ' + str(punkte) + ' Punkte')
         i += 1
 
     if 'c' in teilaufg:
@@ -701,7 +716,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
 
             # print(v), print(w), print(punkt_c)
 
-        aufgabe.append(r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+        aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
+                        r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
@@ -709,7 +725,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
                        + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
                        r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                       r' \end{pmatrix}\\')
+                       r' \end{pmatrix}\\'))
         aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + lagebeziehung + r'} \hspace{25em} \\'
                        + loesung_1)
