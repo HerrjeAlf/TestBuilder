@@ -472,8 +472,25 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    if 'a' in teilaufg: # lagebeziehungen erläutern
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_punkte.append(2)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie alle möglichen Lagebeziehungen zweier Geraden und'
+                       + 'die daraus folgenden Gemeinsamkeiten bzw. Unterschiede. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{parrallel,~d.h.~Richtungsvektor~'
+                       + r'kollinear,~aber~keine~gemeinsamen~Punkte} \quad (1P) \\}'
+                       + r') \mathrm{identisch,~d.h.~Richtungsvektor~kollinear~und~alle~Punkte~gemeinsam}'
+                       + r'\quad (1P) \\}' + r' schneiden' + r' windschief')
+        i += 1
 
-    if 'a' in teilaufg:
+    if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_punkte.append(2)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier Geraden überprüfen kann. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad ')
+        i += 1
+
+    if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == None:
             lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
@@ -540,10 +557,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
         elif lagebeziehung == 'windschief':
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
-            punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + nzahl(1,6)/2 * np.array(u)) # Punkte C und D liegen auf h
-            punkt_d =  [dx,dy,dz] = vektor_ganzzahl((punkt_c) - nzahl(1,6)/2
-                                                    * np.cross(np.array(u),np.array(v)))
-            w = [wx, wy, wz] = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            punkt_d = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
+            punkt_d = [dx,dy,dz] = [punkt_d[0], punkt_d[1], punkt_d[2] + zzahl(1,3)]
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+            w = [wx, wy, wz]= vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
             if vx != 0 and wx != 0:
@@ -698,8 +715,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
                        + loesung_1)
         i += 1
 
-
-    if 'b' in teilaufg:
+    if 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         liste_punkte.append(punkte_aufg)
@@ -739,4 +755,5 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
                        + r'} \Big) ~=~' + gzahl(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3))
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i += 1
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
