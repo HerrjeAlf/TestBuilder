@@ -27,8 +27,6 @@ for element in aufgaben_hmft_seite3:
     liste_bez_hmft.extend(element[5])
     liste_punkte_hmft.extend(element[4])
 
-
-
 liste_seiten_hmft = [seite(aufgaben_hmft_seite2), seite(aufgaben_hmft_seite3)]
 # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
