@@ -375,3 +375,372 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def gerade_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    punkt_a = [ax, ay, az] = punkt_vektor(3)
+    punkt_b = [bx, by, bz] = punkt_a + punkt_vektor(3)
+    v = [vx, vy, vz] = vektor_ganzzahl((punkt_b) - (punkt_a))
+    p = random.choice([0,1])
+    if T_auf_g == None:
+        T_auf_g = random.choice([True,False])
+    if T_auf_g == True:
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
+    else:
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1])
+
+    lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
+               'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
+               'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
+               'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 3
+        liste_punkte.append(punkte_aufg)
+        loesung_1 = (r' \overrightarrow{AB} ~=~'
+                     r' \begin{pmatrix} '
+                     + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\'
+                     r' \end{pmatrix} \quad \to \quad '
+                     r' g: \overrightarrow{x} \ ~=~'
+                     r' \begin{pmatrix} '
+                     + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\'
+                     r' \end{pmatrix} \quad (3P) \\')
+
+        aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
+                                          f' welche die Punkte A und B enthält. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i +=1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 4
+        liste_punkte.append(punkte_aufg)
+        loesung_1 =  (r' \begin{pmatrix} '
+                     + gzahl(N(tx,3)) + r' \\' + gzahl(N(ty,3)) + r' \\' + gzahl(N(tz,3)) + r' \\'
+                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                     + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                     + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                     r' \end{pmatrix} \to \begin{matrix} '
+                     + gzahl(N(tx,3)) + '~=~' + gzahl(ax) + vorz_str(vx) + r' \cdot r' + r' \\'
+                     + gzahl(N(ty,3)) + '~=~' + gzahl(ay) + vorz_str(vy) + r' \cdot r' + r' \\'
+                     + gzahl(N(tz,3)) + '~=~' + gzahl(az) + vorz_str(vz) + r' \cdot r' + r' \\'
+                     r' \end{matrix} \quad \to \quad \begin{matrix} '
+                     + 'r=' + gzahl(N(lx,3)) + r' \\' + 'r=' + gzahl(N(ly,3)) + r' \\'
+                     + 'r=' + gzahl(N(lz,3)) + r' \\'
+                     r' \end{matrix} \\')
+        if lx == ly == lz:
+            loesung_2 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4P) \\'
+        else:
+            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4P) \\'
+
+        aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1 + loesung_2
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i +=1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    v_teiler = zzahl(1, 3)
+    punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
+    v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
+                                        zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
+    # Vektor u steht orthogonal auf v
+    ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
+    uz = - 1 * (vx*ux + vy * uy)/vz
+    u = vektor_ganzzahl([ux, uy, uz])
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Gegeben sind die beiden Geraden mit folgenden Gleichungen:']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if lagebeziehung == None:
+            auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+        if auswahl == 'identisch':
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
+            w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
+                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
+                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
+                         r' \begin{pmatrix} '
+                         + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         + gzahl(ax) + '~=~' + gzahl(cx) + vorz_str(wx) + r' \cdot r' + r' \\'
+                         + gzahl(ay) + '~=~' + gzahl(cy) + vorz_str(wy) + r' \cdot r' + r' \\'
+                         + gzahl(az) + '~=~' + gzahl(cz) + vorz_str(wz) + r' \cdot r' + r' \\'
+                         r' \end{matrix} \quad \to \quad \begin{matrix} '
+                         + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
+                         + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
+                         r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4P) \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        elif auswahl == 'parallel':
+            punkte_aufg = 7
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
+            w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
+                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
+                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
+                         r' \begin{pmatrix} '
+                         + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         + gzahl(ax) + '~=~' + gzahl(cx) + vorz_str(wx) + r' \cdot r' + r' \\'
+                         + gzahl(ay) + '~=~' + gzahl(cy) + vorz_str(wy) + r' \cdot r' + r' \\'
+                         + gzahl(az) + '~=~' + gzahl(cz) + vorz_str(wz) + r' \cdot r' + r' \\'
+                         r' \end{matrix} \quad \to \quad \begin{matrix} '
+                         + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
+                         + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
+                         r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4P) \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        elif auswahl == 'windschief':
+            punkte_aufg = 15
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + nzahl(1,6)/2 * np.array(u)) # Punkte C und D liegen auf h
+            punkt_d =  [dx,dy,dz] = vektor_ganzzahl((punkt_c) - nzahl(1,6)/2
+                                                    * np.cross(np.array(u),np.array(v)))
+            w = [wx, wy, wz] = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
+            lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
+            if vx != 0 and wx != 0:
+                loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
+                             + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
+                             + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
+                             + gzahl(N((ax-cx)/wx,3)) + vorz_str(N(vx/wx,3)) + r' \cdot r \quad (2P) \\')
+                if vy != 0 and wy != 0:
+                    loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
+                                 + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax-cx)/wx,3))
+                                 + vorz_str(N(vx/wx,3)) + r' \cdot r \big) \\'
+                                 + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx*cy + wy*(ax - cx))/wx,3))
+                                 + vorz_str(N(wy*vx/wx,3)) + r' \cdot r \quad \vert ~'
+                                 + vorz_str(-1*vy) + r' \cdot r \quad \vert ~'
+                                 + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
+                                 + gzahl(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + gzahl(N((vx*wy-vy*wx)/wx,3))
+                                 + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
+                                 + r' \quad \to \quad r~=~' + gzahl(N(lsgr,3))
+                                 + r' \quad \mathrm{und} \quad s ~=~'
+                                 + gzahl(N(lsgs,3)) + r' \quad (3P) \\')
+                    if vz != 0 and wz != 0:
+                        loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
+                                     + r' \cdot (' + gzahl(N(lsgr,3)) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(N(lsgs,3)) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
+                                     + '~=~' + gzahl(N(cz+wz*lsgs,3))
+                                     + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
+                                       r'\mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
+                    else:
+                        sys.exit('vz oder wz ist null.')
+                else:
+                    sys.exit('vy oder wy ist null.')
+            else:
+                sys.exit('va oder wa ist null.')
+
+
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
+                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
+                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
+                         r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                         + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                         r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix}'
+                         'I: ~~' + gzahl(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
+                         'II: ~' + gzahl(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
+                         'III: ~' + gzahl(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
+                         r' \end{matrix} \begin{matrix} '
+                         + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
+                         + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
+                         + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
+                         r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+
+
+        else:
+            punkte_aufg = 17
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+            punkt_d =  [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+            w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
+            lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
+            lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
+            schnittpunkt_s = punkt_c + lsgs*w
+            [sx, sy, sz] = vektor_ganzzahl(vektor_runden(schnittpunkt_s,3))
+            if vx != 0 and wx != 0:
+                loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
+                             + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
+                             + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
+                             + gzahl(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2P) \\')
+                if vy != 0 and wy != 0:
+                    loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
+                                 + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax - cx) / wx, 3))
+                                 + vorz_str(N(vx / wx, 3)) + r' \cdot r \big) \\'
+                                 + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx * cy + wy * (ax - cx)) / wx, 3))
+                                 + vorz_str(N(wy * vx / wx, 3)) + r' \cdot r \quad \vert ~'
+                                 + vorz_str(-1 * vy) + r' \cdot r \quad \vert ~'
+                                 + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2P) \\'
+                                 + gzahl(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
+                                 + gzahl(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
+                                 + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
+                                 + r' \quad \to \quad r~=~' + gzahl(N(lsgr, 3))
+                                 + r' \quad \mathrm{und} \quad s ~=~'
+                                 + gzahl(N(lsgs, 3)) + r' \quad (3P) \\')
+                    if vz != 0 and wz != 0:
+                        loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
+                                     + r' \cdot (' + gzahl(N(lsgr, 3)) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(N(lsgs, 3)) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
+                                     + '~=~' + gzahl(N(cz + wz * lsgs, 3))
+                                     + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
+                                       r'\mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
+                                     + str(sy) + r' \vert ' + str(sz) + r').} \quad (2P)')
+                    else:
+                        sys.exit('vz oder wz ist null.')
+                else:
+                    sys.exit('vy oder wy ist null.')
+            else:
+                sys.exit('va oder wa ist null.')
+
+
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
+                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
+                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
+                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
+                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
+                         r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                         + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                         r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
+                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                         r' \end{pmatrix} \quad \to \quad \begin{matrix}'
+                         'I: ~~' + gzahl(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
+                         'II: ~' + gzahl(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
+                         'III: ~' + gzahl(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
+                         r' \end{matrix} \begin{matrix} '
+                         + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
+                         + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
+                         + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
+                         r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+
+            # print(v), print(w), print(punkt_c)
+
+        aufgabe.append(r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                       + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                       r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                       + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                       r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                       + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                       r' \end{pmatrix}\\')
+        aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~'
+                       + auswahl + r'} \hspace{25em} \\' + loesung_1)
+        i += 1
+
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 7
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
+        punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
+        punkt_e =  [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
+        p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
+        [px, py, pz] = vektor_ganzzahl(vektor_runden(p, 3))
+        sp_vp = np.vdot(v,p)
+        l_v = np.linalg.norm(v)
+        l_p = np.linalg.norm(p)
+
+        aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
+        aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+               + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+               r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+               + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
+               r' \end{pmatrix} \quad ')
+        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
+                       r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
+                       r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
+                       r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
+                       r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
+                       r' \vert \overrightarrow{u} \vert } \Big) \quad (1P) \\'
+                       r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
+                       r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
+                       + '+' + gzahl_klammer(vy) + r' \cdot ' + gzahl_klammer(py)
+                       + '+' + gzahl_klammer(vz) + r' \cdot ' + gzahl_klammer(pz) + r' \vert ~=~'
+                       + gzahl(abs(N(sp_vp,3))) + r' \quad (2P) \\'
+                       r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
+                       + str(vy) + ')^2 ~+~(' + str(vz) + ')^2} ~=~ ' + gzahl(N(l_v,3))
+                       + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
+                       + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
+                       + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2P) \\'
+                       + r' \gamma ~=~ cos^{-1} \Big( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
+                       + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
+                       + r'} \Big) ~=~' + gzahl(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3))
+                       + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
