@@ -1,6 +1,6 @@
 from pylatex import (MediumText)
 from pylatex.utils import bold
-import string
+import string, sys
 import numpy as np
 import random, math
 from numpy.linalg import solve as slv
@@ -376,7 +376,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def gerade_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
+def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -452,10 +452,12 @@ def gerade_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b'], lagebeziehung=None):
     liste_punkte = []
     liste_bez = []
     i = 0
+    if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
+        sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
     v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
@@ -474,11 +476,10 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == None:
-            auswahl = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-        if auswahl == 'identisch':
+            lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+        if lagebeziehung == 'identisch':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
@@ -506,10 +507,9 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
                          + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
                          r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4P) \\'
                          + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        elif auswahl == 'parallel':
+        elif lagebeziehung == 'parallel':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
@@ -537,10 +537,9 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
                          + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
                          r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4P) \\'
                          + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        elif auswahl == 'windschief':
+        elif lagebeziehung == 'windschief':
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + nzahl(1,6)/2 * np.array(u)) # Punkte C und D liegen auf h
             punkt_d =  [dx,dy,dz] = vektor_ganzzahl((punkt_c) - nzahl(1,6)/2
                                                     * np.cross(np.array(u),np.array(v)))
@@ -612,7 +611,6 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
         else:
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
-            liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
             punkt_d =  [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
             punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
             w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
@@ -696,8 +694,8 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                        r' \end{pmatrix}\\')
         aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~'
-                       + auswahl + r'} \hspace{25em} \\' + loesung_1)
+        loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + lagebeziehung + r'} \hspace{25em} \\'
+                       + loesung_1)
         i += 1
 
 
@@ -705,7 +703,6 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         liste_punkte.append(punkte_aufg)
-        liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
         punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
         punkt_e =  [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
         p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
@@ -742,5 +739,4 @@ def geraden_lagebeziehung(nr, teilaufg, lagebeziehung=None):
                        + r'} \Big) ~=~' + gzahl(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3))
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i += 1
-
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
