@@ -527,8 +527,14 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot'
                      + vorz_v_innen(lsg_a,'x^2') + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot'
                      + vorz_v_innen(2*lsg_a,'x'))
-    fkt_a2_str_zw = 'noch programmieren'
-    fkt_a3_str_zw = 'noch programmieren'
+    fkt_a2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big('
+                     + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x' + r' \Big)') + r'e^{'
+                     + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
+                     + vorz_str(2*lsg_a) + r' \Big)')
+    fkt_a3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                     + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
+                     + vorz_str(2*lsg_a) + r' \Big)' + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                     + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \Big)'))
 
 
     fkt_a1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
