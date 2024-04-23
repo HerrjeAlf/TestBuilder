@@ -256,6 +256,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                        + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         liste_punkte.append(punkte)
         i += 1
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     liste_punkte = []
@@ -298,20 +299,20 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
             fkt_2 = collect(expand(diff(fkt, x, 2)), x)
             fkt_3 = collect(expand(diff(fkt, x, 3)), x)
             extrema = solve(fkt_1,x)
-            wendepkt = solve(fkt_1,x)
-            wendepkt_art = fkt_3.subs(x,wendepkt)
-            if wendepkt > 0:
-                art = (r'  \mathrm{Es~ist~ein links-rechts-Wendepunkt,~deswegen~ist~das~Extrema~ein~Hochpunkt}'
+            wendepkt = solve(fkt_2,x)
+            wendepkt_art = fkt_3.subs(x,wendepkt[0])
+            if wendepkt_art < 0:
+                art = (r'  \mathrm{Es~ist~ein~links-rechts-Wendepunkt,~deswegen~ist~das~Extrema~ein~Hochpunkt}'
                        + r' \quad (1P) \\')
             else:
-                art = (r'  \mathrm{Es~ist~ein rechts-links-Wendepunkt,~deswegen~ist~das~Extrema~ein~Tiefpunkt}'
+                art = (r'  \mathrm{Es~ist~ein~rechts-links-Wendepunkt,~deswegen~ist~das~Extrema~ein~Tiefpunkt}'
                        + r' \quad (1P) \\')
             aufgabe.append(str(liste_teilaufg[i]) + f') Begründen Sie Ihre Skizze. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~x_1~=~'
-                           + gzahl(N(extrema[0],3)) + 'und~x_2 ~=~' + gzahl(N(extrema[1],3))
-                           + r' sind Nullstellen der Ableitung \quad (1P)} \\'
-                           + r' \mathrm{Wendepunkte~an~Stelle~x_w~=~' + gzahl(N(wendepunkt[0]))
-                           + r'ist~Extrema~der~Ableitung \quad (1P) \\' + art
+                           + gzahl(N(extrema[0],3)) + '~und~x_2 ~=~' + gzahl(N(extrema[1],3))
+                           + r'~sind~Nullstellen~der~Ableitung \quad (1P)} \\'
+                           + r' \mathrm{Wendepunkte~an~Stelle~x_w~=~' + gzahl(N(wendepkt[0]))
+                           + r'~ist~Extrema~der~Ableitung \quad (1P)} \\' + art
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
 
             liste_punkte.append(punkte)
@@ -1322,7 +1323,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e'])
         fkt_partial = faktor * x**2 + fkt_c2 *x + fkt_c1
 
         # hier werden die Koeffizenten als String für das Hornerschema berechnet
-        fkt_c2_str = vorz(-1*faktor) '(' + gzahl(-1 * faktor) + r' \cdot a' + vorz_str(-1 * faktor * nst_3) + r') \cdot x'
+        fkt_c2_str = vorz(-1*faktor) + '(' + gzahl(-1 * faktor) + r' \cdot a' + vorz_str(-1 * faktor * nst_3) + r') \cdot x'
         if faktor < 0:
             fkt_c2_str = '+(' + gzahl(-1*faktor) + r' \cdot a' + vorz_str(-1*faktor*nst_3) + r') \cdot x'
         else:

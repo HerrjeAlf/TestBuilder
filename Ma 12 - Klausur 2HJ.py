@@ -3,7 +3,7 @@ from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
-Klasse = 11
+Klasse = 12
 Semester = 2
 Gesamtzeit = 135
 Zeithmft = 25
