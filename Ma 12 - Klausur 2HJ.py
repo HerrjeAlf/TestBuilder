@@ -4,7 +4,7 @@ from skripte.erstellen import *
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
 Klasse = 12
-Semester = 2
+Semester = 3
 Gesamtzeit = 135
 Zeithmft = 25
 liste_qualiphase = ['Einführungsphase', 'Qualifikationsphase']
@@ -34,7 +34,7 @@ liste_seiten_hmft = [seite(aufgaben_hmft_seite2), seite(aufgaben_hmft_seite3)]
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-aufgaben_seite1 = [kurvendiskussion_polynome(1)]
+aufgaben_seite1 = [kurvendiskussion_polynom_parameter_1(1)]
 # z.B. aufgaben_seite1 = [exponentialfunktionen_01(1,['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
 for element in aufgaben_seite1:
     print(element[5])
@@ -56,5 +56,5 @@ angaben_hmft = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunkt
 angaben = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez, liste_punkte]
 
-erzeugen_kl_teil_1(liste_seiten_hmft, angaben_hmft)
-# erzeugen_kl_teil_2(liste_seiten, angaben)
+# erzeugen_kl_teil_1(liste_seiten_hmft, angaben_hmft)
+erzeugen_kl_teil_2(liste_seiten, angaben)

@@ -17,7 +17,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [geraden_aufstellen(1),geraden_lagebeziehung(2, lagebeziehung='windschief') ]
+    aufgaben_seite1 = [kurvendiskussion_polynom_parameter_2(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

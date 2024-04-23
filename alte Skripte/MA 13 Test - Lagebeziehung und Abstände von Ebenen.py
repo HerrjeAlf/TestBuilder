@@ -128,8 +128,9 @@ def erstellen(Teil):
             grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Gleichung für Ebene E in '
-                                              f'Normalen- und Koordinatenform um. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Formen Sie die Gleichung für Ebene E in '
+                           + 'Normalen- und Koordinatenform um. \n\n')
+                           + 'Normalen- und Koordinatenform um. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                            + gzahl(vy * wz) + '-' + gzahl_klammer(vz * wy) + r' \\'
                            + gzahl(vz * wx) + '-' + gzahl_klammer(vx * wz) + r' \\'

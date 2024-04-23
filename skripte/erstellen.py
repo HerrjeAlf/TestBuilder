@@ -360,7 +360,7 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
         Loesung = Document(geometry_options=geometry_options)
         packages(Loesung)
 
-        Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im {Semester}. Semester \n\n'
+        Loesung.append(LargeText(bold(f' Lösung für Teil II der Klausur im {Semester}. Semester \n\n'
                                       f'der {Phase} am {Datum}')))
 
         # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
