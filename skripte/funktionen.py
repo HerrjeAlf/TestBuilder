@@ -3,6 +3,8 @@ import time
 
 import numpy as np
 from sympy import *
+from pylatex import Document, Package
+
 
 # Timer Funktion
 def timer(func):
@@ -20,8 +22,17 @@ def timer(func):
     return wrapper
 
 
-# Funktionen zur Darstellung von Zahlen
+def packages(doc: Document):
+    """
+    Fügt unsere benutzten Pakete an jeweiliges Dokument an.
+    """
+    packages_lst = ['amsfonts', 'bm']
 
+    for package in packages_lst:
+        doc.packages.append(Package(package))
+
+
+# Funktionen zur Darstellung von Zahlen
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 

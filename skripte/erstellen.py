@@ -94,8 +94,7 @@ def erzeugen_test(Teil, liste_seiten, angaben):
     @timer
     def Hausaufgabenkontrolle():
         Aufgabe = Document(geometry_options=geometry_options)
-        Aufgabe.packages.append(Package('amsfonts'))
-        Aufgabe.packages.append(Package('bm'))
+        packages(Aufgabe)
 
         # Kopf erste Seite
         table1 = Tabular('|p{1.2cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{2cm}|', row_height=1.2)
@@ -132,8 +131,8 @@ def erzeugen_test(Teil, liste_seiten, angaben):
     @timer
     def Erwartungshorizont():
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.packages.append(Package('amsfonts'))
-        Loesung.packages.append(Package('bm'))
+        packages(Loesung)
+
         Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} - {Titel}')))
 
         # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
@@ -199,8 +198,8 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
     @timer
     def Teil_1():
         Aufgabe = Document(geometry_options=geometry_options)
-        Aufgabe.packages.append(Package('amsfonts'))
-        Aufgabe.packages.append(Package('bm'))
+        packages(Aufgabe)
+
         # Kopf erste Seite
         with Aufgabe.create(Figure(position='h')) as kopf:
             kopf.add_image('../img/kopfzeile.png', width='480px')
@@ -276,8 +275,8 @@ def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
     @timer
     def EWH_Teil_1():
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.packages.append(Package('amsfonts'))
-        Loesung.packages.append(Package('bm'))
+        packages(Loesung)
+
         Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im {Semester}. Semester \n\n'
                                       f'der {Phase} am {Datum}')))
 
@@ -332,7 +331,8 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
     @timer
     def Teil_2():
         Aufgabe = Document(geometry_options=geometry_options)
-        Aufgabe.packages.append(Package('amsfonts'))
+        packages(Aufgabe)
+
         # Kopf erste Seite
         table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
         table2.add_row(MediumText(bold('Teil II')),MediumText(bold('Aufgaben mit zugelassenen Hilfsmitteln')))
@@ -352,13 +352,14 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
         Aufgabe.append(' \n\n')
         Aufgabe.append(table3)
 
-        Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester Teil II', clean_tex=true)
+        Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil II', clean_tex=true)
 
     # Erwartungshorizont
     @timer
     def EWH_Teil_2():
         Loesung = Document(geometry_options=geometry_options)
-        Loesung.packages.append(Package('amsfonts'))
+        packages(Loesung)
+
         Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im {Semester}. Semester \n\n'
                                       f'der {Phase} am {Datum}')))
 
