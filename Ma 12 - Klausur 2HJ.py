@@ -16,7 +16,7 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_hmft = ['Punkte']
 liste_bez_hmft = ['Aufgabe']
 
-aufgaben_hmft_seite2 = [aenderungsrate(1,ableitung=None),
+aufgaben_hmft_seite2 = [aenderungsrate(1, ableitung=None),
                         ableitungen(2)]
 for element in aufgaben_hmft_seite2:
     liste_bez_hmft.extend(element[5])

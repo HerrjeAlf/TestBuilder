@@ -84,8 +84,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
 
         loesung.append(str(liste_teilaufg[i])
-                       + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~'
-                         r'\mathbf{m=' + gzahl(steigung_dreieck) + r'}~bestimmt~(1P)}')
+                       + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~}'
+                         r'\bm{m=' + gzahl(steigung_dreieck) + r'}~\mathrm{bestimmt~(1P)}')
 
         if 'c' not in teilaufg:
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '',
@@ -105,7 +105,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{ \Delta y}{ \Delta x} ~=~ \frac{f(' + gzahl(x_wert_2)
             + ') - f(' + gzahl(x_wert_1) + ')}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~ \frac{'
             + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3)) + '}{' + gzahl(x_wert_2)
-            + vorz_str(-1 * x_wert_1) + r'} ~=~\mathbf{'
+            + vorz_str(-1 * x_wert_1) + r'} ~=~\bm{'
             + gzahl(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
             + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
         liste_punkte.append(4)
@@ -150,8 +150,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
                            + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         loesung.extend((str(liste_teilaufg[i])
-                       + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~\mathbf{m='
-                       + str(steigung_dreieck) + r'}~bestimmt~(1P)}', 'Figure'))
+                       + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~}\bm{m='
+                       + str(steigung_dreieck) + r'}\mathrm{~bestimmt~(1P)}', 'Figure'))
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(3)
         i += 1
@@ -194,15 +194,15 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
                            + r'} ~ \frac{f(x)-f(' + gzahl(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
                            + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
                            + gzahl(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
-                           + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + '~=~'
-                           + gzahl(N(fkt_abl_x0, 3)) + r' \quad (3P) \\'
+                           + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + r'~=~ \bm{'
+                           + gzahl(N(fkt_abl_x0, 3)) + r'} \quad (3P) \\'
                            + r' \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P)')
             loesung.append(table)
             loesung.append(' \n\n')
             liste_punkte.append(4)
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl)
-                           + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\mathbf{'
+                           + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\bm{'
                            + gzahl(fkt_abl.subs(x, x_wert_2))
                            + r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
                            r'\quad (1P) \\')
@@ -241,7 +241,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                        + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
                        + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
                        + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
-                       + r'h~}{h} ~=~\mathbf{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
+                       + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
         loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
                        + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
                        + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
@@ -252,7 +252,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                        + str(2 * b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
                        + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2 * b1) + r'x~' + vorz_str(b1)
                        + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2 * b1) + r'x~'
-                       + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~ \mathbf{' + str(2 * b1) + 'x~' + vorz_str(b2)
+                       + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~ \bm{' + str(2 * b1) + 'x~' + vorz_str(b2)
                        + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         liste_punkte.append(punkte)
         i += 1
@@ -298,21 +298,21 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
             fkt_1 = collect(expand(diff(fkt, x, 1)), x)
             fkt_2 = collect(expand(diff(fkt, x, 2)), x)
             fkt_3 = collect(expand(diff(fkt, x, 3)), x)
-            extrema = solve(fkt_1,x)
-            wendepkt = solve(fkt_2,x)
-            wendepkt_art = fkt_3.subs(x,wendepkt[0])
+            extrema = solve(fkt_1, x)
+            wendepkt = solve(fkt_2, x)
+            wendepkt_art = fkt_3.subs(x, wendepkt[0])
             if wendepkt_art < 0:
-                art = (r'  \mathrm{Es~ist~ein~links-rechts-Wendepunkt,~deswegen~ist~das~Extrema~ein~Hochpunkt}'
-                       + r' \quad (1P) \\')
+                art = (r'  \mathrm{Es~ist~ein~\mathbf{links-rechts-Wendepunkt},~deswegen~ist~das~Extrema~ein~Hochpunkt'
+                       + r' \quad (1P)} \\')
             else:
-                art = (r'  \mathrm{Es~ist~ein~rechts-links-Wendepunkt,~deswegen~ist~das~Extrema~ein~Tiefpunkt}'
-                       + r' \quad (1P) \\')
+                art = (r'  \mathrm{Es~ist~ein~\mathbf{rechts-links-Wendepunkt},~deswegen~ist~das~Extrema~ein~Tiefpunkt'
+                       + r' \quad (1P)} \\')
             aufgabe.append(str(liste_teilaufg[i]) + f') Begründen Sie Ihre Skizze. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~x_1~=~'
-                           + gzahl(N(extrema[0],3)) + '~und~x_2 ~=~' + gzahl(N(extrema[1],3))
-                           + r'~sind~Nullstellen~der~Ableitung \quad (1P)} \\'
-                           + r' \mathrm{Wendepunkte~an~Stelle~x_w~=~' + gzahl(N(wendepkt[0]))
-                           + r'~ist~Extrema~der~Ableitung \quad (1P)} \\' + art
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~}\bm{x_1~=~'
+                           + gzahl(N(extrema[0],3)) + r'}\mathrm{~und~}\bm{x_2 ~=~' + gzahl(N(extrema[1], 3))
+                           + r'}\mathrm{~sind~Nullstellen~der~Ableitung \quad (1P)} \\'
+                           + r' \mathrm{Wendepunkte~an~Stelle~}\bm{x_w~=~' + gzahl(N(wendepkt[0], 3))
+                           + r'}\mathrm{~ist~Extrema~der~Ableitung \quad (1P)} \\' + art
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
 
             liste_punkte.append(punkte)
@@ -395,7 +395,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         fkt_abl = (gzahl(faktor_exp) + 'x^{' + gzahl(faktor_exp - 1)
                    + r'} \cdot \ln(x) ~+~ x^{' + gzahl(faktor_exp) + r'} \cdot x^{-1} ~=~'
                    + 'x^{' + gzahl(faktor_exp - 1) + r'} \cdot (' + gzahl(faktor_exp)
-                   + r' \cdot \ln(x) ~+~ 1) \\')
+                   + r' \cdot \ln(x) ~+~ 1)')
         return fkt, fkt_uf, fkt_abl, pkt
 
     def fkt_wurzel_exp():
@@ -424,7 +424,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         fkt_uf = ''
         fkt_abl = ('e^{' + vorz_v_aussen(faktor_1, 'x') + '^{' + gzahl(exponent) + r'}'
                     + vorz_v_innen(faktor_2, 'x') + r'} \cdot (' + vorz_v_aussen(faktor_1 * exponent, 'x')
-                       + '^{' + gzahl(exponent - 1) + r'}' + vorz_str(faktor_2) + r') \\')
+                       + '^{' + gzahl(exponent - 1) + r'}' + vorz_str(faktor_2) + r')')
         return fkt, fkt_uf, fkt_abl, pkt
 
     def verkettet_ln():
@@ -475,7 +475,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         else:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt + r' \\\\'
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt + fkt_uf
-               + r' \quad \to \quad f^{ \prime }(x)~=~' + fkt_abl + r' \quad (' + str(pkt) + r'P) \\')
+               + r' \quad \to \quad f^{ \prime }(x)~=~ \bm{' + fkt_abl + r'} \quad (' + str(pkt) + r'P) \\')
         punkte += pkt
         i += 1
 
