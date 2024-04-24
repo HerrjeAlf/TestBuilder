@@ -746,7 +746,11 @@ def rechenregeln_integrale(nr, teilaufg=['a','b']):
                           r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
                       r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
                       r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
-                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C '}
+                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
+                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}': r' \int_{a}^{a} f(x) \,dx ~=~ 0',
+                      r' \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}': r' - \int_{b}^{a} f(x) \,dx',
+                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int_{a}^{c} f(x) \,dx'}
     auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vervollständige die folgenden Rechenregeln für unbestimmte Integrale']
@@ -902,9 +906,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
     liste_punkte = []
     liste_bez = []
     i = 0
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Bestimme die Stammfunktionen der folgenden Funktionen.']
+               'Berechnen Sie die vom Graphen und der x-Achse eingeschlossene Fläche der gegebenen Funktion f.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -914,34 +917,45 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
         punkte_aufg = 4
         liste_punkte.append(punkte_aufg)
 
-        # Funktion und Stammfunktion 1
-        konst_i = zzahl(2,20)
-        e1_i = nzahl(2,5)
-        e2_i = e1_i + nzahl(1,3)
-        fkt_str_i = 'x^{' + gzahl(e2_i) + '} + x^{' + gzahl(e1_i) + '}' + vorz_str(konst_i)
-        Fkt_str_i = (r' \frac{1}{' + gzahl(e2_i+1) + r'} \cdot x^{' + gzahl(e2_i + 1) + r'} + \frac{1}{' + gzahl(e1_i+1)
-                     + r'} \cdot x^{' + gzahl(e1_i + 1) + '}' + vorz_str(konst_i) + 'x + C')
+        nst_1 = zzahl(1, 3)
+        quadr_nst_23 = nzahl(2, 25)
+        nst_2 = math.sqrt(quadr_nst_23)
+        nst_3 = -1 * nst_2
+        faktor = zzahl(3, 8) / 2
 
-        # Funktion und Stammfunktion 2
-        konst_ii = zzahl(2,20)
-        e1_ii = nzahl(2,5)
-        e2_ii = e1_ii + nzahl(2,4)
-        a1 = (e1_ii+1) * zzahl(1,10)/2
-        a2 = (e2_ii+1) * zzahl(1,10)/2
-        fkt_str_ii = (vorz_v_aussen(a2,'x^{' + gzahl(e2_ii) + '}') + vorz_v_innen(a1,'x^{' + gzahl(e1_ii) + '}')
-                      + vorz_str(konst_ii))
-        Fkt_str_ii = (vorz_v_aussen(Rational(a2,e2_ii+1),'x^{' + gzahl(e2_ii +1) + '}')
-                      + vorz_v_innen(Rational(a1,e1_ii + 1), 'x^{' + gzahl(e1_ii+1) + '}')
-                      + vorz_v_innen(konst_ii,'x + C'))
+        fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
+        fkt_a1 = faktor
+        fkt_a2 = -1 * faktor * nst_1
+        fkt_a3 = faktor * (-1 * quadr_nst_23)
+        fkt_a4 = faktor * nst_1 * quadr_nst_23
+        fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
+                   + vorz_str(fkt_a4))
+        fkt_h_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3 - 1, 'x')
+                     + vorz_str(fkt_a4))
+        fkt_partial = faktor * (x ** 2 - quadr_nst_23)
+        fkt_partial_pq = x ** 2 - quadr_nst_23
+        fkt_partial_p = 0
+        fkt_partial_q = -1 * quadr_nst_23
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \hspace{10em} '
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \hspace{10em} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ ' + fkt_str_i + r' \quad \to \quad F(x) ~=~'
-                       + Fkt_str_i + r' \quad (2P) \\'
-                       + str(liste_teilaufg[i+1]) + r') \quad h(x) ~=~' + fkt_str_ii + r' \quad \to \quad H(x) ~=~'
-                       + Fkt_str_ii + r' \quad (2P) \\'
+        fkt_1 = collect(expand(diff(fkt, x, 1)), x)
+        fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * nst_1, 3), 'x') +
+                    vorz_str(Rational(quadr_nst_23, -3)))
+        p_fkt_1_pq = Rational((-2 * nst_1), 3)
+        q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
+        s_fkt = faktor * nst_1 * quadr_nst_23
+
+        fkt_b2 = nst_1 * fkt_a1
+        fkt_c2 = fkt_a2 + fkt_b2
+        fkt_b3 = nst_1 * fkt_c2
+        fkt_c3 = fkt_a3 + fkt_b3
+        fkt_b4 = nst_1 * fkt_c3
+        fkt_c4 = fkt_a4 + fkt_b4
+
+
+        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \hspace{10em}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i += 2
+        i += 1
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
@@ -1255,13 +1269,13 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     fkt_a0 = -1*faktor*nst_1*nst_3*a
 
     # Koeffizienten der Funktion als String und der richtigen Darstellung
-    fkt_a1_str = (vorz(nst_1+nst_3) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+    fkt_a1_str = (vorz(nst_1+nst_3) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r'a'
                   + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
-    fkt_a2_str = (vorz(-1 * faktor) + '(' + gzahl(abs(faktor)) + r' \cdot a '
+    fkt_a2_str = (vorz(-1 * faktor) + '(' + gzahl(abs(faktor)) + r'a '
                   + vorz_str(-1 * faktor * (nst_1 + nst_3)) + ')')
     fkt_a3_str = gzahl(faktor)
 
-    fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' \cdot a'
+    fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' a'
 
     fkt_str = fkt_a3_str + r'x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
 
@@ -1296,11 +1310,11 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         liste_punkte.append(punkte)
-        fkt_a1_str_neg = (vorz(-1*(nst_1 + nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r' \cdot a'
+        fkt_a1_str_neg = (vorz(-1*(nst_1 + nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r' a'
                           + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
         fkt_a3_str_neg = gzahl(-1*faktor)
-        fkt_sym = (fkt_a3_str_neg + r' \cdot x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str_neg
-                   + r' \cdot x ~' + fkt_a0_str)
+        fkt_sym = (fkt_a3_str_neg + 'x^3' + fkt_a2_str + 'x^2' + fkt_a1_str_neg
+                   + 'x' + fkt_a0_str)
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
                                                  + r' \neq  f(x)  \neq -f(x) \\'
@@ -1319,17 +1333,17 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_partial = faktor * x**2 + fkt_c2 *x + fkt_c1
 
         # hier werden die Koeffizenten als String für das Hornerschema berechnet
-        fkt_c2_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-1 * faktor, r' \cdot a')
+        fkt_c2_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-1 * faktor, r' a')
                       + vorz_v_innen(-1 * faktor * nst_3,r') \cdot x'))
-        fkt_c1_str = vorz_str(faktor*nst_3) + r' \cdot a'
+        fkt_c1_str = vorz_str(faktor*nst_3) + r' a'
         fkt_p = -1*a - nst_3    # -(a+x_3)
         fkt_q = nst_3 * a
         fkt_disk = ((fkt_p/2)**2)-fkt_q
         fkt_p_str = '-(a' + vorz_str(nst_3) + ')'
-        fkt_q_str = vorz_str(nst_3) + r' \cdot a'
+        fkt_q_str = vorz_str(nst_3) + r' a'
         fkt_partial_str = gzahl(faktor) + r' \cdot x^2' + fkt_c2_str + fkt_c1_str
         fkt_pq_str = 'x^2' + fkt_p_str + r' \cdot x' + fkt_q_str
-        fkt_disk_str = r' \frac{a^2' + vorz_str(-1*2*nst_3) + r' \cdot a' + vorz_str(nst_3**2) + '}{4}'
+        fkt_disk_str = r' \frac{a^2' + vorz_str(-1*2*nst_3) + r' a' + vorz_str(nst_3**2) + '}{4}'
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
         table2.add_row('',fkt_a3,latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
@@ -1380,24 +1394,24 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         # Koeffizienten der ersten Ableitung als string
 
         fkt_1_a2_str = gzahl(3*faktor)
-        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor,r' \cdot a')
+        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor,r' a')
                         + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
         fkt_1_a0_str = (vorz(faktor * (nst_1 + nst_3)) + '('
-                         + vorz_v_aussen(abs(faktor * (nst_1 + nst_3)), r' \cdot a')
+                         + vorz_v_aussen(abs(faktor * (nst_1 + nst_3)), r' a')
                          + vorz_v_innen(-1 * faktor * nst_1 * nst_3, ')'))
 
         # p und q in der pq-Formel
-        fkt_1_p_str = r'-( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
-        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Rational(-1 * (nst_1 + nst_3), 3), r' \cdot a')
+        fkt_1_p_str = r'-( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
+        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Rational(-1 * (nst_1 + nst_3), 3), r' a')
                        + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3),')'))
-        fkt_1_q2_str = (vorz_v_aussen(Rational((nst_1 + nst_3), 3), r' \cdot a')
+        fkt_1_q2_str = (vorz_v_aussen(Rational((nst_1 + nst_3), 3), r' a')
                         + vorz_str(Rational((nst_1 * nst_3), 3)))
 
         # p und q in umgeformter pq-Formel
-        fkt_1_p2_str = r'( \frac{2}{3} \cdot a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
-        fkt_1_p3_str = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        fkt_1_p2_str = r'( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
+        fkt_1_p3_str = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
         fkt_1_q3_str = (vorz(-1*(nst_1 + nst_3)) + r' \frac{4 \cdot ('
-                        + vorz_v_aussen(Rational(abs(nst_1 + nst_3), 3), r' \cdot a')
+                        + vorz_v_aussen(Rational(abs(nst_1 + nst_3), 3), r' a')
                         + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3), ') }{4}'))
 
         # Diskriminante der Wurzel
@@ -1440,12 +1454,12 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         liste_punkte.append(punkte)
-        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' \cdot a')
+        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
                         + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
-        fkt_1_a1_str_neg = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' \cdot a')
+        fkt_1_a1_str_neg = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
                             + vorz_v_innen(-2 * faktor * (nst_1 + nst_3), ')'))
 
-        xwert_wendepunkt = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1+nst_3),3))
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1+nst_3),3))
         fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
         fkt_3_str = gzahl(6*faktor)
 
@@ -1466,7 +1480,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         liste_punkte.append(punkte)
         wert_a_wp = nzahl(1,5)
         xwert_wp = Rational((wert_a_wp + nst_1 + nst_3),3)
-        xwert_wendepunkt = r' \frac{1}{3} \cdot a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert von a,'
                                                 f' bei dem der Wendepunkt an der Stelle x = {xwert_wp} ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + gzahl(xwert_wp) + '~=~' + xwert_wendepunkt
@@ -1522,7 +1536,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     fkt_a1 = faktor*(faktor_1*faktor_2 + faktor_2*faktor_3 + faktor_1*faktor_3)
     fkt_a0 = -1*faktor*faktor_1*faktor_2*faktor_3
 
-    fkt_str = (vorz_v_aussen(fkt_a3, r' \cdot x^3') + vorz_v_innen(fkt_a2, r'a \cdot x^2')
+    fkt_str = (vorz_v_aussen(fkt_a3, r'x^3') + vorz_v_innen(fkt_a2, r'a \cdot x^2')
                + vorz_v_innen(fkt_a1, r'a^2 \cdot x') + vorz_v_innen(fkt_a0, r'a^3'))
 
     print(fkt), print(fkt_str)
@@ -1559,7 +1573,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         punkte = 3
         liste_punkte.append(punkte)
         fkt_sym = fkt.subs(x, -x)
-        fkt_sym_str = (gzahl(-1 * fkt_a3)+ r' \cdot x^3 ~' + vorz_str(fkt_a2) + r'a \cdot x^2 ~'
+        fkt_sym_str = (gzahl(-1 * fkt_a3)+ r'x^3 ~' + vorz_str(fkt_a2) + r'a \cdot x^2 ~'
                        + vorz_str(-1 * fkt_a1) + r'a^2 \cdot x ~' + vorz_str(fkt_a0) + r'a^3')
         if fkt_sym == fkt:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str
@@ -1586,11 +1600,11 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_b0 = faktor*faktor_1*faktor_2*faktor_3
         # hier werden das Partialpolynom (Ergebnis Hornerschema) und die Gleichung für die pq-Formel berechnet
         fkt_partial = faktor * x**2 + fkt_c2 * a * x + fkt_c1 * a**2
-        fkt_partial_str = (gzahl(faktor) + r' \cdot x^2' + vorz_str(fkt_c2) + r' \cdot a \cdot x'
-                           + vorz_str(fkt_c1) + r' \cdot a^2')
+        fkt_partial_str = (gzahl(faktor) + r' \cdot x^2' + vorz_str(fkt_c2) + r' a \cdot x'
+                           + vorz_str(fkt_c1) + r' a^2')
         fkt_p = -1 * (faktor_1 + faktor_3)
         fkt_q = faktor_1 * faktor_3
-        fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' \cdot a \cdot x' + vorz_str(fkt_q) + r' \cdot a^2'
+        fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' a \cdot x' + vorz_str(fkt_q) + r' a^2'
         fkt_disk = Rational((faktor_1 - faktor_3)**2,4)
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
@@ -1616,9 +1630,9 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        r' x_{2/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
                        r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                        r'a^2)} ~=~ ' + gzahl(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
-                       + latex(fkt_disk) + r' \cdot a^2} \quad (2P) \\ x_{2/3}~=~'
-                       + gzahl(Rational(faktor_1 + faktor_3,2)) + r' \cdot a \pm \Big('
-                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) \cdot a \quad \to \quad x_2~=~'
+                       + latex(fkt_disk) + r' a^2} \quad (2P) \\ x_{2/3}~=~'
+                       + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
+                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_2~=~'
                        + gzahl(faktor_1) + r'a \quad \mathrm{und} \quad x_3~=~'
                        + gzahl(faktor_3) + r'a \quad (3P) \\ S_{x_2}(' + nst_1_str + r'\vert 0) \quad S_{x_1}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad \mathrm{sowie}'
@@ -1680,17 +1694,17 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
                        r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
-                       + gzahl(fkt_1_p) + r' \cdot a}{2} \pm \sqrt{ \Big( \frac{'
-                       + gzahl(fkt_1_p) + r' \cdot a}{2} \Big)^2 - \Big(' + gzahl(fkt_1_q)
-                       + r' \cdot a^2 \Big) } \quad (1P) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' \cdot a \pm \sqrt{'
-                       + gzahl(N(fkt_1_disk,3)) + r' \cdot a^2} \quad ~=~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' \cdot a \pm '
-                       + gzahl(N(fkt_1_sqrt,3)) + r' \cdot a \quad (1P) \\'
-                       + r'x_1~=~' + gzahl(-1*fkt_1_p/2) + r' \cdot a ~-~' + gzahl(N(fkt_1_sqrt,3))
-                       + r' \cdot a~=~' + gzahl(N(x_1_fkt_1,3)) + r' \quad \mathrm{und} \quad '
-                       + r'x_2~=~' + gzahl(-1*fkt_1_p/2) + r' \cdot a~+~' + gzahl(N(fkt_1_sqrt,3))
-                       + r' \cdot a~=~' + gzahl(N(x_2_fkt_1,3)) + r' \quad (2P) \\'
+                       + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \Big( \frac{'
+                       + gzahl(fkt_1_p) + r' a}{2} \Big)^2 - \Big(' + gzahl(fkt_1_q)
+                       + r' a^2 \Big) } \quad (1P) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
+                       + gzahl(N(fkt_1_disk,3)) + r' a^2} \quad ~=~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm '
+                       + gzahl(N(fkt_1_sqrt,3)) + r' a \quad (1P) \\'
+                       + r'x_1~=~' + gzahl(-1*fkt_1_p/2) + r' a ~-~' + gzahl(N(fkt_1_sqrt,3))
+                       + r' a~=~' + gzahl(N(x_1_fkt_1,3)) + r' \quad \mathrm{und} \quad '
+                       + r'x_2~=~' + gzahl(-1*fkt_1_p/2) + r' a~+~' + gzahl(N(fkt_1_sqrt,3))
+                       + r' a~=~' + gzahl(N(x_2_fkt_1,3)) + r' \quad (2P) \\'
                        + r'f^{ \prime \prime } (' + gzahl(N(x_1_fkt_1,3)) +') ~=~' + gzahl(6*faktor) + r' \cdot ('
-                       + gzahl(N(x_1_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + r' \cdot a ~=~'
+                       + gzahl(N(x_1_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + r' a ~=~'
                        + gzahl(N(x_1_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_1
                        + r' f^{ \prime \prime } (' + gzahl(N(x_1_fkt_2,3)) + ') ~=~' + gzahl(6 * faktor)
                        + r' \cdot (' + gzahl(N(x_2_fkt_1,3)) + ')' + gzahl(fkt_1_a1) + 'a  ~=~'
@@ -1777,7 +1791,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         xmin_f = int(round(nst_1_a2 - 0.5,0))
         xmax_f = int(round(nst_3_a2 + 0.5,0))
         Graph(xmin_f,xmax_f,fkt_a2,name=f'Loesung_{nr}{liste_teilaufg[i]}')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f für a={gzahl(a2)} im '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f für a = {gzahl(a2)} im '
                        + f'Intervall [ {xmin_f} | {xmax_f} ].')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}',
                         'Figure'))

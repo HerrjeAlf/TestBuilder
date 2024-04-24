@@ -4,15 +4,14 @@ import time
 import numpy as np
 import random, math
 import matplotlib.pyplot as plt
-from funktionen import *
+from skripte.funktionen import *
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow, Package)
 from pylatex.utils import bold
 from sympy import *
 from sympy.plotting import plot as symplot
-
-from plotten import Graph
+from skripte.plotten import *
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
