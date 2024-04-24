@@ -906,55 +906,76 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
     liste_punkte = []
     liste_bez = []
     i = 0
+    nst_1 = zzahl(1, 3)
+    quadr_nst_23 = nzahl(2, 25)
+    nst_2 = math.sqrt(quadr_nst_23)
+    nst_3 = -1 * nst_2
+    faktor = zzahl(3, 8) / 2
+
+    fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
+    fkt_a1 = faktor
+    fkt_a2 = -1 * faktor * nst_1
+    fkt_a3 = faktor * (-1 * quadr_nst_23)
+    fkt_a4 = faktor * nst_1 * quadr_nst_23
+    fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
+               + vorz_str(fkt_a4))
+    fkt_h_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3 - 1, 'x')
+                 + vorz_str(fkt_a4))
+    fkt_partial = faktor * (x ** 2 - quadr_nst_23)
+    fkt_partial_pq = x ** 2 - quadr_nst_23
+    fkt_partial_p = 0
+    fkt_partial_q = -1 * quadr_nst_23
+
+    fkt_1 = collect(expand(diff(fkt, x, 1)), x)
+    fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * nst_1, 3), 'x') +
+                vorz_str(Rational(quadr_nst_23, -3)))
+    p_fkt_1_pq = Rational((-2 * nst_1), 3)
+    q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
+    s_fkt = faktor * nst_1 * quadr_nst_23
+
+    lsg = r' \quad S_y(0 \vert' + gzahl(s_fkt) + r') \quad (4P) \\'
+
+    fkt_b2 = nst_1 * fkt_a1
+    fkt_c2 = fkt_a2 + fkt_b2
+    fkt_b3 = nst_1 * fkt_c2
+    fkt_c3 = fkt_a3 + fkt_b3
+    fkt_b4 = nst_1 * fkt_c3
+    fkt_c4 = fkt_a4 + fkt_b4
+
+    table2 = Tabular('c c|c|c|c', row_height=1.2)
+    table2.add_row('', fkt_a1, fkt_a2, fkt_a3, fkt_a4)
+    table2.add_hline(2, 5)
+    table2.add_row('Berechnung der Partialfunktion  mit Hornerschema: ', '', fkt_b2, fkt_b3, fkt_b4)
+    table2.add_hline(2, 5)
+    table2.add_row('', fkt_a1, fkt_c2, fkt_c3, fkt_c4)
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Berechnen Sie die vom Graphen und der x-Achse eingeschlossene Fläche der gegebenen Funktion f.']
+               ' \mathrm{Gegeben~ist~die~Funktion: f(x)~=~' + fkt_str + r' \hspace{20em} }']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 4
-        liste_punkte.append(punkte_aufg)
-
-        nst_1 = zzahl(1, 3)
-        quadr_nst_23 = nzahl(2, 25)
-        nst_2 = math.sqrt(quadr_nst_23)
-        nst_3 = -1 * nst_2
-        faktor = zzahl(3, 8) / 2
-
-        fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
-        fkt_a1 = faktor
-        fkt_a2 = -1 * faktor * nst_1
-        fkt_a3 = faktor * (-1 * quadr_nst_23)
-        fkt_a4 = faktor * nst_1 * quadr_nst_23
-        fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
-                   + vorz_str(fkt_a4))
-        fkt_h_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3 - 1, 'x')
-                     + vorz_str(fkt_a4))
-        fkt_partial = faktor * (x ** 2 - quadr_nst_23)
-        fkt_partial_pq = x ** 2 - quadr_nst_23
-        fkt_partial_p = 0
-        fkt_partial_q = -1 * quadr_nst_23
-
-        fkt_1 = collect(expand(diff(fkt, x, 1)), x)
-        fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * nst_1, 3), 'x') +
-                    vorz_str(Rational(quadr_nst_23, -3)))
-        p_fkt_1_pq = Rational((-2 * nst_1), 3)
-        q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
-        s_fkt = faktor * nst_1 * quadr_nst_23
-
-        fkt_b2 = nst_1 * fkt_a1
-        fkt_c2 = fkt_a2 + fkt_b2
-        fkt_b3 = nst_1 * fkt_c2
-        fkt_c3 = fkt_a3 + fkt_b3
-        fkt_b4 = nst_1 * fkt_c3
-        fkt_c4 = fkt_a4 + fkt_b4
+        punkte = 16
+        liste_punkte.append(punkte)
 
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \hspace{10em}')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
+                       + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
+                       + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
+                       + latex(fkt_partial) + r' \quad (4P)')
+        loesung.append(table2)
+        loesung.append(r'\hspace{10em} \\' + latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
+                       + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
+                       + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
+                       + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
+                       + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
+                       + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
+                       + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
+                       + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         i += 1
 
 

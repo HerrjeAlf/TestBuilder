@@ -105,4 +105,9 @@ def schnittpunkte(fkt_1,fkt_2):
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
 
-print('test')
+
+print('1.b.) ' + str(integrate(x**(-2),(x,1,3))))
+print('1.c) ' + str(abs(integrate(x**3-x,(x,0,1)))))
+print('1.d) ' + str(abs(integrate(x**3-x,(x,0,1))) + abs(integrate(x**3-x,(x,1,2)))))
+print('1.e.) ' + str(abs(integrate(-2*x**2 + 2,(x,0,1)))))
+
