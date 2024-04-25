@@ -747,13 +747,15 @@ def rechenregeln_integrale(nr, teilaufg=['a','b']):
                       r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
                       r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
                       r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
-                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}': r' \int_{a}^{a} f(x) \,dx ~=~ 0',
-                      r' \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}': r' - \int_{b}^{a} f(x) \,dx',
+                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
+                      r' \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
+                          r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
                       r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int_{a}^{c} f(x) \,dx'}
+                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
     auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständige die folgenden Rechenregeln für unbestimmte Integrale']
+               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
