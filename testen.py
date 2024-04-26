@@ -3,15 +3,15 @@ from Aufgaben.Aufgaben_Algebra import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
-Kurs = 'Grundkurs'
+Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
-Klasse = '13 Gk2'
+Klasse = '12 LK1'
 Lehrer = 'Herr Herrys'
-Art = 'Abitur'
-Titel = 'mündliche Prüfung'
+Art = 'Test'
+Titel = 'Kurvendiskussion Parameterfunktionen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
+probe = False    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']

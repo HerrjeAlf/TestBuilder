@@ -140,6 +140,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
             aufgabe.append('Figure')
 
         else:
+            xwerte = [-6 + n / 5 for n in range(60)]
+            ywerte = [fkt.subs(x, xwerte[i]) for i in range(60)]
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt,
                              r'',
                              'f', f'Loesung_{nr}{liste_teilaufg[i]}',
@@ -650,9 +652,9 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                        + vorz_v_innen(2*lsg_a,'x') + r'\quad (3P) \\'
                        + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
-                       + vorz_v_innen(2*lsg_a,r' \Big)')
+                       + vorz_str(2*lsg_a) + r' \Big)'
                        + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
-                       + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_v_innen(2*lsg_a,'') + r' \quad \vert \div '
+                       + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
                        + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
                        + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3P) \\'
                        + r' f^{ \prime \prime }(0) ~=~ ' + gzahl(N(fkt_a2.subs(x,0),2)) + lsg_extrema1
@@ -707,7 +709,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Tangente und Normale am Wendepunkt '
                                                 f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
-                       r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
+                       + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
                        + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
                        + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
                        + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
