@@ -820,7 +820,7 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         k1 = zzahl(1, 19) / 2
         fkt = gzahl(a1) + r' \cdot e^x' + vorz_str(k1)
         fkt_uf = ''
-        Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_aussen(k1, 'x + C')
+        Fkt = gzahl(a1) + r' \cdot e^x' + vorz_v_innen(k1, 'x + C')
         pkt = 2
         return fkt, fkt_uf, Fkt, pkt
 
@@ -906,38 +906,39 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
+def bestimmtes_integral(nr, teilaufg=['a', 'b']):
     liste_punkte = []
     liste_bez = []
     i = 0
-    nst_1 = zzahl(1, 3)
-    quadr_nst_23 = nzahl(2, 25)
-    nst_2 = math.sqrt(quadr_nst_23)
-    nst_3 = -1 * nst_2
-    faktor = zzahl(3, 8) / 2
+
+    nst_1 = zzahl(1, 2)
+    nst_2 = nst_1 + nzahl(1, 2) + 0.5
+    nst_3 = nst_1 - nzahl(1, 2) - 0.5
+    faktor = zzahl(1,3)
 
     fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
     fkt_a1 = faktor
-    fkt_a2 = -1 * faktor * nst_1
-    fkt_a3 = faktor * (-1 * quadr_nst_23)
-    fkt_a4 = faktor * nst_1 * quadr_nst_23
+    fkt_a2 = -1 * faktor * (nst_1 + nst_2 + nst_3)
+    fkt_a3 = faktor * ((nst_1 * nst_2) + (nst_1 * nst_3) + (nst_2 * nst_3))
+    fkt_a4 = -1 * faktor * nst_1 * nst_2 * nst_3
     fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
                + vorz_str(fkt_a4))
     fkt_h_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3 - 1, 'x')
                  + vorz_str(fkt_a4))
-    fkt_partial = faktor * (x ** 2 - quadr_nst_23)
-    fkt_partial_pq = x ** 2 - quadr_nst_23
-    fkt_partial_p = 0
-    fkt_partial_q = -1 * quadr_nst_23
+    fkt_partial = expand(faktor * (x - nst_2) * (x - nst_3))
+    fkt_partial_pq = expand((x - nst_2) * (x - nst_3))
+    fkt_partial_p = -1 * (nst_2 + nst_3)
+    fkt_partial_q = (nst_2 * nst_3)
 
     fkt_1 = collect(expand(diff(fkt, x, 1)), x)
-    fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * nst_1, 3), 'x') +
-                vorz_str(Rational(quadr_nst_23, -3)))
-    p_fkt_1_pq = Rational((-2 * nst_1), 3)
-    q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
-    s_fkt = faktor * nst_1 * quadr_nst_23
-
-    lsg = r' \quad S_y(0 \vert' + gzahl(s_fkt) + r') \quad (4P) \\'
+    fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * (nst_1 + nst_2 + nst_3), 3), 'x')
+                + vorz_str(Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)))
+    p_fkt_1_pq = Rational(-2 * (nst_1 + nst_2 + nst_3), 3)
+    q_fkt_1_pq = Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)
+    s_fkt = -1 * faktor * nst_1 * nst_2 * nst_3
+    Fkt = collect(integrate(fkt,x),x)
+    Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4), 'x^4') + vorz_v_innen(Rational(fkt_a2,3), 'x^3')
+               + vorz_v_innen(Rational(fkt_a3,2), 'x^2') + vorz_v_innen(fkt_a4,'x'))
 
     fkt_b2 = nst_1 * fkt_a1
     fkt_c2 = fkt_a2 + fkt_b2
@@ -953,33 +954,53 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd']):
     table2.add_hline(2, 5)
     table2.add_row('', fkt_a1, fkt_c2, fkt_c3, fkt_c4)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               ' \mathrm{Gegeben~ist~die~Funktion: f(x)~=~' + fkt_str + r' \hspace{20em} }']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
+               'f(x)~=~' + fkt_str + r' \hspace{20em}']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 16
+        punkte = 12
         liste_punkte.append(punkte)
 
-
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
                        + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
                        + latex(fkt_partial) + r' \quad (4P)')
         loesung.append(table2)
-        loesung.append(r'\hspace{10em} \\' + latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
+        loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
                        + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
                        + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
                        + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
                        + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
                        + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
-                       + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
-                       + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 6
+        liste_punkte.append(punkte)
+
+        lsg_A1 = N(Fkt.subs(x, nst_1) - Fkt.subs(x, nst_3),3)
+        lsg_A2 = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1),3)
+        lsg_A = abs(lsg_A1) + abs(lsg_A2)
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
+                       + f'die der Graph mit der x-Achse einschließt. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(N(nst_3,2)) + '}^{'
+                       + gzahl(nst_1) + '}' + fkt_str + r' ~ \,dx \right| + \left| \int_{' + gzahl(nst_1) + '}^{'
+                       + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (2P) \\ =~ \left| \left[ '
+                       + Fkt_str + r' \right]_{' + gzahl(N(nst_3,2)) + '}^{' + gzahl(nst_1)
+                       + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
+                       + gzahl(N(nst_1,2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
+                       + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
+                       + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
+                       + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+
         i += 1
 
 

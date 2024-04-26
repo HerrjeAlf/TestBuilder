@@ -398,7 +398,7 @@ def erstellen(Teil):
 
         return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
 
-    aufgaben = [extremalproblem_02(1, ['a', 'b', 'c'])]
+    aufgaben = [extremalproblem_02(2, ['a', 'b', 'c'])]
 
     # erstellen der Tabelle zur Punkteübersicht
     Punkte = (sum(liste_punkte[1:]))
