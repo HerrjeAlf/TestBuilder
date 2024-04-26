@@ -914,7 +914,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b']):
     nst_1 = zzahl(1, 2)
     nst_2 = nst_1 + nzahl(1, 2) + 0.5
     nst_3 = nst_1 - nzahl(1, 2) - 0.5
-    faktor = zzahl(1,3)
+    faktor = zzahl(3,7)/2
 
     fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
     fkt_a1 = faktor
