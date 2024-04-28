@@ -1148,12 +1148,13 @@ def rechenregeln_integrale(nr, teilaufg=['a','b']):
     if 'b' in teilaufg:
         aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
         lsg = (lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
-               + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte} \\')
+               + r' \mathrm{insgesamt' + str(len(teilaufg)) + r'~Punkte} \\')
         i += 1
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     liste_bez = [nr]
