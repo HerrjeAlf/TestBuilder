@@ -955,6 +955,136 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def rekonstruktion(nr, teilaufg=['a']):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    # hier wird die Funktion erstellt.
+    loesung_vektor = [1/3,1/5,1/7]
+    while vektor_rational(loesung_vektor,10) != True:
+        xwert_1, xwert_2, xwert_3 = np.random.choice([-2,-1,1,2],3, False)
+        ywert_1 = nzahl(3,8)
+        ywert_2 = ywert_1 + nzahl(2,6)
+        ywert_3 = nzahl (2,8)
+
+        A = np.array([[xwert_1 ** 2, xwert_1, 1],
+                         [xwert_2 ** 2, xwert_2, 1],
+                         [xwert_3 ** 2, xwert_3, 1]])
+
+        b = np.array([ywert_1, ywert_2, ywert_3])
+        loesung_vektor = slv(A, b)
+    [x_1, x_2, x_3] = loesung_vektor
+    fkt = x_1 * x**2 + x_2 * x + x_3
+    fkt_str = vorz_v_aussen(x_1,'x') + '^2' + vorz_v_innen(x_2,'x') + vorz_str(x_3)
+    fkt_a = fkt*x
+    fkt_a_str = vorz_v_aussen(x_1,'x') + '^3' + vorz_v_innen(x_2,'x') + '^2' + vorz_v_innen(x_3,'x')
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        punkte = 19
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # Rekonstruktion der Funktion
+        # Zeilen 1 bis 3 vom LGS:
+
+        a1 = xwert_1 ** 2
+        b1 = xwert_1
+        c1 = 1
+        d1 = ywert_1
+
+
+        a2 = xwert_2 ** 2
+        b2 = xwert_2
+        c2 = 1
+        d2 = ywert_2
+
+        a3 = xwert_3 ** 2
+        b3 = xwert_3
+        c3 = 1
+        d3 = ywert_3
+
+        # Zeile 4 und 5 vom LGS:
+
+        z4 = NoEscape(gzahl(a1) + r'$ \cdot II' + vorz_str(-1 * a2) + r' \cdot I $')
+        a4 = 0
+        b4 = a1 * b2 - a2 * b1
+        c4 = a1 - a2
+        d4 = a1 * d2 - a2 * d1
+
+        z5 = NoEscape(gzahl(a1) + r'$ \cdot III' + vorz_str(-1 * a3) + r' \cdot I $')
+        a5 = 0
+        b5 = a1 * b3 - a3 * b1
+        c5 = a1 - a3
+        d5 = a1 * d3 - a3 * d1
+
+        # Zeile 6 vom LGS:
+
+        z6 = NoEscape(gzahl(b4) + r'$ \cdot III' + vorz_str(-1 * b5) + r' \cdot II $')
+        b6 = 0
+        c6 = b4 * c5 - b5 * c4
+        d6 = b4 * d5 - b5 * d4
+
+        # Lösungen des LGS:
+
+        lsg_c = d6 / c6
+        lsg_b = (d4 - (c4 * lsg_c)) / b4
+        lsg_a = (d1 - (c1 * lsg_c) - (b1 * lsg_b)) / a1
+
+        table2 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
+        table2.add_hline(2, 7)
+        table2.add_row('Berechnung mit Gauß-Algorithmus','Nr.', 'Berechnung', 'a', 'b', 'c', 'lsg', '')
+        table2.add_hline(2, 7)
+        table2.add_row('','I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '(1P)')
+        table2.add_row('', 'II', ' ', gzahl(a2), gzahl(b2), gzahl(c2), gzahl(d2), '(1P)')
+        table2.add_row('', 'III', ' ', gzahl(a3), gzahl(b3), gzahl(c3), gzahl(d3), '(1P)')
+        table2.add_hline(2, 7)
+        table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
+        table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1P)')
+        table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1P)')
+        table2.add_hline(2, 7)
+        table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
+        table2.add_row('', 'II', ' ', gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '')
+        table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1P)')
+        table2.add_hline(2, 7)
+
+        # Aufgaben und Lösungen
+        aufgabe.append('Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
+                       + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
+                       + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
+                       + ' | ' + gzahl(ywert_3) + ' ) \n\n')
+        aufgabe.append(str(teilaufg[i]) + ') Berechne die Funktionsgleichung von f. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
+                       + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
+                       + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
+                       + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
+                       + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
+                       + r' \quad (2P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                       + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
+                       + gzahl(ywert_2) + r' \quad (2P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                       + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
+                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
+        loesung.append(table2)
+        loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
+                       + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                       + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
+                       + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
+                       + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
+                       + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                       + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
+                       + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
+                       + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
+                       + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
+                       + r' \quad (2P) }  \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 # Aufgaben zur Integralrechnung
 
 def rechenregeln_integrale(nr, teilaufg=['a','b']):
@@ -1193,10 +1323,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b']):
                        + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
                        + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
                        + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
-                       + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
-                       + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
-                       + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
-                       + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
+                       + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
+                       + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r'} \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         i += 1
 
