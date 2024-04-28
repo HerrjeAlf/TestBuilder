@@ -764,8 +764,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     fkt_a_str = vorz_v_aussen(x_1,'x') + '^3' + vorz_v_innen(x_2,'x') + '^2' + vorz_v_innen(x_3,'x')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen \n'
-               'Rechtecks auf dem Graphen von f. \n', 'Figure']
+               f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen '
+               'Rechtecks auf dem Graphen von f.', 'Figure']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'Aufgabe_{nr}']
     grafiken_loesung = []
