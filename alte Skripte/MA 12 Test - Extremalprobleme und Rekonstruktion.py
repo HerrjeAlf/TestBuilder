@@ -165,13 +165,13 @@ def erstellen(Teil):
 
             # Zeile 4 und 5 vom LGS:
 
-            z4 = gzahl(a1) + '*II' + vorz_str(-1*a2) + '*I'
+            z4 = NoEscape(gzahl(a1) + r'$ \cdot II' + vorz_str(-1*a2) + r' \cdot I $')
             a4 = 0
             b4 = a1 * b2 - a2 * b1
             c4 = a1 - a2
             d4 = a1 * d2 - a2 * d1
 
-            z5 = gzahl(a1) + '*III' + vorz_str(-1*a3) + '*I'
+            z5 = NoEscape(gzahl(a1) + r'$ \cdot III' + vorz_str(-1*a3) + r' \cdot I $')
             a5 = 0
             b5 = a1 * b3 - a3 * b1
             c5 = a1 - a3
@@ -179,7 +179,7 @@ def erstellen(Teil):
 
             # Zeile 6 vom LGS:
 
-            z6 = gzahl(b4) + '*III' + vorz_str(-1*b5) + '*II'
+            z6 = NoEscape(gzahl(b4) + r'$ \cdot III' + vorz_str(-1*b5) + r' \cdot II $')
             b6 = 0
             c6 = b4 * c5 - b5 * c4
             d6 = b4 * d5 - b5 * d4
@@ -308,7 +308,7 @@ def erstellen(Teil):
             faktor = -1 * nzahl(1, 10)/5
         nst = nzahl(5,8)
         xvers = nzahl(1,3)
-        yvers = nzahl(2,6)  * (-1*faktor)
+        yvers = nzahl(2,6) * (-1*faktor)
 
         # Funktionen und Ableitungen
 
