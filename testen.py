@@ -17,7 +17,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [ebenen_umformen(1)]
+    aufgaben_seite1 = [ebene_und_gerade(1, g_in_e='schneiden')]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

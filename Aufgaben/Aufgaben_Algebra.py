@@ -1,4 +1,3 @@
-from pylatex import (MediumText)
 from pylatex.utils import bold
 import string, sys
 import numpy as np
@@ -1021,7 +1020,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def gerade_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1039,8 +1038,8 @@ def gerade_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
     # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), ' Gegeben ist die Ebene E in der Koordinatenform ',
-               r' E:~ ' + gzahl(nx_gk) + 'x' + vorz_str(ny_gk) + 'y'
-               + vorz_str(nz_gk) + 'z ~=~' + gzahl(np.dot(punkt_a,n_gk))]
+               r' E:~ ' + vorz_v_aussen(nx_gk,'x') + vorz_v_innen(ny_gk,'y')
+               + vorz_v_innen(nz_gk,'z ~=~') + gzahl(np.dot(punkt_a,n_gk))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -1139,7 +1138,7 @@ def gerade_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                           + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
             i += 1
 
         if 'd' in teilaufg:
@@ -1147,14 +1146,14 @@ def gerade_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix} \begin{pmatrix} '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
                            + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
                            + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \vert ~=~'
-                           + latex(abs((np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)), 3)))
+                           + r' \end{pmatrix} \right| ~=~'
+                           + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
             i += 1
 
