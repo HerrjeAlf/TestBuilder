@@ -105,6 +105,7 @@ def schnittpunkte(fkt_1,fkt_2):
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
 
-fkt = collect(expand(a*(x-z)**2+y),x)
+fkt = collect(expand(a*(x-b)*(x-c)),x)
 print(fkt)
 print(solve(fkt,x))
+print(integrate(fkt,x))

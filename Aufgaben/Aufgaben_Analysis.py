@@ -1086,20 +1086,20 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
             i += 1
     elif grad == 2:
-        xwert_s = zzahl(1,4)
-        ywert_s = zzahl(1,4)
-        faktor = -1*vorz_fakt(ywert_s)*nzahl(3, 7) / 2
+        nst_1 = -1* nzahl(1,2)
+        nst_2 = nst_1 + nzahl(3,4)
+        faktor = zzahl(1,5)/2
 
-        fkt = collect(expand(faktor * (x - xwert_s) **2 + ywert_s), x)
-        fkt_str = (vorz_v_aussen(faktor,'x^2') + vorz_v_innen(-2*faktor*xwert_s,'x')
-                   + vorz_str(faktor*xwert_s**2+ywert_s))
-        fkt_pq_str = ('x^2' + vorz_v_innen(-2*xwert_s,'x') + vorz_str(Rational(faktor*xwert_s**2+ywert_s,faktor)))
-        fkt_p = -2 * xwert_s
-        fkt_q = Rational(faktor* xwert_s**2 + ywert_s,faktor)
-        lsg_sqrt = N(sqrt(-1*ywert_s/faktor),3)
-        xwert_1 = xwert_s - lsg_sqrt
-        xwert_2 = xwert_s + lsg_sqrt
-        Fkt = 
+        fkt = collect(expand(faktor * (x - nst_1)*(x - nst_2)), x)
+        fkt_str = (vorz_v_aussen(faktor,'x^2') + vorz_v_innen(-1*faktor*(nst_1+nst_2),'x')
+                   + vorz_str(faktor*nst_1*nst_2))
+        fkt_pq_str = ('x^2' + vorz_v_innen(-1*(nst_1+nst_2),'x') + vorz_str(nst_1*nst_2))
+        fkt_p = -1*(nst_1+nst_2)
+        fkt_q = nst_1*nst_2
+        Fkt = integrate(fkt,x)
+        Fkt_str = (vorz_v_aussen(Rational(faktor,3),'x^3')
+                   + vorz_v_innen(Rational(-1*faktor*(nst_1+nst_2),2),'x^2')
+                   + vorz_v_innen(faktor*nst_1*nst_2,'x'))
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
                    'f(x)~=~' + fkt_str + r' \hspace{20em}']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -1116,8 +1116,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
                            + r' \quad \vert \div ' + gzahl_klammer(-1*faktor) + r' \quad \to \quad ' + fkt_pq_str
                            + r' \quad (3P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
-                           + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \mathrm{x_1~=~' + gzahl(xwert_1)
-                           + r' \quad und \quad x_2~=~' + gzahl(xwert_2) + r' \quad (2P)} \\'
+                           + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \mathrm{x_1~=~' + gzahl(nst_1)
+                           + r' \quad und \quad x_2~=~' + gzahl(nst_2) + r' \quad (2P)} \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
             i += 1
 
@@ -1126,19 +1126,15 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             punkte = 3
             liste_punkte.append(punkte)
 
-            lsg_A1 = N(Fkt.subs(x, xwert_1) - Fkt.subs(x, xwert_2), 3)
+            lsg_A1 = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1), 3)
             lsg_A = abs(lsg_A1)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
                            + f'die der Graph mit der x-Achse einschließt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(xwert_1) + '}^{'
-                           + gzahl(xwert_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (1P) \\ =~ \left| \left[ '
-                           + Fkt_str + r' \right]_{' + gzahl(N(nst_3, 2)) + '}^{' + gzahl(nst_1)
-                           + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
-                           + gzahl(N(nst_1, 2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
-                           + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
-                           + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
-                           + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(nst_1) + '}^{'
+                           + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| =~ \left| \left[ '
+                           + Fkt_str + r' \right]_{' + gzahl(nst_1) + '}^{' + gzahl(nst_2)
+                           + r'} \right| ~=~ \left| ' + gzahl(lsg_A1) + r' \right| \quad (3P) \\')
 
             i += 1
     else:
