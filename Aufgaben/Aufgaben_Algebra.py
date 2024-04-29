@@ -774,88 +774,6 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
-    liste_punkte = []
-    liste_bez = []
-    i = 0
-    teiler = zzahl(1,3)
-    schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
-    fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kürzen([1/sx,1/sy,1/sz,e])
-    n = [nx,ny,nz] = vektor_kürzen([int(kfx),int(kfy),int(kfz)])
-    print(schnittpunkte)
-    print(fkt_kf)
-    print(n)
-    punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
-    print(punkt_a)
-    normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                    + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                    r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                    + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                    r' \end{pmatrix} ~=~ 0')
-    koordinatenform = ('E:~' + gzahl(nx) + 'x' + vorz_str(ny) + 'y'
-                       + vorz_str(nz) + 'z') + '~=~' + gzahl(np.dot(punkt_a,n))
-
-    if form == None:
-        form = random.choice(['normalenform', 'koordinatenform'])
-    if form == 'normalenform':
-        ebenengleichung = normalenform
-        andere_darstellungsform = koordinatenform
-        lsg = (r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ \end{pmatrix}')
-    elif form == 'koordinatenform':
-        ebenengleichung = koordinatenform
-        andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                                   + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
-                                   + r' \\' + gzahl(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
-                                   + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                                   r' \end{pmatrix} ~=~ 0')
-        lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
-               + r' \\' + gzahl(0) + r' \\ \end{pmatrix}')
-    else:
-        exit("form kann nur 'normalenform' oder 'koordinatenform' sein ")
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Gegeben ist die Ebene E mit der folgenden Gleichung:',
-               ebenengleichung]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-    if 'a' in teilaufg:
-        punkte = 7
-        liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
-                                          f'anderen beiden Darstellungsformen um. \n\n ')
-        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
-                       + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                       r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
-                       r' \overrightarrow{u} ~=~ \begin{pmatrix}'
-                       + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
-                       r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{v} ~=~ \begin{pmatrix}'
-                       + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
-                       r' \end{pmatrix} \quad \to\ \quad E: \overrightarrow{x} ~=~ '
-                       + lsg + r' ~+~r \cdot \begin{pmatrix} '
-                       + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
-                       r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
-                       + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
-                       r' \end{pmatrix} \quad (4P) \\')
-        i += 1
-
-    if 'b' in teilaufg:
-        punkte = 6
-        liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
-                       + f'und zeichnen Sie ein Schrägbild der Ebene in das Koordinatensystem.',
-                        '3dim_Koordinatensystem'))
-        loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
-                       + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
-                       + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
-                       + str(1) + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (2P)}', '3dim_Koordinatensystem'))
-        i += 1
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-
 def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None):
     liste_punkte = []
     liste_bez = []
@@ -1018,6 +936,226 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
                            + r' \end{pmatrix} \right| ~=~'
                            + gzahl(abs(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+            i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    teiler = zzahl(1,3)
+    schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
+    fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kürzen([1/sx,1/sy,1/sz,e])
+    n = [nx,ny,nz] = vektor_kürzen([int(kfx),int(kfy),int(kfz)])
+    print(schnittpunkte)
+    print(fkt_kf)
+    print(n)
+    punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
+    print(punkt_a)
+    normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                    + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                    r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                    + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
+                    r' \end{pmatrix} ~=~ 0')
+    koordinatenform = ('E:~' + gzahl(nx) + 'x' + vorz_str(ny) + 'y'
+                       + vorz_str(nz) + 'z') + '~=~' + gzahl(np.dot(punkt_a,n))
+
+    if form == None:
+        form = random.choice(['normalenform', 'koordinatenform'])
+    if form == 'normalenform':
+        ebenengleichung = normalenform
+        andere_darstellungsform = koordinatenform
+        lsg = (r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ \end{pmatrix}')
+    elif form == 'koordinatenform':
+        ebenengleichung = koordinatenform
+        andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                                   + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+                                   + r' \\' + gzahl(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                                   + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
+                                   r' \end{pmatrix} ~=~ 0')
+        lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+               + r' \\' + gzahl(0) + r' \\ \end{pmatrix}')
+    else:
+        exit("form kann nur None, 'normalenform' oder 'koordinatenform' sein ")
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Gegeben ist die Ebene E mit der folgenden Gleichung:',
+               ebenengleichung]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    if 'a' in teilaufg:
+        punkte = 7
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
+                                          f'anderen beiden Darstellungsformen um. \n\n ')
+        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+                       + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
+                       r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
+                       r' \overrightarrow{u} ~=~ \begin{pmatrix}'
+                       + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
+                       r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{v} ~=~ \begin{pmatrix}'
+                       + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
+                       r' \end{pmatrix} \quad \to\ \quad E: \overrightarrow{x} ~=~ '
+                       + lsg + r' ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
+                       r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+                       + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
+                       r' \end{pmatrix} \quad (4P) \\')
+        i += 1
+
+    if 'b' in teilaufg:
+        punkte = 6
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.extend((str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
+                       + f'und zeichnen Sie ein Schrägbild der Ebene in das Koordinatensystem.',
+                        '3dim_Koordinatensystem'))
+        loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
+                       + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
+                       + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
+                       + str(1) + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (2P)}', '3dim_Koordinatensystem'))
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def gerade_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
+    punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
+    v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
+    u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
+    n_betrag = np.linalg.norm(n_gk)
+    if n_betrag % 1 == 0:
+        ergebnis_n0 = gzahl(n_betrag)
+    else:
+        ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk ** 2 + ny_gk ** 2 + nz_gk ** 2) + r'}'
+    # auswahl = 'schneiden'
+    # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
+    # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), ' Gegeben ist die Ebene E in der Koordinatenform ',
+               r' E:~ ' + gzahl(nx_gk) + 'x' + vorz_str(ny_gk) + 'y'
+               + vorz_str(nz_gk) + 'z ~=~' + gzahl(np.dot(punkt_a,n_gk))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    if g_in_e == None:
+        g_in_e = random.choice(['identisch', 'parallel', 'schneiden'])
+
+    if g_in_e == 'identisch':
+        punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+        punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+        while vektor_vergleich(punkt_e, punkt_f) == True:
+            punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
+        g_v = [g_vx, g_vy, g_vz] = punkt_f - punkt_e
+        lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
+               + gzahl(np.dot(punkt_a, n_gk))
+               + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
+    elif g_in_e == 'parallel':
+        abstand = zzahl(1, 7) / 2 * np.array(n_gk)
+        punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
+        punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
+        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
+        lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
+               + gzahl(np.dot(punkt_a, n_gk))
+               + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
+    elif g_in_e == 'schneiden':
+        g_v = n_gk
+        while vektor_kollinear(g_v, n_gk) == True:
+            punkt_s = punkt_a + zzahl(1, 3) * v + zzahl(1, 3) * u
+            g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
+            ergebnis_r = zzahl(1, 6) / 2
+            punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
+            punkt_f = [fx, fy, fz] = punkt_e + g_v
+
+        lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez)
+               + vorz_str(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \cdot r ~=~'
+               + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
+               + vorz_str(-1 * (nx_gk * ex + ny_gk * ey + nz_gk * ez)) + r' \quad \vert \div '
+               + gzahl_klammer(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
+               + gzahl(ergebnis_r) + r' \quad (2P) \\'
+               + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:}  \quad (1P) \\ \begin{pmatrix} '
+               + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+               + r' \end{pmatrix}' + vorz_str(ergebnis_r) + r' \cdot \begin{pmatrix} '
+               + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+               + r' \end{pmatrix} ~=~ \begin{pmatrix} '
+               + gzahl(ex + ergebnis_r * g_vx) + r' \\' + gzahl(ey + ergebnis_r * g_vy) + r' \\'
+               + gzahl(ez + ergebnis_r * g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
+               + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
+               + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3P) \\')
+    else:
+        exit("g_in_e muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
+
+    if 'a' in teilaufg:
+        punkte = 2
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.extend(('und die Gerade g durch die Punkte: '
+                        'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
+                        'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
+                        str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                       + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                       + r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                       + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                       + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                       + r' \end{pmatrix} \quad (2P) \\ '
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        punkte = 3
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if g_in_e == 'schneiden':
+            punkte += 4
+        liste_punkte.append(punkte)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
+                                                f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad '
+                       + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
+                       + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
+                       + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
+                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1P) \\'
+                       + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+    if g_in_e == 'parallel':
+        if 'c' in teilaufg:
+            punkte = 4
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                           + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
+                           + ergebnis_n0 + r' \quad \to \quad '
+                           + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} ~=~0' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+            i += 1
+
+        if 'd' in teilaufg:
+            punkte = 3
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad E: \vert \begin{bmatrix} \begin{pmatrix} '
+                           + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \vert ~=~'
+                           + latex(abs((np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)), 3)))
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
             i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
