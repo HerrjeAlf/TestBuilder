@@ -997,103 +997,152 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def bestimmtes_integral(nr, teilaufg=['a', 'b']):
+def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
     liste_punkte = []
     liste_bez = []
     i = 0
+    if grad == 3:
+        nst_1 = zzahl(1, 2)
+        nst_2 = nst_1 + nzahl(1, 2) + 0.5
+        nst_3 = nst_1 - nzahl(1, 2) - 0.5
+        faktor = zzahl(3,7)/2
 
-    nst_1 = zzahl(1, 2)
-    nst_2 = nst_1 + nzahl(1, 2) + 0.5
-    nst_3 = nst_1 - nzahl(1, 2) - 0.5
-    faktor = zzahl(3,7)/2
+        fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
+        fkt_a1 = faktor
+        fkt_a2 = -1 * faktor * (nst_1 + nst_2 + nst_3)
+        fkt_a3 = faktor * ((nst_1 * nst_2) + (nst_1 * nst_3) + (nst_2 * nst_3))
+        fkt_a4 = -1 * faktor * nst_1 * nst_2 * nst_3
+        fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
+                   + vorz_str(fkt_a4))
+        fkt_partial = expand(faktor * (x - nst_2) * (x - nst_3))
+        fkt_partial_pq = expand((x - nst_2) * (x - nst_3))
+        fkt_partial_p = -1 * (nst_2 + nst_3)
+        fkt_partial_q = (nst_2 * nst_3)
 
-    fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
-    fkt_a1 = faktor
-    fkt_a2 = -1 * faktor * (nst_1 + nst_2 + nst_3)
-    fkt_a3 = faktor * ((nst_1 * nst_2) + (nst_1 * nst_3) + (nst_2 * nst_3))
-    fkt_a4 = -1 * faktor * nst_1 * nst_2 * nst_3
-    fkt_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3, 'x')
-               + vorz_str(fkt_a4))
-    fkt_h_str = (vorz_v_aussen(fkt_a1, 'x^3') + vorz_v_innen(fkt_a2, 'x^2') + vorz_v_innen(fkt_a3 - 1, 'x')
-                 + vorz_str(fkt_a4))
-    fkt_partial = expand(faktor * (x - nst_2) * (x - nst_3))
-    fkt_partial_pq = expand((x - nst_2) * (x - nst_3))
-    fkt_partial_p = -1 * (nst_2 + nst_3)
-    fkt_partial_q = (nst_2 * nst_3)
+        Fkt = collect(integrate(fkt,x),x)
+        Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4), 'x^4') + vorz_v_innen(Rational(fkt_a2,3), 'x^3')
+                   + vorz_v_innen(Rational(fkt_a3,2), 'x^2') + vorz_v_innen(fkt_a4,'x'))
 
-    fkt_1 = collect(expand(diff(fkt, x, 1)), x)
-    fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * (nst_1 + nst_2 + nst_3), 3), 'x')
-                + vorz_str(Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)))
-    p_fkt_1_pq = Rational(-2 * (nst_1 + nst_2 + nst_3), 3)
-    q_fkt_1_pq = Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)
-    s_fkt = -1 * faktor * nst_1 * nst_2 * nst_3
-    Fkt = collect(integrate(fkt,x),x)
-    Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4), 'x^4') + vorz_v_innen(Rational(fkt_a2,3), 'x^3')
-               + vorz_v_innen(Rational(fkt_a3,2), 'x^2') + vorz_v_innen(fkt_a4,'x'))
+        fkt_b2 = nst_1 * fkt_a1
+        fkt_c2 = fkt_a2 + fkt_b2
+        fkt_b3 = nst_1 * fkt_c2
+        fkt_c3 = fkt_a3 + fkt_b3
+        fkt_b4 = nst_1 * fkt_c3
+        fkt_c4 = fkt_a4 + fkt_b4
 
-    fkt_b2 = nst_1 * fkt_a1
-    fkt_c2 = fkt_a2 + fkt_b2
-    fkt_b3 = nst_1 * fkt_c2
-    fkt_c3 = fkt_a3 + fkt_b3
-    fkt_b4 = nst_1 * fkt_c3
-    fkt_c4 = fkt_a4 + fkt_b4
+        table2 = Tabular('c c|c|c|c', row_height=1.2)
+        table2.add_row('', fkt_a1, fkt_a2, fkt_a3, fkt_a4)
+        table2.add_hline(2, 5)
+        table2.add_row('Berechnung der Partialfunktion  mit Hornerschema: ', '', fkt_b2, fkt_b3, fkt_b4)
+        table2.add_hline(2, 5)
+        table2.add_row('', fkt_a1, fkt_c2, fkt_c3, fkt_c4)
 
-    table2 = Tabular('c c|c|c|c', row_height=1.2)
-    table2.add_row('', fkt_a1, fkt_a2, fkt_a3, fkt_a4)
-    table2.add_hline(2, 5)
-    table2.add_row('Berechnung der Partialfunktion  mit Hornerschema: ', '', fkt_b2, fkt_b3, fkt_b4)
-    table2.add_hline(2, 5)
-    table2.add_row('', fkt_a1, fkt_c2, fkt_c3, fkt_c4)
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
+                   'f(x)~=~' + fkt_str + r' \hspace{20em}']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = []
+        grafiken_loesung = []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
-               'f(x)~=~' + fkt_str + r' \hspace{20em}']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
+        if 'a' in teilaufg:
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 12
+            liste_punkte.append(punkte)
 
-    if 'a' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 12
-        liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
+                           + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
+                           + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
+                           + latex(fkt_partial) + r' \quad (4P)')
+            loesung.append(table2)
+            loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
+                           + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
+                           + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
+                           + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
+                           + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
+                           + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P)} \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+            i += 1
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
-                       + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
-                       + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
-                       + latex(fkt_partial) + r' \quad (4P)')
-        loesung.append(table2)
-        loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
-                       + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
-                       + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
-                       + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
-                       + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
-                       + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P)} \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
-        i += 1
+        if 'b' in teilaufg:
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 6
+            liste_punkte.append(punkte)
 
-    if 'b' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 6
-        liste_punkte.append(punkte)
+            lsg_A1 = N(Fkt.subs(x, nst_1) - Fkt.subs(x, nst_3),3)
+            lsg_A2 = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1),3)
+            lsg_A = abs(lsg_A1) + abs(lsg_A2)
 
-        lsg_A1 = N(Fkt.subs(x, nst_1) - Fkt.subs(x, nst_3),3)
-        lsg_A2 = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1),3)
-        lsg_A = abs(lsg_A1) + abs(lsg_A2)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
+                           + f'die der Graph mit der x-Achse einschließt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(N(nst_3,2)) + '}^{'
+                           + gzahl(nst_1) + '}' + fkt_str + r' ~ \,dx \right| + \left| \int_{' + gzahl(nst_1) + '}^{'
+                           + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (2P) \\ =~ \left| \left[ '
+                           + Fkt_str + r' \right]_{' + gzahl(N(nst_3,2)) + '}^{' + gzahl(nst_1)
+                           + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
+                           + gzahl(N(nst_1,2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
+                           + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
+                           + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
-                       + f'die der Graph mit der x-Achse einschließt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(N(nst_3,2)) + '}^{'
-                       + gzahl(nst_1) + '}' + fkt_str + r' ~ \,dx \right| + \left| \int_{' + gzahl(nst_1) + '}^{'
-                       + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (2P) \\ =~ \left| \left[ '
-                       + Fkt_str + r' \right]_{' + gzahl(N(nst_3,2)) + '}^{' + gzahl(nst_1)
-                       + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
-                       + gzahl(N(nst_1,2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
-                       + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
-                       + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
-                       + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+            i += 1
+    elif grad == 2:
+        xwert_s = zzahl(1,4)
+        ywert_s = zzahl(1,4)
+        faktor = -1*vorz_fakt(ywert_s)*nzahl(3, 7) / 2
 
-        i += 1
+        fkt = collect(expand(faktor * (x - xwert_s) **2 + ywert_s), x)
+        fkt_str = (vorz_v_aussen(faktor,'x^2') + vorz_v_innen(-2*faktor*xwert_s,'x')
+                   + vorz_str(faktor*xwert_s**2+ywert_s))
+        fkt_pq_str = ('x^2' + vorz_v_innen(-2*xwert_s,'x') + vorz_str(Rational(faktor*xwert_s**2+ywert_s,faktor)))
+        fkt_p = -2 * xwert_s
+        fkt_q = Rational(faktor* xwert_s**2 + ywert_s,faktor)
+        lsg_sqrt = N(sqrt(-1*ywert_s/faktor),3)
+        xwert_1 = xwert_s - lsg_sqrt
+        xwert_2 = xwert_s + lsg_sqrt
+        Fkt = 
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
+                   'f(x)~=~' + fkt_str + r' \hspace{20em}']
+        loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+        grafiken_aufgaben = []
+        grafiken_loesung = []
 
+        if 'a' in teilaufg:
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 6
+            liste_punkte.append(punkte)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
+                           + r' \quad \vert \div ' + gzahl_klammer(-1*faktor) + r' \quad \to \quad ' + fkt_pq_str
+                           + r' \quad (3P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
+                           + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
+                           + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \mathrm{x_1~=~' + gzahl(xwert_1)
+                           + r' \quad und \quad x_2~=~' + gzahl(xwert_2) + r' \quad (2P)} \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+            i += 1
+
+        if 'b' in teilaufg:
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 3
+            liste_punkte.append(punkte)
+
+            lsg_A1 = N(Fkt.subs(x, xwert_1) - Fkt.subs(x, xwert_2), 3)
+            lsg_A = abs(lsg_A1)
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
+                           + f'die der Graph mit der x-Achse einschließt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(xwert_1) + '}^{'
+                           + gzahl(xwert_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (1P) \\ =~ \left| \left[ '
+                           + Fkt_str + r' \right]_{' + gzahl(N(nst_3, 2)) + '}^{' + gzahl(nst_1)
+                           + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
+                           + gzahl(N(nst_1, 2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
+                           + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
+                           + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+
+            i += 1
+    else:
+        exit("Der Grad muss 2 oder 3 sein.")
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
