@@ -1,4 +1,4 @@
-import datetime
+import datetime, locale
 import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -6,6 +6,7 @@ from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabula
 from pylatex.utils import bold
 from skripte.funktionen import *
 from skripte.plotten import *
+locale.setlocale(locale.LC_TIME, locale.normalize("de"))
 
 # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
 try:
