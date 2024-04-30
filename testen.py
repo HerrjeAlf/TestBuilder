@@ -5,7 +5,7 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
-Klasse = '12 LK1'
+Klasse = '12'
 Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Kurvendiskussion Parameterfunktionen'
@@ -17,7 +17,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [bestimmtes_integral(1, grad=2)]
+    aufgaben_seite1 = [kurvendiskussion_polynom_parameter_2(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

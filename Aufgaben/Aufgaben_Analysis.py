@@ -1088,6 +1088,9 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
     elif grad == 2:
         nst_1 = -1* nzahl(1,2)
         nst_2 = nst_1 + nzahl(3,4)
+        if nst_1*nst_2 == 0 or abs(nst_1) == abs(nst_2):
+            nst_1 = -1 * nzahl(1, 2)
+            nst_2 = nst_1 + nzahl(3, 4)
         faktor = zzahl(1,5)/2
 
         fkt = collect(expand(faktor * (x - nst_1)*(x - nst_2)), x)
@@ -1113,7 +1116,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
-                           + r' \quad \vert \div ' + gzahl_klammer(-1*faktor) + r' \quad \to \quad ' + fkt_pq_str
+                           + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + fkt_pq_str
                            + r' \quad (3P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
                            + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \mathrm{x_1~=~' + gzahl(nst_1)
@@ -1126,15 +1129,15 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             punkte = 3
             liste_punkte.append(punkte)
 
-            lsg_A1 = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1), 3)
-            lsg_A = abs(lsg_A1)
+            lsg_A = N(Fkt.subs(x, nst_2) - Fkt.subs(x, nst_1), 3)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Fläche, '
                            + f'die der Graph mit der x-Achse einschließt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(nst_1) + '}^{'
                            + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| =~ \left| \left[ '
                            + Fkt_str + r' \right]_{' + gzahl(nst_1) + '}^{' + gzahl(nst_2)
-                           + r'} \right| ~=~ \left| ' + gzahl(lsg_A1) + r' \right| \quad (3P) \\')
+                           + r'} \right| ~=~ \left| ' + gzahl(lsg_A) + r' \right| ~=~ '
+                           + gzahl(abs(lsg_A)) + r' \quad (3P) \\')
 
             i += 1
     else:
@@ -1977,6 +1980,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}',
                         'Figure'))
         i += 1
+
+
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
