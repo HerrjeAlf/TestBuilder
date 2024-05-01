@@ -1,4 +1,4 @@
-import datetime, locale
+import datetime
 import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -6,7 +6,6 @@ from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabula
 from pylatex.utils import bold
 from skripte.funktionen import *
 from skripte.plotten import *
-locale.setlocale(locale.LC_TIME, locale.normalize("de"))
 
 # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
 try:
@@ -157,7 +156,6 @@ def erzeugen_test(Teil, liste_seiten, angaben):
     del liste_bez[1:]
     del liste_punkte[1:]
 
-
 def pdf_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     alphabet = string.ascii_uppercase
     if probe:
@@ -166,6 +164,8 @@ def pdf_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
         erzeugen_test(f'Gr. {alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
 
+
+# Hier wird eine Klausur erzeugt
 def erzeugen_kl_teil_1(liste_seiten, angb_hmft):
     Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema = (angb_hmft[0],
     angb_hmft[1], angb_hmft[2], angb_hmft[3], angb_hmft[4], angb_hmft[5], angb_hmft[6], angb_hmft[7])
@@ -383,4 +383,93 @@ def erzeugen_kl_teil_2(liste_seiten, angb):
     Teil_2()
     EWH_Teil_2()
 
+# Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
 
+def muendliche_pruefung(liste_seiten, angb):
+
+    # Aufgabenblatt
+    def Aufgaben():
+        Aufgabe = Document(geometry_options=geometry_options)
+        packages(Aufgabe)
+
+        # Kopf erste Seite
+        with Aufgabe.create(Figure(position='h')) as kopf:
+            kopf.add_image('../img/kopfzeile.png', width='480px')
+
+        # Tabelle erste Seite
+        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=MediumText(f'Mündliche Abiturprüfung im Fach '
+                                                    + bold(f'Mathematik') + f'des Schuljahres {schuljahr}')),))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='c', data=MediumText(str(pruefungsfach))),))
+        table1.add_row(MediumText('Lehrkraft:'), MediumText(str(lehrkraft)))
+        table1.add_empty_row()
+        table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
+        table1.add_row(MediumText('Bearbeitungszeit:'), MediumText('30 min'))
+        table1.add_empty_row()
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='l', data=LargeText(bold(f'Aufgaben {thema}'))),))
+        table1.add_hline(1, 2)
+
+        Aufgabe.append(table1)
+
+        # hier werden die Aufgaben für die Prüfung angehangen
+        Aufgabe.extend(liste_seiten[0][0])
+
+        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben', clean_tex=true)
+
+    # Fragen für das Prüfungsgespräch der mündlichen Prüfung
+    def pruefungsfragen():
+        Aufgabe = Document(geometry_options=geometry_options)
+        packages(Aufgabe)
+
+        # Kopf erste Seite
+        with Aufgabe.create(Figure(position='h')) as kopf:
+            kopf.add_image('../img/kopfzeile.png', width='480px')
+
+        # Tabelle erste Seite
+        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=MediumText(f'Mündliche Abiturprüfung im Fach '
+                                                    + bold(f'Mathematik') + 'des Schuljahres {schuljahr}')),))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='c', data=MediumText(str(pruefungsfach))),))
+        table1.add_row(MediumText('Lehrkraft:'), MediumText(str(lehrkraft)))
+        table1.add_empty_row()
+        table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
+        table1.add_empty_row()
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgaben'))),))
+        table1.add_hline(1, 2)
+
+        Aufgabe.append(table1)
+
+
+        # erstellen der Tabelle zur Punkteübersicht
+        Punkte = (sum(liste_punkte[1:]))
+        liste_bez.append('Summe')
+        liste_punkte.append(str(Punkte))
+        anzahl_spalten = len(liste_punkte)
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+
+        spalten = '|'
+        for p in liste_punkte:
+            spalten += 'c|'
+
+        table3 = Tabular(spalten, row_height=1.2)
+        table3.add_hline()
+        table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil I'),))
+        table3.add_hline()
+        table3.add_row(liste_bez)
+        table3.add_hline()
+        table3.add_row(liste_punkte)
+        table3.add_hline()
+        table3.add_row(liste_ergebnis_z1)
+        table3.add_row(liste_ergebnis_z2)
+        table3.add_hline()
