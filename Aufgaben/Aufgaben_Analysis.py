@@ -369,11 +369,11 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         e1, e2, e3 = exponenten(3)
         fkt = (vorz_aussen(a1 / a2) + r' \frac{' + gzahl(abs(a1)) + '}{' + gzahl(abs(a2)) + r'x^{'
                    + gzahl(e1) + '}}' + vorz(a3) + r' \frac{' + gzahl(abs(a3)) + r'}{ \sqrt[' + gzahl(e2) + r']{'
-                   + gzahl(e3) + '}}')
+                   + r'x^{' + gzahl(e3) + '}}}')
         fkt_uf = ('~=~' + vorz_v_aussen(Rational(a1, a2), 'x^{' + gzahl(-1 * e1) + '}')
                       + vorz_v_innen(a3, 'x^{' + gzahl(Rational(-1 * e3, e2)) + '}'))
         fkt_abl = (vorz_v_aussen(Rational(-1 * a1 * e1, a2), 'x^{' + gzahl(-1 * e1 - 1) + '}')
-                       + vorz_v_innen(Rational(-1 * a3 * e3, e2), 'x^{' + gzahl(Rational(-1 * (e3 - e2), e2)) + '}'))
+                       + vorz_v_innen(Rational(-1 * a3 * e3, e2), 'x^{' + gzahl(Rational(-1 * (e3 + e2), e2)) + '}'))
         pkt = 2
         return fkt, fkt_uf, fkt_abl, pkt
 
@@ -778,6 +778,7 @@ def rekonstruktion(nr, teilaufg=['a']):
         lsg_c = d6 / c6
         lsg_b = (d4 - (c4 * lsg_c)) / b4
         lsg_a = (d1 - (c1 * lsg_c) - (b1 * lsg_b)) / a1
+
 
         table2 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
         table2.add_hline(2, 7)

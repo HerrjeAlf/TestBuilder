@@ -29,5 +29,5 @@ for i in range(anzahl):
     liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
     angaben = [Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
-    pdf_erzeugen(liste_seiten, angaben, i, probe)
+    test_erzeugen(liste_seiten, angaben, i, probe)
 
