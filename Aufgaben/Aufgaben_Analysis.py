@@ -1987,34 +1987,34 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 
         # Aufstellen der Funktionsgleichung (a festlegen und dann A berechnen)
         fkt = collect(expand(faktor * (x - faktor_1 * a) * (x - faktor_2 * a) * (x - faktor_3 * a)), x)
-        print('fkt =' + str(fkt))
         a_fest = zzahl(1,10)/2
-        print('a = ' + str(a_fest))
         fkt_a = fkt.subs(a, a_fest)
-        print('fkt_a = ' + str(fkt_a))
         if faktor < 0:
             grenze_a = faktor_2
             grenze_b = faktor_3
         else:
             grenze_a = faktor_1
             grenze_b = faktor_2
-        print('untere Grenze:' + str(grenze_a))
-        print('obere Grenze:' + str(grenze_b))
         Fkt = integrate(fkt,x)
-        print('Fkt = ' + str(Fkt))
-        Fkt_a = integrate(fkt_a,x)
-        print('Fkt_a = ' + str(Fkt_a))
-        flaeche = Fkt_a.subs(x, grenze_b) - Fkt_a.subs(x, grenze_a)
-        print('A = ' + str(flaeche))
+        flaeche = Fkt.subs(x, grenze_b*a) - Fkt.subs(x, grenze_a*a)
+        flaeche_a = flaeche.subs(a, a_fest)
+        flaeche_a_wert = N(flaeche_a,4)
         Fkt_grenze_b = Fkt.subs(x,grenze_b*a)
+        Fkt_grenze_b_wert = N(Fkt_grenze_b.subs(a,1),4)
         Fkt_grenze_a = Fkt.subs(x,grenze_a*a)
+        Fkt_grenze_a_wert = N(Fkt_grenze_a.subs(a,1),4)
         integral = Fkt_grenze_b - Fkt_grenze_a
-        wert_integr = integral.subs(a,1)
+        integral_wert = N(Fkt_grenze_b.subs(a,1)-Fkt_grenze_a.subs(a,1),3)
+        wert_integr = integral.subs(a, a_fest)
         # Koeffizienten der Funktion
         fkt_a3 = faktor
         fkt_a2 = -1 * faktor * (faktor_1 + faktor_2 + faktor_3)
         fkt_a1 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
         fkt_a0 = -1 * faktor * faktor_1 * faktor_2 * faktor_3
+        Fkt_a3_a = Rational(fkt_a3,4)
+        Fkt_a2_a = Rational(fkt_a2*a_fest,3)
+        Fkt_a1_a = Rational(fkt_a1*a_fest**2,2)
+        Fkt_a0_a = fkt_a0 * a_fest**3
 
         fkt_str = (vorz_v_aussen(fkt_a3, r'x^3') + vorz_v_innen(fkt_a2, r'a \cdot x^2')
                    + vorz_v_innen(fkt_a1, r'a^2 \cdot x') + vorz_v_innen(fkt_a0, r'a^3'))
@@ -2022,16 +2022,18 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                    + vorz_v_innen(Rational(fkt_a2,3), r'a \cdot x^3')
                    + vorz_v_innen(Rational(fkt_a1,2), r'a^2 \cdot x^2')
                    + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
+
         aufgabe.extend(('Der Graph von f schließt oberhalb der x-Achse eine Fläche mit der x_Achse ein. \n\n',
                         str(liste_teilaufg[i]) + f') Berechne den Wert für a, wenn '
-                       + f'diese Fläche A = {flaeche} beträgt. \n\n'))
+                       + f'diese Fläche A = {flaeche_a} beträgt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
                        + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
                        + r' \right]_{' + gzahl(grenze_a) + 'a' + '}^{' + gzahl(grenze_b)+ 'a'
-                       + r'} \right| \quad (2P) \\ ~=~  \left| (' + latex(Fkt_grenze_b) + ')-('
-                       + latex(Fkt_grenze_a) + r') \right| \quad \to \quad ' + gzahl(flaeche) + '~=~' + latex(integral)
-                       + r' \quad \vert \div ' + gzahl(wert_integr) + r' \quad \vert \sqrt[4]{  }'
-                       + r' \quad \to \quad a ~=~' + gzahl((flaeche/wert_integr)**(1/4)) + '~=~' + str(a_fest)
+                       + r'} \right| \quad (2P) \\ ~=~  \left| (' + latex(Fkt_grenze_b_wert) + 'a^4)-('
+                       + latex(Fkt_grenze_a_wert) + r'a^4) \right| \quad \to \quad '
+                       + gzahl(flaeche_a_wert) + '~=~' + latex(integral_wert)
+                       + r'a^4 \quad \vert \div ' + gzahl(integral_wert) + r' \quad \vert \sqrt[4]{  }'
+                       + r' \\ \quad \to \quad a ~=~' + gzahl(N((flaeche_a/integral_wert)**(1/4),4))
                        + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         i += 1
 
