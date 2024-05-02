@@ -6,11 +6,11 @@ Kurs = 'Kurs auf erhöhtem Niveau'
 Klasse = 12
 Semester = 2
 Gesamtzeit = 135
-Zeithmft = 25
+Zeithmft = 45
 liste_qualiphase = ['Einführungsphase', 'Qualifikationsphase']
 Phase = liste_qualiphase[1]
 Thema = 'Analysis'
-datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
+datum_delta = 6  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 
 # auswahl der Aufgabenteile für Nr. 2 und 3
 teilaufg_nr2 = ['a']

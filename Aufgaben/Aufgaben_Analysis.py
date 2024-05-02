@@ -345,7 +345,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         fkt_2 = collect(expand(diff(fkt, x, 2)), x)
         return latex(fkt), fkt_uf, latex(fkt_abl), pkt
 
-    def polynom():
+    def polynom_ganzrational():
         a1 = zzahl(3, 15)
         e1 = nzahl(2, 6)
         fkt = r' \frac{' + gzahl(a1) + '}{x^{' + gzahl(e1) + '}}'
@@ -461,8 +461,9 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
                    + gzahl(Rational(1 - wurzel, wurzel)) + r'}')
         return fkt, fkt_uf, fkt_abl, pkt
 
-    aufgaben = {'a': funktion(2), 'b': polynom(), 'c': wurzel(), 'd': poly_wurzel(), 'e': fkt_exp(), 'f': fkt_ln(),
-                'g': fkt_wurzel_exp(), 'h': verkettet_exp(), 'i': verkettet_ln(), 'j': verkettet_wurzel()}
+    aufgaben = {'a': funktion(2), 'b': polynom_ganzrational(), 'c': wurzel(), 'd': poly_wurzel(), 'e': fkt_exp(),
+                'f': fkt_ln(), 'g': fkt_wurzel_exp(), 'h': verkettet_exp(), 'i': verkettet_ln(),
+                'j': verkettet_wurzel()}
 
     aufg = ''
     lsg = (r' \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe'
@@ -707,8 +708,9 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rekonstruktion(nr, teilaufg=['a']):
-    liste_punkte = []
-    liste_bez = []
+    punkte = 14
+    liste_punkte = [punkte]
+    liste_bez = [f'{str(nr)}']
     i = 0
     # hier wird die Funktion erstellt.
     faktor = zzahl(1, 8)/2
@@ -723,15 +725,15 @@ def rekonstruktion(nr, teilaufg=['a']):
                + vorz_str((faktor * (xwert_2 ** 2)) + ywert_2))
     fkt = faktor * (x - xwert_2) ** 2 + ywert_2
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S(' + gzahl(xwert_1) + '|'
+               + gzahl(ywert_1) + '), P(' + gzahl(xwert_2) + r'|' + gzahl(ywert_2) + ') und Q('
+               + gzahl(xwert_3) + '|' + gzahl(ywert_3) + '). \n Berechnen Sie die Funktionsgleichung von f. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        punkte = 20
-        liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         # Rekonstruktion der Funktion
         # Zeilen 1 bis 3 vom LGS:
@@ -798,32 +800,28 @@ def rekonstruktion(nr, teilaufg=['a']):
         table2.add_hline(2, 7)
 
         # Aufgaben und Lösungen
-        aufgabe.append('Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S(' + gzahl(xwert_1) + '|'
-                       + gzahl(ywert_1) + '), P(' + gzahl(xwert_2) + r'|' + gzahl(ywert_2) + ') und Q('
-                       + gzahl(xwert_3) + '|' + gzahl(ywert_3) + ') \n\n')
-        aufgabe.append(' Berechne die Funktionsgleichung von f. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
                        + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
                        + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                        + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                        + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
-                       + r' \quad (2P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                       + r' \quad (1P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
                        + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
-                       + gzahl(ywert_2) + r' \quad (2P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                       + gzahl(ywert_2) + r' \quad (1P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
                        + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
-                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
+                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (1P) }')
         loesung.append(table2)
         loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                       + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                       + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1P) } \\'
                        + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
                        + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                        + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                       + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                       + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1P) } \\'
                        + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
                        + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                        + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                        + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                       + r' \quad (2P) }  \\' + r' f(x)~=~' + vorz_v_aussen(lsg_a,'x^2')
+                       + r' \quad (1P) }  \\' + r' f(x)~=~' + vorz_v_aussen(lsg_a,'x^2')
                        + vorz_v_innen(lsg_b,'x') + vorz_str(lsg_c) + r' \quad (1P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         i += 1
@@ -1677,7 +1675,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']):
+def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1686,9 +1684,9 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     faktor_1 = -1*nzahl(5,10)/2
     faktor_2 = zzahl(1,2)
     if faktor_1%1 == 0:
-        faktor_3 = nzahl(2,5)+0.5
+        faktor_3 = faktor_2 + nzahl(0,2)+0.5
     else:
-        faktor_3 = nzahl(3,5)
+        faktor_3 = faktor_2 + nzahl(1,3)
     while faktor_1 + faktor_2 + faktor_3 == 0:
         faktor_1 = -1 * nzahl(5, 10) / 2
         faktor_2 = zzahl(1,2)
@@ -1977,12 +1975,65 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         xmax_f = int(round(nst_3_a2 + 0.5,0))
         Graph(xmin_f,xmax_f,fkt_a2,name=f'Loesung_{nr}{liste_teilaufg[i]}')
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen von f für a = {gzahl(a2)} im '
-                       + f'Intervall [ {xmin_f} | {xmax_f} ].')
+                       + f'Intervall [ {xmin_f} | {xmax_f} ]. \n\n')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}',
                         'Figure'))
         i += 1
 
+    if 'i' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 5
+        liste_punkte.append(punkte)
 
+        # Aufstellen der Funktionsgleichung (a festlegen und dann A berechnen)
+        fkt = collect(expand(faktor * (x - faktor_1 * a) * (x - faktor_2 * a) * (x - faktor_3 * a)), x)
+        print('fkt =' + str(fkt))
+        a_fest = zzahl(1,10)/2
+        print('a = ' + str(a_fest))
+        fkt_a = fkt.subs(a, a_fest)
+        print('fkt_a = ' + str(fkt_a))
+        if faktor < 0:
+            grenze_a = faktor_2
+            grenze_b = faktor_3
+        else:
+            grenze_a = faktor_1
+            grenze_b = faktor_2
+        print('untere Grenze:' + str(grenze_a))
+        print('obere Grenze:' + str(grenze_b))
+        Fkt = integrate(fkt,x)
+        print('Fkt = ' + str(Fkt))
+        Fkt_a = integrate(fkt_a,x)
+        print('Fkt_a = ' + str(Fkt_a))
+        flaeche = Fkt_a.subs(x, grenze_b) - Fkt_a.subs(x, grenze_a)
+        print('A = ' + str(flaeche))
+        Fkt_grenze_b = Fkt.subs(x,grenze_b*a)
+        Fkt_grenze_a = Fkt.subs(x,grenze_a*a)
+        integral = Fkt_grenze_b - Fkt_grenze_a
+        wert_integr = integral.subs(a,1)
+        # Koeffizienten der Funktion
+        fkt_a3 = faktor
+        fkt_a2 = -1 * faktor * (faktor_1 + faktor_2 + faktor_3)
+        fkt_a1 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
+        fkt_a0 = -1 * faktor * faktor_1 * faktor_2 * faktor_3
+
+        fkt_str = (vorz_v_aussen(fkt_a3, r'x^3') + vorz_v_innen(fkt_a2, r'a \cdot x^2')
+                   + vorz_v_innen(fkt_a1, r'a^2 \cdot x') + vorz_v_innen(fkt_a0, r'a^3'))
+        Fkt_str = (vorz_v_aussen(Rational(fkt_a3,4), r'x^4')
+                   + vorz_v_innen(Rational(fkt_a2,3), r'a \cdot x^3')
+                   + vorz_v_innen(Rational(fkt_a1,2), r'a^2 \cdot x^2')
+                   + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
+        aufgabe.extend(('Der Graph von f schließt oberhalb der x-Achse eine Fläche mit der x_Achse ein. \n\n',
+                        str(liste_teilaufg[i]) + f') Berechne den Wert für a, wenn '
+                       + f'diese Fläche A = {flaeche} beträgt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
+                       + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
+                       + r' \right]_{' + gzahl(grenze_a) + 'a' + '}^{' + gzahl(grenze_b)+ 'a'
+                       + r'} \right| \quad (2P) \\ ~=~  \left| (' + latex(Fkt_grenze_b) + ')-('
+                       + latex(Fkt_grenze_a) + r') \right| \quad \to \quad ' + gzahl(flaeche) + '~=~' + latex(integral)
+                       + r' \quad \vert \div ' + gzahl(wert_integr) + r' \quad \vert \sqrt[4]{  }'
+                       + r' \quad \to \quad a ~=~' + gzahl((flaeche/wert_integr)**(1/4)) + '~=~' + str(a_fest)
+                       + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
