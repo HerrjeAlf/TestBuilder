@@ -1452,7 +1452,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     fkt_a0 = -1*faktor*nst_1*nst_3*a
 
     # Koeffizienten der Funktion als String und der richtigen Darstellung
-    fkt_a1_str = (vorz(nst_1+nst_3) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r'a'
+    fkt_a1_str = (vorz(faktor*(nst_1+nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r'a'
                   + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
     fkt_a2_str = (vorz(-1 * faktor) + '(' + gzahl(abs(faktor)) + r'a '
                   + vorz_str(-1 * faktor * (nst_1 + nst_3)) + ')')
