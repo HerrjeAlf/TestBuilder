@@ -1020,7 +1020,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1043,10 +1043,10 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    if g_in_e == None:
-        g_in_e = random.choice(['identisch', 'parallel', 'schneiden'])
+    if g_in_E == None:
+        g_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
 
-    if g_in_e == 'identisch':
+    if g_in_E == 'identisch':
         punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         while vektor_vergleich(punkt_e, punkt_f) == True:
@@ -1055,7 +1055,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
         lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
                + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
-    elif g_in_e == 'parallel':
+    elif g_in_E == 'parallel':
         abstand = zzahl(1, 7) / 2 * np.array(n_gk)
         punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
         punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
@@ -1063,7 +1063,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
         lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
                + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
-    elif g_in_e == 'schneiden':
+    elif g_in_E == 'schneiden':
         g_v = n_gk
         while vektor_kollinear(g_v, n_gk) == True:
             punkt_s = punkt_a + zzahl(1, 3) * v + zzahl(1, 3) * u
@@ -1088,9 +1088,26 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
                + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
                + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3P) \\')
     else:
-        exit("g_in_e muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
+        exit("g_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
 
-    if 'a' in teilaufg:
+    if 'a' in teilaufg: # lagebeziehungen erläutern
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        liste_punkte.append(punkte)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
+                                          'mit einer Ebene und deren Eigenschaften. \n\n')
+        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
+                       + 'haben alle Punkte gem. (1P) \n'
+                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
+                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
+        i += 1
+
+    if 'b' in teilaufg:
         punkte = 2
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1109,10 +1126,10 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
         liste_punkte.append(punkte)
         i += 1
 
-    if 'b' in teilaufg:
+    if 'c' in teilaufg:
         punkte = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if g_in_e == 'schneiden':
+        if g_in_E == 'schneiden':
             punkte += 4
         liste_punkte.append(punkte)
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
@@ -1125,8 +1142,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
                        + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
-    if g_in_e == 'parallel':
-        if 'c' in teilaufg:
+    if g_in_E == 'parallel':
+        if 'd' in teilaufg:
             punkte = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
@@ -1141,7 +1158,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
                            + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
             i += 1
 
-        if 'd' in teilaufg:
+        if 'e' in teilaufg:
             punkte = 3
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
@@ -1154,6 +1171,179 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], g_in_e=None):
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                            + r' \end{pmatrix} \right| ~=~'
                            + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+            i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(4)
+    n_betrag = np.linalg.norm(n_gk)
+    if n_betrag % 1 == 0:
+        ergebnis_n0 = gzahl(n_betrag)
+    else:
+        ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk ** 2 + ny_gk ** 2 + nz_gk ** 2) + r'}'
+    punkt_d = [dx, dy, dz] = punkt_vektor(3)
+    v = np.array([ny_gk, -1 * nx_gk, 0])
+    u = np.array([0, nz_gk, -1 * ny_gk])
+    print('n_gk: ' + str(n_gk))
+    print('Punkt D: ' + str(punkt_d))
+    print('Vektor v: ' + str(v))
+    print('Vektor u: ' + str(u))
+
+    if F_in_E == None:
+        F_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
+
+    # auswahl = 'schneiden'
+    if F_in_E == 'identisch':
+        punkte = 4
+        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
+        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 3) * np.array(u))
+        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
+        k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
+
+        lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
+               + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+
+    elif F_in_E == 'parallel':
+        punkte = 4
+        abstand = zzahl(1, 7) / 2
+        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
+        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
+        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
+        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
+        k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
+
+        lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
+               + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2P) } \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+
+    elif F_in_E == 'schneiden':
+        punkte = 10
+        n = [nx, ny, nz] = punkt_vektor(4)
+        punkt_a = [ax, ay, az] = punkt_vektor(3)
+        while vektor_kollinear(n, n_gk) == True:
+            n = [nx, ny, nz] = punkt_vektor(4)
+
+        g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+        k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+        while np.dot(n_gk, k_v) == 0 or np.dot(n_gk, g_v) == 0:
+            g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+            k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+
+        # print('Vektor n: ' + str(n))
+        # print('Vektor g_v: ' + str(g_v))
+        # print('Vektor k_v: ' + str(k_v))
+        # print(-1 * np.dot(n_gk, k_v))
+        # print(np.dot(n_gk, g_v))
+        g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)) * g_v
+        g_richtung = [g_rx, g_ry, g_rz] = Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)) * g_v + k_v
+
+        lsg = (gzahl(np.dot(punkt_a, n_gk)) + vorz_str(np.dot(n_gk, g_v)) + 'r'
+               + vorz_str(np.dot(n_gk, k_v)) + 's ~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad \vert '
+               + vorz_str(-1 * np.dot(punkt_a, n_gk)) + r' \quad \vert ' + vorz_str(-1 * np.dot(n_gk, k_v))
+               + r's \quad \to \quad ' + gzahl(np.dot(n_gk, g_v)) + 'r ~=~'
+               + gzahl(np.dot(punkt_d - punkt_a, n_gk)) + vorz_str(np.dot(n_gk, k_v))
+               + r's \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2P) \\ r ~=~'
+               + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
+               + vorz_str(Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
+               + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
+               + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
+               + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az)
+               + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
+               + vorz_str(Rational(np.dot(n_gk, k_v), np.dot(n_gk, g_v))) + r's) \cdot \begin{pmatrix} ' + gzahl(g_vx)
+               + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+               + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
+               + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(g_sx) + r' \\' + gzahl(g_sy) + r' \\' + gzahl(g_sz)
+               + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(g_rx) + r' \\' + gzahl(g_ry) + r' \\'
+               + gzahl(g_rz) + r' \\' + r' \end{pmatrix} \quad (2P) \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+    
+    if F_in_E not in (None,'identisch', 'parallel', 'schneiden'):
+        exit("F_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein.")
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Ebenen E und F mit',
+               r' E: ~' + vorz_v_aussen(nx_gk, 'x') + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk, 'z ~=~')
+               + gzahl(np.dot(punkt_d, n_gk))
+               + r' \quad \mathrm{und} \quad F: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+               + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+               + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
+               + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
+               + r' \end{pmatrix} ']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = ['', '', '']
+    grafiken_loesung = ['']
+
+    if 'a' in teilaufg: # lagebeziehungen erläutern
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        liste_punkte.append(punkte)
+        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
+                                          'und deren Eigenschaften. \n\n')
+        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
+                       + 'haben alle Punkte gem. (1P) \n'
+                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
+                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
+                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
+                                                f'und berechnen Sie ggf. die Schnittgerade. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
+                       + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
+                       + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
+                       + vorz_str(g_vz) + 'r' + vorz_str(k_vz) + 's) ~=~ ' + gzahl(np.dot(punkt_d, n_gk))
+                       + r' \quad (1P) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
+                       + vorz_v_innen(nx_gk * k_vx, 's') + vorz_str(ny_gk * ay) + vorz_v_innen(ny_gk * g_vy, 'r')
+                       + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
+                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r'\quad (1P) \\'
+                       + lsg)
+        liste_punkte.append(punkte)
+        i += 1
+    if F_in_E == 'parallel':
+        if 'c' in teilaufg:
+            punkte = 4
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
+            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                           + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
+                           + r')^2 } ~=~ ' + ergebnis_n0
+                           + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+            i += 1
+
+        if 'd' in teilaufg:
+            punkte = 3
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
+                           + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~'
+                           + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
             i += 1
 

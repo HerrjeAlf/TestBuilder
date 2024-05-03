@@ -2023,9 +2023,9 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                    + vorz_v_innen(Rational(fkt_a1,2), r'a^2 \cdot x^2')
                    + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
 
-        aufgabe.extend(('Der Graph von f schließt oberhalb der x-Achse eine Fläche mit der x_Achse ein. \n\n',
+        aufgabe.extend(('Der Graph von f schließt oberhalb der x-Achse eine Fläche mit der x-Achse ein. \n\n',
                         str(liste_teilaufg[i]) + f') Berechne den Wert für a, wenn '
-                       + f'diese Fläche A = {flaeche_a} beträgt. \n\n'))
+                       + f'diese Fläche A = {flaeche_a_wert} beträgt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
                        + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
                        + r' \right]_{' + gzahl(grenze_a) + 'a' + '}^{' + gzahl(grenze_b)+ 'a'
