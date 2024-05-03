@@ -1889,8 +1889,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r'f^{ \prime \prime } (' + gzahl(N(x_1_fkt_1,3)) +') ~=~' + gzahl(6*faktor) + r' \cdot ('
                        + gzahl(N(x_1_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + r' a ~=~'
                        + gzahl(N(x_1_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_1
-                       + r' f^{ \prime \prime } (' + gzahl(N(x_1_fkt_2,3)) + ') ~=~' + gzahl(6 * faktor)
-                       + r' \cdot (' + gzahl(N(x_2_fkt_1,3)) + ')' + gzahl(fkt_1_a1) + 'a  ~=~'
+                       + r' f^{ \prime \prime } (' + gzahl(N(x_2_fkt_1,3)) + ') ~=~' + gzahl(6 * faktor)
+                       + r' \cdot (' + gzahl(N(x_2_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + 'a  ~=~'
                        + gzahl(N(x_2_fkt_2,3)) + r' \quad (2P)' + lsg_extrema_2
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
