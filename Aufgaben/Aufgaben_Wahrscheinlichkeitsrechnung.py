@@ -1,4 +1,4 @@
-from pylatex import (MediumText)
+from pylatex import (MediumText, Tabular, NoEscape, MultiColumn, MultiRow)
 from pylatex.utils import bold
 
 from skripte.funktionen import *
@@ -33,8 +33,8 @@ def ereignisse_ergebnisse(nr, teilaufg=['a', 'b', 'c']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        punkte_aufg = 6
-        liste_punkte.append(punkte_aufg)
+        punkte = 6
+        liste_punkte.append(punkte)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
 
         def ereig_1():
@@ -95,16 +95,23 @@ def ereignisse_ergebnisse(nr, teilaufg=['a', 'b', 'c']):
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-        loesung.append(str(liste_teilaufg[i]) + ') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n\n'
-                       + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n\n'
-                       + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n\n'
-                       + ' Lösung E1 und E2 geschnitten: ' + str(lsg_schnittmenge) + ' (1P) \n\n'
-                       + ' insgesamt ' + str(punkte_aufg) + ' Punkte \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
+        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '2P')
+        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '2P')
+        table1.add_row(MultiColumn(2, align='r', data=NoEscape(r'$E1 \cup E2: $')),
+                       str(lsg_vereinigung), '1P')
+        table1.add_row(MultiColumn(2, align='r', data=NoEscape(r'$E1 \cap E2: $')),
+                       str(lsg_schnittmenge), '1P')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table1)
+        loesung.append(' \n\n\n')
         i += 1
 
     if 'b' in teilaufg:
-        punkte_aufg = 2
-        liste_punkte.append(punkte_aufg)
+        punkte = 2
+        liste_punkte.append(punkte)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
 
         auswahl = random.choice([farbe_1, farbe_2])
@@ -122,7 +129,7 @@ def ereignisse_ergebnisse(nr, teilaufg=['a', 'b', 'c']):
                         + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\'))
         i += 1
 
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 
 def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
@@ -161,18 +168,18 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
         if anzahl_ziehen[0] == 2:
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte_aufg = 5
+            punkte = 5
         else:
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte_aufg = 6
+            punkte = 6
 
-        liste_punkte.append(punkte_aufg)
+        liste_punkte.append(punkte)
         i += 1
 
     if 'b' in teilaufg:
-        punkte_aufg = 6
-        liste_punkte.append(punkte_aufg)
+        punkte = 6
+        liste_punkte.append(punkte)
         liste_bez.append(str(nr) + '. ' + str(liste_teilaufg[i]) + ')')
 
         def ereig_1(p):
@@ -188,7 +195,7 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
                         i += 1
                 if i == p:
                     lsg_menge.append(element)
-            print(lsg_menge)
+            # print(lsg_menge)
             return text, lsg_menge
 
         def ereig_2():
@@ -233,11 +240,19 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-        loesung.append(str(liste_teilaufg[i]) + ') Lösung E1: ' + str(lsg_menge_1) + ' (2P) \n\n'
-                       + ' Lösung E2: ' + str(lsg_menge_2) + '(2P) \n\n'
-                       + ' Lösung E1 und E2 vereinigt: ' + str(lsg_vereinigung) + ' (1P) \n\n'
-                       + ' Lösung E1 und E2 geschnitten: ' + str(lsg_schnittmenge) + ' (1P) \n\n'
-                       + ' insgesamt ' + str(punkte_aufg) + ' Punkte \n\n')
+
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
+        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '2P')
+        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '2P')
+        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
+                       str(lsg_vereinigung), '1P')
+        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
+                       str(lsg_schnittmenge), '1P')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table1)
+        loesung.append(' \n\n\n')
         i += 1
 
     if 'c' in teilaufg:
@@ -280,7 +295,7 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
         auswahl = np.random.choice([aufgabe_1, aufgabe_2], 2, False)
         aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
         aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
-        punkte_aufg = punkte_1 + punkte_2
+        punkte = punkte_1 + punkte_2
 
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
                                                   ' die folgenden Ereignisse.'),
@@ -290,7 +305,7 @@ def wahrscheinlichkeit_zoZ(nr, teilaufg=['a', 'b', 'c']):
                         r' \quad P(E_3) ~=~' + aufgabe_lsg_1
                         + r' \quad P(E_4) ~=~' + aufgabe_lsg_2))
 
-        liste_punkte.append(punkte_aufg)
+        liste_punkte.append(punkte)
         i += 1
 
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung]
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

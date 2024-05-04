@@ -3,7 +3,7 @@ import string, sys
 import numpy as np
 import random, math
 from numpy.linalg import solve as slv
-from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure
+from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure, MultiColumn
 from pylatex.utils import bold
 from random import *
 from sympy import *
@@ -472,42 +472,49 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
     grafiken_loesung = []
     if 'a' in teilaufg: # lagebeziehungen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
+        punkte = 8
         liste_punkte.append(punkte)
-
-        table1 = Tabular('p{0.2cm} p{10cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')','Die Geraden:', 'Punkte' )
-        table1.add_row('-', 'sind parrallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '1P' )
-        table1.add_row('-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gemeinsam ', '1P' )
-        table1.add_row('-', 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gemeinsam', '1P' )
-        table1.add_row('-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben keine gem. Punkte.', '1P' )
-        table1.add_row('','', 'insg.: ' + str(punkte) + ' P')
 
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Geraden:'), 'Punkte')
+        table1.add_row('', '-', 'sind parrallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2P' )
+        table1.add_row('', '-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
+                       + 'haben alle Punkte gemeinsam ', '2P' )
+        table1.add_row('', '-', 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben einen Punkt gemeinsam', '2P' )
+        table1.add_row('', '-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben keine gem. Punkte.', '2P' )
+        table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
-        loesung.append(' \n\n')
+        if 'b' in teilaufg:
+            loesung.append(' \n\n\n')
         i += 1
 
     if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
+        punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
                                           'Geraden mathematisch überprüfen kann. \n\n')
-        loesung.append(str(teilaufg[i]) + ') Zuerst prüft man ob die Geraden parallel sind, '
-                       + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt. (1P)  \n'
-                       + 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), setzt man '
-                       + 'einen Stützvektor in die andere Geradengleichung ein. Ist dieser in der anderen Geraden '
-                       + 'enthalten, sind die Geraden identisch, ansonsten "echt" parallel. (1P) \n'
-                       + 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
+                       'Punkte')
+        table1.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
+                       + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt.', '2P')
+        table1.add_row('', '-', 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), '
+                       + 'setzt man einen Stützvektor in die andere Geradengleichung ein. Ist dieser in der anderen '
+                       + 'Geraden enthalten, sind die Geraden identisch, ansonsten "echt" parallel.', '2P')
+        table1.add_row('', '-', 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
                        + 'löst das Gleichungssystem. Erhält man eine Lösung für r und s, schneiden sich die Geraden. '
-                       + 'Erhält man keine Lösung, sind die Geraden windschief. (1P) \n'
-                       + 'insgesamt ' + str(punkte) + ' Punkte')
+                       + 'erhält man keine Lösung, sind die Geraden windschief. ', '2P')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table1)
+
         i += 1
 
     if 'c' in teilaufg:
@@ -1098,19 +1105,23 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
 
     if 'a' in teilaufg: # lagebeziehungen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
+        punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
                                           'mit einer Ebene und deren Eigenschaften. \n\n')
-        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gem. (1P) \n'
-                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
-                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
+                       'Punkte')
+        table1.add_row('', '-', 'sind parallel, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
+                                'der Ebene sind senkrecht zueinander und haben keine gemeinsamen Punkte', '2P')
+        table1.add_row('', '-', 'sind identisch, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
+                                'der Ebene sind senkrecht zueinander und alle Punkte der Geraden liegen in der Ebene',
+                                '2P')
+        table1.add_row('', '-', 'schneiden sich, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
+                                'der Ebene sind nicht senkrecht zueinander und haben den Schnittpunkt gemeinsam', '2P')
+        table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table1)
         i += 1
 
     if 'b' in teilaufg:
@@ -1289,19 +1300,21 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
 
     if 'a' in teilaufg: # lagebeziehungen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
+        punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
                                           'und deren Eigenschaften. \n\n')
-        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gem. (1P) \n'
-                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
-                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
+        table1.add_row('', '-', 'sind parallel, d.h. die Normalenvektoren der Ebenen sind parallel und '
+                                'sie haben keine gemeinsamen Punkte', '2P')
+        table1.add_row('', '-', 'sind identisch, d.h. die Normalenvektoren der Ebenen sind parallel und '
+                                'sie haben alle Punkte gemeinsam', '2P')
+        table1.add_row('', '-', 'schneiden sich, d.h. die Normalenvektoren der Ebenen sind nicht parallel und '
+                                'die gemeinsamen Punkte liegen auf einer Geraden ', '2P')
+        table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table1)
         i += 1
 
     if 'b' in teilaufg:

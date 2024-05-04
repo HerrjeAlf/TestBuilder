@@ -1,5 +1,6 @@
 from Aufgaben.Aufgaben_Analysis import *
 from Aufgaben.Aufgaben_Algebra import *
+from Aufgaben.Aufgaben_Wahrscheinlichkeitsrechnung import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
@@ -17,7 +18,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [ebene_ebene(1)]
+    aufgaben_seite1 = [wahrscheinlichkeit_zoZ(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
