@@ -474,17 +474,23 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         liste_punkte.append(punkte)
+
+        table1 = Tabular('p{0.2cm} p{10cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')','Die Geraden:', 'Punkte' )
+        table1.add_row('-', 'sind parrallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '1P' )
+        table1.add_row('-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
+                       + 'haben alle Punkte gemeinsam ', '1P' )
+        table1.add_row('-', 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben einen Punkt gemeinsam', '1P' )
+        table1.add_row('-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
+                       + 'und die Geraden haben keine gem. Punkte.', '1P' )
+        table1.add_row('','', 'insg.: ' + str(punkte) + ' P')
+
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
-        loesung.append(str(teilaufg[i]) + ') Die Geraden: \n sind parrallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gem. (1P) \n'
-                       + 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gem. (1P) \n'
-                       + 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben keine gem. Punkte. (1P) \n'
-                       + 'insgesamt ' + str(punkte) + ' Punkte \n\n')
+        loesung.append(table1)
+        loesung.append(' \n\n')
         i += 1
 
     if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern
