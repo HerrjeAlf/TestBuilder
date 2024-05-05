@@ -1,0 +1,13 @@
+Fehler / Entwicklung:
+in Aufgaben Analysis:
+- Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
+
+
+in Aufgaben Wahrscheinlichkeit:
+- Baumdiagramm_bernoulli Aufgabe c noch weiter auf zmZ anpassen und eine Aufgabe d zur Bernoullikette erstellen
+
+
+langfristig:
+
+- GUI
+- *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
