@@ -1803,21 +1803,21 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f, '
                                                 f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1P) \\ \mathrm{mit~x_1='
+                                                 + fkt_str + r' \quad (1P) \\ \mathrm{mit~x_2='
                                                  + nst_2_str + r'~folgt:} \quad (' + fkt_str
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))
         loesung.append(table2)
         loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
-                       r' x_{2/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
+                       r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
                        r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                        r'a^2)} ~=~ ' + gzahl(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
-                       + latex(fkt_disk) + r' a^2} \quad (2P) \\ x_{2/3}~=~'
+                       + latex(fkt_disk) + r' a^2} \quad (2P) \\ x_{1/3}~=~'
                        + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
-                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_2~=~'
+                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_1~=~'
                        + gzahl(faktor_1) + r'a \quad \mathrm{und} \quad x_3~=~'
-                       + gzahl(faktor_3) + r'a \quad (3P) \\ \bm{S_{x_2}(' + nst_1_str + r'\vert 0) \quad S_{x_1}('
+                       + gzahl(faktor_3) + r'a \quad (3P) \\ \bm{S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
                        r' \bm{\quad S_y(0 \vert' + gzahl(fkt_a0) + r'a^3)} \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
@@ -1838,17 +1838,17 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         x_2_fkt_2 = fkt_2.subs(x,x_2_fkt_1)
         # print(x_1_fkt_2), print(x_2_fkt_2)
         if x_1_fkt_2.subs(a,1) < 0:
-            lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \bm{HP(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
+            lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \mathbf{HP}\bm{(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
                              + gzahl(N(y_1_fkt,3)) + r')} \quad (2P) \\')
         else:
-            lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \bm{TP(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
+            lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \mathbf{TP}\bm{(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
                              + gzahl(N(y_1_fkt,3)) + r')} \quad (2P) \\')
 
         if x_2_fkt_2.subs(a,1) < 0:
-            lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \bm{HP(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
+            lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \mathbf{HP}\bm{(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
                              + gzahl(N(y_2_fkt,3)) + r')} \quad (2P) \\')
         else:
-            lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \bm{TP(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
+            lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \mathbf{TP}\bm{(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
                              + gzahl(N(y_2_fkt,3)) + r')} \quad (2P) \\')
 
         # Koeffizienten der ersten Ableitung
@@ -1911,8 +1911,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r' \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
                        + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
-                       + gzahl(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }('
-                       + gzahl(xwert_wp_bruch) + ') ~=~ ' + fkt_3_str
+                       + gzahl(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }\Big('
+                       + gzahl(xwert_wp_bruch) + r'a \Big) ~=~ ' + fkt_3_str
                        + r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} \bm{\Big(' + gzahl(xwert_wp_bruch)
                        + r'a \vert ' + gzahl(ywert_wp_dezimal) + r'\Big)} \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
