@@ -8,10 +8,19 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
-def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
+def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
     liste_punkte = []
     liste_bez = []
     i = 0
+
+    if stufen == None:
+        anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
+    elif stufen == 2:
+        anzahl_ziehen = [2, 'zweimal']
+    elif stufen == 3:
+        anzahl_ziehen = [3, 'dreimal']
+    else:
+        exit("anzahl_ziehen muss None, 2 oder 3 sein")
 
     farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
@@ -20,8 +29,8 @@ def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
     anzahl_1 = nzahl(5, 15)
     farbe_2 = farben[auswahl_farbe[1]]
     anzahl_2 = 20 - anzahl_1
-    anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
-    ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
+
+    ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0],
                                     farbe1=farben_kuerzel[auswahl_farbe[0]],
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
@@ -54,7 +63,7 @@ def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
         i += 1
 
     if 'b' in teilaufg:
-        punkte = 6
+        punkte = 4
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -118,10 +127,10 @@ def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
 
         # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
-        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '2P')
-        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '2P')
+        table1 = Tabular('p{0.2cm} p{1cm} p{8cm} p{2cm}')
+        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ergebnismengen'), 'Punkte')
+        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '1P')
+        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '1P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
                        str(lsg_vereinigung), '1P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
@@ -149,21 +158,17 @@ def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
         def aufgabe_2():
             if anzahl_ziehen[0] == 2:
                 aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} + 2 \cdot \frac{' + gzahl(anzahl_2)
-                                   + r' \cdot ' + gzahl(anzahl_1) + r'}{20 \cdot 19} ~=~ '
-                                   + gzahl(
-                            N((anzahl_2 * (anzahl_2 - 1) + 2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
+                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \rigth)^2 '
+                                   + r'2 \cdot \frac{' + gzahl(anzahl_2)
+                                   + r' \cdot ' + gzahl(anzahl_1) + r'}{20^2} ~=~ '
+                                   + gzahl(N((anzahl_2**2 + 2 * anzahl_2 * anzahl_1) * 100 / (20**2), 3))
                                    + r' \% \quad (3P) \\')
                 punkte = 3
             else:
                 aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} \cdot \frac{' + gzahl(anzahl_2 - 2) + r'}{18} + 3 \cdot \frac{'
-                                   + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
-                                   + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
-                                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
-                                              + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
+                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'^3}{20} \right)^3 + 3 \cdot \frac{'
+                                   + gzahl(anzahl_2) + r'^2 \cdot ' + gzahl(anzahl_1) + r'}{20^3} ~=~ '
+                                   + gzahl(N(anzahl_2**3 + 3*anzahl_2**2*anzahl_1*100/20**3,3))
                                    + r' \% \quad (4P) \\')
                 punkte = 4
             return aufgabe_text, aufgabe_loesung, punkte
@@ -182,6 +187,21 @@ def baumdiagramm_und_bernoulli(nr, teilaufg=['a', 'b', 'c']):
         liste_punkte.append(punkte)
         i += 1
 
+    if 'd' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        anzahl_n = random.choice([50,100,150,200])
+        anzahl_k = random.choice(list(range(2,6)))
+
+        aufgabe.extend((f'Diesmal wird {anzahl_n} mal jeweils eine Kugel mit Zurücklegen gezogen.',
+                        str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, wenn {farbe_1} '
+                                                 f'genau {anzahl_k} gezogen wird.'))
+        loesung.extend((str(liste_teilaufg[i]) + ') \quad P(X=' + str(anzahl_k) + ') ~=~ '
+                        + r' ...'
+                        + binomial(anzahl_n,anzahl_k)* ))
+
+        liste_punkte.append(punkte)
+        i += 1
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 

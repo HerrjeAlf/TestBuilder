@@ -533,7 +533,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         Loesung.append(table5)
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____ der geforderten Leistung erreicht'
+        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____ \% der Leistung erreicht'
                                   ' und damit ___ Notenpunkte.\n\n'))
 
         Loesung.append(' \n\n')
@@ -558,7 +558,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         Loesung.append(table6)
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____ der geforderten Leistung erreicht '
+        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____ \% der Leistung erreicht '
                                   'und damit ___ Notenpunkte. \n\n'))
 
         Loesung.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - EWH', clean_tex=true)

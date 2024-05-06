@@ -103,18 +103,5 @@ def schnittpunkte(fkt_1,fkt_2):
 # Graph(0, 5,60*x**3-60*x**2 + 720, 720*x)
 # integral(0,4/3,4*x**3-16*x**2-398/79*x+25.68)
 # print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42)
-# print(4*(4/3)**3-16*(4/3)**2-5*(4/3)+42-4/79)
-
-
-fkt = x**2 - 2*x
-print(integrate(fkt,(x,0,2)))
-
-fkt = -2*x**2 +8
-xwerte = solve(fkt,x)
-print('x_1 = ' + str(xwerte[0]) + ' und x_2 = ' + str(xwerte[1]))
-print(integrate(fkt,(x,xwerte[0],xwerte[1])))
-
-fkt = 1/4*x**2 - (x-1)**2
-xwerte = solve(fkt,x)
-print('x_1 = ' + str(xwerte[0]) + ' und x_2 = ' + str(xwerte[1]))
-print(integrate(fkt,(x,xwerte[0],xwerte[1])))
+list = list(range(2,6))
+print(list)
