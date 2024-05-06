@@ -18,7 +18,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [baumdiagramm_und_bernoulli(1, stufen=3)]
+    aufgaben_seite1 = [baumdiagramm_zmZ_und_bernoulli(1, stufen=3)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

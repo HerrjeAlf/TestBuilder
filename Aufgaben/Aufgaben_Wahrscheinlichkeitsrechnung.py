@@ -1,3 +1,4 @@
+import sympy
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 
@@ -150,26 +151,26 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
             else:
                 auswahl_anzahl = anzahl_2
             punkte = 2
-            aufgabe_text = (r' \mathrm{Die~erste~Kugel~ist~' + auswahl + r'.} \hspace{12em} \\')
+            aufgabe_text = (r' \mathrm{Die~erste~Kugel~ist~' + auswahl + r'.} \hspace{12em}')
             aufgabe_loesung = (r' \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
-                               + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\')
+                               + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P)')
             return aufgabe_text, aufgabe_loesung, punkte
 
         def aufgabe_2():
             if anzahl_ziehen[0] == 2:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
+                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.}')
                 aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \rigth)^2 '
                                    + r'2 \cdot \frac{' + gzahl(anzahl_2)
                                    + r' \cdot ' + gzahl(anzahl_1) + r'}{20^2} ~=~ '
-                                   + gzahl(N((anzahl_2**2 + 2 * anzahl_2 * anzahl_1) * 100 / (20**2), 3))
-                                   + r' \% \quad (3P) \\')
+                                   + gzahl(N((anzahl_2**2 + 2 * anzahl_2 * anzahl_1)*100 / (20**2), 3))
+                                   + r' \% \quad (3P)')
                 punkte = 3
             else:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'^3}{20} \right)^3 + 3 \cdot \frac{'
+                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.}')
+                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \right)^3 + 3 \cdot \frac{'
                                    + gzahl(anzahl_2) + r'^2 \cdot ' + gzahl(anzahl_1) + r'}{20^3} ~=~ '
-                                   + gzahl(N(anzahl_2**3 + 3*anzahl_2**2*anzahl_1*100/20**3,3))
-                                   + r' \% \quad (4P) \\')
+                                   + gzahl(N((anzahl_2**3 + 3*(anzahl_2**2)*anzahl_1)*100/20**3,3))
+                                   + r' \% \quad (4P)')
                 punkte = 4
             return aufgabe_text, aufgabe_loesung, punkte
 
@@ -180,9 +181,9 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
 
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
                         + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_3: \quad }' + aufgabe_1
-                        + r' \mathrm{ \quad E_4: \quad }' + aufgabe_2))
+                        + r' \\ \mathrm{ \quad E_4: \quad }' + aufgabe_2))
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \quad P(E_4) ~=~' + aufgabe_lsg_2))
+                        r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \\ \quad P(E_4) ~=~' + aufgabe_lsg_2))
 
         liste_punkte.append(punkte)
         i += 1
@@ -190,18 +191,26 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
     if 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        anzahl_n = random.choice([50,100,150,200])
-        anzahl_k = random.choice(list(range(2,6)))
+        anzahl_n = random.choice([25,50,75,100])
+        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
+        wkt = Rational(anzahl_1,20)
 
-        aufgabe.extend((f'Diesmal wird {anzahl_n} mal jeweils eine Kugel mit Zurücklegen gezogen.',
+        aufgabe.extend((f'Diesmal wird {anzahl_n} mal jeweils eine Kugel mit Zurücklegen gezogen. \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, wenn {farbe_1} '
-                                                 f'genau {anzahl_k} gezogen wird.'))
-        loesung.extend((str(liste_teilaufg[i]) + ') \quad P(X=' + str(anzahl_k) + ') ~=~ '
-                        + r' ...'
-                        + binomial(anzahl_n,anzahl_k)* ))
+                                                 f'genau {gzahl(anzahl_k)} gezogen wird.'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
+                       + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
+                       + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
+                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
+                       + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
+                       + r' \% \quad (4P) \\')
 
         liste_punkte.append(punkte)
         i += 1
+
+    if 'e' in teilaufg:
+        pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 
