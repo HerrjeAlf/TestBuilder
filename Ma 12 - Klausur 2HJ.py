@@ -22,7 +22,7 @@ teilaufg_nr3.extend(np.random.choice(('b', 'c', 'd', 'e', 'f', 'g'),2, False))
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-aufgaben_teil1 = [rekonstruktion(1),
+aufgaben_teil1 = [rekonstruktion(1, xwert_1=-1, xwert_2=1, xwert_3=2),
                   ableitungen(2, teilaufg=teilaufg_nr2),
                   unbestimmtes_integral(3, teilaufg=teilaufg_nr3),
                   bestimmtes_integral(4, grad=2)]

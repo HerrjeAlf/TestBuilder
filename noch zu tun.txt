@@ -4,7 +4,7 @@ in Aufgaben Analysis:
 
 
 in Aufgaben Wahrscheinlichkeit:
-- Baumdiagramm_bernoulli Aufgabe c noch weiter auf zmZ anpassen und eine Aufgabe d zur Bernoullikette erstellen
+- Baumdiagramm_bernoulli Aufgabe c noch weiter auf zmZ anpassen und eine Aufgabe e zur kummulierten Bernoullikette erstellen
 
 funktionen
 - ergebnissmenge_zoZ überprüfen und ggf. fertig stellen

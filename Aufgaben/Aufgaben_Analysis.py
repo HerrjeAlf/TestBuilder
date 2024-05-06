@@ -707,20 +707,20 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rekonstruktion(nr, teilaufg=['a']):
+def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None):
     punkte = 14
     liste_punkte = [punkte]
     liste_bez = [f'{str(nr)}']
     i = 0
     # hier wird die Funktion erstellt.
     faktor = zzahl(1, 8)/2
-    xwert_2 = zzahl(1, 2)
+    xwert_2 = zzahl(1, 2) if xwert_2 == None else xwert_2
     ywert_2 = zzahl(1, 3)
 
-    xwert_3 = xwert_2 + 1
-    xwert_1 = xwert_2 - 1
-    ywert_3 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
-    ywert_1 = faktor * (xwert_2 - xwert_2) ** 2 + ywert_2
+    xwert_3 = xwert_3 + 1 if xwert_3 == None else xwert_3
+    xwert_1 = xwert_1 - 1 if xwert_1 == None else xwert_1
+    ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
+    ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
     fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2,'x')
                + vorz_str((faktor * (xwert_2 ** 2)) + ywert_2))
     fkt = faktor * (x - xwert_2) ** 2 + ywert_2
@@ -804,12 +804,12 @@ def rekonstruktion(nr, teilaufg=['a']):
                        + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
                        + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                        + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
-                       + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
+                       + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)
                        + r' \quad (1P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
-                       + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
-                       + gzahl(ywert_2) + r' \quad (1P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
-                       + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
-                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (1P) }')
+                       + r' \quad \to \quad ' + vorz_v_aussen(xwert_2**2, 'a') + vorz_v_innen(xwert_2, 'b')
+                       + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                       + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
+                       + vorz_v_innen(xwert_3,'b' + ' + c ~=~' + gzahl(ywert_3) + r' \quad (1P) }'))
         loesung.append(table2)
         loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
                        + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1P) } \\'
