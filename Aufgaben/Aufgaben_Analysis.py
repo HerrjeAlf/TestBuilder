@@ -408,7 +408,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
         while abs(faktor_exp) == faktor_sqrt:
             faktor_sqrt = nzahl(2, 8)
         fkt = r' \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
-        fkt_uf = (r'x^{' + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x}')
+        fkt_uf = (r'~=~x^{' + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x}')
         fkt_abl = (gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
                    + gzahl(Rational(faktor_exp, faktor_sqrt) - 1) + r'} \cdot e^{x} ~+~' + 'x^{'
                    + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} ~=~ e^{x} \cdot ('
