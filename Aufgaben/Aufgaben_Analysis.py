@@ -813,7 +813,7 @@ def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None)
         loesung.append(table2)
         loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
                        + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1P) } \\'
-                       + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
+                       + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4, null=True)
                        + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                        + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
                        + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1P) } \\'
