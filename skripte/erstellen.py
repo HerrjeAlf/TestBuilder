@@ -443,7 +443,8 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
                                                          f'Mathematik des Schuljahres {schuljahr}'))),))
         table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
         table1.add_empty_row()
-        table1.add_row((MultiColumn(2, align='c', data=LargeText(bold(f'Fragen zum Prüfungsgespräch '))),))
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=LargeText(bold(f'Fragen zum Prüfungsgespräch - Vorschlag {vorschlag}'))),))
         table1.add_empty_row()
         table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_2}'))),))
         table1.add_hline(1, 2)

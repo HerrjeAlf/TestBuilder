@@ -375,7 +375,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
+def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -385,13 +385,14 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=None):
     p = random.choice([0,1])
     if T_auf_g == None:
         T_auf_g = random.choice([True,False])
-    if T_auf_g == True:
+    if T_auf_g:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
-    else:
+    elif T_auf_g == False:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1])
+    else:
+        exit("T_auf_g muss None, True oder False sein!")
 
     lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
                'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
