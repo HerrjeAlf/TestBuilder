@@ -953,7 +953,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
+def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1023,9 +1023,9 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None):
         punkte = 6
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
-                       + f'und zeichnen Sie ein Schrägbild der Ebene in das Koordinatensystem.',
-                        '3dim_Koordinatensystem'))
+        aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
+                       + f'und zeichnen Sie ein Schrägbild der Ebene.')
+        aufgabe.append('3dim_Koordinatensystem') if koordinatensystem else aufgabe.append(' \n\n')
         loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
@@ -1129,7 +1129,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
         punkte = 2
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.extend(('und die Gerade g durch die Punkte: '
+        aufgabe.extend(('Gegeben ist  die Gerade g durch die Punkte: '
                         'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                         'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
                         str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))

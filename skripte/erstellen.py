@@ -57,8 +57,6 @@ def seite(aufgaben):
             else:
                 Loesung.append(elements)
 
-
-
     return Aufgabe, Loesung
 
 # hier wird ein Test erzeugt
@@ -354,6 +352,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
                 Aufgabe.append(table2)
                 Aufgabe.append(' \n\n')
                 Aufgabe.extend(element[0])
+                Aufgabe.append('neueSeite')
 
 
             Aufgabe.append(' \n\n')
@@ -416,13 +415,10 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         table1.add_hline(1, 2)
 
         Aufgabe.append(table1)
-        Aufgabe.append(' \n\n')
+        Aufgabe.append(' \n\n\n')
 
-        # hier werden die Aufgaben für die Prüfung angehangen
         for element in liste_aufg_lsg_teil1:
-            Aufgabe.append(' \n\n')
             Aufgabe.extend(element[0])
-
 
         Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben {vorschlag}', clean_tex=true)
 
@@ -451,10 +447,11 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         Aufgabe.append(table1)
         Aufgabe.append(' \n\n')
+        Aufgabe.append(' \n\n')
 
         for element in liste_aufg_lsg_teil2:
-            Aufgabe.append(' \n\n')
             Aufgabe.extend(element[0])
+            Aufgabe.append(NewPage())
 
         Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Fragen {vorschlag}', clean_tex=true)
 
@@ -477,7 +474,6 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
         for element in liste_aufg_lsg_teil1:
             Loesung.extend(element[1])
-
 
         Loesung.append(NewPage())
 

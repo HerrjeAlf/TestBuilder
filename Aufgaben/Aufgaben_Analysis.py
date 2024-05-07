@@ -2189,13 +2189,13 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Geben Sie den Zwischenschritt bei der Berechnung'
-                           + f'der folgenden Ableitungen an- \n\n', r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
-                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str))
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Geben Sie den Zwischenschritt bei der Berechnung '
+                           + f'der folgenden Ableitungen an.', r' f^{ \prime }(x) ~=~' + fkt_a1_str
+                           + r' \\\\ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
+                           + r' \\\\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str + r' \\'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str_zw + '~=~' + fkt_a1_str
                            + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str_zw + '~=~' + fkt_a2_str
-                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str_zw  + '~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str_zw + '~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
                            + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
             i += 1
 
@@ -2312,4 +2312,4 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
         i += 1
 
-        return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
