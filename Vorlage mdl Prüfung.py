@@ -24,7 +24,7 @@ for element in aufg_teil1:
 liste_punkte_teil2 = ['Punkte']
 liste_bez_teil2 = ['Aufgabe']
 
-aufg_teil2_s1 = [kurvendiskussion_polynome(2)]
+aufg_teil2_s1 = [grafisches_ableiten(2)]
 for element in aufg_teil2_s1:
     liste_bez_teil2.extend(element[5])
     liste_punkte_teil2.extend(element[4])

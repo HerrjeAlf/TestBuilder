@@ -45,7 +45,7 @@ def vorz(k):
     else:
         return '+'
 
-def vorz_aussen(k):
+def vorz_aussen(k, Null=False):
     if k < 0:
         return '-'
     else:
@@ -71,9 +71,9 @@ def vorz_str(k, null=False):
 
 # Darstellung der Faktoren bzw. Vorzeichen neu
 
-def vorz_v_innen(k,v):
+def vorz_v_innen(k,v, null=False):
     if k == 0:
-        return ''
+        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if k == -1:
         return '-' + v
     if k == 1:
@@ -85,9 +85,9 @@ def vorz_v_innen(k,v):
     else:
         return f'+{latex(k)}' + v
 
-def vorz_v_aussen(k,v):
+def vorz_v_aussen(k,v, null=False):
     if k == 0:
-        return ''
+        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if k == -1:
         return '-' + v
     if k == 1:

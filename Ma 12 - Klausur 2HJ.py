@@ -4,13 +4,14 @@ from skripte.erstellen import *
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
 Klasse = 12
+Gruppe = 'Gr. B'
 Semester = 2
 Gesamtzeit = 135
 Zeithmft = 45
 liste_qualiphase = ['Einführungsphase', 'Qualifikationsphase']
 Phase = liste_qualiphase[1]
 Thema = 'Analysis'
-datum_delta = 6  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
+datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 
 # auswahl der Aufgabenteile für Nr. 2 und 3
 teilaufg_nr2 = ['a']
@@ -64,9 +65,9 @@ liste_seiten_teil2 = [seite(aufgaben_teil2_s1)] # z.b. liste_seiten = [seite(auf
 #  Angaben für die Klausur
 
 Gesamtpunktzahl = sum(liste_punkte_teil1[1:]) + sum(liste_punkte[1:])
-angb_teil1 = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
+angb_teil1 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez_teil1, liste_punkte_teil1]
-angb_teil2 = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
+angb_teil2 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez, liste_punkte]
 
 klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2)

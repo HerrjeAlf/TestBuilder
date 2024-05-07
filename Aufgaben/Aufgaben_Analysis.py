@@ -1146,7 +1146,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
-def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']):
+def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1273,11 +1273,11 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                        + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
                        + latex(fkt_partial) + r' \quad (4P)')
         loesung.append(table2)
-        loesung.append(r'\hspace{10em} \\' + latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
-                       + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
-                       + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
-                       + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
-                       + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
+        loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(faktor)
+                       + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2P) \\'
+                       + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \Big('
+                       + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-' + gzahl_klammer(fkt_partial_q)
+                       + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
                        + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
                        + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
                        + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
@@ -1286,7 +1286,21 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         i += 1
 
     if 'd' in teilaufg:
-        punkte = 16
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        fkt_2_str = vorz_v_aussen(6 * faktor, 'x') + vorz_str(-2 * faktor * (nst_1 + nst_2 + nst_3))
+        fkt_3 = vorz_str(6 * faktor)
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + latex(fkt_1)
+                       + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                       + r' \quad f^{ \prime \prime \prime } (x) ~=~' + latex(fkt_3) + r' \quad (3P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        punkte = 13
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         x_12_fkt_1 = solve(fkt_1, x)
@@ -1314,13 +1328,11 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + latex(fkt_1)
-                       + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                       + r' \quad f^{ \prime \prime \prime } (x) ~=~' + latex(fkt_3) + r' \quad (3P) \\'
-                       + r' f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + latex(fkt_1) + r' \vert ~ \div '
-                       + gzahl_klammer(3 * faktor) + r' \quad (1P) \\  0 ~=~' + fkt_1_pq + r' \quad \to \quad '
-                       + r' x_{1/2} ~=~ - \frac{' + gzahl_klammer(p_fkt_1_pq) + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                       + latex(p_fkt_1_pq) + r'}{2} \Big)^2-' + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3P) \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                       + latex(fkt_1) + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\  0 ~=~'
+                       + fkt_1_pq + r' \quad \to \quad ' + r' x_{1/2} ~=~ - \frac{' + gzahl_klammer(p_fkt_1_pq)
+                       + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(p_fkt_1_pq) + r'}{2} \Big)^2-'
+                       + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3P) \\'
                        + r'x_1~=~' + gzahl(x_1_fkt_1) + r' \quad \mathrm{und} \quad x_2~=~' + gzahl(x_2_fkt_1)
                        + r' \quad (2P) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'
                        + gzahl(round(fkt_2.subs(x, x_1_fkt_1), 3)) + loesung_f_monotonie_1 + r' f^{ \prime \prime }('
@@ -1329,7 +1341,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1345,7 +1357,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
+    if 'g' in teilaufg:
         punkte = 6
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1381,7 +1393,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(punkte)
         i += 1
 
-    if 'g' in teilaufg:
+    if 'h' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
@@ -1399,7 +1411,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(5)
         i += 1
 
-    if 'h' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
+    if 'i' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         Fkt = integrate(fkt, x)
@@ -1695,20 +1707,10 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         else:
             faktor_3 = nzahl(3, 5)
 
-    nst_1_str = gzahl(faktor_1) + 'a'
-    if faktor_2 == 1:
-        nst_2_str = 'a'
-        nst_2_str_neg = '-a'
-    elif faktor_2 == -1:
-        nst_2_str = '-a'
-        nst_2_str_neg = '+a'
-    else:
-        nst_2_str = gzahl(faktor_2) + 'a'
-        if int(gzahl(-1 * faktor_2)) > 0:
-            nst_2_str_neg = f'+{gzahl(-1 * faktor_2)}a'
-        else:
-            nst_2_str_neg = f'{gzahl(-1 * faktor_2)}a'
-    nst_3_str = gzahl(faktor_3) + 'a'
+    nst_1_str = vorz_v_aussen(faktor_1,'a', null=True)
+    nst_2_str = vorz_v_aussen(faktor_2,'a', null=True)
+    nst_2_str_neg = vorz_v_innen(-1*faktor_2,'a', null=True)
+    nst_3_str = vorz_v_aussen(faktor_3,'a', null = True)
 
     # Aufstellen der Funktionsgleichung
     fkt = collect(expand(faktor * (x - faktor_1 * a) * (x - faktor_2 * a) * (x - faktor_3 * a)),x)
@@ -1816,10 +1818,10 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + latex(fkt_disk) + r' a^2} \quad (2P) \\ x_{1/3}~=~'
                        + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
                        + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_1~=~'
-                       + gzahl(faktor_1) + r'a \quad \mathrm{und} \quad x_3~=~'
-                       + gzahl(faktor_3) + r'a \quad (3P) \\ \bm{S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
+                       + vorz_v_aussen(faktor_1,'a', null=True) + r' \quad \mathrm{und} \quad x_3~=~'
+                       + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3P) \\ \bm{S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
-                       r' \bm{\quad S_y(0 \vert' + gzahl(fkt_a0) + r'a^3)} \quad (2P) \\'
+                       + r' \bm{\quad S_y(0 \vert' + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
@@ -2024,7 +2026,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                    + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
         aufgabe.extend(('Der Graph von f schließt oberhalb der x-Achse eine Fläche mit der x-Achse ein. \n\n',
                         str(liste_teilaufg[i]) + f') Berechne den Wert für a, wenn '
-                       + f'diese Fläche A = {flaeche_a_wert} beträgt. \n\n'))
+                       + f'diese Fläche A = {gzahl(flaeche_a_wert)} FE beträgt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
                        + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
                        + r' \right]_{' + gzahl(grenze_a) + 'a' + '}^{' + gzahl(grenze_b)+ 'a'

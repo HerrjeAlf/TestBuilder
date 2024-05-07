@@ -4,6 +4,7 @@ from skripte.erstellen import *
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
 Klasse = 11
+Gruppe = ''
 Semester = 1
 Gesamtzeit = 135
 Zeithmft = 25
@@ -51,9 +52,9 @@ liste_seiten_teil2 = [seite(aufgaben_teil2_s1)] # z.b. liste_seiten = [seite(auf
 #  Angaben für die Klausur
 
 Gesamtpunktzahl = sum(liste_punkte_teil1[1:]) + sum(liste_punkte[1:])
-angb_teil1 = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
+angb_teil1 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez_teil1, liste_punkte_teil1]
-angb_teil2 = [Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
+angb_teil2 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez, liste_punkte]
 
 klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2)

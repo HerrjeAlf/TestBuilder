@@ -169,10 +169,10 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
 # Hier wird eine Klausur erzeugt
 def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
     def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
-        Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema =\
+        Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema =\
             (angb_teil1[0], angb_teil1[1], angb_teil1[2], angb_teil1[3], angb_teil1[4], angb_teil1[5],
-             angb_teil1[6], angb_teil1[7])
-        in_tagen, liste_bez, liste_punkte = angb_teil1[8], angb_teil1[9], angb_teil1[10]
+             angb_teil1[6], angb_teil1[7], angb_teil1[8])
+        in_tagen, liste_bez, liste_punkte = angb_teil1[9], angb_teil1[10], angb_teil1[11]
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
@@ -262,7 +262,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Aufgabe.append(NewPage())
 
             table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-            table2.add_row(MediumText(bold('Teil I')),MediumText(bold('Hilfsmittelfreier Teil')))
+            table2.add_row(MediumText(bold(f'Teil I {Gruppe}')),MediumText(bold('Hilfsmittelfreier Teil')))
             table2.add_hline(1, 2)
             table2.add_empty_row()
 
@@ -276,7 +276,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Aufgabe.append(' \n\n')
             Aufgabe.append(table3)
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil I', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil I {Gruppe}', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -284,7 +284,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im {Semester}. Semester \n\n'
+            Loesung.append(LargeText(bold(f' Lösung für Teil I {Gruppe} der Klausur im {Semester}. Semester \n\n'
                                           f'der {Phase} am {Datum}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
@@ -294,17 +294,17 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil I', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil I {Gruppe}', clean_tex=true)
 
         # Druck der Seiten
         Teil_1()
         EWH_Teil_1()
 
     def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
-        Kurs, Klasse, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema =\
+        Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema =\
             (angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3],
-             angb_teil2[4], angb_teil2[5], angb_teil2[6], angb_teil2[7])
-        in_tagen, liste_bez, liste_punkte = angb_teil2[8], angb_teil2[9], angb_teil2[10]
+             angb_teil2[4], angb_teil2[5], angb_teil2[6], angb_teil2[7], angb_teil2[8])
+        in_tagen, liste_bez, liste_punkte = angb_teil2[9], angb_teil2[10], angb_teil2[11]
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
 
@@ -343,7 +343,8 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             # Kopf erste Seite
             table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-            table2.add_row(MediumText(bold('Teil II')),MediumText(bold('Aufgaben mit zugelassenen Hilfsmitteln')))
+            table2.add_row(MediumText(bold(f'Teil II {Gruppe}')),
+                           MediumText(bold('Aufgaben mit zugelassenen Hilfsmitteln')))
             table2.add_hline(1, 2)
             table2.add_empty_row()
 
@@ -358,7 +359,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Aufgabe.append(' \n\n')
             Aufgabe.append(table3)
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil II', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil II {Gruppe}', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -366,7 +367,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f' Lösung für Teil II der Klausur im {Semester}. Semester \n\n'
+            Loesung.append(LargeText(bold(f' Lösung für Teil II {Gruppe} der Klausur im {Semester}. Semester \n\n'
                                           f'der {Phase} am {Datum}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
@@ -376,7 +377,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil II', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil II {Gruppe}', clean_tex=true)
 
         # Druck der Seiten
         Teil_2()
@@ -393,7 +394,8 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
     def Aufgaben(liste_aufg_lsg_teil1, angb):
         Aufgabe = Document(geometry_options=geometry_options)
         packages(Aufgabe)
-        schuljahr, pruefungsfach, lehrkraft, thema_1, thema_2 = angb[0], angb[1], angb[2], angb[3], angb[4]
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 = \
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
         # Kopf erste Seite
         with Aufgabe.create(Figure(position='h')) as kopf:
             kopf.add_image('../img/kopfzeile.png', width='480px')
@@ -405,10 +407,10 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
                                                     f'Mathematik des Schuljahres {schuljahr}'))),))
         table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
         table1.add_empty_row()
+        table1.add_row(MediumText('Prüfung:'), MediumText(f'Vorschlag {vorschlag}'))
         table1.add_row(MediumText('Lehrkraft:'), MediumText(str(lehrkraft)))
         table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
         table1.add_row(MediumText('Bearbeitungszeit:'), MediumText('30 min'))
-        table1.add_empty_row()
         table1.add_empty_row()
         table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_1}'))),))
         table1.add_hline(1, 2)
@@ -422,13 +424,14 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
             Aufgabe.extend(element[0])
 
 
-        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben', clean_tex=true)
+        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben {vorschlag}', clean_tex=true)
 
     # Fragen für das Prüfungsgespräch der mündlichen Prüfung
     def pruefungsfragen(liste_aufg_lsg_teil2, angb):
         Aufgabe = Document(geometry_options=geometry_options)
         packages(Aufgabe)
-        schuljahr, pruefungsfach, lehrkraft, thema_1, thema_2 = angb[0], angb[1], angb[2], angb[3], angb[4]
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
         # Kopf erste Seite
         with Aufgabe.create(Figure(position='h')) as kopf:
             kopf.add_image('../img/kopfzeile.png', width='480px')
@@ -440,7 +443,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
                                                          f'Mathematik des Schuljahres {schuljahr}'))),))
         table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
         table1.add_empty_row()
-        table1.add_row((MultiColumn(2, align='c', data=LargeText(bold('Fragen zum Prüfungsgespräch'))),))
+        table1.add_row((MultiColumn(2, align='c', data=LargeText(bold(f'Fragen zum Prüfungsgespräch '))),))
         table1.add_empty_row()
         table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_2}'))),))
         table1.add_hline(1, 2)
@@ -452,10 +455,11 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
             Aufgabe.append(' \n\n')
             Aufgabe.extend(element[0])
 
-        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Fragen', clean_tex=true)
+        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Fragen {vorschlag}', clean_tex=true)
 
     def Erwartungshorizont(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
-        schuljahr, pruefungsfach, lehrkraft, thema_1, thema_2 = angb[0], angb[1], angb[2], angb[3], angb[4]
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
 
         # Erwartungshorizont
         Loesung = Document(geometry_options=geometry_options)
@@ -463,7 +467,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         # Lösung Teil 1
         table2 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
-        table2.add_row(MediumText(bold('Teil I')), MediumText(bold(f'Lösungen zum Thema {thema_1}')))
+        table2.add_row(MediumText(bold(f'Teil I')), MediumText(bold(f'EWH zum Thema {thema_1} - {vorschlag}')))
         table2.add_hline(1, 2)
         table2.add_empty_row()
 
@@ -478,7 +482,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         # Lösung Teil 2
         table3 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
-        table3.add_row(MediumText(bold('Teil II')), MediumText(bold(f'Lösungen zum Thema {thema_2}')))
+        table3.add_row(MediumText(bold(f'Teil II')), MediumText(bold(f'EWH zum Thema {thema_2} - {vorschlag}')))
         table3.add_hline(1, 2)
         table3.add_empty_row()
 
@@ -492,7 +496,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         # Lösung Teil 2
         table4 = Tabular(' p{16.5cm}', row_height=1.5)
-        table4.add_row(MediumText(bold('Auswertung der mündlichen Prüfung')))
+        table4.add_row(MediumText(bold(f'Auswertung der mündlichen Prüfung {vorschlag}')))
         table4.add_hline()
         table4.add_empty_row()
         Loesung.append(table4)
@@ -533,8 +537,7 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         Loesung.append(table5)
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____% der Leistung erreicht'
-                                  ' und damit ___ Notenpunkte. \n\n'))
+        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____% der Leistung erreicht \n\n'))
 
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
@@ -560,10 +563,9 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
         Loesung.append(table6)
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____% der Leistung erreicht '
-                                  'und damit ___ Notenpunkte. \n\n'))
+        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____% der Leistung erreicht \n\n'))
 
-        Loesung.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - EWH', clean_tex=true)
+        Loesung.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - EWH {vorschlag}', clean_tex=true)
 
 
     Aufgaben(liste_aufg_lsg_teil1, angb)
