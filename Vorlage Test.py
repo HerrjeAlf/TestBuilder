@@ -2,6 +2,8 @@ from Aufgaben.Aufgaben_Analysis import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
+schule = 'Torhorst - Gesamtschule'
+schulart = 'mit gymnasialer Oberstufe'
 Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'

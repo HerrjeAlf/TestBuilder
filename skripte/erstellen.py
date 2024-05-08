@@ -64,8 +64,9 @@ def seite(aufgaben):
 # hier wird ein Test erzeugt
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     def erzeugen_test(Teil, liste_seiten, angaben):
-        Kurs, Fach, Klasse, Lehrer, Art, Titel = angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5]
-        in_tagen, liste_bez, liste_punkte = angaben[6], angaben[7], angaben[8]
+        schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel =\
+            (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
+        in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
@@ -106,8 +107,8 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
 
             # Kopf erste Seite
             table1 = Tabular('|p{1.2cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{2cm}|', row_height=1.2)
-            table1.add_row((MultiColumn(6, align='c', data=MediumText(bold('Torhorst - Gesamtschule'))),))
-            table1.add_row((MultiColumn(6, align='c', data=SmallText(bold('mit gymnasialer Oberstufe'))),))
+            table1.add_row((MultiColumn(6, align='c', data=MediumText(bold(schule))),))
+            table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()
             table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', 'Art:')
             table1.add_hline()
