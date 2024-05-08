@@ -195,9 +195,9 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
         wkt = Rational(anzahl_1,20)
 
-        aufgabe.extend((f'Diesmal wird {anzahl_n} mal jeweils eine Kugel mit Zurücklegen gezogen. \n\n',
+        aufgabe.extend((f'Diesmal wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, wenn {farbe_1} '
-                                                 f'genau {gzahl(anzahl_k)} gezogen wird.'))
+                        + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
                        + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
                        + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
@@ -419,7 +419,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In Phase III einer klinischen Doppelblindstudie wird die Wirksamkeit eines neuen Medikaments '
                f'untersucht. An dieser Studie nahmen insgesamt {gzahl(A)} Personen teil. Davon sind {gzahl(P)} '
-               f'Personen, Teil einer Vergleichsgruppe, die ein Placebo erhalten. \n'
+               f'Personen, Teil einer Vergleichsgruppe, die ein Placebo erhalten. '
                f'Am Ende der Studie wurde festgestellt, dass insgesamt {gzahl(H)} Personen, '
                f'aber in der Vergleichsgruppe nur {gzahl(P_H)} Personen geheilt wurden. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -447,10 +447,10 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.extend(('Zum Schluss der Studie werden die Heilungschancen beider Gruppen vergleichen.'
-                        'D.h. der Personen die ein Medikamente erhalten haben, mit denjenigen'
+        aufgabe.extend(('Zum Schluss der Studie werden die Heilungschancen beider Gruppen vergleichen. '
+                        'D.h. die Personen die ein Medikamente erhalten haben, mit denjenigen '
                         'die nur das Placebo erhalten haben. \n\n',
-                        str(liste_teilaufg[i]) + ') Berechnen Sie die Heilungschancen beider Gruppen'
+                        str(liste_teilaufg[i]) + ') Berechnen Sie die Heilungschancen beider Gruppen '
                         + 'und vergleichen Sie diese. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cup H \vert }'
                        + r'{ \vert M \vert } ~=~ \frac{' + gzahl(M_H) + '}{' + gzahl(M) + '} ~=~ '
@@ -468,7 +468,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
 
-        aufgabe.extend(('Ein Patient wurde geheilt und weiß nicht,'
+        aufgabe.extend(('Ein Patient wurde geheilt und weiß nicht, '
                         + 'ob er das Placebo oder das Medikament erhalten hat. \n\n',
                         str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit das '
                         + 'dieser Patient ein Placebo erhalten hat. \n\n'))
