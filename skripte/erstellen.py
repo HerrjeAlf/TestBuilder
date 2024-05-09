@@ -261,7 +261,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Aufgabe.append(NewPage())
 
             table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-            table2.add_row(MediumText(bold(f'Teil I {Gruppe}')),MediumText(bold('Hilfsmittelfreier Teil')))
+            table2.add_row(MediumText(bold(f'Teil I')),MediumText(bold(f'Hilfsmittelfreier Teil {Gruppe}')))
             table2.add_hline(1, 2)
             table2.add_empty_row()
 
@@ -270,6 +270,8 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
                 Aufgabe.append(table2)
                 Aufgabe.append(' \n\n')
                 Aufgabe.extend(element[0])
+                if element != liste_seiten_teil1[-1]:
+                    Aufgabe.append(NewPage())
 
 
             Aufgabe.append(' \n\n')
@@ -287,7 +289,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
                                           f'der {Phase} am {Datum}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
-            k = 0
+
             for element in liste_seiten_teil1:
                 Loesung.extend(element[1])
 
@@ -342,21 +344,19 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             # Kopf erste Seite
             table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-            table2.add_row(MediumText(bold(f'Teil II {Gruppe}')),
-                           MediumText(bold('Aufgaben mit zugelassenen Hilfsmitteln')))
+            table2.add_row(MediumText(bold(f'Teil II')),
+                           MediumText(bold(f'Aufgaben mit zugelassenen Hilfsmitteln {Gruppe}')))
             table2.add_hline(1, 2)
             table2.add_empty_row()
 
             # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-
             for element in liste_seiten_teil2:
                 Aufgabe.append(table2)
                 Aufgabe.append(' \n\n')
                 Aufgabe.extend(element[0])
-                Aufgabe.append('neueSeite')
+                if element != liste_seiten_teil2[-1]:
+                    Aufgabe.append(NewPage())
 
-
-            Aufgabe.append(' \n\n')
             Aufgabe.append(table3)
 
             Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil II {Gruppe}', clean_tex=true)
@@ -371,9 +371,9 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
                                           f'der {Phase} am {Datum}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
-            k = 0
             for element in liste_seiten_teil2:
                 Loesung.extend(element[1])
+
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
