@@ -492,7 +492,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
         table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
         if 'b' in teilaufg:
-            loesung.append(' \n\n\n')
+            loesung.append(' \n\n')
         i += 1
 
     if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern

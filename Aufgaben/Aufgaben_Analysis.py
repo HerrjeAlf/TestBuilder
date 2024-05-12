@@ -1117,7 +1117,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                            + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + fkt_pq_str
-                           + r' \quad (3P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
+                           + r' \quad (2P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
                            + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \bm{x_1~=~' + gzahl(nst_1)
                            + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r' \quad (2P)} \\'
@@ -1918,7 +1918,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + gzahl(N(x_1_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_1
                        + r' f^{ \prime \prime } (' + gzahl(N(x_2_fkt_1,3)) + ') ~=~' + gzahl(6 * faktor)
                        + r' \cdot (' + gzahl(N(x_2_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + 'a  ~=~'
-                       + gzahl(N(x_2_fkt_2,3)) + r' \quad (2P)' + lsg_extrema_2
+                       + gzahl(N(x_2_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_2
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
