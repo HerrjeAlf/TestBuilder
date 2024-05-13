@@ -225,7 +225,8 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             table1.add_empty_row()
             table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgaben'))),))
             table1.add_hline(1, 2)
-            table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
+            table1.add_row(MediumText('Hilfsmittel:'),
+                           MediumText('Formelübersicht (nach IQB) und zugelassener Taschenrechner'))
             table1.add_row(MediumText('Bearbeitungszeit:'), MediumText(str(Gesamtzeit) + ' min'))
             table1.add_empty_row()
             table1.add_row((MultiColumn(2, align='r', data=MediumText(bold('Teil I'))),))
@@ -233,11 +234,13 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             table1.add_empty_row()
             table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenstellung 1'))),))
             table1.add_row(MediumText('Thema/Inhalt:'), MediumText('Hilfsmittelfreier Teil'))
-            table1.add_row(MediumText('Hinweis:'), MediumText('Hier gibt es keine Wahlmöglichkeiten.'))
-            table1.add_row('', MediumText(f'Die Aufgabenstellung und die Lösung zum hilfsmittelfreien Teil müssen'
-                                          f' spätestens nach {Zeithmft} Minuten abgegeben werden. Eine frühere Abgabe ist'
-                                          f' möglich. Nach Abgabe dieser Aufgabenstellung dürfen die Hilfsmittel'
-                                          f' verwendet werden.'))
+            table1.add_row(MediumText('Hinweis:'),
+                           MediumText(f'Die Aufgabenstellung und die Lösung zum hilfsmittelfreien Teil müssen '
+                                      f'spätestens nach {Zeithmft} Minuten abgegeben werden. Eine frühere Abgabe '
+                                      f'ist möglich. Nach Abgabe dieser Aufgabenstellung dürfen '
+                                      f'die Hilfsmittel verwendet werden.'))
+            table1.add_empty_row()
+            table1.add_row('', MediumText(f'Anzahl der abgegebenen Blätter: ____'))
             table1.add_empty_row()
             table1.add_row((MultiColumn(2, align='r', data=MediumText(bold('Teil II'))),))
             table1.add_hline(1, 2)
@@ -247,6 +250,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             table1.add_row(MediumText('Thema/Inhalt:'), MediumText(Thema))
             table1.add_row(MediumText('Hinweis:'), MediumText('Hier dürfen Sie alle Hilfsmittel verwenden.'))
             table1.add_empty_row()
+            table1.add_row('', MediumText(f'Anzahl der abgegebenen Blätter: ____'))
             table1.add_empty_row()
             table1.add_empty_row()
             table1.add_hline(1, 2)

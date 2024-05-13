@@ -29,7 +29,7 @@ for i in range(anzahl):
         liste_punkte.extend(element[4])
 
     liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
-    angaben = [Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
     test_erzeugen(liste_seiten, angaben, i, probe)
 

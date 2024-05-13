@@ -4,6 +4,8 @@ from Aufgaben.Aufgaben_Wahrscheinlichkeitsrechnung import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
+schule = 'Torhorst - Gesamtschule'
+schulart = 'mit gymnasialer Oberstufe'
 Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
@@ -18,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [baumdiagramm_zmZ_und_bernoulli(1, ['a', 'b', 'c', 'd'], stufen=3)]
+    aufgaben_seite1 = [kurvendiskussion_polynom_parameter_2(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
@@ -28,8 +30,8 @@ for i in range(anzahl):
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
 
-    liste_seiten = [seite(aufgaben_seite1)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
-    angaben = [Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+    liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
     test_erzeugen(liste_seiten, angaben, i, probe)
 
