@@ -1147,7 +1147,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
-def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], ableitungen=None,
+def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
                               nullstellen=None, wendenormale=True):
     liste_punkte = []
     liste_bez = []
@@ -1158,7 +1158,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         nst_1 = zzahl(1, 3)
         nst_2 = nst_1 + nzahl(1, 3)
         nst_3 = nst_1 - nzahl(2, 3) + 0.5
-        faktor = zzahl(2, 4) /2
+        faktor = zzahl(2, 3)
 
         fkt = collect(expand(faktor * (x - nst_1) * (x - nst_2) * (x - nst_3)), x)
         fkt_a1 = faktor
@@ -1308,8 +1308,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                 + 'wie diese Ableitungen bestimmt wurden. \n\n'))
             # Tabelle mit dem Text
             table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-            table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Erklärung der Ableitungen'),
-                           'Punkte')
+            table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l',
+                            data='Erklärung der Ableitungen'), 'Punkte')
             table1.add_row('', '-', 'bei der Ableitung fällt der hintere Term (die Konstante) '
                            + 'immer weg (Konstantenregel) ', '1P')
             table1.add_row('', '-', 'die einzelnen Summanden können nach der Summenregel '
@@ -1319,6 +1319,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + ' und der neue Exponent um eins kleiner wird', '2P')
             table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
             loesung.append(table1)
+            if teilaufg[i+1] == 'f':
+                loesung.append(' \n\n\n')
         else:
             punkte = 3
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
@@ -1372,11 +1374,31 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         i += 1
 
     if 'f' in teilaufg:
+        punkte = 3
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung, '
+                                                'dass diese Funktion einen Wendepunkt besitzt. \n\n')
+        table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
+        table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
+        if 'c' in teilaufg:
+            table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
+                           f'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.' , '3P')
+        if 'e' in teilaufg and 'c' not in teilaufg:
+            table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie auch einen Wendepunkt.' , '2P')
+        loesung.append(table1)
+        loesung.append('\n')
+        liste_punkte.append(punkte)
+        i += 1
+
+
+    if 'g' in teilaufg:
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die möglichen Wendepunkte der Funktion f. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_1 + nst_2 + nst_3))
                        + r' \quad \vert \div ' + gzahl_klammer(6 * faktor) + r' \quad \to \quad x_1~=~'
@@ -1387,7 +1409,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(punkte)
         i += 1
 
-    if 'g' in teilaufg:
+    if 'h' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         ywert_wp1 = N(fkt.subs(x, xwert_wp1), 3)
@@ -1398,6 +1420,9 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         # print('f(x)=' + latex(fkt))
         # print('f`(x)=' + latex(fkt_1))
         # print('t(x)=' + latex(fkt_t))
+
+        if wendenormale not in ([True, False]):
+            exit("wendenormale muss True oder False sein")
         if wendenormale == True:
             punkte = 6
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wendetangente und die Wendenormale '
@@ -1429,13 +1454,14 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
                            + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
 
+
         # xmin = int(round(nst_3 - 0.4, 0))
         # xmax = int(round(nst_2 + 0.4, 0))
         # Graph(xmin,xmax, fkt, name='latex(fkt_t)')
         liste_punkte.append(punkte)
         i += 1
 
-    if 'h' in teilaufg:
+    if 'i' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
@@ -1453,7 +1479,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(5)
         i += 1
 
-    if 'i' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
+    if 'j' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         Fkt = integrate(fkt, x)
@@ -1477,9 +1503,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                             + ' rechts vom Ursprung eine Fläche ein. \n\n', str(liste_teilaufg[i])
                             + f') Berechnen Sie die eingeschlossen Fläche. \n\n'))
         else:
-            aufgabe.extend((f'Der Graph von f schließt, mit der x-Achse und der y-Achse '
-                            + ' rechts vom Ursprung eine Fläche ein. \n\n', str(liste_teilaufg[i])
-                            + f') Berechnen Sie die eingeschlossen Fläche im Intervall I(0|{obere_grenze}). \n\n'))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche unter dem Graphen '
+                                                    f'im Intervall I(0|{gzahl(obere_grenze)}). \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \int \limits_0^{' + gzahl(obere_grenze) + '}' + fkt_str
                        + r'~ \mathrm{d}x \right| ~=~ \left| \left[' + Fkt_str + r' \right]_{0}^{' + gzahl(obere_grenze)
                        + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4P) \\')
@@ -2113,18 +2138,21 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], ableitung=False):
+def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=False, verschiebung=True):
     liste_punkte = []
     liste_bez = []
     i = 0
     extrema_xwert = zzahl(1,3)
     extrema_ywert = zzahl(1,3)
-    if extrema_xwert > 0:
-        y_vers = -1*nzahl(0,2)
-    else:
-        y_vers = nzahl(0,2)
-    # print(extrema_xwert), # print(extrema_ywert), # print(y_vers)
+    if verschiebung:
+        if extrema_xwert > 0:
+            y_vers = -1*nzahl(1,3)
+        else:
+            y_vers = nzahl(1,3)
+    if verschiebung == False:
+        y_vers = 0
 
+    # print(extrema_xwert), # print(extrema_ywert), # print(y_vers)
     # rekonstruktion der exponentialfunktion
     fkt_v = exp(b*x+2)*a*x**2
     fkt_a1 = diff(fkt_v,x)
@@ -2152,16 +2180,16 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     fkt_a2 = diff(fkt, x,2)
     fkt_a3 = diff(fkt, x,3)
 
-    fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot'
-                     + vorz_v_innen(lsg_a,'x^2') + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot'
-                     + vorz_v_innen(2*lsg_a,'x'))
+    fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot ('
+                     + vorz_v_aussen(lsg_a,'x^2') + r') + e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot ('
+                     + vorz_v_aussen(2*lsg_a,'x')) + ')'
     fkt_a2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big('
-                     + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x' + r' \Big)') + r'e^{'
+                     + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x') + r' \Big) + e^{'
                      + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
                      + vorz_str(2*lsg_a) + r' \Big)')
     fkt_a3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
                      + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
-                     + vorz_str(2*lsg_a) + r' \Big)' + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                     + vorz_str(2*lsg_a) + r' \Big)' + ' + e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
                      + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \Big)'))
 
 
@@ -2213,7 +2241,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         else:
             punkte_aufg = 2
             liste_punkte.append(punkte_aufg)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Schnittpunkt der'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der'
                                                     f' Funktion f mit der y-Achse. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
                            + r' \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
@@ -2270,7 +2298,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             lsg_extrema2 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
 
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrema der Funktion f und deren Art'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
                        + fkt_a1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
@@ -2289,6 +2317,23 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'e' in teilaufg:
+        punkte = 4
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
+        xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung, '
+                                                'dass diese Funktion zwei Wendepunkte besitzt. \n\n')
+        table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
+        table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
+        table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie einen Wendepunkt dazwischen' , '2P')
+        table1.add_row('', f'einen weiteren Wendepunkt besitzt die Funktion, nach dem Extrema, '
+                           f'wenn sich der Graph der Asymptote nähert, da sich die Steigung dazwischen ändert' , '2P')
+        loesung.append(table1)
+        loesung.append('\n')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'f' in teilaufg:
         punkte_aufg = 10
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2296,7 +2341,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
         xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Wendepunkte der Funktion f. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
                        + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                        + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2')
@@ -2321,7 +2366,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
         i += 1
 
-    if 'f' in teilaufg:
+    if 'g' in teilaufg:
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2331,7 +2376,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
         ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Tangente und Normale am Wendepunkt '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
                                                 f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
                        + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
@@ -2349,13 +2394,13 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
 
-    if 'g' in teilaufg:
+    if 'h' in teilaufg:
         punkte_aufg = 5
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen im Intervall I [{xmin}|{xmax}]. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen im Intervall I [{xmin}|{xmax}]. \n\n')
         loesung.extend((str(liste_teilaufg[i])
                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
         i += 1

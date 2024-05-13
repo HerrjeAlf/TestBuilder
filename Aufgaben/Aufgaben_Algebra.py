@@ -382,13 +382,14 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
     punkt_a = [ax, ay, az] = punkt_vektor(3)
     punkt_b = [bx, by, bz] = punkt_a + punkt_vektor(3)
     v = [vx, vy, vz] = vektor_ganzzahl((punkt_b) - (punkt_a))
+
     p = random.choice([0,1])
     if T_auf_g == None:
         T_auf_g = random.choice([True,False])
     if T_auf_g:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
     elif T_auf_g == False:
-        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v + [1, 1, 1])
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,10)/2)*[vy,vx,vz+zzahl(1,3)])
     else:
         exit("T_auf_g muss None, True oder False sein!")
 
@@ -1020,7 +1021,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         i += 1
 
     if 'b' in teilaufg:
-        punkte = 6
+        punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
@@ -1029,7 +1030,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
-                       + str(1) + r' \quad (4P) \\ \mathrm{Zeichnung: \quad (2P)}', '3dim_Koordinatensystem'))
+                       + str(1) + r' \quad (1P) \\ \mathrm{Zeichnung: \quad (2P)}', '3dim_Koordinatensystem'))
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

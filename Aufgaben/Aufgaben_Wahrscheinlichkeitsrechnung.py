@@ -159,7 +159,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         def aufgabe_2():
             if anzahl_ziehen[0] == 2:
                 aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.}')
-                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \rigth)^2 '
+                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \right)^2 '
                                    + r'2 \cdot \frac{' + gzahl(anzahl_2)
                                    + r' \cdot ' + gzahl(anzahl_1) + r'}{20^2} ~=~ '
                                    + gzahl(N((anzahl_2**2 + 2 * anzahl_2 * anzahl_1)*100 / (20**2), 3))
@@ -369,7 +369,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
                                    + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
                                    + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
                                    + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
-                                              + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
+                                   + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
                                    + r' \% \quad (4P) \\')
                 punkte = 4
             return aufgabe_text, aufgabe_loesung, punkte
