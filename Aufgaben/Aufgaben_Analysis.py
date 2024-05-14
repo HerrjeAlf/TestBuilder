@@ -842,7 +842,7 @@ def rechenregeln_integrale(nr, teilaufg=['a','b']):
                       r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
                       r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}':
                           r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
-                      r' \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
+                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
                           r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
                       r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
                           r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
@@ -1120,7 +1120,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
                            + r' \quad (2P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
                            + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \bm{x_1~=~' + gzahl(nst_1)
-                           + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r' \quad (2P)} \\'
+                           + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r'} \quad (2P) \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
             i += 1
 
