@@ -1863,14 +1863,14 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_disk = Rational((faktor_1 - faktor_3)**2,4)
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
-        table2.add_row('', latex(fkt_a3), NoEscape('$' + latex(fkt_a2*a) + '$'),
-                       NoEscape('$' + latex(fkt_a1*a**2) + '$'), NoEscape('$' + latex(fkt_a0*a**3) + '$'))
+        table2.add_row('', gzahl(fkt_a3), NoEscape('$' + gzahl(fkt_a2*a) + '$'),
+                       NoEscape('$' + gzahl(fkt_a1*a**2) + '$'), NoEscape('$' + gzahl(fkt_a0*a**3) + '$'))
         table2.add_hline(2, 5)
-        table2.add_row('Partialpolynom mit Horner Schema berechnen: ' , '', NoEscape('$' + latex(fkt_b2*a) + '$'),
-                       NoEscape('$' + latex(fkt_b1*a**2) + '$'), NoEscape('$' + latex(fkt_b0*a**3) +'$'))
+        table2.add_row('Partialpolynom mit Horner Schema berechnen: ' , '', NoEscape('$' + gzahl(fkt_b2*a) + '$'),
+                       NoEscape('$' + gzahl(fkt_b1*a**2) + '$'), NoEscape('$' + gzahl(fkt_b0*a**3) +'$'))
         table2.add_hline(2, 5)
-        table2.add_row('', NoEscape('$' + latex(fkt_a3) + '$'),
-                       NoEscape('$' + latex(fkt_c2*a) + '$'), NoEscape('$' + latex(fkt_c1*a**2) + '$'), '0')
+        table2.add_row('', NoEscape('$' + gzahl(fkt_a3) + '$'),
+                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gSzahl(fkt_c1*a**2) + '$'), '0')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion, '
                                                 f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')

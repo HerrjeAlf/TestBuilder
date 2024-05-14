@@ -27,6 +27,6 @@ fkt = -5*x**3-2.5*a*x**2+30*a**2*x-22.5*a**3
 fkt_1 = diff(fkt,x)
 fkt_2 = diff(fkt,x,2)
 fkt_3 = diff(fkt,x,3)
-Fkt = integrate(fkt,x)
+Fkt = integrate(fkt ,x)
 
 print(Fkt.subs(x,-a))
