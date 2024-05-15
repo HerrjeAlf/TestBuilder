@@ -9,6 +9,47 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
+def begriffe_wahrscheinlichkeit(nr, anzahl=1):
+    liste_punkte = [anzahl]
+    liste_bez = [f'{nr}']
+    i = 0
+
+    anzahl = 6 if anzahl > 6 else anzahl
+    begriffe = {r' \mathrm{Zufallsversuch: ~ \hspace{30em}}':
+                    r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \\',
+                r' \mathrm{Ergebnis ~ e_i : \hspace{30em}}':
+                    r' \mathrm{Ergebnis ~ e_i : \quad Die~möglichen~Resultate~des~Zufallsversuches} \\',
+                r' \mathrm{Ergebnisraum ~ \Omega : \hspace{30em}}':
+                    r' \mathrm{Ergebnisraum ~ \Omega : \quad Die~Menge~aller~möglichen~Ergebnisse} \\',
+                r' \mathrm{Ereignis ~ E: \hspace{30em}}':
+                    r' \mathrm{Ereignis ~ E: \quad Teilmenge~des~Ergebnisraumes} \\',
+                r' \mathrm{unmögliches~Ereignis: \hspace{30em}}':
+                    r' \mathrm{unmögliches~Ereignis: \quad Ergebnisse,~die~nicht~eintreten~können} \\',
+                r' \mathrm{sicheres~Ereignis: \hspace{30em}}':
+                    r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \\'}
+
+    auswahl = np.random.choice(list(begriffe.keys()),anzahl, False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    aufg = lsg = ''
+    for element in range(anzahl-1):
+        aufg = aufg + auswahl[i] + r' \\\\'
+        lsg = lsg + begriffe[auswahl[i]] + r' \quad (1P)'
+        i += 1
+    aufg = aufg + auswahl[anzahl-1]
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
     liste_punkte = []
     liste_bez = []
@@ -212,7 +253,6 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 
 def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
     liste_punkte = []
