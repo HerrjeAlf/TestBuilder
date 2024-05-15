@@ -30,7 +30,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     auswahl = np.random.choice(list(begriffe.keys()),anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
+               'Erläutern Sie die folgenden Grundbegriffe der Wahrscheinlichkeitsrechnung.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
