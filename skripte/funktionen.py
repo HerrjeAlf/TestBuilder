@@ -204,6 +204,25 @@ def vektor_vergleich(vec1, vec2):
 
 # Wahrscheinlichkeitsrechnung
 
+def darstellung_mengen(lsg_menge):
+    # korrekte Darstellung der Lösungsmenge
+    lsg = '{ '
+    m = 1
+    for tubel in lsg_menge:
+        n = 1
+        lsg = lsg + '( '
+        for element in tubel:
+            lsg = lsg + str(element)
+            if n < len(tubel):
+                lsg = lsg + ', '
+            n += 1
+        lsg = lsg + ')'
+        if m < len(lsg_menge):
+            lsg = lsg + '; '
+        m += 1
+    lsg = lsg + ' }'
+    return lsg
+
 def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
     omega = [[farbe1 for element in range(anzahl_ziehen)]]
     for anzahl in omega:

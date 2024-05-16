@@ -657,9 +657,9 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
         # zwischenrechnungen
         fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
         fkt_1_a_str = vorz_v_aussen(3 * x_1,'x^2') + vorz_v_innen(2 * x_2,'x') + vorz_str(x_3)
-        fkt_1_a_p = Rational(2*x_2/x_1,3)
-        fkt_1_a_p2 = Rational(x_2/x_1,3)
-        fkt_1_a_q = Rational(x_3/x_1,3)
+        fkt_1_a_p = Rational(2*x_2,x_1)
+        fkt_1_a_p2 = Rational(x_2,x_1)
+        fkt_1_a_q = Rational(x_3,x_1)
         fkt_1_a_pq = 'x^2' + vorz_v_innen(fkt_1_a_p,'x') + vorz_str(fkt_1_a_q)
         fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
         fkt_1_a_lsg = solve(fkt_1_a, x)
@@ -1870,7 +1870,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        NoEscape('$' + gzahl(fkt_b1*a**2) + '$'), NoEscape('$' + gzahl(fkt_b0*a**3) +'$'))
         table2.add_hline(2, 5)
         table2.add_row('', NoEscape('$' + gzahl(fkt_a3) + '$'),
-                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gSzahl(fkt_c1*a**2) + '$'), '0')
+                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gzahl(fkt_c1*a**2) + '$'), '0')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion, '
                                                 f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
