@@ -492,10 +492,10 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
                         'die nur das Placebo erhalten haben. \n\n',
                         str(liste_teilaufg[i]) + ') Berechnen Sie die Heilungschancen beider Gruppen '
                         + 'und vergleichen Sie diese. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cup H \vert }'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cap H \vert }'
                        + r'{ \vert M \vert } ~=~ \frac{' + gzahl(M_H) + '}{' + gzahl(M) + '} ~=~ '
                        + gzahl(Rational(M_H,M)) + '~=~' + gzahl(Rational(M_H*100,M))
-                       + r' \%  \quad (2P)  \quad und \quad P_{P}(H) = \frac{ \vert P \cup H \vert }'
+                       + r' \%  \quad (2P)  \quad und \quad P_{P}(H) = \frac{ \vert P \cap H \vert }'
                        + r'{ \vert P \vert } ~=~ \frac{' + gzahl(P_H) + '}{' + gzahl(P) + '} ~=~ '
                        + gzahl(Rational(P_H,P)) + '~=~' + gzahl(Rational(P_H*100,P))
                        + r' \% \quad (2P) } \\ \mathrm{Die~Gruppe,~welche~die~Medikamente~erhalten~hat,~'
