@@ -718,8 +718,8 @@ def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None)
     xwert_2 = zzahl(1, 2) if xwert_2 == None else xwert_2
     ywert_2 = zzahl(1, 3)
 
-    xwert_3 = xwert_3 + 1 if xwert_3 == None else xwert_3
-    xwert_1 = xwert_1 - 1 if xwert_1 == None else xwert_1
+    xwert_3 = xwert_2 + 1 if xwert_3 == None else xwert_3
+    xwert_1 = xwert_2 - 1 if xwert_1 == None else xwert_1
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
     fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2,'x')
