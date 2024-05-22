@@ -1147,7 +1147,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 
-def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
+def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
                               nullstellen=None, wendenormale=True):
     liste_punkte = []
     liste_bez = []
@@ -1332,7 +1332,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         i += 1
 
     if 'e' in teilaufg:
-        punkte = 13
+        punkte = 12
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         x_12_fkt_1 = solve(fkt_1, x)
@@ -1514,248 +1514,6 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # noch Teilaufgabe mit Flächenberechnung ergänzen
-def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
-    liste_punkte = []
-    liste_bez = []
-    i = 0
-    # Berechnung der Nullstellen und des Faktors
-    nst_1 = zzahl(1, 5)
-    nst_2 = nst_1 + nzahl(2, 8) / 2
-    nst_3 = nst_1 - nzahl(2, 8) / 2
-    while nst_3 == 0:
-        nst_3 = nst_1 - nzahl(2, 8) / 2
-    faktor = zzahl(3, 8) / 2
-    # Aufstellen der Funktionsgleichung
-    fkt = collect(expand(faktor * (x - nst_1) * (x - a) * (x - nst_3)),x)
-    # Koeffizienten der Funktion
-    fkt_a3 = faktor
-    fkt_a2 = -1* (faktor*a + faktor*(nst_1 + nst_3))
-    fkt_a1 = (faktor*(nst_1 + nst_3)*a + faktor*nst_1*nst_3)
-    fkt_a0 = -1*faktor*nst_1*nst_3*a
-
-    # Koeffizienten der Funktion als String und der richtigen Darstellung
-    fkt_a1_str = (vorz(faktor*(nst_1+nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r'a'
-                  + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
-    fkt_a2_str = (vorz(-1 * faktor) + '(' + gzahl(abs(faktor)) + r'a '
-                  + vorz_str(-1 * faktor * (nst_1 + nst_3)) + ')')
-    fkt_a3_str = gzahl(faktor)
-
-    fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' a'
-
-    fkt_str = fkt_a3_str + r'x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
-
-    print(fkt), print(fkt_str)
-
-    if nst_1 < 0:
-        db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > 0}'
-    else:
-        db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > ' + gzahl(nst_1) + r'}'
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
-               r' \mathrm{Gegeben~ist~die~Funktion \quad  f(x)~=~' + fkt_str + r' \quad ' + db_bereich + r'}']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-
-    if 'a' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        liste_punkte.append(punkte)
-        grenzwert_neg = limit(fkt, x, -oo)
-        grenzwert_pos = limit(fkt, x, oo)
-
-        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
-                       + gzahl(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + gzahl(grenzwert_neg) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-        i += 1
-
-    if 'b' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        liste_punkte.append(punkte)
-        fkt_a1_str_neg = (vorz(-1*(nst_1 + nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r' a'
-                          + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
-        fkt_a3_str_neg = gzahl(-1*faktor)
-        fkt_sym = (fkt_a3_str_neg + 'x^3' + fkt_a2_str + 'x^2' + fkt_a1_str_neg
-                   + 'x' + fkt_a0_str)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
-                                                 + r' \neq  f(x)  \neq -f(x) \\'
-                                                 + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
-        i += 1
-    if 'c' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 15
-        liste_punkte.append(punkte)
-        # hier werden die Koeffizenten für das Hornerschema berechnet
-        fkt_b2 = nst_1 * faktor
-        fkt_c2 = -1 * faktor * a - faktor * nst_3
-        fkt_b1 = -1 * faktor * nst_1 * a - faktor * nst_1 * nst_3
-        fkt_c1 = faktor * nst_3 * a
-        fkt_b0 = faktor * nst_1 * nst_3 * a
-        fkt_partial = faktor * x**2 + fkt_c2 *x + fkt_c1
-
-        # hier werden die Koeffizenten als String für das Hornerschema berechnet
-        fkt_c2_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-1 * faktor, r' a')
-                      + vorz_v_innen(-1 * faktor * nst_3,r') \cdot x'))
-        fkt_c1_str = vorz_str(faktor*nst_3) + r' a'
-        fkt_p = -1*a - nst_3    # -(a+x_3)
-        fkt_q = nst_3 * a
-        fkt_disk = ((fkt_p/2)**2)-fkt_q
-        fkt_p_str = '-(a' + vorz_str(nst_3) + ')'
-        fkt_q_str = vorz_str(nst_3) + r' a'
-        fkt_partial_str = gzahl(faktor) + r' \cdot x^2' + fkt_c2_str + fkt_c1_str
-        fkt_pq_str = 'x^2' + fkt_p_str + r' \cdot x' + fkt_q_str
-        fkt_disk_str = r' \frac{a^2' + vorz_str(-1*2*nst_3) + r' a' + vorz_str(nst_3**2) + '}{4}'
-
-        table2 = Tabular('c c|c|c|c', row_height=1.2)
-        table2.add_row('',fkt_a3,latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
-        table2.add_hline(2, 5)
-        table2.add_row('Partialpolynom mit Horner Schema berechnen: ',' ',
-                       latex(collect(fkt_b2,a)), latex(collect(fkt_b1,a)), latex(collect(fkt_b0,a)))
-        table2.add_hline(2, 5)
-        table2.add_row('',fkt_a3, latex(collect(fkt_c2,a)), latex(collect(fkt_c1,a)), '0')
-
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
-                                                 + vorz_str(nst_1) + r' \quad (1P) \\'
-                                                 + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
-                                                 + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
-        loesung.append(table2)
-        loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
-                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
-                       r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
-                       r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
-                       r')} ~=~ ' + gzahl(-1*fkt_p/2) + r' \pm \sqrt{'
-                       + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + gzahl(-1*fkt_p/2) + r' \pm ('
-                       + gzahl((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + gzahl(nst_3)
-                       + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-        i += 1
-
-    if 'd' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 19
-        liste_punkte.append(punkte)
-        fkt_1 = collect(diff(fkt,x,1),x)
-        fkt_2 = collect(diff(fkt,x,2),x)
-        fkt_3 = collect(diff(fkt,x,3),x)
-        x_12_fkt_1 = solve(fkt_1, x)
-        x_1_fkt_1 = x_12_fkt_1[0]
-        x_2_fkt_1 = x_12_fkt_1[1]
-
-        # Koeffizienten der ersten Ableitung
-        fkt_1_a2 = 3*faktor
-        fkt_1_a1 = (-2*faktor*a -2*faktor*(nst_1 + nst_3))
-        fkt_1_a0 = (faktor*(nst_1+nst_3)*a+faktor*nst_1*nst_3)
-        fkt_1_p = (-2/3*a -2/3*(nst_1*nst_3))
-        fkt_1_q = (1/3*(nst_1+nst_3)*a + 1/3*nst_1*nst_3)
-
-        fkt_1 = fkt_1_a2 * x**2 + fkt_1_a1 * x + fkt_1_a0
-
-        # Koeffizienten der ersten Ableitung als string
-
-        fkt_1_a2_str = gzahl(3*faktor)
-        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor,r' a')
-                        + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
-        fkt_1_a0_str = (vorz(faktor * (nst_1 + nst_3)) + '('
-                         + vorz_v_aussen(abs(faktor * (nst_1 + nst_3)), r' a')
-                         + vorz_v_innen(-1 * faktor * nst_1 * nst_3, ')'))
-
-        # p und q in der pq-Formel
-        fkt_1_p_str = r'-( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
-        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Rational(-1 * (nst_1 + nst_3), 3), r' a')
-                       + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3),')'))
-        fkt_1_q2_str = (vorz_v_aussen(Rational((nst_1 + nst_3), 3), r' a')
-                        + vorz_str(Rational((nst_1 * nst_3), 3)))
-
-        # p und q in umgeformter pq-Formel
-        fkt_1_p2_str = r'( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
-        fkt_1_p3_str = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
-        fkt_1_q3_str = (vorz(-1*(nst_1 + nst_3)) + r' \frac{4 \cdot ('
-                        + vorz_v_aussen(Rational(abs(nst_1 + nst_3), 3), r' a')
-                        + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3), ') }{4}'))
-
-        # Diskriminante der Wurzel
-        fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
-                          + vorz_str(-4*nst_1*nst_3) + ')')
-
-        fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
-        fkt_1_pq_str = 'x^2' + fkt_1_p_str + r' \cdot x' + fkt_1_q_str
-        fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
-        fkt_3_str = gzahl(6*faktor)
-        fkt_1_x1 = fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str + r'}'
-        fkt_1_x2 = fkt_1_p3_str + r' - \sqrt{' + fkt_1_disk_str + r'}'
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extremstellen der Funktion f und deren Art'
-                                                ' mithilfe des hinreichenden Kriteriums. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
-                       + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                       + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
-                       + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
-                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
-                       + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                       + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2P) \\ =~ '
-                       + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
-                       + r'}{4}' + fkt_1_q3_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
-                       + r'} \quad (4P) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
-                       + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
-                       + fkt_1_disk_str + r'}  \quad (2P) \\'
-                       + r'f^{ \prime \prime } (x_2) ~=~' + gzahl(6*faktor)
-                       + r' \cdot \Big( ' + fkt_1_x1 + r' \Big) ' + fkt_1_a1_str
-                       + r' \quad (1P) \\ ~=~ + \sqrt{' + fkt_1_disk_str
-                       + r'} \quad \mathrm{>~0} \quad \to TP \quad (2P) \\ f^{ \prime \prime } (x_2) ~=~'
-                       + gzahl(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
-                       + r' \Big) ' + fkt_1_a1_str + r' \quad (1P) \\ ~=~ - \sqrt{' + fkt_1_disk_str
-                       + r'} \quad \mathrm{<~0} \quad \to HP \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-        i += 1
-
-    if 'e' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 5
-        liste_punkte.append(punkte)
-        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
-                        + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
-        fkt_1_a1_str_neg = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
-                            + vorz_v_innen(-2 * faktor * (nst_1 + nst_3), ')'))
-
-        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1+nst_3),3))
-        fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
-        fkt_3_str = gzahl(6*faktor)
-
-        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie rechnerisch auf mögliche Wendepunkte der Funktion f '
-                                                'mithilfe des hinr. Kriteriums. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                       + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
-                       + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
-                       + vorz_str(Rational((nst_1+nst_3),3))
-                       + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
-                       + r') ~=~ ' + gzahl(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-        i += 1
-
-    if 'f' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 3
-        liste_punkte.append(punkte)
-        wert_a_wp = nzahl(1,5)
-        xwert_wp = Rational((wert_a_wp + nst_1 + nst_3),3)
-        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert von a,'
-                                                f' bei dem der Wendepunkt an der Stelle x = {xwert_wp} ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + gzahl(xwert_wp) + '~=~' + xwert_wendepunkt
-                                                 + r' \quad \vert ~' + gzahl(Rational(-1 * (nst_1 + nst_3), 3))
-                                                 + r' \quad \vert \cdot 3 \quad \to \quad a~=~'
-                                                 + str(wert_a_wp) + r' \quad (3P) \\'
-                                                 + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\'))
-        i += 1
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
     liste_punkte = []
@@ -2400,6 +2158,281 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen im Intervall I [{xmin}|{xmax}]. \n\n')
         loesung.extend((str(liste_teilaufg[i])
                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+# in Entwicklung
+
+def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
+                              nullstellen=None, wendenormale=True):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    xwert_extrema_1 = -1 * nzahl(1,2)
+    abstand = nzahl(2,4)*2
+    xwert_extrema_2 = xwert_extrema_1 + abstand
+    nst_1 = xwert_extrema_1 - abstand/2
+    nst_2 = nst_1 + abstand
+    nst_3 = nst_2 + abstand
+    faktor = zzahl(2,7)/2
+    fkt_0 = collect(expand(faktor*(x-nst_1)*(x-nst_2)*(x-nst_3)),x)
+    fkt_str = latex(fkt_0)
+    ywert_0 = fkt_0.subs(x,xwert_extrema_1)
+
+    print(fkt_0)
+    print(ywert_0)
+    plot(fkt_0, (x,nst_1-1,nst_3+1) ,show=True)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
+               r' f(x)~=~' + fkt_str]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    # Berechnung der Nullstellen und des Faktors
+    nst_1 = zzahl(1, 5)
+    nst_2 = nst_1 + nzahl(2, 8) / 2
+    nst_3 = nst_1 - nzahl(2, 8) / 2
+    while nst_3 == 0:
+        nst_3 = nst_1 - nzahl(2, 8) / 2
+    faktor = zzahl(3, 8) / 2
+    # Aufstellen der Funktionsgleichung
+    fkt = collect(expand(faktor * (x - nst_1) * (x - a) * (x - nst_3)),x)
+    # Koeffizienten der Funktion
+    fkt_a3 = faktor
+    fkt_a2 = -1* (faktor*a + faktor*(nst_1 + nst_3))
+    fkt_a1 = (faktor*(nst_1 + nst_3)*a + faktor*nst_1*nst_3)
+    fkt_a0 = -1*faktor*nst_1*nst_3*a
+
+    # Koeffizienten der Funktion als String und der richtigen Darstellung
+    fkt_a1_str = (vorz(faktor*(nst_1+nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r'a'
+                  + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
+    fkt_a2_str = (vorz(-1 * faktor) + '(' + gzahl(abs(faktor)) + r'a '
+                  + vorz_str(-1 * faktor * (nst_1 + nst_3)) + ')')
+    fkt_a3_str = gzahl(faktor)
+
+    fkt_a0_str = vorz_str(-1*faktor*nst_1*nst_3) + r' a'
+
+    fkt_str = fkt_a3_str + r'x^3 ~' + fkt_a2_str + r' \cdot x^2 ~' + fkt_a1_str + r' \cdot x ~' + fkt_a0_str
+
+    print(fkt), print(fkt_str)
+
+    if nst_1 < 0:
+        db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > 0}'
+    else:
+        db_bereich = r' \mathrm{mit~a \in \mathbb{R} ~und~ a > ' + gzahl(nst_1) + r'}'
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
+               r' \mathrm{Gegeben~ist~die~Funktion \quad  f(x)~=~' + fkt_str + r' \quad ' + db_bereich + r'}']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        liste_punkte.append(punkte)
+        grenzwert_neg = limit(fkt, x, -oo)
+        grenzwert_pos = limit(fkt, x, oo)
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
+                       + gzahl(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} '
+                       + fkt_str + '~=~' + gzahl(grenzwert_neg) + r' \quad (2P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        liste_punkte.append(punkte)
+        fkt_a1_str_neg = (vorz(-1*(nst_1 + nst_3)) + '(' + gzahl(abs(faktor * (nst_1 + nst_3))) + r' a'
+                          + vorz_str(-1 * faktor * nst_1 * nst_3) + ')')
+        fkt_a3_str_neg = gzahl(-1*faktor)
+        fkt_sym = (fkt_a3_str_neg + 'x^3' + fkt_a2_str + 'x^2' + fkt_a1_str_neg
+                   + 'x' + fkt_a0_str)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
+                                                 + r' \neq  f(x)  \neq -f(x) \\'
+                                                 + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
+        i += 1
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 15
+        liste_punkte.append(punkte)
+        # hier werden die Koeffizenten für das Hornerschema berechnet
+        fkt_b2 = nst_1 * faktor
+        fkt_c2 = -1 * faktor * a - faktor * nst_3
+        fkt_b1 = -1 * faktor * nst_1 * a - faktor * nst_1 * nst_3
+        fkt_c1 = faktor * nst_3 * a
+        fkt_b0 = faktor * nst_1 * nst_3 * a
+        fkt_partial = faktor * x**2 + fkt_c2 *x + fkt_c1
+
+        # hier werden die Koeffizenten als String für das Hornerschema berechnet
+        fkt_c2_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-1 * faktor, r' a')
+                      + vorz_v_innen(-1 * faktor * nst_3,r') \cdot x'))
+        fkt_c1_str = vorz_str(faktor*nst_3) + r' a'
+        fkt_p = -1*a - nst_3    # -(a+x_3)
+        fkt_q = nst_3 * a
+        fkt_disk = ((fkt_p/2)**2)-fkt_q
+        fkt_p_str = '-(a' + vorz_str(nst_3) + ')'
+        fkt_q_str = vorz_str(nst_3) + r' a'
+        fkt_partial_str = gzahl(faktor) + r' \cdot x^2' + fkt_c2_str + fkt_c1_str
+        fkt_pq_str = 'x^2' + fkt_p_str + r' \cdot x' + fkt_q_str
+        fkt_disk_str = r' \frac{a^2' + vorz_str(-1*2*nst_3) + r' a' + vorz_str(nst_3**2) + '}{4}'
+
+        table2 = Tabular('c c|c|c|c', row_height=1.2)
+        table2.add_row('',fkt_a3,latex(collect(fkt_a2,a)), latex(collect(fkt_a1,a)), latex(collect(fkt_a0,a)))
+        table2.add_hline(2, 5)
+        table2.add_row('Partialpolynom mit Horner Schema berechnen: ',' ',
+                       latex(collect(fkt_b2,a)), latex(collect(fkt_b1,a)), latex(collect(fkt_b0,a)))
+        table2.add_hline(2, 5)
+        table2.add_row('',fkt_a3, latex(collect(fkt_c2,a)), latex(collect(fkt_c1,a)), '0')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
+                                                 + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
+                                                 + vorz_str(nst_1) + r' \quad (1P) \\'
+                                                 + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
+                                                 + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
+        loesung.append(table2)
+        loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
+                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
+                       r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
+                       r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
+                       r')} ~=~ ' + gzahl(-1*fkt_p/2) + r' \pm \sqrt{'
+                       + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + gzahl(-1*fkt_p/2) + r' \pm ('
+                       + gzahl((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + gzahl(nst_3)
+                       + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+    if 'd' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 19
+        liste_punkte.append(punkte)
+        fkt_1 = collect(diff(fkt,x,1),x)
+        fkt_2 = collect(diff(fkt,x,2),x)
+        fkt_3 = collect(diff(fkt,x,3),x)
+        x_12_fkt_1 = solve(fkt_1, x)
+        x_1_fkt_1 = x_12_fkt_1[0]
+        x_2_fkt_1 = x_12_fkt_1[1]
+
+        # Koeffizienten der ersten Ableitung
+        fkt_1_a2 = 3*faktor
+        fkt_1_a1 = (-2*faktor*a -2*faktor*(nst_1 + nst_3))
+        fkt_1_a0 = (faktor*(nst_1+nst_3)*a+faktor*nst_1*nst_3)
+        fkt_1_p = (-2/3*a -2/3*(nst_1*nst_3))
+        fkt_1_q = (1/3*(nst_1+nst_3)*a + 1/3*nst_1*nst_3)
+
+        fkt_1 = fkt_1_a2 * x**2 + fkt_1_a1 * x + fkt_1_a0
+
+        # Koeffizienten der ersten Ableitung als string
+
+        fkt_1_a2_str = gzahl(3*faktor)
+        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor,r' a')
+                        + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
+        fkt_1_a0_str = (vorz(faktor * (nst_1 + nst_3)) + '('
+                         + vorz_v_aussen(abs(faktor * (nst_1 + nst_3)), r' a')
+                         + vorz_v_innen(-1 * faktor * nst_1 * nst_3, ')'))
+
+        # p und q in der pq-Formel
+        fkt_1_p_str = r'-( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
+        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Rational(-1 * (nst_1 + nst_3), 3), r' a')
+                       + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3),')'))
+        fkt_1_q2_str = (vorz_v_aussen(Rational((nst_1 + nst_3), 3), r' a')
+                        + vorz_str(Rational((nst_1 * nst_3), 3)))
+
+        # p und q in umgeformter pq-Formel
+        fkt_1_p2_str = r'( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
+        fkt_1_p3_str = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        fkt_1_q3_str = (vorz(-1*(nst_1 + nst_3)) + r' \frac{4 \cdot ('
+                        + vorz_v_aussen(Rational(abs(nst_1 + nst_3), 3), r' a')
+                        + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3), ') }{4}'))
+
+        # Diskriminante der Wurzel
+        fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
+                          + vorz_str(-4*nst_1*nst_3) + ')')
+
+        fkt_1_str = fkt_1_a2_str + 'x^2' + fkt_1_a1_str + 'x' + fkt_1_a0_str
+        fkt_1_pq_str = 'x^2' + fkt_1_p_str + r' \cdot x' + fkt_1_q_str
+        fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
+        fkt_3_str = gzahl(6*faktor)
+        fkt_1_x1 = fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str + r'}'
+        fkt_1_x2 = fkt_1_p3_str + r' - \sqrt{' + fkt_1_disk_str + r'}'
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extremstellen der Funktion f und deren Art'
+                                                ' mithilfe des hinreichenden Kriteriums. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
+                       + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                       + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
+                       + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
+                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
+                       + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
+                       + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2P) \\ =~ '
+                       + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
+                       + r'}{4}' + fkt_1_q3_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
+                       + r'} \quad (4P) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
+                       + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
+                       + fkt_1_disk_str + r'}  \quad (2P) \\'
+                       + r'f^{ \prime \prime } (x_2) ~=~' + gzahl(6*faktor)
+                       + r' \cdot \Big( ' + fkt_1_x1 + r' \Big) ' + fkt_1_a1_str
+                       + r' \quad (1P) \\ ~=~ + \sqrt{' + fkt_1_disk_str
+                       + r'} \quad \mathrm{>~0} \quad \to TP \quad (2P) \\ f^{ \prime \prime } (x_2) ~=~'
+                       + gzahl(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
+                       + r' \Big) ' + fkt_1_a1_str + r' \quad (1P) \\ ~=~ - \sqrt{' + fkt_1_disk_str
+                       + r'} \quad \mathrm{<~0} \quad \to HP \quad (2P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+    if 'e' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 5
+        liste_punkte.append(punkte)
+        fkt_1_a1_str = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
+                        + vorz_v_innen(-2 * faktor * (nst_1 + nst_3),')'))
+        fkt_1_a1_str_neg = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
+                            + vorz_v_innen(-2 * faktor * (nst_1 + nst_3), ')'))
+
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1+nst_3),3))
+        fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
+        fkt_3_str = gzahl(6*faktor)
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie rechnerisch auf mögliche Wendepunkte der Funktion f '
+                                                'mithilfe des hinr. Kriteriums. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                       + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
+                       + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
+                       + vorz_str(Rational((nst_1+nst_3),3))
+                       + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
+                       + r') ~=~ ' + gzahl(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+    if 'f' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        liste_punkte.append(punkte)
+        wert_a_wp = nzahl(1,5)
+        xwert_wp = Rational((wert_a_wp + nst_1 + nst_3),3)
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert von a,'
+                                                f' bei dem der Wendepunkt an der Stelle x = {xwert_wp} ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + gzahl(xwert_wp) + '~=~' + xwert_wendepunkt
+                                                 + r' \quad \vert ~' + gzahl(Rational(-1 * (nst_1 + nst_3), 3))
+                                                 + r' \quad \vert \cdot 3 \quad \to \quad a~=~'
+                                                 + str(wert_a_wp) + r' \quad (3P) \\'
+                                                 + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\'))
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
