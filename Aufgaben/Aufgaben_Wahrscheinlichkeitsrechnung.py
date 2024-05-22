@@ -36,11 +36,11 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
     grafiken_loesung = []
 
     aufg = lsg = ''
-    for element in range(anzahl-1):
-        aufg = aufg + auswahl[i] + r' \\\\'
-        lsg = lsg + begriffe[auswahl[i]]
-        i += 1
-    aufg = aufg + auswahl[anzahl-1]
+    for element in range(anzahl):
+        aufg = aufg + auswahl[element]
+        if element != range(anzahl)[-1]:
+            aufg = aufg + r' \\\\'
+        lsg = lsg + begriffe[auswahl[element]]
 
     lsg = lsg + r' \\ \mathrm{insgesamt~' + str(len(auswahl)) + r'~Punkte}'
     aufgabe.append(aufg)
