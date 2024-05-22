@@ -10,8 +10,8 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
 Lehrer = 'Herr Herrys'
-Art = 'Test 3 (2. Sem.)'
-Titel = 'Kurvendiskusssion einer Parameterfunktion'
+Art = 'Test 1 (2. Sem.)'
+Titel = 'Rekonstruktion und Extremalprobleme'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [kurvendiskussion_polynom_parameter_2(1)]
+    aufgaben_seite1 = [rekonstruktion_und_extremalproblem(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

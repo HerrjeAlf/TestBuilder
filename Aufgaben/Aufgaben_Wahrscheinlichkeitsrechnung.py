@@ -16,19 +16,19 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     anzahl = 6 if anzahl > 6 else anzahl
     begriffe = {r' \mathrm{Zufallsversuch: ~ \hspace{30em}}':
-                    r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \\',
+                    r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \quad (1P) \\',
                 r' \mathrm{Ergebnis ~ e_i : \hspace{30em}}':
-                    r' \mathrm{Ergebnis ~ e_i : \quad Die~möglichen~Resultate~des~Zufallsversuches} \\',
+                    r' \mathrm{Ergebnis ~ e_i : \quad Die~möglichen~Resultate~des~Zufallsversuches} \quad (1P) \\',
                 r' \mathrm{Ergebnisraum ~ \Omega : \hspace{30em}}':
-                    r' \mathrm{Ergebnisraum ~ \Omega : \quad Die~Menge~aller~möglichen~Ergebnisse} \\',
+                    r' \mathrm{Ergebnisraum ~ \Omega : \quad Die~Menge~aller~möglichen~Ergebnisse} \quad (1P) \\',
                 r' \mathrm{Ereignis ~ E: \hspace{30em}}':
-                    r' \mathrm{Ereignis ~ E: \quad Teilmenge~des~Ergebnisraumes} \\',
+                    r' \mathrm{Ereignis ~ E: \quad Teilmenge~des~Ergebnisraumes} \quad (1P) \\',
                 r' \mathrm{unmögliches~Ereignis: \hspace{30em}}':
-                    r' \mathrm{unmögliches~Ereignis: \quad Ergebnisse,~die~nicht~eintreten~können} \\',
+                    r' \mathrm{unmögliches~Ereignis: \quad Ergebnisse,~die~nicht~eintreten~können} \quad (1P) \\',
                 r' \mathrm{sicheres~Ereignis: \hspace{30em}}':
-                    r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \\'}
+                    r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \quad (1P) \\'}
 
-    auswahl = np.random.choice(list(begriffe.keys()),anzahl, False)
+    auswahl = np.random.choice(list(begriffe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Erläutern Sie die folgenden Grundbegriffe der Wahrscheinlichkeitsrechnung.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -38,15 +38,13 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
     aufg = lsg = ''
     for element in range(anzahl-1):
         aufg = aufg + auswahl[i] + r' \\\\'
-        lsg = lsg + begriffe[auswahl[i]] + r' \quad (1P)'
+        lsg = lsg + begriffe[auswahl[i]]
         i += 1
     aufg = aufg + auswahl[anzahl-1]
-    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
+
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(len(auswahl)) + r'~Punkte}'
     aufgabe.append(aufg)
     loesung.append(lsg)
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
@@ -122,8 +120,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
                         i += 1
                 if i == p:
                     lsg_menge.append(element)
-            # print(lsg_menge)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
         def ereig_2():
             auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
@@ -139,10 +137,11 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
                 for element in ergebnisraum:
                     if element[1] == auswahl[1]:
                         lsg_menge.append(element)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
-        ereignis_1, lsg_menge_1 = ereig_1(anzahl_kugel_E1)
-        ereignis_2, lsg_menge_2 = ereig_2()
+        ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
+        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
 
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
@@ -150,7 +149,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
             for element2 in lsg_menge_2:
                 if element2 not in lsg_menge:
                     lsg_menge.append(element2)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
         def geschnitten():
             text = r' \mathrm{E_1 \cap E_2}'
@@ -159,10 +159,11 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
                 for element2 in lsg_menge_2:
                     if element2 == element1:
                         lsg_menge.append(element2)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
-        vereinigung, lsg_vereinigung = vereinigung()
-        schnittmenge, lsg_schnittmenge = geschnitten()
+        vereinigung, lsg_menge_vereinigung, lsg_vereinigung = vereinigung()
+        schnittmenge, lsg_menge_schnittmenge, lsg_schnittmenge = geschnitten()
 
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
@@ -170,9 +171,9 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
 
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{1cm} p{8cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ergebnismengen'), 'Punkte')
-        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '1P')
-        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '1P')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ergebnismengen'), 'Punkte')
+        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '1P')
+        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '1P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
                        str(lsg_vereinigung), '1P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),

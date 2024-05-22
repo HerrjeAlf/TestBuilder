@@ -657,9 +657,9 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
         # zwischenrechnungen
         fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
         fkt_1_a_str = vorz_v_aussen(3 * x_1,'x^2') + vorz_v_innen(2 * x_2,'x') + vorz_str(x_3)
-        fkt_1_a_p = Rational(2*x_2/x_1,3)
-        fkt_1_a_p2 = Rational(x_2/x_1,3)
-        fkt_1_a_q = Rational(x_3/x_1,3)
+        fkt_1_a_p = Rational(2*x_2,x_1)
+        fkt_1_a_p2 = Rational(x_2,x_1)
+        fkt_1_a_q = Rational(x_3,x_1)
         fkt_1_a_pq = 'x^2' + vorz_v_innen(fkt_1_a_p,'x') + vorz_str(fkt_1_a_q)
         fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
         fkt_1_a_lsg = solve(fkt_1_a, x)
@@ -718,8 +718,8 @@ def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None)
     xwert_2 = zzahl(1, 2) if xwert_2 == None else xwert_2
     ywert_2 = zzahl(1, 3)
 
-    xwert_3 = xwert_3 + 1 if xwert_3 == None else xwert_3
-    xwert_1 = xwert_1 - 1 if xwert_1 == None else xwert_1
+    xwert_3 = xwert_2 + 1 if xwert_3 == None else xwert_3
+    xwert_1 = xwert_2 - 1 if xwert_1 == None else xwert_1
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
     fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2,'x')
@@ -1870,7 +1870,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        NoEscape('$' + gzahl(fkt_b1*a**2) + '$'), NoEscape('$' + gzahl(fkt_b0*a**3) +'$'))
         table2.add_hline(2, 5)
         table2.add_row('', NoEscape('$' + gzahl(fkt_a3) + '$'),
-                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gSzahl(fkt_c1*a**2) + '$'), '0')
+                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gzahl(fkt_c1*a**2) + '$'), '0')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion, '
                                                 f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
@@ -1972,9 +1972,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrempunkte der Funktion und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
-                       + r' \quad \mathrm{und} \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                       + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
                        r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
                        + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \Big( \frac{'
@@ -2007,8 +2005,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_3_str = gzahl(6*faktor)
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                       + r' \quad \to \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
                        + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
                        + gzahl(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }\Big('

@@ -104,7 +104,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table1 = Tabular('|p{1.2cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{2cm}|', row_height=1.2)
+            table1 = Tabular('|p{1.2cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{3cm}|', row_height=1.2)
             table1.add_row((MultiColumn(6, align='c', data=MediumText(bold(schule))),))
             table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()
@@ -140,7 +140,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} - {Titel}')))
+            Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n {Titel}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
             k = 0
