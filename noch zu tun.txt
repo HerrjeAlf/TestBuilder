@@ -1,7 +1,13 @@
+allgemein:
+- alte Skripte in neue Form anpassen
+
 Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
-
+- kurvendiskussion von polynom_02 anfertigen (Funktion mit Nullstellen und Extremstellen die ganzzahlige Werte annehmen)
+- Kurvendiskussion mit Polynom_03 des 4. Grades anfertigen
+- Kurvendiskussion einer weiteren Exponentialfunktion anfertigen
+- Kurvendiskussion einer
 
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm_bernoulli Aufgabe c noch weiter auf zmZ anpassen und eine Aufgabe e zur kummulierten Bernoullikette erstellen
@@ -10,7 +16,9 @@ funktionen
 - ergebnissmenge_zoZ überprüfen und ggf. fertig stellen
 
 
+
 langfristig:
+
 
 - GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
