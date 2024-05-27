@@ -1043,6 +1043,157 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    # hier wird die Funktion erstellt.
+    def Aufgabe_Variante_1():
+
+        Text = ('Ein Patient nimmt ein Medikament ein. Anschließend wird die Konzentration des Medikaments im Blut'
+                ' jede Stunde in mg/l gemessen. Die Messwerte ergeben folgende Tabelle: \n\n')
+
+        Grundwert = nzahl(10, 20) * 10
+        Prozentwert = nzahl(5, 15)
+        Wachstumsfaktor = 1 - Prozentwert/100
+        Liste = []
+        for j in range(20):
+            wert = N(Grundwert * Wachstumsfaktor ** j, 4)
+            if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
+                Liste.append(int(wert))
+            else:
+                Liste.append(wert)
+
+        Einheit_y = 'mg/l'
+        Einheit_x = 'Stunden'
+        Tabelle_beschriftung = 'Konzentrationsentwicklung:'
+        return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
+
+    def Aufgabe_Variante_2():
+
+        Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse'
+                ' wurden in der folgenden Tabelle festgehalten: \n\n')
+
+        Grundwert = nzahl(80, 200)
+        Prozentwert = zzahl(10,50)/10
+        Wachstumsfaktor = 1 + Prozentwert/100
+        Liste = []
+        for j in range(20):
+            wert = N(Grundwert * Wachstumsfaktor ** j, 4)
+            if str(wert)[-1] == '.' or str(wert)[-2:] == '.0':
+                Liste.append(int(wert))
+            else:
+                Liste.append(wert)
+        Einheit_y = 'Millionen'
+        Einheit_x = 'Jahren'
+        Tabelle_beschriftung = 'Bevölkerungsentwicklung:'
+        return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
+
+    if random.random() < 0.5:
+        Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_1()
+    else:
+        Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_2()
+
+    Aufg_t = nzahl(7, 10)
+    Aufg_wert_y = int(N(Aufg_Liste[Aufg_t], 2))
+    Aufg_wert_t = nzahl(10, 17)
+
+    table2 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
+    table2.add_hline(2, 7)
+    table2.add_row(Tab_beschr, f'Zeit in {Aufg_Einheit_x}', '0', '1', '2', '3', '4')
+    table2.add_hline(2, 7)
+    table2.add_row('', f'Wert in {Aufg_Einheit_y}', Aufg_Liste[0], Aufg_Liste[1], Aufg_Liste[2],
+                   Aufg_Liste[3], Aufg_Liste[4])
+    table2.add_hline(2, 7)
+
+    table3 = Tabular('c|c|c|c|c|c|c|', row_height=1.5)
+    table3.add_hline(2, 7)
+    table3.add_row('Ergebnisse: ', 'Quotient der Werte', NoEscape(r'$\frac{a1}{a0}$'),
+                   NoEscape(r'$\frac{a2}{a1}$'), NoEscape(r'$\frac{a3}{a2}$'), NoEscape(r'$\frac{a4}{a3}$'),
+                   NoEscape(r'$\frac{a5}{a4}$'))
+    table3.add_hline(2, 7)
+    table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip('0'),
+                   str(N(Aufg_Liste[2] / Aufg_Liste[1], 4)).rstrip('0'),
+                   str(N(Aufg_Liste[3] / Aufg_Liste[2], 4)).rstrip('0'),
+                   str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip('0'),
+                   str(N(Aufg_Liste[5] / Aufg_Liste[4], 4)).rstrip('0'))
+    table3.add_hline(2, 7)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        punkte_aufg = 3
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # grafische Darstellung des Sachverhaltes
+
+        # Aufgaben und Lösungen
+        aufgabe.extend((table2, '\n\n\n', str(teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
+                                            'Wachstum handelt.\n\n'))
+        loesung.extend((str(teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
+                                           r'um~exponentielles~Wachstum. \quad (3P)}', table3,
+                                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+        i += 1
+
+    if 'b' in teilaufg:
+        punkte_aufg = 2
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # grafische Darstellung des Sachverhaltes
+
+        # Aufgaben und Lösungen
+        aufgabe.append(str(teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
+        loesung.append(str(teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
+                                           + str(Aufg_a) + r'^x \quad (2P) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+        i += 1
+
+
+    if 'c' in teilaufg:
+        punkte_aufg = 3
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # grafische Darstellung des Sachverhaltes
+
+        # Aufgaben und Lösungen
+        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie die Zeit bis {Aufg_wert_y} {Aufg_Einheit_y}'
+                                          ' erreicht werden. \n\n')
+        loesung.append(str(teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
+                                           + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
+                                           + r' \quad \to \quad ' + latex(Rational(Aufg_wert_y,Aufg_c0))
+                                           + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
+                                           + r'} \quad \to \quad x~=~'
+                                           + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
+                                           + r' \quad (3P) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+        i += 1
+
+
+    if 'd' in teilaufg:
+        punkte_aufg = 2
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # grafische Darstellung des Sachverhaltes
+
+        # Aufgaben und Lösungen
+        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den Wert der nach {Aufg_wert_t} {Aufg_Einheit_x}'
+                                          f' erreicht wird. \n\n')
+        loesung.append(str(teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
+                                           + r' \cdot '+ str(Aufg_a) + r'^{'+ str(Aufg_wert_t)+ r'} ~=~ '
+                                           + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2P) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 
 # Aufgaben zur Integralrechnung
 

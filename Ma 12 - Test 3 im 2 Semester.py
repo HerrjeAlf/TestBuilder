@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [kurvendiskussion_polynom_parameter_2(1,['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])]
+    aufgaben_seite1 = [kurvendiskussion_exponentialfkt_01(1, ['a', 'b', 'c', 'd', 'e', 'f', 'h'])]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
