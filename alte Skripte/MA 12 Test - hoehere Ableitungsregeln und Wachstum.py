@@ -3,7 +3,7 @@ import string
 import time
 import numpy as np
 import random, math
-from funktionen import *
+from skripte.funktionen import *
 import matplotlib.pyplot as plt
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -11,8 +11,7 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
 from pylatex.utils import bold
 from sympy import *
 from sympy.plotting import plot as symplot
-
-from plotten import Graph
+from skripte.plotten import Graph
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -109,9 +108,9 @@ def erstellen(Teil):
                 erg_gl = nzahl(2, 40) / 10
                 aufgabe = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + '} ~=~ ' + gzahl(erg_gl)
                 aufgabe_lsg = ('e^{' + vorz_v_aussen(faktor_exp,'x') + '} ~=~ ' + gzahl(erg_gl)
-                               + r' \quad \vert \ln() \quad \to \quad ' + vorz_gzahl(faktor_exp) + r'x ~=~ \ln('
+                               + r' \quad \vert \ln() \quad \to \quad ' + vorz_str(faktor_exp) + r'x ~=~ \ln('
                                + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
-                               + r' \quad \to \quad x~=~' + vorz_gzahl(N(log(erg_gl) / faktor_exp, 3))
+                               + r' \quad \to \quad x~=~' + vorz_str(N(log(erg_gl) / faktor_exp, 3))
                                + r' \quad (2P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
@@ -127,7 +126,7 @@ def erstellen(Teil):
                                + vorz_str(-1*summand) + r' \quad (1P) \\' + vorz_v_aussen(faktor_exp,'x')
                                + r' ~=~ \ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
                                + gzahl_klammer(faktor_exp) + r' \quad \to \quad x~=~'
-                               + vorz_gzahl(N((log(erg_gl) - summand)/ faktor_exp, 3))
+                               + vorz_str(N((log(erg_gl) - summand)/ faktor_exp, 3))
                                + r' \quad (2P) \\')
                 return [aufgabe, aufgabe_lsg, punkte]
 
@@ -140,15 +139,15 @@ def erstellen(Teil):
                 vorzeichen = random.choice([-1, 1])
                 faktor_1 = vorzeichen * nzahl(1,40)
                 faktor_2 = vorzeichen * nzahl(1,40)
-                aufgabe = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
-                           + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}')
-                aufgabe_lsg = (vorz_gzahl(faktor_1/10) + 'e^{' + vorz_gzahl(faktor_exp_1) + r'x} ~=~'
-                               + vorz_gzahl(faktor_2/10) + 'e^{' + vorz_gzahl(faktor_exp_2) + r'x}'
+                aufgabe = (vorz_str(faktor_1/10) + 'e^{' + vorz_str(faktor_exp_1) + r'x} ~=~'
+                           + vorz_str(faktor_2/10) + 'e^{' + vorz_str(faktor_exp_2) + r'x}')
+                aufgabe_lsg = (vorz_str(faktor_1/10) + 'e^{' + vorz_str(faktor_exp_1) + r'x} ~=~'
+                               + vorz_str(faktor_2/10) + 'e^{' + vorz_str(faktor_exp_2) + r'x}'
                                + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
                                + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Rational(faktor_2,faktor_1))
                                + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
-                               + vorz_gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
-                               + 'e^{' + vorz_gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
+                               + vorz_str(faktor_exp_2) + r'x} \quad (1P) \\'
+                               + 'e^{' + vorz_str(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
                                + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln() \quad \to \quad '
                                + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \Big('
                                + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '

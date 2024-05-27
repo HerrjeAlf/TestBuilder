@@ -2171,19 +2171,28 @@ def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     i = 0
 
     xwert_extrema_1 = -1 * nzahl(1,2)
-    abstand = nzahl(2,4)*2
+    abstand = nzahl(1,4)*2
     xwert_extrema_2 = xwert_extrema_1 + abstand
     nst_1 = xwert_extrema_1 - abstand/2
     nst_2 = nst_1 + abstand
     nst_3 = nst_2 + abstand
     faktor = zzahl(2,7)/2
-    fkt_0 = collect(expand(faktor*(x-nst_1)*(x-nst_2)*(x-nst_3)),x)
+    fkt_1 = collect(expand(faktor*(x-xwert_extrema_1)*(x-xwert_extrema_2)),x)
+    fkt_0 = integrate(fkt_1,x) + zzahl(1,5)
+    liste_nst = solve(fkt_0,x)
+    # fkt_0 = collect(expand(faktor*(x-nst_1)*(x-nst_2)*(x-nst_3)),x)
     fkt_str = latex(fkt_0)
     ywert_0 = fkt_0.subs(x,xwert_extrema_1)
+    fkt_0_1 = diff(fkt_0,x)
+    extremstellen = solve(fkt_0_1,x)
 
     print(fkt_0)
-    print(ywert_0)
-    plot(fkt_0, (x,nst_1-1,nst_3+1) ,show=True)
+    # print('x_1 = '  + str(nst_1)), print('x_2 = '  + str(nst_2)), print('x_3 = '  + str(nst_3))
+    print(liste_nst)
+    print('xe_1 = '  + str(xwert_extrema_1))
+    print('xe_2 = '  + str(xwert_extrema_2))
+    print(extremstellen)
+    plot(fkt_0, (x,nst_1-1,nst_3+1), show=True)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                r' f(x)~=~' + fkt_str]
