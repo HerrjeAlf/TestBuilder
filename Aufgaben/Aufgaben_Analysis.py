@@ -20,16 +20,16 @@ def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
     liste_punkte = [len(teilaufg)]
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
-    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{15em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
-                      r'\log_a \frac{u}{v} ~=~ \hspace{15em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
-                      r'\log_a u^r ~=~ \hspace{15em}': r'\log_a u^r ~=~ r \cdot \log_a u',
-                      r'\log_a \sqrt[n]{u} ~=~ \hspace{15em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
-                      r'\log_c b ~=~ \hspace{15em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
-                      r'a^{\log_a b} ~=~ \hspace{15em}': r'a^{\log_a b} ~=~ b',
-                      r'\log_a 1 ~=~ \hspace{15em}': r'\log_a 1 ~=~ 0',
-                      r'\log_a a ~=~ \hspace{15em}': r'\log_a a ~=~ 1',
-                      r'\log_e ~=~ \hspace{15em}': r'\log_e ~=~ \ln',
-                      r'\log_{10} ~=~ \hspace{15em}': r'\log_{10} ~=~ \lg'}
+    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{10em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                      r'\log_a \frac{u}{v} ~=~ \hspace{10em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                      r'\log_a u^r ~=~ \hspace{10em}': r'\log_a u^r ~=~ r \cdot \log_a u',
+                      r'\log_a \sqrt[n]{u} ~=~ \hspace{10em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                      r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
+                      r'a^{\log_a b} ~=~ \hspace{10em}': r'a^{\log_a b} ~=~ b',
+                      r'\log_a 1 ~=~ \hspace{10em}': r'\log_a 1 ~=~ 0',
+                      r'\log_a a ~=~ \hspace{10em}': r'\log_a a ~=~ 1',
+                      r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ \ln',
+                      r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ \lg'}
 
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), len(teilaufg), False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -46,8 +46,10 @@ def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
         value = regeln_aufgabe[keys]
         if i % 3 != 0:
             aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys
-        else:
+        elif i % 3 == 0 and element != teilaufg[-1]:
             aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys + r' \\\\'
+        else:
+            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys
         lsg = lsg + str(liste_teilaufg[element]) + value + r' \\'
 
     lsg = lsg + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte}'
@@ -552,12 +554,14 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
     punkte = 0
     for element in teilaufg:
         fkt, fkt_uf, fkt_abl, pkt = aufgaben[element]
-        if (i+1)%3 != 0:
+        if (i+1) % 3 != 0:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
             if i+1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
-        else:
+        elif (i + 1) % 3 == 0 and element != teilaufg[-1]:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt + r' \\\\'
+        else:
+            aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt + fkt_uf
                + r' \quad \to \quad \bm{f^{ \prime }(x)~=~ ' + fkt_abl + r'} \quad (' + str(pkt) + r'P) \\')
         punkte += pkt
@@ -1030,8 +1034,10 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
             if i + 1 < len(teilaufg):
                 aufg_text = aufg_text + r' \hspace{5em} '
-        else:
+        elif (i + 1) % 2 == 0 and element != teilaufg[-1]:
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg + r' \\\\'
+        else:
+            aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
         lsg_aufg = (lsg_aufg + str(liste_teilaufg[i]) + lsg + r' \\')
         punkte += pkt
         i += 1
