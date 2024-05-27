@@ -16,7 +16,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 # Aufgaben zu den Regeln
 
-def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
+def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
     liste_punkte = [len(teilaufg)]
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
@@ -30,6 +30,10 @@ def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'
                       r'\log_a a ~=~ \hspace{10em}': r'\log_a a ~=~ 1',
                       r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ \ln',
                       r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ \lg'}
+    if anzahl != False:
+        if anzahl > len(teilaufg):
+            anzahl = len(teilaufg)
+        teilaufg = np.random.choice(teilaufg, anzahl , False)
 
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), len(teilaufg), False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -405,7 +409,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
+def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -543,6 +547,11 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'])
                    + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r')^{'
                    + gzahl(Rational(1 - wurzel, wurzel)) + r'}')
         return fkt, fkt_uf, fkt_abl, pkt
+
+    if anzahl != False:
+        if anzahl > len(teilaufg):
+            anzahl = len(teilaufg)
+        teilaufg = np.random.choice(teilaufg, anzahl, False)
 
     aufgaben = {'a': funktion(2), 'b': polynom_ganzrational(), 'c': wurzel(), 'd': poly_wurzel(), 'e': fkt_exp(),
                 'f': fkt_ln(), 'g': fkt_wurzel_exp(), 'h': verkettet_exp(), 'i': verkettet_ln(),
@@ -913,7 +922,12 @@ def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
+    if anzahl != False:
+        if anzahl > len(teilaufg):
+            anzahl = len(teilaufg)
+        teilaufg = np.random.choice(teilaufg, anzahl , False)
+
     liste_bez = [str(nr)]
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Lösen Sie die Exponentialgleichungen.']

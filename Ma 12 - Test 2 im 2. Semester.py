@@ -18,19 +18,12 @@ probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
-# Berechnung der Aufgabenteile
-teilaufg_nr1 = np.random.choice(('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'), 2, False)
-teilaufg_nr2 = np.random.choice(('a', 'b', 'c', 'd', 'e', 'f'), 2, False)
-teilaufg_nr4 = np.random.choice(('e', 'f', 'g', 'h', 'i', 'j'), 2, False)
-print(teilaufg_nr1)
-print(teilaufg_nr2)
-print(teilaufg_nr4)
 
 for i in range(anzahl):
-    aufgaben_seite1 = [logarithmusgesetze(1, teilaufg_nr1),
-                       exponentialgleichungen(2, teilaufg_nr2),
+    aufgaben_seite1 = [logarithmusgesetze(1, anzahl=2),
+                       exponentialgleichungen(2, anzahl=4),
                        wachstumsfunktion(3),
-                       ableitungen(4, teilaufg_nr4)]
+                       ableitungen(4,  ['e', 'f', 'g', 'h', 'i', 'j'], anzahl=3)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
