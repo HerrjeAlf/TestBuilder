@@ -1106,18 +1106,16 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                    Aufg_Liste[3], Aufg_Liste[4])
     table2.add_hline(2, 7)
 
-    table3 = Tabular('c|c|c|c|c|c|c|', row_height=1.5)
-    table3.add_hline(2, 7)
+    table3 = Tabular('c|c|c|c|c|c|', row_height=1.5)
+    table3.add_hline(2, 6)
     table3.add_row('Ergebnisse: ', 'Quotient der Werte', NoEscape(r'$\frac{a1}{a0}$'),
-                   NoEscape(r'$\frac{a2}{a1}$'), NoEscape(r'$\frac{a3}{a2}$'), NoEscape(r'$\frac{a4}{a3}$'),
-                   NoEscape(r'$\frac{a5}{a4}$'))
-    table3.add_hline(2, 7)
+                   NoEscape(r'$\frac{a2}{a1}$'), NoEscape(r'$\frac{a3}{a2}$'), NoEscape(r'$\frac{a4}{a3}$'))
+    table3.add_hline(2, 6)
     table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip('0'),
                    str(N(Aufg_Liste[2] / Aufg_Liste[1], 4)).rstrip('0'),
                    str(N(Aufg_Liste[3] / Aufg_Liste[2], 4)).rstrip('0'),
-                   str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip('0'),
-                   str(N(Aufg_Liste[5] / Aufg_Liste[4], 4)).rstrip('0'))
-    table3.add_hline(2, 7)
+                   str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip('0'))
+    table3.add_hline(2, 6)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
@@ -1135,7 +1133,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         aufgabe.extend((table2, '\n\n\n', str(teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
                                             'Wachstum handelt.\n\n'))
         loesung.extend((str(teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
-                                           r'um~exponentielles~Wachstum. \quad (3P)}', table3,
+                                           r'um~exponentielles~Wachstum. \quad (1P)}', table3,
                                             r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
 
