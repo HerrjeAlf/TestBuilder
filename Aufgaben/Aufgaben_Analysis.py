@@ -14,6 +14,86 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm']
 nr_aufgabe = 0
+# Aufgaben zu den Regeln
+
+def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
+    liste_punkte = [len(teilaufg)]
+    liste_bez = [f'{nr}']
+    # hier wird die Funktion erstellt.
+    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{15em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                      r'\log_a \frac{u}{v} ~=~ \hspace{15em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                      r'\log_a u^r ~=~ \hspace{15em}': r'\log_a u^r ~=~ r \cdot \log_a u',
+                      r'\log_a \sqrt[n]{u} ~=~ \hspace{15em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                      r'\log_c b ~=~ \hspace{15em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
+                      r'a^{\log_a b} ~=~ \hspace{15em}': r'a^{\log_a b} ~=~ b',
+                      r'\log_a 1 ~=~ \hspace{15em}': r'\log_a 1 ~=~ 0',
+                      r'\log_a a ~=~ \hspace{15em}': r'\log_a a ~=~ 1',
+                      r'\log_e ~=~ \hspace{15em}': r'\log_e ~=~ \ln',
+                      r'\log_{10} ~=~ \hspace{15em}': r'\log_{10} ~=~ \lg'}
+
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()), len(teilaufg), False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständige die folgenden Logarithmusgesetze']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    aufg = ''
+    lsg = (r' \mathrm{Vervollständige~die~folgenden~Logarithmusgesetze} \\')
+    for element in range(len(teilaufg)):
+        i = element + 1
+        keys = auswahl[element]
+        value = regeln_aufgabe[keys]
+        if i % 3 != 0:
+            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys
+        else:
+            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys + r' \\\\'
+        lsg = lsg + str(liste_teilaufg[element]) + value + r' \\'
+
+    lsg = lsg + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte}'
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def rechenregeln_integrale(nr, teilaufg=['a','b']):
+    liste_punkte = [len(teilaufg)]
+    liste_bez = [f'{nr}']
+    i = 0
+    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{10em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
+                      r' \int a \cdot f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
+                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
+                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
+                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
+                          r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
+                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
+                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    aufg = lsg = ''
+    if 'a' in teilaufg:
+        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
+        lsg = lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
+        i += 1
+
+    if 'b' in teilaufg:
+        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
+        lsg = (lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
+               + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte} \\')
+        i += 1
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
@@ -829,45 +909,142 @@ def rekonstruktion(nr, teilaufg=['a'], xwert_1=None, xwert_2=None, xwert_3=None)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-# Aufgaben zur Integralrechnung
-def rechenregeln_integrale(nr, teilaufg=['a','b']):
-    liste_punkte = [len(teilaufg)]
-    liste_bez = [f'{nr}']
-    i = 0
-    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{10em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
-                      r' \int a \cdot f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
-                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
-                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
-                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
-                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
-                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
-                          r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
-                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
-    auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
+def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+    liste_bez = [str(nr)]
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
+               'Lösen Sie die Exponentialgleichungen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    aufg = lsg = ''
-    if 'a' in teilaufg:
-        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
-        lsg = lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
+    def exp_einfach():
+        basis_1 = nzahl(2,8)
+        exponent_1 = nzahl(3,5)
+        ergebnis_1 = basis_1 ** exponent_1
+        aufg = gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
+        lsg = (gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1) + r' \quad \vert \log_{'
+               + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1) + r' \quad (2P)')
+        pkt = 2
+        return aufg, lsg, pkt
+
+    def exp_schwer():
+        pkt = 2
+        basis_2 = nzahl(2,8)
+        exponent_2 = nzahl(2,5)
+        exponent_2_summe = zzahl(1,3)
+        faktor = zzahl(2,30)*20
+        ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
+        aufg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe)
+                + r'} ~=~ ' + gzahl(faktor*ergebnis_2))
+        lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ '
+               + gzahl(faktor*ergebnis_2) + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad '
+               + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2)
+               + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad (1P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
+               + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
+               + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2)) + r' \quad (2P)'
+        return aufg, lsg, pkt
+
+    def exp_linear_einfach():
+        pkt = 2
+        faktor_exp = zzahl(1, 8) / 2
+        erg_gl = nzahl(2, 40) / 10
+        aufg = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + '} ~=~ ' + gzahl(erg_gl)
+        lsg = ('e^{' + vorz_v_aussen(faktor_exp,'x') + '} ~=~ ' + gzahl(erg_gl)
+               + r' \quad \vert \ln() \quad \to \quad ' + vorz_str(faktor_exp) + r'x ~=~ \ln('
+               + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
+               + r' \quad \to \quad x~=~' + vorz_str(N(log(erg_gl) / faktor_exp, 3))
+               + r' \quad (2P)')
+        return aufg, lsg, pkt
+
+    def exp_linear_schwer():
+        pkt = 3
+        faktor_exp = zzahl(1, 8) / 2
+        summand = zzahl(1,8)
+        erg_gl = nzahl(2, 40) / 10
+        aufg = 'e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + r'} ~=~ ' + gzahl(erg_gl)
+        lsg = ('e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + '} ~=~ ' + gzahl(erg_gl)
+               + r' \quad \vert \ln() \quad \to \quad ' + vorz_v_aussen(faktor_exp, 'x')
+               + vorz_str(summand) + r' ~=~ \ln(' + gzahl(erg_gl) + r') \quad \vert '
+               + vorz_str(-1*summand) + r' \quad (1P) \\' + vorz_v_aussen(faktor_exp,'x')
+               + r' ~=~ \ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
+               + gzahl_klammer(faktor_exp) + r' \quad \to \quad x~=~'
+               + vorz_str(N((log(erg_gl) - summand)/ faktor_exp, 3))
+               + r' \quad (2P)')
+        return aufg, lsg, pkt
+
+    def exp_summe():
+        pkt = 4
+        faktor_exp_1 = zzahl(1,5)
+        faktor_exp_2 = zzahl(1,5)
+        while faktor_exp_1 == faktor_exp_2:
+            faktor_exp_2 = zzahl(1, 5)
+        vorzeichen = random.choice([-1, 1])
+        faktor_1 = vorzeichen * nzahl(1,40)
+        faktor_2 = vorzeichen * nzahl(1,40)
+        aufg = (gzahl(faktor_1/10) + 'e^{' + vorz_v_aussen(faktor_exp_1, 'x') + r'} ~=~'
+                + gzahl(faktor_2/10) + 'e^{' + vorz_v_aussen(faktor_exp_2, 'x') + r'}')
+        lsg = (gzahl(faktor_1/10) + 'e^{' + vorz_v_aussen(faktor_exp_1, 'x') + '} ~=~'
+               + gzahl(faktor_2/10) + 'e^{' + vorz_v_aussen(faktor_exp_2, 'x') + '}'
+               + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
+               + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Rational(faktor_2,faktor_1))
+               + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
+               + gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
+               + 'e^{' + gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
+               + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln() \quad \to \quad '
+               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \Big('
+               + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
+               + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
+               + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
+               + r' \quad (3P)')
+        return aufg, lsg, pkt
+
+    def logarithmus():
+        pkt = 3
+        faktor_exp_1 = zzahl(2, 8)
+        faktor_exp_2 = zzahl(2, 8)
+        summand = zzahl(1,7)
+        while faktor_exp_1 == faktor_exp_2:
+            faktor_exp_2 = zzahl(1, 5)
+        aufg = (r' \ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
+                   + vorz_str(summand))
+        lsg = (r' \ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
+               + vorz_str(summand) + r' \quad \vert ~-~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
+               + r' \quad \to \quad \ln(x^{' + gzahl(faktor_exp_1-faktor_exp_2) + '}) ~=~'
+               + gzahl(summand) + r' \quad \vert e^{\Box} \quad (1P) \\ x^{'
+               + gzahl(faktor_exp_1-faktor_exp_2) + '} ~=~ e^{' + gzahl(summand)
+               + r'} \quad \vert \sqrt[' + gzahl(faktor_exp_1-faktor_exp_2)
+               + r'] \quad \to \quad x ~=~'
+               + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2P)')
+        return aufg, lsg, pkt
+
+    auswahl = {'a': exp_einfach(), 'b': exp_schwer(), 'c': exp_linear_einfach(), 'd': exp_linear_schwer(),
+                'e': exp_summe(),'f': logarithmus()}
+
+    aufg_text = ''
+    lsg_aufg = (r' \mathrm{Lösen~Sie~die~Exponentialgleichungen.} \\')
+    punkte = 0
+    i = 0
+    for element in teilaufg:
+        aufg, lsg, pkt = auswahl[element]
+        if (i + 1) % 2 != 0:
+            aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
+            if i + 1 < len(teilaufg):
+                aufg_text = aufg_text + r' \hspace{5em} '
+        else:
+            aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg + r' \\\\'
+        lsg_aufg = (lsg_aufg + str(liste_teilaufg[i]) + lsg + r' \\')
+        punkte += pkt
         i += 1
 
-    if 'b' in teilaufg:
-        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
-        lsg = (lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
-               + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte} \\')
-        i += 1
-    aufgabe.append(aufg)
-    loesung.append(lsg)
+    lsg_aufg = lsg_aufg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
+    liste_punkte = [punkte]
+    aufgabe.append(aufg_text)
+    loesung.append(lsg_aufg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+# Aufgaben zur Integralrechnung
 
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     liste_bez = [nr]
