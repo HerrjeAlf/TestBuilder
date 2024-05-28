@@ -16,90 +16,80 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 # Aufgaben zu den Regeln
 
-def logarithmusgesetze(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
-    liste_punkte = [len(teilaufg)]
+def logarithmusgesetze(nr, anzahl=1):
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
-    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{10em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
-                      r'\log_a \frac{u}{v} ~=~ \hspace{10em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
-                      r'\log_a u^r ~=~ \hspace{10em}': r'\log_a u^r ~=~ r \cdot \log_a u',
-                      r'\log_a \sqrt[n]{u} ~=~ \hspace{10em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
-                      r'\log_c b ~=~ \hspace{10em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
-                      r'a^{\log_a b} ~=~ \hspace{10em}': r'a^{\log_a b} ~=~ b',
-                      r'\log_a 1 ~=~ \hspace{10em}': r'\log_a 1 ~=~ 0',
-                      r'\log_a a ~=~ \hspace{10em}': r'\log_a a ~=~ 1',
-                      r'\log_e ~=~ \hspace{10em}': r'\log_e ~=~ \ln',
-                      r'\log_{10} ~=~ \hspace{10em}': r'\log_{10} ~=~ \lg'}
-    if anzahl != False:
-        if anzahl > len(teilaufg):
-            anzahl = len(teilaufg)
-        teilaufg = np.random.choice(teilaufg, anzahl , False)
+    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{30em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                      r'\log_a \frac{u}{v} ~=~ \hspace{30em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                      r'\log_a u^r ~=~ \hspace{30em}': r'\log_a u^r ~=~ r \cdot \log_a u',
+                      r'\log_a \sqrt[n]{u} ~=~ \hspace{30em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                      r'\log_c b ~=~ \hspace{30em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
+                      r'a^{\log_a b} ~=~ \hspace{30em}': r'a^{\log_a b} ~=~ b',
+                      r'\log_a 1 ~=~ \hspace{30em}': r'\log_a 1 ~=~ 0',
+                      r'\log_a a ~=~ \hspace{30em}': r'\log_a a ~=~ 1',
+                      r'\log_e ~=~ \hspace{30em}': r'\log_e ~=~ \ln',
+                      r'\log_{10} ~=~ \hspace{30em}': r'\log_{10} ~=~ \lg'}
 
-    auswahl = np.random.choice(list(regeln_aufgabe.keys()), len(teilaufg), False)
+    anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
+    liste_punkte = [anzahl]
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständige die folgenden Logarithmusgesetze']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-
-    aufg = ''
-    lsg = (r' \mathrm{Vervollständige~die~folgenden~Logarithmusgesetze} \\')
-    for element in range(len(teilaufg)):
-        i = element + 1
-        keys = auswahl[element]
-        value = regeln_aufgabe[keys]
-        if i % 3 != 0:
-            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys
-        elif i % 3 == 0 and element != teilaufg[-1]:
-            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys + r' \\\\'
-        else:
-            aufg = aufg + str(liste_teilaufg[element]) + r') \quad ' + keys
-        lsg = lsg + str(liste_teilaufg[element]) + value + r' \\'
-
-    lsg = lsg + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte}'
-    aufgabe.append(aufg)
-    loesung.append(lsg)
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-def rechenregeln_integrale(nr, teilaufg=['a','b']):
-    liste_punkte = [len(teilaufg)]
-    liste_bez = [f'{nr}']
-    i = 0
-    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{10em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
-                      r' \int a \cdot f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
-                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{10em}':
-                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
-                      r' \int e^x \,dx ~=~ \hspace{10em}': r' \int e^x \,dx ~=~ e^x + C ',
-                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
-                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{10em}':
-                          r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
-                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{10em}':
-                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
-    auswahl = np.random.choice(list(regeln_aufgabe.keys()),2, False)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständige die folgenden Rechenregeln für die Integralrechnung.']
+               'Vervollständigen Sie die folgenden Logarithmusgesetze.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     aufg = lsg = ''
-    if 'a' in teilaufg:
-        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
-        lsg = lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
-        i += 1
+    for element in range(anzahl):
+        aufg = aufg + auswahl[element]
+        if element != range(anzahl)[-1]:
+            aufg = aufg + r' \\\\'
+        lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
 
-    if 'b' in teilaufg:
-        aufg = aufg + str(liste_teilaufg[i]) + r') ~' + auswahl[i]
-        lsg = (lsg + str(liste_teilaufg[i]) + r') ~' + regeln_aufgabe[auswahl[i]] + r' \quad (1P) \\'
-               + r' \mathrm{insgesamt~' + str(len(teilaufg)) + r'~Punkte} \\')
-        i += 1
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def rechenregeln_integrale(nr, anzahl = 1):
+    liste_bez = [f'{nr}']
+    i = 0
+    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{30em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
+                      r' \int a \cdot f(x) \,dx ~=~ \hspace{30em}':
+                          r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{30em}':
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
+                      r' \int e^x \,dx ~=~ \hspace{30em}': r' \int e^x \,dx ~=~ e^x + C ',
+                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{30em}':
+                          r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
+                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{30em}':
+                          r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
+                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{30em}':
+                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
+
+    anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
+    liste_punkte = [anzahl]
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständigen Sie die folgenden Rechenregeln der Integrale.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    aufg = lsg = ''
+    for element in range(anzahl):
+        aufg = aufg + auswahl[element]
+        if element != range(anzahl)[-1]:
+            aufg = aufg + r' \\\\'
+        lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
+
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 
 # Aufgaben zur Differenzialrechnung
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):

@@ -10,11 +10,9 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 def begriffe_wahrscheinlichkeit(nr, anzahl=1):
-    liste_punkte = [anzahl]
+
     liste_bez = [f'{nr}']
     i = 0
-
-    anzahl = 6 if anzahl > 6 else anzahl
     begriffe = {r' \mathrm{Zufallsversuch: ~ \hspace{30em}}':
                     r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \quad (1P) \\',
                 r' \mathrm{Ergebnis ~ e_i : \hspace{30em}}':
@@ -28,6 +26,8 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
                 r' \mathrm{sicheres~Ereignis: \hspace{30em}}':
                     r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \quad (1P) \\'}
 
+    anzahl = len(begriffe) if anzahl > len(begriffe) else anzahl
+    liste_punkte = [anzahl]
     auswahl = np.random.choice(list(begriffe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Erläutern Sie die folgenden Grundbegriffe der Wahrscheinlichkeitsrechnung.']

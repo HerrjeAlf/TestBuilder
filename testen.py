@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [wachstumsfunktion(1)]
+    aufgaben_seite1 = [logarithmusgesetze(1, anzahl=10)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
