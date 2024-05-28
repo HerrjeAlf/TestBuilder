@@ -143,6 +143,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
         ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
 
+
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
             lsg_menge = lsg_menge_1.copy()
@@ -183,7 +184,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         loesung.append(' \n\n\n')
         i += 1
 
-    if 'c' in teilaufg:
+    if 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         def aufgabe_1():
@@ -230,7 +231,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' in teilaufg:
+    if 'e' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         anzahl_n = random.choice([25,50,75,100])
@@ -250,15 +251,24 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
+def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
     liste_punkte = []
     liste_bez = []
     i = 0
+
+    if stufen == None:
+        anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
+    elif stufen == 2:
+        anzahl_ziehen = [2, 'zweimal']
+    elif stufen == 3:
+        anzahl_ziehen = [3, 'dreimal']
+    else:
+        exit("anzahl_ziehen muss None, 2 oder 3 sein")
 
     farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
@@ -267,7 +277,6 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
     anzahl_1 = nzahl(5, 15)
     farbe_2 = farben[auswahl_farbe[1]]
     anzahl_2 = 20 - anzahl_1
-    anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
     ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
                                     farbe1=farben_kuerzel[auswahl_farbe[0]],
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
@@ -339,7 +348,6 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
 
         ereignis_1, lsg_menge_1 = ereig_1(anzahl_kugel_E1)
         ereignis_2, lsg_menge_2 = ereig_2()
-
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
             lsg_menge = lsg_menge_1.copy()
@@ -430,6 +438,33 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c']):
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def faires_spiel(nr):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    produkt = lambda a, b: a*b
+    summe = lambda a, b: a+b
+    einsatz = nzahl(1,5)/2
+    operation = [['das Produkt', produkt, nzahl(20,30),36],['die Summe', summe, nzahl(8,10), 12]]
+    auswahl = random.choice(operation)
+    i = 0
+    for n in range(1,7):
+        for m in range(1,7):
+            if auswahl[1](m,n) > auswahl[2]:
+                i += 1
+
+    gewinn = nzahl(1,2)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Ein Wurf mit zwei Würfeln kostet {einsatz}€ Einsatz. Ist {auswahl[0]} '
+               f'der beiden Auganzahlen größer als {auswahl[2]}, werden {gewinn}€ ausbezahlt. Ist das Spiel fair? '
+               f'Wie müsste der Einsatz geändert werden, wenn das Spiel fair sein soll?  \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 
 def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     liste_punkte = []

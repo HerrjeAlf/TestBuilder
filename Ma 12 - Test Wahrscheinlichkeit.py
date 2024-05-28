@@ -21,7 +21,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     aufgaben_seite1 = [begriffe_wahrscheinlichkeit(1, anzahl=2),
-                       baumdiagramm_zmZ_und_bernoulli(2, ['a', 'b', 'c'])]
+                       baumdiagramm_zoZ(2, ['a', 'b', 'c'])]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

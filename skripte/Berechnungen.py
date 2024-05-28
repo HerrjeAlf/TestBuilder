@@ -84,3 +84,5 @@ def schnittpunkte(fkt_1,fkt_2):
         print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
         i += 1
 
+
+
