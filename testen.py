@@ -20,7 +20,9 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [logarithmusgesetze(1, anzahl=10)]
+    aufgaben_seite1 = [logarithmusgesetze(1, anzahl=10),
+                       rechenregeln_integrale(2, anzahl=12),
+                       ableitungen(2,['a','a','a'])]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

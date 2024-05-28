@@ -19,16 +19,16 @@ nr_aufgabe = 0
 def logarithmusgesetze(nr, anzahl=1):
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
-    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{30em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
-                      r'\log_a \frac{u}{v} ~=~ \hspace{30em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
-                      r'\log_a u^r ~=~ \hspace{30em}': r'\log_a u^r ~=~ r \cdot \log_a u',
-                      r'\log_a \sqrt[n]{u} ~=~ \hspace{30em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
-                      r'\log_c b ~=~ \hspace{30em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
-                      r'a^{\log_a b} ~=~ \hspace{30em}': r'a^{\log_a b} ~=~ b',
-                      r'\log_a 1 ~=~ \hspace{30em}': r'\log_a 1 ~=~ 0',
-                      r'\log_a a ~=~ \hspace{30em}': r'\log_a a ~=~ 1',
-                      r'\log_e ~=~ \hspace{30em}': r'\log_e ~=~ \ln',
-                      r'\log_{10} ~=~ \hspace{30em}': r'\log_{10} ~=~ \lg'}
+    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{15em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                      r'\log_a \frac{u}{v} ~=~ \hspace{15em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                      r'\log_a u^r ~=~ \hspace{15em}': r'\log_a u^r ~=~ r \cdot \log_a u',
+                      r'\log_a \sqrt[n]{u} ~=~ \hspace{15em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                      r'\log_c b ~=~ \hspace{15em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
+                      r'a^{\log_a b} ~=~ \hspace{15em}': r'a^{\log_a b} ~=~ b',
+                      r'\log_a 1 ~=~ \hspace{15em}': r'\log_a 1 ~=~ 0',
+                      r'\log_a a ~=~ \hspace{15em}': r'\log_a a ~=~ 1',
+                      r'\log_e ~=~ \hspace{15em}': r'\log_e ~=~ \ln',
+                      r'\log_{10} ~=~ \hspace{15em}': r'\log_{10} ~=~ \lg'}
 
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
     liste_punkte = [anzahl]
@@ -41,9 +41,12 @@ def logarithmusgesetze(nr, anzahl=1):
 
     aufg = lsg = ''
     for element in range(anzahl):
-        aufg = aufg + auswahl[element]
-        if element != range(anzahl)[-1]:
-            aufg = aufg + r' \\\\'
+        if (element + 1) % 2 != 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element]
+        elif (element + 1) % 2 == 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element] + r' \\\\'
+        else:
+            aufg = aufg + auswahl[element]
         lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
 
     lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
@@ -55,17 +58,17 @@ def logarithmusgesetze(nr, anzahl=1):
 def rechenregeln_integrale(nr, anzahl = 1):
     liste_bez = [f'{nr}']
     i = 0
-    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{30em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
-                      r' \int a \cdot f(x) \,dx ~=~ \hspace{30em}':
+    regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{15em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
+                      r' \int a \cdot f(x) \,dx ~=~ \hspace{15em}':
                           r' \int a \cdot f(x) \,dx ~=~ a \cdot \int f(x) \,dx ~=~ a \cdot F(x) + C ',
-                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{30em}':
+                      r' \int \left( f(x) + g(x) \right) \,dx ~=~ \hspace{15em}':
                       r' \int \left( f(x) + g(x) \right) \,dx ~=~ \int f(x) \,dx + \int g(x) \,dx ~=~ F(x) + G(x) + C',
-                      r' \int e^x \,dx ~=~ \hspace{30em}': r' \int e^x \,dx ~=~ e^x + C ',
-                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{30em}':
+                      r' \int e^x \,dx ~=~ \hspace{15em}': r' \int e^x \,dx ~=~ e^x + C ',
+                      r' \int_{a}^{a} f(x) \,dx ~=~ \hspace{15em}':
                           r' \int_{a}^{a} f(x) \,dx ~=~ \int_{a}^{a} f(x) \,dx ~=~ 0',
-                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{30em}':
+                      r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{15em}':
                           r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
-                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{30em}':
+                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{15em}':
                           r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
 
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
@@ -79,9 +82,12 @@ def rechenregeln_integrale(nr, anzahl = 1):
 
     aufg = lsg = ''
     for element in range(anzahl):
-        aufg = aufg + auswahl[element]
-        if element != range(anzahl)[-1]:
-            aufg = aufg + r' \\\\'
+        if (element + 1) % 2 != 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element]
+        elif (element + 1) % 2 == 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element] + r' \\\\'
+        else:
+            aufg = aufg + auswahl[element]
         lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
 
     lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
@@ -409,14 +415,15 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
+    def funktion():  # erzeugt eine Funktion und deren Ableitungen mit p Summanden
+        p = nzahl(2, 4)
         fkt = nzahl(1,9)
         koeffizienten = faktorliste(1, 15, p)
         potenzen = exponenten(p)
         pkt = p
         for koeffizient in koeffizienten:
             fkt = koeffizient * (x ** potenzen.pop()) + fkt
-            fkt = collect(fkt, x)
+        fkt = collect(fkt, x)
         fkt_uf = ''
         fkt_abl = collect(expand(diff(fkt, x)), x)
         fkt_2 = collect(expand(diff(fkt, x, 2)), x)
@@ -543,16 +550,16 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
             anzahl = len(teilaufg)
         teilaufg = np.random.choice(teilaufg, anzahl, False)
 
-    aufgaben = {'a': funktion(2), 'b': polynom_ganzrational(), 'c': wurzel(), 'd': poly_wurzel(), 'e': fkt_exp(),
-                'f': fkt_ln(), 'g': fkt_wurzel_exp(), 'h': verkettet_exp(), 'i': verkettet_ln(),
-                'j': verkettet_wurzel()}
+    aufgaben = {'a': funktion, 'b': polynom_ganzrational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
+                'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
+                'j': verkettet_wurzel}
 
     aufg = ''
     lsg = (r' \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe'
            r'~der~elementaren~Ableitungsregeln.} \\')
     punkte = 0
     for element in teilaufg:
-        fkt, fkt_uf, fkt_abl, pkt = aufgaben[element]
+        fkt, fkt_uf, fkt_abl, pkt = aufgaben[element]()
         if (i+1) % 3 != 0:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
             if i+1 < len(teilaufg):
@@ -1306,14 +1313,14 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
         return fkt, fkt_uf, Fkt, pkt
 
 
-    aufgaben = {'a': polynom_01(), 'b': polynom_02(), 'c': e_funktion(), 'd': trig_funktion(), 'e': ln_funktion(),
-                'f': kettenregel(), 'g': wurzelfunktion()}
+    aufgaben = {'a': polynom_01, 'b': polynom_02, 'c': e_funktion, 'd': trig_funktion, 'e': ln_funktion,
+                'f': kettenregel, 'g': wurzelfunktion}
 
     aufg = ''
     lsg = (r' \mathrm{~Bestimme~die~Stammfunktionen~der~gegebenen~Funktionen.} \\')
     punkte = 0
     for element in teilaufg:
-        fkt, fkt_uf, Fkt, pkt = aufgaben[element]
+        fkt, fkt_uf, Fkt, pkt = aufgaben[element]()
         if (i + 1) % 3 != 0:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx '
             if i + 1 < len(teilaufg):
