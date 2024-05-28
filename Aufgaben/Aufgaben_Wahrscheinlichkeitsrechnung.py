@@ -184,7 +184,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         loesung.append(' \n\n\n')
         i += 1
 
-    if 'd' in teilaufg:
+    if 'c' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         def aufgabe_1():
@@ -231,7 +231,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         anzahl_n = random.choice([25,50,75,100])
@@ -251,7 +251,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
+    if 'e' in teilaufg:
         pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
