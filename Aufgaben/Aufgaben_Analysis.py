@@ -1205,8 +1205,6 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
-
 # Aufgaben zur Integralrechnung
 
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):

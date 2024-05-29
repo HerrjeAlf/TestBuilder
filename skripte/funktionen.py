@@ -210,11 +210,11 @@ def darstellung_mengen(lsg_menge):
     m = 1
     for tubel in lsg_menge:
         n = 1
-        lsg = lsg + '( '
+        lsg = lsg + '('
         for element in tubel:
             lsg = lsg + str(element)
             if n < len(tubel):
-                lsg = lsg + ', '
+                lsg = lsg + ','
             n += 1
         lsg = lsg + ')'
         if m < len(lsg_menge):

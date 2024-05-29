@@ -327,8 +327,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
                         i += 1
                 if i == p:
                     lsg_menge.append(element)
-            # print(lsg_menge)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
         def ereig_2():
             auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
@@ -344,17 +344,19 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
                 for element in ergebnisraum:
                     if element[1] == auswahl[1]:
                         lsg_menge.append(element)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
-        ereignis_1, lsg_menge_1 = ereig_1(anzahl_kugel_E1)
-        ereignis_2, lsg_menge_2 = ereig_2()
+        ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
+        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
             lsg_menge = lsg_menge_1.copy()
             for element2 in lsg_menge_2:
                 if element2 not in lsg_menge:
                     lsg_menge.append(element2)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
         def geschnitten():
             text = r' \mathrm{E_1 \cap E_2}'
@@ -363,10 +365,11 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
                 for element2 in lsg_menge_2:
                     if element2 == element1:
                         lsg_menge.append(element2)
-            return text, lsg_menge
+            lsg = darstellung_mengen(lsg_menge)
+            return text, lsg_menge, lsg
 
-        vereinigung, lsg_vereinigung = vereinigung()
-        schnittmenge, lsg_schnittmenge = geschnitten()
+        vereinigung, lsg_vereinigung, lsg_menge_verein = vereinigung()
+        schnittmenge, lsg_schnittmenge, lsg_menge_schnitt = geschnitten()
 
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
@@ -375,12 +378,12 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
         table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
-        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_menge_1), '2P')
-        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_menge_2), '2P')
+        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
+        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
-                       str(lsg_vereinigung), '1P')
+                       str(lsg_menge_verein), '1P')
         table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
-                       str(lsg_schnittmenge), '1P')
+                       str(lsg_menge_schnitt), '1P')
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
         loesung.append(' \n\n\n')
@@ -440,7 +443,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def faires_spiel(nr):
-    pkt = 3
+    pkt = 6
     liste_bez = [str(nr)]
     i = 0
     produkt = lambda a, b: a*b
@@ -453,29 +456,32 @@ def faires_spiel(nr):
         for m in range(1,7):
             if auswahl[1](m,n) > auswahl[2]:
                 i += 1
-    einsatz = 1
     wkt = i/auswahl[3]
     wkt_proz = i/auswahl[3]*100
-    preis = int((einsatz/wkt-1))
+    einsatz = 1
     preis_fair = N(einsatz/wkt,3)
+    preis = int(preis_fair - int(preis_fair/5))
     gewinn = N(preis*wkt-einsatz,3)
     if gewinn != 0:
-        lsg = (r' \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
-               + r' \mathrm{für~ein~faires~Spiel~müsste:~ P} ~=~ \frac{E}{p \% } ~=~ \frac{'
-               + gzahl(einsatz) + '}{' + gzahl(wkt_proz) + r' \% } ~=~ ' + gzahl(preis_fair)
-               + r' Euro sein \quad (3P)')
+        lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
+               + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
+               + gzahl(einsatz) + '~Euro}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ ' + gzahl(preis_fair)
+               + r' ~Euro~sein \quad (3P)}')
         pkt += 3
     else:
-        lsg = (r' \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\')
+        lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3P) \\')
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Wurf mit zwei Würfeln kostet {gzahl(einsatz)}€ Einsatz. Ist {auswahl[0]} '
                f'der beiden Auganzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
-               f'Ist das Spiel fair? Wie müsste der Einsatz geändert werden, wenn das Spiel fair sein soll?  \n\n']
+               f'Ist das Spiel fair? Wenn es unfair ist, wie müsste der Einsatz geändert werden, '
+               f'damit es fair ist?  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
-               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' Euro \cdot ' + gzahl(wkt_proz) + r' \% - '
-               + gzahl(einsatz) + r' Euro ~=~} ' + gzahl(gewinn) + lsg]
+               + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
+               + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (3P)} \\'
+               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' ~Euro \cdot ' + gzahl(N(wkt_proz,3))
+               + r' \% - ' + gzahl(einsatz) + r' Euro ~=~ ' + gzahl(gewinn) + '~Euro}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
     liste_punkte = [pkt]
