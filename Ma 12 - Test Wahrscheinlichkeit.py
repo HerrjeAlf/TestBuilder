@@ -10,10 +10,10 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '12'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 13'
-Titel = 'Grundbegriffe der Wahrscheinlichkeitsrechnung'
+Art = 'HAK 14'
+Titel = 'Baumdiagramm und Laplace Experimente'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
@@ -21,7 +21,8 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     aufgaben_seite1 = [begriffe_wahrscheinlichkeit(1, anzahl=2),
-                       baumdiagramm_zoZ(2, ['a', 'b', 'c'])]
+                       baumdiagramm_zoZ(2, ['a', 'b', 'c']),
+                       faires_spiel(3)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

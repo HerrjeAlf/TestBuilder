@@ -440,28 +440,45 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def faires_spiel(nr):
-    liste_punkte = []
-    liste_bez = []
+    pkt = 3
+    liste_bez = [str(nr)]
     i = 0
     produkt = lambda a, b: a*b
     summe = lambda a, b: a+b
     einsatz = nzahl(1,5)/2
-    operation = [['das Produkt', produkt, nzahl(20,30),36],['die Summe', summe, nzahl(8,10), 12]]
+    operation = [['das Produkt', produkt, nzahl(20,30), 36], ['die Summe', summe, nzahl(8,11), 36]]
     auswahl = random.choice(operation)
     i = 0
     for n in range(1,7):
         for m in range(1,7):
             if auswahl[1](m,n) > auswahl[2]:
                 i += 1
-
-    gewinn = nzahl(1,2)
+    einsatz = 1
+    wkt = i/auswahl[3]
+    wkt_proz = i/auswahl[3]*100
+    preis = int((einsatz/wkt-1))
+    preis_fair = N(einsatz/wkt,3)
+    gewinn = N(preis*wkt-einsatz,3)
+    if gewinn != 0:
+        lsg = (r' \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
+               + r' \mathrm{für~ein~faires~Spiel~müsste:~ P} ~=~ \frac{E}{p \% } ~=~ \frac{'
+               + gzahl(einsatz) + '}{' + gzahl(wkt_proz) + r' \% } ~=~ ' + gzahl(preis_fair)
+               + r' Euro sein \quad (3P)')
+        pkt += 3
+    else:
+        lsg = (r' \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\')
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Ein Wurf mit zwei Würfeln kostet {einsatz}€ Einsatz. Ist {auswahl[0]} '
-               f'der beiden Auganzahlen größer als {auswahl[2]}, werden {gewinn}€ ausbezahlt. Ist das Spiel fair? '
-               f'Wie müsste der Einsatz geändert werden, wenn das Spiel fair sein soll?  \n\n']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+               f'Ein Wurf mit zwei Würfeln kostet {gzahl(einsatz)}€ Einsatz. Ist {auswahl[0]} '
+               f'der beiden Auganzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
+               f'Ist das Spiel fair? Wie müsste der Einsatz geändert werden, wenn das Spiel fair sein soll?  \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '
+               r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
+               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' Euro \cdot ' + gzahl(wkt_proz) + r' \% - '
+               + gzahl(einsatz) + r' Euro ~=~} ' + gzahl(gewinn) + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
+    liste_punkte = [pkt]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
