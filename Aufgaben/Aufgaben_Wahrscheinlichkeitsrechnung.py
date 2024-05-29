@@ -473,7 +473,7 @@ def faires_spiel(nr):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Wurf mit zwei Würfeln kostet {gzahl(einsatz)}€ Einsatz. Ist {auswahl[0]} '
                f'der beiden Auganzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
-               f'Ist das Spiel fair? Wenn es unfair ist, wie müsste der Einsatz geändert werden, '
+               f'Ist das Spiel fair? Wenn es unfair ist, wie müsste der Preis geändert werden, '
                f'damit es fair ist?  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '

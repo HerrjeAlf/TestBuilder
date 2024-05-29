@@ -21,7 +21,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     aufgaben_seite1 = [begriffe_wahrscheinlichkeit(1, anzahl=2),
-                       baumdiagramm_zoZ(2, ['a', 'b', 'c']),
+                       baumdiagramm_zoZ(2, ['a', 'b', 'c'], stufen=2),
                        faires_spiel(3)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
