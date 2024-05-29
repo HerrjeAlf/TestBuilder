@@ -480,7 +480,7 @@ def faires_spiel(nr):
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
                + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (3P)} \\'
-               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot ' + gzahl(N(wkt_proz,3))
+               + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot ' + gzahl(N(wkt_proz,3))
                + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ ' + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
