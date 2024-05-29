@@ -465,7 +465,7 @@ def faires_spiel(nr):
     if gewinn != 0:
         lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
-               + gzahl(einsatz) + '~Euro}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ ' + gzahl(preis_fair)
+               + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ ' + gzahl(preis_fair)
                + r' ~Euro~sein \quad (3P)}')
         pkt += 3
     else:
@@ -480,8 +480,8 @@ def faires_spiel(nr):
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
                + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (3P)} \\'
-               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' ~Euro \cdot ' + gzahl(N(wkt_proz,3))
-               + r' \% - ' + gzahl(einsatz) + r' Euro ~=~ ' + gzahl(gewinn) + '~Euro}' + lsg]
+               + r' \mathrm{G~=~P \cdot p - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot ' + gzahl(N(wkt_proz,3))
+               + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ ' + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
     liste_punkte = [pkt]

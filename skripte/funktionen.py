@@ -26,7 +26,7 @@ def packages(doc: Document):
     """
     Fügt unsere benutzten Pakete an jeweiliges Dokument an.
     """
-    packages_lst = ['amsfonts', 'bm']
+    packages_lst = ['amsfonts', 'bm', 'textcomp']
 
     for package in packages_lst:
         doc.packages.append(Package(package))
