@@ -935,8 +935,8 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         ergebnis_1 = basis_1 ** exponent_1
         aufg = gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
         lsg = (gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1) + r' \quad \vert \log_{'
-               + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1) + r' \quad (2P)')
-        pkt = 2
+               + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1) + r' \quad (1P)')
+        pkt = 1
         return aufg, lsg, pkt
 
     def exp_schwer():
@@ -1046,7 +1046,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg + r' \\\\'
         else:
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
-        lsg_aufg = (lsg_aufg + str(liste_teilaufg[i]) + lsg + r' \\')
+        lsg_aufg = (lsg_aufg + str(liste_teilaufg[i]) + r') \quad ' + lsg + r' \\')
         punkte += pkt
         i += 1
 
