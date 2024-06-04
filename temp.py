@@ -1,4 +1,4 @@
-b = list(range(1,7))
+b = list(range(1,4))
 print(b)
 
 i = 0
