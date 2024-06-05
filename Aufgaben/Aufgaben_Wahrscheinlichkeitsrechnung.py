@@ -48,7 +48,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
+def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -304,7 +304,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
-               f' Kugeln der Farbe {farbe_2}.']
+               f' Kugeln der Farbe {farbe_2}. ']
     if 'a' or 'b' or 'c' in teilaufg:
         aufgabe.append(f'Aus dieser Urne wird ohne Zurücklegen {anzahl_ziehen[1]} eine Kugel gezogen. \n\n')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
