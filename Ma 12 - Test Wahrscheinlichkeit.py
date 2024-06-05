@@ -14,7 +14,7 @@ Art = 'HAK 15'
 Titel = 'Passwörter und Binomialkoeffizient'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
+probe =True    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
