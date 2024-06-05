@@ -75,7 +75,6 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
     anzahl_kugel_E1 = nzahl(1, 2)
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
                f' Kugeln der Farbe {farbe_2}. Aus dieser Urne wird {anzahl_ziehen[1]}'
@@ -231,29 +230,6 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=Non
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' in teilaufg:
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
-        anzahl_n = random.choice([25,50,75,100])
-        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
-        wkt = Rational(anzahl_1,20)
-
-        aufgabe.extend((f'Diesmal wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
-                        + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
-                       + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
-                       + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
-                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
-                       + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
-                       + r' \% \quad (4P) \\')
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'e' in teilaufg:
-        pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
-
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
@@ -282,6 +258,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
     anzahl_kugel_E1 = nzahl(1, 2)
+    anzahl_n = random.choice([25, 50, 75, 100])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -440,6 +417,43 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c'], stufen=None):
         liste_punkte.append(punkte)
         i += 1
 
+    if 'd' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
+        wkt = Rational(anzahl_1,20)
+
+        aufgabe.extend((f'Diesmal wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
+                        str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
+                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P \quad (4P) \\')
+
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        anzahl_n = random.choice([25,50,75,100])
+        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
+        wkt = Rational(anzahl_1,20)
+        if 'd' not in teilaufg:
+            aufgabe.append(f'Diesmal wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
+                       + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
+                       + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
+                       + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
+                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
+                       + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
+                       + r' \% \quad (4P) \\')
+
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'f' in teilaufg:
+        pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def faires_spiel(nr):
@@ -487,7 +501,6 @@ def faires_spiel(nr):
     liste_punkte = [pkt]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 
 def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     liste_punkte = []
@@ -578,3 +591,75 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sicheres_passwort(nr, teilaufg=['a', 'b']):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    laenge = nzahl(6,12)
+    liste_zeichen = [['Zahlen', 10], ['Kleinbuchstaben', 26], ['Großbuchstaben', 26], ['Sonderzeichen', 33]]
+    wiederholung = random.choice(['nicht', ''])
+    auswahl_z = np.random.choice(list(range(len(liste_zeichen))), nzahl(1,len(liste_zeichen)), False)
+    auswahl_zeichen = [liste_zeichen[element][0] for element in auswahl_z]
+    anzahl = sum([liste_zeichen[element][1] for element in auswahl_z])
+    if wiederholung == '':
+        ergebnis = anzahl ** laenge
+        lsg = gzahl(anzahl) + '^' + gzahl(laenge) + '~=~' + latex(N(ergebnis, 3))
+    else:
+        ergebnis = 1
+        faktor = anzahl
+        for x in range(laenge):
+            ergebnis = ergebnis * faktor
+            faktor = faktor - 1
+        lsg = (r' \frac{' + gzahl(anzahl) + '!}{(' + gzahl(anzahl) + '-' + gzahl(laenge) + ')!} ~=~'
+               + latex(N(ergebnis, 3)))
+
+    auswahl_text = auswahl_zeichen[-1]
+    if len(auswahl_zeichen) > 1:
+        auswahl_text = auswahl_zeichen[-2] + ' und ' + auswahl_text
+        if len(auswahl_zeichen) > 2:
+            del auswahl_zeichen[-2:]
+            for element in auswahl_zeichen:
+                auswahl_text = element + ', ' + auswahl_text
+    grafikkarten = [['Geforce RTX 4090', 'eine Billion', 10**12],
+                            ['Radeon RX 7900 XTX', '800 Milliarden', 8*10**11],
+                            ['Geforce RTX 4070', '500 Milliarden', 5*10**11],
+                            ['Radeon RX 6700 XT', '3,4 Milliarden', 3.4*10**11]]
+    auswahl_g = random.choice(list(range(len(grafikkarten))))
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Passwörter können mit der sogenannten "Brute Force Methode" durch das Ausprobieren '
+               f'aller möglichen Zeichen herausgefunden werden. So kann eine {grafikkarten[auswahl_g][0]} '
+               f'{grafikkarten[auswahl_g][1]} Passwörter pro Sekunde ausprobieren. \n\n'
+               r'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen '
+               r'und Sonderzeichen 33 Zeichen \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+
+        aufgabe.extend((f'Es wird ein Passwort aus {auswahl_text} mit {gzahl(laenge)} Stellen erstellt, '
+                        f'wobei sich die Zeichen {wiederholung} wiederholen dürfen. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Passwörter. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        zeit = N(ergebnis/grafikkarten[auswahl_g][2],3)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Wie lange benötigt die {grafikkarten[auswahl_g][0]} '
+                                                ' zum Ausprobieren aller Kombinationen. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad t ~=~ \frac{' + latex(N(ergebnis,3)) + r'}{ '
+                       + latex(N(grafikkarten[auswahl_g][2],3)) + r' \frac{1}{s} } ~=~'
+                       + latex(zeit) + r's \quad (2P) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
