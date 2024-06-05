@@ -10,6 +10,7 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 nr_aufgabe = 0
 
 def begriffe_wahrscheinlichkeit(nr, anzahl=1):
+    # Grundbegriffe der Wahrscheinlichkeitsrechnung erläutern
 
     liste_bez = [f'{nr}']
     i = 0
@@ -49,6 +50,8 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
+    # Zufallsversuch (ziehen und zurücklegen) + Bernoulli
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -87,6 +90,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Baumdiagramm zeichnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         Baumdiagramm_zmZ(anzahl_ziehen[0], Rational(anzahl_1,20) ,f'Loesung_{nr}{liste_teilaufg[i]}',
@@ -105,6 +110,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'b' in teilaufg:
+        # Ergebnismengen angeben
+
         punkte = 4
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -187,6 +194,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'c' in teilaufg:
+        # Wahrscheinlichkeit von Ereignissen berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         def aufgabe_1():
@@ -234,6 +243,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'd' in teilaufg:
+        # Anzahl möglicher Ergebnisse berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
@@ -250,6 +261,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'e' in teilaufg:
+        # Wahrscheinlichkeit berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         anzahl_n = random.choice([25,50,75,100])
@@ -270,12 +283,15 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'f' in teilaufg:
-        pass # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
+        pass
+        # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
+    # Zufallsversuch (ziehen und nicht zurücklegen)
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -312,6 +328,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Baumdiagramm zeichnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
@@ -330,6 +348,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
         i += 1
 
     if 'b' in teilaufg:
+        # Ergebnismengen angeben
+
         punkte = 6
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -410,6 +430,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
         i += 1
 
     if 'c' in teilaufg:
+        # Wahrscheinlichkeit von Ereignissen berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         def aufgabe_1():
@@ -461,6 +483,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
         i += 1
 
     if 'd' in teilaufg:
+        # Anzahl möglicher Ergebnisse berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         anzahl_k = int((anzahl_1 - nzahl(1,2)))
@@ -478,6 +502,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def faires_spiel(nr):
+    # Faires Spiel
+
     pkt = 5
     liste_bez = [str(nr)]
     i = 0
@@ -524,6 +550,8 @@ def faires_spiel(nr):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
+    # Vierfeldertafel
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -560,6 +588,8 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Tafel vervollständigen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if vierfeldertafel == True:
             punkte = 3
@@ -578,6 +608,8 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         i += 1
 
     if 'b' in teilaufg:
+        # Chancen berechnen und vergleichen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         aufgabe.extend(('Zum Schluss der Studie werden die Heilungschancen beider Gruppen verglichen. '
@@ -598,6 +630,8 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         i += 1
 
     if 'c' in teilaufg:
+        # Wahrscheinlichkeit berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
 
@@ -614,6 +648,8 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def sicheres_passwort(nr, teilaufg=['a', 'b']):
+    # Sicheres Passwort
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -657,6 +693,8 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Anzahl möglicher Passwörter berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
 
@@ -669,6 +707,8 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
         i += 1
 
     if 'b' in teilaufg:
+        # Zeit berechnen die benötigt wird alle Kombinationen auszuprobieren
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         zeit = N(ergebnis/grafikkarten[auswahl_g][2],3)
