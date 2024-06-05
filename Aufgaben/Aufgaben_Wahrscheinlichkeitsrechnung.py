@@ -681,7 +681,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     grafikkarten = [['Geforce RTX 4090', 'eine Billion', 10**12],
                             ['Radeon RX 7900 XTX', '800 Milliarden', 8*10**11],
                             ['Geforce RTX 4070', '500 Milliarden', 5*10**11],
-                            ['Radeon RX 6700 XT', '3,4 Milliarden', 3.4*10**11]]
+                            ['Radeon RX 6700 XT', '340 Milliarden', 3.4*10**11]]
     auswahl_g = random.choice(list(range(len(grafikkarten))))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
