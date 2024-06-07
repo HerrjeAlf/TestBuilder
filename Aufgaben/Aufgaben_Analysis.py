@@ -17,6 +17,8 @@ nr_aufgabe = 0
 # Aufgaben zu den Regeln
 
 def logarithmusgesetze(nr, anzahl=1):
+    # Logarithmusgesetze vervollständigen
+
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
     regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{15em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
@@ -56,6 +58,8 @@ def logarithmusgesetze(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rechenregeln_integrale(nr, anzahl=1):
+    # Rechenregeln der Integrale vervollständigen
+
     liste_bez = [f'{nr}']
     i = 0
     regeln_aufgabe = {r' \int x^n \,dx ~=~ \hspace{15em}': r' \int x^n \,dx ~=~ \frac{1}{n+1} \cdot x^{n+1} + C ',
@@ -98,6 +102,8 @@ def rechenregeln_integrale(nr, anzahl=1):
 
 # Aufgaben zur Differenzialrechnung
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
+    # Änderungsrate
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -143,6 +149,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
 
     xwerte_geraden = [-6, 6]
     if 'a' in teilaufg:
+        # Mittlere Änderungsrate zeichnerisch bestimmen (Intervall gegeben)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
@@ -181,6 +189,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'b' in teilaufg:
+        # Mittlere Änderungsrate überprüfen (Intervall gegeben)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval '
                                           f'[ {x_wert_1} | {x_wert_2} ] durch Rechnung. \n\n')
@@ -194,6 +204,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'c' in teilaufg:
+        # Lokale Änderungsrate zeichnerisch bestimmen (Stelle gegeben)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         steigung_tangente = fkt_abl.subs(x, x_wert_2)
@@ -241,6 +253,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'd' in teilaufg:
+        # Lokale Änderungsrate überprüfen (Stelle gegeben)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i])
                        + f') Überprüfe die lokale Änderungsrate an der Stelle x = {x_wert_2} '
@@ -296,6 +310,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def differentialqoutient(nr, teilaufg=['a', 'b']):
+    # Differentialquotient
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -306,6 +322,8 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Ableitung berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
@@ -342,7 +360,10 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
         i += 1
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+
 def grafisches_ableiten(nr, teilaufg=['a', 'b']):
+    # Grafisches Ableiten
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -353,6 +374,8 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Ableitungsfunktion skizzieren
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -377,6 +400,8 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
         i += 1
 
         if 'b' in teilaufg:
+            # Skizze begründen
+
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 3
             fkt_1 = collect(expand(diff(fkt, x, 1)), x)
@@ -405,6 +430,8 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
+    # Ableitungen
+
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -580,6 +607,8 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
+    # Rekonstruktion und Extremalproblem
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -641,6 +670,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
 
     if 'a' in teilaufg:
+        # Funktionsgleichung berechnen (Gauß-Algorithmus, 2. Grad und 3 Punkte gegeben)
+
         punkte = 16
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -739,6 +770,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
         i += 1
 
     if 'b' in teilaufg:
+        # x wählen, damit die Fläche maximal wird
+
         punkte = 15
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -798,6 +831,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rekonstruktion(nr, xwert_1=None, xwert_2=None, xwert_3=None):
+    # Rekonstruktion
+
     punkte = 11
     liste_punkte = [punkte]
     liste_bez = [f'{str(nr)}']
@@ -917,6 +952,8 @@ def rekonstruktion(nr, xwert_1=None, xwert_2=None, xwert_3=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
+    # Exponentialgleichungen lösen
+
     if anzahl != False:
         if anzahl > len(teilaufg):
             anzahl = len(teilaufg)
@@ -1058,6 +1095,8 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
+    # Wachstumsfunktion
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1137,6 +1176,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Nachweise, dass es sich um exponentielles Wachstum handelt
+
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1152,6 +1193,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         i += 1
 
     if 'b' in teilaufg:
+        # Wachstumsfunktion aufstellen
+
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1165,8 +1208,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
 
-
     if 'c' in teilaufg:
+        # Zeit berechnen, bis ein Wert erreicht wird
+
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1186,8 +1230,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
 
-
     if 'd' in teilaufg:
+        # Wert berechnen, welcher nach Zeit t erreicht wird
+
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1208,6 +1253,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
 # Aufgaben zur Integralrechnung
 
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
+    # Stammfunktionen bestimmen (unbestimmtes Integral)
+
     liste_bez = [nr]
     i = 0
 
@@ -1336,6 +1383,8 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
+    # Bestimmtes Integral
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1382,6 +1431,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
         grafiken_loesung = []
 
         if 'a' in teilaufg:
+            # Nullstellen berechnen
+
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 12
             liste_punkte.append(punkte)
@@ -1402,6 +1453,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             i += 1
 
         if 'b' in teilaufg:
+            # Fläche mit eingeschlossener x-Achse berechnen
+
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 6
             liste_punkte.append(punkte)
@@ -1825,6 +1878,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                    + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
 
         def erste_positive_nst(vec):
+
             # print(vec)
             vec.sort()
             # print(vec)
@@ -1854,6 +1908,8 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
 # noch Teilaufgabe mit Flächenberechnung ergänzen
 
 def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
+    # Kurvendiskussion einer Polynom- und Parameterfunktion 2
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1904,8 +1960,9 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     while a1 == a2:
         a2 = nzahl(1, 6) / 2
 
-
     if 'a' in teilaufg:
+        # Verhalten im Unendlichen untersuchen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         liste_punkte.append(punkte)
@@ -1920,6 +1977,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'b' in teilaufg:
+        # Symmetrie überprüfen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
         liste_punkte.append(punkte)
@@ -1940,6 +1999,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'c' in teilaufg:
+        # Schnittpunkt mit den Achsen berechnen (Nullstelle gegeben)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 14
         liste_punkte.append(punkte)
@@ -1992,6 +2053,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'd' in teilaufg:
+        # Ersten drei Ableitungen bestimmen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
         liste_punkte.append(punkte)
@@ -2020,6 +2083,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'e' in teilaufg:
+        # Extrema und deren Art berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 12
         liste_punkte.append(punkte)
@@ -2090,6 +2155,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'f' in teilaufg:
+        # Mögliche Wendepunkte berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         liste_punkte.append(punkte)
@@ -2112,6 +2179,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'g' in teilaufg:
+        # Ortskurve der Wendepunkte berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         liste_punkte.append(punkte)
@@ -2134,6 +2203,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'h' in teilaufg:
+        # Wert a des Graphen bestimmen und begründen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         punkte = 4
@@ -2157,6 +2228,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'i' in teilaufg:
+        # Graph mit Wert für a in einem Intervall zeichnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         punkte = 5
@@ -2174,6 +2247,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'j' in teilaufg:
+        # Wert a für eine vorgegebene Fläche berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         liste_punkte.append(punkte)
@@ -2232,6 +2307,8 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=False, verschiebung=True):
+    # Kurvendiskussion einer Exponentialfunktion
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2302,6 +2379,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Verhalten im Unendlichen untersuchen
+
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2318,6 +2397,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'b' in teilaufg:
+        # Schnittpunkt mit den Achsen berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if y_vers == 0:
             punkte_aufg = 4
@@ -2343,6 +2424,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'c' in teilaufg:
+        # Ersten drei Ableitungen berechnen
+
         if ableitung == False:
             punkte_aufg = 6
             liste_punkte.append(punkte_aufg)
@@ -2370,6 +2453,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
 
 
     if 'd' in teilaufg:
+        # Extrema und deren Art berechnen
+
         punkte_aufg = 10
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2410,6 +2495,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'e' in teilaufg:
+        # Ohne Rechnung begründen, dass die Funktion 2 Wendepunkte besitzt
+
         punkte = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
@@ -2427,6 +2514,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'f' in teilaufg:
+        # Wendepunkte berechnen
+
         punkte_aufg = 10
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2460,6 +2549,7 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         i += 1
 
     if 'g' in teilaufg:
+        # Tangente und Normale am Wendepunkt berechnen (Wendepunkt gegeben)
         punkte_aufg = 6
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2486,8 +2576,9 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append('neueSeite')
         i += 1
 
-
     if 'h' in teilaufg:
+        # Graphen im Intervall zeichnen
+
         punkte_aufg = 5
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2504,6 +2595,8 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
 
 def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
                               nullstellen=None, wendenormale=True):
+    # Kurvendiskussion einer Polynomfunktion
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2542,6 +2635,8 @@ def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+    # Kurvendiskussion einer Polynom- und Parameterfunktion 1
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2585,6 +2680,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Verhalten im Unendlichen untersuchen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         liste_punkte.append(punkte)
@@ -2599,6 +2696,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'b' in teilaufg:
+        # Symmetrie überprüfen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         liste_punkte.append(punkte)
@@ -2612,7 +2711,10 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                                                  + r' \neq  f(x)  \neq -f(x) \\'
                                                  + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
         i += 1
+
     if 'c' in teilaufg:
+        # Schnittpunkte mit den Achsen berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 15
         liste_punkte.append(punkte)
@@ -2664,6 +2766,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'd' in teilaufg:
+        # Extrema und deren Art berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 19
         liste_punkte.append(punkte)
@@ -2743,6 +2847,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'e' in teilaufg:
+        # Mögliche Wendepunkte berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         liste_punkte.append(punkte)
@@ -2755,7 +2861,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
         fkt_3_str = gzahl(6*faktor)
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie rechnerisch auf mögliche Wendepunkte der Funktion f '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie mögliche Wendepunkte der Funktion f '
                                                 'mithilfe des hinr. Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
@@ -2767,6 +2873,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'f' in teilaufg:
+        # Wert a berechnen, bei dem der Wendepunkt an einer gegebenen Stelle ist
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
         liste_punkte.append(punkte)
