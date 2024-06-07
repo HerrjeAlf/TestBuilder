@@ -13,7 +13,7 @@ Lehrer = 'Herr Herrys'
 Art = 'Test 2 (2. Sem.)'
 Titel = 'höhere Ableitungsregeln und Wachstum'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']

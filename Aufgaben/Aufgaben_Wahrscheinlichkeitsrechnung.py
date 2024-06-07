@@ -50,7 +50,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
-    # Zufallsversuch (ziehen und zurücklegen) + Bernoulli
+    # Zufallsversuch (Urnenmodell Ziehen mit Zurücklegen) mit Bernoulliverteilung
 
     liste_punkte = []
     liste_bez = []
@@ -243,7 +243,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'd' in teilaufg:
-        # Anzahl möglicher Ergebnisse berechnen
+        # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -261,7 +261,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'e' in teilaufg:
-        # Wahrscheinlichkeit berechnen
+        # mit Bernoullikette Wahrscheinlichkeit berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -283,6 +283,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         i += 1
 
     if 'f' in teilaufg:
+        # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen
         pass
         # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
@@ -290,7 +291,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
-    # Zufallsversuch (ziehen und nicht zurücklegen)
+    # Zufallsversuch (Urnenmodell Ziehen ohne Zurücklegen) und Bernoullikoeffizient
 
     liste_punkte = []
     liste_bez = []
@@ -483,8 +484,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
         i += 1
 
     if 'd' in teilaufg:
-        # Anzahl möglicher Ergebnisse berechnen
-
+        # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         anzahl_k = int((anzahl_1 - nzahl(1,2)))
@@ -502,7 +502,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def faires_spiel(nr):
-    # Faires Spiel
+    # Überprüfung eines Zufallsversuches (zweimal Würfeln) auf "faires Spiel"
 
     pkt = 5
     liste_bez = [str(nr)]
@@ -550,7 +550,7 @@ def faires_spiel(nr):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
-    # Vierfeldertafel
+    # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
 
     liste_punkte = []
     liste_bez = []
@@ -588,7 +588,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Tafel vervollständigen
+        # Vierfeldertafel vervollständigen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if vierfeldertafel == True:
@@ -608,7 +608,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         i += 1
 
     if 'b' in teilaufg:
-        # Chancen berechnen und vergleichen
+        # bedingte Wahrscheinlichkeiten aus gegebenen Größen berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
@@ -630,7 +630,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         i += 1
 
     if 'c' in teilaufg:
-        # Wahrscheinlichkeit berechnen
+        # bedingte Wahrscheinlichkeit aus vervollst. Vierfeldertafel berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
@@ -648,7 +648,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def sicheres_passwort(nr, teilaufg=['a', 'b']):
-    # Sicheres Passwort
+    # Berechnung von Permutationen am Beispiel eines sicheren Passwortes
 
     liste_punkte = []
     liste_bez = []
@@ -693,7 +693,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Anzahl möglicher Passwörter berechnen
+        # Anzahl möglichen Kombinationen eines Passwortes berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -701,13 +701,13 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
         aufgabe.extend((f'Es wird ein Passwort aus {auswahl_text} mit {gzahl(laenge)} Stellen erstellt, '
                         f'wobei sich die Zeichen {wiederholung} wiederholen dürfen. \n'
                         'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen und Sonderzeichen 33 Zeichen \n\n',
-                        str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Passwörter. \n\n'))
+                        str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Kombinationen für ein Passwort. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P) \\')
         liste_punkte.append(punkte)
         i += 1
 
     if 'b' in teilaufg:
-        # Zeit berechnen die benötigt wird alle Kombinationen auszuprobieren
+        # Zeit für Brute Force Attacke (Ausprobieren aller Kombinationen) des Passwortes berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2

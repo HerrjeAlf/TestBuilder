@@ -4,17 +4,21 @@ allgemein:
 Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
-- kurvendiskussion von polynom_02 anfertigen (Funktion mit Nullstellen und Extremstellen die ganzzahlige Werte annehmen)
-- Kurvendiskussion mit Polynom_03 des 4. Grades anfertigen
+- Auswahl in polynom_01 erstellen mit Polynom das 1. Nullstellen und Extremstellen mit ganzzahlige Werte besitzt
+- Kurvendiskussion mit Polynom_02 des 4. Grades anfertigen
 - Kurvendiskussion einer weiteren Exponentialfunktion anfertigen
-- Kurvendiskussion einer
+
 
 in Aufgaben Wahrscheinlichkeit:
-- Baumdiagramm_bernoulli Aufgabe c noch weiter auf zmZ anpassen und eine Aufgabe e zur kummulierten Bernoullikette erstellen
+- Baumdiagramm_bernoulli - Aufgabe e zur kummulierten Bernoullikette erstellen
+- Baumdiagramm zmZ erzeugt ab und zu Fehler (???)
+
+
+in Algebra:
+- in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 
 funktionen
 - ergebnissmenge_zoZ überprüfen und ggf. fertig stellen
-
 
 
 langfristig:

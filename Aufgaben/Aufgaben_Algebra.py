@@ -19,6 +19,7 @@ nr_aufgabe = 0
 
 # Berechnung für die Aufgaben
 def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
+    # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -91,6 +92,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie das Dreieck ABC im Koordinatensystem ein. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
@@ -98,6 +100,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
         i +=1
 
     if 'b' in teilaufg:
+        # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
@@ -114,6 +117,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
         i += 1
 
     if 'c' in teilaufg:
+        # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
@@ -127,6 +131,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None):
+    # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -137,6 +142,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # resultierenden Vektor einer Vektoraddition berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_1 = punkt_vektor(5)
         vektor_2 = punkt_vektor(7)
@@ -158,6 +164,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'b' in teilaufg:
+        # Mittelpunkt zweier gegebener Punkte berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_1 = punkt_vektor(5)
         vektor_2 = punkt_vektor(7)
@@ -182,6 +189,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'c' in teilaufg:
+        # Linearkombination von Vektoren überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
@@ -267,6 +275,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'd' in teilaufg:
+        # Vektoren auf Kollinearität überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_2 = punkt_vektor(5)
         faktor = zzahl(2, 40) / 10
@@ -301,6 +310,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'e' in teilaufg:
+        # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         vektor_a = punkt_vektor(5)
@@ -337,6 +347,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'f' in teilaufg:
+        # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         vektor_a = punkt_vektor(5)
@@ -376,6 +387,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
+    # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -394,15 +406,23 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
         exit("T_auf_g muss None, True oder False sein!")
 
     lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-               'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
-               'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
-               'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
+    if 'a' in teilaufg:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
+                   'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
+                   'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
+                   'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
+    if 'a' not in teilaufg:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   r' \mathrm{Gegeben~ist~die~Gerade g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                   + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                   + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
+                   + gzahl(v[2]) + r' \\' + r' \end{pmatrix} .} ']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Aufstellen der Geradengleichung bei gegebenen Punkten
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
@@ -424,6 +444,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
         i +=1
 
     if 'b' in teilaufg:
+        # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 4
         liste_punkte.append(punkte_aufg)
@@ -454,9 +475,11 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None):
+    # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden
     liste_punkte = []
     liste_bez = []
     i = 0
+    lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden']) if lagebeziehung == None else lagebeziehung
     if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
         sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     v_teiler = zzahl(1, 3)
@@ -472,7 +495,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    if 'a' in teilaufg: # lagebeziehungen erläutern
+    if 'a' in teilaufg:
+        # lagebeziehungen zweier Geraden und die dafür nötigen Eigenschaften erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         liste_punkte.append(punkte)
@@ -496,7 +520,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
             loesung.append(' \n\n')
         i += 1
 
-    if 'b' in teilaufg: # mathematisches Vorgehen zur Bestimmung der Lagebeziehung erläutern
+    if 'b' in teilaufg:
+        # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
@@ -520,9 +545,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
         i += 1
 
     if 'c' in teilaufg:
+        # Lagebeziehung zweier gegebener Geraden bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if lagebeziehung == None:
-            lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+
         if lagebeziehung == 'identisch':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
@@ -745,7 +770,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
                        + loesung_1)
         i += 1
 
-    if 'd' in teilaufg:
+    if 'e' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
+        # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
+        pass
+
+    if 'e' in teilaufg:
+        # Schnittwinkel zweier gegebener Geraden berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         liste_punkte.append(punkte_aufg)
@@ -757,12 +787,24 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
         l_v = np.linalg.norm(v)
         l_p = np.linalg.norm(p)
 
-        aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
-        aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
-               + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-               r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
-               + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
-               r' \end{pmatrix} \quad ')
+        if 'c' in teilaufg:
+            aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
+            aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                   + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                   r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                   + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
+                   r' \end{pmatrix} ')
+        if 'c' not in teilaufg:
+            aufgabe.append('Gegeben sind die beiden Geraden mit folgenden Gleichungen:')
+            aufgabe.append(r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                           + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'+
+                           r' \end{pmatrix} \quad und \quad k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                           + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                           + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                           + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
+                           + r' \end{pmatrix} }')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
@@ -786,9 +828,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i += 1
 
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None):
+    # Aufgaben zum Aufstellen der Ebenengleichung in Parameter-, Normalen- und Koordinatenform, ob ein Punkt in der Ebene liegt und ggf. der Berechnung des Abstandes Punkt-Ebene mit der hessischen Normalenform
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -935,7 +979,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
             i += 1
 
-        if 'e' in teilaufg:
+        if 'd' and 'e' in teilaufg:
             punkte = 3
             liste_punkte.append(punkte)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
