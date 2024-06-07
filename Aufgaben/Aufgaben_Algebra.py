@@ -900,6 +900,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Ebenengleichung in Parameterform aus drei gegebenen Punkten aufstellen
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -921,6 +922,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
         i += 1
 
     if 'b' in teilaufg:
+        # gegebene Ebenengleichung von Parameterform in Normalen- und Koordinatenform umformen
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -946,6 +948,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
         i += 1
 
     if 'c' in teilaufg:
+        # Überprüfen, ob ein Punkt in der Ebene liegt
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -962,6 +965,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
         i += 1
 
     if t_in_ebene == False:
+        # Aufstellen der hessischen Normalform der Ebenengleichung
         if 'd' in teilaufg:
             punkte = 4
             liste_punkte.append(punkte)
@@ -980,6 +984,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
             i += 1
 
         if 'd' and 'e' in teilaufg:
+            # Berechnung des Abstandes eines Punktes von der Ebene
             punkte = 3
             liste_punkte.append(punkte)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -999,6 +1004,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False):
+    # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1021,11 +1027,11 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
 
     if form == None:
         form = random.choice(['normalenform', 'koordinatenform'])
-    if form == 'normalenform':
+    if form == 'normalenform' and 'a' in teilaufg:
         ebenengleichung = normalenform
         andere_darstellungsform = koordinatenform
         lsg = (r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ \end{pmatrix}')
-    elif form == 'koordinatenform':
+    elif form == 'koordinatenform' or 'a' not in teilaufg:
         ebenengleichung = koordinatenform
         andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                                    + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
@@ -1044,6 +1050,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
     grafiken_aufgaben = []
     grafiken_loesung = []
     if 'a' in teilaufg:
+        # gegebene Normalen- bzw. Koordinatenform in Parameter-, Koordinaten- bzw. Normalenform umformen
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1065,9 +1072,11 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         i += 1
 
     if 'b' in teilaufg:
+        # Aufstellen der Achsenabschnittsform der Ebene und zeichnen der Ebene in 3-dim-Koordinatenform
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
         aufgabe.append('3dim_Koordinatensystem') if koordinatensystem else aufgabe.append(' \n\n')
@@ -1080,6 +1089,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
+    # in dieser Aufgabe sollen die möglichen Lagebeziehungen einer Ebene mit einer Geraden untersucht und ggf. der Abstand berechnet werden
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1149,7 +1159,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     else:
         exit("g_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
 
-    if 'a' in teilaufg: # lagebeziehungen erläutern
+    if 'a' in teilaufg:
+        # die Lagebeziehung einer Geraden mit einer Ebene und die dafür nötigen Eigenschaften erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
@@ -1171,6 +1182,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
         i += 1
 
     if 'b' in teilaufg:
+        # Geradengleichung aus zwei gegebenen Punkten aufstellen
         punkte = 2
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1190,13 +1202,21 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
         i += 1
 
     if 'c' in teilaufg:
+        # die Lagebeziehung einer Ebene mit einer Geraden bestimmen
         punkte = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if g_in_E == 'schneiden':
             punkte += 4
         liste_punkte.append(punkte)
+
+
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
                                                 f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
+        if 'b' not in teilaufg:
+            aufgabe.appemnd(r' \mathrm{Gleichung~der~Geraden~g: \overrightarrow{x} \ ~ = ~ \begin{pmatrix}'
+                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                            + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ')
         loesung.append(str(liste_teilaufg[i]) + r') \quad '
                        + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
@@ -1205,41 +1225,44 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
                        + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
-    if g_in_E == 'parallel':
-        if 'd' in teilaufg:
-            punkte = 4
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            liste_punkte.append(punkte)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
-                           + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
-                           + ergebnis_n0 + r' \quad \to \quad '
-                           + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-            i += 1
+    if 'd' in teilaufg:
+        # Aufstellen der hessischen Normalform einer Ebene
+        punkte = 4
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_punkte.append(punkte)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                       + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
+                       + ergebnis_n0 + r' \quad \to \quad '
+                       + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                       + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                       + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                       + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
 
-        if 'e' in teilaufg:
-            punkte = 3
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            liste_punkte.append(punkte)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
-                           + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
-                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \right| ~=~'
-                           + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-            i += 1
+        if g_in_E == 'parallel':
+            if 'd' and 'e' in teilaufg:
+                # Berechnung des Abstandes einer parallelen Geraden zur Ebene
+                punkte = 3
+                liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+                liste_punkte.append(punkte)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
+                               + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} \right| ~=~'
+                               + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
+    # in dieser Aufgabe sollen die möglichen Lagebziehungen zweier Ebenen untersucht und ggf. der Abstand berechnet werden
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1344,7 +1367,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
     grafiken_aufgaben = ['', '', '']
     grafiken_loesung = ['']
 
-    if 'a' in teilaufg: # lagebeziehungen erläutern
+    if 'a' in teilaufg:
+        # lagebeziehungen zwischen zwei Ebenen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
@@ -1364,6 +1388,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
         i += 1
 
     if 'b' in teilaufg:
+        # Lagebeziehung bestimmen und ggf. Schnittegrade berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
@@ -1379,37 +1404,40 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
                        + lsg)
         liste_punkte.append(punkte)
         i += 1
-    if F_in_E == 'parallel':
-        if 'c' in teilaufg:
-            punkte = 4
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            liste_punkte.append(punkte)
-            punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
-            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
-                           + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
-                           + r')^2 } ~=~ ' + ergebnis_n0
-                           + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-            i += 1
 
-        if 'd' in teilaufg:
-            punkte = 3
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            liste_punkte.append(punkte)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
-                           + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
-                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
-                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \right| ~=~'
-                           + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-            i += 1
+    if 'c' in teilaufg:
+        # hessische Normalenform der Ebene aufstellen
+        punkte = 4
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_punkte.append(punkte)
+        punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                       + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
+                       + r')^2 } ~=~ ' + ergebnis_n0
+                       + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                       + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                       + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                       + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                       + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        i += 1
+
+        if F_in_E == 'parallel':
+            if 'c' and 'd' in teilaufg:
+                # hier soll der Abstand zwischen zwei parallelen Ebenen berechnet werden
+                punkte = 3
+                liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+                liste_punkte.append(punkte)
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
+                               + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
+                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                               + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                               + r' \end{pmatrix} \right| ~=~'
+                               + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
