@@ -749,17 +749,14 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
 
 def lotto_modell_01(nr):
     # Berechnung der Wahrscheinlichkeit nach dem Lottomodell
-
-    liste_punkte = []
-    liste_bez = []
+    liste_punkte = [3]
+    liste_bez = [f'{str(nr)}']
     i = 0
     begriff = random.choice(['Transistoren', 'Batterien', 'Stiften'])
     anzahl = nzahl(5,10)*10
     defekte = nzahl(1,3)*anzahl/10
     ziehungen = nzahl(4,7)
     ziehungen_defekt = int(ziehungen*nzahl(2,6)/10 + 1)
-
-
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Lieferung von {gzahl(anzahl)} {begriff} sind {gzahl(defekte)} defekt. '
@@ -780,5 +777,6 @@ def lotto_modell_01(nr):
                + r'\% \quad (3P) \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
+
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
