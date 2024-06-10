@@ -835,7 +835,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
-    # Aufgaben zum Aufstellen der Ebenengleichung in Parameter-, Normalen- und Koordinatenform, ob ein Punkt in der Ebene liegt und ggf. der Berechnung des Abstandes Punkt-Ebene mit der hessischen Normalenform
+    # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1092,7 +1092,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
-    # in dieser Aufgabe sollen die möglichen Lagebeziehungen einer Ebene mit einer Geraden untersucht und ggf. der Abstand berechnet werden
+    # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1115,7 +1115,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    if g_in_E == None:
+    if g_in_E == None and 'e' not in teilaufg:
         g_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
 
     if g_in_E == 'identisch':
@@ -1127,14 +1127,6 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
         lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
                + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
-    elif g_in_E == 'parallel':
-        abstand = zzahl(1, 7) / 2 * np.array(n_gk)
-        punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
-        punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
-        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
-        lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
-               + gzahl(np.dot(punkt_a, n_gk))
-               + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
     elif g_in_E == 'schneiden':
         g_v = n_gk
         while vektor_kollinear(g_v, n_gk) == True:
@@ -1159,6 +1151,14 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
                + gzahl(ez + ergebnis_r * g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
                + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
                + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3P) \\')
+    elif g_in_E == 'parallel' or 'e' in teilaufg:
+        abstand = zzahl(1, 7) / 2 * np.array(n_gk)
+        punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
+        punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
+        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
+        lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
+               + gzahl(np.dot(punkt_a, n_gk))
+               + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
     else:
         exit("g_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
 
@@ -1244,28 +1244,27 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
                        + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
-        if g_in_E == 'parallel':
-            if 'd' and 'e' in teilaufg:
-                # Berechnung des Abstandes einer parallelen Geraden zur Ebene
-                punkte = 3
-                liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-                liste_punkte.append(punkte)
-                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
-                               + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
-                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} \right| ~=~'
-                               + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-                i += 1
+        if 'd' and 'e' in teilaufg:
+            # Berechnung des Abstandes einer parallelen Geraden zur Ebene
+            punkte = 3
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
+                           + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~'
+                           + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+            i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
-    # in dieser Aufgabe sollen die möglichen Lagebziehungen zweier Ebenen untersucht und ggf. der Abstand berechnet werden
+    # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1283,7 +1282,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
     print('Vektor v: ' + str(v))
     print('Vektor u: ' + str(u))
 
-    if F_in_E == None:
+    if F_in_E == None and 'd' not in teilaufg:
         F_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
 
     # auswahl = 'schneiden'
@@ -1297,19 +1296,6 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
 
         lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
                + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
-               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-
-    elif F_in_E == 'parallel':
-        punkte = 4
-        abstand = zzahl(1, 7) / 2
-        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
-        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
-        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
-        k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
-
-        lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
-               + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2P) } \\'
                + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
 
     elif F_in_E == 'schneiden':
@@ -1352,7 +1338,20 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
                + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(g_rx) + r' \\' + gzahl(g_ry) + r' \\'
                + gzahl(g_rz) + r' \\' + r' \end{pmatrix} \quad (2P) \\'
                + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-    
+
+    elif F_in_E == 'parallel' or 'd' in teilaufg:
+        punkte = 4
+        abstand = zzahl(1, 7) / 2
+        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
+        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
+        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
+        g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
+        k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
+
+        lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
+               + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2P) } \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+
     if F_in_E not in (None,'identisch', 'parallel', 'schneiden'):
         exit("F_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein.")
 
@@ -1425,22 +1424,21 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
                        + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
-        if F_in_E == 'parallel':
-            if 'c' and 'd' in teilaufg:
-                # hier soll der Abstand zwischen zwei parallelen Ebenen berechnet werden
-                punkte = 3
-                liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-                liste_punkte.append(punkte)
-                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
-                loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
-                               + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
-                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                               + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
-                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} \right| ~=~'
-                               + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-                i += 1
+        if 'c' and 'd' in teilaufg:
+            # hier soll der Abstand zwischen zwei parallelen Ebenen berechnet werden
+            punkte = 3
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            liste_punkte.append(punkte)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
+                           + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~'
+                           + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+            i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

@@ -777,7 +777,7 @@ def lotto_modell_01(nr):
                + r'~=~' + latex(N(binomial(defekte, ziehungen_defekt)
                                   * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
                                   / binomial(anzahl, ziehungen), 3) * 100)
-               + r'\% \quad (2P) \\']
+               + r'\% \quad (3P) \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
