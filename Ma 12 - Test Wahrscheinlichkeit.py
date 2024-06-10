@@ -23,18 +23,19 @@ for i in range(anzahl):
     aufgaben_seite1 = [begriffe_wahrscheinlichkeit(1, anzahl=2),
                        baumdiagramm_zoZ(2, ['a', 'b', 'c', 'd', 'e'], stufen=2),
                        faires_spiel(3),
-                       sicheres_passwort(4)]
+                       sicheres_passwort(4),
+                       lotto_modell_01(5)]
 
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
 
-    aufgaben_seite2 = [lotto_modell_01(5)]
+    aufgaben_seite2 = []
     for element in aufgaben_seite2:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
 
-    liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+    liste_seiten = [seite(aufgaben_seite1)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
     test_erzeugen(liste_seiten, angaben, i, probe)
