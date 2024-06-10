@@ -508,13 +508,18 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
+                       + r'e)} ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl_2) + r' \\'
                        + gzahl(anzahl_n - anzahl_k) + r' \\ ' + r' \end{pmatrix} } { \begin{pmatrix}'
                        + str(20) + r' \\' + gzahl(anzahl_n) + r' \\ ' + r' \end{pmatrix} } ~=~ '
-                       + latex(N(binomial(anzahl_1,anzahl_k)\
-                                 *binomial(anzahl_2,anzahl_n-anzahl_k)/binomial(20,anzahl_n),3))
-                       + r' \quad (2P) \\')
+                       + latex(N(binomial(anzahl_1,anzahl_k)
+                                 * binomial(anzahl_2,anzahl_n-anzahl_k)
+                                 / binomial(20,anzahl_n),3)) + r'~=~'
+                       + latex(N(binomial(anzahl_1,anzahl_k)
+                                 * binomial(anzahl_2,anzahl_n-anzahl_k)
+                                 / binomial(20,anzahl_n),3) * 100)
+                       + r'\% \quad (2P) \\')
 
         liste_punkte.append(punkte)
         i += 1
@@ -547,7 +552,7 @@ def faires_spiel(nr):
         lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
                + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ ' + gzahl(preis_fair)
-               + r' ~Euro~sein \quad (3P)}')
+               + r' ~\text{\texteuro}~sein \quad (3P)}')
         pkt += 3
     else:
         lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3P) \\')
@@ -681,7 +686,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     anzahl = sum([liste_zeichen[element][1] for element in auswahl_z])
     if wiederholung == '':
         ergebnis = anzahl ** laenge
-        lsg = gzahl(anzahl) + '^' + gzahl(laenge) + '~=~' + latex(N(ergebnis, 3))
+        lsg = gzahl(anzahl) + r'^{' + gzahl(laenge) + r'}~=~' + latex(N(ergebnis, 3))
     else:
         ergebnis = 1
         faktor = anzahl
@@ -752,7 +757,7 @@ def lotto_modell_01(nr):
     anzahl = nzahl(5,10)*10
     defekte = nzahl(1,3)*anzahl/10
     ziehungen = nzahl(4,7)
-    ziehungen_defekt= int(ziehungen*nzahl(2,6)/10 + 1)
+    ziehungen_defekt = int(ziehungen*nzahl(2,6)/10 + 1)
 
 
 
@@ -761,14 +766,18 @@ def lotto_modell_01(nr):
                f'Berechnen Sie die Wahrscheinlichkeit, dass in einer Stichprobe von {ziehungen} {begriff} '
                f'genau {ziehungen_defekt} defekt sind.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
-               r' \mathrm{P(' + gzahl(ziehungen_defekt) + r' Defekt)~=~ \frac{ \begin{pmatrix}'
-               + gzahl(defekte) + r' \\' + gzahl(ziehungen_defekt) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}'
-               + gzahl(anzahl-defekte) + r' \\' + gzahl(ziehungen-ziehungen_defekt) + r' \\ '
-               + r' \end{pmatrix} } { \begin{pmatrix}' + str(anzahl) + r' \\' + gzahl(ziehungen) + r' \\ '
-               + r' \end{pmatrix} }} ~=~ ' + latex(N(binomial(defekte, ziehungen_defekt)
-                                                 * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
-                                                 / binomial(anzahl, ziehungen), 3))
-               + r'\quad (2P) \\']
+               r' \mathrm{P(' + gzahl(ziehungen_defekt) + r'~von~' + gzahl(ziehungen)
+               + r'~defekt)~=~ \frac{ \begin{pmatrix}' + gzahl(defekte) + r' \\' + gzahl(ziehungen_defekt) + r' \\ '
+               + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl-defekte) + r' \\'
+               + gzahl(ziehungen-ziehungen_defekt) + r' \\ ' + r' \end{pmatrix} } { \begin{pmatrix}' + str(anzahl)
+               + r' \\' + gzahl(ziehungen) + r' \\ ' + r' \end{pmatrix} }} ~=~ '
+               + latex(N(binomial(defekte, ziehungen_defekt)
+                         * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
+                         / binomial(anzahl, ziehungen), 3))
+               + r'~=~' + latex(N(binomial(defekte, ziehungen_defekt)
+                                  * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
+                                  / binomial(anzahl, ziehungen), 3) * 100)
+               + r'\% \quad (2P) \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
