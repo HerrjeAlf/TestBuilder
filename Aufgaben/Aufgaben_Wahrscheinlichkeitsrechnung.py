@@ -260,6 +260,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
         liste_punkte.append(punkte)
         i += 1
 
+
     if 'e' in teilaufg:
         # mit Bernoullikette Wahrscheinlichkeit berechnen
 
@@ -290,7 +291,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
+def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
     # Zufallsversuch (Urnenmodell Ziehen ohne Zurücklegen) und Bernoullikoeffizient
 
     liste_punkte = []
@@ -318,6 +319,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
     anzahl_kugel_E1 = nzahl(1, 2)
+    anzahl_n = anzahl_1 + nzahl(2, 3)
+    anzahl_k = int((anzahl_1 - nzahl(1, 2)))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -487,15 +490,32 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd'], stufen=None):
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
-        anzahl_k = int((anzahl_1 - nzahl(1,2)))
+
         wkt = Rational(anzahl_1,20)
 
-        aufgabe.extend((f'Nun wird {anzahl_1} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
+        aufgabe.extend((f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
-                       + gzahl(N(binomial(anzahl_1,anzahl_k),3)) + r' \quad (2P) \\')
+                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        # Berechnung der Wahrscheinlichkeit mit Lottomodell
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
+                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
+                       + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl_2) + r' \\'
+                       + gzahl(anzahl_n - anzahl_k) + r' \\ ' + r' \end{pmatrix} } { \begin{pmatrix}'
+                       + str(20) + r' \\' + gzahl(anzahl_n) + r' \\ ' + r' \end{pmatrix} } ~=~ '
+                       + latex(N(binomial(anzahl_1,anzahl_k)\
+                                 *binomial(anzahl_2,anzahl_n-anzahl_k)/binomial(20,anzahl_n),3))
+                       + r' \quad (2P) \\')
+
         liste_punkte.append(punkte)
         i += 1
 
@@ -722,4 +742,34 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def lotto_modell_01(nr):
+    # Berechnung der Wahrscheinlichkeit nach dem Lottomodell
 
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    begriff = random.choice(['Transistoren', 'Batterien', 'Stiften'])
+    anzahl = nzahl(5,10)*10
+    defekte = nzahl(1,3)*anzahl/10
+    ziehungen = nzahl(4,7)
+    ziehungen_defekt= int(ziehungen*nzahl(2,6)/10 + 1)
+
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'In einer Lieferung von {gzahl(anzahl)} {begriff} sind {gzahl(defekte)} defekt. '
+               f'Berechnen Sie die Wahrscheinlichkeit, dass in einer Stichprobe von {ziehungen} {begriff} '
+               f'genau {ziehungen_defekt} defekt sind.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{P(' + gzahl(ziehungen_defekt) + r' Defekt)~=~ \frac{ \begin{pmatrix}'
+               + gzahl(defekte) + r' \\' + gzahl(ziehungen_defekt) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}'
+               + gzahl(anzahl-defekte) + r' \\' + gzahl(ziehungen-ziehungen_defekt) + r' \\ '
+               + r' \end{pmatrix} } { \begin{pmatrix}' + str(anzahl) + r' \\' + gzahl(ziehungen) + r' \\ '
+               + r' \end{pmatrix} }} ~=~ ' + latex(N(binomial(defekte, ziehungen_defekt)
+                                                 * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
+                                                 / binomial(anzahl, ziehungen), 3))
+               + r'\quad (2P) \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
