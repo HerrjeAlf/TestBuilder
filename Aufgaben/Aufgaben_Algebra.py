@@ -834,7 +834,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None):
+def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
     # Aufgaben zum Aufstellen der Ebenengleichung in Parameter-, Normalen- und Koordinatenform, ob ein Punkt in der Ebene liegt und ggf. der Berechnung des Abstandes Punkt-Ebene mit der hessischen Normalenform
     liste_punkte = []
     liste_bez = []
