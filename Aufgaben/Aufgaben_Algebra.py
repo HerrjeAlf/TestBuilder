@@ -474,13 +474,16 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden
     liste_punkte = []
     liste_bez = []
     i = 0
-    lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden']) if lagebeziehung == None else lagebeziehung
-    if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
+    if lagebeziehung == None:
+        lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
+    elif 'e' in teilaufg:
+        lagebeziehung = random.choice(['windschief', 'schneiden'])
+    elif lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
         sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
@@ -774,7 +777,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=None)
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         pass
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         # Schnittwinkel zweier gegebener Geraden berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
@@ -861,7 +864,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], t_in_ebene=None
         ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk**2 + ny_gk**2 + nz_gk**2) + r'}'
     parameter_r = zzahl(1, 2)
     parameter_s = zzahl(1, 2)
-    if t_in_ebene == None:
+    if t_in_ebene == None and 'e' not in teilaufg:
         t_in_ebene = random.choice([True,False])
     if t_in_ebene == True:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
