@@ -320,7 +320,9 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
     # zwischenergebnisse für teilaufgaben
     anzahl_kugel_E1 = nzahl(1, 2)
     anzahl_n = anzahl_1 + nzahl(2, 3)
-    anzahl_k = int((anzahl_1 - nzahl(1, 2)))
+    anzahl_k = anzahl_1 - nzahl(1, 2)
+    if anzahl_n - anzahl_k > anzahl_2:
+        anzahl_k = anzahl_n - anzahl_2
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -558,7 +560,7 @@ def faires_spiel(nr):
         lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3P) \\')
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Wurf mit zwei Würfeln kostet {gzahl(einsatz)}€ Einsatz. Ist {auswahl[0]} '
-               f'der beiden Auganzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
+               f'der beiden Augenzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
                f'Ist das Spiel fair? Wenn es unfair ist, wie müsste der Preis geändert werden, '
                f'damit es fair ist?  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
@@ -752,11 +754,11 @@ def lotto_modell_01(nr):
     liste_punkte = [3]
     liste_bez = [f'{str(nr)}']
     i = 0
-    begriff = random.choice(['Transistoren', 'Batterien', 'Stiften'])
+    begriff = random.choice(['Transistoren', 'Batterien', 'Stiften', 'Fußbällen'])
     anzahl = nzahl(5,10)*10
-    defekte = nzahl(1,3)*anzahl/10
+    defekte = int(nzahl(1,4)*anzahl/20)
     ziehungen = nzahl(4,7)
-    ziehungen_defekt = int(ziehungen*nzahl(2,6)/10 + 1)
+    ziehungen_defekt = int(defekte*nzahl(2,6)/10)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Lieferung von {gzahl(anzahl)} {begriff} sind {gzahl(defekte)} defekt. '
