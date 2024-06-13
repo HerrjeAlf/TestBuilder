@@ -2,7 +2,7 @@ import datetime
 import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, Package, HugeText, MultiRow)
+                     MultiColumn, Package, HugeText, MultiRow, NoEscape)
 from pylatex.utils import bold
 from skripte.funktionen import *
 from skripte.plotten import *
@@ -507,8 +507,8 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         # Auswertungsseite
         # erstellen der Tabelle zur Punkteübersicht
-        liste_punkte = angb[-1]
-        liste_bez = angb[-2]
+        liste_punkte = angb[-3]
+        liste_bez = angb[-4]
         Punkte = (sum(liste_punkte[1:]))
         liste_bez.append('Summe')
         liste_punkte.append(str(Punkte))
@@ -543,23 +543,41 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         Loesung.append(' \n\n')
         Loesung.append(' \n\n')
-        Loesung.append(' \n\n')
         Loesung.append(MediumText('erzielte Leistungen im Prüfungsgespräch: \n\n'))
 
-        table6 = Tabular('|p{1.5cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1.5cm}|',
-                         row_height=1.2)
+        # erstellen der Tabelle zur Punkteübersicht
+        liste_punkte = angb[-1]
+        liste_bez = angb[-2]
+        liste_bez.append('')
+        liste_punkte.append('')
+        anzahl_spalten = len(liste_punkte)
+        liste_gewaehlt = ['gewählt']
+        for p in range(anzahl_spalten - 2):
+            liste_gewaehlt.append(NoEscape(r'$  \square $'))
+        liste_gewaehlt.append('Summe')
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+
+        spalten = '|'
+        for p in liste_punkte:
+            spalten += 'c|'
+
+        table6 = Tabular(spalten, row_height=1.2)
         table6.add_hline()
-        table6.add_row((MultiColumn(9, align='|c|',
-                                    data='Punkteverteilung aller ausgewählten Aufgaben im Gespräch'),))
+        table6.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                    data='Punkteverteilung aller Aufgaben des Prüfungsgespräches'),))
         table6.add_hline()
-        table6.add_row((MultiRow(2, data='Aufgabe'),'','','','','','','',MultiRow(2, data='Summe')))
-        table6.add_row('', '', '', '', '', '', '', '', '')
+        table6.add_row(liste_bez)
+        table6.add_row(liste_gewaehlt)
         table6.add_hline()
-        table6.add_row((MultiRow(2, data='Punkte'),'','','','','','','', ''))
-        table6.add_row('', '', '', '', '', '', '', '', '')
+        table6.add_row(liste_punkte)
         table6.add_hline()
-        table6.add_row('erhaltene', '','','','','','','','')
-        table6.add_row('Punkte', '','','','','','','','')
+        table6.add_row(liste_ergebnis_z1)
+        table6.add_row(liste_ergebnis_z2)
         table6.add_hline()
 
         Loesung.append(table6)
