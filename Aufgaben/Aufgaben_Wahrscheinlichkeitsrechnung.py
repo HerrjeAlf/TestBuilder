@@ -759,11 +759,11 @@ def lotto_modell_01(nr):
     defekte = int(nzahl(1,4)*anzahl/20)
     ziehungen = nzahl(4,7)
     ziehungen_defekt = int(defekte*nzahl(2,6)/10)
-
+    ende = 'ist. \n\n' if ziehungen_defekt == 1 else ende = 'sind. \n\n'
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Lieferung von {gzahl(anzahl)} {begriff} sind {gzahl(defekte)} defekt. '
                f'Berechnen Sie die Wahrscheinlichkeit, dass in einer Stichprobe von {ziehungen} {begriff} '
-               f'genau {ziehungen_defekt} defekt sind.']
+               f'genau {ziehungen_defekt} defekt ' + ende]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{P(' + gzahl(ziehungen_defekt) + r'~von~' + gzahl(ziehungen)
                + r'~defekt)~=~ \frac{ \begin{pmatrix}' + gzahl(defekte) + r' \\' + gzahl(ziehungen_defekt) + r' \\ '
