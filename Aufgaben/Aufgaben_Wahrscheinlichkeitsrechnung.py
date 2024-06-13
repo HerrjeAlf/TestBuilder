@@ -759,7 +759,10 @@ def lotto_modell_01(nr):
     defekte = int(nzahl(1,4)*anzahl/20)
     ziehungen = nzahl(4,7)
     ziehungen_defekt = int(defekte*nzahl(2,6)/10)
-    ende = 'ist. \n\n' if ziehungen_defekt == 1 else ende = 'sind. \n\n'
+    if ziehungen_defekt == 1:
+        ende = str('ist. \n\n')
+    else:
+        ende = str('sind. \n\n')
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Lieferung von {gzahl(anzahl)} {begriff} sind {gzahl(defekte)} defekt. '
                f'Berechnen Sie die Wahrscheinlichkeit, dass in einer Stichprobe von {ziehungen} {begriff} '

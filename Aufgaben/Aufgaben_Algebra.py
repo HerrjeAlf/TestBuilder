@@ -1106,7 +1106,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
-                       + str(1) + r' \quad (1P) \\ \mathrm{Zeichnung: \quad (2P)}', '3dim_Koordinatensystem'))
+                       + str(1) + r' \quad (1P) \\ \mathrm{Zeichnung: \quad (2P)}', ''))
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

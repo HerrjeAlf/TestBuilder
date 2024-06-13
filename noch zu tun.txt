@@ -23,6 +23,6 @@ funktionen
 
 langfristig:
 
-
+- test
 - GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
