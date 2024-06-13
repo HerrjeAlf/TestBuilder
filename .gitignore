@@ -1,0 +1,4 @@
+    $ cat .gitignore
+    # exclude everything except py Dateien
+    /*
+    !*.py
