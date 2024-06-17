@@ -1,5 +1,5 @@
     $ cat .gitignore
-    # exclude everything except py and txt 
+    # exclude everything except py and txt  test
     /*
     !*.py
     !*.txt
