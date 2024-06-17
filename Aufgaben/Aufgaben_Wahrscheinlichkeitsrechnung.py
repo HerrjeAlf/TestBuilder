@@ -311,18 +311,108 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
     auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
     farbe_1 = farben[auswahl_farbe[0]]
+    farben_kuerzel_1 = farben_kuerzel[auswahl_farbe[0]]
     anzahl_1 = nzahl(5, 15)
     farbe_2 = farben[auswahl_farbe[1]]
+    farben_kuerzel_2 = farben_kuerzel[auswahl_farbe[1]]
     anzahl_2 = 20 - anzahl_1
     ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
                                     farbe1=farben_kuerzel[auswahl_farbe[0]],
                                     farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
-    anzahl_kugel_E1 = nzahl(1, 2)
     anzahl_n = anzahl_1 + nzahl(2, 3)
     anzahl_k = anzahl_1 - nzahl(1, 2)
     if anzahl_n - anzahl_k > anzahl_2:
         anzahl_k = anzahl_n - anzahl_2
+
+    # definieren der Ereignisse
+    def ereig_1(anzahl_ziehungen_E1=None):
+        anzahl_ziehungen_E1 = nzahl(1, 2) if anzahl_ziehungen_E1 == None else anzahl_ziehungen_E1
+        if anzahl_ziehungen_E1 == 1:
+            text = r' \mathrm{' + str(farbe_1) + '~wird~einmal~gezogen}'
+            if stufen == 2:
+                wkt = (r' P( einmal~' + str(farbe_1) + r') ~=~ 2 \cdot \frac{' + gzahl(anzahl_2)
+                       + r' \cdot ' + gzahl(anzahl_1) + r'}{20 \cdot 19} ~=~ '
+                       + gzahl(N((2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
+                       + r' \% \quad (3P) \\')
+            elif stufen == 3:
+                wkt = (r' P( einmal~' + str(farbe_1) + r') ~=~ 3 \cdot \frac{' + gzahl(anzahl_1)
+                       + r' \cdot ' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1)
+                       + r'}{20 \cdot 19 \dot 18} ~=~ '
+                       + gzahl(N((3 * anzahl_1 * anzahl_2 * (anzahl_2 - 1)) * 100 / (20 * 19 * 18), 3))
+                       + r' \% \quad (3P) \\')
+        elif anzahl_ziehungen_E1 == 2:
+            text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
+            if stufen == 2:
+                wkt = (r' P( zweimal~' + str(farbe_1) + r') ~=~ 2 \cdot \frac{' + gzahl(anzahl_1)
+                       + r' \cdot ' + gzahl(anzahl_1 - 1) + r'}{20 \cdot 19} ~=~ '
+                       + gzahl(N((2 * anzahl_1 * (anzahl_1 - 1)) * 100 / (20 * 19), 3))
+                       + r' \% \quad (3P) \\')
+            elif stufen == 3:
+                wkt = (r' P( zweimal~' + str(farbe_1) + r') ~=~ 3 \cdot \frac{' + gzahl(anzahl_1)
+                       + r' \cdot ' + gzahl(anzahl_1 - 1) + r' \cdot ' + gzahl(anzahl_2)
+                       + r'}{20 \cdot 19 \cdot 18} ~=~ '
+                       + gzahl(N((2 * anzahl_1 * (anzahl_1 - 1) * (anzahl_2)) * 100 / (20 * 19 * 18), 3))
+                       + r' \% \quad (3P) \\')
+        else:
+            sys.exit("anzahl_ziehungen_E1 muss None, 1 oder 2 sein")
+        lsg_menge = []
+        for element in ergebnisraum:
+            i = 0
+            for ergebnis in element:
+                if ergebnis == farben_kuerzel[auswahl_farbe[0]]:
+                    i += 1
+            if i == p:
+                lsg_menge.append(element)
+        punkte = 3
+        lsg = darstellung_mengen(lsg_menge)
+        return text, lsg_menge, lsg, wkt, punkte
+
+    def ereig_2():
+        auswahl_kugel = random.choice(['erste', 'zweite'])
+        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + str(farbe_2) + '}'
+        lsg_menge = []
+        if auswahl_kugel == 'erste':
+            for element in ergebnisraum:
+                if element[0] == farbe_2:
+                    lsg_menge.append(element)
+            wkt = (r' P(' + str(farbe_2) + r'~ist~erste~Kugel) ~=~ \frac{' + gzahl(anzahl_2)
+                   + r'}{20} ~=~ ' + gzahl(N(anzahl_2 * 5, 3)) + r' \% \quad (3P) \\')
+            punkte = 2
+        elif auswahl_kugel == 'zweite':
+            for element in ergebnisraum:
+                if element[1] == farbe_2:
+                    lsg_menge.append(element)
+            wkt = (r' P(' + str(farbe_2) + r'~ist~zweite~Kugel) ~=~ \frac{' + gzahl(anzahl_1) + r' \cdot ' + gzahl(anzahl_2)
+                   + r'}{20 \cdot 19} + \frac{' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1)
+                   + r'}{20 \cdot 19} ~=~ ' + gzahl(N(anzahl_2*(anzahl_1 + anzahl_2-1) * 100/(20*19), 3))
+                   + r' \% \quad (3P) \\')
+            punkte = 3
+        lsg = darstellung_mengen(lsg_menge)
+        return text, lsg_menge, lsg, wkt, punkte
+
+    def ereig_3():
+        if stufen == 2:
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
+            wkt = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
+                   + r'}{19} + 2 \cdot \frac{' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_1)
+                   + r'}{20 \cdot 19} ~=~ '
+                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) + 2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
+                   + r' \% \quad (3P) \\')
+            punkte = 3
+            lsg_menge = ergebnisraum.copy()
+            lsg_menge.remove([farben_kuerzel_1, farben_kuerzel_1])
+        elif stufen == 3:
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
+            wkt = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
+                   + r'}{19} \cdot \frac{' + gzahl(anzahl_2 - 2) + r'}{18} + 3 \cdot \frac{'
+                   + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
+                   + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
+                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
+                              + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
+                   + r' \% \quad (4P) \\')
+            punkte = 4
+        return text, wkt, punkte
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -360,41 +450,8 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        def ereig_1(p):
-            if p == 1:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
-            else:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
-            lsg_menge = []
-            for element in ergebnisraum:
-                i = 0
-                for ergebnis in element:
-                    if ergebnis == farben_kuerzel[auswahl_farbe[0]]:
-                        i += 1
-                if i == p:
-                    lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        def ereig_2():
-            auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
-                                     [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
-            auswahl_kugel = random.choice(['erste', 'zweite'])
-            text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
-            lsg_menge = []
-            if auswahl_kugel == 'erste':
-                for element in ergebnisraum:
-                    if element[0] == auswahl[1]:
-                        lsg_menge.append(element)
-            else:
-                for element in ergebnisraum:
-                    if element[1] == auswahl[1]:
-                        lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
-        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
+        ereignis_1, lsg_menge_1, lsg_1, wkt_1 = ereig_1()
+        ereignis_2, lsg_menge_2, lsg_2, wkt_2 = ereig_2()
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
             lsg_menge = lsg_menge_1.copy()
@@ -440,48 +497,14 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        def aufgabe_1():
-            auswahl = random.choice([farbe_1, farbe_2])
-            if auswahl == farbe_1:
-                auswahl_anzahl = anzahl_1
-            else:
-                auswahl_anzahl = anzahl_2
-            punkte = 2
-            aufgabe_text = (r' \mathrm{Die~erste~Kugel~ist~' + auswahl + r'.} \hspace{12em} \\')
-            aufgabe_loesung = (r' \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
-                               + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\')
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        def aufgabe_2():
-            if anzahl_ziehen[0] == 2:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} + 2 \cdot \frac{' + gzahl(anzahl_2)
-                                   + r' \cdot ' + gzahl(anzahl_1) + r'}{20 \cdot 19} ~=~ '
-                                   + gzahl(
-                            N((anzahl_2 * (anzahl_2 - 1) + 2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
-                                   + r' \% \quad (3P) \\')
-                punkte = 3
-            else:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} \cdot \frac{' + gzahl(anzahl_2 - 2) + r'}{18} + 3 \cdot \frac{'
-                                   + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
-                                   + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
-                                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
-                                   + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
-                                   + r' \% \quad (4P) \\')
-                punkte = 4
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        auswahl = np.random.choice([aufgabe_1, aufgabe_2], 2, False)
+        auswahl = np.random.choice([ereig_1, ereig_2, ereig_3], 2, False)
         aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
         aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
         punkte = punkte_1 + punkte_2
 
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
-                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_3: \quad }' + aufgabe_1
-                        + r' \mathrm{ \quad E_4: \quad }' + aufgabe_2))
+                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1: \quad }' + aufgabe_1
+                        + r' \mathrm{ \quad E_2: \quad }' + aufgabe_2))
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
                         r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \quad P(E_4) ~=~' + aufgabe_lsg_2))
 
