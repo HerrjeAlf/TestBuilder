@@ -1765,19 +1765,20 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'f' in teilaufg:
-        punkte = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung, '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie mithilfe der vorherigen Ergebnisse, '
                                                 'dass diese Funktion einen Wendepunkt besitzt. \n\n')
         table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
         table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
         if 'c' in teilaufg:
             table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
                            f'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.' , '3P')
+            punkte = 3
         if 'e' in teilaufg and 'c' not in teilaufg:
             table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie auch einen Wendepunkt.' , '2P')
+            punkte = 2
         loesung.append(table1)
         loesung.append('\n')
         liste_punkte.append(punkte)
@@ -2609,7 +2610,6 @@ def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     fkt_0 = integrate(fkt_1,x) + zzahl(1,5)
     liste_nst = solve(fkt_0,x)
     nst_1 = liste_nst[0]
-    nst_2 =
     # fkt_nv = collect(expand(faktor*(x-nst_1)*(x-nst_2)*(x-nst_3)),x)
     fkt_str = latex(fkt_0)
     ywert_0 = fkt_0.subs(x,xwert_extrema_1)

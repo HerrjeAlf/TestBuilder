@@ -402,6 +402,8 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
     elif T_auf_g == False:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,10)/2)*[vy,vx,vz+zzahl(1,3)])
+        while (tx-ax)/vx == (ty-ay)/ty == (tz-az)/tz:
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * [vy, vx, vz + zzahl(1, 3)])
     else:
         exit("T_auf_g muss None, True oder False sein!")
 
@@ -491,7 +493,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                         zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
-    uz = - 1 * (vx*ux + vy * uy)/vz
+    uz = (vx*ux + vy * uy)/vz
     u = vektor_ganzzahl([ux, uy, uz])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
@@ -584,8 +586,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         elif lagebeziehung == 'parallel':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
-            punkt_c =  [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+            while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
+                punkt_c = [cx, cy, cz] = vektor_ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '

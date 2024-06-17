@@ -15,7 +15,7 @@ Thema_teil2 = 'Analytische Geometrie (3. Semester)'
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-aufg_teil1 = [kurvendiskussion_polynome(1, ['b', 'd', 'e', 'f', 'j'], ableitungen=True, )]
+aufg_teil1 = [kurvendiskussion_polynome_01(1, ['b', 'd', 'e', 'f', 'i'],nullstellen='rational', ableitungen=True, )]
 for element in aufg_teil1:
     liste_bez_teil1.extend(element[5])
     liste_punkte_teil1.extend(element[4])
@@ -40,6 +40,7 @@ liste_aufg_lsg_teil2 = [seite(aufg_teil2_s1), seite(aufg_teil2_s2)]
 
 #  Angaben für die Klausur
 
-angb = [schuljahr, pruefungsfach, lehrkraft, vorschlag, Thema_teil1, Thema_teil2, liste_bez_teil1, liste_punkte_teil1]
+angb = [schuljahr, pruefungsfach, lehrkraft, vorschlag, Thema_teil1, Thema_teil2, liste_bez_teil1,
+        liste_punkte_teil1, liste_bez_teil2, liste_punkte_teil2]
 muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb)
 

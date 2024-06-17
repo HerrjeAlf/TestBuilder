@@ -11,16 +11,16 @@ Fach = 'Mathematik'
 Klasse = '12'
 Lehrer = 'Herr Herrys'
 Art = 'Test 3 (2. Sem.)'
-Titel = 'Kurvendiskusssion einer Parameterfunktion'
+Titel = 'Kurvendiskusssion einer Exponentialfunktion'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [kurvendiskussion_exponentialfkt_01(1, ['a', 'b', 'c', 'd', 'e', 'f', 'h'])]
+    aufgaben_seite1 = [kurvendiskussion_exponentialfkt_01(1, ['a', 'b', 'c', 'd', 'f', 'g', 'h'])]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

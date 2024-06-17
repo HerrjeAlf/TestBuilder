@@ -16,7 +16,7 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-aufg_teil1 = [kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
+aufg_teil1 = [kurvendiskussion_polynome_01(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
                                         nullstellen='rational', wendenormale=False)]
 for element in aufg_teil1:
     liste_bez_teil1.extend(element[5])
