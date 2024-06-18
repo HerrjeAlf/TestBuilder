@@ -236,12 +236,27 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
             i += 1
     return omega
 
-def wkt_berechnen(menge, a1, a2, art='zmZ'):
-    zw_menge = []
-    for elements in menge:
-        for element in elements:
 
+def wkt_berechnen(menge, a1=10, a2=10, art='zmZ'):
+    obermenge = []
+    for element in menge:
+        element.sort()
+    for element in menge:
+        teilmenge = []
+        print(element)
+        print(menge)
+        while element in menge:
+            teilmenge.append(element)
+            menge.remove(element)
+            print(element)
+            print(menge)
+        obermenge.append(teilmenge)
+        if len(menge) == 1:
+            obermenge.append([menge[-1]])
 
+    print(obermenge)
+
+print(wkt_berechnen(ergebnisraum_zmZ(3, farbe1='W', farbe2='S')))
 # Funktionen zur Analysis
 
 def faktorliste(p, q, n):
@@ -288,3 +303,5 @@ def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
                         omega.append(tubel)
             i += 1
     return omega
+
+
