@@ -291,8 +291,8 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
-    # Zufallsversuch (Urnenmodell Ziehen ohne Zurücklegen) und Bernoullikoeffizient
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
+    # Urnenmodell
 
     liste_punkte = []
     liste_bez = []

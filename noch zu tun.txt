@@ -1,5 +1,6 @@
 allgemein:
 - alte Skripte in neue Form anpassen
+- Vorlage Arbeitsblatt erstellen
 
 Fehler / Entwicklung:
 in Aufgaben Analysis:
@@ -11,7 +12,7 @@ in Aufgaben Analysis:
 
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm_bernoulli - Aufgabe e zur kummulierten Bernoullikette erstellen
-- Baumdiagramm zmZ erzeugt ab und zu Fehler (???)
+- Baumdiagramm zmZ und zoZ zusammenführen
 
 
 in Algebra:
@@ -23,6 +24,5 @@ funktionen
 
 langfristig:
 
-- test
 - GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
