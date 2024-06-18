@@ -237,24 +237,36 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
     return omega
 
 
-def wkt_berechnen(menge, a1=10, a2=10, art='zmZ'):
+def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
     obermenge = []
-    for element in menge:
-        element.sort()
-    for element in menge:
+    for tubel in menge:
+        tubel.sort()
+    for tubel in menge:
         teilmenge = []
-        print(element)
-        print(menge)
-        while element in menge:
-            teilmenge.append(element)
-            menge.remove(element)
-            print(element)
-            print(menge)
+        while tubel in menge:
+            teilmenge.append(tubel)
+            menge.remove(tubel)
         obermenge.append(teilmenge)
         if len(menge) == 1:
             obermenge.append([menge[-1]])
+    # print(obermenge)
+    if art == 'zoZ':
+        wkt = ''
+        for elements in obermenge:
+            faktor = len(elements)
+            wkt = wkt + r' \cdot ' + gzahl(faktor)
+            for element in elements:
+                wkt = wkt + r' \frac{'
+                i = 0
+                for string in element:
+                    if i < len(element):
+                        wkt = wkt + gzahl(anz1) + r' \cdot ' if string == bez1 else wkt = wkt + gzahl(anz2) + r' \cdot '
+                    elif i == len(element):
+                        wkt = wkt + gzahl(anz1) + '}' if string == bez1 else wkt = wkt + gzahl(anz2) + '}'
+                    i += 1
+                for x in range(i):
+                    wkt = wkt + r'{' + str(anz1+anz2 - x)
 
-    print(obermenge)
 
 print(wkt_berechnen(ergebnisraum_zmZ(3, farbe1='W', farbe2='S')))
 # Funktionen zur Analysis
@@ -268,7 +280,7 @@ def exponenten(n):
         menge.add(nzahl(2, 6 + n))
     return menge
 
-def funktion(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
+def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
     koeffizienten = faktorliste(1, 15, p)
     potenzen = exponenten(p)

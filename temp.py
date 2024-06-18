@@ -9,3 +9,8 @@ for m in range(1,7):
             i += 1
 
 print(i)
+
+
+a = [[1,2],[2,3]]
+
+print(len(a))
