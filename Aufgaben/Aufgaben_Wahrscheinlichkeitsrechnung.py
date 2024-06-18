@@ -528,7 +528,6 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
     # Urnenmodell
 
