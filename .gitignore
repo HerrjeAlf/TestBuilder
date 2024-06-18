@@ -1,7 +1,5 @@
-    $ cat .gitignore
-    # exclude everything except py and txt  test
-    /*
-    !*.py
-    !*.txt
+# Default ignored files
+/shelf/
+/workspace.xml
 
 
