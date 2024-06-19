@@ -1,4 +1,4 @@
-import sympy
+import sympy, sys
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 
@@ -360,10 +360,12 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        def ereig_1(p):
+        def ereig_1():
+            p = 1
+            p = random.choice([1, 2]) if anzahl_ziehen[0] == 3 else p
             if p == 1:
                 text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
-            else:
+            elif p == 2:
                 text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
             lsg_menge = []
             for element in ergebnisraum:
@@ -538,7 +540,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None, art='zmZ'):
     # Urnenmodell
 
     liste_punkte = []
@@ -563,9 +565,14 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
     farbe_2 = farben[auswahl_farbe[1]]
     farben_kuerzel_2 = farben_kuerzel[auswahl_farbe[1]]
     anzahl_2 = 20 - anzahl_1
-    ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
-                                    farbe1=farben_kuerzel[auswahl_farbe[0]],
-                                    farbe2=farben_kuerzel[auswahl_farbe[1]])
+    if art == 'zoZ':
+        ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
+                                        farbe1=farben_kuerzel[auswahl_farbe[0]],
+                                        farbe2=farben_kuerzel[auswahl_farbe[1]])
+    else:
+        ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0],
+                                        farbe1=farben_kuerzel[auswahl_farbe[0]],
+                                        farbe2=farben_kuerzel[auswahl_farbe[1]])
     # zwischenergebnisse für teilaufgaben
     anzahl_n = anzahl_1 + nzahl(2, 3)
     anzahl_k = anzahl_1 - nzahl(1, 2)
@@ -573,14 +580,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         anzahl_k = anzahl_n - anzahl_2
 
     # definieren der Ereignisse
-    def ereig_1(anzahl_ziehungen_E1=None):
-        anzahl_ziehungen_E1 = nzahl(1, 2) if anzahl_ziehungen_E1 == None else anzahl_ziehungen_E1
-        if anzahl_ziehungen_E1 == 1:
-            text = r' \mathrm{' + str(farbe_1) + '~wird~einmal~gezogen}'
-        elif anzahl_ziehungen_E1 == 2:
+    def ereig_1():
+        p = 1
+        p = random.choice([1,2]) if anzahl_ziehen[0] == 3 else p
+        if p == 1:
+            text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
+        elif p == 2:
             text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
-         else:
-            sys.exit("anzahl_ziehungen_E1 muss None, 1 oder 2 sein")
         lsg_menge = []
         for element in ergebnisraum:
             i = 0
@@ -589,23 +595,25 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
                     i += 1
             if i == p:
                 lsg_menge.append(element)
-        punkte = 3
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge
+        return text, lsg_menge, lsg
 
     def ereig_2():
+        auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
+                                 [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
         auswahl_kugel = random.choice(['erste', 'zweite'])
-        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + str(farbe_2) + '}'
+        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
         lsg_menge = []
         if auswahl_kugel == 'erste':
             for element in ergebnisraum:
-                if element[0] == farbe_2:
-        elif auswahl_kugel == 'zweite':
+                if element[0] == auswahl[1]:
+                    lsg_menge.append(element)
+        else:
             for element in ergebnisraum:
-                if element[1] == farbe_2:
+                if element[1] == auswahl[1]:
                     lsg_menge.append(element)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge
+        return text, lsg_menge, lsg
 
     def ereig_3():
         if stufen == 2:
@@ -614,8 +622,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
             lsg_menge.remove([farben_kuerzel_1, farben_kuerzel_1])
         elif stufen == 3:
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-
-        return text, lsg_menge
+        lsg = darstellung_mengen(lsg_menge)
+        return text, lsg_menge, lsg
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -631,8 +639,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-        Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
-                         bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
+        if art == 'zoZ':
+            Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
+                             bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
+        else:
+            Baumdiagramm_zmZ(anzahl_ziehen[0], Rational(anzahl_1,(anzahl_1+anzahl_2)),
+                             f'Loesung_{nr}{liste_teilaufg[i]}',
+                             bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
         aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
         if anzahl_ziehen[0] == 2:
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
@@ -653,8 +666,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        ereignis_1, lsg_menge_1, lsg_1, wkt_1 = ereig_1()
-        ereignis_2, lsg_menge_2, lsg_2, wkt_2 = ereig_2()
+        ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
+        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
             lsg_menge = lsg_menge_1.copy()

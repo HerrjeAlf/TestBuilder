@@ -236,6 +236,28 @@ def ergebnisraum_zmZ(anzahl_ziehen, farbe1='weiß', farbe2='schwarz'):
             i += 1
     return omega
 
+def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
+    anz_ges = anz_1 + anz_2
+    if az > anz_ges:
+        az = anz_ges
+    omega1 = [[farbe1 for element in range(az)]]
+    if az > anz_1:
+        omega = []
+    else:
+        omega = [[farbe1 for element in range(az)]]
+    for anzahl in omega1:
+        i = 0
+        for stelle in anzahl:
+            tubel = anzahl.copy()
+            tubel[i] = farbe2
+            for element in omega1:
+                if tubel not in omega1:
+                    omega1.append(tubel)
+                    if tubel.count(farbe2) <= anz_2 and tubel.count(farbe1) <= anz_1:
+                        omega.append(tubel)
+            i += 1
+    return omega
+
 
 def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
     obermenge = []
@@ -250,46 +272,60 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
         if len(menge) == 1:
             obermenge.append([menge[-1]])
     print(obermenge)
-    if art == 'zoZ':
-        wkt = ''
-        for elements in obermenge:
-            faktor = len(elements)
-            if elements == obermenge[0]:
-                pass
-            else:
-                wkt = wkt + vorz_str(faktor) + r' \cdot '
-            i = 1
-            zaehler = ''
-            nenner = ''
-            a1 = anz1
-            a2 = anz2
-            for string in elements[0]:
-                if i == len(elements[0]):
-                    print(i)
-                    print(len(elements[0]))
-                    if string == bez1:
-                        zaehler = zaehler + gzahl(a1) + '}'
-                    else:
-                        zaehler = zaehler + gzahl(a2) + '}'
-                    nenner = nenner + gzahl(a1 + a2)
-                    break
-                elif string == bez1:
-                    zaehler = zaehler + gzahl(a1) + r' \cdot '
-                    nenner = nenner + gzahl(a1 + a2) + r' \cdot '
-                    a1 -= 1
+    wkt = ''
+    ergebnis = 0
+    for elements in obermenge:
+        if elements == obermenge[0] and len(elements) == 1:
+            pass
+        elif len(elements) == 1 and not elements == obermenge[0]:
+            wkt = wkt + '+'
+        else:
+            wkt = wkt + vorz_str(len(elements)) + r' \cdot '
+        i = 1
+        zaehler = ''
+        nenner = ''
+        erg_zaehler = 1
+        erg_nenner = 1
+        a1 = anz1
+        a2 = anz2
+        for string in elements[0]:
+            print(string)
+            print(a1)
+            if i == len(elements[0]):
+                if string == bez1:
+                    zaehler = zaehler + gzahl(a1) + '}'
+                    erg_zaehler = erg_zaehler * a1
                 else:
-                    zaehler = zaehler + gzahl(a2) + (r' \cdot ')
-                    nenner = nenner + gzahl(a1 + a2) + r' \cdot '
+                    zaehler = zaehler + gzahl(a2) + '}'
+                    erg_zaehler = erg_zaehler * a2
+                nenner = nenner + gzahl(a1 + a2)
+                erg_nenner = erg_nenner * (a1+a2)
+                break
+            elif string == bez1:
+                zaehler = zaehler + gzahl(a1) + r' \cdot '
+                nenner = nenner + gzahl(a1 + a2) + r' \cdot '
+                erg_zaehler = erg_zaehler * a1
+                erg_nenner = erg_nenner * (a1+a2)
+                if art == 'zoZ':
+                    a1 -= 1
+            else:
+                zaehler = zaehler + gzahl(a2) + (r' \cdot ')
+                nenner = nenner + gzahl(a1 + a2) + r' \cdot '
+                erg_zaehler = erg_zaehler * a2
+                erg_nenner = erg_nenner * (a1+a2)
+                if art == 'zoZ':
                     a2 -= 1
-                i += 1
-            wkt = wkt + r' \frac{' + zaehler + '}{' + nenner + '}'
-        punkte = len(obermenge)
-        ergebnis = ''
-        wkt = wkt + '~=~' + ergebnis + r' \quad (' + str(punkte) + r') \\'
-
+            i += 1
+        wkt = wkt + r' \frac{' + zaehler + '}{' + nenner + '}'
+        print(erg_zaehler)
+        print(erg_nenner)
+        ergebnis = ergebnis + len(elements)*Rational(erg_zaehler,erg_nenner)
+        print(ergebnis)
+    punkte = len(obermenge)
+    wkt = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r') \\'
     return wkt, punkte
 
-print(wkt_berechnen(ergebnisraum_zmZ(3, farbe1='W', farbe2='S'), bez1='W', anz1=5, bez2='S', anz2=15, art='zoZ'))
+print(wkt_berechnen(ergebnisraum_zmZ(2, farbe1='W', farbe2='S'), bez1='W', anz1=5, bez2='S', anz2=15, art='zmZ'))
 # Funktionen zur Analysis
 
 def faktorliste(p, q, n):
@@ -313,28 +349,5 @@ def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden u
     fkt_abl_2 = collect(expand(diff(fkt, x, 2)), x)
 
     return fkt, fkt_abl_1, fkt_abl_2
-
-# noch zu programmieren
-def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
-    anz_ges = anz_1 + anz_2
-    if az > anz_ges:
-        az = anz_ges
-    omega1 = [[farbe1 for element in range(az)]]
-    if az > anz_1:
-        omega = []
-    else:
-        omega = [[farbe1 for element in range(az)]]
-    for anzahl in omega1:
-        i = 0
-        for stelle in anzahl:
-            tubel = anzahl.copy()
-            tubel[i] = farbe2
-            for element in omega1:
-                if tubel not in omega1:
-                    omega1.append(tubel)
-                    if tubel.count(farbe2) <= anz_2 and tubel.count(farbe1) <= anz_1:
-                        omega.append(tubel)
-            i += 1
-    return omega
 
 
