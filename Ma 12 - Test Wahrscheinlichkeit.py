@@ -21,7 +21,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     aufgaben_seite1 = [begriffe_wahrscheinlichkeit(1, anzahl=2),
-                       baumdiagramm_zoZ(2, ['a', 'b', 'c', 'd', 'e'], stufen=2),
+                       baumdiagramm_zoZ(2, ['a', 'b', 'c', 'd', 'e', 'f'], stufen=2),
                        faires_spiel(3),
                        sicheres_passwort(4),
                        lotto_modell_01(5)]

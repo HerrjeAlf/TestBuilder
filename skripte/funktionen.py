@@ -249,26 +249,47 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
         obermenge.append(teilmenge)
         if len(menge) == 1:
             obermenge.append([menge[-1]])
-    # print(obermenge)
+    print(obermenge)
     if art == 'zoZ':
         wkt = ''
         for elements in obermenge:
             faktor = len(elements)
-            wkt = wkt + r' \cdot ' + gzahl(faktor)
-            for element in elements:
-                wkt = wkt + r' \frac{'
-                i = 0
-                for string in element:
-                    if i < len(element):
-                        wkt = wkt + gzahl(anz1) + r' \cdot ' if string == bez1 else wkt = wkt + gzahl(anz2) + r' \cdot '
-                    elif i == len(element):
-                        wkt = wkt + gzahl(anz1) + '}' if string == bez1 else wkt = wkt + gzahl(anz2) + '}'
-                    i += 1
-                for x in range(i):
-                    wkt = wkt + r'{' + str(anz1+anz2 - x)
+            if elements == obermenge[0]:
+                pass
+            else:
+                wkt = wkt + vorz_str(faktor) + r' \cdot '
+            i = 1
+            zaehler = ''
+            nenner = ''
+            a1 = anz1
+            a2 = anz2
+            for string in elements[0]:
+                if i == len(elements[0]):
+                    print(i)
+                    print(len(elements[0]))
+                    if string == bez1:
+                        zaehler = zaehler + gzahl(a1) + '}'
+                    else:
+                        zaehler = zaehler + gzahl(a2) + '}'
+                    nenner = nenner + gzahl(a1 + a2)
+                    break
+                elif string == bez1:
+                    zaehler = zaehler + gzahl(a1) + r' \cdot '
+                    nenner = nenner + gzahl(a1 + a2) + r' \cdot '
+                    a1 -= 1
+                else:
+                    zaehler = zaehler + gzahl(a2) + (r' \cdot ')
+                    nenner = nenner + gzahl(a1 + a2) + r' \cdot '
+                    a2 -= 1
+                i += 1
+            wkt = wkt + r' \frac{' + zaehler + '}{' + nenner + '}'
+        punkte = len(obermenge)
+        ergebnis = ''
+        wkt = wkt + '~=~' + ergebnis + r' \quad (' + str(punkte) + r') \\'
 
+    return wkt, punkte
 
-print(wkt_berechnen(ergebnisraum_zmZ(3, farbe1='W', farbe2='S')))
+print(wkt_berechnen(ergebnisraum_zmZ(3, farbe1='W', farbe2='S'), bez1='W', anz1=5, bez2='S', anz2=15, art='zoZ'))
 # Funktionen zur Analysis
 
 def faktorliste(p, q, n):

@@ -291,7 +291,7 @@ def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
+def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
     # Zufallsversuch (Urnenmodell Ziehen ohne Zurücklegen) und Bernoullikoeffizient
 
     liste_punkte = []
@@ -526,6 +526,16 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         liste_punkte.append(punkte)
         i += 1
 
+    if 'f' in teilaufg:
+        # Berechnung der Wahrscheinlichkeit mit Lottomodell
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die stochastische Unabhängeit von E1 und E2. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4P) \\')
+
+        liste_punkte.append(punkte)
+        i += 1
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
@@ -567,31 +577,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         anzahl_ziehungen_E1 = nzahl(1, 2) if anzahl_ziehungen_E1 == None else anzahl_ziehungen_E1
         if anzahl_ziehungen_E1 == 1:
             text = r' \mathrm{' + str(farbe_1) + '~wird~einmal~gezogen}'
-            if stufen == 2:
-                wkt = (r' P( einmal~' + str(farbe_1) + r') ~=~ 2 \cdot \frac{' + gzahl(anzahl_2)
-                       + r' \cdot ' + gzahl(anzahl_1) + r'}{20 \cdot 19} ~=~ '
-                       + gzahl(N((2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
-                       + r' \% \quad (3P) \\')
-            elif stufen == 3:
-                wkt = (r' P( einmal~' + str(farbe_1) + r') ~=~ 3 \cdot \frac{' + gzahl(anzahl_1)
-                       + r' \cdot ' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1)
-                       + r'}{20 \cdot 19 \dot 18} ~=~ '
-                       + gzahl(N((3 * anzahl_1 * anzahl_2 * (anzahl_2 - 1)) * 100 / (20 * 19 * 18), 3))
-                       + r' \% \quad (3P) \\')
         elif anzahl_ziehungen_E1 == 2:
             text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
-            if stufen == 2:
-                wkt = (r' P( zweimal~' + str(farbe_1) + r') ~=~ 2 \cdot \frac{' + gzahl(anzahl_1)
-                       + r' \cdot ' + gzahl(anzahl_1 - 1) + r'}{20 \cdot 19} ~=~ '
-                       + gzahl(N((2 * anzahl_1 * (anzahl_1 - 1)) * 100 / (20 * 19), 3))
-                       + r' \% \quad (3P) \\')
-            elif stufen == 3:
-                wkt = (r' P( zweimal~' + str(farbe_1) + r') ~=~ 3 \cdot \frac{' + gzahl(anzahl_1)
-                       + r' \cdot ' + gzahl(anzahl_1 - 1) + r' \cdot ' + gzahl(anzahl_2)
-                       + r'}{20 \cdot 19 \cdot 18} ~=~ '
-                       + gzahl(N((2 * anzahl_1 * (anzahl_1 - 1) * (anzahl_2)) * 100 / (20 * 19 * 18), 3))
-                       + r' \% \quad (3P) \\')
-        else:
+         else:
             sys.exit("anzahl_ziehungen_E1 muss None, 1 oder 2 sein")
         lsg_menge = []
         for element in ergebnisraum:
@@ -603,7 +591,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
                 lsg_menge.append(element)
         punkte = 3
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg, wkt, punkte
+        return text, lsg_menge
 
     def ereig_2():
         auswahl_kugel = random.choice(['erste', 'zweite'])
@@ -612,44 +600,22 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None):
         if auswahl_kugel == 'erste':
             for element in ergebnisraum:
                 if element[0] == farbe_2:
-                    lsg_menge.append(element)
-            wkt = (r' P(' + str(farbe_2) + r'~ist~erste~Kugel) ~=~ \frac{' + gzahl(anzahl_2)
-                   + r'}{20} ~=~ ' + gzahl(N(anzahl_2 * 5, 3)) + r' \% \quad (3P) \\')
-            punkte = 2
         elif auswahl_kugel == 'zweite':
             for element in ergebnisraum:
                 if element[1] == farbe_2:
                     lsg_menge.append(element)
-            wkt = (r' P(' + str(farbe_2) + r'~ist~zweite~Kugel) ~=~ \frac{' + gzahl(anzahl_1) + r' \cdot ' + gzahl(anzahl_2)
-                   + r'}{20 \cdot 19} + \frac{' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1)
-                   + r'}{20 \cdot 19} ~=~ ' + gzahl(N(anzahl_2*(anzahl_1 + anzahl_2-1) * 100/(20*19), 3))
-                   + r' \% \quad (3P) \\')
-            punkte = 3
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg, wkt, punkte
+        return text, lsg_menge
 
     def ereig_3():
         if stufen == 2:
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
-            wkt = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                   + r'}{19} + 2 \cdot \frac{' + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_1)
-                   + r'}{20 \cdot 19} ~=~ '
-                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) + 2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
-                   + r' \% \quad (3P) \\')
-            punkte = 3
             lsg_menge = ergebnisraum.copy()
             lsg_menge.remove([farben_kuerzel_1, farben_kuerzel_1])
         elif stufen == 3:
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-            wkt = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                   + r'}{19} \cdot \frac{' + gzahl(anzahl_2 - 2) + r'}{18} + 3 \cdot \frac{'
-                   + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
-                   + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
-                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
-                              + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
-                   + r' \% \quad (4P) \\')
-            punkte = 4
-        return text, wkt, punkte
+
+        return text, lsg_menge
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
