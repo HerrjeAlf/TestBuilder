@@ -395,7 +395,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
             lsg = darstellung_mengen(lsg_menge)
             return text, lsg_menge, lsg
 
-        ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
+        ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
         ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
         def vereinigung():
             text = r' \mathrm{E_1 \cup E_2}'
@@ -532,7 +532,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
         # Berechnung der Wahrscheinlichkeit mit Lottomodell
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die stochastische Unabhängeit von E1 und E2. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängeit von E1 und E2. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad (4P) \\')
 
         liste_punkte.append(punkte)
@@ -616,14 +616,39 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None, art='zmZ')
         return text, lsg_menge, lsg
 
     def ereig_3():
+        auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
+                                 [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
         if stufen == 2:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] + r'~wird~mind.~einmal~gezogen.} \\')
             lsg_menge = ergebnisraum.copy()
-            lsg_menge.remove([farben_kuerzel_1, farben_kuerzel_1])
+            lsg_menge.remove([auswahl[1], auswahl[1]])
         elif stufen == 3:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.} \\')
+            lsg_menge = ergebnisraum.copy()
+            lsg_menge.remove([auswahl[1], auswahl[1]])
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg
+
+    def vereinigung(menge1, menge2, bez1='E_1', bez2='E_2'):
+        text = r' \mathrm{' + bez1 + r' \cup ' + bez2 + '}'
+        lsg_menge = menge1.copy()
+        for element2 in menge2:
+            if element2 not in lsg_menge:
+                lsg_menge.append(element2)
+        lsg = darstellung_mengen(lsg_menge)
+        return text, lsg_menge, lsg
+
+    def geschnitten(menge1, menge2, bez1='E_1', bez2='E_2'):
+        text = r' \mathrm{' + bez1 + r' \cap ' + bez2 + '}'
+        lsg_menge = []
+        for element1 in menge1:
+            for element2 in menge2:
+                if element2 == element1:
+                    lsg_menge.append(element2)
+        lsg = darstellung_mengen(lsg_menge)
+        return text, lsg_menge, lsg
+
+
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -668,24 +693,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None, art='zmZ')
 
         ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
         ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
-        def vereinigung():
-            text = r' \mathrm{E_1 \cup E_2}'
-            lsg_menge = lsg_menge_1.copy()
-            for element2 in lsg_menge_2:
-                if element2 not in lsg_menge:
-                    lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
 
-        def geschnitten():
-            text = r' \mathrm{E_1 \cap E_2}'
-            lsg_menge = []
-            for element1 in lsg_menge_1:
-                for element2 in lsg_menge_2:
-                    if element2 == element1:
-                        lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
+
+
 
         vereinigung, lsg_vereinigung, lsg_menge_verein = vereinigung()
         schnittmenge, lsg_schnittmenge, lsg_menge_schnitt = geschnitten()
@@ -994,10 +1004,11 @@ def lotto_modell_01(nr):
     liste_bez = [f'{str(nr)}']
     i = 0
     begriff = random.choice(['Transistoren', 'Batterien', 'Stiften', 'Fußbällen'])
-    anzahl = nzahl(5,10)*10
-    defekte = int(nzahl(1,4)*anzahl/20)
-    ziehungen = nzahl(4,7)
-    ziehungen_defekt = int(defekte*nzahl(2,6)/10)
+    anzahl = nzahl(5,10)*100
+    defekte = int(nzahl(2,5)*anzahl/100)
+    ziehungen = nzahl(5,15)
+    ziehungen_defekt = round(ziehungen*nzahl(1,2)/10)
+    ziehungen_defekt = ziehungen if ziehungen_defekt > ziehungen else ziehungen_defekt
     if ziehungen_defekt == 1:
         ende = str('ist. \n\n')
     else:
