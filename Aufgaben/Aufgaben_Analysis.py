@@ -977,7 +977,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         return aufg, lsg, pkt
 
     def exp_schwer():
-        pkt = 2
+        pkt = 3
         basis_2 = nzahl(2,8)
         exponent_2 = nzahl(2,5)
         exponent_2_summe = zzahl(1,3)
