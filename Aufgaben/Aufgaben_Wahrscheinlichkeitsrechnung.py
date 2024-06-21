@@ -540,7 +540,7 @@ def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None, art='zmZ'):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=None, art='zmZ'):
     # Urnenmodell
 
     liste_punkte = []
@@ -690,6 +690,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], stufen=None, art='zmZ')
         punkte = 6
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        auswahl = np.random.choice((ereig_1,ereig_2, ereig_3), 2, False)
+        print(auswahl)
 
         ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
         ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
