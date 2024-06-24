@@ -333,9 +333,9 @@ def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'
         # print(ergebnis)
     punkte = len(obermenge) + 1
     wkt_erg = ergebnis
-    wkt_str = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r') \\'
+    wkt_str = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r'P)'
     if len(obermenge) == 0:
-        wkt_str = r'0 \% \quad (1P) \\'
+        wkt_str = r'0 \% \quad (1P)'
     return wkt_erg, wkt_str, punkte
 
 # print(wkt_baumdiagramm(ergebnisraum_zmZ(2, farbe1='B', farbe2='R'), bez1='B', bez2='R', anz1=5, anz2=15, art='zmZ'))

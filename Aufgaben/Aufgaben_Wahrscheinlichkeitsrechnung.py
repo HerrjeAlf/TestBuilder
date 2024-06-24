@@ -49,497 +49,6 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm_zmZ_und_bernoulli(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
-    # Zufallsversuch (Urnenmodell Ziehen mit Zurücklegen) mit Bernoulliverteilung
-
-    liste_punkte = []
-    liste_bez = []
-    i = 0
-
-    if stufen == None:
-        anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
-    elif stufen == 2:
-        anzahl_ziehen = [2, 'zweimal']
-    elif stufen == 3:
-        anzahl_ziehen = [3, 'dreimal']
-    else:
-        exit("anzahl_ziehen muss None, 2 oder 3 sein")
-
-    farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
-    farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
-    auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
-    farbe_1 = farben[auswahl_farbe[0]]
-    anzahl_1 = nzahl(5, 15)
-    farbe_2 = farben[auswahl_farbe[1]]
-    anzahl_2 = 20 - anzahl_1
-    anzahl_n = random.choice([25, 50, 75, 100])
-
-    ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0],
-                                    farbe1=farben_kuerzel[auswahl_farbe[0]],
-                                    farbe2=farben_kuerzel[auswahl_farbe[1]])
-    # zwischenergebnisse für teilaufgaben
-    anzahl_kugel_E1 = nzahl(1, 2)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
-               f' Kugeln der Farbe {farbe_2}. ']
-    if 'a' or 'b' or 'c' in teilaufg:
-        aufgabe.append(f'Aus dieser Urne wird {anzahl_ziehen[1]} '
-                       f'eine Kugel gezogen und anschließend wieder zurückgelegt. \n\n')
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-
-    if 'a' in teilaufg:
-        # Baumdiagramm zeichnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-        Baumdiagramm_zmZ(anzahl_ziehen[0], Rational(anzahl_1,20) ,f'Loesung_{nr}{liste_teilaufg[i]}',
-                         bz=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
-        aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
-        if anzahl_ziehen[0] == 2:
-            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
-                            '2 Stufen: 1P, Wkt an den Zweige: 1P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte = 3
-        else:
-            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
-                            '3 Stufen: 2P, Wkt an den Zweige: 1P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte = 4
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'b' in teilaufg:
-        # Ergebnismengen angeben
-
-        punkte = 4
-        liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        def ereig_1(p):
-            if p == 1:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
-            else:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
-            lsg_menge = []
-            for element in ergebnisraum:
-                i = 0
-                for ergebnis in element:
-                    if ergebnis == farben_kuerzel[auswahl_farbe[0]]:
-                        i += 1
-                if i == p:
-                    lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        def ereig_2():
-            auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
-                                     [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
-            auswahl_kugel = random.choice(['erste', 'zweite'])
-            text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
-            lsg_menge = []
-            if auswahl_kugel == 'erste':
-                for element in ergebnisraum:
-                    if element[0] == auswahl[1]:
-                        lsg_menge.append(element)
-            else:
-                for element in ergebnisraum:
-                    if element[1] == auswahl[1]:
-                        lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        ereignis_1, lsg_menge_1, lsg_1 = ereig_1(anzahl_kugel_E1)
-        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
-
-
-        def vereinigung():
-            text = r' \mathrm{E_1 \cup E_2}'
-            lsg_menge = lsg_menge_1.copy()
-            for element2 in lsg_menge_2:
-                if element2 not in lsg_menge:
-                    lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        def geschnitten():
-            text = r' \mathrm{E_1 \cap E_2}'
-            lsg_menge = []
-            for element1 in lsg_menge_1:
-                for element2 in lsg_menge_2:
-                    if element2 == element1:
-                        lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        vereinigung, lsg_menge_vereinigung, lsg_vereinigung = vereinigung()
-        schnittmenge, lsg_menge_schnittmenge, lsg_schnittmenge = geschnitten()
-
-        aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                        r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
-                        + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-
-        # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{1cm} p{8cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ergebnismengen'), 'Punkte')
-        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '1P')
-        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '1P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
-                       str(lsg_vereinigung), '1P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
-                       str(lsg_schnittmenge), '1P')
-        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
-        loesung.append(table1)
-        loesung.append(' \n\n\n')
-        i += 1
-
-    if 'c' in teilaufg:
-        # Wahrscheinlichkeit von Ereignissen berechnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        def aufgabe_1():
-            auswahl = random.choice([farbe_1, farbe_2])
-            if auswahl == farbe_1:
-                auswahl_anzahl = anzahl_1
-            else:
-                auswahl_anzahl = anzahl_2
-            punkte = 2
-            aufgabe_text = (r' \mathrm{Die~erste~Kugel~ist~' + auswahl + r'.} \hspace{12em}')
-            aufgabe_loesung = (r' \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
-                               + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P)')
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        def aufgabe_2():
-            if anzahl_ziehen[0] == 2:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.}')
-                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \right)^2 '
-                                   + r'2 \cdot \frac{' + gzahl(anzahl_2)
-                                   + r' \cdot ' + gzahl(anzahl_1) + r'}{20^2} ~=~ '
-                                   + gzahl(N((anzahl_2**2 + 2 * anzahl_2 * anzahl_1)*100 / (20**2), 3))
-                                   + r' \% \quad (3P)')
-                punkte = 3
-            else:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.}')
-                aufgabe_loesung = (r' \left( \frac{' + gzahl(anzahl_2) + r'}{20} \right)^3 + 3 \cdot \frac{'
-                                   + gzahl(anzahl_2) + r'^2 \cdot ' + gzahl(anzahl_1) + r'}{20^3} ~=~ '
-                                   + gzahl(N((anzahl_2**3 + 3*(anzahl_2**2)*anzahl_1)*100/20**3,3))
-                                   + r' \% \quad (4P)')
-                punkte = 4
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        auswahl = np.random.choice([aufgabe_1, aufgabe_2], 2, False)
-        aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
-        aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
-        punkte = punkte_1 + punkte_2
-
-        aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
-                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_3: \quad }' + aufgabe_1
-                        + r' \\ \mathrm{ \quad E_4: \quad }' + aufgabe_2))
-        loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \\ \quad P(E_4) ~=~' + aufgabe_lsg_2))
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'd' in teilaufg:
-        # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
-        wkt = Rational(anzahl_1,20)
-
-        aufgabe.extend((f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
-                       + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
-                       + latex(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P) \\')
-
-        liste_punkte.append(punkte)
-        i += 1
-
-
-    if 'e' in teilaufg:
-        # mit Bernoullikette Wahrscheinlichkeit berechnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
-        anzahl_n = random.choice([25,50,75,100])
-        anzahl_k = int((anzahl_1+zzahl(1,2))/20*anzahl_n)
-        wkt = Rational(anzahl_1,20)
-        if 'd' not in teilaufg:
-            aufgabe.append(f'Diesmal wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
-                       + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
-                       + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
-                       + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
-                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
-                       + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
-                       + r' \% \quad (4P) \\')
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'f' in teilaufg:
-        # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen
-        pass
-        # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
-
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-def baumdiagramm_zoZ(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], stufen=None):
-    # Zufallsversuch (Urnenmodell Ziehen ohne Zurücklegen) und Bernoullikoeffizient
-
-    liste_punkte = []
-    liste_bez = []
-    i = 0
-
-    if stufen == None:
-        anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
-    elif stufen == 2:
-        anzahl_ziehen = [2, 'zweimal']
-    elif stufen == 3:
-        anzahl_ziehen = [3, 'dreimal']
-    else:
-        exit("anzahl_ziehen muss None, 2 oder 3 sein")
-
-    farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
-    farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
-    auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
-    farbe_1 = farben[auswahl_farbe[0]]
-    anzahl_1 = nzahl(5, 15)
-    farbe_2 = farben[auswahl_farbe[1]]
-    anzahl_2 = 20 - anzahl_1
-    ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
-                                    farbe1=farben_kuerzel[auswahl_farbe[0]],
-                                    farbe2=farben_kuerzel[auswahl_farbe[1]])
-    # zwischenergebnisse für teilaufgaben
-    anzahl_kugel_E1 = nzahl(1, 2)
-    anzahl_n = anzahl_1 + nzahl(2, 3)
-    anzahl_k = anzahl_1 - nzahl(1, 2)
-    if anzahl_n - anzahl_k > anzahl_2:
-        anzahl_k = anzahl_n - anzahl_2
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
-               f' Kugeln der Farbe {farbe_2}. ']
-    if 'a' or 'b' or 'c' in teilaufg:
-        aufgabe.append(f'Aus dieser Urne wird ohne Zurücklegen {anzahl_ziehen[1]} eine Kugel gezogen. \n\n')
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-
-    if 'a' in teilaufg:
-        # Baumdiagramm zeichnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-        Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
-                         bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
-        aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
-        if anzahl_ziehen[0] == 2:
-            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
-                            '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte = 5
-        else:
-            loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
-                            '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P', 'Figure'))
-            punkte = 6
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'b' in teilaufg:
-        # Ergebnismengen angeben
-
-        punkte = 6
-        liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        def ereig_1():
-            p = 1
-            p = random.choice([1, 2]) if anzahl_ziehen[0] == 3 else p
-            if p == 1:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
-            elif p == 2:
-                text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
-            lsg_menge = []
-            for element in ergebnisraum:
-                i = 0
-                for ergebnis in element:
-                    if ergebnis == farben_kuerzel[auswahl_farbe[0]]:
-                        i += 1
-                if i == p:
-                    lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        def ereig_2():
-            auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
-                                     [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
-            auswahl_kugel = random.choice(['erste', 'zweite'])
-            text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
-            lsg_menge = []
-            if auswahl_kugel == 'erste':
-                for element in ergebnisraum:
-                    if element[0] == auswahl[1]:
-                        lsg_menge.append(element)
-            else:
-                for element in ergebnisraum:
-                    if element[1] == auswahl[1]:
-                        lsg_menge.append(element)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
-        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
-        def vereinigung():
-            text = r' \mathrm{E_1 \cup E_2}'
-            lsg_menge = lsg_menge_1.copy()
-            for element2 in lsg_menge_2:
-                if element2 not in lsg_menge:
-                    lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        def geschnitten():
-            text = r' \mathrm{E_1 \cap E_2}'
-            lsg_menge = []
-            for element1 in lsg_menge_1:
-                for element2 in lsg_menge_2:
-                    if element2 == element1:
-                        lsg_menge.append(element2)
-            lsg = darstellung_mengen(lsg_menge)
-            return text, lsg_menge, lsg
-
-        vereinigung, lsg_vereinigung, lsg_menge_verein = vereinigung()
-        schnittmenge, lsg_schnittmenge, lsg_menge_schnitt = geschnitten()
-
-        aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                        r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
-                        + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-
-        # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
-        table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
-        table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
-                       str(lsg_menge_verein), '1P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
-                       str(lsg_menge_schnitt), '1P')
-        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
-        loesung.append(table1)
-        loesung.append(' \n\n\n')
-        i += 1
-
-    if 'c' in teilaufg:
-        # Wahrscheinlichkeit von Ereignissen berechnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        def aufgabe_1():
-            auswahl = random.choice([farbe_1, farbe_2])
-            if auswahl == farbe_1:
-                auswahl_anzahl = anzahl_1
-            else:
-                auswahl_anzahl = anzahl_2
-            punkte = 2
-            aufgabe_text = (r' \mathrm{Die~erste~Kugel~ist~' + auswahl + r'.} \hspace{12em} \\')
-            aufgabe_loesung = (r' \frac{' + gzahl(auswahl_anzahl) + '}{20} ~=~'
-                               + gzahl(auswahl_anzahl / 20 * 100) + r' \% \quad (2P) \\')
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        def aufgabe_2():
-            if anzahl_ziehen[0] == 2:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~einmal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} + 2 \cdot \frac{' + gzahl(anzahl_2)
-                                   + r' \cdot ' + gzahl(anzahl_1) + r'}{20 \cdot 19} ~=~ '
-                                   + gzahl(
-                            N((anzahl_2 * (anzahl_2 - 1) + 2 * anzahl_2 * anzahl_1) * 100 / (20 * 19), 3))
-                                   + r' \% \quad (3P) \\')
-                punkte = 3
-            else:
-                aufgabe_text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbe_2 + r'~wird~mind.~zweimal~gezogen.} \\')
-                aufgabe_loesung = (r' \frac{' + gzahl(anzahl_2) + r'}{20} \cdot \frac{' + gzahl(anzahl_2 - 1)
-                                   + r'}{19} \cdot \frac{' + gzahl(anzahl_2 - 2) + r'}{18} + 3 \cdot \frac{'
-                                   + gzahl(anzahl_2) + r' \cdot ' + gzahl(anzahl_2 - 1) + r' \cdot '
-                                   + gzahl(anzahl_1) + r'}{20 \cdot 19 \cdot 18} ~=~ '
-                                   + gzahl(N((anzahl_2 * (anzahl_2 - 1) * (anzahl_2 - 2)
-                                   + 3 * anzahl_2 * (anzahl_2 - 1) * anzahl_1) * 100 / (20 * 19 * 18), 3))
-                                   + r' \% \quad (4P) \\')
-                punkte = 4
-            return aufgabe_text, aufgabe_loesung, punkte
-
-        auswahl = np.random.choice([aufgabe_1, aufgabe_2], 2, False)
-        aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
-        aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
-        punkte = punkte_1 + punkte_2
-
-        aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
-                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_3: \quad }' + aufgabe_1
-                        + r' \mathrm{ \quad E_4: \quad }' + aufgabe_2))
-        loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \quad P(E_4) ~=~' + aufgabe_lsg_2))
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'd' in teilaufg:
-        # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-
-        wkt = Rational(anzahl_1,20)
-
-        aufgabe.extend((f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
-                       + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
-                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P) \\')
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'e' in teilaufg:
-        # Berechnung der Wahrscheinlichkeit mit Lottomodell
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
-                       + r'e)} ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
-                       + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl_2) + r' \\'
-                       + gzahl(anzahl_n - anzahl_k) + r' \\ ' + r' \end{pmatrix} } { \begin{pmatrix}'
-                       + str(20) + r' \\' + gzahl(anzahl_n) + r' \\ ' + r' \end{pmatrix} } ~=~ '
-                       + latex(N(binomial(anzahl_1,anzahl_k)
-                                 * binomial(anzahl_2,anzahl_n-anzahl_k)
-                                 / binomial(20,anzahl_n),3)) + r'~=~'
-                       + latex(N(binomial(anzahl_1,anzahl_k)
-                                 * binomial(anzahl_2,anzahl_n-anzahl_k)
-                                 / binomial(20,anzahl_n),3) * 100)
-                       + r'\% \quad (2P) \\')
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'f' in teilaufg:
-        # Berechnung der Wahrscheinlichkeit mit Lottomodell
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängeit von E1 und E2. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4P) \\')
-
-        liste_punkte.append(punkte)
-        i += 1
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=None, art='zmZ'):
     # Urnenmodell
 
@@ -741,19 +250,31 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
                         + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
                         + r' und \quad E_3: ~}' + ereignis_3))
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_1) ~=~' + wkt1_str + r' \\ P(E_2) ~=~' + wkt2_str
-                       + r' \\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \\ P(E_3) ~=~' + wkt3_str))
+                        r' \quad P(E_1) ~=~' + wkt1_str + r' \qquad P(E_2) ~=~' + wkt2_str
+                       + r' \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \qquad P(E_3) ~=~' + wkt3_str))
         punkte = pkt1 + pkt2 + pkt3 + pkt5
         liste_punkte.append(punkte)
         i += 1
 
     if 'd' in teilaufg:
-        # mit bedingte Wahrscheinlichkeit berechnen berechnen
+        # bedingte Wahrscheinlichkeit berechnen und überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        if wkt5/wkt2 == wkt1:
+            lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3P) \\'
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabängig} \quad (1P) \\')
+        else:
+            lsg = (r' \pm P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3P) \\'
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~abängig} \quad (1P) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + ')')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
+                       + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
+                       + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg)
         liste_punkte.append(punkte)
         i += 1
+
+    if 'e' or 'f' or 'g' or 'h' in teilaufg:
+        aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
 
 
     if 'e' in teilaufg:
@@ -761,19 +282,16 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
 
-        wkt = Rational(anzahl_1,20)
-
-        aufgabe.extend((f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n'))
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
+                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
-                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P) \\')
+                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P)')
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
-        # Berechnung der Wahrscheinlichkeit mit Lottomodell
+    if 'f' in teilaufg and art == 'zoZ':
+        # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
@@ -789,12 +307,35 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
                        + latex(N(binomial(anzahl_1,anzahl_k)
                                  * binomial(anzahl_2,anzahl_n-anzahl_k)
                                  / binomial(20,anzahl_n),3) * 100)
-                       + r'\% \quad (2P) \\')
+                       + r'\% \quad (2P)')
 
         liste_punkte.append(punkte)
         i += 1
 
+    if 'g' in teilaufg and art == 'zmZ':
+        # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
+                       + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
+                       + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
+                       + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
+                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
+                       + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
+                       + r' \% \quad (4P)')
+
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'h' in teilaufg and art == 'zmZ':
+        # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen
+        pass
+        # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def faires_spiel(nr):
     # Überprüfung eines Zufallsversuches (zweimal Würfeln) auf "faires Spiel"
 
@@ -996,7 +537,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
                         f'wobei sich die Zeichen {wiederholung} wiederholen dürfen. \n'
                         'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen und Sonderzeichen 33 Zeichen \n\n',
                         str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Kombinationen für ein Passwort. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P) \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -1010,7 +551,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
                                                 ' zum Ausprobieren aller Kombinationen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad t ~=~ \frac{' + latex(N(ergebnis,3)) + r'}{ '
                        + latex(N(grafikkarten[auswahl_g][2],3)) + r' \frac{1}{s} } ~=~'
-                       + latex(zeit) + r's \quad (2P) \\')
+                       + latex(zeit) + r's \quad (2P)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -1047,7 +588,7 @@ def lotto_modell_01(nr):
                + r'~=~' + latex(N(binomial(defekte, ziehungen_defekt)
                                   * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
                                   / binomial(anzahl, ziehungen), 3) * 100)
-               + r'\% \quad (3P) \\']
+               + r'\% \quad (3P)']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
