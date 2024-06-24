@@ -259,7 +259,10 @@ def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
     return omega
 
 
-def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
+def wkt_baumdiagramm(menge_aufg, bez1='A', anz1=10, anz2=10, art='zmZ'):
+    menge = menge_aufg.copy()
+    print(menge_aufg)
+    print(menge)
     obermenge = []
     for tubel in menge:
         tubel.sort()
@@ -271,7 +274,9 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
         obermenge.append(teilmenge)
         if len(menge) == 1:
             obermenge.append([menge[-1]])
-    print(obermenge)
+    # print(obermenge)
+    print(menge_aufg)
+    print(menge)
     wkt = ''
     ergebnis = 0
     for elements in obermenge:
@@ -279,6 +284,8 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
             pass
         elif len(elements) == 1 and not elements == obermenge[0]:
             wkt = wkt + '+'
+        elif elements == obermenge[0] and len(elements) > 1:
+            wkt = wkt + latex(len(elements)) + r' \cdot '
         else:
             wkt = wkt + vorz_str(len(elements)) + r' \cdot '
         i = 1
@@ -289,14 +296,14 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
         a1 = anz1
         a2 = anz2
         for string in elements[0]:
-            print(string)
-            print(a1)
+            # print(string)
+            # print(a1)
             if i == len(elements[0]):
                 if string == bez1:
-                    zaehler = zaehler + gzahl(a1) + '}'
+                    zaehler = zaehler + gzahl(a1)
                     erg_zaehler = erg_zaehler * a1
                 else:
-                    zaehler = zaehler + gzahl(a2) + '}'
+                    zaehler = zaehler + gzahl(a2)
                     erg_zaehler = erg_zaehler * a2
                 nenner = nenner + gzahl(a1 + a2)
                 erg_nenner = erg_nenner * (a1+a2)
@@ -317,15 +324,19 @@ def wkt_berechnen(menge, bez1='A', anz1=10, bez2='B', anz2=10, art='zmZ'):
                     a2 -= 1
             i += 1
         wkt = wkt + r' \frac{' + zaehler + '}{' + nenner + '}'
-        print(erg_zaehler)
-        print(erg_nenner)
+        # print(erg_zaehler)
+        # print(erg_nenner)
         ergebnis = ergebnis + len(elements)*Rational(erg_zaehler,erg_nenner)
-        print(ergebnis)
-    punkte = len(obermenge)
-    wkt = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r') \\'
-    return wkt, punkte
+        # print(ergebnis)
+    punkte = len(obermenge) + 1
+    wkt_erg = ergebnis
+    wkt_str = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r') \\'
+    if len(obermenge) == 0:
+        wkt_str = r'0 \% \quad (1P) \\'
 
-print(wkt_berechnen(ergebnisraum_zmZ(2, farbe1='W', farbe2='S'), bez1='W', anz1=5, bez2='S', anz2=15, art='zmZ'))
+    return wkt_erg, wkt_str, punkte
+
+# print(wkt_baumdiagramm(ergebnisraum_zmZ(2, farbe1='W', farbe2='S'), bez1='W', anz1=5, anz2=15, art='zmZ'))
 # Funktionen zur Analysis
 
 def faktorliste(p, q, n):

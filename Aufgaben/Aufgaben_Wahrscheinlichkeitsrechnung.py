@@ -566,13 +566,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
     farben_kuerzel_2 = farben_kuerzel[auswahl_farbe[1]]
     anzahl_2 = 20 - anzahl_1
     if art == 'zoZ':
-        ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2,
-                                        farbe1=farben_kuerzel[auswahl_farbe[0]],
-                                        farbe2=farben_kuerzel[auswahl_farbe[1]])
+        ergebnisraum = ergebnisraum_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, farbe1=farben_kuerzel_1,
+                                        farbe2=farben_kuerzel_2)
     else:
-        ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0],
-                                        farbe1=farben_kuerzel[auswahl_farbe[0]],
-                                        farbe2=farben_kuerzel[auswahl_farbe[1]])
+        ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farben_kuerzel_1, farbe2=farben_kuerzel_2)
+    # print(ergebnisraum)
     # zwischenergebnisse für teilaufgaben
     anzahl_n = anzahl_1 + nzahl(2, 3)
     anzahl_k = anzahl_1 - nzahl(1, 2)
@@ -591,17 +589,22 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         for element in ergebnisraum:
             i = 0
             for ergebnis in element:
-                if ergebnis == farben_kuerzel[auswahl_farbe[0]]:
+                if ergebnis == farben_kuerzel_1:
                     i += 1
             if i == p:
                 lsg_menge.append(element)
+        # print(ergebnisraum)
+        # print(lsg_menge)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg
+        return text, lsg_menge, lsg, wkt, wkt_str, pkt
+    # print(ereig_1())
 
     def ereig_2():
-        auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
-                                 [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
+        auswahl = random.choice([[farbe_1, farben_kuerzel_1],
+                                 [farbe_2, farben_kuerzel_2]])
         auswahl_kugel = random.choice(['erste', 'zweite'])
+        auswahl_kugel = 'erste'
         text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
         lsg_menge = []
         if auswahl_kugel == 'erste':
@@ -612,8 +615,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
             for element in ergebnisraum:
                 if element[1] == auswahl[1]:
                     lsg_menge.append(element)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg
+        return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
     def ereig_3():
         auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
@@ -626,8 +630,15 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.} \\')
             lsg_menge = ergebnisraum.copy()
             lsg_menge.remove([auswahl[1], auswahl[1]])
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg
+        return text, lsg_menge, lsg, wkt, wkt_str, pkt
+
+
+    # Auswahl für Aufgabe b, c und d
+    ereignis_1, menge_1, lsg_1, wkt1, wkt1_str, pkt1 = ereig_1()
+    ereignis_2, menge_2, lsg_2, wkt2, wkt2_str, pkt2 = ereig_2()
+    ereignis_3, menge_3, lsg_3, wkt3, wkt3_str, pkt3 = ereig_3()
 
     def vereinigung(menge1, menge2, bez1='E_1', bez2='E_2'):
         text = r' \mathrm{' + bez1 + r' \cup ' + bez2 + '}'
@@ -635,8 +646,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         for element2 in menge2:
             if element2 not in lsg_menge:
                 lsg_menge.append(element2)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg
+        return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
     def geschnitten(menge1, menge2, bez1='E_1', bez2='E_2'):
         text = r' \mathrm{' + bez1 + r' \cap ' + bez2 + '}'
@@ -645,10 +657,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
             for element2 in menge2:
                 if element2 == element1:
                     lsg_menge.append(element2)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
         lsg = darstellung_mengen(lsg_menge)
-        return text, lsg_menge, lsg
+        return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
-
+    # Auswahl für Aufgabe b, c und d
+    vereinigung, menge_verein, lsg_vereinigung, wkt4, wkt4_str, pkt4 = vereinigung(menge_1, menge_2, 'E_1', 'E_2')
+    schnittmenge, menge_schnitt, lsg_schnittmenge, wkt5, wkt5_str, pkt5 = geschnitten(menge_1, menge_2, 'E_1', 'E_2')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
@@ -691,18 +706,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        auswahl = np.random.choice((ereig_1,ereig_2, ereig_3), 2, False)
-        print(auswahl)
-
-        ereignis_1, lsg_menge_1, lsg_1 = ereig_1()
-        ereignis_2, lsg_menge_2, lsg_2 = ereig_2()
-
-
-
-
-        vereinigung, lsg_vereinigung, lsg_menge_verein = vereinigung()
-        schnittmenge, lsg_schnittmenge, lsg_menge_schnitt = geschnitten()
-
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
@@ -712,10 +715,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
         table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
         table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cup E2: $')),
-                       str(lsg_menge_verein), '1P')
-        table1.add_row(MultiColumn(2, align='r', data= NoEscape(r'$E1 \cap E2: $')),
-                       str(lsg_menge_schnitt), '1P')
+        table1.add_row(MultiColumn(2, align='r', data=NoEscape(r'$E1 \cup E2: $')),
+                       str(lsg_vereinigung), '1P')
+        table1.add_row(MultiColumn(2, align='r', data=NoEscape(r'$E1 \cap E2: $')),
+                       str(lsg_schnittmenge), '1P')
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
         loesung.append(' \n\n\n')
@@ -723,24 +726,29 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
 
     if 'c' in teilaufg:
         # Wahrscheinlichkeit von Ereignissen berechnen
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        auswahl = np.random.choice([ereig_1, ereig_2, ereig_3], 2, False)
-        aufgabe_1, aufgabe_lsg_1, punkte_1 = auswahl[0]()
-        aufgabe_2, aufgabe_lsg_2, punkte_2 = auswahl[1]()
-        punkte = punkte_1 + punkte_2
 
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
-                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1: \quad }' + aufgabe_1
-                        + r' \mathrm{ \quad E_2: \quad }' + aufgabe_2))
+                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
+                        + r' und \quad E_3: ~}' + ereignis_3))
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_3) ~=~' + aufgabe_lsg_1 + r' \quad P(E_4) ~=~' + aufgabe_lsg_2))
-
+                        r' \quad P(E_1) ~=~' + wkt1_str + r' \\ P(E_2) ~=~' + wkt2_str
+                       + r' \\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \\ P(E_3) ~=~' + wkt3_str))
+        punkte = pkt1 + pkt2 + pkt3 + pkt5
         liste_punkte.append(punkte)
         i += 1
 
     if 'd' in teilaufg:
+        # mit bedingte Wahrscheinlichkeit berechnen berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + ')')
+        liste_punkte.append(punkte)
+        i += 1
+
+
+    if 'e' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -756,7 +764,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         # Berechnung der Wahrscheinlichkeit mit Lottomodell
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -779,7 +787,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 def faires_spiel(nr):
     # Überprüfung eines Zufallsversuches (zweimal Würfeln) auf "faires Spiel"
 
