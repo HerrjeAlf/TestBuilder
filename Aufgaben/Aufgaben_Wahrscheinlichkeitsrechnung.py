@@ -570,7 +570,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
                                         farbe2=farben_kuerzel_2)
     else:
         ergebnisraum = ergebnisraum_zmZ(anzahl_ziehen[0], farbe1=farben_kuerzel_1, farbe2=farben_kuerzel_2)
-    # print(ergebnisraum)
     # zwischenergebnisse für teilaufgaben
     anzahl_n = anzahl_1 + nzahl(2, 3)
     anzahl_k = anzahl_1 - nzahl(1, 2)
@@ -593,12 +592,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
                     i += 1
             if i == p:
                 lsg_menge.append(element)
-        # print(ergebnisraum)
-        # print(lsg_menge)
-        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2,art=art)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                             anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
-    # print(ereig_1())
 
     def ereig_2():
         auswahl = random.choice([[farbe_1, farben_kuerzel_1],
@@ -615,7 +612,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
             for element in ergebnisraum:
                 if element[1] == auswahl[1]:
                     lsg_menge.append(element)
-        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                             anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
@@ -624,13 +622,21 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
                                  [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
         if stufen == 2:
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] + r'~wird~mind.~einmal~gezogen.} \\')
-            lsg_menge = ergebnisraum.copy()
-            lsg_menge.remove([auswahl[1], auswahl[1]])
+            p = 1
         elif stufen == 3:
             text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.} \\')
             lsg_menge = ergebnisraum.copy()
-            lsg_menge.remove([auswahl[1], auswahl[1]])
-        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
+            p = 2
+        lsg_menge = []
+        for element in ergebnisraum:
+            i = 0
+            for ergebnis in element:
+                if ergebnis == auswahl[1]:
+                    i += 1
+            if i >= p:
+                lsg_menge.append(element)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                             anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
@@ -646,7 +652,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         for element2 in menge2:
             if element2 not in lsg_menge:
                 lsg_menge.append(element2)
-        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                             anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
@@ -657,7 +664,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
             for element2 in menge2:
                 if element2 == element1:
                     lsg_menge.append(element2)
-        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, anz1=anzahl_1, anz2=anzahl_2, art=art)
+        wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                             anz1=anzahl_1, anz2=anzahl_2,art=art)
         lsg = darstellung_mengen(lsg_menge)
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 

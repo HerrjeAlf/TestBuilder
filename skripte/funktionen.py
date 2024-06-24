@@ -259,24 +259,27 @@ def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
     return omega
 
 
-def wkt_baumdiagramm(menge_aufg, bez1='A', anz1=10, anz2=10, art='zmZ'):
-    menge = menge_aufg.copy()
-    print(menge_aufg)
-    print(menge)
+def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'):
     obermenge = []
-    for tubel in menge:
-        tubel.sort()
-    for tubel in menge:
+    menge = []
+    for element in menge_aufg:
+        element_neu = []
+        for tubel in element:
+            if tubel == bez1:
+                element_neu.append(bez1)
+            else:
+                pass
+        while len(element) > len(element_neu):
+            element_neu.append(bez2)
+        menge.append(element_neu)
+    for element in menge:
         teilmenge = []
-        while tubel in menge:
-            teilmenge.append(tubel)
-            menge.remove(tubel)
+        while element in menge:
+            teilmenge.append(element)
+            menge.remove(element)
         obermenge.append(teilmenge)
         if len(menge) == 1:
             obermenge.append([menge[-1]])
-    # print(obermenge)
-    print(menge_aufg)
-    print(menge)
     wkt = ''
     ergebnis = 0
     for elements in obermenge:
@@ -333,10 +336,9 @@ def wkt_baumdiagramm(menge_aufg, bez1='A', anz1=10, anz2=10, art='zmZ'):
     wkt_str = wkt + '~=~' + latex(N(ergebnis*100,3)) + r' \% \quad (' + str(punkte) + r') \\'
     if len(obermenge) == 0:
         wkt_str = r'0 \% \quad (1P) \\'
-
     return wkt_erg, wkt_str, punkte
 
-# print(wkt_baumdiagramm(ergebnisraum_zmZ(2, farbe1='W', farbe2='S'), bez1='W', anz1=5, anz2=15, art='zmZ'))
+# print(wkt_baumdiagramm(ergebnisraum_zmZ(2, farbe1='B', farbe2='R'), bez1='B', bez2='R', anz1=5, anz2=15, art='zmZ'))
 # Funktionen zur Analysis
 
 def faktorliste(p, q, n):
