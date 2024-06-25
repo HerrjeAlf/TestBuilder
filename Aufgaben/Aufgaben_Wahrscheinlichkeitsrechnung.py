@@ -130,10 +130,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
                                  [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
         if stufen == 2:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] + r'~wird~mind.~einmal~gezogen.} \\')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] + r'~wird~mind.~einmal~gezogen.}')
             p = 1
         elif stufen == 3:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.} \\')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.}')
             lsg_menge = ergebnisraum.copy()
             p = 2
         lsg_menge = []
@@ -262,10 +262,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         punkte = 4
         if wkt5/wkt2 == wkt1:
             lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3P) \\'
-                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabängig} \quad (1P) \\')
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabhängig} \quad (1P)')
         else:
-            lsg = (r' \pm P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3P) \\'
-                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~abängig} \quad (1P) \\')
+            lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3P) \\'
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1P)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
                        + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
@@ -274,7 +274,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         i += 1
 
     if 'e' or 'f' or 'g' or 'h' in teilaufg:
-        aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
+        if art == 'zoZ':
+            aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
+        if art == 'zmZ':
+            aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n')
 
 
     if 'e' in teilaufg:
@@ -330,7 +333,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         i += 1
 
     if 'h' in teilaufg and art == 'zmZ':
-        # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen
+        # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
         pass
         # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
