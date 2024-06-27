@@ -59,7 +59,6 @@ def Graph(a, b, xwert, f, n, name):
     plt.axis([-6, 6, -6, 6])
     plt.plot(a, b, linewidth=2)
     return plt.savefig(name, dpi=200)
-    return plt.savefig(name, dpi=200)
 
 
 # Berechnung für die Aufgaben
