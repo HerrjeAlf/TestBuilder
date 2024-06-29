@@ -15,20 +15,23 @@ in Aufgaben Analysis:
 - Kurvendiskussion mit Polynom_02 des 4. Grades anfertigen
 - Kurvendiskussion einer weiteren Exponentialfunktion anfertigen
 
-
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm_bernoulli - Aufgabe e zur kummulierten Bernoullikette erstellen
-- Baumdiagramm zmZ und zoZ zusammenführen
-
 
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 
 funktionen
-- ergebnissmenge_zoZ überprüfen und ggf. fertig stellen
+- ergebnismenge_zoZ überprüfen und ggf. fertigstellen
+
+Physik
+- Test für Physik Klasse 7 (Thermodynamik, Kräfte und Energie) und 8 (Spannung, Strom, Schaltungen usw.) erstellen
 
 
 langfristig:
-
 - GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
+
+neue Projekte
+- Planung Stundenplan mit Graphentheorie in Python programmieren
+- Mathe KI von Google (in Arbeit) zur automatischen Korrektur von Test/Klausuren anpassen

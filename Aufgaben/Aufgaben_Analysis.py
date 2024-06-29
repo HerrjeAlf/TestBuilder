@@ -101,6 +101,142 @@ def rechenregeln_integrale(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
+
+def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
+    # Aufgabe zu geometrischen und arithmetischen Zahlenfolgen
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    # Berechnungen der Zahlenfolgen
+    start_arithm_folge = zzahl(1, 10)
+    start_geom_folge = nzahl(1, 10)
+    arithm_folge_d = nzahl(2, 10)
+    basis = zzahl(2, 10)
+    if nzahl(1, 2) == 1:
+        p = random.choice([2, 4, 5, 8, 10])
+        geom_folge_q = Rational(1, p)
+    else:
+        geom_folge_q = random.choice([2, 3, 4, 5])
+    bel_vorschrift = [start_arithm_folge + basis ** x,
+                      start_arithm_folge - 1 / x,
+                      start_arithm_folge / (x + arithm_folge_d),
+                      x ** arithm_folge_d]
+    bel_vorschrift_str = [str(start_arithm_folge) + r'+ \left( ' + str(basis) + r' \right) ^{n}',
+                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
+                          r'n^{' + str(arithm_folge_d) + '}']
+    ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
+    a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
+                start_geom_folge * geom_folge_q ** (x - 1),
+                bel_vorschrift[ausw_folge]]
+    a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
+                    latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
+                    bel_vorschrift_str[ausw_folge]]
+    liste_folgen = [ 'arithmetisch', 'geometrisch', 'keine Vorschrift']
+    exit(f"ausw_folgenart muss None, oder 'arithmetisch', 'geometrisch', 'keine Vorschrift' sein")\
+        if ausw_folgenart not in liste_folgen else ausw_folgenart
+    auswahl_folgenart = liste_folgen.index(ausw_folgenart)
+    a_n = a_n_alle[auswahl_folgenart]
+    a_n_str = a_n_str_alle[auswahl_folgenart]
+    data = [a_n.subs(x, i) for i in range(1, 5)]
+    data_lsg = [a_n.subs(x, i) for i in range(1, 8)]
+
+    # Aufgaben
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge:',
+               latex(data[0]) + r', \quad ' + latex(data[1]) + r', \quad ' + latex(data[2]) + r', \quad ' +
+               latex(data[3]) + r', ~ ...  \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1])
+                       + ',~' + latex(data_lsg[2]) + ',~' + latex(data_lsg[3]) + r',~' + latex(data_lsg[4])
+                       + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3P)')
+        liste_punkte.append(3)
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
+                                                'Zahlenfolge handelt. \n\n')
+        if auswahl_folgenart == 0:
+            table_b = Tabular('c|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(2, 5)
+            table_b.add_row('Liste der Differenz aus den Folgengliedern', 'Werte', 'a1-a0', 'a2-a1', 'a3-a2')
+            table_b.add_hline(2, 5)
+            table_b.add_row('', 'Ergebnis', data[1] - data[0], data[2] - data[1], data[3] - data[2])
+            table_b.add_hline(2, 5)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
+                                                    r'~ist~es~eine~arithmetische~Folge~mit~d~=~'
+                           + str(arithm_folge_d) + r'.} \quad (3P)')
+            loesung.append(table_b)
+
+        if auswahl_folgenart == 1:
+            table_b = Tabular('c|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(2, 5)
+            table_b.add_row('Liste der Quotienten aus den Folgengliedern ', 'Werte', 'a1/a0', 'a2/a1', 'a3/a2')
+            table_b.add_hline(2, 5)
+            table_b.add_row('', 'Ergebnis', Rational(data[1], data[0]), Rational(data[2] / data[1]),
+                            Rational(data[3] / data[2]))
+            table_b.add_hline(2, 5)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
+                           + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + str(geom_folge_q) + r'.} \quad (3P)')
+            loesung.append(table_b)
+        if auswahl_folgenart == 2:
+            table_b = Tabular('c|c|c|c|c|c|', row_height=1.2)
+            table_b.add_hline(2, 6)
+            table_b.add_row('Liste der Differenzen und Qoutienten aus den ', 'Werten',
+                            'a1-a0', 'a2-a1', 'a1/a0', 'a2/a1')
+            table_b.add_hline(2, 6)
+            table_b.add_row('', 'Ergebnis', data[1] - data[0], data[2] - data[1], N(data[1] / data[0], 3),
+                            N(data[2] / data[1], 4))
+            table_b.add_hline(2, 6)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
+                                                    r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
+                                                    r'\quad (3P)')
+            loesung.append(table_b)
+        liste_punkte.append(3)
+        i += 1
+
+    if 'c' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
+        liste_punkte.append(3)
+        i += 1
+
+    if 'd' in teilaufg and auswahl_folgenart < 2:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if auswahl_folgenart == 0:
+            a_unten = nzahl(1, 50)
+            a_oben = nzahl(51, 100)
+            n = a_oben - a_unten
+            wert_a_unten = a_n.subs(x, a_unten)
+            wert_a_oben = a_n.subs(x, a_oben)
+            aufgabe.append(str(liste_teilaufg[i])
+                           + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
+            ergebnis = n * (wert_a_oben + wert_a_unten) / 2
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
+                           str(a_oben) + r'} ~ a_n ~=~ ' + str(n) + r' \cdot \frac{~' + str(wert_a_unten) +
+                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+        else:
+            a_unten = nzahl(11, 20)
+            a_oben = nzahl(21, 30)
+            n = a_oben - a_unten
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} '
+                                                    f'bis n={a_oben}. \n\n')
+            ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
+                           str(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{'
+                           + str(n + 1) + '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5))
+                           + r' \quad (3P) \\')
+        liste_punkte.append(3)
+        i += 1
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
     # Änderungsrate
 
@@ -1904,9 +2040,9 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         liste_punkte.append(4)
         i += 1
 
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+    # noch Teilaufgabe mit Flächenberechnung ergänzen
 
-# noch Teilaufgabe mit Flächenberechnung ergänzen
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 2

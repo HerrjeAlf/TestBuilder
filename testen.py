@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [sicheres_passwort(1)]
+    aufgaben_seite1 = [folgen(1, ['a', 'b', 'c', 'd'], ausw_folgenart='keine Vorschrift')]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
