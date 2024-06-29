@@ -2,6 +2,12 @@ allgemein:
 - alte Skripte in neue Form anpassen
 - Vorlage Arbeitsblatt erstellen
 
+Berechnungen:
+ - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus
+ - kleine Kurvendiskussion
+ - Graphen zeichnen
+
+
 Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte

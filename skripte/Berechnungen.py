@@ -7,13 +7,8 @@ from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPag
 from pylatex.utils import bold
 from sympy import *
 from random import shuffle
-
+from skripte.funktionen import *
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
-def zzahl(p, q):
-    return random.choice([-1, 1]) * random.randint(p, q)
-
-def nzahl(p, q):
-    return random.randint(p, q)
 
 def Ableitungen(fkt):
     fkt_1 = diff(fkt,x,1)
