@@ -133,6 +133,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                     latex(start_geom_folge) + r' \cdot ' + latex(geom_folge_q) + r'^{n-1}',
                     bel_vorschrift_str[ausw_folge]]
     liste_folgen = [ 'arithmetisch', 'geometrisch', 'keine Vorschrift']
+    ausw_folgenart = random.choice(liste_folgen) if ausw_folgenart == None else ausw_folgenart
     exit(f"ausw_folgenart muss None, oder 'arithmetisch', 'geometrisch', 'keine Vorschrift' sein")\
         if ausw_folgenart not in liste_folgen else ausw_folgenart
     auswahl_folgenart = liste_folgen.index(ausw_folgenart)
@@ -235,6 +236,75 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                            + r' \quad (3P) \\')
         liste_punkte.append(3)
         i += 1
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def grenzwerte_folge(nr, ausw_folgenart=None):
+    # Berechnung des Grenzwertes von Zahlenfolgen
+    liste_bez = [f'{nr}']
+    start_arithm_folge = zzahl(2, 10)
+    start_geom_folge = nzahl(2, 10)
+    arithm_folge_d = nzahl(2, 10)
+    basis = zzahl(2, 10)
+    if nzahl(1, 2) == 1:
+        p = random.choice([2, 4, 5, 8, 10])
+        geom_folge_q = Rational(1, p)
+    else:
+        geom_folge_q = random.choice([2, 3, 4, 5])
+    bel_vorschrift = [start_arithm_folge + basis ** x,
+                      start_arithm_folge - 1 / x,
+                      start_arithm_folge / (x + arithm_folge_d),
+                      x ** arithm_folge_d]
+    bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
+                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
+                          r'n^{' + str(arithm_folge_d) + '}']
+    ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
+    a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
+                start_geom_folge * geom_folge_q ** (x - 1),
+                bel_vorschrift[ausw_folge]]
+    a_n_str_alle = [latex(start_arithm_folge) + r'~+~ (n-1) \cdot ~' + latex(arithm_folge_d),
+                    latex(start_geom_folge) + r' \cdot \left(' + latex(geom_folge_q) + r' \right) ^{n-1}',
+                    bel_vorschrift_str[ausw_folge]]
+    liste_folgen = [ 'arithmetisch', 'geometrisch', 'keine Vorschrift']
+    ausw_folgenart = random.choice(liste_folgen) if ausw_folgenart == None else ausw_folgenart
+    exit(f"ausw_folgenart muss None, oder 'arithmetisch', 'geometrisch', 'keine Vorschrift' sein")\
+        if ausw_folgenart not in liste_folgen else ausw_folgenart
+    auswahl_folgenart = liste_folgen.index(ausw_folgenart)
+    a_n = a_n_alle[auswahl_folgenart]
+    a_n_str = a_n_str_alle[auswahl_folgenart]
+    print(a_n)
+    grenzwert = limit(a_n, x, oo)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Berechne den Grenzwert der folgende Bildungsvorschrift:',
+               r'a_{n}~=~' + a_n_str]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    loesung.append(r' \lim \limits_{n \to \infty } ' + a_n_str + '~=~'
+                   + latex(grenzwert) + r' \quad (2P)')
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    liste_punkte = [2]
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def grenzwerte_funktionen(nr):
+    # Berechnung des Grenzwertes von Funktionen
+    liste_bez = [f'{nr}']
+    faktor = zzahl(1, 10)
+    polstelle = zzahl(1, 8)
+    zaehler = collect(expand(faktor * (x ** 2 - polstelle ** 2)),x)
+    nenner = x + (-1 * polstelle)
+    Bruch = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
+    Bruch_gekuerzt = (r'~=~ \lim \limits_{x \to ' + str(polstelle) + '} ~ ' + vorz_v_aussen(faktor, r' \cdot (x')
+                      + vorz_v_innen(polstelle,')'))
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    aufgabe.extend(('Bestimmen Sie den Grenzwert durch Termumformungen.',
+                    r' \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch))
+    loesung.append(r'\quad \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch +
+                   r'~=~ \lim \limits_{x \to ' + gzahl(polstelle) + r'} ~ \frac{' + vorz_v_aussen(faktor,'(x') +
+                   vorz_v_innen(polstelle, r') \cdot (x~') + vorz_v_innen(-1 * polstelle, ')}{') + latex(nenner) + '}' +
+                   Bruch_gekuerzt + r'~=~' + gzahl(faktor * (polstelle * 2)) + r'\quad (4P) \\')
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
