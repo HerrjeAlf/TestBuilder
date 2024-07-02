@@ -110,7 +110,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         auswahl = random.choice([[farbe_1, farben_kuerzel_1],
                                  [farbe_2, farben_kuerzel_2]])
         auswahl_kugel = random.choice(['erste', 'zweite'])
-        auswahl_kugel = 'erste'
+        # auswahl_kugel = 'erste'
         text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
         lsg_menge = []
         if auswahl_kugel == 'erste':
@@ -246,8 +246,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
                         + r' und \quad E_3: ~}' + ereignis_3))
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_1) ~=~' + wkt1_str + r' \qquad P(E_2) ~=~' + wkt2_str
-                       + r' \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \qquad P(E_3) ~=~' + wkt3_str))
+                        r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'P) \qquad P(E_2) ~=~' + wkt2_str
+                        + r' \quad (' + gzahl(pkt2) + r'P) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \quad ('
+                        + gzahl(pkt5) + r'P) \qquad P(E_3) ~=~' + wkt3_str + r' \quad (' + gzahl(pkt3) + r'P)'))
         punkte = pkt1 + pkt2 + pkt3 + pkt5
         liste_punkte.append(punkte)
         i += 1
@@ -272,32 +273,48 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'e' in teilaufg:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {farbe_2}. \n\n',
+        punkte = 2
+        auswahl = random.choice([[farbe_1, farben_kuerzel_1],
+                                 [farbe_2, farben_kuerzel_2]])
+        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {auswahl[0]}. \n\n',
                         str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
                                                  f' zeichen Sie das zugehörige Histogramm. \n\n'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
-        spalten = 'c|c|c|c|'
-        for p in range(stufen):
+        spalten = 'c|c|'
+        for p in range(stufen+1):
             spalten += 'c|'
-        print(spalten)
-        liste_x = ['Wahrscheinlichkeitsverteilung von X ', NoEscape(r'$ x_i $'), '', '']
-        liste_x.extend(['' for x in range(stufen)])
-        print(liste_x)
-        liste_wkt = ['', NoEscape(r'$ P(X=x_i) $'), '', '']
-        liste_wkt.extend(['' for x in range(stufen)])
-        print(liste_wkt)
+        wkt_berechn = ''
+        x_werte = []
+        y_werte = []
+        liste_x = ['Wahrscheinlichkeitsverteilung von X ', NoEscape(r'$ x_i $')]
+        liste_wkt = ['', NoEscape(r'$ P(X=x_i) $')]
+        for zahl in list(range(stufen+1)):
+            lsg_menge_x = []
+            for element in ergebnisraum:
+                i = 0
+                for tubel in element:
+                    if tubel == auswahl[1]:
+                        i += 1
+                if i == zahl:
+                    lsg_menge_x.append(element)
+            wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge_x, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
+                                                 anz1=anzahl_1, anz2=anzahl_2, art=art)
+            liste_x.append(gzahl(zahl))
+            liste_wkt.append(gzahl(N(wkt,2)))
+            wkt_berechn = wkt_berechn + r' P(X=' + str(zahl) + ') ~=~' + wkt_str + r' \quad (1P) \\'
+            punkte += 1
         table1 = Tabular(spalten, row_height=1.2)
         table1.add_hline(2)
         table1.add_row(liste_x)
         table1.add_hline(2)
         table1.add_row(liste_wkt)
         table1.add_hline(2)
-        loesung.append(str(liste_teilaufg[i]) + r') \quad  \quad (2P) \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' mathrm{Tabelle~(2P)} \\')
         loesung.append(table1)
-        liste_punkte.append(2)
+        liste_punkte.append(punkte)
         i += 1
+
     if 'f' in teilaufg:
         pass
         # Erwartungswert einer Zufallsgröße
