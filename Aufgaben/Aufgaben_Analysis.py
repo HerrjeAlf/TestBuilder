@@ -151,6 +151,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Zahlenfolge um weitere Glieder ergänzen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1])
@@ -160,6 +161,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         i += 1
 
     if 'b' in teilaufg:
+        # Art der Zahlenfolge zuordnen (arithmetisch oder geometrisch)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
                                                 'Zahlenfolge handelt. \n\n')
@@ -203,6 +205,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         i += 1
 
     if 'c' in teilaufg:
+        # Bildungsgesetz der Zahlenfolge formulieren
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
@@ -565,7 +568,6 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
         liste_punkte.append(punkte)
         i += 1
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 
 def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     # Grafisches Ableiten

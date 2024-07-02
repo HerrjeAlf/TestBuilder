@@ -26,7 +26,8 @@ funktionen
 - ergebnismenge_zoZ überprüfen und ggf. fertigstellen
 
 Physik
-- Test für Physik Klasse 7 (Thermodynamik, Kräfte und Energie) und 8 (Spannung, Strom, Schaltungen usw.) erstellen
+- Test für Physik Klasse 7 (Thermodynamik, Kräfte und Energie)
+- Test für Physik Klass8 8 (Spannung, Strom, Schaltungen usw.) erstellen
 
 
 langfristig:
