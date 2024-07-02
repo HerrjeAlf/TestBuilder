@@ -16,7 +16,8 @@ in Aufgaben Analysis:
 - Kurvendiskussion einer weiteren Exponentialfunktion anfertigen
 
 in Aufgaben Wahrscheinlichkeit:
-- Baumdiagramm_bernoulli - Aufgabe e zur kummulierten Bernoullikette erstellen
+- Baumdiagramm - Aufgabe k zur kummulierten Bernoullikette erstellen
+- Baumdiagramm - Aufgabe g, h, i erstellen
 
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen

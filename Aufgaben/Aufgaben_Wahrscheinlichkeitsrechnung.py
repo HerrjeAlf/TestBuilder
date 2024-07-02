@@ -6,7 +6,7 @@ from skripte.funktionen import *
 from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
-liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
 nr_aufgabe = 0
 
 def begriffe_wahrscheinlichkeit(nr, anzahl=1):
@@ -49,7 +49,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=None, art='zmZ'):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ'):
     # Urnenmodell
 
     liste_punkte = []
@@ -273,7 +273,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' or 'f' or 'g' or 'h' in teilaufg:
+    if 'e' or 'f' or 'j' or 'k' in teilaufg:
         if art == 'zoZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
         if art == 'zmZ':
@@ -315,7 +315,17 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_punkte.append(punkte)
         i += 1
 
-    if 'g' in teilaufg and art == 'zmZ':
+    if 'g' in teilaufg:
+        pass
+        # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
+    if 'h' in teilaufg:
+        pass
+        # Erwartungswert einer Zufallsgröße
+    if 'i' in teilaufg:
+        pass
+        # Varianz und Standardabweichung einer Zufallsgröße
+
+    if 'j' in teilaufg and art == 'zmZ':
         # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -332,7 +342,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], stufen=N
         liste_punkte.append(punkte)
         i += 1
 
-    if 'h' in teilaufg and art == 'zmZ':
+    if 'k' in teilaufg and art == 'zmZ':
         # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
         pass
         # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
@@ -597,3 +607,10 @@ def lotto_modell_01(nr):
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def erwartungswert(nr, teilaufg=['a', 'b']):
+    # Aufgabe zur Zufallsgröße
+
+    # Aufgabe a: Wahrscheinlichkeitsverteilung einer Zufallsgröße
+    # Aufgabe b: Erwartungswert einer Zufallsgröße
+    # Aufgabe c: Varianz und Standardabweichung einer Zufallsgröße
