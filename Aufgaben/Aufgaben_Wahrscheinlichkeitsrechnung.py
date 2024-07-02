@@ -49,13 +49,13 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ'):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'],
+                 stufen=None, art='zmZ', zieh_aufg_g=None):
     # Urnenmodell
 
     liste_punkte = []
     liste_bez = []
     i = 0
-
     if stufen == None:
         anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
     elif stufen == 2:
@@ -219,14 +219,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'b' in teilaufg:
         # Ergebnismengen angeben
 
-        punkte = 6
-        liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+        liste_punkte.append(6)
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
         table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
@@ -243,9 +240,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'c' in teilaufg:
         # Wahrscheinlichkeit von Ereignissen berechnen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
                         + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
                         + r' und \quad E_3: ~}' + ereignis_3))
@@ -258,8 +254,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'd' in teilaufg:
         # bedingte Wahrscheinlichkeit berechnen und überprüfen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         if wkt5/wkt2 == wkt1:
             lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3P) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabhängig} \quad (1P)')
@@ -270,33 +266,69 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         loesung.append(str(liste_teilaufg[i]) + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
                        + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
                        + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg)
-        liste_punkte.append(punkte)
+        liste_punkte.append(4)
         i += 1
 
-    if 'e' or 'f' or 'j' or 'k' in teilaufg:
+
+    if 'e' in teilaufg:
+        # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {farbe_2}. \n\n',
+                        str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
+                                                 f' zeichen Sie das zugehörige Histogramm. \n\n'))
+        # Tabelle der Wahrscheinlichkeitsverteilung:
+        spalten = 'c|c|c|c|'
+        for p in range(stufen):
+            spalten += 'c|'
+        print(spalten)
+        liste_x = ['Wahrscheinlichkeitsverteilung von X ', NoEscape(r'$ x_i $'), '', '']
+        liste_x.extend(['' for x in range(stufen)])
+        print(liste_x)
+        liste_wkt = ['', NoEscape(r'$ P(X=x_i) $'), '', '']
+        liste_wkt.extend(['' for x in range(stufen)])
+        print(liste_wkt)
+        table1 = Tabular(spalten, row_height=1.2)
+        table1.add_hline(2)
+        table1.add_row(liste_x)
+        table1.add_hline(2)
+        table1.add_row(liste_wkt)
+        table1.add_hline(2)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad  \quad (2P) \\')
+        loesung.append(table1)
+        liste_punkte.append(2)
+        i += 1
+    if 'f' in teilaufg:
+        pass
+        # Erwartungswert einer Zufallsgröße
+    if 'g' in teilaufg:
+        pass
+        # Varianz und Standardabweichung einer Zufallsgröße
+
+
+    if len([element for element in teilaufg if element in ['h', 'i', 'j', 'k']]) > 0:
         if art == 'zoZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
         if art == 'zmZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n')
 
 
-    if 'e' in teilaufg:
+    if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
 
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P)')
-        liste_punkte.append(punkte)
+        liste_punkte.append(2)
         i += 1
 
-    if 'f' in teilaufg and art == 'zoZ':
+    if 'i' in teilaufg and art == 'zoZ':
         # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
@@ -312,23 +344,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                                  / binomial(20,anzahl_n),3) * 100)
                        + r'\% \quad (2P)')
 
-        liste_punkte.append(punkte)
+        liste_punkte.append(2)
         i += 1
-
-    if 'g' in teilaufg:
-        pass
-        # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
-    if 'h' in teilaufg:
-        pass
-        # Erwartungswert einer Zufallsgröße
-    if 'i' in teilaufg:
-        pass
-        # Varianz und Standardabweichung einer Zufallsgröße
 
     if 'j' in teilaufg and art == 'zmZ':
         # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
                        + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
@@ -339,7 +361,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
                        + r' \% \quad (4P)')
 
-        liste_punkte.append(punkte)
+        liste_punkte.append(4)
         i += 1
 
     if 'k' in teilaufg and art == 'zmZ':
@@ -607,10 +629,3 @@ def lotto_modell_01(nr):
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-def erwartungswert(nr, teilaufg=['a', 'b']):
-    # Aufgabe zur Zufallsgröße
-
-    # Aufgabe a: Wahrscheinlichkeitsverteilung einer Zufallsgröße
-    # Aufgabe b: Erwartungswert einer Zufallsgröße
-    # Aufgabe c: Varianz und Standardabweichung einer Zufallsgröße

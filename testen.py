@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [grenzwerte_funktionen(1)]
+    aufgaben_seite1 = [baumdiagramm(1,['a', 'b', 'c', 'd', 'e', 'f', 'g'], stufen=2, art='zoZ')]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
