@@ -85,6 +85,15 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if anzahl_n - anzahl_k > anzahl_2:
         anzahl_k = anzahl_n - anzahl_2
 
+    # Werte für Aufgabe g und h
+    x_werte = []
+    y_werte = []
+
+    def auswahl():
+        auswahl = random.choice([[farbe_1, farben_kuerzel_1],
+                                 [farbe_2, farben_kuerzel_2]])
+        return auswahl[0], auswahl[1]
+
     # definieren der Ereignisse
     def ereig_1():
         p = 1
@@ -107,19 +116,18 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
     def ereig_2():
-        auswahl = random.choice([[farbe_1, farben_kuerzel_1],
-                                 [farbe_2, farben_kuerzel_2]])
+        farbwahl, kuerzelwahl = auswahl()
         auswahl_kugel = random.choice(['erste', 'zweite'])
         # auswahl_kugel = 'erste'
-        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(auswahl[0]) + '}'
+        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(farbwahl) + '}'
         lsg_menge = []
         if auswahl_kugel == 'erste':
             for element in ergebnisraum:
-                if element[0] == auswahl[1]:
+                if element[0] == kuerzelwahl:
                     lsg_menge.append(element)
         else:
             for element in ergebnisraum:
-                if element[1] == auswahl[1]:
+                if element[1] == kuerzelwahl:
                     lsg_menge.append(element)
         wkt, wkt_str, pkt = wkt_baumdiagramm(lsg_menge, bez1=farben_kuerzel_1, bez2=farben_kuerzel_2,
                                              anz1=anzahl_1, anz2=anzahl_2,art=art)
@@ -127,20 +135,19 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         return text, lsg_menge, lsg, wkt, wkt_str, pkt
 
     def ereig_3():
-        auswahl = random.choice([[farbe_1, farben_kuerzel[auswahl_farbe[0]]],
-                                 [farbe_2, farben_kuerzel[auswahl_farbe[1]]]])
+        farbwahl, kuerzelwahl = auswahl()
         if stufen == 2:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] + r'~wird~mind.~einmal~gezogen.}')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbwahl + r'~wird~mind.~einmal~gezogen.}')
             p = 1
         elif stufen == 3:
-            text = (r' \mathrm{Die~Kugel~der~Farbe~' + auswahl[0] +r'~wird~mind.~zweimal~gezogen.}')
+            text = (r' \mathrm{Die~Kugel~der~Farbe~' + farbwahl +r'~wird~mind.~zweimal~gezogen.}')
             lsg_menge = ergebnisraum.copy()
             p = 2
         lsg_menge = []
         for element in ergebnisraum:
             i = 0
             for ergebnis in element:
-                if ergebnis == auswahl[1]:
+                if ergebnis == kuerzelwahl:
                     i += 1
             if i >= p:
                 lsg_menge.append(element)
@@ -185,7 +192,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
                f' Kugeln der Farbe {farbe_2}. ']
-    if 'a' or 'b' or 'c' in teilaufg:
+    if len(set(teilaufg).intersection(set(['a', 'b', 'c', 'd', 'e', 'f', 'g']))) > 0:
         aufgabe.append(f'Aus dieser Urne wird ohne Zurücklegen {anzahl_ziehen[1]} eine Kugel gezogen. \n\n')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -273,12 +280,12 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'e' in teilaufg:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr} {liste_teilaufg[i]}')
         pkt = 0
-        auswahl = random.choice([[farbe_1, farben_kuerzel_1],
-                                 [farbe_2, farben_kuerzel_2]])
-        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {auswahl[0]}. \n\n',
+        farbwahl, kuerzelwahl = auswahl()
+        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {farbwahl}. \n\n',
                         str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
                                                  f' zeichen Sie das zugehörige Histogramm. \n\n'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
@@ -286,8 +293,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         for p in range(stufen+1):
             spalten += 'c|'
         wkt_berechn = ''
-        x_werte = []
-        y_werte = []
+
         liste_x = ['Wahrscheinlichkeitsverteilung von X ', NoEscape(r'$ x_i $')]
         liste_wkt = ['', NoEscape(r'$ P(X=x_i) $')]
         for zahl in list(range(stufen+1)):
@@ -295,7 +301,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             for element in ergebnisraum:
                 k = 0
                 for tubel in element:
-                    if tubel == auswahl[1]:
+                    if tubel == kuerzelwahl:
                         k += 1
                 if k == zahl:
                     lsg_menge_x.append(element)
@@ -325,15 +331,23 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
-        pass
+    if 'e' and 'f' in teilaufg:
         # Erwartungswert einer Zufallsgröße
-    if 'g' in teilaufg:
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X.')
+        liste_punkte.append(4)
+        i += 1
+
+
+
+    if 'e' and 'g' in teilaufg:
         pass
         # Varianz und Standardabweichung einer Zufallsgröße
 
-
-    if len([element for element in teilaufg if element in ['h', 'i', 'j', 'k']]) > 0:
+    if 'h' or 'i' or 'j' or 'k' in teilaufg:
+        if len(set(teilaufg).intersection(set(['a', 'b', 'c', 'd', 'e', 'f', 'g']))) > 0:
+            aufgabe.append(' \n\n')
         if art == 'zoZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
         if art == 'zmZ':
