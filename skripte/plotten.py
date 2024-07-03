@@ -417,7 +417,13 @@ def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{
         wkt_liste_anzahl_1 = wkt_liste_anzahl_1_neu
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 
+def histogramm(liste_kategorien, liste_werte, name, titel='Histogramm'):
+    plt.title(titel)
+    plt.xticks(liste_kategorien)
+    plt.bar(liste_kategorien, liste_werte, width=0.65, edgecolor='black', linewidth=2)
+    # plt.show()
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
 def loeschen():
     plt.figure().clear()
 
-# Baumdiagramm(2,0.3,'E')
+# histogramm([1,2,3,4],[0.1,0.3,0.2,0.4], 'Test', titel='Test')
