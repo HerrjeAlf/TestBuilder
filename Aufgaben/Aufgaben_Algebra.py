@@ -93,7 +93,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
 
     if 'a' in teilaufg:
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie das Dreieck ABC im Koordinatensystem ein. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
         liste_punkte.append(2)
@@ -101,7 +101,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
 
     if 'b' in teilaufg:
         # Abstände von Punkten berechnen und vergleichen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
         loesung.append(str(teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
@@ -118,7 +118,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
 
     if 'c' in teilaufg:
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
                                            + f' ein Parallelogramm bilden. \n\n'))
@@ -143,7 +143,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'a' in teilaufg:
         # resultierenden Vektor einer Vektoraddition berechnen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_1 = punkt_vektor(5)
         vektor_2 = punkt_vektor(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
@@ -165,7 +165,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'b' in teilaufg:
         # Mittelpunkt zweier gegebener Punkte berechnen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_1 = punkt_vektor(5)
         vektor_2 = punkt_vektor(7)
         ergebnis = 0.5 * (np.array(vektor_1) + np.array(vektor_2))
@@ -190,7 +190,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'c' in teilaufg:
         # Linearkombination von Vektoren überprüfen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         print('r =' + gzahl(faktor_1))
@@ -276,7 +276,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'd' in teilaufg:
         # Vektoren auf Kollinearität überprüfen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_2 = punkt_vektor(5)
         faktor = zzahl(2, 40) / 10
         punkte = 4
@@ -311,7 +311,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'e' in teilaufg:
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         vektor_a = punkt_vektor(5)
         vektor_ab = punkt_vektor(5)
@@ -348,7 +348,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     if 'f' in teilaufg:
         # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         vektor_a = punkt_vektor(5)
         vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
@@ -425,7 +425,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
 
     if 'a' in teilaufg:
         # Aufstellen der Geradengleichung bei gegebenen Punkten
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
         loesung_1 = (r' \overrightarrow{AB} ~=~'
@@ -447,7 +447,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False):
 
     if 'b' in teilaufg:
         # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 4
         liste_punkte.append(punkte_aufg)
         loesung_1 =  (r' \begin{pmatrix} '
@@ -502,7 +502,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     grafiken_loesung = []
     if 'a' in teilaufg:
         # lagebeziehungen zweier Geraden und die dafür nötigen Eigenschaften erläutern
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         liste_punkte.append(punkte)
 
@@ -527,7 +527,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     if 'b' in teilaufg:
         # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
@@ -551,7 +551,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     if 'c' in teilaufg:
         # Lagebeziehung zweier gegebener Geraden bestimmen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         if lagebeziehung == 'identisch':
             punkte_aufg = 7
@@ -783,7 +783,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     if 'f' in teilaufg:
         # Schnittwinkel zweier gegebener Geraden berechnen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         liste_punkte.append(punkte_aufg)
         punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
@@ -910,7 +910,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
         # Ebenengleichung in Parameterform aus drei gegebenen Punkten aufstellen
         punkte = 3
         liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
                                           f'welche die Punkte A, B und C enthält. \n\n')
@@ -932,7 +932,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
         # gegebene Ebenengleichung von Parameterform in Normalen- und Koordinatenform umformen
         punkte = 7
         liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Formen Sie die Gleichung für Ebene E in '
                        + 'Normalen- und Koordinatenform um. \n\n')
@@ -958,7 +958,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
         # Überprüfen, ob ein Punkt in der Ebene liegt
         punkte = 3
         liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append('Gegeben ist ein weiterer Punkt T(' + gzahl(tx) + '|' + gzahl(ty) + '|'
                        + gzahl(tz) + '), \n\n')
@@ -976,7 +976,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
         if 'd' in teilaufg:
             punkte = 4
             liste_punkte.append(punkte)
-            liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
@@ -994,7 +994,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None):
             # Berechnung des Abstandes eines Punktes von der Ebene
             punkte = 3
             liste_punkte.append(punkte)
-            liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes T zur Ebene E. \n\n')
             if 'd' not in teilaufg:
@@ -1080,7 +1080,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         # gegebene Normalen- bzw. Koordinatenform in Parameter-, Koordinaten- bzw. Normalenform umformen
         punkte = 7
         liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                           f'anderen beiden Darstellungsformen um. \n\n ')
         loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
@@ -1102,7 +1102,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False)
         # Aufstellen der Achsenabschnittsform der Ebene und zeichnen der Ebene in 3-dim-Koordinatenform
         punkte = 3
         liste_punkte.append(punkte)
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
@@ -1188,7 +1188,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
 
     if 'a' in teilaufg:
         # die Lagebeziehung einer Geraden mit einer Ebene und die dafür nötigen Eigenschaften erläutern
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
@@ -1211,7 +1211,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     if 'b' in teilaufg:
         # Geradengleichung aus zwei gegebenen Punkten aufstellen
         punkte = 2
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.extend(('Gegeben ist  die Gerade g durch die Punkte: '
                         'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
@@ -1231,7 +1231,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     if 'c' in teilaufg:
         # die Lagebeziehung einer Ebene mit einer Geraden bestimmen
         punkte = 3
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if g_in_E == 'schneiden':
             punkte += 4
         liste_punkte.append(punkte)
@@ -1255,7 +1255,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
     if 'd' in teilaufg:
         # Aufstellen der hessischen Normalform einer Ebene
         punkte = 4
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
@@ -1271,7 +1271,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None):
         if 'e' in teilaufg:
             # Berechnung des Abstandes einer parallelen Geraden zur Ebene
             punkte = 3
-            liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
             if 'd' not in teilaufg:
@@ -1414,7 +1414,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
 
     if 'a' in teilaufg:
         # lagebeziehungen zwischen zwei Ebenen erläutern
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
         aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
@@ -1434,7 +1434,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
 
     if 'b' in teilaufg:
         # Lagebeziehung bestimmen und ggf. Schnittegrade berechnen
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
@@ -1453,7 +1453,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
     if 'c' in teilaufg:
         # hessische Normalenform der Ebene aufstellen
         punkte = 4
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
         punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
@@ -1470,7 +1470,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
         if 'd' in teilaufg:
             # hier soll der Abstand zwischen zwei parallelen Ebenen berechnet werden
             punkte = 3
-            liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
             if 'c' not in teilaufg:

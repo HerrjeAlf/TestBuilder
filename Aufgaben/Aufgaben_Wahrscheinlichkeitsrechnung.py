@@ -194,7 +194,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'a' in teilaufg:
         # Baumdiagramm zeichnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         if art == 'zoZ':
             Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
@@ -219,7 +219,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'b' in teilaufg:
         # Ergebnismengen angeben
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(6)
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
@@ -241,7 +241,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'c' in teilaufg:
         # Wahrscheinlichkeit von Ereignissen berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
                         + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
                         + r' und \quad E_3: ~}' + ereignis_3))
@@ -256,7 +256,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'd' in teilaufg:
         # bedingte Wahrscheinlichkeit berechnen und überprüfen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if wkt5/wkt2 == wkt1:
             lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3P) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabhängig} \quad (1P)')
@@ -273,8 +273,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'e' in teilaufg:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
-        punkte = 0
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Loesung_{nr} {liste_teilaufg[i]}')
+        pkt = 0
         auswahl = random.choice([[farbe_1, farben_kuerzel_1],
                                  [farbe_2, farben_kuerzel_2]])
         aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {auswahl[0]}. \n\n',
@@ -305,22 +306,22 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             liste_x.append(gzahl(zahl))
             liste_wkt.append(gzahl(N(wkt,2)))
             wkt_berechn = wkt_berechn + r' P(X=' + str(zahl) + ') ~=~' + wkt_str + r' \quad \\'
-            punkte += 1
+            pkt += 1
         table1 = Tabular(spalten, row_height=1.2)
         table1.add_hline(2)
         table1.add_row(liste_x)
         table1.add_hline(2)
         table1.add_row(liste_wkt)
         table1.add_hline(2)
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' mathrm{Tabelle~('
-                       + gzahl(punkte) + r'P)} \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' \mathrm{Tabelle~('
+                       + gzahl(pkt) + r'P) } \\')
         loesung.append(table1)
-
+        punkte = 2*pkt + 1
         # erstellen vom Histogramm
         loeschen()
-        print(i)
-        histogramm(x_werte, y_werte,f'{str(nr)}{str(liste_teilaufg[i])})','Histogramm')
-
+        histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}','Histogramm')
+        loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1P,~Balken~' + str(pkt) + r'P} \\'
+                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\'))
         liste_punkte.append(punkte)
         i += 1
 
@@ -342,7 +343,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
@@ -354,7 +355,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'i' in teilaufg and art == 'zoZ':
         # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
@@ -376,7 +377,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if 'j' in teilaufg and art == 'zmZ':
         # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
                        + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
@@ -486,7 +487,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     if 'a' in teilaufg:
         # Vierfeldertafel vervollständigen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if vierfeldertafel == True:
             punkte = 3
             aufgabe.extend((Tabelle(A=A, P=P, P_nH=P_nH, H=H),' \n\n\n',
@@ -506,7 +507,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     if 'b' in teilaufg:
         # bedingte Wahrscheinlichkeiten aus gegebenen Größen berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         aufgabe.extend(('Zum Schluss der Studie werden die Heilungschancen beider Gruppen verglichen. '
                         'D.h. die Personen, die ein Medikament erhalten haben mit denjenigen, '
@@ -528,7 +529,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
     if 'c' in teilaufg:
         # bedingte Wahrscheinlichkeit aus vervollst. Vierfeldertafel berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
 
         aufgabe.extend(('Ein Patient wurde geheilt und weiß nicht, '
@@ -591,7 +592,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     if 'a' in teilaufg:
         # Anzahl möglichen Kombinationen eines Passwortes berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
 
         aufgabe.extend((f'Es wird ein Passwort aus {auswahl_text} mit {gzahl(laenge)} Stellen erstellt, '
@@ -605,7 +606,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
     if 'b' in teilaufg:
         # Zeit für Brute Force Attacke (Ausprobieren aller Kombinationen) des Passwortes berechnen
 
-        liste_bez.append(f'{str(nr)}{str(liste_teilaufg[i])})')
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         zeit = N(ergebnis/grafikkarten[auswahl_g][2],3)
         aufgabe.append(str(liste_teilaufg[i]) + f') Wie lange benötigt die {grafikkarten[auswahl_g][0]} '
