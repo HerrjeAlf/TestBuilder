@@ -85,9 +85,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     if anzahl_n - anzahl_k > anzahl_2:
         anzahl_k = anzahl_n - anzahl_2
 
-    # Werte für Aufgabe g und h
+    # Werte für Aufgabe e, f und g
     x_werte = []
     y_werte = []
+    ew_wert = 0
+    ew_wert_str = ''
 
     def auswahl():
         auswahl = random.choice([[farbe_1, farben_kuerzel_1],
@@ -319,9 +321,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         table1.add_hline(2)
         table1.add_row(liste_wkt)
         table1.add_hline(2)
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' \mathrm{Tabelle~('
-                       + gzahl(pkt) + r'P) } \\')
-        loesung.append(table1)
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' \\', table1,
+                        r' \mathrm{Tabelle~(' + gzahl(pkt) + r'P) }'))
         punkte = 2*pkt + 1
         # erstellen vom Histogramm
         loeschen()
@@ -333,26 +334,42 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'e' and 'f' in teilaufg:
         # Erwartungswert einer Zufallsgröße
-        ew_wert_str = ''
-        ew_wert = 0
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = int(len(x_werte)/2)+1
         print(x_werte)
         print(y_werte)
         for x, y in zip(x_werte, y_werte):
             ew_wert_str = ew_wert_str + vorz_str(x, null=True) + r' \cdot ' + gzahl(y)
             ew_wert = ew_wert + x*y
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
                        + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'P)')
         liste_punkte.append(punkte)
         i += 1
 
-
-
-    if 'e' and 'g' in teilaufg:
-        pass
+    if 'e' and 'f' and 'g' in teilaufg:
         # Varianz und Standardabweichung einer Zufallsgröße
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        var_wert_str = ''
+        var_wert = 0
+        punkte = 4
+        for x, y in zip(x_werte,y_werte):
+            if x == x_werte[0]:
+                var_wert_str = (var_wert_str + r'(' + gzahl(x) + '-' + gzahl(N(ew_wert,3))
+                                + r')^2 \cdot ' + gzahl(y))
+            else:
+                var_wert_str = (var_wert_str + r'~+~ (' + gzahl(x) + '-' + gzahl(N(ew_wert, 3))
+                                + r')^2 \cdot ' + gzahl(y))
+            var_wert = var_wert + (x - ew_wert)**2*y
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Varianz und die Standardabweichung '
+                       + 'der Zufallsgröße X. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
+                       + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{E(X)}} \\'
+                       + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2P) \\'
+                       + r' \sigma (X) ~=~ \sqrt{' + gzahl((N(var_wert,3))) + '} ~=~ ' + gzahl(N(sqrt(var_wert),3))
+                       + r' \quad (2P)')
+        liste_punkte.append(punkte)
+        i += 1
 
     if len([element for element in teilaufg if element in liste_teilaufg[7:11]]) > 0:
         if art == 'zoZ':
