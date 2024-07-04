@@ -1,5 +1,6 @@
-b = list(range(1,4))
-print(b)
+from sympy import *
+# b = list(range(1,4))
+# print(b)
 #
 # i = 0
 # for m in range(1,7):
@@ -12,7 +13,11 @@ print(b)
 #
 #
 # a = [[1,2],[2,3]]
-#
-# print(len(a))
-stufen = 2
-print(list(range(stufen+1)))
+
+
+teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i']
+liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+if len([element for element in teilaufg if element in liste_teilaufg[8:11]]) > 0:
+    if len([element for element in teilaufg if element in liste_teilaufg[0:7]]) > 0:
+        print([element for element in teilaufg if element in liste_teilaufg[8:11]])
+        print([element for element in teilaufg if element in liste_teilaufg[0:7]])

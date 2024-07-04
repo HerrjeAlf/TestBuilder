@@ -192,7 +192,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
                f' Kugeln der Farbe {farbe_2}. ']
-    if len(set(teilaufg).intersection(set(['a', 'b', 'c', 'd', 'e', 'f', 'g']))) > 0:
+    if len([element for element in teilaufg if element in liste_teilaufg[0:6]]) > 0:
         aufgabe.append(f'Aus dieser Urne wird ohne Zurücklegen {anzahl_ziehen[1]} eine Kugel gezogen. \n\n')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -333,10 +333,19 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'e' and 'f' in teilaufg:
         # Erwartungswert einer Zufallsgröße
-
+        ew_wert_str = ''
+        ew_wert = 0
+        punkte = int(len(x_werte)/2)+1
+        print(x_werte)
+        print(y_werte)
+        for x, y in zip(x_werte, y_werte):
+            ew_wert_str = ew_wert_str + vorz_str(x, null=True) + r' \cdot ' + gzahl(y)
+            ew_wert = ew_wert + x*y
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X.')
-        liste_punkte.append(4)
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
+                       + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'P)')
+        liste_punkte.append(punkte)
         i += 1
 
 
@@ -345,14 +354,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         pass
         # Varianz und Standardabweichung einer Zufallsgröße
 
-    if 'h' or 'i' or 'j' or 'k' in teilaufg:
-        if len(set(teilaufg).intersection(set(['a', 'b', 'c', 'd', 'e', 'f', 'g']))) > 0:
-            aufgabe.append(' \n\n')
+    if len([element for element in teilaufg if element in liste_teilaufg[7:11]]) > 0:
         if art == 'zoZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel ohne Zurücklegen gezogen. \n\n')
         if art == 'zmZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n')
-
 
     if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
