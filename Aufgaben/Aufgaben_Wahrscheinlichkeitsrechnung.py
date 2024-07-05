@@ -280,7 +280,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         i += 1
 
 
-    if 'e' in teilaufg:
+    if 'e' or 'f' or 'g' in teilaufg:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -332,7 +332,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' and 'f' in teilaufg:
+    if 'f' or 'g' in teilaufg:
         # Erwartungswert einer Zufallsgröße
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = int(len(x_werte)/2)+1
@@ -347,7 +347,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' and 'f' and 'g' in teilaufg:
+    if 'g' in teilaufg:
         # Varianz und Standardabweichung einer Zufallsgröße
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         var_wert_str = ''
