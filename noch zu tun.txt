@@ -17,7 +17,6 @@ in Aufgaben Analysis:
 
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm - Aufgabe k zur kummulierten Bernoullikette erstellen
-- Baumdiagramm - Aufgabe g, h, i erstellen
 
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
