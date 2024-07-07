@@ -814,6 +814,172 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+    # Anwendung der Ableitungen in verschiedenen Kontexten
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    y_wert_s = 0
+    while y_wert_s > 5 or y_wert_s < 1:
+        x_wert_x1 = nzahl(4, 8) / 2
+        x_wert_x2 = x_wert_x1 + nzahl(4, 8) / 2
+        x_wert_s = 0.5 * (x_wert_x2 + x_wert_x1)
+        faktor = -1 * nzahl(2, 8) / 2
+        fkt = expand(faktor* (x - x_wert_x1) * (x - x_wert_x2))
+        y_wert_s = fkt.subs(x, x_wert_s)
+
+    fkt_str = (str(faktor) + 'x^2~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2)) + 'x~'
+               + vorz_str(faktor * x_wert_x1 * x_wert_x2))
+    p_fkt = -1 * (x_wert_x1 + x_wert_x2)
+    q_fkt = x_wert_x1 * x_wert_x2
+    fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
+    fkt_abl = diff(fkt, x, 1)
+    fkt_abl_str = str(2 * faktor) + 'x~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2))
+    m_tangente_str = Rational(y_wert_s,(x_wert_s - 1))
+    m_tangente = y_wert_s/(x_wert_s - 1)
+    fkt_tangente = N(m_tangente,3) * x - N(m_tangente,3)
+    #print(fkt_tangente)
+    x_wert_schnittpunkt = solve(Eq(fkt, fkt_tangente), x)
+    y_wert_schnittpunkt = fkt_tangente.subs(x, x_wert_schnittpunkt[0])
+    xwerte = [-1 + n / 5 for n in range(60)]
+    ywerte_huegel = [fkt.subs(x, xwerte[i]) for i in range(60)]
+    xwerte_gerade = [1, x_wert_schnittpunkt[0]]
+    ywerte_gerade = [0, y_wert_schnittpunkt]
+    plt.plot(xwerte_gerade, ywerte_gerade)
+    Graph(xwerte, ywerte_huegel, x_wert_s, fkt, '$f(x) =' + latex(fkt) + '$', 'Hügel', 'Aufgabe_3')
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Im Koordinatensystem auf der Rückseite ist die Profilkurve eines Hügels aufgetragen.',
+               r' f(x)~=~' + latex(fkt)]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if a in teilaufg:
+        aufgabe.append(str(teilaufg[i]) + ') Berechne die Fußpunkte des Hügels. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                       + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
+                       + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
+                       + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
+                       + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
+                       + gzahl_klammer(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
+                       + r' x_1 ~=~\mathbf{' + str(x_wert_x1) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
+                       + str(x_wert_x2) + r'} \quad (1P) \quad \mathbf{P_1(' + str(x_wert_x1)
+                       + r' \vert 0)} \quad \mathrm{und} \quad \mathbf{P_2(' + str(x_wert_x2)
+                       + r' \vert 0)} \quad (1P) \\\\')
+        Punkte += 5
+        i += 1
+
+    if b in teilaufg:
+        m_x1 = fkt_abl.subs(x, x_wert_x1)
+        #print('m_x1 = ' + str(m_x1))
+        winkel_x1 = math.degrees(N(atan(m_x1),2))
+        aufgabe.append(str(teilaufg[i]) + ') Berechne die Steigung und den Steigungswinkel am westlichen Fußpunkt. \n\n')
+        loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
+                       + str(x_wert_x1) + r') ~=~ \mathbf{' + str(N(m_x1,3)) + r'} \quad (2P) \\'
+                       + r' \alpha ~=~ arctan(' + str(N(m_x1,3)) + r') ~=~ \mathbf{' + str(N(winkel_x1,3))
+                       + r'^\circ} \quad (2P) \\\\')
+
+        Punkte += 4
+        i += 1
+
+    if c in teilaufg:
+        fkt_tp = fkt - fkt_tangente
+        fkt_tp_str = (str(faktor) + 'x^2~' + vorz_str(N(-1 * faktor * (x_wert_x1 + x_wert_x2) - m_tangente,3)) + 'x~'
+                      + vorz_str(N(faktor * x_wert_x1 * x_wert_x2 + m_tangente,3)))
+        p_fkt_tp = -1 * (x_wert_x1 + x_wert_x2) - m_tangente/faktor
+        q_fkt_tp = x_wert_x1 * x_wert_x2 + m_tangente/faktor
+        fkt_tp_pq = ('x^2~' + vorz_str(N(-1 * (x_wert_x1 + x_wert_x2) - m_tangente/faktor,3)) + 'x~'
+                      + vorz_str(N(x_wert_x1 * x_wert_x2 + m_tangente/faktor,3)))
+        x_werte_tp = solve(fkt_tp,x)
+        y_wert_tp = fkt.subs(x, x_werte_tp[0])
+        #print(x_werte_tp[0], x_werte_tp[1])
+        aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0).'
+                       +'Berechne den Treffpunkt mit dem Hügel, wenn die Steigung')
+        aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente_str) + r' \mathrm{~beträgt}. \hspace{38em}')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
+                       + r' 0 ~=~' + latex(N(m_tangente,3)) + r' \cdot 1 ~+~n \quad \vert '
+                       + vorz_str(N(-1 * m_tangente,3)) + r' \quad (1P) \\ n ~=~' + vorz_str(N(-1 * m_tangente,3))
+                       + r' \quad t(x)~=~' + str(N(m_tangente,3)) + r' \cdot x ' + vorz_str(N(-1 * m_tangente,3))
+                       + r' \quad (2P) \\' + fkt_str + '~=~' + latex(fkt_tangente) + r'~ \vert -('
+                       + latex(fkt_tangente) + r') \quad (1P) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
+                       + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~'
+                       + fkt_tp_pq + r' \quad (1P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt_tp, 3))
+                       + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
+                       + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
+                       + gzahl_klammer(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
+                       + r' x_1 ~=~\mathbf{' + str(N(x_werte_tp[0],3)) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
+                       + str(N(x_werte_tp[1],3)) + r'} \quad (1P) \quad \mathbf{P_1(' + str(N(x_werte_tp[0],3))
+                       + r' \vert' + str(N(y_wert_tp,3)) + r')} \quad (1P) \\\\')
+
+        Punkte += 9
+        i += 1
+
+    if d in teilaufg:
+        m_fkt_x_tp = fkt_abl.subs(x, x_werte_tp[0])
+        winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
+        winkel_beta = N(math.degrees(atan(m_tangente)),3)
+        loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
+                   + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
+        if abs(winkel_beta-winkel_alpha) > 90:
+            loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
+                       + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha)) + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
+                       + str(abs(winkel_beta - winkel_alpha)) + r'^\circ~=~\mathbf{' + str(180 - abs(winkel_beta - winkel_alpha))
+                       + r'^\circ} \quad (2P) \\\\')
+            Punkte += 1
+
+        # print(m_fkt_x_tp)
+
+        aufgabe.append(str(teilaufg[i]) + ') Berechne den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
+        loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
+                       + str(N(x_werte_tp[0],3)) + r') ~=~ ' + str(N(m_fkt_x_tp,3))
+                       + r' \quad (1P) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
+                       + latex(winkel_alpha) + r'^\circ \quad (2P) \\'
+                       + r' t^{ \prime}(x) ~=~' + str(N(m_tangente,3)) + r' \quad \to \quad'
+                       r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta) + r'^\circ \quad (2P) \\'
+                       + loesung_1)
+
+        Punkte += 6
+        i += 1
+
+    if e in teilaufg:
+        aufgabe.append(str(teilaufg[i]) + ') Berechne den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
+                                          ' Steigung des Hügels besitzt. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{aus~} f^{ \prime } (' + str(N(x_werte_tp[0],3)) + ') ~=~ '
+                                        + str(N(m_fkt_x_tp,3)) + r' \mathrm{~und~} P_1('
+                                        + str(N(x_werte_tp[0],3)) + r' \vert' + str(N(y_wert_tp,3))
+                                        + r') \mathrm{~folgt~} \quad \to \quad' + str(N(y_wert_tp,3)) + '~=~'
+                                        + str(N(m_fkt_x_tp,3)) + r' \cdot ' + gzahl_klammer(N(x_werte_tp[0],3))
+                                        + r'+~n \quad \vert ' + vorz_str(N(-1*m_fkt_x_tp*x_werte_tp[0],3))
+                                        + r' \quad n~=~' + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
+                                        + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
+                                        + str(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3)) + '}{'+ str(N(m_fkt_x_tp,3))
+                                        + r'} ~=~\mathbf{' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
+                                        + r'} \quad (2P) \\\\')
+
+        Punkte += 5
+        i += 1
+
+    if f in teilaufg:
+        aufgabe.append(str(teilaufg[i]) + ') Berechne die Höhe des Hügels. \n\n')
+        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
+                                        + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~'
+                                        + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
+                                        + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
+                                        + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~' + str(faktor) + r' \cdot ((x'
+                                        + vorz_str(-1*x_wert_s) + ')^2' + vorz_str(-1 * (p_fkt / 2) ** 2) + ')'
+                                        + vorz_str(faktor * q_fkt) + '~=~' + str(faktor)
+                                        + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
+                                        + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + str(y_wert_s) +  r'.} \quad (1P)')
+
+        Punkte += 4
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     # Rekonstruktion und Extremalproblem
 
