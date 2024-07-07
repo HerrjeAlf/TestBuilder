@@ -1409,8 +1409,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None):
                + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
                + r' \end{pmatrix} ']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['', '', '']
-    grafiken_loesung = ['']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
         # lagebeziehungen zwischen zwei Ebenen erläutern
