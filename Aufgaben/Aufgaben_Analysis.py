@@ -826,10 +826,11 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         x_wert_x2 = x_wert_x1 + nzahl(4, 8) / 2
         x_wert_s = 0.5 * (x_wert_x2 + x_wert_x1)
         faktor = -1 * nzahl(2, 8) / 2
-        fkt = expand(faktor* (x - x_wert_x1) * (x - x_wert_x2))
+        fkt = collect(expand(faktor * (x - x_wert_x1) * (x - x_wert_x2)),x)
+
         y_wert_s = fkt.subs(x, x_wert_s)
 
-    fkt_str = (str(faktor) + 'x^2~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2)) + 'x~'
+    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (x_wert_x1 - x_wert_x2), 'x')
                + vorz_str(faktor * x_wert_x1 * x_wert_x2))
     p_fkt = -1 * (x_wert_x1 + x_wert_x2)
     q_fkt = x_wert_x1 * x_wert_x2
@@ -843,22 +844,29 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
     x_wert_schnittpunkt = solve(Eq(fkt, fkt_tangente), x)
     y_wert_schnittpunkt = fkt_tangente.subs(x, x_wert_schnittpunkt[0])
     # Werte für die Grafik
-    xwerte = [-1 + n / 5 for n in range(60)]
-    ywerte_huegel = [fkt.subs(x, xwerte[i]) for i in range(60)]
+    xwerte = [x_wert_x1 + x/10 for x in range(int((x_wert_x2 - x_wert_x1)*10)+1)]
+    ywerte_huegel = [fkt.subs(x, element) for element in xwerte]
     xwerte_gerade = [1, x_wert_schnittpunkt[0]]
     ywerte_gerade = [0, y_wert_schnittpunkt]
     # Erzeugen der Grafik
+    fig, ax = plt.subplots()
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_position(('data', 0))
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_aspect(1/2)
     plt.plot(xwerte_gerade, ywerte_gerade)
     plt.plot(xwerte, ywerte_huegel)
-    plt.cla()
-    plt.title("Profilkurve")
+    # plt.show()
     plt.savefig('img/temp/' + str(nr), dpi=200, bbox_inches="tight", pad_inches=0.02)
 
     # plt.plot(xwerte, ywerte_huegel, x_wert_s, fkt, '$f(x) =' + latex(fkt) + '$', 'Hügel', 'Aufgabe_3')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Im Koordinatensystem ist die Profilkurve eines Hügels aufgetragen.', 'Figure',
-               r' f(x)~=~' + latex(fkt)]
+               'In der folgenden Abbildung ist die Profilkurve eines Hügels aufgetragen, '
+               'an dem eine Seilbahn zum Gipfel führt.', 'Figure']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = [str(nr)]
     grafiken_loesung = []
@@ -867,7 +875,9 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         # Berechnung der Nullstellen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels. \n\n')
+        aufgabe.extend((str(teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels, '
+                        + 'wenn der Hügel durch die Funktion',
+                        r' \mathrm{ f(x)~=~' + fkt_str + r' \qquad beschrieben~wird.}'))
         loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
                        + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))

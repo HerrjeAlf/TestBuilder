@@ -1,4 +1,6 @@
 from sympy import *
+
+a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # b = list(range(1,4))
 # print(b)
 #
@@ -15,9 +17,11 @@ from sympy import *
 # a = [[1,2],[2,3]]
 
 
-teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i']
-liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
-if len([element for element in teilaufg if element in liste_teilaufg[8:11]]) > 0:
-    if len([element for element in teilaufg if element in liste_teilaufg[0:7]]) > 0:
-        print([element for element in teilaufg if element in liste_teilaufg[8:11]])
-        print([element for element in teilaufg if element in liste_teilaufg[0:7]])
+# teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i']
+# liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']
+# if len([element for element in teilaufg if element in liste_teilaufg[8:11]]) > 0:
+#     if len([element for element in teilaufg if element in liste_teilaufg[0:7]]) > 0:
+#         print([element for element in teilaufg if element in liste_teilaufg[8:11]])
+#         print([element for element in teilaufg if element in liste_teilaufg[0:7]])
+
+print(collect(expand(a*(x-b)*(x-c)),x))
