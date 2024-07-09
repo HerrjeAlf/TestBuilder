@@ -25,3 +25,5 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #         print([element for element in teilaufg if element in liste_teilaufg[0:7]])
 
 print(collect(expand(a*(x-b)*(x-c)),x))
+vec = [1,1,1]
+print(len(vec))

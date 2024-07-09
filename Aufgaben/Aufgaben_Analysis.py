@@ -101,7 +101,6 @@ def rechenregeln_integrale(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
-
 def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     # Aufgabe zu geometrischen und arithmetischen Zahlenfolgen
     liste_punkte = []
@@ -1105,7 +1104,6 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
 def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     # Rekonstruktion und Extremalproblem
 
@@ -1751,7 +1749,6 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Integralrechnung
-
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     # Stammfunktionen bestimmen (unbestimmtes Integral)
 
@@ -2037,7 +2034,6 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
-
 def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
                               nullstellen=None, wendenormale=True):
     liste_punkte = []
@@ -3093,7 +3089,6 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # in Entwicklung
-
 def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None,
                               nullstellen=None, wendenormale=True):
     # Kurvendiskussion einer Polynomfunktion
@@ -3132,7 +3127,6 @@ def kurvendiskussion_polynome_02(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
 def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 1
 
