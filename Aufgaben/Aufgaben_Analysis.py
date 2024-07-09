@@ -814,7 +814,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
     # Anwendung der Ableitungen in verschiedenen Kontexten
 
     liste_punkte = []
