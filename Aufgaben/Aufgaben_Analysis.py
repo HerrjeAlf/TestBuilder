@@ -866,7 +866,7 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'In der folgenden Abbildung ist die Profilkurve eines Hügels aufgetragen, '
-               'an dem eine Seilbahn zum Gipfel führt.', 'Figure']
+               'dessen Gipfel mit einer Seilbahn erreicht werden kann.', 'Figure']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = [str(nr)]
     grafiken_loesung = []
@@ -892,6 +892,8 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'b' in teilaufg:
+        # Steigung und Steigungswinkel
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         m_x1 = fkt_abl.subs(x, x_wert_x1)
         #print('m_x1 = ' + str(m_x1))
@@ -906,6 +908,8 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'c' or 'd' or 'e' in teilaufg:
+        # Schnittpunkte Gerade und Parabel
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         fkt_tp = fkt - fkt_tangente
         fkt_tp_str = (str(faktor) + 'x^2~' + vorz_str(N(-1 * faktor * (x_wert_x1 + x_wert_x2) - m_tangente,3)) + 'x~'
@@ -938,6 +942,8 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'd' or 'e' in teilaufg:
+        # Schnittwinkel zweier Funktionen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 0
         m_fkt_x_tp = fkt_abl.subs(x, x_werte_tp[0])
@@ -966,6 +972,8 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'e' in teilaufg:
+        # Geradengleichung aus gegebenen Zusammenhang erstellen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
                                           ' Steigung des Hügels besitzt. \n\n')
@@ -985,6 +993,8 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'f' in teilaufg:
+        # Scheitelpunkt einer Parabel mit quadratischer Ergänzung bestimmen
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
         loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
@@ -997,6 +1007,100 @@ def anwendungen_ableitung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
                                         + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
                                         + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + str(y_wert_s) +  r'.} \quad (1P)')
         liste_punkte.append(4)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
+    # Anwendung der Ableitungen zur Berechnung der Steigung
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def faktorliste(p, q, n):
+        return [zzahl(p, q) for _ in range(n)]
+
+    def exponenten(n):
+        menge = set()
+        while len(menge) < n:
+            menge.add(nzahl(2, 6 + n))
+        return menge
+
+    if 'a' in teilaufg:
+        # x-Wert bei gegebener Steigung berechnen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        steigung = 0
+        while steigung == 0:
+            try:
+                a1, a2, a3 = faktorliste(2, 10, 3)
+                e1 = (nzahl(2,4)*2)-1
+                e2 = e1 + (nzahl(0,2)*2)+1
+                funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), str(2*a1) + r'x' + vorz_str(a2)],
+                                     [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
+                                      str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
+                                     [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
+                                      latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
+
+                Aufgabe = random.randint(0, 2)
+                # Aufgabe = 1
+                funktion_liste = funktionen_liste[Aufgabe]
+                fkt, fkt_str, fkt_abl_str = funktion_liste[0], funktion_liste[1], funktion_liste[2]
+                fkt_abl = diff(fkt, x)
+                stelle = nzahl(3, 10)/2
+                steigung = int(fkt_abl.subs(x, stelle))
+            except TypeError as te:
+                print(te)
+                steigung = 0
+
+        loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
+                         + gzahl_klammer(a2) + r'~ \vert \div ' + gzahl_klammer(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
+                         + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P)',
+                         r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
+                         + gzahl_klammer(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
+                         + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
+                         + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3P)',
+                         r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
+                         + gzahl_klammer(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
+                         + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
+                         + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~\mathbf{'
+                         + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P)']
+
+        loesung_1 = loesung_liste[Aufgabe]
+        aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert x, an der die Funktion f die Steigung m hat. ')
+        aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
+        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
+        liste_punkte.append(3)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Berechnung des Parameters für Schnittpunktes und der Steigung am Schnittpunkt zweier (Parameter)-Funktionen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        a1, a2, a3 = faktorliste(2, 10, 3)
+        verschiebung = zzahl(2,10)/2
+        fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel= (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
+        fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = (a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2))
+
+        aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
+        aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
+                       + r' \hspace{15em}')
+        loesung.append(str(teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+                         + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
+                         + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
+                         + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
+                         + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
+                         + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
+                         + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
+                         + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
+                         + r' \quad \to \quad a~=~\mathbf{' + latex(N((a2**2/(2*a1)) + a3 - (a2**2)/(4*a1),3))
+                         + r'} \quad (3P)')
+        liste_punkte.append(6)
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

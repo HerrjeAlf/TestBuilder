@@ -20,7 +20,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [anwendungen_ableitung(1)]
+    aufgaben_seite1 = [anwendung_abl_steig(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
