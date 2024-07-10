@@ -31,6 +31,10 @@ def seite(aufgaben):
                     graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px', placement=None)
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
+            elif 'Grafik' in elements:
+                with Aufgabe.create(Figure(position='h!')) as graph:
+                    graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
+                i += 1
             elif 'neueSeite' in elements:
                 Aufgabe.append(NewPage())
             elif '3dim_Koordinatensystem' in elements:

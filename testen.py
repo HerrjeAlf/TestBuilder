@@ -1,3 +1,4 @@
+from Aufgaben.Mittelstufe_Geometrie import *
 from Aufgaben.Oberstufe_Analysis import *
 from Aufgaben.Oberstufe_Algebra import *
 from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
@@ -20,7 +21,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [anwendung_abl_steig(1)]
+    aufgaben_seite1 = [pruefung_Kl10_allg_dr_01(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
