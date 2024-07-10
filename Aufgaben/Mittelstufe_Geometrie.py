@@ -32,31 +32,22 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
         seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
         auswahl = random.sample([0, 1, 2], 3)
         auswahl_liste = {'Seite_bez' : [['a', 'b', 'c'][x] for x in auswahl],
-                    'Seite_wert' : [seite_a, seite_b, seite_c],
-                    'Winkel_bez' : [[r' \alpha', r' \beta', r' \gamma'][x] for x in auswahl],
-                    'Winkel_wert' : [alpha, beta, gamma]}
+                         'Seite_wert' : [seite_a, seite_b, seite_c],
+                         'Winkel_bez' : [[r' \alpha', r' \beta', r' \gamma'][x] for x in auswahl],
+                         'Winkel_wert' : [alpha, beta, gamma]}
 
         return auswahl_liste
 
     auswahl_liste = werte_bel_dreieck()
-    seite_1, seite_1_wert, winkel_1, winkel_1_wert = (auswahl_liste['Seite_bez'][0],
-                                                      auswahl_liste['Seite_wert'][0],
-                                                      auswahl_liste['Winkel_bez'][0],
-                                                      auswahl_liste['Winkel_wert'][0])
-    seite_2, seite_2_wert, winkel_2, winkel_2_wert = (auswahl_liste['Seite_bez'][1],
-                                                      auswahl_liste['Seite_wert'][1],
-                                                      auswahl_liste['Winkel_bez'][1],
-                                                      auswahl_liste['Winkel_wert'][1])
-    seite_3, seite_3_wert, winkel_3, winkel_3_wert = (auswahl_liste['Seite_bez'][2],
-                                                      auswahl_liste['Seite_wert'][2],
-                                                      auswahl_liste['Winkel_bez'][2],
-                                                      auswahl_liste['Winkel_wert'][2])
+    seite_1, seite_wert_1, winkel_1, winkel_wert_1 = [element[0] for element in auswahl_liste.values()]
+    seite_2, seite_wert_2, winkel_2, winkel_wert_2 = [element[1] for element in auswahl_liste.values()]
+    seite_3, seite_wert_3, winkel_3, winkel_wert_3 = [element[2] for element in auswahl_liste.values()]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Von einem allgemeinen Dreieck, sind folgende Daten gegeben: ',
-               seite_1 + '~ = ~' + latex(seite_1_wert) + r'cm, \quad '
-               + seite_2 + '~ = ~' + latex(seite_2_wert) + r'cm, \quad '
-               + winkel_1 + '~ = ~' + latex(winkel_1_wert) + r' ^{ \circ } \quad']
+               seite_1 + '~ = ~' + latex(seite_wert_1) + r'cm, \quad '
+               + seite_2 + '~ = ~' + latex(seite_wert_2) + r'cm, \quad '
+               + winkel_1 + '~ = ~' + latex(winkel_wert_1) + r' ^{ \circ } \quad']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -69,9 +60,9 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
         pkt = 10
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_1_wert)
-                                                 + r'cm, \quad ' + str(seite_2) + '~=~' + latex(seite_2_wert)
-                                                 + r'cm, \quad ' + winkel_1 + '~=~' + latex(winkel_1_wert)
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_wert_1)
+                                                 + r'cm, \quad ' + str(seite_2) + '~=~' + latex(seite_wert_2)
+                                                 + r'cm, \quad ' + winkel_1 + '~=~' + latex(winkel_wert_1)
                                                  + r'^{ \circ } \quad \mathrm{ges:~}' + winkel_2
                                                  + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
@@ -85,12 +76,12 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
                                                  + r' ~=~ sin^{ -1} \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
                                                  + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
                                                  + winkel_2 + r' ~=~ sin^{ -1} \Big( \frac{'
-                                                 + latex(seite_2_wert) + 'cm}{' + latex(seite_1_wert)
-                                                 + r'cm} \cdot sin(' + latex(winkel_1_wert) + r'^{ \circ } ) \Big) ~=~'
-                                                 + latex(winkel_2_wert) + r'^{ \circ } \quad (2P) \\'
-                                                 + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_1_wert)
-                                                 + r'^{ \circ} ~-~ ' + str(winkel_2_wert) + r'^{ \circ} ~=~ '
-                                                 + str(winkel_3_wert) + r'^{ \circ} \quad (2P) \\'
+                                                 + latex(seite_wert_2) + 'cm}{' + latex(seite_wert_1)
+                                                 + r'cm} \cdot sin(' + latex(winkel_wert_1) + r'^{ \circ } ) \Big) ~=~'
+                                                 + latex(winkel_wert_2) + r'^{ \circ } \quad (2P) \\'
+                                                 + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_wert_1)
+                                                 + r'^{ \circ} ~-~ ' + str(winkel_wert_2) + r'^{ \circ} ~=~ '
+                                                 + str(winkel_wert_3) + r'^{ \circ} \quad (2P) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -107,9 +98,9 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
                                                  + r')} \quad \vert \cdot sin(' + winkel_3 + r') \quad \to \quad '
                                                  + str(seite_3) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
                                                  + winkel_3 + ') }{ sin(' + winkel_1 + r') } \quad (2P) \\'
-                                                 + str(seite_3) + r'~=~ \frac{' + str(seite_1_wert) + r'cm \cdot sin('
-                                                 + latex(winkel_3_wert) + r' ^{ \circ } )}{ sin(' + latex(winkel_1_wert)
-                                                 + r' ^{ \circ } )} ~=~' + latex(seite_3_wert) + r'cm \quad (2P) \\'
+                                                 + str(seite_3) + r'~=~ \frac{' + str(seite_wert_1) + r'cm \cdot sin('
+                                                 + latex(winkel_wert_3) + r' ^{ \circ } )}{ sin(' + latex(winkel_wert_1)
+                                                 + r' ^{ \circ } )} ~=~' + latex(seite_wert_3) + r'cm \quad (2P) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -119,13 +110,13 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 3
-        flaeche = 0.5*seite_1_wert*seite_2_wert*math.sin(math.radians(winkel_3_wert))
+        flaeche = 0.5*seite_wert_1*seite_wert_2*math.sin(math.radians(winkel_wert_3))
         print(N(flaeche,3))
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad A ~ = ~ \frac{1}{2} \cdot ' + seite_1 + r' \cdot ' + seite_2
                                                  + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot '
-                                                 + latex(seite_1_wert) + r'cm \cdot ' + latex(seite_2_wert)
-                                                 + r'cm \cdot sin(' + latex(winkel_3_wert) + r'^{ \circ } ) ~=~ '
+                                                 + latex(seite_wert_1) + r'cm \cdot ' + latex(seite_wert_2)
+                                                 + r'cm \cdot sin(' + latex(winkel_wert_3) + r'^{ \circ } ) ~=~ '
                                                  + latex(N(flaeche,3)) + r'cm^2 \quad (3P) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
@@ -166,7 +157,7 @@ def pruefung_Kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
+    if 'a' or 'b' or 'c' or 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 5
         dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
@@ -184,7 +175,7 @@ def pruefung_Kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'b' in teilaufg:
+    if 'b' or 'c' or 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 6
         aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel ' + r'$ \alpha $'
@@ -200,7 +191,7 @@ def pruefung_Kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'c' in teilaufg:
+    if 'c' or 'd' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
