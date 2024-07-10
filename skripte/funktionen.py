@@ -125,7 +125,7 @@ def vektor_rational(vec,p,q=1000):
             k += 1
         if int(k/q) == 0:
             i += 1
-    if k == 3 and i == 3:
+    if k == len(vec) and i == len(vec):
         return True
     else:
         return False
@@ -186,7 +186,7 @@ def vektor_max(vec, p):
     for element in vec_p:
         if element % 1 == 0:
             k += 1
-    if k == 3:
+    if k == len(vec):
         return True
     else:
         return False
