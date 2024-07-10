@@ -1,4 +1,4 @@
-from Aufgaben.Aufgaben_Analysis import *
+from Aufgaben.Oberstufe_Analysis import *
 from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument

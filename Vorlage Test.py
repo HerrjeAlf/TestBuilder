@@ -1,5 +1,5 @@
-from Aufgaben.Aufgaben_Analysis import *
-from Aufgaben.Aufgaben_Algebra import *
+from Aufgaben.Oberstufe_Analysis import *
+from Aufgaben.Oberstufe_Algebra import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
