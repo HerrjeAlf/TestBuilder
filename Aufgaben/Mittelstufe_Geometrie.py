@@ -53,7 +53,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
     grafiken_loesung = []
 
 
-    if 'a' or 'b' or 'c' in teilaufg:
+    if 'a' or 'b' in teilaufg:
         # Berechnung der Winkel im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -124,7 +124,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pruefung_Kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
+def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
     liste_punkte = []
     liste_bez = []
     i = 0
