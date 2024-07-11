@@ -73,7 +73,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
         i += 1
 
     if 'b' in teilaufg:
-        # Konstruktion der kongruenten Dreiecke
+        # Konstruktion des kongruenten Dreieckes
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
