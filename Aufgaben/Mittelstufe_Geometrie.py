@@ -16,6 +16,79 @@ liste_teilaufg = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm
 nr_aufgabe = 0
 
 # Trigonometrie
+
+def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
+    # hier müssen Kongruenzsätze erkannt und die Dreiecke konstruiert werden
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    l_a = (m ** 2 - n ** 2) / 10
+    l_b = 2 * m * n / 10
+    l_c = (m ** 2 + n ** 2) / 10
+    gamma = 90
+    beta = int(math.degrees(math.asin(l_b / l_c)))
+    alpha = gamma - beta
+    auswahl = random.sample([0, 1, 2], 3)
+    pkt_bez = ['A', 'B', 'C']
+    st = [['a', 'b', 'c'][x] for x in auswahl]
+    st_werte = [l_a, l_b, l_c]
+    wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+    wk_werte = [alpha, beta, gamma]
+    pkt_werte = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+
+    auswahl = random.choice([['sss', 'a~=~' + str(l_a) + 'cm', 'b~=~' + str(l_b) + 'cm', 'c~=~' + str(l_c) + 'cm'],
+                             ['sws', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                              st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                              wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
+                             ['wsw', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                              wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}',
+                              wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
+                             ['sww',  st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                              wk[0] + '~=~' + gzahl(wk_werte[0]) + r' ^{  \circ}',
+                              wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}'],
+                             random.choice([['Ssw', 'b~=~' + str(l_b) + 'cm', ' c ~=~' + str(l_c) + 'cm',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
+                             ['Ssw', 'a~=~' + str(l_a) + 'cm', ' c ~=~' + str(l_c) + 'cm',
+                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}']])])
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
+    aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~' + str(auswahl[3]) + r'.')
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Auswahl des Kongruenzsatzes
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        pkt = 1
+        aufgabe.append(str(liste_teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r')~ \quad ' + str(auswahl[0]) + r' \quad (1P)')
+        liste_punkte.append(pkt)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Konstruktion der kongruenten Dreiecke
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+        pkt = 7
+        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
+                       + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+                       + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
+        dreieck_zeichnen(pkt_werte, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
+        liste_punkte.append(pkt)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
     # Berechnungen im allgemeinen Dreieck
 
@@ -125,6 +198,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
+    # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -150,14 +224,16 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
     wk_werte = [alpha, beta, gamma_1, 90]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-                NoEscape('Abbildung 1 stellt ein beliebiges Dreieck mit $ h = '
+                NoEscape('Die folgende Abbildung stellt ein beliebiges Dreieck dar, wobei $ h = '
                          + latex(seite_h) + '$cm, $a = ' + latex(seite_a) + r'$cm und $ \gamma_1 = '
-                         + latex(gamma_1) + r'^{ \circ}$ dar.'), 'Figure']
+                         + latex(gamma_1) + r'^{ \circ}$ ist.'), 'Figure']
     loesung = [r' \mathbf{Lösung~AufgSabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
     if 'a' or 'b' or 'c' or 'd' in teilaufg:
+        # Berechnung des Hypotenusenabschnittes mit Pythagoras
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 5
         dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
@@ -176,6 +252,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
         i += 1
 
     if 'b' or 'c' or 'd' in teilaufg:
+        # Berechnung eines Winkels mit dem Sinus
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 6
         aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel ' + r'$ \alpha $'
@@ -192,6 +270,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
         i += 1
 
     if 'c' or 'd' in teilaufg:
+        # Berechnung einer Seite mit dem Sinussatz
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
@@ -206,6 +286,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
         i += 1
 
     if 'd' in teilaufg:
+        # Berechnung der Fläche des Dreiecks
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 5
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
