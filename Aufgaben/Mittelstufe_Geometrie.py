@@ -33,7 +33,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
     beta = int(math.degrees(math.asin(l_b / l_c)))
     alpha = gamma - beta
     auswahl = random.sample([0, 1, 2], 3)
-    pkt_bez = ['A', 'B', 'C']
+    pkt_bez = [['A', 'B', 'C'][x] for x in auswahl]
     st = [['a', 'b', 'c'][x] for x in auswahl]
     st_werte = [l_a, l_b, l_c]
     wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
@@ -74,7 +74,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
         i += 1
 
     if 'b' in teilaufg:
-        # Konstruktion der kongruenten Dreiecke
+        # Konstruktion des kongruenten Dreieckes
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
