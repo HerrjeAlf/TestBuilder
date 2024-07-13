@@ -40,7 +40,9 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
     wk_werte = [alpha, beta, gamma]
     pkt_werte = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
 
-    auswahl = random.choice([['sss', 'a~=~' + str(l_a) + 'cm', 'b~=~' + str(l_b) + 'cm', 'c~=~' + str(l_c) + 'cm'],
+    auswahl = random.choice([['sss', st[0] + '~=~' + str(l_a) + 'cm',
+                              st[1] + '~=~' + str(l_b) + 'cm',
+                              st[2] + '~=~' + str(l_c) + 'cm'],
                              ['sws', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                               st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                               wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
@@ -50,10 +52,9 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
                              ['sww',  st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                               wk[0] + '~=~' + gzahl(wk_werte[0]) + r' ^{  \circ}',
                               wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}'],
-                             random.choice([['Ssw', 'b~=~' + str(l_b) + 'cm', ' c ~=~' + str(l_c) + 'cm',
-                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}'],
-                             ['Ssw', 'a~=~' + str(l_a) + 'cm', ' c ~=~' + str(l_c) + 'cm',
-                              r' \gamma ~=~' + str(gamma) + r' ^{  \circ}']])])
+                             ['Ssw', st[1] + '~=~' + str(l_b) + 'cm',
+                              st[2] + '~=~' + str(l_c) + 'cm',
+                              wk[2] + '~=~' + str(gamma) + r' ^{  \circ}']])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
@@ -63,7 +64,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Auswahl des Kongruenzsatzes
+        # Kongruenzsatzes benennen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 1
@@ -84,6 +85,82 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
                        + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
         dreieck_zeichnen(pkt_werte, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b']):
+    #
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    l_a = (m ** 2 - n ** 2) / 10
+    l_b = 2 * m * n / 10
+    l_c = (m ** 2 + n ** 2) / 10
+    gamma = 90
+    beta = int(math.degrees(math.asin(l_b / l_c)))
+    alpha = gamma - beta
+    auswahl = random.sample([0, 1, 2], 3)
+    pkt_bez = ['A', 'B', 'C']
+    st = [['a', 'b', 'c'][x] for x in auswahl]
+    st_werte = [l_a, l_b, l_c]
+    wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+    wk_werte = [alpha, beta, gamma]
+    pkt_werte = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+    # die verschiedenen Aufgaben  ['a', 'b', 'c', r' \alpha ', r' \beta ', r' \gamma ']
+    aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
+                 + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
+    loesung_1 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
+                 + st[2] + r'~=~ \sqrt{ (' + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
+                 + r'cm \quad (3P) \\ \mathrm{Planskizze} \quad (2P)')
+    aufgabe_2 = (st[1] + '~=~' + gzahl(l_b) + r'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm, ~ \mathrm{und} ~'
+                 + wk[2] + r'~=~ 90^{  \circ} .')
+    loesung_2 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[1]
+                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{ ('
+                 + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_a) + r'cm \quad (3P) \\'
+                 + r' \mathrm{Planskizze} \quad (2P)')
+    aufgabe_3 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[2] + '~=~' + gzahl(l_c)
+                 + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
+    loesung_3 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[0]
+                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{ (' + gzahl(l_c)
+                 + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~' + gzahl(l_b) + r'cm \quad (3P) \\'
+                 + r' \mathrm{Planskizze} \quad (2P)')
+    auswahl = random.choice([[aufgabe_1,loesung_1], [aufgabe_2,loesung_2],[aufgabe_3, loesung_3]])
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:', auswahl[0]]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Seitenlänge im rechtw. Dreieck mit Pythagoras berechnen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. '
+                                                'Fertige dazu eine Planskizze an. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + auswahl[1])
+        liste_punkte.append(5)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Winkel im rechtwinkligen Dreieck mit Sinus, Kosinus und Tangens berechnen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~}' + st[0] + '~=~' + gzahl(l_a) + 'cm,~'
+                       + st[1] + '~=~' + gzahl(l_b) + 'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm ~ \mathrm{und} ~'
+                       + wk[2] + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1P) \\ sin('
+                       + wk[0] + r')~=~ \frac{' + st[0] + 'cm}{' + st[2] + r'cm} ~=~ \frac{' + gzahl(l_a) + 'cm}{'
+                       + gzahl(l_c) + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad' + wk[0]
+                       + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
+                       + r' ^{ \circ} \quad (3P) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
+                       + gzahl(alpha) + r'^{ \circ} ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (2P)')
+        liste_punkte.append(5)
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

@@ -21,7 +21,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [kongruente_Dreiecke(1)]
+    aufgaben_seite1 = [rechtwinkliges_dreieck(1)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])
