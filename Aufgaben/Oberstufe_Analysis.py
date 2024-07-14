@@ -120,9 +120,9 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                       start_arithm_folge - 1 / x,
                       start_arithm_folge / (x + arithm_folge_d),
                       x ** arithm_folge_d]
-    bel_vorschrift_str = [str(start_arithm_folge) + r'+ \left( ' + str(basis) + r' \right) ^{n}',
-                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
-                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
+    bel_vorschrift_str = [gzahl(start_arithm_folge) + r'+ \left( ' + gzahl(basis) + r' \right) ^{n}',
+                          gzahl(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + gzahl(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
@@ -173,7 +173,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             table_b.add_hline(2, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
                                                     r'~ist~es~eine~arithmetische~Folge~mit~d~=~'
-                           + str(arithm_folge_d) + r'.} \quad (3P)')
+                           + gzahl(arithm_folge_d) + r'.} \quad (3P)')
             loesung.append(table_b)
 
         if auswahl_folgenart == 1:
@@ -185,7 +185,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                             Rational(data[3] / data[2]))
             table_b.add_hline(2, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
-                           + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + str(geom_folge_q) + r'.} \quad (3P)')
+                           + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + gzahl(geom_folge_q) + r'.} \quad (3P)')
             loesung.append(table_b)
         if auswahl_folgenart == 2:
             table_b = Tabular('c|c|c|c|c|c|', row_height=1.2)
@@ -222,9 +222,9 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             aufgabe.append(str(liste_teilaufg[i])
                            + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} bis n={a_oben}. \n\n')
             ergebnis = n * (wert_a_oben + wert_a_unten) / 2
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
-                           str(a_oben) + r'} ~ a_n ~=~ ' + str(n) + r' \cdot \frac{~' + str(wert_a_unten) +
-                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + str(N(ergebnis, 5)) + r' \quad (3P) \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + gzahl(a_unten) + '}^{' +
+                           gzahl(a_oben) + r'} ~ a_n ~=~ ' + gzahl(n) + r' \cdot \frac{~' + gzahl(wert_a_unten) +
+                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + gzahl(N(ergebnis, 5)) + r' \quad (3P) \\')
         else:
             a_unten = nzahl(11, 20)
             a_oben = nzahl(21, 30)
@@ -232,9 +232,9 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Summe der Folgenglieder von n={a_unten} '
                                                     f'bis n={a_oben}. \n\n')
             ergebnis = (1 - geom_folge_q ** (n + 1)) / (1 - geom_folge_q)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + str(a_unten) + '}^{' +
-                           str(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + str(geom_folge_q) + r' \right)^{'
-                           + str(n + 1) + '~}}{~1~-~' + str(geom_folge_q) + '} ~=~' + str(N(ergebnis, 5))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + gzahl(a_unten) + '}^{' +
+                           gzahl(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + gzahl(geom_folge_q) + r' \right)^{'
+                           + gzahl(n + 1) + '~}}{~1~-~' + gzahl(geom_folge_q) + '} ~=~' + gzahl(N(ergebnis, 5))
                            + r' \quad (3P) \\')
         liste_punkte.append(3)
         i += 1
@@ -257,9 +257,9 @@ def grenzwerte_folge(nr, ausw_folgenart=None):
                       start_arithm_folge / (x + arithm_folge_d),
                       x ** arithm_folge_d]
     bel_vorschrift_str = [str(start_arithm_folge) + vorz_str(basis) + r'^{n}',
-                          str(start_arithm_folge) + r'~-~ \frac{1}{n}',
-                          r' \frac{' + str(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
-                          r'n^{' + str(arithm_folge_d) + '}']
+                          gzahl(start_arithm_folge) + r'~-~ \frac{1}{n}',
+                          r' \frac{' + gzahl(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
+                          r'n^{' + gzahl(arithm_folge_d) + '}']
     ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
@@ -294,7 +294,7 @@ def grenzwerte_funktionen(nr):
     zaehler = collect(expand(faktor * (x ** 2 - polstelle ** 2)),x)
     nenner = x + (-1 * polstelle)
     Bruch = r' \frac{' + latex(zaehler) + '}{' + latex(nenner) + '}'
-    Bruch_gekuerzt = (r'~=~ \lim \limits_{x \to ' + str(polstelle) + '} ~ ' + vorz_v_aussen(faktor, r' \cdot (x')
+    Bruch_gekuerzt = (r'~=~ \lim \limits_{x \to ' + gzahl(polstelle) + '} ~ ' + vorz_v_aussen(faktor, r' \cdot (x')
                       + vorz_v_innen(polstelle,')'))
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -455,7 +455,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
 
         loesung.extend((str(liste_teilaufg[i])
                        + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~}\bm{m='
-                       + str(steigung_dreieck) + r'}\mathrm{~bestimmt~(1P)}', 'Figure'))
+                       + gzahl(steigung_dreieck) + r'}\mathrm{~bestimmt~(1P)}', 'Figure'))
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(3)
         i += 1
@@ -536,8 +536,8 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
         punkte = 8
         a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
         b1, b2, b3 = faktorliste(2, 12, 3)
-        fkt_str_a = str(a1) + 'x' + vorz_str(a2)
-        fkt_str_b = str(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
+        fkt_str_a = gzahl(a1) + 'x' + vorz_str(a2)
+        fkt_str_b = gzahl(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
 
         aufgabe.append(str(liste_teilaufg[i])
                        + r') Berechne die Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.')
@@ -996,15 +996,15 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + str(faktor) + r' \cdot (~x^2~'
+        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + gzahl(faktor) + r' \cdot (~x^2~'
                                         + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~'
                                         + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
                                         + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
-                                        + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~' + str(faktor) + r' \cdot ((x'
+                                        + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~' + gzahl(faktor) + r' \cdot ((x'
                                         + vorz_str(-1*x_wert_s) + ')^2' + vorz_str(-1 * (p_fkt / 2) ** 2) + ')'
-                                        + vorz_str(faktor * q_fkt) + '~=~' + str(faktor)
+                                        + vorz_str(faktor * q_fkt) + '~=~' + gzahl(faktor)
                                         + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
-                                        + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + str(y_wert_s) +  r'.} \quad (1P)')
+                                        + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + gzahl(y_wert_s) +  r'.} \quad (1P)')
         liste_punkte.append(4)
         i += 1
 

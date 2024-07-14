@@ -105,12 +105,8 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b']):
     beta = int(math.degrees(math.asin(l_b / l_c)))
     alpha = gamma - beta
     auswahl = random.sample([0, 1, 2], 3)
-    pkt_bez = ['A', 'B', 'C']
     st = [['a', 'b', 'c'][x] for x in auswahl]
-    st_werte = [l_a, l_b, l_c]
     wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
-    wk_werte = [alpha, beta, gamma]
-    pkt_werte = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
     # die verschiedenen Aufgaben  ['a', 'b', 'c', r' \alpha ', r' \beta ', r' \gamma ']
     aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
                  + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')

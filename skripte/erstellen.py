@@ -168,7 +168,6 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
         erzeugen_test(f'Gr. {alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
 
-
 # Hier wird eine Klausur erzeugt
 def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
     def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
@@ -395,7 +394,6 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
     erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
 
 # Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
-
 def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
     # Aufgabenblatt
