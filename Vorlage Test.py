@@ -1,5 +1,6 @@
 from Aufgaben.Oberstufe_Analysis import *
 from Aufgaben.Oberstufe_Algebra import *
+from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
@@ -12,17 +13,17 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Vorlage'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = False    # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-Aufgaben = [[logarithmusgesetze(1), ableitungen(2)],[anwend_abl_seilbahn(3)]]
-
-# hier werden aus der Liste der Aufgaben dieTest erzeugt
 for i in range(anzahl):
+    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+    Aufgaben = [[aenderungsrate(1), rekonstruktion(2)], [baumdiagramm(3,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'])]]
+
+    # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
         for aufgabe in element:
@@ -30,7 +31,6 @@ for i in range(anzahl):
             liste_punkte.extend(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
-
-test_erzeugen(liste_seiten, angaben, i, probe)
+    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+    test_erzeugen(liste_seiten, angaben, i, probe)
 
