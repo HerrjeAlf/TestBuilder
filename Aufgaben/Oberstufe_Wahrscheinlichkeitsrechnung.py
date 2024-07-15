@@ -58,6 +58,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     i = 0
     if stufen == None:
         anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
+        stufen = anzahl_ziehen[0]
     elif stufen == 2:
         anzahl_ziehen = [2, 'zweimal']
     elif stufen == 3:
@@ -207,11 +208,12 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         if art == 'zoZ':
             Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
-                             bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
+                             bz1=farben_kuerzel_1, bz2=farben_kuerzel_2)
         else:
-            Baumdiagramm_zmZ(anzahl_ziehen[0], Rational(anzahl_1,(anzahl_1+anzahl_2)),
+            print(farben_kuerzel_1)
+            Baumdiagramm_zmZ(stufen, Rational(anzahl_1,(anzahl_1+anzahl_2)),
                              f'Loesung_{nr}{liste_teilaufg[i]}',
-                             bz1=farben_kuerzel[auswahl_farbe[0]], bz2=farben_kuerzel[auswahl_farbe[1]])
+                             bz=farben_kuerzel_1, bz2=farben_kuerzel_2)
         aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
         if anzahl_ziehen[0] == 2:
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
@@ -328,7 +330,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         loeschen()
         histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}','Histogramm')
         loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1P,~Balken~' + str(pkt) + r'P} \\'
-                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\'))
+                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'))
         liste_punkte.append(punkte)
         i += 1
 
