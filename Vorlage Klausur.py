@@ -1,6 +1,7 @@
 from Aufgaben import *
 from skripte.erstellen import *
 
+
 # Angaben für die Klausur im pdf-Dokument
 Kurs = 'Kurs auf erhöhtem Niveau'
 Klasse = 11
@@ -18,7 +19,7 @@ liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil1 = [[ableitungen(1,['b','c'])]]
+aufgaben_teil1 = [[ableitungen(1)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -38,7 +39,7 @@ aufgaben_teil2 = [[kurvendiskussion_polynome_01(2)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil2 = []
-for element in aufgaben_teil1:
+for element in aufgaben_teil2:
     for aufgabe in element:
         liste_bez_teil2.extend(aufgabe[5])
         liste_punkte_teil2.extend(aufgabe[4])

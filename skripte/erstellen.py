@@ -509,8 +509,8 @@ def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
         # Auswertungsseite
         # erstellen der Tabelle zur Punkteübersicht
-        liste_punkte = angb[-3]
-        liste_bez = angb[-4]
+        liste_punkte = angb[-1]
+        liste_bez = angb[-2]
         Punkte = (sum(liste_punkte[1:]))
         liste_bez.append('Summe')
         liste_punkte.append(str(Punkte))

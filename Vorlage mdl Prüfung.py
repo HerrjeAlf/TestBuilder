@@ -1,6 +1,4 @@
-from Aufgaben.Oberstufe_Analysis import *
-from Aufgaben.Oberstufe_Algebra import *
-from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
+from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
@@ -16,32 +14,36 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-aufg_teil1 = [kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
-                                        nullstellen='rational', wendenormale=False)]
-for element in aufg_teil1:
-    liste_bez_teil1.extend(element[5])
-    liste_punkte_teil1.extend(element[4])
+# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+aufgaben_teil1 = [[kurvendiskussion_polynome_01(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
+                                        nullstellen='rational', wendenormale=False)]]
+
+# hier werden aus der Liste der Aufgaben dieTest erzeugt
+liste_seiten_teil1 = []
+for element in aufgaben_teil1:
+    for aufgabe in element:
+        liste_bez_teil1.extend(aufgabe[5])
+        liste_punkte_teil1.extend(aufgabe[4])
+    liste_seiten_teil1.append(seite(element))
 
 # Aufgaben für Prüfungsgespräch
 liste_punkte_teil2 = ['Punkte']
 liste_bez_teil2 = ['Aufgabe']
 
-aufg_teil2_s1 = [baumdiagramm_zmZ_und_bernoulli(2, ['a', 'c', 'd']), vierfeldertafel_01(3)]
-for element in aufg_teil2_s1:
-    liste_bez_teil2.extend(element[5])
-    liste_punkte_teil2.extend(element[4])
+# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel_01(3)]]
 
-aufg_teil2_s2 = []
-for element in aufg_teil2_s2:
-    liste_bez_teil2.extend(element[5])
-    liste_punkte_teil2.extend(element[4])
-
-liste_aufg_lsg_teil1 = [seite(aufg_teil1)]
-liste_aufg_lsg_teil2 = [seite(aufg_teil2_s1), seite(aufg_teil2_s2)]
+# hier werden aus der Liste der Aufgaben dieTest erzeugt
+liste_seiten_teil2 = []
+for element in aufgaben_teil2:
+    for aufgabe in element:
+        liste_bez_teil2.extend(aufgabe[5])
+        liste_punkte_teil2.extend(aufgabe[4])
+    liste_seiten_teil2.append(seite(element))
 
 #  Angaben für die Klausur
 
 angb = [schuljahr, pruefungsfach, lehrkraft, vorschlag, Thema_teil1, Thema_teil2, datum_delta,
         liste_bez_teil1, liste_punkte_teil1]
-muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb)
+muendliche_pruefung(liste_seiten_teil1, liste_seiten_teil2, angb)
 
