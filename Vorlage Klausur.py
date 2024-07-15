@@ -1,4 +1,4 @@
-from Aufgaben.Oberstufe_Analysis import *
+from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
@@ -17,44 +17,40 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-aufgaben_teil1_s1 = []
-for element in aufgaben_teil1_s1:
-    liste_bez_teil1.extend(element[5])
-    liste_punkte_teil1.extend(element[4])
+# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+aufgaben_teil1 = [[ableitungen(1,['b','c'])]]
 
-
-aufgaben_teil1_s2 = []
-for element in aufgaben_teil1_s2:
-    liste_bez_teil1.extend(element[5])
-    liste_punkte_teil1.extend(element[4])
-
-liste_seiten_teil1 = [seite(aufgaben_teil1_s1)]
-# z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+# hier werden aus der Liste der Aufgaben dieTest erzeugt
+liste_seiten_teil1 = []
+for element in aufgaben_teil1:
+    for aufgabe in element:
+        liste_bez_teil1.extend(aufgabe[5])
+        liste_punkte_teil1.extend(aufgabe[4])
+    liste_seiten_teil1.append(seite(element))
 
 # Aufgaben für Teil II
-liste_punkte = ['Punkte']
-liste_bez = ['Aufgabe']
+liste_punkte_teil2 = ['Punkte']
+liste_bez_teil2 = ['Aufgabe']
 
-aufgaben_teil2_s1 = [kurvendiskussion_polynom_parameter_2(5)]
-# z.B. aufgaben_seite1 = [exponentialfunktionen_01(1,['a', 'b', 'c', 'd', 'e', 'f', 'g'])]
-for element in aufgaben_teil2_s1:
-    print(element[5])
-    liste_bez.extend(element[5])
-    liste_punkte.extend(element[4])
 
-aufgaben_teil2_s2 = []
-for element in aufgaben_teil2_s2:
-    liste_bez.extend(element[5])
-    liste_punkte.extend(element[4])
+# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+aufgaben_teil2 = [[kurvendiskussion_polynome_01(2)]]
 
-liste_seiten_teil2 = [seite(aufgaben_teil2_s1)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+# hier werden aus der Liste der Aufgaben dieTest erzeugt
+liste_seiten_teil2 = []
+for element in aufgaben_teil1:
+    for aufgabe in element:
+        liste_bez_teil2.extend(aufgabe[5])
+        liste_punkte_teil2.extend(aufgabe[4])
+    liste_seiten_teil2.append(seite(element))
+
 
 #  Angaben für die Klausur
 
-Gesamtpunktzahl = sum(liste_punkte_teil1[1:]) + sum(liste_punkte[1:])
+Gesamtpunktzahl = sum(liste_punkte_teil1[1:]) + sum(liste_punkte_teil2[1:])
 angb_teil1 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
                 liste_bez_teil1, liste_punkte_teil1]
 angb_teil2 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
-                liste_bez, liste_punkte]
+              liste_bez_teil2, liste_punkte_teil2]
 
 klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2)

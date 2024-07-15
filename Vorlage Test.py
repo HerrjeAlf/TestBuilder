@@ -1,6 +1,4 @@
-from Aufgaben.Oberstufe_Analysis import *
-from Aufgaben.Oberstufe_Algebra import *
-from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
+from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument
@@ -21,7 +19,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[aenderungsrate(1), rekonstruktion(2)], [baumdiagramm(3,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'])]]
+    Aufgaben = [[aenderungsrate(1)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
