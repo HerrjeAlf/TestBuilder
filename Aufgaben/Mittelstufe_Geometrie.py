@@ -161,6 +161,172 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b']):
+    #
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    n = random.randint(1, 5)
+    m = n + random.randint(1, 5)
+    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+    l_a = (m ** 2 - n ** 2) / 10
+    l_b = 2 * m * n / 10
+    l_c = (m ** 2 + n ** 2) / 10
+    # hier werden die Winkel berechnet
+    w_c = 90
+    w_a = int(math.degrees(math.asin(l_a / l_c)))
+    w_b = w_c - w_a
+    # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
+    pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+    print('Länge Seite a: ' + str(l_a))
+    print('Länge Seite b: ' + str(l_b))
+    print('Länge Seite c: ' + str(l_c))
+    auswahl_beschriftung = random.randint(0, 6)
+    bezeichnungen = [
+        {'Punkte' : ['A', 'B', 'C'] ,'Seiten' : ['a', 'b', 'c'], 'Winkel' : [r'\alpha',r'\beta',r'90^{ \circ}']},
+        {'Punkte' : ['D', 'E', 'F'] ,'Seiten' : ['d', 'e', 'f'], 'Winkel' : [r'\delta',r'\epsilon',r'90^{ \circ}']},
+        {'Punkte' : ['G', 'K', 'L'] ,'Seiten' : ['g', 'k', 'l'], 'Winkel' : [r'\zeta',r'\eta',r'90^{ \circ}']},
+        {'Punkte' : ['M', 'N', 'P'] ,'Seiten' : ['m', 'n', 'p'], 'Winkel' : [r'\mu',r'\nu',r'90^{ \circ}']},
+        {'Punkte' : ['R', 'S', 'T'] ,'Seiten' : ['r', 's', 't'], 'Winkel' : [r'\rho',r'\sigma',r'90^{ \circ}']},
+        {'Punkte' : ['U', 'V', 'W'] ,'Seiten' : ['u', 'v', 'w'], 'Winkel' : [r'\upsilon',r'\phi',r'90^{ \circ}']},
+        {'Punkte' : ['X', 'Y', 'Z'] ,'Seiten' : ['x', 'y', 'z'], 'Winkel' : [r'\chi',r'\psi',r'90^{ \circ}']}]
+
+
+    pkt_bez = bezeichnungen[auswahl_beschriftung]['Punkte']
+    st = bezeichnungen[auswahl_beschriftung]['Seiten']
+    st_werte = [l_a,l_b,l_c]
+    wk = [r'\alpha', r'\beta', r'90^{ \circ}']
+    wk_werte = [w_a, w_b, w_c]
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+               'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.', 'Figure']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = [f'Loesung_{nr}']
+    dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Loesung_{nr}')
+    grafiken_loesung = []
+
+    p = random.choice([0, 1])
+
+    if 'a' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
+        if p == 0:
+            aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
+            loesungen = (r' \mathrm{sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2]
+                         + r'}, \quad cos(' + wk[0] + r')~=~ \frac{' + st[1] + '}{' + st[2]
+                         + r'}, \quad tan(' + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[1] + '}}')
+        else:
+            aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
+                           + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
+            loesungen = (r' \mathrm{sin(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[2]
+                         + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
+                         + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
+
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
+        liste_punkte.append(3)
+        i += 1
+
+    if 'b' in teilaufg:
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        auswahl_seite = random.randint(0,2)
+        aufgabe.append(str(liste_teilaufg[i])
+                       + ') Berechne die fehlenden Größen, wenn außer dem rechten Winkel noch folgendes gegeben ist:')
+        aufgabe.append(wk[p] + '~=~' + latex(wk_werte[p]) + r' ^{ \circ } ~, \quad ' + st[auswahl_seite] + '~=~'
+                       + latex(st_werte[auswahl_seite]) + r' cm \\')
+        if p == 0:
+            if auswahl_seite == 0:
+                loesung_1 = (' sin(' + wk[p] + r')~=~ \frac{' + st[auswahl_seite] + '}{' + st[2] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[2] + r' ~ \vert ~ \div sin(' + wk[p] + ')'
+                             + r' \quad \to \quad ' + st[2]   + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ sin('
+                             + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + ' cm ~}{~ sin('
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[2]) + r' cm \quad (2P) \\'
+
+                             + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[1] + r'}'
+                             + r' \quad \vert ~ \cdot ' + st[1] + r' ~ \vert ~ \div tan(' + wk[p]
+                             + r') \quad \to \quad ' + st[1] +  r'=~ \frac{' + st[auswahl_seite] + r'}{ ~ tan('
+                             + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + ' cm ~}{~ tan('
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[1]) + r' cm \quad (2P) \\')
+
+            elif auswahl_seite == 1:
+                loesung_1 = (' cos(' + wk[p] + r')~=~ \frac{' + st[auswahl_seite] + '}{' + st[2] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[2] + r' ~ \vert ~ \div cos(' + wk[p] + ')'
+                             + r' \quad \to \quad ' + st[2] + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ cos('
+                             + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos('
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[2]) + r'cm \quad (2P) \\'
+
+                             + ' tan(' + wk[p] + r') ~=~ \frac{' + st[0] + r'}{' + st[auswahl_seite] + r'}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[0]
+                             + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
+                             + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
+                             + str(st_werte[0]) + r' cm \quad (2P) \\')
+            else:
+                loesung_1 = (' sin(' + wk[p] + r')~=~ \frac{' + st[0] + '}{' + st[auswahl_seite] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[0]
+                             + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite] + '~=~'
+                             + r'=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
+                             + 'cm~=~' + str(st_werte[0]) + r'cm \quad (2P) \\'
+
+                             + ' cos(' + wk[p] + r')~=~ \frac{' + st[1] + '}{' + st[auswahl_seite] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
+                             + st[1] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
+                             + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
+                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[1]) + r'cm \quad (2P) \\')
+
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad' + loesung_1)
+                           + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
+                           + str(wk_werte[1]) + r'^{ \circ} \quad (2P)')
+        else:
+            if auswahl_seite == 0:
+                loesung_1 = (' cos(' + wk[p] + r')~=~ \frac{' + st[auswahl_seite] + '}{' + st[2] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[2] + r' ~ \vert ~ \div cos(' + wk[p] + ')'
+                             + r' \quad \to \quad ' + st[2] + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ cos('
+                             + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos('
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[2]) + r'cm \quad (2P) \\'
+
+                             + ' tan(' + wk[p] + r') ~=~ \frac{' + st[1] + r'}{' + st[auswahl_seite] + r'}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[1]
+                             + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
+                             + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
+                             + str(st_werte[1]) + r' cm \quad (2P) \\')
+
+            elif auswahl_seite == 1:
+                loesung_1 = (' sin(' + wk[p] + r')~=~ \frac{' + st[auswahl_seite] + '}{' + st[2] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[2] + r' \vert \div sin(' + wk[p] + r')'
+                             + r' \quad \to \quad ' + st[2] + r'~=~ \frac{' + st[auswahl_seite] + '}{ ~ sin('
+                             + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + 'cm~ }{~ sin('
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[2]) + r'cm \quad (2P) \\'
+
+                             + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[0] + r'}'
+                             + r' \quad \vert ~ \cdot ' + st[0] + r' \vert \div tan(' + wk[p] + r')'
+                             + r' \quad \to \quad ' + st[0] + r'=~ \frac{' + st[auswahl_seite]
+                             + '}{ ~ tan(' + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite])
+                             + 'cm~ }{~ tan(' + str(wk_werte[p]) + r') ~} ~=~'
+                             + str(st_werte[0]) + r'cm \quad (2P) \\')
+            else:
+                loesung_1 = (' sin(' + wk[p] + r')~=~ \frac{' + st[1] + '}{' + st[auswahl_seite] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[1]
+                             + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
+                             + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
+                             + 'cm~=~' + str(st_werte[1]) + r'cm \quad (2P) \\'
+
+                             + ' cos(' + wk[p] + r')~=~ \frac{' + st[0] + '}{' + st[auswahl_seite] + '}'
+                             + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
+                             + st[0] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
+                             + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
+                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[0]) + r'cm \quad (2P) \\')
+
+            loesung.append(str(liste_teilaufg[i]) + (r') \quad' + loesung_1)
+                           + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
+                           + str(wk_werte[0]) + r'^{ \circ} \quad (2P)')
+        liste_punkte.append(6)
+        i += 1
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 
 def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
     # Berechnungen im allgemeinen Dreieck
