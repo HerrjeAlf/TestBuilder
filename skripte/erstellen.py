@@ -393,6 +393,245 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
     erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1)
     erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
 
+# Hier wird eine Vorbiturklausur erzeugt
+def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
+    def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
+        Kurs, in_tagen, liste_bez, liste_punkte = angb_teil1[0], angb_teil1[1], angb_teil1[2], angb_teil1[3]
+        print(f'\033[38;2;100;141;229m\033[1m\033[0m')
+        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+
+        # erstellen der Tabelle zur Punkteübersicht
+        liste_punkte = angb_teil1[-1]
+        liste_bez = angb_teil1[-2]
+        liste_bez.append('')
+        liste_punkte.append('')
+        anzahl_spalten = len(liste_punkte)
+        liste_gewaehlt = ['gewählt']
+        for p in range(anzahl_spalten - 2):
+            if p < 4:
+                liste_gewaehlt.append(NoEscape(r'$  \boxtimes $'))
+            else:
+                liste_gewaehlt.append(NoEscape(r'$  \square $'))
+        liste_gewaehlt.append('Summe')
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+
+        spalten = '|'
+        if Kurs == 'Grundkurs':
+            for p in len(liste_punkte):
+                if p < 3:
+                    spalten += 'c'
+                elif p > 3 and p < 6:
+                    spalten += 'c'
+                elif p > 6 and p < 9:
+                    spalten += 'c'
+                else:
+                    spalten += 'c|'
+        elif Kurs == 'Leistungskurs':
+            for p in len(liste_punkte):
+                if p < 3:
+                    spalten += 'c'
+                elif p > 3 and p < 9:
+                    spalten += 'c'
+                else:
+                    spalten += 'c|'
+        else:
+            exit("Kurs muss 'Grundkurs' oder 'Leistungskurs' sein.")
+        table3 = Tabular(spalten, row_height=1.2)
+        table3.add_hline()
+        table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                    data='Punkteverteilung aller Aufgaben in Teil I'),))
+        table3.add_hline()
+        table3.add_row(liste_bez)
+        table3.add_hline()
+        table3.add_row(liste_punkte)
+        table3.add_hline()
+        table3.add_row(liste_ergebnis_z1)
+        table3.add_row(liste_ergebnis_z2)
+        table3.add_hline()
+
+
+                       # der Teil in dem die PDF-Datei erzeugt wird
+        @timer
+        def Teil_1():
+            Aufgabe = Document(geometry_options=geometry_options)
+            packages(Aufgabe)
+
+            # Kopf erste Seite
+            with Aufgabe.create(Figure(position='h')) as kopf:
+                kopf.add_image('../img/kopfzeile.png', width='480px')
+            # Tabelle erste Seite
+            table1 = Tabular(' p{5cm} p{11cm}', row_height=1.5)
+            table1.add_row((MultiColumn(2, align='l',
+                                        data=MediumText(bold(f'Klausur im 3. Semester der Qualifikationsphase am {Datum}'))),))
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='c', data=HugeText(bold('Mathematik'))),))
+            table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(Kurs))),))
+            table1.add_empty_row()
+            table1.add_row(MediumText('Vorname, Name:'), '')
+            table1.add_hline(2, 2, color='gray')
+            table1.add_empty_row()
+            table1.add_row(LargeText(bold('Aufgabenvorschlag')),
+                           (MultiColumn(1, align='c', data=LargeText(bold('Teil I'))),))
+            table1.add_hline(1, 2)
+            table1.add_row(MediumText(bold('Thema/Inhalt:')),
+                           MediumText('hilfsmittelfreie Aufgaben'))
+            table1.add_row(MediumText(bold('Hilfsmittel:')),
+                           MediumText('Nachschlagewerk zur Rechtschreibung der deutschen Sprache, Zeichenwerkzeuge'))
+            table1.add_row(MediumText(''),MediumText(bold('keine weiteren Hilfsmittel')))
+            table1.add_row(MediumText(bold('Bearbeitungszeit:')),
+                           MediumText('Für die Bearbeitung stehen maximal 100 Minuten zur Verfügung. '
+                                      'Sobald die Aufgabenstellungen und die Bearbeitungen zum Teil 1 abgegeben '
+                                      'wurden, werden die Hilfsmittel für Teil 2 ausgegeben, auch wenn dies bereits '
+                                      'vor Ablauf der 100 Minuten erfolgt.'))
+
+            table1.add_hline(1, 2)
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenwahl'))),))
+            table1.add_row(MediumText(bold('Pflichtaufgaben')),
+                           MediumText('Die Aufgaben 1, 2, 3 und 4 müssen bearbeitet werden.'))
+            if Kurs == 'Grundkurs':
+                table1.add_row(MediumText('Wahlaufgaben:'),
+                               MediumText('Von den Aufgaben 5, 6 und 7 muss genau eine Aufgabe bearbeitet werden. \n '
+                                          'Von den Aufgaben 8, 9 und 10 muss genau eine Aufgabe bearbeitet werden.'))
+            if Kurs == 'Leistungskurs':
+                table1.add_row(MediumText('Wahlaufgaben:'),
+                               MediumText('Von den Aufgaben 5 bis 10 müssen genau zwei Aufgaben bearbeitet werden.'))
+            table1.add_hline(1, 2)
+            table1.add_empty_row()
+
+            Aufgabe.append(table1)
+            Aufgabe.append(table3)
+
+            Aufgabe.append(' \n\n')
+            Aufgabe.append(NewPage())
+
+            table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+            table2.add_row(MediumText(bold(f'Teil I')),MediumText(bold(f'hilfsmittelfreie Aufgaben')))
+            table2.add_hline(1, 2)
+            table2.add_empty_row()
+
+            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+            for element in liste_seiten_teil1:
+                Aufgabe.append(table2)
+                Aufgabe.append(' \n\n')
+                Aufgabe.extend(element[0])
+                if element != liste_seiten_teil1[-1]:
+                    Aufgabe.append(NewPage())
+
+
+            Aufgabe.append(' \n\n')
+
+            Aufgabe.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - Teil I', clean_tex=true)
+
+        # Erwartungshorizont
+        @timer
+        def EWH_Teil_1():
+            Loesung = Document(geometry_options=geometry_options)
+            packages(Loesung)
+
+            Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im 3. Semester \n\n'
+                                          f'der Qualifikationsphase am {Datum}')))
+
+            # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
+
+            for element in liste_seiten_teil1:
+                Loesung.extend(element[1])
+
+
+            Loesung.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - EWH Teil I', clean_tex=true)
+
+        # Druck der Seiten
+        Teil_1()
+        EWH_Teil_1()
+
+    def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
+        Kurs, in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3]
+        in_tagen, liste_bez, liste_punkte = angb_teil2[9], angb_teil2[10], angb_teil2[11]
+        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        print(f'\033[38;2;100;141;229m\033[1m\033[0m')
+
+        # erstellen der Tabelle zur Punkteübersicht
+        Punkte = (sum(liste_punkte[1:]))
+        liste_bez.append('Summe')
+        liste_punkte.append(str(Punkte))
+        anzahl_spalten = len(liste_punkte)
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+        spalten = '|'
+        for p in liste_punkte:
+            spalten += 'c|'
+
+        table3 = Tabular(spalten, row_height=1.2)
+        table3.add_hline()
+        table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil II'),))
+        table3.add_hline()
+        table3.add_row(liste_bez)
+        table3.add_hline()
+        table3.add_row(liste_punkte)
+        table3.add_hline()
+        table3.add_row(liste_ergebnis_z1)
+        table3.add_row(liste_ergebnis_z2)
+        table3.add_hline()
+
+        # der Teil in dem die PDF-Datei erzeugt wird
+        @timer
+        def Teil_2():
+            Aufgabe = Document(geometry_options=geometry_options)
+            packages(Aufgabe)
+
+            # Kopf erste Seite
+            table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+            table2.add_row(MediumText(bold(f'Teil II')),
+                           MediumText(bold(f'Aufgaben mit zugelassenen Hilfsmitteln')))
+            table2.add_hline(1, 2)
+            table2.add_empty_row()
+
+            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+            for element in liste_seiten_teil2:
+                Aufgabe.append(table2)
+                Aufgabe.append(' \n\n')
+                Aufgabe.extend(element[0])
+                if element != liste_seiten_teil2[-1]:
+                    Aufgabe.append(NewPage())
+
+            Aufgabe.append(table3)
+
+            Aufgabe.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - Teil II', clean_tex=true)
+
+        # Erwartungshorizont
+        @timer
+        def EWH_Teil_2():
+            Loesung = Document(geometry_options=geometry_options)
+            packages(Loesung)
+
+            Loesung.append(LargeText(bold(f' Lösung für Teil II der Klausur im 3. Semester \n\n'
+                                          f'der Qualifikationsphase am {Datum}')))
+
+            # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
+            for element in liste_seiten_teil2:
+                Loesung.extend(element[1])
+
+
+            Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
+
+            Loesung.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - EWH Teil II', clean_tex=true)
+
+        # Druck der Seiten
+        Teil_2()
+        EWH_Teil_2()
+
+    erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1)
+    erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
+
 # Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
 def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
 
