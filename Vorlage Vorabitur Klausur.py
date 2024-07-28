@@ -2,7 +2,7 @@ from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
-Kurs = 'Grundkurs'
+Kurs = ('Grundkurs')
 Klasse = 13
 Gruppe = ''
 Gesamtzeit = 285
@@ -18,7 +18,8 @@ liste_bez_teil1 = ['Aufgabe']
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], [ ..., aufgabe(10)]] eintragen
 aufgaben_teil1 = [[ableitungen(1, ['a', 'b', 'c']), ableitungen(2, ['b']), ableitungen(3, ['c'])],
                   [ableitungen(4, ['d']), ableitungen(5, ['e']), ableitungen(6, ['f'])],
-                  [ableitungen(7, ['a']), ableitungen(8, ['b']), ableitungen(9, ['c'])]]
+                  [ableitungen(7, ['a']), ableitungen(8, ['b']), ableitungen(9, ['c']),]]
+                   # ableitungen(10, ['c'])]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -49,7 +50,7 @@ for aufgaben in aufgaben_teil2:
     liste_punkte = ['Punkte']
     liste_bez = ['Aufgabe']
 
-    # hier werden aus der Liste der Aufgaben dieTest erzeugt
+    # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []
     for element in aufgaben:
         for aufgabe in element:
