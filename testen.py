@@ -1,7 +1,4 @@
-from Aufgaben.Mittelstufe_Geometrie import *
-from Aufgaben.Oberstufe_Analysis import *
-from Aufgaben.Oberstufe_Algebra import *
-from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
+from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für den Test im pdf-Dokument

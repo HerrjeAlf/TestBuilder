@@ -2044,6 +2044,8 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     if nullstellen == 'rational':
         nst_1 = zzahl(1, 3)
         nst_2 = nst_1 + nzahl(1, 3)
+        while nst_2 < 1:
+            nst_2 + 1
         nst_3 = nst_1 - nzahl(2, 3) + 0.5
         faktor = zzahl(2, 3)
 
@@ -2367,7 +2369,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         liste_punkte.append(5)
         i += 1
 
-    if 'j' in teilaufg and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
+    if 'j' in teilaufg: # and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         Fkt = integrate(fkt, x)
@@ -2375,7 +2377,6 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                    + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
 
         def erste_positive_nst(vec):
-
             # print(vec)
             vec.sort()
             # print(vec)
@@ -2383,7 +2384,6 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                 if element > 0:
                     # print(element)
                     return element
-            exit('keine positive Nullstelle')
 
         obere_grenze = N(erste_positive_nst([nst_1, nst_2, nst_3]), 3)
         loesung_integral = Fkt.subs(x, obere_grenze)

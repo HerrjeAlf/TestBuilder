@@ -405,48 +405,36 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         liste_bez = angb_teil1[-2]
         liste_bez.append('')
         liste_punkte.append('')
-        anzahl_spalten = len(liste_punkte)
         liste_gewaehlt = ['gewählt']
-        for p in range(anzahl_spalten - 2):
-            if p < 4:
-                liste_gewaehlt.append(NoEscape(r'$  \boxtimes $'))
+        for p in range(len(liste_punkte) - 2):
+            if Kurs == 'Grundkurs':
+                if p < 3:
+                    liste_gewaehlt.append(NoEscape(r'$ \surd $'))
+                else:
+                    liste_gewaehlt.append(NoEscape(r'$ \square $'))
             else:
-                liste_gewaehlt.append(NoEscape(r'$  \square $'))
+                if p < 4:
+                    liste_gewaehlt.append(NoEscape(r'$ \surd $'))
+                else:
+                    liste_gewaehlt.append(NoEscape(r'$ \square $'))
         liste_gewaehlt.append('Summe')
         liste_ergebnis_z1 = ['erhaltene']
-        for p in range(anzahl_spalten - 1):
+        for p in range(len(liste_punkte) - 1):
             liste_ergebnis_z1.append('')
         liste_ergebnis_z2 = ['Punkte']
-        for p in range(anzahl_spalten - 1):
+        for p in range(len(liste_punkte) - 1):
             liste_ergebnis_z2.append('')
 
         spalten = '|'
-        if Kurs == 'Grundkurs':
-            for p in len(liste_punkte):
-                if p < 3:
-                    spalten += 'c'
-                elif p > 3 and p < 6:
-                    spalten += 'c'
-                elif p > 6 and p < 9:
-                    spalten += 'c'
-                else:
-                    spalten += 'c|'
-        elif Kurs == 'Leistungskurs':
-            for p in len(liste_punkte):
-                if p < 3:
-                    spalten += 'c'
-                elif p > 3 and p < 9:
-                    spalten += 'c'
-                else:
-                    spalten += 'c|'
-        else:
-            exit("Kurs muss 'Grundkurs' oder 'Leistungskurs' sein.")
+        for element in liste_punkte:
+            spalten += 'c|'
         table3 = Tabular(spalten, row_height=1.2)
         table3.add_hline()
-        table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
+        table3.add_row((MultiColumn(len(liste_punkte), align='|c|',
                                     data='Punkteverteilung aller Aufgaben in Teil I'),))
         table3.add_hline()
         table3.add_row(liste_bez)
+        table3.add_row(liste_gewaehlt)
         table3.add_hline()
         table3.add_row(liste_punkte)
         table3.add_hline()
@@ -455,7 +443,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         table3.add_hline()
 
 
-                       # der Teil in dem die PDF-Datei erzeugt wird
+        # der Teil in dem die PDF-Datei erzeugt wird
         @timer
         def Teil_1():
             Aufgabe = Document(geometry_options=geometry_options)
@@ -475,36 +463,58 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             table1.add_row(MediumText('Vorname, Name:'), '')
             table1.add_hline(2, 2, color='gray')
             table1.add_empty_row()
-            table1.add_row(LargeText(bold('Aufgabenvorschlag')),
-                           (MultiColumn(1, align='c', data=LargeText(bold('Teil I'))),))
+            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenvorschlag Teil I'))),))
             table1.add_hline(1, 2)
+            table1.add_empty_row()
             table1.add_row(MediumText(bold('Thema/Inhalt:')),
                            MediumText('hilfsmittelfreie Aufgaben'))
+            table1.add_empty_row()
             table1.add_row(MediumText(bold('Hilfsmittel:')),
                            MediumText('Nachschlagewerk zur Rechtschreibung der deutschen Sprache, Zeichenwerkzeuge'))
             table1.add_row(MediumText(''),MediumText(bold('keine weiteren Hilfsmittel')))
-            table1.add_row(MediumText(bold('Bearbeitungszeit:')),
-                           MediumText('Für die Bearbeitung stehen maximal 100 Minuten zur Verfügung. '
-                                      'Sobald die Aufgabenstellungen und die Bearbeitungen zum Teil 1 abgegeben '
-                                      'wurden, werden die Hilfsmittel für Teil 2 ausgegeben, auch wenn dies bereits '
-                                      'vor Ablauf der 100 Minuten erfolgt.'))
-
-            table1.add_hline(1, 2)
             table1.add_empty_row()
-            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenwahl'))),))
-            table1.add_row(MediumText(bold('Pflichtaufgaben')),
-                           MediumText('Die Aufgaben 1, 2, 3 und 4 müssen bearbeitet werden.'))
             if Kurs == 'Grundkurs':
-                table1.add_row(MediumText('Wahlaufgaben:'),
-                               MediumText('Von den Aufgaben 5, 6 und 7 muss genau eine Aufgabe bearbeitet werden. \n '
-                                          'Von den Aufgaben 8, 9 und 10 muss genau eine Aufgabe bearbeitet werden.'))
-            if Kurs == 'Leistungskurs':
-                table1.add_row(MediumText('Wahlaufgaben:'),
-                               MediumText('Von den Aufgaben 5 bis 10 müssen genau zwei Aufgaben bearbeitet werden.'))
+                table1.add_row(MediumText(bold('Bearbeitungszeit:')),
+                        MediumText('Für die Bearbeitung stehen maximal 90 Minuten zur Verfügung. '
+                                   'Sobald die Aufgabenstellungen und die Bearbeitungen zum Teil 1 abgegeben '
+                                   'wurden, werden die Hilfsmittel für Teil 2 ausgegeben, auch wenn dies bereits '
+                                   'vor Ablauf der 90 Minuten erfolgt.'))
+            else:
+                table1.add_row(MediumText(bold('Bearbeitungszeit:')),
+                               MediumText('Für die Bearbeitung stehen maximal 100 Minuten zur Verfügung. '
+                                          'Sobald die Aufgabenstellungen und die Bearbeitungen zum Teil 1 abgegeben '
+                                          'wurden, werden die Hilfsmittel für Teil 2 ausgegeben, auch wenn dies bereits '
+                                          'vor Ablauf der 100 Minuten erfolgt.'))
+            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenwahl'))),))
             table1.add_hline(1, 2)
             table1.add_empty_row()
+            if Kurs == 'Grundkurs':
+                table1.add_row(MediumText(bold('Pflichtaufgaben')),
+                               MediumText('Die Aufgaben 1, 2 und 3 müssen bearbeitet werden.'))
+                table1.add_row(MediumText(bold('Wahlaufgaben:')),
+                               MediumText('Von den Aufgaben 4, 5 und 6 muss genau eine bearbeitet werden.'))
+                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 4 oder '
+                                                            + r'$ \square $' + ' Aufgabe 5 oder ' + r'$ \square $'
+                                                            + ' Aufgabe 6'))))
+
+                table1.add_empty_row()
+                table1.add_row(MediumText(bold('Wahlaufgaben:')),
+                               MediumText('Von den Aufgaben 7, 8 und 9 muss genau eine bearbeitet werden.'))
+                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 7  oder '
+                                                            + r'$ \square $' + ' Aufgabe 8 oder ' + r'$ \square $'
+                                                            + ' Aufgabe 9'))))
+
+            else:
+                table1.add_row(MediumText(bold('Pflichtaufgaben')),
+                               MediumText('Die Aufgaben 1, 2, 3 und 4 müssen bearbeitet werden.'))
+                table1.add_empty_row()
+                table1.add_row(MediumText(bold('Wahlaufgaben:')),
+                               MediumText('Von den Aufgaben 5 bis 10 müssen genau zwei Aufgaben bearbeitet werden.'))
+            table1.add_empty_row()
+            table1.add_hline(1, 2)
 
             Aufgabe.append(table1)
+            Aufgabe.append(' \n\n \n\n')
             Aufgabe.append(table3)
 
             Aufgabe.append(' \n\n')
@@ -534,8 +544,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f' Lösung für Teil I der Klausur im 3. Semester \n\n'
-                                          f'der Qualifikationsphase am {Datum}')))
+            Loesung.append(LargeText(bold(f' Lsg für Teil I der Kl. im 3. Semester am {Datum}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
 
@@ -551,36 +560,10 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
     def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
         Kurs, in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3]
-        in_tagen, liste_bez, liste_punkte = angb_teil2[9], angb_teil2[10], angb_teil2[11]
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
-
-        # erstellen der Tabelle zur Punkteübersicht
-        Punkte = (sum(liste_punkte[1:]))
-        liste_bez.append('Summe')
-        liste_punkte.append(str(Punkte))
-        anzahl_spalten = len(liste_punkte)
-        liste_ergebnis_z1 = ['erhaltene']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z1.append('')
-        liste_ergebnis_z2 = ['Punkte']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z2.append('')
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
-
-        table3 = Tabular(spalten, row_height=1.2)
-        table3.add_hline()
-        table3.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil II'),))
-        table3.add_hline()
-        table3.add_row(liste_bez)
-        table3.add_hline()
-        table3.add_row(liste_punkte)
-        table3.add_hline()
-        table3.add_row(liste_ergebnis_z1)
-        table3.add_row(liste_ergebnis_z2)
-        table3.add_hline()
+        themen = ['1. Wahlaufgabe zur Analysis', '2. Wahlaufgabe zur Analysis', 'Aufgaben zur analytischen Geometrie',
+                  'Aufgaben zur Stochastik']
 
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
@@ -589,21 +572,121 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-            table2.add_row(MediumText(bold(f'Teil II')),
-                           MediumText(bold(f'Aufgaben mit zugelassenen Hilfsmitteln')))
-            table2.add_hline(1, 2)
-            table2.add_empty_row()
+            with Aufgabe.create(Figure(position='h')) as kopf:
+                kopf.add_image('../img/kopfzeile.png', width='480px')
+            # Tabelle erste Seite
+            table1 = Tabular(' p{5cm} p{11cm}', row_height=1.5)
+            table1.add_row((MultiColumn(2, align='l',
+                                        data=MediumText(
+                                            bold(f'Klausur im 3. Semester der Qualifikationsphase am {Datum}'))),))
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='c', data=HugeText(bold('Mathematik'))),))
+            table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(Kurs))),))
+            table1.add_empty_row()
+            table1.add_row(MediumText('Vorname, Name:'), '')
+            table1.add_hline(2, 2, color='gray')
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenvorschlag Teil II'))),))
+            table1.add_hline(1, 2)
+            table1.add_empty_row()
+            table1.add_row(MediumText(bold('Hilfsmittel:')),
+                           MediumText('Nachschlagewerk zur Rechtschreibung der deutschen Sprache, Zeichenwerkzeuge, '
+                                      'Formelsammlung, die an der Schule eingeführt ist, Taschenrechner, die nicht '
+                                      'programmierbar und nicht grafikfähig sind und nicht über Möglichkeiten der '
+                                      'numerischen Differenziation oder Integration oder des automatisierten Lösens '
+                                      'von Gleichungen verfügen'))
+            table1.add_empty_row()
+            if Kurs == 'Grundkurs':
+                table1.add_row(MediumText(bold('Gesamtbearbeitungszeit:')),
+                               MediumText('285 Minuten (davon maximal 100 Minuten für Teil I)'))
+            else:
+                table1.add_row(MediumText(bold('Gesamtbearbeitungszeit:')),
+                               MediumText('330 Minuten (davon maximal 90 Minuten für Teil I)'))
+            table1.add_empty_row()
+            table1.add_hline(1, 2)
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='l', data=LargeText(bold('Aufgabenwahl'))),))
+            table1.add_row(MediumText(bold('Analysis:')),
+                           MediumText('Von den beiden Aufgaben zur Analysis muss eine bearbeitet werden'))
+            table1.add_row('',MediumText(bold(NoEscape('gewählt wurde: ' + r'$ \square $' + ' Aufgabe 1  bzw.  '
+                                                                 + r'$ \square $' + ' Aufgabe 2'))))
+            table1.add_empty_row()
+            table1.add_row(MediumText(bold('Analytische Geometrie:')),
+                           MediumText('Hier müssen alle Aufgaben bearbeitet werden.'))
+            table1.add_empty_row()
+            table1.add_row(MediumText(bold('Stochastik:')),
+                           MediumText('Hier müssen alle Aufgaben bearbeitet werden.'))
+            table1.add_empty_row()
+            table1.add_hline(1, 2)
 
-            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-            for element in liste_seiten_teil2:
-                Aufgabe.append(table2)
-                Aufgabe.append(' \n\n')
-                Aufgabe.extend(element[0])
-                if element != liste_seiten_teil2[-1]:
-                    Aufgabe.append(NewPage())
+            table4 = Tabular('|c|c|c|c|c|c|')
+            table4.add_row((MultiColumn(6, align='c', data=MediumText(bold(f'Punkteverteilung aller Aufgaben'))),))
+            table4.add_hline(1, 6)
+            table4.add_row('Aufgaben','Teil I', 'Analysis', 'Geometrie', 'Stochastik','Summe')
+            table4.add_hline(1, 6)
+            table4.add_row('Punkte','', '', '', '','')
+            table4.add_hline(1, 6)
+            table4.add_row('erhalten','','','','','')
+            table4.add_hline(1, 6)
+            table4.add_row((MultiColumn(6, align='l', data=MediumText(bold(f''))),))
+            table4.add_row((MultiColumn(6, align='l', data=MediumText(bold(f'Note bzw. Notenpunkte: '))),))
 
-            Aufgabe.append(table3)
+            Aufgabe.append(table1)
+            Aufgabe.append(' \n\n')
+            Aufgabe.append(' \n\n')
+            Aufgabe.append(table4)
+
+            Aufgabe.append(NewPage())
+            i = 0
+
+            for element in themen:
+
+                # Tabelle für Kopfzeile
+                table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+                table2.add_row(MediumText(bold(f'Teil II')),
+                               MediumText(bold(element)))
+                table2.add_hline(1, 2)
+                table2.add_empty_row()
+
+                # erstellen der Tabelle zur Punkteübersicht
+                Punkte = (sum(liste_punkte[i][1:]))
+                liste_bez[i].append('Summe')
+                liste_punkte[i].append(str(Punkte))
+                anzahl_spalten = len(liste_punkte[i])
+                spalten = '|'
+                for p in liste_punkte[i]:
+                    spalten += 'c|'
+                liste_ergebnis_z1 = ['erhaltene']
+                for p in range(anzahl_spalten - 1):
+                    liste_ergebnis_z1.append('')
+                liste_ergebnis_z2 = ['Punkte']
+                for p in range(anzahl_spalten - 1):
+                    liste_ergebnis_z2.append('')
+
+                table3 = Tabular(spalten, row_height=1.2)
+                table3.add_hline()
+                table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                            data='Punkteverteilung der Aufgabe'),))
+                table3.add_hline()
+                table3.add_row(liste_bez[i])
+                table3.add_hline()
+                table3.add_row(liste_punkte[i])
+                table3.add_hline()
+                table3.add_row(liste_ergebnis_z1)
+                table3.add_row(liste_ergebnis_z2)
+                table3.add_hline()
+
+                # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+                for aufgaben in liste_seiten_teil2[i]:
+                    Aufgabe.append(table2)
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.extend(aufgaben[0])
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.append(table3)
+                    if element != liste_seiten_teil2[i][-1]:
+                        Aufgabe.append(NewPage())
+                i += 1
 
             Aufgabe.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - Teil II', clean_tex=true)
 
@@ -613,15 +696,15 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f' Lösung für Teil II der Klausur im 3. Semester \n\n'
-                                          f'der Qualifikationsphase am {Datum}')))
-
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
-            for element in liste_seiten_teil2:
-                Loesung.extend(element[1])
-
-
-            Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
+            i = 0
+            for thema in themen:
+                Loesung.append(LargeText(bold(f' Lsg für Teil II der Kl. im 3. Semester am {Datum} \n\n'
+                                              f'{thema}')))
+                for element in liste_seiten_teil2[i]:
+                    Loesung.extend(element[1])
+                Loesung.append(NewPage())
+                i += 1
 
             Loesung.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - EWH Teil II', clean_tex=true)
 
