@@ -1,6 +1,6 @@
 from Aufgaben import *
 
-for titel in liste:
+for titel in liste_Aufgaben:
     file = open('../Aufgaben/' + titel + '.py', 'r')
     liste_file = []
     for line in file:
@@ -18,7 +18,7 @@ for titel in liste:
                 Aufgabenstellung.append('Erläuterungen: ' + liste_file[i+p][2:])
                 p += 1
         if 'in teilaufg:' in element and '#' in liste_file[i+1]:
-            Aufgabenstellung.append('Teilaufgabe (' + liste_file[i][4] + '): ' + liste_file[i+1][2:])
+            Aufgabenstellung.append('Teilaufgabe ' + liste_file[i][4] + '): ' + liste_file[i+1][2:])
         i += 1
     print(Aufgabenstellung)
 

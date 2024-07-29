@@ -1,10 +1,11 @@
-from .Oberstufe_Analysis import *
-from .Oberstufe_Algebra import *
-from .Oberstufe_Wahrscheinlichkeitsrechnung import *
-from .Mittelstufe_Funktionen import *
-from .Mittelstufe_Geometrie import *
+from Aufgaben.Oberstufe_Analysis import *
+from Aufgaben.Oberstufe_Algebra import *
+from Aufgaben.Oberstufe_Wahrscheinlichkeitsrechnung import *
+from Aufgaben.Mittelstufe_Funktionen import *
+from Aufgaben.Mittelstufe_Geometrie import *
 
-liste = ['Oberstufe_Analysis', 'Oberstufe_Algebra', 'Oberstufe_Wahrscheinlichkeitsrechnung',
+# folgende Liste ist wichtig für das Erstellen der Übersicht aller Aufgaben
+liste_Aufgaben = ['Oberstufe_Analysis', 'Oberstufe_Algebra', 'Oberstufe_Wahrscheinlichkeitsrechnung',
          'Mittelstufe_Funktionen', 'Mittelstufe_Geometrie']
 
 
