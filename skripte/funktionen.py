@@ -1,10 +1,12 @@
 import random
 import time
 import numpy as np
+import string
 from sympy import *
 from pylatex import Document, Package
 
-
+a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
+liste_teilaufg = list(string.ascii_lowercase)
 # Timer Funktion
 def timer(func):
     """
