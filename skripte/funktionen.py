@@ -1,6 +1,5 @@
 import random
 import time
-
 import numpy as np
 from sympy import *
 from pylatex import Document, Package
@@ -362,5 +361,3 @@ def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden u
     fkt_abl_2 = collect(expand(diff(fkt, x, 2)), x)
 
     return fkt, fkt_abl_1, fkt_abl_2
-
-

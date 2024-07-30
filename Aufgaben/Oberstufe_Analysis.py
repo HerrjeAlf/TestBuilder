@@ -2035,6 +2035,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True):
+    # Kurvendiskussion einer Polynom
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2118,6 +2119,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        #
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         grenzwert_min = limit(fkt, x, -oo)
