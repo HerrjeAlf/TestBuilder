@@ -6,7 +6,7 @@ from pylatex.utils import bold
 # Auslesen der Aufgabenstellungen bzw. Erläuterungen und der Teilaufgaben
 alle_Aufgaben = []
 for titel in liste_Aufgaben:
-    file = open('../Aufgaben/' + titel + '.py', 'r')
+    file = open('../Aufgaben/' + titel + '.py', 'r', encoding='utf-8')
     Titel = titel.replace('_', ' ')
     liste_file = []
     for line in file:
