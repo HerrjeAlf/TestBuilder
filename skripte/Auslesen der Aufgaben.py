@@ -13,17 +13,20 @@ for titel in liste_Aufgaben:
         liste_file.append(line.strip())
     file.close()
     i = 0
-    Aufgabenstellung = [LargeText(bold('Aufgaben zum Thema ' + Titel))]
+    Aufgabenstellung = [LargeText(bold('Aufgaben zum Thema ' + Titel + ' \n'))]
     for element in liste_file:
         if '# in Entwicklung' in element:
             del liste_file[i:]
-        if 'del' and 'nr,' in element:
+        if ('def' and '(nr' in element) and ('#' in liste_file[i+1]):
+            Aufgabenstellung.append(MediumText(bold(' \n' + element[4:] + ' \n')))
+            if '#' in liste_file[i+1]:
+                Aufgabenstellung.append('Erläuterungen: \n')
             p = 1
-            Aufgabenstellung.append(MediumText(bold(' \n\n' + element[4:] + ' \n')))
             while '#' in liste_file[i+p]:
-                Aufgabenstellung.append('Erläuterungen: ' + liste_file[i+p][2:] + ' \n')
+                Aufgabenstellung.append(liste_file[i+p][2:] + ' \n')
                 p += 1
-        if 'in teilaufg:' in element and '#' in liste_file[i+1]:
+            Aufgabenstellung.append(' \n')
+        if 'in teilaufg' in element and '#' in liste_file[i+1]:
             Aufgabenstellung.append('Teilaufgabe ' + liste_file[i][4] + '): ' + liste_file[i+1][2:] + ' \n')
         i += 1
     alle_Aufgaben.append(Aufgabenstellung)

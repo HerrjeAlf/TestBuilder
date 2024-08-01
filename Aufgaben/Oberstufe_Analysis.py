@@ -17,7 +17,9 @@ nr_aufgabe = 0
 # Aufgaben zu den Regeln
 
 def logarithmusgesetze(nr, anzahl=1):
-    # Logarithmusgesetze vervollständigen
+    # Hier sollen die Schüler und Schülerinnen Logarithmusgesetze vervollständigen.
+    # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Logarithmusgesetze festgelegt werden.
+    # Standardmäßig wird immer ein Gesetz erstellt.
 
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
@@ -58,7 +60,9 @@ def logarithmusgesetze(nr, anzahl=1):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rechenregeln_integrale(nr, anzahl=1):
-    # Rechenregeln der Integrale vervollständigen
+    # Hier sollen die Schüler und Schülerinnen Rechenregeln der Integralrechnung vervollständigen.
+    # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Regeln festgelegt werden.
+    # Standardmäßig wird immer eine Regel erstellt.
 
     liste_bez = [f'{nr}']
     i = 0
@@ -102,7 +106,8 @@ def rechenregeln_integrale(nr, anzahl=1):
 
 # Aufgaben zur Differenzialrechnung
 def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
-    # Aufgabe zu geometrischen und arithmetischen Zahlenfolgen
+    # Hier sollen die SuS Zahlenfolge um weitere Folgenglieder ergänzen, die Art (arithmetisch oder geometrisch) erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen.
+    # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -150,7 +155,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Zahlenfolge um weitere Glieder ergänzen
+        # Die SuS sollen eine gegebene Zahlenfolge um drei weitere Glieder ergänzen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1])
@@ -160,7 +165,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         i += 1
 
     if 'b' in teilaufg:
-        # Art der Zahlenfolge zuordnen (arithmetisch oder geometrisch)
+        # Die SuS sollen entscheiden, ob eine arithmetische oder geometrische Zahlenfolge vorliegt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfe ob es sich um eine arithmetische oder geometrische '
                                                 'Zahlenfolge handelt. \n\n')
@@ -204,7 +209,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         i += 1
 
     if 'c' in teilaufg:
-        # Bildungsgesetz der Zahlenfolge formulieren
+        # Die SuS sollen das Bildungsgesetz der gegebenen Zahlenfolge finden bzw. nennen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
@@ -212,6 +217,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         i += 1
 
     if 'd' in teilaufg and auswahl_folgenart < 2:
+        # Die Teilaufgabe wird nur angezeigt, wenn eine arithmetische oder geometrische Zahlenfolge vorliegt. Hier sollen die SuS ein bestimmtes Folgenglied berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if auswahl_folgenart == 0:
             a_unten = nzahl(1, 50)
@@ -241,7 +247,9 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grenzwerte_folge(nr, ausw_folgenart=None):
-    # Berechnung des Grenzwertes von Zahlenfolgen
+    # In dieser Aufgabe sollen die SuS den Grenzwert einer bestimmten Zahlenfolgen berechnen.
+    # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
+
     liste_bez = [f'{nr}']
     start_arithm_folge = zzahl(2, 10)
     start_geom_folge = nzahl(2, 10)
@@ -287,7 +295,7 @@ def grenzwerte_folge(nr, ausw_folgenart=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grenzwerte_funktionen(nr):
-    # Berechnung des Grenzwertes von Funktionen
+    # In dieser Aufgabe sollen die SuS den Grenzwert einer rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
     liste_bez = [f'{nr}']
     faktor = zzahl(1, 10)
     polstelle = zzahl(1, 8)
@@ -309,9 +317,9 @@ def grenzwerte_funktionen(nr):
     liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
-    # Änderungsrate
-
+def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
+    # In dieser Aufgabe sollen die SuS die mittlere Änderungsrate in einem gegebenen Intervall und lokale Änderungsrate an einer gegebenen Stelle einer Funktion rechnerisch und zeichnerisch bestimmen.
+    # Der Parameter "ableitung=" kann 'True' oder 'False' sein und gibt die mögliche Lösung für Teilaufgabe d) vor. Bei 'False' kennen die SuS die Ableitung einer Funktion noch nicht und müssen die lokale Änderungsrate mit einer Grenzwertberechnung bestimmen. Bei 'True' ist es die triviale Lösung mithilfe der Ableitung der Funktion.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -357,7 +365,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
 
     xwerte_geraden = [-6, 6]
     if 'a' in teilaufg:
-        # Mittlere Änderungsrate zeichnerisch bestimmen (Intervall gegeben)
+        # Die SuS sollen die mittlere Änderungsrate im gegebenen Intervall eines Graphen zeichnerisch bestimmen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -397,7 +405,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'b' in teilaufg:
-        # Mittlere Änderungsrate überprüfen (Intervall gegeben)
+        # Die SuS sollen die mittlere Änderungsrate in einem gegebenen Intervall berechnen und ihr Ergebnis der vorherigen Teilaufgabe überprüfen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die mittlere Änderungsrate im Interval '
@@ -412,7 +420,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'c' in teilaufg:
-        # Lokale Änderungsrate zeichnerisch bestimmen (Stelle gegeben)
+        # Die SuS sollen die lokale Änderungsrate an einer Stelle eines Graphen zeichnerisch bestimmen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -461,7 +469,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         i += 1
 
     if 'd' in teilaufg:
-        # Lokale Änderungsrate überprüfen (Stelle gegeben)
+        # Die SuS sollen die zeichnerisch bestimmte lokale Änderungsrate rechnerisch überprüfen. Die Lösung hängt vom gewählten Parameter 'ableitung=' ab.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i])
@@ -495,7 +503,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=None):
         # print(division_fkt_linear)
         # print(partialbruch)
 
-        if ableitung == None:
+        if ableitung == False:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \lim \limits_{x \to ' + gzahl(x_wert_2)
                            + r'} ~ \frac{f(x)-f(' + gzahl(x_wert_2) + r')}{x' + vorz_str(-1 * x_wert_2)
                            + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
