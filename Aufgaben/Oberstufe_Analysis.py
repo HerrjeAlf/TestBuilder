@@ -247,7 +247,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grenzwerte_folge(nr, ausw_folgenart=None):
-    # In dieser Aufgabe sollen die SuS den Grenzwert einer bestimmten Zahlenfolgen berechnen.
+    # In dieser Aufgabe sollen die SuS den Grenzwert einer bestimmten Zahlenfolgen berechnen. Die Aufgabe besitzt keine Teilaufgaben.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
 
     liste_bez = [f'{nr}']
@@ -525,55 +525,57 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def differentialqoutient(nr, teilaufg=['a', 'b']):
+def differentialqoutient(nr):
     # Differentialquotient
-
     liste_punkte = []
-    liste_bez = []
+    liste_bez = [f'{str(nr)}']
     i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    #
+    def funktion_erstellen(n):
+        faktoren = faktorliste(n)
+        fkt_str = ''
+        for element in faktoren:
 
-    if 'a' in teilaufg:
-        # Ableitung berechnen
 
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 8
-        a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
-        b1, b2, b3 = faktorliste(2, 12, 3)
-        fkt_str_a = gzahl(a1) + 'x' + vorz_str(a2)
-        fkt_str_b = gzahl(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
 
-        aufgabe.append(str(liste_teilaufg[i])
-                       + r') Berechne die Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.')
-        aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
-                       + fkt_str_b + r' \hspace{5em} \\')
-        loesung.append(str(liste_teilaufg[i])
-                       + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~des~'
-                         r'Differentialquotienten}.')
-        loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
-                       + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
-                       + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
-                       + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
-                       + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
-                       + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
-        loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
-                       + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
-                       + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
-                       + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
-                       + r'x^2 ~' + vorz_str(2 * b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x~'
-                       + vorz_str(b2) + 'h~' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~'
-                       + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) + r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
-                       + str(2 * b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
-                       + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2 * b1) + r'x~' + vorz_str(b1)
-                       + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2 * b1) + r'x~'
-                       + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~ \bm{' + str(2 * b1) + 'x~' + vorz_str(b2)
-                       + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
-        liste_punkte.append(punkte)
-        i += 1
+    punkte = 8
+    a1, a2 = faktorliste(2, 10, 2)  # funktioniert auch so :)
+    b1, b2, b3 = faktorliste(2, 12, 3)
+    fkt_str_a = gzahl(a1) + 'x' + vorz_str(a2)
+    fkt_str_b = gzahl(b1) + 'x^2' + vorz_str(b2) + 'x' + vorz_str(b3)
+
+    aufgabe.append(str(liste_teilaufg[i])
+                   + r') Berechne die Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.')
+    aufgabe.append(r'i) \quad f_1 (x)~=~' + fkt_str_a + r' \hspace{10em} ' + r'ii) \quad f_2 (x)~=~'
+                   + fkt_str_b + r' \hspace{5em} \\')
+    loesung.append(str(liste_teilaufg[i])
+                   + r') \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~des~'
+                     r'Differentialquotienten}.')
+    loesung.append(r' i) \quad f_1 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0} \frac{f(x+h) ~-~ f(x)}{h}'
+                   + r'= ~ \lim \limits_{ h \to 0}\frac{' + str(a1) + r'(x + h)~' + vorz_str(a2) + r'~-('
+                   + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
+                   + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
+                   + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
+                   + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3P) \\\\')  # \\\\ für Übersichtlichkeit
+    loesung.append(r' ii) \quad f_2 ^{ \prime} (x) ~=~ \lim \limits_{ h \to 0}'
+                   + r' \frac{f(x+h) - f(x)}{h} ~=~ \lim \limits_{ h \to 0} \frac{' + str(b1) + r'(x + h)^2 ~'
+                   + vorz_str(b2) + r'(x+h) ~' + vorz_str(b3) + r' ~-~ (' + str(b1) + r'x^2' + vorz_str(b2)
+                   + r'x~' + vorz_str(b3) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{~' + str(b1)
+                   + r'x^2 ~' + vorz_str(2 * b1) + 'xh ~' + vorz_str(b1) + 'h^2 ~' + vorz_str(b2) + 'x~'
+                   + vorz_str(b2) + 'h~' + vorz_str(b3) + '~' + vorz_str(-1 * b1) + 'x^2~'
+                   + vorz_str(-1 * b2) + 'x ~' + vorz_str(-1 * b3) + r'}{h} ~=~ \lim \limits_{ h \to 0} \frac{~'
+                   + str(2 * b1) + r'xh ~' + vorz_str(b1) + r'h^2~' + vorz_str(b2) + r' h~}{h} \\'
+                   + r' ~=~ \lim \limits_{ h \to 0} \frac{~ h(~' + str(2 * b1) + r'x~' + vorz_str(b1)
+                   + 'h ~' + vorz_str(b2) + r'~)}{h} =~ \lim \limits_{ h \to 0} ' + str(2 * b1) + r'x~'
+                   + vorz_str(b1) + 'h ~' + vorz_str(b2) + r'~=~ \bm{' + str(2 * b1) + 'x~' + vorz_str(b2)
+                   + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+    liste_punkte.append(punkte)
+    i += 1
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grafisches_ableiten(nr, teilaufg=['a', 'b']):
