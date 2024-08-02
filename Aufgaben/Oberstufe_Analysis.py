@@ -693,9 +693,9 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
 
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
-    # Mithilfe von "teilaufg=[]" können bestimmte Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt. Es können folgende Funktionstypen ausgewählt werdem:
-    # a: ganzrationales Polynom, b: rationales Polynom, c: Wurzelfunktion, d: Polynom mit Wurzelfunktion, e: Exponentialfunktion, f: Logarithmusfunktion, g: Exponentialfunktion mit Wurzel, h: verkettete Expoenentialfunktion, i: verkettete Logarithmusfunktion, j: verkettete Wurzelfunktion
-    # Mit 'anzahl=' kann eine Anzahl an zufällig ausgewählten Funktionstypen festlegt werden. Wird eine Anzahl an Aufgaben festgelegt, können keine Funktionstypen mit "teilaufg=[]" festegelegt werden ('teilaufg=[]' wird ignoriert)
+    # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) ganzrationales Polynom, b) rationales Polynom, c) Wurzelfunktion, d) Polynom mit Wurzelfunktion, e) Exponentialfunktion, f) Logarithmusfunktion, g) Exponentialfunktion mit Wurzel, h) verkettete Expoenentialfunktion, i) verkettete Logarithmusfunktion, j) verkettete Wurzelfunktion
+    # Mit 'anzahl=' kann eine Anzahl von Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -836,12 +836,9 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         return fkt, fkt_uf, fkt_abl, pkt
 
     if anzahl != False:
-        if type(anzahl) != int:
-            exit("Die Eingabe bei anzahl muss eine Zahl sein")
-        if anzahl > len(teilaufg):
-            anzahl = len(teilaufg)
-        teilaufg = np.random.choice(teilaufg, anzahl, False)
-
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
     aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}
@@ -965,7 +962,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'c' or 'd' or 'e' in teilaufg:
-        # Schnittpunkte Gerade und Parabel
+        # Hier sollen die SuS den Schnittpunkt zwischen Seilbahn (lineare Fkt.) und Hügel (quadratische Fkt.) berechnen. Diese Teilaufgabe wird immer angezeigt, wenn 'd' oder 'e' in 'teilaufg=['d', 'e']' enthalten sind.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         fkt_tp = fkt - fkt_tangente
@@ -999,7 +996,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'd' or 'e' in teilaufg:
-        # Schnittwinkel zweier Funktionen
+        # Hier sollen die SuS den Schnittwinkel zwischen Seilbahn (lineare Fkt.) und Hügel (quadratische Fkt.) berechnen. Diese Teilaufgabe wird immer angezeigt, wenn 'e' in 'teilaufg=['e']' enthalten ist.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 0
@@ -1029,7 +1026,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'e' in teilaufg:
-        # Geradengleichung aus gegebenen Zusammenhang erstellen
+        # Hier sollen die SuS die Funktionsgleichung der Seilbahn (lineare Funktion) mithilfe der Steigung rekonstruieren.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
@@ -1050,7 +1047,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'f' in teilaufg:
-        # Scheitelpunkt einer Parabel mit quadratischer Ergänzung bestimmen
+        # Hier sollen de SuS den Scheitelpunkt einer Parabel mit quadratischer Ergänzung bestimmen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
