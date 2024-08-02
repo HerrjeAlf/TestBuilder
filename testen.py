@@ -18,7 +18,7 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [differentialqoutient(1)]
+    aufgaben_seite1 = [ableitungen(1, anzahl=2)]
     for element in aufgaben_seite1:
         liste_bez.extend(element[5])
         liste_punkte.extend(element[4])

@@ -34,6 +34,7 @@ def logarithmusgesetze(nr, anzahl=1):
                       r'\log_e ~=~ \hspace{15em}': r'\log_e ~=~ \ln',
                       r'\log_{10} ~=~ \hspace{15em}': r'\log_{10} ~=~ \lg'}
 
+    exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
     liste_punkte = [anzahl]
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
@@ -548,13 +549,12 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                                 + vorz_v_innen(b2, 'x') + vorz_str(b3) + '$ mithilfe des Differentialquotienten.')]
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                    r' \mathrm{Berechne~die~erste~Ableitung~der~folgenden~Funktion~mithilfe~des~'
-                   r'Differentialquotienten}.',
-                   str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str_a + r' \hspace{10em}'
-                   + str(liste_teilaufg[i + 1]) + r') \quad f(x)~=~' + fkt_str_b + r' \hspace{5em} \\']
-s
+                   r'Differentialquotienten}.']
     else:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-                   'Berechne die erste Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.']
+                   'Berechne die erste Ableitung der folgenden Funktionen mithilfe des Differentialquotienten.',
+                   str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str_a + r' \hspace{10em}'
+                   + str(liste_teilaufg[i + 1]) + r') \quad f(x)~=~' + fkt_str_b + r' \hspace{5em} \\']
         loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                    r' \mathrm{Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe~des~'
                    r'Differentialquotienten}.']
@@ -624,7 +624,7 @@ s
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grafisches_ableiten(nr, teilaufg=['a', 'b']):
-    # Grafisches Ableiten
+    # Die SuS sollen in einem gegebenen Graphen einer Funktion den Graphen der Ableitungsfunktion skizzieren und den skizzierten Verlauf begründen.
 
     liste_punkte = []
     liste_bez = []
@@ -636,7 +636,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Ableitungsfunktion skizzieren
+        # Ableitungsgraphen skizzieren
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -662,7 +662,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
         i += 1
 
         if 'b' in teilaufg:
-            # Skizze begründen
+            # Die SuS sollen ihre Skizze begründen. Die Teilaufgabe wird nur angezeigt, wenn Teilaufgabe a) ausgewählt ist.
 
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 3
@@ -692,8 +692,10 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
-    # Ableitungen
-
+    # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
+    # Mithilfe von "teilaufg=[]" können bestimmte Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt. Es können folgende Funktionstypen ausgewählt werdem:
+    # a: ganzrationales Polynom, b: rationales Polynom, c: Wurzelfunktion, d: Polynom mit Wurzelfunktion, e: Exponentialfunktion, f: Logarithmusfunktion, g: Exponentialfunktion mit Wurzel, h: verkettete Expoenentialfunktion, i: verkettete Logarithmusfunktion, j: verkettete Wurzelfunktion
+    # Mit 'anzahl=' kann eine Anzahl an zufällig ausgewählten Funktionstypen festlegt werden. Wird eine Anzahl an Aufgaben festgelegt, können keine Funktionstypen mit "teilaufg=[]" festegelegt werden ('teilaufg=[]' wird ignoriert)
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -703,7 +705,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def funktion():  # erzeugt eine Funktion und deren Ableitungen mit p Summanden
+    def polynom():  # erzeugt eine Funktion und deren Ableitungen mit p Summanden
         p = nzahl(2, 4)
         fkt = nzahl(1,9)
         koeffizienten = faktorliste(1, 15, p)
@@ -717,7 +719,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         fkt_2 = collect(expand(diff(fkt, x, 2)), x)
         return latex(fkt), fkt_uf, latex(fkt_abl), pkt
 
-    def polynom_ganzrational():
+    def polynom_rational():
         a1 = zzahl(3, 15)
         e1 = nzahl(2, 6)
         fkt = r' \frac{' + gzahl(a1) + '}{x^{' + gzahl(e1) + '}}'
@@ -834,11 +836,13 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         return fkt, fkt_uf, fkt_abl, pkt
 
     if anzahl != False:
+        if type(anzahl) != int:
+            exit("Die Eingabe bei anzahl muss eine Zahl sein")
         if anzahl > len(teilaufg):
             anzahl = len(teilaufg)
         teilaufg = np.random.choice(teilaufg, anzahl, False)
 
-    aufgaben = {'a': funktion, 'b': polynom_ganzrational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
+    aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}
 
@@ -869,7 +873,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
-    # Anwendung der Ableitungen in verschiedenen Kontexten
+    # In dieser Aufgabe sollen die SuS verschiedene Anwendungen der Ableitung am Beispiel eines Hügels, dessen Gipfel mit einer Seilbahn erreicht werden kann, kennenlernen.
 
     liste_punkte = []
     liste_bez = []
@@ -920,18 +924,17 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'In der folgenden Abbildung ist die Profilkurve eines Hügels aufgetragen, '
-               'dessen Gipfel mit einer Seilbahn erreicht werden kann.', 'Figure']
+               'dessen Gipfel mit einer Seilbahn erreicht werden kann.', 'Grafik',
+               r' \mathrm{ f(x)~=~' + fkt_str + '}']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = [str(nr)]
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Berechnung der Nullstellen
+        # Hier sollen die SuS die Nullstellen, bei gegebener Funktionsgleichung, des Hügels berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((str(teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels, '
-                        + 'wenn der Hügel durch die Funktion',
-                        r' \mathrm{ f(x)~=~' + fkt_str + r' \qquad beschrieben~wird.}'))
+        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels. ')
         loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
                        + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
@@ -946,7 +949,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         i += 1
 
     if 'b' in teilaufg:
-        # Steigung und Steigungswinkel
+        # Die SuS sollen die Steigung und den Steigungswinkel am westlichen Fußpunkt des Hügels berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         m_x1 = fkt_abl.subs(x, x_wert_x1)
