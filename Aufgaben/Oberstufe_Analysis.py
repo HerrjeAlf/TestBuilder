@@ -695,7 +695,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) ganzrationales Polynom, b) rationales Polynom, c) Wurzelfunktion, d) Polynom mit Wurzelfunktion, e) Exponentialfunktion, f) Logarithmusfunktion, g) Exponentialfunktion mit Wurzel, h) verkettete Expoenentialfunktion, i) verkettete Logarithmusfunktion, j) verkettete Wurzelfunktion
-    # Mit 'anzahl=' kann eine Anzahl von Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -1066,7 +1066,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
-    # Die SuS sollen mithilfe der Ableitung cen Wert von x bzw. der Variablien a bestimmen.
+    # Die SuS sollen mithilfe der Ableitung den Wert von x bzw. der Variablen a bestimmen.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1122,7 +1122,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
                          + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P)']
 
         loesung_1 = loesung_liste[Aufgabe]
-        aufgabe.append(str(liste_teilaufg[i]) + r') Berechne den Wert x, an der die Funktion f die Steigung m hat. ')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den Wert x, an der die Funktion f die Steigung m hat. ')
         aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
         loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1)
         liste_punkte.append(3)
@@ -1136,7 +1136,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
         fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel = (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
         fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = (a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2))
 
-        aufgabe.append(str(liste_teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den Wert von a, für den sich beide Funktionen berühren.')
         aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
                        + r' \hspace{15em}')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
@@ -1156,7 +1156,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
 
 def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=True):
     # Den SuS ist ein Grah einer quadratischen Funktion gegeben, dessen Funktionsgleichung Sie rekonstruieren müssen, um damit ein Extremalproblem zu lösen.
-    # mit 'gleichung=' kann festgelegt, ob den SuS die Funktionsgleichung aus Teilaufgabe a) bei b) (als Kontrollergebnis) gegeben ist. Wurde Teilaufgabe a) nicht ausgewählt, ist die Funktionsgleichung automatisch gegeben.
+    # Mit dem Paramter 'gleichung=' kann festgelegt, ob den SuS die Funktionsgleichung aus Teilaufgabe a) bei b) gegeben ist. Wurde Teilaufgabe a) nicht ausgewählt, ist die Funktionsgleichung automatisch gegeben.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1218,7 +1218,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
 
     if 'a' in teilaufg:
-        # Den SuS sollen mithilfe dreier gegebener Punkte eine quadratischen Funktion rekonstruieren. Da nicht der Scheitelpunkt gegeben ist, müssen die SuS das Gaußverfahren nutzen.
+        # Den SuS sollen mithilfe drei gegebener Punkte eine quadratischen Funktion rekonstruieren. Da nicht der Scheitelpunkt gegeben ist, müssen die SuS das Gaußverfahren nutzen.
         punkte = 16
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1332,7 +1332,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
         i += 1
 
     if 'b' or 'c' in teilaufg:
-        # Hier sollen die SuS einen Punkt auf dem Graphen berechnen, der ein Eckpunkt eines Rechtecks mit maximalen Flächeninhalt ist. Die in der vorherigen Teilaufgabe zu bestimmtenete
+        # Hier sollen die SuS einen Punkt auf dem Graphen berechnen, der ein Eckpunkt eines Rechtecks mit maximalen Flächeninhalt ist.
 
         punkte = 15
         liste_punkte.append(punkte)
@@ -1381,7 +1381,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
         i += 1
 
     if 'c' in teilaufg:
-        # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe den maximalen Flächeninhalt berechnen. Wird diese Teilaufgabe ausgewählt, ist automatisch die vorherige Teilaufgabe ausgewählt.
+        # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe den maximalen Flächeninhalt berechnen. Wird diese Teilaufgabe ausgewählt, ist automatisch auch die vorherige Teilaufgabe in 'teilaufg' enthalten.
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1397,18 +1397,22 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rekonstruktion(nr, xwert_1=None, xwert_2=None, xwert_3=None):
-    # Rekonstruktion
+def rekonstruktion(nr, xwerte=[], faktor=None):
+    # In dieser Aufgabe sollen die SuS eine einfache quadratische Funktion rekonstruieren. Die Aufgaben besitzt keine Teilaufgaben.
+    # Mit dem Parameter 'xwerte=' können die x-Werte von drei Punkten der Funktion in der Form [x1, x2, x3] vorgegeben werden. Standardmäßig ist die Liste leer und die x-Werte werden zufällig zwischen -3 und 3 gebildet.
+    # Mit dem Parameter 'faktor=' kann der Streckungs- bzw. Stazchungsfaktor der Funktion festgelegt werden. Standardmäßig ist der Wert None und der Faktor wird zufällig zwischen 0,5 und 4 gebildet.
 
     punkte = 11
     liste_punkte = [punkte]
     liste_bez = [f'{str(nr)}']
     i = 0
     # hier wird die Funktion erstellt.
-    faktor = zzahl(1, 8)/2
-    xwert_2 = zzahl(1, 2) if xwert_2 == None else xwert_2
-    xwert_3 = xwert_2 + 1 if xwert_3 == None else xwert_3
-    xwert_1 = xwert_2 - 1 if xwert_1 == None else xwert_1
+    faktor = zzahl(1, 8)/2 if faktor == None or type(faktor) != int else faktor
+    if len(xwerte) != 3 or not all(type(n) == int for n in xwerte):
+        xwert_2 = zzahl(1, 2)
+        xwert_3 = xwert_2 + 1
+        xwert_1 = xwert_2 - 1
+
     ywert_2 = zzahl(1, 3)
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
@@ -1518,14 +1522,14 @@ def rekonstruktion(nr, xwert_1=None, xwert_2=None, xwert_3=None):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
-    # Exponentialgleichungen lösen
+    # Die SuS sollen verschiedene Exponentialgleichungen lösen.
+    # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfache Exponentfkt, b) schwierige Exponentfkt, c) Exponentialfkt mit einf. lin. Fkt als Exponenten, d) Exponentialfkt mit lin. Fkt als Exponenten, e) Summe von Exponentialfkt, f) Logarithmusfkt
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
 
-    if anzahl != False:
-        if anzahl > len(teilaufg):
-            anzahl = len(teilaufg)
-        teilaufg = np.random.choice(teilaufg, anzahl, False)
+    liste_bez = [f'{str(nr)}']
+    i = 0
 
-    liste_bez = [str(nr)]
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Lösen Sie die Exponentialgleichungen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -1632,15 +1636,20 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
                + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2P)')
         return aufg, lsg, pkt
 
-    auswahl = {'a': exp_einfach(), 'b': exp_schwer(), 'c': exp_linear_einfach(), 'd': exp_linear_schwer(),
-                'e': exp_summe(),'f': logarithmus()}
+    auswahl = {'a': exp_einfach, 'b': exp_schwer, 'c': exp_linear_einfach, 'd': exp_linear_schwer,
+                'e': exp_summe,'f': logarithmus}
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
 
     aufg_text = ''
     lsg_aufg = (r' \mathrm{Lösen~Sie~die~Exponentialgleichungen.} \\')
     punkte = 0
     i = 0
     for element in teilaufg:
-        aufg, lsg, pkt = auswahl[element]
+        aufg, lsg, pkt = auswahl[element]()
         if (i + 1) % 2 != 0:
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
             if i + 1 < len(teilaufg):
