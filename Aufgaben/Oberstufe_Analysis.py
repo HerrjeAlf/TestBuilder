@@ -1670,7 +1670,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
-    # Wachstumsfunktion
+    # In dieser Aufgabe sollen die SuS in einer Sachaufgaben zum Wachstum ihre Kenntnisse der Logarithmusgesetze nutzen.
 
     liste_punkte = []
     liste_bez = []
@@ -1725,7 +1725,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
     Aufg_t = nzahl(7, 10)
     Aufg_wert_y = int(N(Aufg_Liste[Aufg_t], 2))
     Aufg_wert_t = nzahl(10, 17)
-
+    # Aufg_Liste_str = [str(x).replace('.',',') for x in Aufg_Liste]
+    # print(Aufg_Liste_str)
     table2 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
     table2.add_hline(2, 7)
     table2.add_row(Tab_beschr, f'Zeit in {Aufg_Einheit_x}', '0', '1', '2', '3', '4')
@@ -1750,8 +1751,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
-        # Nachweise, dass es sich um exponentielles Wachstum handelt
+    if len([i for i in ['a', 'b', 'c', 'd'] if i in teilaufg]) > 0:
+        # Die SuS sollen mithilfe des Quotienten aufeinanderfolgender Werte das exponentielle Wachstum nachweisen,
 
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
@@ -1767,14 +1768,11 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                             r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
 
-    if 'b' in teilaufg:
-        # Wachstumsfunktion aufstellen
-
+    if len([i for i in ['b', 'c', 'd'] if i in teilaufg]) > 0:
+        # Die SuS sollen mithilfe der Werte und dem Quotienten aus der vorherigen Teilaufgabe, die Gleichung dieser Wachstumsfunktion aufstellen.
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
         aufgabe.append(str(liste_teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
@@ -1783,8 +1781,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
 
-    if 'c' in teilaufg:
-        # Zeit berechnen, bis ein Wert erreicht wird
+    if 'c' or 'd' in teilaufg:
+        # Mithilfe der Gleichung aus Teilaufgabe 'b' sollen die SuS einen x-Wert bei gegebenen y-Wert berechnen.
 
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
@@ -1806,7 +1804,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         i += 1
 
     if 'd' in teilaufg:
-        # Wert berechnen, welcher nach Zeit t erreicht wird
+        # Mithilfe der Gleichung aus Teilaufgabe 'b' sollen die SuS einen y-Wert bei gegebenen x-Wert berechnen.
 
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
@@ -1826,8 +1824,11 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Integralrechnung
-def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
-    # Stammfunktionen bestimmen (unbestimmtes Integral)
+def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False):
+    # Die SuS sollen verschiedene Funktionen ableiten.
+    # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfaches Polynom, b) Polynom, c) Exponentialfkt, d) Trigonometrische Fkt, e) Logarithmusfkt, f) verschiedene verkettete Fkt, g) Wurzelfunktion
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
 
     liste_bez = [nr]
     i = 0
@@ -1913,10 +1914,8 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
                                  [gzahl(a1) + r' \cdot \cos(' + innere + ')' + vorz_str(k1),
                                   gzahl(Rational(a1, i1)) + r' \cdot \sin(' + innere + ')'
                                   + vorz_v_innen(k1,'x + C')]])
-        fkt = auswahl[0]
-        fkt_uf = ''
-        Fkt = auswahl[1]
-        pkt = 2
+
+        fkt, fkt_uf, Fkt, pkt = auswahl[0], '', auswahl[1], 2
         return fkt, fkt_uf, Fkt, pkt
 
     def wurzelfunktion():
@@ -1931,6 +1930,11 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
 
     aufgaben = {'a': polynom_01, 'b': polynom_02, 'c': e_funktion, 'd': trig_funktion, 'e': ln_funktion,
                 'f': kettenregel, 'g': wurzelfunktion}
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
 
     aufg = ''
     lsg = (r' \mathrm{~Bestimme~die~Stammfunktionen~der~gegebenen~Funktionen.} \\')
@@ -1957,11 +1961,14 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
-    # Bestimmtes Integral
+    # Die SuS sollen die vom Graph einer Funktion (zweiten oder dritten Grades) mit der x-Achse eingeschlossene Fläche berechnen.
+    # Mit dem Parameter 'grad=' kann der Grad der Funktion festgelegt werden. Es ist momentan nur die Wahl zwischen grad=2 oder grad=3 möglich. Werden andere Werte angegeben, wird der Grad der Funktion zufällig ausgewählt.
+    # Hinweis: Die Funktion zweiten Grades ist für den hilfsmittelfreien Teil geeignet.
 
     liste_punkte = []
     liste_bez = []
     i = 0
+    grad = random.choice([2, 3]) if grad not in (2, 3) else grad
     if grad == 3:
         nst_1 = zzahl(1, 2)
         nst_2 = nst_1 + nzahl(1, 2) + 0.5
@@ -2004,8 +2011,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
         grafiken_aufgaben = []
         grafiken_loesung = []
 
-        if 'a' in teilaufg:
-            # Nullstellen berechnen
+        if 'a' or 'b' in teilaufg:
+            # Die SuS sollen die Nullstellen der Funktion berechnen. Bei der Funktion dritten Grades mithilfe des Gaußalgorithmus und beim zweiten Grad reicht die p-q-Formel.
 
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 12
@@ -2027,7 +2034,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             i += 1
 
         if 'b' in teilaufg:
-            # Fläche mit eingeschlossener x-Achse berechnen
+            # Die SuS sollen mithilfe der vorher bestimmten Nullstellen die vom Graphen der Funktion und der x-Achse eingeschlossene Fläche berechnen.
 
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 6
@@ -2053,7 +2060,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
     elif grad == 2:
         nst_1 = -1* nzahl(1,2)
         nst_2 = nst_1 + nzahl(3,4)
-        if nst_1*nst_2 == 0 or abs(nst_1) == abs(nst_2):
+        while nst_1*nst_2 == 0 or abs(nst_1) == abs(nst_2):
             nst_1 = -1 * nzahl(1, 2)
             nst_2 = nst_1 + nzahl(3, 4)
         faktor = zzahl(1,5)/2
@@ -2074,7 +2081,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
         grafiken_aufgaben = []
         grafiken_loesung = []
 
-        if 'a' in teilaufg:
+        if 'a' or 'b' in teilaufg:
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 6
             liste_punkte.append(punkte)
@@ -2105,8 +2112,6 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
                            + gzahl(abs(lsg_A)) + r'} \quad (3P) \\')
 
             i += 1
-    else:
-        exit("Der Grad muss 2 oder 3 sein.")
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 

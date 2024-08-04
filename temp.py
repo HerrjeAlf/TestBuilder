@@ -1,6 +1,7 @@
 from sympy import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
+
 # b = list(range(1,4))
 # print(b)
 #
@@ -10,10 +11,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #         if m + n > 9:
 #             print ('m: ' + str(m) + ' und n: ' + str(n) + ' und m+n:' + str(m+n))
 #             i += 1
-#
 # print(i)
-#
-#
 # a = [[1,2],[2,3]]
 
 
@@ -24,4 +22,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #         print([element for element in teilaufg if element in liste_teilaufg[8:11]])
 #         print([element for element in teilaufg if element in liste_teilaufg[0:7]])
 
-print('seite_' + str(i)) for i in range(1,2)
+# print('seite_' + str(i for i in range(1,2)))
+
+# wert = 123.3
+# wert_neu = str(wert).replace('.', ',')
