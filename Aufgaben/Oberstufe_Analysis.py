@@ -931,8 +931,8 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         # Hier sollen die SuS die Nullstellen, bei gegebener Funktionsgleichung, des Hügels berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels. ')
-        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels. ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
                        + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
                        + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
@@ -952,9 +952,9 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         m_x1 = fkt_abl.subs(x, x_wert_x1)
         #print('m_x1 = ' + str(m_x1))
         winkel_x1 = math.degrees(N(atan(m_x1),2))
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Steigung und den Steigungswinkel '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Steigung und den Steigungswinkel '
                        + 'am westlichen Fußpunkt. \n\n')
-        loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
+        loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
                        + str(x_wert_x1) + r') ~=~ \mathbf{' + str(N(m_x1,3)) + r'} \quad (2P) \\'
                        + r' \alpha ~=~ arctan(' + str(N(m_x1,3)) + r') ~=~ \mathbf{' + str(N(winkel_x1,3))
                        + r'^\circ} \quad (2P) \\\\')
@@ -975,10 +975,10 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         x_werte_tp = solve(fkt_tp,x)
         y_wert_tp = fkt.subs(x, x_werte_tp[0])
         #print(x_werte_tp[0], x_werte_tp[1])
-        aufgabe.append(str(teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Die Seilbahn startet bei B(1|0). '
                        +'Berechnen Sie den Treffpunkt mit dem Hügel, wenn die Steigung')
         aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente_str) + r' \mathrm{~beträgt}. \hspace{38em}')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
                        + r' 0 ~=~' + latex(N(m_tangente,3)) + r' \cdot 1 ~+~n \quad \vert '
                        + vorz_str(N(-1 * m_tangente,3)) + r' \quad (1P) \\ n ~=~' + vorz_str(N(-1 * m_tangente,3))
                        + r' \quad t(x)~=~' + str(N(m_tangente,3)) + r' \cdot x ' + vorz_str(N(-1 * m_tangente,3))
@@ -1013,8 +1013,8 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
                          + str(180 - abs(winkel_beta - winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
             pkt += 1
         # print(m_fkt_x_tp)
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
-        loesung.append(str(teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
                        + str(N(x_werte_tp[0],3)) + r') ~=~ ' + str(N(m_fkt_x_tp,3))
                        + r' \quad (1P) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
                        + latex(winkel_alpha) + r'^\circ \quad (2P) \\'
@@ -1029,9 +1029,9 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         # Hier sollen die SuS die Funktionsgleichung der Seilbahn (lineare Funktion) mithilfe der Steigung rekonstruieren.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den  Startpunkt der Seilbahn, damit sie am Schnittpunkt die'
                                           ' Steigung des Hügels besitzt. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{aus~} f^{ \prime } (' + str(N(x_werte_tp[0],3))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{aus~} f^{ \prime } (' + str(N(x_werte_tp[0],3))
                        + ') ~=~ ' + str(N(m_fkt_x_tp,3)) + r' \mathrm{~und~} P_1(' + str(N(x_werte_tp[0],3))
                        + r' \vert' + str(N(y_wert_tp,3)) + r') \mathrm{~folgt~} \quad \to \quad'
                        + str(N(y_wert_tp,3)) + '~=~' + str(N(m_fkt_x_tp,3)) + r' \cdot '
@@ -1050,8 +1050,8 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         # Hier sollen de SuS den Scheitelpunkt einer Parabel mit quadratischer Ergänzung bestimmen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + gzahl(faktor) + r' \cdot (~x^2~'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + gzahl(faktor) + r' \cdot (~x^2~'
                                         + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~'
                                         + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
                                         + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
@@ -1066,8 +1066,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
-    # Anwendung der Ableitungen zur Berechnung der Steigung
-
+    # Die SuS sollen mithilfe der Ableitung cen Wert von x bzw. der Variablien a bestimmen.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1076,9 +1075,6 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def faktorliste(p, q, n):
-        return [zzahl(p, q) for _ in range(n)]
-
     def exponenten(n):
         menge = set()
         while len(menge) < n:
@@ -1086,7 +1082,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
         return menge
 
     if 'a' in teilaufg:
-        # x-Wert bei gegebener Steigung berechnen
+        # Die SuS sollen den x-Wert berechnen, an dem eine (rationale) Funktion die gegebene Steigung besitzt.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         steigung = 0
@@ -1126,25 +1122,24 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
                          + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P)']
 
         loesung_1 = loesung_liste[Aufgabe]
-        aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert x, an der die Funktion f die Steigung m hat. ')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Berechne den Wert x, an der die Funktion f die Steigung m hat. ')
         aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1)
         liste_punkte.append(3)
         i += 1
 
     if 'b' in teilaufg:
-        # Berechnung des Parameters für Schnittpunktes und der Steigung am Schnittpunkt zweier (Parameter)-Funktionen
-
+        # Die SuS sollen den Wert von a einer quadratischen Parameterfunktion berechnen, an dem diese eine lineare Funktion berührt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         a1, a2, a3 = faktorliste(2, 10, 3)
         verschiebung = zzahl(2,10)/2
-        fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel= (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
+        fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel = (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
         fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = (a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2))
 
-        aufgabe.append(str(teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Berechne den Wert von a, für den sich beide Funktionen berühren.')
         aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
                        + r' \hspace{15em}')
-        loesung.append(str(teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
                          + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
                          + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
                          + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
@@ -1159,9 +1154,9 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
-    # Rekonstruktion und Extremalproblem
-
+def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=True):
+    # Den SuS ist ein Grah einer quadratischen Funktion gegeben, dessen Funktionsgleichung Sie rekonstruieren müssen, um damit ein Extremalproblem zu lösen.
+    # mit 'gleichung=' kann festgelegt, ob den SuS die Funktionsgleichung aus Teilaufgabe a) bei b) (als Kontrollergebnis) gegeben ist. Wurde Teilaufgabe a) nicht ausgewählt, ist die Funktionsgleichung automatisch gegeben.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1223,10 +1218,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
 
     if 'a' in teilaufg:
-        # Funktionsgleichung berechnen (Gauß-Algorithmus, 2. Grad und 3 Punkte gegeben)
-
+        # Den SuS sollen mithilfe dreier gegebener Punkte eine quadratischen Funktion rekonstruieren. Da nicht der Scheitelpunkt gegeben ist, müssen die SuS das Gaußverfahren nutzen.
         punkte = 16
-        liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         # Rekonstruktion der Funktion
@@ -1297,8 +1290,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
                        + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
                        + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
                        + ' | ' + gzahl(ywert_3) + ' ) \n\n')
-        aufgabe.append(str(teilaufg[i]) + ') Berechne die Funktionsgleichung von f. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Funktionsgleichung von f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
                        + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
                        + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                        + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
@@ -1309,21 +1302,37 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
                        + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
                        + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
         loesung.append(table2)
-        loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                       + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
-                       + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
-                       + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
-                       + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                       + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
-                       + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
-                       + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
-                       + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
-                       + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                       + r' \quad (2P) }  \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        if gleichung != True:
+            punkte += 1
+            loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
+                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
+                           + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
+                           + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
+                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
+                           + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
+                           + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
+                           + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
+                           + r' \quad (2P) } \\ \to \quad f(x)~=~' + fkt_str + r' \quad  (1P) \\ \mathrm{insgesamt~'
+                           + str(punkte) + '~Punkte}')
+        else:
+            loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
+                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
+                           + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
+                           + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
+                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                           + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
+                           + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
+                           + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
+                           + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
+                           + r' \quad (2P) } \\ \mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+        liste_punkte.append(punkte)
         i += 1
 
-    if 'b' in teilaufg:
-        # x wählen, damit die Fläche maximal wird
+    if 'b' or 'c' in teilaufg:
+        # Hier sollen die SuS einen Punkt auf dem Graphen berechnen, der ein Eckpunkt eines Rechtecks mit maximalen Flächeninhalt ist. Die in der vorherigen Teilaufgabe zu bestimmtenete
 
         punkte = 15
         liste_punkte.append(punkte)
@@ -1344,10 +1353,14 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
         flaeche = N(fkt_a.subs(x,re(fkt_1_a_lsg[1])),3)
 
         # Aufgaben und Lösungen
-        aufgabe.append(str(teilaufg[i]) + r') Wie muss x gewählt werden, damit die Rechtecksfläche maximal wird,'
-                                          r' wenn')
-        aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{ist.}')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)~=~' + fkt_str
+        if ('a' not in teilaufg) or (gleichung == True):
+            aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den x-Wert von Punkt P für den maximalen '
+                                                    r'Flächeninhalt, wenn')
+            aufgabe.append(r' \mathrm{f(x)~=~' + fkt_str + r' \quad ist.} ')
+        else:
+            aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechnen Sie den x-Wert von Punkt P, für den '
+                                                             'maximalen Flächeninhalt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)=~' + fkt_str
                        + r' \quad ges: x~für~A_{max} \quad (1P) } \\'
                        + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
                        + fkt_str + r' \quad (2P)}  \\'
@@ -1367,14 +1380,15 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a','b','c']):
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         i += 1
 
-    if 'b' and 'c' in teilaufg:
+    if 'c' in teilaufg:
+        # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe den maximalen Flächeninhalt berechnen. Wird diese Teilaufgabe ausgewählt, ist automatisch die vorherige Teilaufgabe ausgewählt.
         punkte_aufg = 2
         liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         # Aufgaben und Lösungen
-        aufgabe.append(str(teilaufg[i]) + ') Berechne den maximalen Flächeninhalt. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad A(' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den maximalen Flächeninhalt des Rechteckes. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A(' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~'
                        + gzahl(x_1) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
                        + vorz_str(x_2) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
                        + vorz_str(x_3) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
@@ -1393,10 +1407,9 @@ def rekonstruktion(nr, xwert_1=None, xwert_2=None, xwert_3=None):
     # hier wird die Funktion erstellt.
     faktor = zzahl(1, 8)/2
     xwert_2 = zzahl(1, 2) if xwert_2 == None else xwert_2
-    ywert_2 = zzahl(1, 3)
-
     xwert_3 = xwert_2 + 1 if xwert_3 == None else xwert_3
     xwert_1 = xwert_2 - 1 if xwert_1 == None else xwert_1
+    ywert_2 = zzahl(1, 3)
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
     fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2,'x')
@@ -1738,9 +1751,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.extend((table2, '\n\n\n', str(teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
+        aufgabe.extend((table2, '\n\n\n', str(liste_teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
                                             'Wachstum handelt.\n\n'))
-        loesung.extend((str(teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
                                            r'um~exponentielles~Wachstum. \quad (1P)}', table3,
                                             r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
@@ -1755,8 +1768,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.append(str(teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
-        loesung.append(str(teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
                                            + str(Aufg_a) + r'^x \quad (2P) \\'
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
         i += 1
@@ -1771,9 +1784,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie die Zeit bis {Aufg_wert_y} {Aufg_Einheit_y}'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Zeit bis {Aufg_wert_y} {Aufg_Einheit_y}'
                                           ' erreicht werden. \n\n')
-        loesung.append(str(teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
                                            + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
                                            + r' \quad \to \quad ' + latex(Rational(Aufg_wert_y,Aufg_c0))
                                            + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
@@ -1793,9 +1806,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den Wert der nach {Aufg_wert_t} {Aufg_Einheit_x}'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert der nach {Aufg_wert_t} {Aufg_Einheit_x}'
                                           f' erreicht wird. \n\n')
-        loesung.append(str(teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
                                            + r' \cdot '+ str(Aufg_a) + r'^{'+ str(Aufg_wert_t)+ r'} ~=~ '
                                            + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2P) \\'
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))

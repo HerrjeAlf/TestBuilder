@@ -18,18 +18,16 @@ liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
-    aufgaben_seite1 = [ableitungen(1, anzahl=2)]
-    for element in aufgaben_seite1:
-        liste_bez.extend(element[5])
-        liste_punkte.extend(element[4])
+    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+    Aufgaben = [[anwendung_abl_steig(1)]]
 
-    aufgaben_seite2 = []
-    for element in aufgaben_seite2:
-        liste_bez.extend(element[5])
-        liste_punkte.extend(element[4])
+    # hier werden aus der Liste der Aufgaben dieTest erzeugt
+    liste_seiten = []
+    for element in Aufgaben:
+        for aufgabe in element:
+            liste_bez.extend(aufgabe[5])
+            liste_punkte.extend(aufgabe[4])
+        liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-    liste_seiten = [seite(aufgaben_seite1)] # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
-
     test_erzeugen(liste_seiten, angaben, i, probe)
-
