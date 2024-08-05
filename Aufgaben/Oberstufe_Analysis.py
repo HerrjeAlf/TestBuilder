@@ -636,7 +636,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Ableitungsgraphen skizzieren
+        # Die SuS sollen den Ableitungsgraphen für einen vorgegebenen Graphen skizzieren.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -2117,7 +2117,10 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True):
-    # Kurvendiskussion einer Polynom
+    # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms dritten Grades durchführen.
+    # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
+    # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen rational bzw. irrational sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
+    # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2201,7 +2204,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        #
+        # Die SuS sollen das Verhalten der Funktion im Unendlichen untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         grenzwert_min = limit(fkt, x, -oo)
@@ -2215,6 +2218,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'b' in teilaufg:
+        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         fkt_sym = fkt.subs(x, -x)
@@ -2233,6 +2237,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'c' in teilaufg:
+        # DIe SuS die Schnittpunkte der Funktion mit den Achsen berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
@@ -2267,7 +2272,8 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' in teilaufg:
+    if 'd' or 'e' or 'f' or 'g' in teilaufg:
+        # Je nach gewählten Parameter 'ableitung=' müssen die SuS entweder die ersten drei Ableitungen berechnen bzw. die Berechnung der Ableitung begründen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         fkt_3 = 6 * faktor
         if ableitungen:
@@ -2303,7 +2309,8 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'e' or 'f' in teilaufg:
+        # Hier sollen die SuS die Extrema und deren Art mithilfe des notwendigen und hinreichenden Kriteriums berechnen.
         punkte = 12
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -2346,6 +2353,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'f' in teilaufg:
+        # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe die Existenz eines Wendepunktes begründen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
@@ -2366,7 +2374,8 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
 
-    if 'g' in teilaufg:
+    if 'g' or 'h' in teilaufg:
+        # Die SuS sollen den Wendepunkt der Funktion berechnen,
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -2383,6 +2392,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'h' in teilaufg:
+        # Die SuS sollen die Wendetangente bzw. die Wendenormale, abhängig vom gewählten Parameter 'wendenormale', berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         ywert_wp1 = N(fkt.subs(x, xwert_wp1), 3)
@@ -2435,6 +2445,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'i' in teilaufg:
+        # Die SuS sollen den Graphen der Funktoin zeichnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
@@ -2453,6 +2464,7 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         i += 1
 
     if 'j' in teilaufg: # and (nst_1 > 0 or nst_2 > 0 or nst_3 > 0) and nst_1 * nst_2 * nst_3 != 0:
+        # Die SuS sollen die vom Funktionsgraphen im ersten Quadranten eingeschlossene Fläche berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         Fkt = integrate(fkt, x)
@@ -2487,8 +2499,9 @@ def kurvendiskussion_polynome_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']):
-    # Kurvendiskussion einer Polynom- und Parameterfunktion 2
+def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None):
+    # In dieser Aufgaben sollen die SuS eine Kurvendiskussion einer Polynomfunktion (dritten Grades) mit einem Parameter durchführen.
+    # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
 
     liste_punkte = []
     liste_bez = []
@@ -2541,7 +2554,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         a2 = nzahl(1, 6) / 2
 
     if 'a' in teilaufg:
-        # Verhalten im Unendlichen untersuchen
+        # Die SuS sollen das Verhalten der Funktion im Unendlichen untersuchen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -2557,7 +2570,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'b' in teilaufg:
-        # Symmetrie überprüfen
+        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
@@ -2579,7 +2592,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'c' in teilaufg:
-        # Schnittpunkt mit den Achsen berechnen (Nullstelle gegeben)
+        # Die SuS sollen hier die Schnittpunkte mit den Achsen berechnen. Da alle Nullstellen vom Parameter a abhängen, ist eine Nullstelle gegeben.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 14
@@ -2632,12 +2645,10 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
         i += 1
 
-    if 'd' in teilaufg:
-        # Ersten drei Ableitungen bestimmen
+    if 'd' or 'e' or 'f' or 'g' in teilaufg:
+        # Je nach gewählten Parameter 'ableitung=' müssen die SuS entweder die ersten drei Ableitungen berechnen bzw. die Berechnung der Ableitung begründen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 3
-        liste_punkte.append(punkte)
         fkt_1_a2 = 3*faktor
         fkt_1_a1 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
         fkt_1_a0 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
@@ -2654,16 +2665,40 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_3_str = gzahl(6*faktor)
 
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Bestimmen Sie die ersten drei Ableitungen der Funktion. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ f^{ \prime }(x) ~=~' + fkt_1_str
-                       + r'} \\ \mathrm{f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                       + r'} \\ \mathrm{f^{ \prime \prime \prime }(x) ~=~ ' + fkt_3_str
-                       + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        if ableitungen:
+            punkte = 4
+            aufgabe.extend(('Gegeben sind die ersten drei Ableitungen der Funktion f.',
+                            r'f^{ \prime }(x) ~=~' + fkt_1_str
+                            + r' \hspace{5em} f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                            + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str,
+                            str(liste_teilaufg[i]) + ') Erläutern Sie mithilfe der elementaren Ableitungsregeln, '
+                            + 'wie diese Ableitungen bestimmt wurden. \n\n'))
+            # Tabelle mit dem Text
+            table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+            table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l',
+                                                                     data='Erklärung der Ableitungen'), 'Punkte')
+            table1.add_row('', '-', 'bei der Ableitung fällt der hintere Term (die Konstante) '
+                           + 'immer weg (Konstantenregel) ', '1P')
+            table1.add_row('', '-', 'die einzelnen Summanden können nach der Summenregel '
+                           + 'einzeln abgeleitet werden', '1P')
+            table1.add_row('', '-', 'die Potenzen von x werden nach der Potenzregeln abgeleitet, '
+                           + 'wobei der bisherige Exponent mit dem Faktor multipliziert wird (Faktorregel)'
+                           + ' und der neue Exponent um eins kleiner wird', '2P')
+            table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+            loesung.append(table1)
 
+        else:
+            punkte += 3
+            aufgabe.append(str(liste_teilaufg[i]) + ') Bestimmen Sie die ersten drei Ableitungen der Funktion. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r'} \\ \mathrm{f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r'} \\ \mathrm{f^{ \prime \prime \prime }(x) ~=~ ' + fkt_3_str
+                           + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        liste_punkte.append(punkte)
         i += 1
 
     if 'e' in teilaufg:
-        # Extrema und deren Art berechnen
+        # Die SuS sollen die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 12
@@ -2735,7 +2770,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'f' in teilaufg:
-        # Mögliche Wendepunkte berechnen
+        # Die SuS sollen dem Wendepunkt der Funktion berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -2759,7 +2794,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'g' in teilaufg:
-        # Ortskurve der Wendepunkte berechnen
+        # Die SuS sollen die Ortskurve der Wendepunkte berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
@@ -2783,7 +2818,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'h' in teilaufg:
-        # Wert a des Graphen bestimmen und begründen
+        # Die bekommen einen Graphen der Parameterfunktion vorgegeben und sollen daraus den Wert für a bestimmen und ihre Anwort begründen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -2808,7 +2843,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'i' in teilaufg:
-        # Graph mit Wert für a in einem Intervall zeichnen
+        # Die SuS sollen den Graphen für einen vorgegebenen Wert für a in einem festgelegten Intervall zeichnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -2827,7 +2862,7 @@ def kurvendiskussion_polynom_parameter_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         i += 1
 
     if 'j' in teilaufg:
-        # Wert a für eine vorgegebene Fläche berechnen
+        # Die SuS wird die Fläche eines Integrals gegeben, die der Graph mit der x-Achse einschließt und sollen daraus den Wert für a und damit die zugehörige Parameterfunktion bestimmen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
