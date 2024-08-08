@@ -2389,7 +2389,6 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         if grad == 3:
             punkte = 5
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            # fkt_2 = 6*fkt_a1 * x + 2*fkt_a2
             xwert_wp1 = N(Rational(-2*fkt_a2, 6 * fkt_a1), 3)
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
@@ -2477,9 +2476,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 4), 'x^4') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
                        + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
             def erste_positive_nst(vec):
-                # print(vec)
                 vec.sort()
-                # print(vec)
                 for element in vec:
                     if element > 0:
                         # print(element)
