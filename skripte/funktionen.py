@@ -97,6 +97,12 @@ def vorz_v_aussen(k,v, null=False):
         k = int(k)
     return latex(k) + v
 
+def ganz(k):
+    if k % 1 == 0:
+        return int(k)
+    else:
+        return k
+
 def gzahl(k):
     if k % 1 == 0:
         return latex(int(k))

@@ -32,13 +32,13 @@ def seite(aufgaben):
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
             elif 'Grafik' in elements:
-                with Aufgabe.create(Figure(position='h!')) as graph:
+                with Aufgabe.create(Figure(position='ht')) as graph:
                     graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
                 i += 1
             elif 'neueSeite' in elements:
                 Aufgabe.append(NewPage())
             elif '3dim_Koordinatensystem' in elements:
-                with Aufgabe.create(Figure(position='h!')) as graph:
+                with Aufgabe.create(Figure(position='ht')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
             else:
                 Aufgabe.append(elements)
@@ -50,13 +50,13 @@ def seite(aufgaben):
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Figure' in elements:
-                with Loesung.create(Figure(position='h!')) as graph:
+                with Loesung.create(Figure(position='ht')) as graph:
                     graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
                 i += 1
             elif 'neueSeite' in elements:
                 Loesung.append(NewPage())
             elif '3dim_Koordinatensystem' in elements:
-                with Loesung.create(Figure(position='h!')) as graph:
+                with Loesung.create(Figure(position='ht')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
             else:
                 Loesung.append(elements)
