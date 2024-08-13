@@ -3107,71 +3107,99 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, verschiebung=False):
+def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, expfkt=2, verschiebung=True):
     # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.
-    # Mit dem Parameter 'verschiebung=' kann die Verschiebung der Funktion auf der y-Achse festgelegt werden. Standardmäßig ist die 'verschiebung=True' und die Funktion ist auf der y-Achse verschoben bzw. besitzt die Gleichung eine Konstante. Wird 'verschiebung=False' gesetzt, besitzt die e-Funktion keine Konstante.
+    # Mit dem Parameter 'expfkt=' kann die Art der Exponentialfunktion ausgewählt werden. Bei 'expfkt=1' hat die Funktion die Form ax^2*exp(bx+2)+c und bei 'expfkt=2' die Form (x+a)*exp(b*x). Standardmäßig ist 'expfkt=None' festgelegt und die Funktion wird zufällig ausgewählt.
+    # Mit dem Parameter 'verschiebung=' kann die Verschiebung der ersten Exponentialfunktion (ax^2*exp(bx+2)+c) auf der y-Achse festgelegt werden. Standardmäßig ist die 'verschiebung=True' und die Funktion ist auf der y-Achse verschoben bzw. besitzt die Gleichung eine Konstante. Wird 'verschiebung=None' gesetzt, besitzt die e-Funktion keine Konstante.
     liste_punkte = []
     liste_bez = []
     i = 0
-    extrema_xwert = zzahl(1,3)
-    extrema_ywert = zzahl(1,3)
-    if verschiebung:
-        if extrema_xwert > 0:
-            y_vers = -1*nzahl(1,3)
+
+    expfkt = random.choice([1, 2]) if expfkt not in ([1,2]) else expfkt
+    if expfkt == 1:
+        extrema_xwert = zzahl(1,3)
+        extrema_ywert = zzahl(1,3)
+        if verschiebung == True:
+            if extrema_xwert > 0:
+                y_vers = -1*nzahl(1,3)
+            else:
+                y_vers = nzahl(1,3)
         else:
-            y_vers = nzahl(1,3)
-    if verschiebung == False:
-        y_vers = 0
+            y_vers = 0
 
-    # print(extrema_xwert), # print(extrema_ywert), # print(y_vers)
-    # rekonstruktion der exponentialfunktion
-    fkt_v = exp(b*x+2)*a*x**2
-    fkt_a1 = diff(fkt_v,x)
-    gleichung1 = Eq(fkt_v.subs(x,extrema_xwert),extrema_ywert)
-    gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
-    lsg = solve((gleichung1,gleichung2),(a,b))
-    lsg_a = lsg[0][0]
-    lsg_b = lsg[0][1]
-    # print(lsg)
-    fkt = exp(lsg_b*x+2)*lsg_a*x**2 + y_vers
-    fkt_str = (vorz_v_aussen(lsg_a,'x^2') + r' \cdot e^{' + vorz_v_aussen(lsg_b,'x+2') + '}'
-               + vorz_str(y_vers))
+        # print(extrema_xwert), # print(extrema_ywert), # print(y_vers)
+        # rekonstruktion der exponentialfunktion
+        fkt_v = exp(d*x+2)*a*x**2
+        fkt_a1 = diff(fkt_v,x)
+        gleichung1 = Eq(fkt_v.subs(x,extrema_xwert),extrema_ywert)
+        gleichung2 = Eq(fkt_a1.subs(x,extrema_xwert),0)
+        lsg = solve((gleichung1,gleichung2),(a,d))
+        lsg_a = lsg[0][0]
+        lsg_b = lsg[0][1]
+        # print(lsg)
+        fkt = exp(lsg_b*x+2)*lsg_a*x**2 + y_vers
+        fkt_str = (vorz_v_aussen(lsg_a,'x^2') + r' \cdot e^{' + vorz_v_aussen(lsg_b,'x+2') + '}'
+                   + vorz_str(y_vers))
 
-    # Werte für Angaben zum Zeichnen des Graphen
-    ywerte = [(element,fkt.subs(x,element)) for element in range(-5,6)]
-    wertebereich = [element[0] for element in ywerte if abs(element[1]) < 6]
-    xmin = wertebereich[0]
-    xmax = wertebereich[-1]
-    # print(fkt), # print(ywerte), # print(wertebereich), # print(xmin), # print(xmax)
-    graph_xyfix(fkt, name='Funktionsgraph')
+        # Ableitung der Funktionen
+        fkt_1 = diff(fkt,x)
+        fkt_2 = diff(fkt, x,2)
+        fkt_3 = diff(fkt, x,3)
 
-    # Ableitung der Funktionen
-    fkt_a1 = diff(fkt,x)
-    fkt_a2 = diff(fkt, x,2)
-    fkt_a3 = diff(fkt, x,3)
-
-    fkt_a1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot ('
-                     + vorz_v_aussen(lsg_a,'x^2') + r') + e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot ('
-                     + vorz_v_aussen(2*lsg_a,'x')) + ')'
-    fkt_a2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big('
-                     + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x') + r' \Big) + e^{'
-                     + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
-                     + vorz_str(2*lsg_a) + r' \Big)')
-    fkt_a3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
-                     + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
-                     + vorz_str(2*lsg_a) + r' \Big)' + ' + e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
-                     + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \Big)'))
+        fkt_1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot ('
+                         + vorz_v_aussen(lsg_a,'x^2') + r') + e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot ('
+                         + vorz_v_aussen(2*lsg_a,'x')) + ')'
+        fkt_2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big('
+                         + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x') + r' \Big) + e^{'
+                         + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
+                         + vorz_str(2*lsg_a) + r' \Big)')
+        fkt_3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                         + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
+                         + vorz_str(2*lsg_a) + r' \Big)' + ' + e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                         + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \Big)'))
 
 
-    fkt_a1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
-                  + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
-    fkt_a2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
-                  + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
-                  + vorz_str(2*lsg_a) + r' \Big)')
-    fkt_a3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
-                  + vorz_v_aussen(lsg_a * lsg_b**3, 'x^2') + vorz_v_innen(6 * lsg_a * lsg_b**2, 'x')
-                  + vorz_str(6*lsg_a*lsg_b) + r' \Big)')
+        fkt_1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
+                      + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
+        fkt_2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                      + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
+                      + vorz_str(2*lsg_a) + r' \Big)')
+        fkt_3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                      + vorz_v_aussen(lsg_a * lsg_b**3, 'x^2') + vorz_v_innen(6 * lsg_a * lsg_b**2, 'x')
+                      + vorz_str(6*lsg_a*lsg_b) + r' \Big)')
+    else:
+        b = zzahl(2, 5)
+        extrema_xwert = nzahl(1, 4)
+        nst = extrema_xwert + nzahl(1, 3)
+        c = -1 * nst * b
+        fkt_v = (b * x + c) * exp(a * x)
+        fkt_a1 = diff(fkt_v, x)
+        gleichung2 = Eq(fkt_a1.subs(x, extrema_xwert), 0)
+        lsg = solve(fkt_a1.subs(x, extrema_xwert), a)
+        fkt = (b * x + c) * exp(lsg[0] * x)
+        fkt_str = '(' + vorz_v_aussen(b,'x') + vorz_str(c) + r') \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'}'
+        fkt_1 = diff(fkt, x)
+        fkt_2 = diff(fkt, x, 2)
+        fkt_3 = diff(fkt, x, 3)
+
+        fkt_1_str_zw = (gzahl(b) + r' \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} + \left(' + vorz_v_aussen(b,'x')
+                        + vorz_str(c) + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} \cdot '
+                        + gzahl_klammer(lsg[0]))
+        fkt_1_str = (r' \left(' + vorz_v_aussen(lsg[0]*b,'x') + vorz_str(lsg[0]*c+b)
+                     + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'}')
+        fkt_2_str_zw = (gzahl(lsg[0]*b) + r' \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} + '
+                        + r' \left(' + vorz_v_aussen(lsg[0]*b,'x') + vorz_str(lsg[0]*c+b)
+                        + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} \cdot '
+                        + gzahl_klammer(lsg[0]))
+        fkt_2_str = (r' \left(' + vorz_v_aussen(lsg[0]**2*b,'x') + vorz_str(lsg[0]**2*c+2*lsg[0]*b)
+                     + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'}')
+        fkt_3_str_zw = (gzahl(lsg[0]**2*b) + r' \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} + '
+                        + r' \left(' + vorz_v_aussen(lsg[0]**2*b,'x') + vorz_str(lsg[0]**2*c+2*lsg[0]*b)
+                        + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'} \cdot '
+                        + gzahl_klammer(lsg[0]))
+        fkt_3_str = (r' \left(' + vorz_v_aussen(lsg[0]**3*b,'x') + vorz_str(lsg[0]**3*c+3*lsg[0]**2*b)
+                     + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'}')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
                r' f(x)~=~' + fkt_str]
@@ -3179,51 +3207,65 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
+    if len([element for element in ['a', 'e'] if element in teilaufg]) > 0:
         # Hier sollen die SuS das Verhalten der Funktion im Unendlichen untersuchen.
 
         punkte_aufg = 2
-        liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        grenzwert_min = limit(fkt, x, -oo)
+        grenzwert_neg = limit(fkt, x, -oo)
         grenzwert_pos = limit(fkt, x, oo)
         # print(grenzwert_min), # print(grenzwert_pos)
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + latex(grenzwert_min) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                       + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        liste_punkte.append(punkte_aufg)
         i += 1
-
     if 'b' in teilaufg:
         # In dieser Aufgabe sollen die SuS die Schnittpunkte mit den Achsen (immer bei x=0) berechnen, wenn der Parameter 'verschiebung=False' ist. Ist der Parameter 'verschiebung=True' sollen die SuS nur den Schnittpunkt mit der y-Achse berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if y_vers == 0:
-            punkte_aufg = 4
-            liste_punkte.append(punkte_aufg)
+        if expfkt == 1:
+            if y_vers == 0:
+                punkte_aufg = 4
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der'
+                                                        f' Funktion f mit den Achsen. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
+                               + r' \hspace{20em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                               + r' \quad da~e^{' + vorz_v_aussen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
+                               + r' \quad \to \quad ' + (vorz_v_innen(lsg[0][0],'x^2'))
+                               + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert \sqrt{~} \\'
+                               + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4P) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+            else:
+                punkte_aufg = 2
+                aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der'
+                                                        f' Funktion f mit der y-Achse. \n\n')
+                loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
+                               + r' \hspace{5em} \\ \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
+                               + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2P) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        if expfkt == 2:
+            punkte_aufg = 6
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der'
                                                     f' Funktion f mit den Achsen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
-                           + r' \hspace{10em} \\ \mathrm{Ansatz:~f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
-                           + r' \quad da~e^{' + vorz_v_innen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
-                           + r' \quad \to \quad ' + (vorz_v_innen(lsg[0][0],'x^2'))
-                           + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert \sqrt{~} \\'
-                           + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        else:
-            punkte_aufg = 2
-            liste_punkte.append(punkte_aufg)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der'
-                                                    f' Funktion f mit der y-Achse. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
-                           + r' \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
-                           + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-        i += 1
+                           + r' \hspace{5em} f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                           + r' \quad (1P) \\ \mathrm{ da~e^{' + vorz_v_aussen(lsg[0], 'x') + r'} ~immer~ \neq 0 }'
+                           + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(b, 'x') + vorz_str(c)
+                           + r' \quad \vert ' + vorz_str(-1*c) + r' \quad \vert \div ' + gzahl_klammer(b)
+                           + r' \quad \to \quad ' + r' x ~=~' + gzahl(Rational(-1*c,b)) + r' \quad \to \quad S_x ( '
+                           + gzahl(Rational(-1*c,b)) + r'\vert 0) \quad (4P) \\ '
+                           + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
+                           + r' f(0) = e^0 \cdot (0' + vorz_str(c) + r') \quad \to \quad S_y( 0 \vert '
+                           + gzahl(c) + r') \quad (1P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
 
+        liste_punkte.append(punkte_aufg)
+        i += 1
     if len([element for element in ['c', 'd', 'f'] if element in teilaufg]) > 0:
         # Hier sollen die SuS, abhängig vom Parameter 'ableitung=', die drei Ableitungen bzw. die Zwischenschritte der drei gegebenen Ableitungen berechnen.
 
@@ -3233,160 +3275,240 @@ def kurvendiskussion_exponentialfkt_01(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str
-                           + r' \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
-                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \\ \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
         else:
             punkte_aufg = 3
             liste_punkte.append(punkte_aufg)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             aufgabe.extend((str(liste_teilaufg[i]) + f') Geben Sie den Zwischenschritt bei der Berechnung '
-                           + f'der folgenden Ableitungen an.', r' f^{ \prime }(x) ~=~' + fkt_a1_str
-                           + r' \\\\ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                           + r' \\\\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str + r' \\'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_a1_str_zw + '~=~' + fkt_a1_str
-                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_a2_str_zw + '~=~' + fkt_a2_str
-                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_a3_str_zw + '~=~' + fkt_a3_str  # passt sonst manchmal nicht aufs blatt
-                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                           + f'der folgenden Ableitungen an.', r' f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r' \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str_zw + '~=~' + fkt_1_str
+                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str_zw + '~=~' + fkt_2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str_zw + '~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
             i += 1
-
     if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
         # Hier sollen die SuS die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
-
-        punkte_aufg = 10
-        liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        if fkt_a2.subs(x,0) < 0:
-            lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
-        elif fkt_a2.subs(x,0) > 0:
-            lsg_extrema1 = r'~>~0~ \to TP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
-        else:
-            lsg_extrema1 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
-
-        if fkt_a2.subs(x,-2/lsg_b) < 0:
-            lsg_extrema2 = (r'~<~0~ \to HP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
-                            + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
-        elif fkt_a2.subs(x,-2/lsg_b) > 0:
-            lsg_extrema2 = (r'~>~0~ \to TP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
-                            + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
-        else:
-            lsg_extrema2 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
-
-
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
-                       + fkt_a1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
-                       + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
-                       + vorz_v_innen(2*lsg_a,'x') + r'\quad (3P) \\'
-                       + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
-                       + vorz_str(2*lsg_a) + r' \Big)'
-                       + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
-                       + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
-                       + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
-                       + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3P) \\'
-                       + r' f^{ \prime \prime }(0) ~=~ ' + gzahl(N(fkt_a2.subs(x,0),2)) + lsg_extrema1
-                       + r' \quad \mathrm{und} \quad f^{ \prime \prime }(' + gzahl(-2/lsg_b) + ') ~=~ '
-                       + gzahl(N(fkt_a2.subs(x,-2/lsg_b),2)) + lsg_extrema2 + r' \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        if expfkt == 1:
+            punkte_aufg = 10
+            if fkt_2.subs(x,0) < 0:
+                lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
+            elif fkt_2.subs(x,0) > 0:
+                lsg_extrema1 = r'~>~0~ \to TP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
+            else:
+                lsg_extrema1 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
+
+            if fkt_2.subs(x,-2/lsg_b) < 0:
+                lsg_extrema2 = (r'~<~0~ \to HP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
+                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
+            elif fkt_2.subs(x,-2/lsg_b) > 0:
+                lsg_extrema2 = (r'~>~0~ \to TP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
+                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
+            else:
+                lsg_extrema2 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
+
+            loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
+                           + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
+                           + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
+                           + vorz_v_innen(2*lsg_a,'x') + r'\quad (3P) \\'
+                           + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
+                           + vorz_str(2*lsg_a) + r' \Big)'
+                           + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
+                           + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
+                           + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
+                           + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3P) \\'
+                           + r' f^{ \prime \prime }(0) ~=~ ' + gzahl(N(fkt_2.subs(x,0),2)) + lsg_extrema1
+                           + r' \quad \mathrm{und} \quad f^{ \prime \prime }(' + gzahl(-2/lsg_b) + ') ~=~ '
+                           + gzahl(N(fkt_2.subs(x,-2/lsg_b),2)) + lsg_extrema2 + r' \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        elif expfkt == 2:
+            punkte_aufg = 7
+            xwert_extr = Rational(-1*(lsg[0]*c+b), lsg[0]*b)
+            if fkt_2.subs(x, xwert_extr) < 0:
+                lsg_extrema = (r'~<~0~ \to HP(~' + gzahl(N(xwert_extr, 3)) + r'~ \vert ~'
+                               + gzahl(N(fkt.subs(x, xwert_extr), 3)))
+            elif fkt_2.subs(x, xwert_extr) > 0:
+                lsg_extrema = (r'~>~0~ \to TP(~ ' + gzahl(N(xwert_extr, 3)) + r' ~ \vert ~'
+                               + gzahl(N(fkt.subs(x, xwert_extr), 3)))
+            else:
+                lsg_extrema = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium} \\'
+
+            loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
+                           + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg[0],'x')
+                           + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg[0]*b,'x') + vorz_str(lsg[0]*c+b)
+                           + r' \quad \vert ' + vorz_str(-1*(lsg[0]*c+b)) + r' \quad \vert \div '
+                           + gzahl_klammer(lsg[0]*b) + r' \quad (3P) \\ x~=~ ' + gzahl(N(xwert_extr, 3))
+                           + r' \quad \to \quad f^{ \prime \prime }(' + gzahl(N(xwert_extr, 3)) + ') ~=~ '
+                           + r' \left(' + gzahl(lsg[0] ** 2 * b) + r' \cdot ' + gzahl(N(xwert_extr, 3))
+                           + vorz_str(lsg[0] ** 2 * c + 2 * lsg[0] * b) + r' \right) \cdot e^{' + gzahl(lsg[0])
+                           + r' \cdot' + gzahl(N(xwert_extr, 3)) + r'} ~=~'
+                           + gzahl(N(fkt_2.subs(x,xwert_extr),3)) + lsg_extrema + r') \quad (4P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        liste_punkte.append(punkte_aufg)
         i += 1
-
     if 'e' in teilaufg:
-        # Hier sollen die SuS mithilfe der bisherigen Ergebnisse und ohne Rechnung begründen, dass die Funktion zwei Wendepunkte besitzt.
-
-        punkte = 4
+        # Hier sollen die SuS mithilfe der bisherigen Ergebnisse und ohne Rechnung begründen, dass die Funktion mind. einen Wendepunkte besitzt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
-        xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung, '
-                                                'dass diese Funktion zwei Wendepunkte besitzt. \n\n')
-        table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
-        table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie einen Wendepunkt dazwischen' , '2P')
-        table1.add_row('', f'einen weiteren Wendepunkt besitzt die Funktion, nach dem Extrema, '
-                           f'wenn sich der Graph der Asymptote nähert, da sich die Steigung dazwischen ändert' , '2P')
-        loesung.append(table1)
-        loesung.append('\n')
+        if expfkt == 1:
+            punkte = 4
+
+            xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
+            xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
+            aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung, '
+                                                    'dass diese Funktion zwei Wendepunkte besitzt. \n\n')
+            table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
+            table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
+            table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie dazwischen einen Wendepunkt.', '2P')
+            table1.add_row('', f'Einen weiteren Wendepunkt besitzt die Funktion, nach dem Extrema, wenn '
+                               f'sich der Graph der Asymptote nähert.', '2P')
+            loesung.append(table1)
+            loesung.append('\n')
+        if expfkt == 2:
+            punkte = 3
+            aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung,'
+                                                    'dass diese Funktion einen Wendepunkte besitzt. \n\n')
+            table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
+            table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
+            if grenzwert_neg == 0:
+                table1.add_row('',NoEscape('Da die Funktion ein Extrema hat und '
+                                           r'$ \lim\limits_{x \to - \infty} = 0 $ ist, '
+                                           r'muss dazwischen eine Wendestelle existieren.'),'(3P)')
+            if grenzwert_pos == 0:
+                table1.add_row('',NoEscape('Da die Funktion ein Extrema hat und '
+                                           r'$ \lim\limits_{x \to \infty} = 0 $ ist, '
+                                           r'muss dazwischen eine Wendestelle existieren.', '(3P)'))
+            loesung.append(table1)
+            loesung.append('\n')
         liste_punkte.append(punkte)
         i += 1
-
     if len([element for element in ['f', 'g'] if element in teilaufg]) > 0:
         # Hier sollen die SuS die Wendepunkte berechnen.
-
-        punkte_aufg = 10
-        liste_punkte.append(punkte_aufg)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
-        xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
-
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_a2_str
-                       + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
-                       + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2')
-                       + vorz_v_innen(4 * lsg_a*lsg_b, 'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
-                       + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3P) \\'
-                       + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
-                       + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
-                       + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
-                       + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
-                       + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2P) \\'
-                       + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                       + gzahl(N(xwert_wp2,3)) + r' \quad (1P) \\'
-                       + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,3)) + ') ~=~ '
-                       + gzahl(N(fkt_a3.subs(x,xwert_wp1),3)) + r' \neq 0 \quad \to \quad WP(~'
-                       + gzahl(N(xwert_wp1,3)) + r'~ \vert ~ '
-                       + gzahl(N(fkt.subs(x,xwert_wp1),3))
-                       + r') \quad (2P) \\ f^{ \prime \prime \prime }('
-                       + gzahl(N(xwert_wp2,3)) + ') ~=~ '
-                       + gzahl(N(fkt_a3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
-                       + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
-                       + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        if expfkt == 1:
+            punkte_aufg = 10
+            xwert_wp1 = -2 / lsg_b - sqrt(2) / abs(lsg_b)
+            xwert_wp2 = -2/lsg_b + sqrt(2)/abs(lsg_b)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
+                           + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2')
+                           + vorz_v_innen(4 * lsg_a*lsg_b, 'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
+                           + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3P) \\'
+                           + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
+                           + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
+                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
+                           + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
+                           + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2P) \\'
+                           + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
+                           + gzahl(N(xwert_wp2,3)) + r' \quad (1P) \\'
+                           + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,3)) + ') ~=~ '
+                           + gzahl(N(fkt_3.subs(x,xwert_wp1),3)) + r' \neq 0 \quad \to \quad WP(~'
+                           + gzahl(N(xwert_wp1,3)) + r'~ \vert ~ '
+                           + gzahl(N(fkt.subs(x,xwert_wp1),3))
+                           + r') \quad (2P) \\ f^{ \prime \prime \prime }('
+                           + gzahl(N(xwert_wp2,3)) + ') ~=~ '
+                           + gzahl(N(fkt_3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
+                           + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
+                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quad (2P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        if expfkt == 2:
+            punkte_aufg = 7
+            xwert_w = Rational(-1*(lsg[0]*c+2*b),lsg[0]*b)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg[0],'x')
+                           + r'} \neq 0 \quad \to \quad 0~=~ ' + vorz_v_aussen(lsg[0]**2*b,'x')
+                           + vorz_str(lsg[0]**2*c+2*lsg[0]*b) + r' \quad \vert ' + vorz_str(-1*(lsg[0]**2*c+2*lsg[0]*b))
+                           + r' \quad \vert \div ' + gzahl_klammer(lsg[0]**2*b) + r' \quad (4P) \\ x~=~'
+                           + gzahl_klammer(N(xwert_w,3)) + r' \quad \to \quad f^{ \prime \prime \prime }('
+                           + gzahl(N(xwert_w, 3)) + r') ~=~ \left(' + gzahl(lsg[0]**3*b) + r' \cdot '
+                           + gzahl(N(xwert_w, 3)) + vorz_str(lsg[0]**3*c+3*lsg[0]**2*b) + r' \right) \cdot e^{'
+                           + gzahl(lsg[0]) + r' \cdot '+ gzahl(N(xwert_w, 3)) + r'} ~=~'
+                           + gzahl(N(fkt_3.subs(x, xwert_w), 3)) + r' \neq 0 \quad \to \quad WP(~'
+                           + gzahl(N(xwert_w, 3)) + r'~ \vert ~ ' + gzahl(N(fkt.subs(x, xwert_w), 3))
+                           + r') \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        liste_punkte.append(punkte_aufg)
         i += 1
-
     if 'g' in teilaufg:
         # In dieser Aufgabe sollen die SuS die Tangente und Normale am Wendepunkt berechnen. Zur Kontrolle ist der Wendepunkt gegeben.
-        punkte_aufg = 6
-        liste_punkte.append(punkte_aufg)
+
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if expfkt == 1:
+            punkte_aufg = 6
+            xwert_wp1 = N(-2/lsg_b - sqrt(2)/abs(lsg_b), 3)
+            ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)), 3)
+            ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
+            ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
 
-        xwert_wp1 = N(-2/lsg_b - sqrt(2)/abs(lsg_b), 3)
-        ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)), 3)
-        ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
-        ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
+                                                    f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
+                           + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
+                           + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
+                           + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
+                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
+                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
+                           + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
+                           + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'x')
+                           + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
+                           + r' \quad (3P) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+        if expfkt == 2:
+            punkte_aufg = 6
+            ywert_w = N(fkt_3.subs(x, xwert_w), 3)
+            ywert_w_fkt_1 = N(fkt_1.subs(x, xwert_w),3)
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
+                                                    f'WP({gzahl(N(xwert_w,3))}|{gzahl(ywert_w)}). \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
+                           + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_w_fkt_1,'(x')
+                           + vorz_v_innen(-1 * N(xwert_w,3),')') + vorz_str(ywert_w) + '~=~'
+                           + vorz_v_aussen(ywert_w_fkt_1,'x') + vorz_str(N(-1*ywert_w_fkt_1*xwert_w + ywert_w,3))
+                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
+                           r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(-1/ywert_w_fkt_1) + '(x'
+                           + vorz_str(-1 * N(xwert_w,3)) + ')' + vorz_str(ywert_w) + '~=~'
+                           + vorz_v_aussen(-1/ywert_w_fkt_1,'x') + vorz_str(N(xwert_w/ywert_w_fkt_1 + ywert_w,3))
+                           + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
-                                                f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
-                       + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
-                       + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
-                       + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
-                       + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
-                       + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
-                       r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
-                       + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
-                       + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'x')
-                       + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
-                       + r' \quad (3P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
-        loesung.append('neueSeite')
+        liste_punkte.append(punkte_aufg)
         i += 1
-
     if 'h' in teilaufg:
         # Hier sollen die SuS den Graphen der Funktion zeichnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if expfkt == 1:
+            # Werte für Angaben zum Zeichnen des Graphen
+            ywerte = [(element, fkt.subs(x, element)) for element in range(-5, 6)]
+            wertebereich = [element[0] for element in ywerte if abs(element[1]) < 6]
+            xmin = wertebereich[0]
+            xmax = wertebereich[-1]
+        if expfkt == 2:
+            ywerte = [(element, fkt.subs(x, element)) for element in range(-20, 20)]
+            k = 0
+            wertebereich = []
+            for zahl in range(len(ywerte) - 1):
+                if abs(ywerte[k][1]) < 6 and abs(ywerte[k][1] - ywerte[k + 1][1]) > 0.5:
+                    wertebereich.append(ywerte[k][0])
+                k += 1
+            xmin = wertebereich[0]
+            xmax = wertebereich[-1]
 
         punkte_aufg = 5
-        liste_punkte.append(punkte_aufg)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen im Intervall I [{xmin}|{xmax}]. \n\n')
         loesung.extend((str(liste_teilaufg[i])
                         + r') \quad \mathrm{Punkte~für~Koordinatensystem~2P,~Werte~2P,~Graph~1P} \\', 'Figure'))
+        liste_punkte.append(punkte_aufg)
+
         i += 1
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

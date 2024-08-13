@@ -19,7 +19,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kurvendiskussion_polynome(1, grad=4)]]
+    Aufgaben = [[kurvendiskussion_exponentialfkt(1, expfkt=2)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
@@ -29,5 +29,5 @@ for ziffer in range(anzahl):
             liste_punkte.extend(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titsel, datum_delta, liste_bez, liste_punkte]
+    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
     test_erzeugen(liste_seiten, angaben, ziffer, probe)
