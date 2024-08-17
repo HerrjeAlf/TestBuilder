@@ -63,6 +63,64 @@ def seite(aufgaben):
 
     return Aufgabe, Loesung
 
+# hier wird ein Arbeitsblatt erzeugt
+def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
+    def arbeitsblatt(Teil, liste_seiten, ang):
+        schule, schulart, Klasse, Thema, in_tagen= ang[0], ang[1], ang[2], ang[3], ang[4]
+        print(f'\033[38;2;100;141;229m\033[1m Gr. {Teil}\033[0m')
+        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+
+        # der Teil in dem die PDF-Datei erzeugt wird
+        @timer
+        def Hausaufgabenkontrolle():
+            Aufgabe = Document(geometry_options=geometry_options)
+            packages(Aufgabe)
+
+            # Kopf erste Seite
+            table1 = Tabular('|c|c|c|c|c|p{5cm}|', row_height=1.2)
+            table1.add_hline(1,6)
+            table1.add_row(MediumText(bold(schule)), 'Arbeitsblatt',
+                           'Kl.', 'Gr.', ' Datum ', MultiRow(2, data=MediumText(bold('Name:'))))
+            table1.add_hline(2,5)
+            table1.add_row(SmallText(bold(schulart)), Thema, Klasse, Teil, Datum, '')
+            table1.add_hline(1,6)
+            Aufgabe.append(table1)
+            Aufgabe.append(' \n\n\n\n')
+
+            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+            k = 0
+            for element in liste_seiten:
+                Aufgabe.extend(element[0])
+                Aufgabe.append(NewPage())
+
+            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=true)
+
+        # Erwartungshorizont
+        @timer
+        def Erwartungshorizont():
+            Loesung = Document(geometry_options=geometry_options)
+            packages(Loesung)
+
+            Loesung.append(LargeText(bold(f'Loesung vom Arbeitsblatt über {Thema} - Gr. {Teil}')))
+
+            # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
+            k = 0
+            for element in liste_seiten:
+                Loesung.extend(element[1])
+
+            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=true)
+
+        # Druck der Seiten
+        Hausaufgabenkontrolle()
+        Erwartungshorizont()
+
+
+    alphabet = string.ascii_uppercase
+    arbeitsblatt(f'{alphabet[anzahl]}', liste_seiten, angaben)
+    print()  # Abstand zwischen den Arbeiten (im Terminal)
+
+
+
 # hier wird ein Test erzeugt
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     def erzeugen_test(Teil, liste_seiten, angaben):
