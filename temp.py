@@ -102,3 +102,5 @@ print(latex(fkt_3))
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 #print(fkt)
+
+print(list(range(2,12)))
