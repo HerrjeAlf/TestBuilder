@@ -17,7 +17,7 @@ nr_aufgabe = 0
 
 def brueche_erweitern(nr, trivial=1, einfach=1, schwer=1, anzahl_fakt=3):
     # Die SuS sollen Brüche mit vorgebenen Zahlen erweitern.
-    # die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
+    # Die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     # Erstellen der Liste der Brüche mit Zähler und Nenner
@@ -94,7 +94,7 @@ def brueche_erweitern(nr, trivial=1, einfach=1, schwer=1, anzahl_fakt=3):
 
 def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
     # Die SuS sollen Brüche mit soweit wie möglich kürzen.
-    # die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
+    # Die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
 
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -213,5 +213,29 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
     liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def brueche_ergaenzen(nr, nenner=3, zaehler=3):
+    # Die SuS sollen eine vorgegebene Gleichung von Bruchtermen so ergänzen, dass diese richtig ist.
+    # Die Parameter "nenner=" und "zaehler=" legen die Anzahl der Teilaufgaben fest, in denen der Nenner bzw. der Zähler ergänzt werden muss. Maximal sind jeweils 6 Teilaufgaben möglich.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    punkte = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Ergänzen Sie die Terme so, dass die jeweilige Gleichung stimmt.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    for zahl in range(nenner+zaehler):
+        fkt = random.choice([2, 3, 4, 5, 6, 7, 10])
+        zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+
+
+    liste_punkte = [punkte]
+
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
