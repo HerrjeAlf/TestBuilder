@@ -234,55 +234,55 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
     lsg = ''
     for zahl in range(unbek_nenner):
         fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
-        zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
-        liste_brueche.append([zaehler, nenner])
+        zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
         while [zaehler, nenner] in liste_brueche:
-            zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+            zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
+        liste_brueche.append([zaehler, nenner])
         if (i + 1) % 3 != 0:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{ \quad }}')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{ \quad }')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{~' + gzahl(nenner*fakt) + '~}')
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + '}~}')
             if i + 1 < nenner + zaehler:
-                aufg = aufg + r' \hspace{2em} '
-                lsg = lsg + r' \hspace{2em} '
+                aufg = aufg + r' \hspace{5em} '
+                lsg = lsg + r' \hspace{5em} '
         elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }} \\\\')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad } \\\\')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + r'}~} \\\\')
         else:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }}')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + '}~}')
         punkte += 1
         i += 1
 
     for zahl in range(unbek_zaehler):
         fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
-        zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
-        liste_brueche.append([zaehler, nenner])
+        zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
         while [zaehler, nenner] in liste_brueche:
-            zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+            zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
+        liste_brueche.append([zaehler, nenner])
         if (i + 1) % 3 != 0:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}}')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'} ~}{~' + gzahl(nenner * fakt) + '~}')
             if i + 1 < nenner + zaehler:
-                aufg = aufg + r' \hspace{2em} '
-                lsg = lsg + r' \hspace{2em} '
+                aufg = aufg + r' \hspace{5em} '
+                lsg = lsg + r' \hspace{5em} '
         elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}} \\\\')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~} \\\\')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
+                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'}~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
         else:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + '~}}')
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + '~}')
             lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'}~}{~' + gzahl(nenner * fakt) + '~}')
         punkte += 1
         i += 1
 
