@@ -216,9 +216,9 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_ergaenzen(nr, nenner=3, zaehler=3):
+def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
     # Die SuS sollen eine vorgegebene Gleichung von Bruchtermen so ergänzen, dass diese richtig ist.
-    # Die Parameter "nenner=" und "zaehler=" legen die Anzahl der Teilaufgaben fest, in denen der Nenner bzw. der Zähler ergänzt werden muss. Maximal sind jeweils 6 Teilaufgaben möglich.
+    # Die Parameter "unbek_nenner=" und "unbek_zaehler=" legen die Anzahl der Teilaufgaben fest, in denen der Nenner bzw. der Zähler ergänzt werden muss. Maximal sind jeweils 6 Teilaufgaben möglich.
 
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -229,13 +229,65 @@ def brueche_ergaenzen(nr, nenner=3, zaehler=3):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-
-    for zahl in range(nenner+zaehler):
-        fkt = random.choice([2, 3, 4, 5, 6, 7, 10])
+    liste_brueche = []
+    aufg = ''
+    lsg = ''
+    for zahl in range(unbek_nenner):
+        fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
         zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+        liste_brueche.append([zaehler, nenner])
+        while [zaehler, nenner] in liste_brueche:
+            zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+        if (i + 1) % 3 != 0:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{ \quad }}')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{~' + gzahl(nenner*fakt) + '~}')
+            if i + 1 < nenner + zaehler:
+                aufg = aufg + r' \hspace{2em} '
+                lsg = lsg + r' \hspace{2em} '
+        elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }} \\\\')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
+        else:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }}')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+        punkte += 1
+        i += 1
 
+    for zahl in range(unbek_zaehler):
+        fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
+        zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+        liste_brueche.append([zaehler, nenner])
+        while [zaehler, nenner] in liste_brueche:
+            zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
+        if (i + 1) % 3 != 0:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}}')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+            if i + 1 < nenner + zaehler:
+                aufg = aufg + r' \hspace{2em} '
+                lsg = lsg + r' \hspace{2em} '
+        elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}} \\\\')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
+        else:
+            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \Huge{ \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + '~}}')
+            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~' + gzahl(nenner * fakt) + '~}')
+        punkte += 1
+        i += 1
 
     liste_punkte = [punkte]
-
+    aufgabe.append(aufg)
+    loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
