@@ -658,11 +658,11 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             table1.add_hline(1, 2)
             table1.add_empty_row()
             table1.add_row(MediumText(bold('Hilfsmittel:')),
-                           MediumText('Nachschlagewerk zur Rechtschreibung der deutschen Sprache, Zeichenwerkzeuge, '
-                                      'Formelsammlung, die an der Schule eingeführt ist, Taschenrechner, die nicht '
-                                      'programmierbar und nicht grafikfähig sind und nicht über Möglichkeiten der '
-                                      'numerischen Differenziation oder Integration oder des automatisierten Lösens '
-                                      'von Gleichungen verfügen'))
+                           MediumText('Nachschlagewerk zur Rechtschreibung der deutschen Sprache, '
+                                      'Standard-Zeichenwerkzeuge, Mathematische Formelsammlung (IQB), Taschenrechner, '
+                                      'die nicht programmierbar und nicht grafikfähig sind und nicht über '
+                                      'Möglichkeiten der numerischen Differenziation oder Integration oder des '
+                                      'automatisierten Lösens von Gleichungen verfügen'))
             table1.add_empty_row()
             if Kurs == 'Grundkurs':
                 table1.add_row(MediumText(bold('Gesamtbearbeitungszeit:')),
