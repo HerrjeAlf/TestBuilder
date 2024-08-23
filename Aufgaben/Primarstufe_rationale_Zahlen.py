@@ -110,20 +110,14 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
     for zahl in liste_nenner:
         faktor = random.choice([2, 3, 5, 7, 10])
         liste_brueche_aufg.append([faktor, faktor*zahl])
-        if (i + 1) % 3 != 0:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor*zahl)
-                   + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + r'~}')
-            if i + 1 < trivial + einfach + schwer:
-                lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor*zahl)
-                   + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + r'~} \\\\')
-        elif i + 1 == trivial and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor*zahl)
-                   + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + r'~} \\\\')
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor * zahl)
+               + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + r'~}')
+        if (i + 1) % 3 != 0 and i + 1 < trivial + einfach + schwer:
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 3 == 0 or i + 1 == trivial and i + 1 < trivial + einfach + schwer:
+            lsg = lsg + r' \\\\'
         else:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor*zahl)
-                   + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + '~}')
+            pass
         i += 1
         punkte += 1
 
@@ -135,24 +129,15 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
         while [zaehler, nenner] in liste_brueche_aufg:
             zaehler, nenner = np.random.choice([2, 3, 5, 7, 11], 2, False)
         liste_brueche_aufg.append([zaehler*fkt[0]*fkt[1], nenner*fkt[0]*fkt[1]])
-        if (i + 1) % 3 != 0:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
-            if i + 1 < trivial + einfach + schwer:
-                lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~} \\\\')
-        elif i + 1 == einfach and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~} \\\\')
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler * fkt[0] * fkt[1]) + '~}{~'
+               + gzahl(nenner * fkt[0] * fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler * fkt[0]) + '~}{~'
+               + gzahl(nenner * fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
+        if (i + 1) % 3 != 0 and i + 1 < trivial + einfach + schwer:
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 3 == 0 or i + 1 == einfach and i + 1 < trivial + einfach + schwer:
+            lsg = lsg + r' \\\\'
         else:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
+            pass
         i += 1
         punkte += 1
 
@@ -164,28 +149,17 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
         while [zaehler, nenner] in liste_brueche_aufg:
             zaehler, nenner = np.random.choice([3, 5, 7, 11, 13], 2, False)
         liste_brueche_aufg.append([zaehler*fkt[0]*fkt[1]*fkt[2], nenner*fkt[0]*fkt[1]*fkt[2]])
-        if (i + 1) % 2 != 0:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]*fkt[2]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]*fkt[2]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
-            if i + 1 < trivial + einfach + schwer:
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler * fkt[0] * fkt[1] * fkt[2]) + '~}{~'
+               + gzahl(nenner * fkt[0] * fkt[1] * fkt[2]) + r'~} ~=~ \frac{ ~' + gzahl(
+                    zaehler * fkt[0] * fkt[1]) + '~}{~'
+               + gzahl(nenner * fkt[0] * fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler * fkt[0]) + '~}{~'
+               + gzahl(nenner * fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
+        if (i + 1) % 2 != 0 and i + 1 < trivial + einfach + schwer:
                 lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]*fkt[2]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]*fkt[2]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~} \\\\')
-        elif i + 1 == einfach and i + 1 < trivial + einfach + schwer:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]*fkt[2]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]*fkt[2]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~} \\\\')
+        elif (i + 1) % 2 == 0 or i + 1 == einfach and i + 1 < trivial + einfach + schwer:
+            lsg = lsg + r' \\\\'
         else:
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler*fkt[0]*fkt[1]*fkt[2]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]*fkt[2]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]*fkt[1]) + '~}{~'
-                   + gzahl(nenner*fkt[0]*fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler*fkt[0]) + '~}{~'
-                   + gzahl(nenner*fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
+            pass
         i += 1
         punkte += 1
 
@@ -238,24 +212,18 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         while [zaehler, nenner] in liste_brueche:
             zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
         liste_brueche.append([zaehler, nenner])
-        if (i + 1) % 3 != 0:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{ \quad }')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler*fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + '}~}')
-            if i + 1 < nenner + zaehler:
+        ufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+               + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }')
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+               + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner * fakt) + '}~}')
+        if (i + 1) % 3 != 0 and i + 1 < nenner + zaehler:
                 aufg = aufg + r' \hspace{5em} '
                 lsg = lsg + r' \hspace{5em} '
         elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad } \\\\')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + r'}~} \\\\')
+            aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
         else:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner*fakt) + '}~}')
+            pass
         punkte += 1
         i += 1
 
@@ -265,24 +233,18 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         while [zaehler, nenner] in liste_brueche:
             zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
         liste_brueche.append([zaehler, nenner])
-        if (i + 1) % 3 != 0:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'} ~}{~' + gzahl(nenner * fakt) + '~}')
-            if i + 1 < nenner + zaehler:
+        aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+                + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~}')
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+               + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'} ~}{~' + gzahl(nenner * fakt) + '~}')
+        if (i + 1) % 3 != 0 and i + 1 < nenner + zaehler:
                 aufg = aufg + r' \hspace{5em} '
                 lsg = lsg + r' \hspace{5em} '
         elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + r'~} \\\\')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'}~}{~' + gzahl(nenner * fakt) + r'~} \\\\')
+            aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
         else:
-            aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                    + r'~} ~=~ \frac{ \quad }{~' + gzahl(nenner * fakt) + '~}')
-            lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
-                   + r'~} ~=~ \frac{~ \mathbf{' + gzahl(zaehler * fakt) + r'}~}{~' + gzahl(nenner * fakt) + '~}')
+            pass
         punkte += 1
         i += 1
 
