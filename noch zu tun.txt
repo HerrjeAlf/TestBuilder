@@ -1,6 +1,5 @@
 allgemein:
 - alte Skripte in neue Form anpassen
-- Vorlage Arbeitsblatt erstellen
 
 Berechnungen:
  - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus
@@ -21,8 +20,7 @@ in Algebra:
 funktionen
 
 Physik
-- Test für Physik Klasse 7 (Thermodynamik, Kräfte und Energie)
-- Test für Physik Klass8 8 (Spannung, Strom, Schaltungen usw.) erstellen
+- Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
 
 
 langfristig:
