@@ -247,9 +247,54 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
             pass
         punkte += 1
         i += 1
-
+    lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
     liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def bruchteile_berechnen(nr, anzahl=2):
+    # Die SuS sollen von einer gegebenen Menge den angegebenen Bruchteil berechnen.
+    # Der Parameter "anzahl=" legt die Anzahl der Teilaufgaben fest. Sie kann maximal 12 betragen.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    punkte = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Berechne die Größe x.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    anzahl = 12 if anzahl > 12 else anzahl
+
+    aufg = ''
+    lsg = ''
+    for zahl in range(anzahl):
+        bruch = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2, False)
+        bruch.sort()
+        zaehler, nenner = bruch
+        einheiten = random.choice(['min', 'l', 'kg', 'g', 'qm', 'km'])
+        zahl = random.randint(20, 100)
+        wert = zaehler * zahl
+        punkte += 1
+        aufg = (aufg + str(liste_teilaufg[i]) + r') \quad  \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner)
+                + r'} \quad \mathrm{von} \quad x ~=~' + gzahl(zahl * nenner) + einheiten)
+        lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'} \cdot '
+               + gzahl(zahl * nenner) + einheiten + '~=~' + gzahl(wert) + einheiten)
+        if (i + 1) % 2 != 0 and i + 1 < anzahl:
+            aufg = aufg + r' \hspace{5em} '
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i + 1 < anzahl:
+            aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
+        i += 1
+
+    lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
+    liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
