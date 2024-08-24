@@ -120,6 +120,26 @@ def gzahl_klammer(k):
     else:
         return latex(k)
 
+def kgv(q, p):
+    if q == 0 or p == 0:
+        return 0
+    if q == p:
+        return p
+    if q > p:
+        max = q
+        min = p
+    else:
+        max = p
+        min = q
+    quotient = max/min
+    if quotient % 1 == 0:
+        return int(max)
+    for zahl in range(1,max):
+        if (zahl * min) % max == 0:
+            return int(zahl*min)
+    return max*min
+
+
 # Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
 
 def vektor_rational(vec,p,q=1000):
@@ -147,7 +167,7 @@ def faktorliste(n, p=1,q=10):
 
 def vektor_runden(vec,p):
     return [N(elements,p) for elements in vec]
-# Berechnung für die Aufgaben
+
 def vektor_ganzzahl(vec):
     return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
@@ -264,7 +284,6 @@ def ergebnisraum_zoZ(az, anz_1, anz_2, farbe1='weiß', farbe2='schwarz'):
                         omega.append(tubel)
             i += 1
     return omega
-
 
 def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'):
     obermenge = []

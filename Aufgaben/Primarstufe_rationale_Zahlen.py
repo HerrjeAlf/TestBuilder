@@ -298,3 +298,180 @@ def bruchteile_berechnen(nr, anzahl=2):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def brueche_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
+    # Hier sollen die SuS gleichnamige und ungleichnamige Brüche addieren und subtrahieren.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfacher gleichnamiger Bruchterm (beide positiv)
+    # b) gleichnamiger Bruchterm (beide positiv)
+    # c) gleichnamiger Bruchterm (zweiter negativ)
+    # d) gleichnamiger Bruchterm (beide negativ)
+    # e) beliebiger gleichnamiger Bruch
+    # f) einfacher ungleichnamiger Bruchterme (beide positiv)
+    # g) ungleichnamiger Bruchterm (beide positiv)
+    # h) ungleichnamiger Bruchterm (zweiter negativ)
+    # i) ungleichnamiger Bruchterm (beide negativ)
+    # j) beliebiger ungleichnamiger Bruchterm
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Berechne die Ableitung der folgenden Funktionen mithilfe der elementaren Ableitungsregeln.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def einf_pp_gleichn_bruchterm():
+        zaehler_2, zaehler_1 = np.random.choice([1, 2, 3, 4, 5, 6], 2, False)
+        nenner = zaehler_1 + zaehler_2 + nzahl(2,4)
+        loesung = Rational(zaehler_1 + zaehler_2, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner) + r'} ~=~ \frac{' + gzahl(zaehler_1) + '+' + gzahl(zaehler_2) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def pp_gleichn_bruchterm():
+        zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
+        loesung = Rational(zaehler_1 + zaehler_2, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner) + r'} ~=~ \frac{' + gzahl(zaehler_1) + '~+~' + gzahl(zaehler_2) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def pn_gleichn_bruchterm():
+        zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
+        loesung = Rational(zaehler_1 - zaehler_2, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner) + r'} ~=~ \frac{' + gzahl(zaehler_1) + '~-~' + gzahl(zaehler_2) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def nn_gleichn_bruchterm():
+        zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
+        loesung = Rational(-1*(zaehler_1 + zaehler_2), nenner)
+        aufg = (r' - \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner) + r'}')
+        lsg = (r' - \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner) + r'} ~=~ \frac{ - ' + gzahl(zaehler_1) + '~-~' + gzahl(zaehler_2) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def bel_gleichn_bruchterm():
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        loesung = Rational(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
+        aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~' + vorz(vorz2) + r'~ \frac{'
+                + gzahl(zaehler_2) + '}{' + gzahl(nenner) + r'}')
+        lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~' + vorz(vorz2)
+               + r'~ \frac{' + gzahl(zaehler_2) + '}{' + gzahl(nenner) + r'} ~=~ \frac{' + gzahl(vorz1*zaehler_1)
+               + vorz_str(vorz2*zaehler_2) + '}{' + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def einf_pp_ungl_bruchterm():
+        zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2,10), 4, False)
+        nenner = kgv(nenner_1, nenner_2)
+        zaehler_1_erw = nenner / nenner_1 * zaehler_1
+        zaehler_2_erw = nenner / nenner_2 * zaehler_2
+        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner_2) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner_2) + r'} ~=~ \frac{' + gzahl(zaehler_1_erw) + '+' + gzahl(zaehler_2_erw) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def pp_ungl_bruchterm():
+        zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2,12), 4, False)
+        nenner = kgv(nenner_1, nenner_2)
+        zaehler_1_erw = nenner / nenner_1 * zaehler_1
+        zaehler_2_erw = nenner / nenner_2 * zaehler_2
+        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner_2) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner_2) + r'} ~=~ \frac{' + gzahl(zaehler_1_erw) + '+' + gzahl(zaehler_2_erw) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def pn_ungl_bruchterm():
+        zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2,12), 4, False)
+        nenner = kgv(nenner_1, nenner_2)
+        zaehler_1_erw = nenner / nenner_1 * zaehler_1
+        zaehler_2_erw = nenner / nenner_2 * zaehler_2
+        loesung = Rational(zaehler_1_erw - zaehler_2_erw, nenner)
+        aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner_2) + r'}')
+        lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner_2) + r'} ~=~ \frac{' + gzahl(zaehler_1_erw) + '-' + gzahl(zaehler_2_erw) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def nn_ungl_bruchterm():
+        zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2,12), 4, False)
+        nenner = kgv(nenner_1, nenner_2)
+        zaehler_1_erw = nenner / nenner_1 * zaehler_1
+        zaehler_2_erw = nenner / nenner_2 * zaehler_2
+        loesung = Rational(-1*(zaehler_1_erw + zaehler_2_erw), nenner)
+        aufg = (r' - \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+                + '}{' + gzahl(nenner_2) + r'}')
+        lsg = (r' - \frac{ ' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
+               + '}{' + gzahl(nenner_2) + r'} ~=~ \frac{ - ' + gzahl(zaehler_1_erw) + '-' + gzahl(zaehler_2_erw) + '}{'
+               + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    def bel_ungl_bruchterm():
+        zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2,12), 4, False)
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        nenner = kgv(nenner_1, nenner_2)
+        zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
+        zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
+        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner_1) + r'} ~' + vorz(vorz2)
+                + r'~ \frac{' + gzahl(zaehler_2) + '}{' + gzahl(nenner_2) + r'}')
+        lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner_1) + r'} ~' + vorz(vorz2)
+                + r'~ \frac{' + gzahl(zaehler_2) + '}{' + gzahl(nenner_2) + r'} ~=~ \frac{' + gzahl(zaehler_1_erw)
+               + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
+        return aufg, lsg
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
+    aufgaben = {'a': einf_pp_gleichn_bruchterm, 'b': pp_gleichn_bruchterm, 'c': pn_gleichn_bruchterm,
+                'd': nn_gleichn_bruchterm, 'e': bel_gleichn_bruchterm, 'f': einf_pp_ungl_bruchterm,
+                'g': pp_ungl_bruchterm, 'h': pn_ungl_bruchterm, 'i': nn_ungl_bruchterm, 'j':bel_ungl_bruchterm}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif (i + 1) % 4 == 0 and element != teilaufg[-1]:
+            aufg = aufg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \\\\'
+        else:
+            pass
+        punkte += 1
+        i += 1
+
+    lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
+    liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

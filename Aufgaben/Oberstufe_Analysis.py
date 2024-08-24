@@ -694,7 +694,17 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) ganzrationales Polynom, b) rationales Polynom, c) Wurzelfunktion, d) Polynom mit Wurzelfunktion, e) Exponentialfunktion, f) Logarithmusfunktion, g) Exponentialfunktion mit Wurzel, h) verkettete Expoenentialfunktion, i) verkettete Logarithmusfunktion, j) verkettete Wurzelfunktion
+    # a) ganzrationales Polynom
+    # b) rationales Polynom
+    # c) Wurzelfunktion
+    # d) Polynom mit Wurzelfunktion
+    # e) Exponentialfunktion
+    # f) Logarithmusfunktion
+    # g) Exponentialfunktion mit Wurzel
+    # h) verkettete Expoenentialfunktion
+    # i) verkettete Logarithmusfunktion
+    # j) verkettete Wurzelfunktion
+    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -1826,7 +1836,14 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
 def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False):
     # Die SuS sollen verschiedene Funktionen ableiten.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) einfaches Polynom, b) Polynom, c) Exponentialfkt, d) Trigonometrische Fkt, e) Logarithmusfkt, f) verschiedene verkettete Fkt, g) Wurzelfunktion
+    # a) einfaches Polynom
+    # b) Polynom
+    # c) Exponentialfkt
+    # d) Trigonometrische Fkt
+    # e) Logarithmusfkt
+    # f) verschiedene verkettete Fkt
+    # g) Wurzelfunktion
+    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
 
     liste_bez = [nr]
