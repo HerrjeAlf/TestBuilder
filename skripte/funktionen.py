@@ -109,16 +109,13 @@ def gzahl(k):
     else:
         return latex(k)
 
-def gzahl_klammer(k):
-    if k%1 == 0:
+def gzahl_klammer(k,string=''):
+    if k % 1 == 0:
         k = int(k)
     if k < 0:
-        if k % 1 == 0:
-            return f'({latex(k)})'
-        else:
-            return r'\Big(' + latex(k) + r'\Big)'
+        return r' \left(' + latex(k) + string + r' \right)'
     else:
-        return latex(k)
+        return latex(k) + string
 
 def kgv(q, p):
     if q == 0 or p == 0:
@@ -138,8 +135,6 @@ def kgv(q, p):
         if (zahl * min) % max == 0:
             return int(zahl*min)
     return max*min
-
-
 # Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
 
 def vektor_rational(vec,p,q=1000):

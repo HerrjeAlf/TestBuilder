@@ -280,7 +280,7 @@ def bruchteile_berechnen(nr, anzahl=2):
         wert = zaehler * zahl
         punkte += 1
         aufg = (aufg + str(liste_teilaufg[i]) + r') \quad  \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner)
-                + r'} \quad \mathrm{von} \quad x ~=~' + gzahl(zahl * nenner) + einheiten)
+                + r'} \quad \mathrm{von} \quad ' + gzahl(zahl * nenner) + einheiten)
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'} \cdot '
                + gzahl(zahl * nenner) + einheiten + '~=~' + gzahl(wert) + einheiten)
         if (i + 1) % 2 != 0 and i + 1 < anzahl:
@@ -298,7 +298,7 @@ def bruchteile_berechnen(nr, anzahl=2):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
+def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
     # Hier sollen die SuS gleichnamige und ungleichnamige Brüche addieren und subtrahieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfacher gleichnamiger Bruchterm (beide positiv)
@@ -318,7 +318,7 @@ def brueche_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Berechne die Ableitung der folgenden Funktionen mithilfe der elementaren Ableitungsregeln.']
+               'Berechne den angegebenen Bruchterm.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -470,6 +470,176 @@ def brueche_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         i += 1
 
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
+    liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
+    # Hier sollen die SuS Brüche multiplizieren und dividieren.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfachen Bruchterm multiplizieren (beide positiv)
+    # b) einfachen Bruchterm multiplizieren (beliebige Vorzeichen)
+    # c) Bruchterm kürzen und multiplizieren (beliebige Vorzeichen)
+    # a) einfachen Bruchterm dividieren (beide positiv)
+    # b) einfachen Bruchterm dividieren (beliebige Vorzeichen)
+    # c) Bruchterm kürzen und dividieren (beliebige Vorzeichen)
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Berechne den engegebenen Bruchterm.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def einf_pp_bruchterm_multi():
+        zahlen = np.random.choice(range(1,10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        bruch1 = Rational(zaehler1, nenner1)
+        bruch2 = Rational(zaehler2, nenner2)
+        ergebnis = Rational(zaehler1 * zaehler2, nenner1 * nenner2)
+        aufg = gzahl(bruch1) + r'~ \cdot ~' + gzahl(bruch2)
+        lsg = gzahl(bruch1) + r'~ \cdot ~' + gzahl(bruch2) + '~=~' + gzahl(ergebnis)
+        return aufg, lsg
+
+    def einf_bruchterm_multi():
+        zahlen = np.random.choice(range(1,10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bruch1 = Rational(vorz1 * zaehler1, nenner1)
+        bruch2 = Rational(vorz2 * zaehler2, nenner2)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        aufg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2)
+        lsg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2) + '~=~' + gzahl(ergebnis)
+        return aufg, lsg
+
+    def bruchterm_kuerz_multi():
+        zahlen = np.random.choice(range(1,12), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        while (nenner1/zaehler1) % 1 == 0 or (nenner2/zaehler2) % 1 == 0:
+            zahlen = np.random.choice(range(1, 12), 4, False)
+            zahlen.sort()
+            zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        fakt1, fakt2 = np.random.choice(range(2,12), 2, False)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        if vorz2 < 0:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2*zaehler1) + '}{' + gzahl(fakt1*nenner1)
+                    + r'}~ \cdot ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                    + gzahl(fakt2 * nenner2) + r'} \right)')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \cdot ~ \left( ' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                   + gzahl(fakt2 * nenner2) + r'} \right) ~=~' + vorz_aussen(vorz1*vorz2) + r' \frac{'
+                   + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{' + gzahl(zaehler2) + '}{'
+                   + gzahl(nenner2) + r'} ~=~' + gzahl(ergebnis))
+        else:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'} ~ \cdot ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                    + gzahl(fakt2 * nenner2) + r'}')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \cdot ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                   + gzahl(fakt2 * nenner2) + r'} ~=~' + vorz_aussen(vorz1 * vorz2) + r' \frac{'
+                   + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{'
+                   + gzahl(zaehler2) + '}{' + gzahl(nenner2) + r'} ~=~' + gzahl(ergebnis))
+        return aufg, lsg
+    def einf_pp_bruchterm_div():
+        zahlen = np.random.choice(range(1, 10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        bruch1 = Rational(zaehler1, nenner1)
+        bruch2 = Rational(zaehler2, nenner2)
+        bruch2_kw = Rational(nenner2, zaehler2)
+        ergebnis = Rational(zaehler1 * nenner2, nenner1 * zaehler2)
+        aufg = gzahl(bruch1) + r'~ \div ~' + gzahl(bruch2)
+        lsg = (gzahl(bruch1) + r' \div ' + gzahl(bruch2) + '~=~' + gzahl(bruch1) + r' \cdot '
+               + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+    def einf_bruchterm_div():
+        zahlen = np.random.choice(range(1,10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bruch1 = Rational(zaehler1, nenner1)
+        bruch2 = Rational(zaehler2, nenner2)
+        bruch2_kw = Rational(nenner2, zaehler2)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        aufg = gzahl(vorz1 * bruch1) + r'~ \div ~' + gzahl_klammer(vorz2 * bruch2)
+        lsg = (gzahl(vorz1 * bruch1) + r' \div ' + gzahl_klammer(vorz2*bruch2) + '~=~' + vorz_aussen(vorz1*vorz2)
+               + gzahl(bruch1) + r' \cdot ' + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+    def bruchterm_kuerz_div():
+        zahlen = np.random.choice(range(1, 12), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        while (nenner1 / zaehler1) % 1 == 0 or (nenner2 / zaehler2) % 1 == 0:
+            zahlen = np.random.choice(range(1, 12), 4, False)
+            zahlen.sort()
+            zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        fakt1, fakt2 = np.random.choice(range(2, 12), 2, False)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        if vorz2 < 0:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'} ~ \div ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                    + gzahl(fakt1 * nenner2) + r'} \right)')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \div \left(' + vorz_aussen(vorz2) + r'~ \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                   + gzahl(fakt1 * nenner2) + r'} \right) ~=~' + vorz_aussen(vorz1 * vorz2) + r' \frac{'
+                   + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1) + r'} \cdot \frac{'
+                   + gzahl(fakt1 * nenner2) + '}{' + gzahl(fakt2 * zaehler2) + r'} ~=~'
+                   + vorz_aussen(vorz1 * vorz2) + r' \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1)
+                   + r'} \cdot \frac{' + gzahl(nenner2) + '}{' + gzahl(zaehler2) + r'} ~=~' + gzahl(ergebnis))
+        else:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'}~ \div ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                    + gzahl(fakt1 * nenner2) + r'} ')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \div ' + vorz_aussen(vorz2) + r'~ \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                   + gzahl(fakt1 * nenner2) + r'} ~=~' + vorz_aussen(vorz1) + r' \frac{'
+                   + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1) + r'} ~ \cdot \frac{'
+                   + gzahl(fakt1 * nenner2) + '}{' + gzahl(fakt2 * zaehler2) + r'} ~=~' + vorz_aussen(vorz1)
+                   + r' \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{' + gzahl(nenner2)
+                   + '}{' + gzahl(zaehler2)+ r'} ~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
+    aufgaben = {'a': einf_pp_bruchterm_multi, 'b': einf_bruchterm_multi, 'c': bruchterm_kuerz_multi,
+                'd': einf_pp_bruchterm_div, 'e': einf_bruchterm_div, 'f': bruchterm_kuerz_div}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif (i + 1) % 4 == 0 and element != teilaufg[-1]:
+            aufg = aufg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \\\\'
+        else:
+            pass
+        punkte += 1
+        i += 1
+
+
     liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)

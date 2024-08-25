@@ -19,7 +19,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form list([aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.) eintragen
-    Aufgaben = [[brueche_addieren(1)]]
+    Aufgaben = [[brueche_mul_div(1))]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
