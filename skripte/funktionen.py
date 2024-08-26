@@ -32,7 +32,6 @@ def packages(doc: Document):
     for package in packages_lst:
         doc.packages.append(Package(package))
 
-
 # Funktionen zur Darstellung von Zahlen
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
@@ -69,9 +68,7 @@ def vorz_str(k, null=False):
     else:
         return f'+{latex(k)}'
 
-
 # Darstellung der Faktoren bzw. Vorzeichen neu
-
 def vorz_v_innen(k,v, null=False):
     if k == 0:
         return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
@@ -135,8 +132,8 @@ def kgv(q, p):
         if (zahl * min) % max == 0:
             return int(zahl*min)
     return max*min
-# Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
 
+# Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
 def vektor_rational(vec,p,q=1000):
     vec_p = [element*p for element in vec]
     print(vec_p)
@@ -153,7 +150,6 @@ def vektor_rational(vec,p,q=1000):
         return False
 
 # Funktionen zur linearen Algebra
-
 def punkt_vektor(p):
     return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
 
@@ -225,7 +221,6 @@ def vektor_vergleich(vec1, vec2):
     return True
 
 # Wahrscheinlichkeitsrechnung
-
 def darstellung_mengen(lsg_menge):
     # korrekte Darstellung der Lösungsmenge
     lsg = '{ '
@@ -359,9 +354,7 @@ def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'
         wkt_str = r'0 \% \quad (1P)'
     return wkt_erg, wkt_str, punkte
 
-# print(wkt_baumdiagramm(ergebnisraum_zmZ(2, farbe1='B', farbe2='R'), bez1='B', bez2='R', anz1=5, anz2=15, art='zmZ'))
 # Funktionen zur Analysis
-
 def faktorliste(p, q, n):
     return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
