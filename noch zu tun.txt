@@ -10,6 +10,7 @@ Berechnungen:
 Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
+- Biquadratische Funktion mit ganzahligen Extrema, da Nullstellen irrational sein können
 
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm - Aufgabe k zur kummulierten Bernoullikette erstellen

@@ -716,7 +716,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     grafiken_loesung = []
 
     def polynom():  # erzeugt eine Funktion und deren Ableitungen mit p Summanden
-        p = nzahl(2, 3)
+        p = nzahl(1, 2)
         fkt = nzahl(1,9)
         koeffizienten = faktorliste(1, 15, p)
         potenzen = exponenten(p)
@@ -857,13 +857,14 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     lsg = (r' \mathrm{~Berechne~die~erste~Ableitung~der~folgenden~Funktionen~mithilfe'
            r'~der~elementaren~Ableitungsregeln.} \\')
     punkte = 0
+
     for element in teilaufg:
         fkt, fkt_uf, fkt_abl, pkt = aufgaben[element]()
         if (i+1) % 3 != 0:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
             if i+1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and element != teilaufg[-1]:
+        elif (i + 1) % 3 == 0 and i != len(teilaufg)-1:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt + r' \\\\'
         else:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
@@ -2534,8 +2535,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + r' \vert ' + gzahl(round(fkt.subs(x, xwert_wp2), 3))
                            + r') \quad (2P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
 
-            liste_punkte.append(punkte)
-            i += 1
+        liste_punkte.append(punkte)
+        i += 1
     if 'h' in teilaufg:
         # Die SuS sollen die Wendetangente bzw. die Wendenormale, abhängig vom gewählten Parameter 'wendenormale', berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')

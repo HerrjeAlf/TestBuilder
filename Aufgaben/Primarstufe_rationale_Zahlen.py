@@ -212,7 +212,7 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         while [zaehler, nenner] in liste_brueche:
             zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
         liste_brueche.append([zaehler, nenner])
-        ufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
+        aufg = (aufg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
                + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{ \quad }')
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler) + '~}{~' + gzahl(nenner)
                + r'~} ~=~ \frac{~' + gzahl(zaehler * fakt) + r'~}{~ \mathbf{' + gzahl(nenner * fakt) + '}~}')
