@@ -458,7 +458,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 4 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 4 == 0 and element != teilaufg[-1]:
+        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             lsg = lsg + r' \hspace{5em} '
@@ -628,7 +628,7 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 4 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 4 == 0 and element != teilaufg[-1]:
+        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             lsg = lsg + r' \hspace{5em} '

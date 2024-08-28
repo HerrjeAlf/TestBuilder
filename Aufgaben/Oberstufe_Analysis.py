@@ -864,7 +864,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
             if i+1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and i != len(teilaufg)-1:
+        elif (i + 1) % 3 == 0 and i+1 != len(teilaufg):
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt + r' \\\\'
         else:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
@@ -1665,7 +1665,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
             if i + 1 < len(teilaufg):
                 aufg_text = aufg_text + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and element != teilaufg[-1]:
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg + r' \\\\'
         else:
             aufg_text = aufg_text + str(liste_teilaufg[i]) + r') \quad ' + aufg
