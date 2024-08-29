@@ -37,8 +37,8 @@ else:
     exit('Es müssen 10 Aufgaben für den hilfsmittelfreien Teil ausgewählt werden.') if i != 10 else i
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-ana1 = [[kurvendiskussion_polynome_01(1)]]
-ana2 = [[kurvendiskussion_exponentialfkt_01(2)]]
+ana1 = [[kurvendiskussion_polynome(1)]]
+ana2 = [[kurvendiskussion_exponentialfkt(2)]]
 algebra = [[ebene_ebene(3,F_in_E='parallel')]]
 stochastik = [[baumdiagramm(4)]]
 
