@@ -13,13 +13,13 @@ from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
-nr_aufgabe = 0
 # Aufgaben zu den Regeln
 
-def logarithmusgesetze(nr, anzahl=1):
+def logarithmusgesetze(nr, anzahl=1, BE=[]):
     # Hier sollen die Schüler und Schülerinnen Logarithmusgesetze vervollständigen.
     # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Logarithmusgesetze festgelegt werden.
     # Standardmäßig wird immer ein Gesetz erstellt.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
@@ -36,7 +36,6 @@ def logarithmusgesetze(nr, anzahl=1):
 
     exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
-    liste_punkte = [anzahl]
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vervollständigen Sie die folgenden Logarithmusgesetze.']
@@ -54,16 +53,24 @@ def logarithmusgesetze(nr, anzahl=1):
             aufg = aufg + auswahl[element]
         lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
 
-    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~BE}'
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [anzahl]
+        liste_punkte = BE
+    else:
+        liste_punkte = [anzahl]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechenregeln_integrale(nr, anzahl=1):
+def rechenregeln_integrale(nr, anzahl=1, BE=[]):
     # Hier sollen die Schüler und Schülerinnen Rechenregeln der Integralrechnung vervollständigen.
     # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Regeln festgelegt werden.
     # Standardmäßig wird immer eine Regel erstellt.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{nr}']
     i = 0
@@ -78,10 +85,16 @@ def rechenregeln_integrale(nr, anzahl=1):
                       r' - \int_{a}^{b} f(x) \,dx ~=~ \hspace{15em}':
                           r' - \int_{a}^{b} f(x) \,dx ~=~ \int_{b}^{a} f(x) \,dx',
                       r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \hspace{15em}':
-                          r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
+                      r' \int_{a}^{b} f(x) \,dx + \int_{b}^{c} f(x) \,dx ~=~ \int_{a}^{c} f(x) \,dx'}
 
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
-    liste_punkte = [anzahl]
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [anzahl]
+        liste_punkte = BE
+    else:
+        liste_punkte = [anzahl]
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vervollständigen Sie die folgenden Rechenregeln der Integrale.']
@@ -99,16 +112,17 @@ def rechenregeln_integrale(nr, anzahl=1):
             aufg = aufg + auswahl[element]
         lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
 
-    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~Punkte}'
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~BE}'
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
-def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
+def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
     # Hier sollen die SuS Zahlenfolge um weitere Folgenglieder ergänzen, die Art (arithmetisch oder geometrisch) erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -130,7 +144,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                           gzahl(start_arithm_folge) + r'~-~ \frac{1}{n}',
                           r' \frac{' + gzahl(start_arithm_folge) + r'}{n~' + vorz_str(arithm_folge_d) + '}',
                           r'n^{' + str(arithm_folge_d) + '}']
-    ausw_folge = random.randint(1, len(bel_vorschrift)) - 1
+    ausw_folge = random.randint(0,len(bel_vorschrift)-1)
     a_n_alle = [start_arithm_folge + (x - 1) * arithm_folge_d,
                 start_geom_folge * geom_folge_q ** (x - 1),
                 bel_vorschrift[ausw_folge]]
@@ -144,8 +158,8 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
     auswahl_folgenart = liste_folgen.index(ausw_folgenart)
     a_n = a_n_alle[auswahl_folgenart]
     a_n_str = a_n_str_alle[auswahl_folgenart]
-    data = [a_n.subs(x, i) for element in range(1, 5)]
-    data_lsg = [a_n.subs(x, i) for element in range(1, 8)]
+    data = [a_n.subs(x, element) for element in range(1, 5)]
+    data_lsg = [a_n.subs(x, element) for element in range(1, 8)]
 
     # Aufgaben
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die folgende Zahlenfolge:',
@@ -161,7 +175,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         aufgabe.append(str(liste_teilaufg[i]) + ') Setze die Zahlenfolge um drei weitere Glieder fort. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + latex(data_lsg[0]) + ',~' + latex(data_lsg[1])
                        + ',~' + latex(data_lsg[2]) + ',~' + latex(data_lsg[3]) + r',~' + latex(data_lsg[4])
-                       + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3P)')
+                       + ',~' + latex(data_lsg[5]) + ',~' + latex(data_lsg[6]) + r' \quad (3BE)')
         liste_punkte.append(3)
         i += 1
 
@@ -179,7 +193,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             table_b.add_hline(2, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
                                                     r'~ist~es~eine~arithmetische~Folge~mit~d~=~'
-                           + gzahl(arithm_folge_d) + r'.} \quad (3P)')
+                           + gzahl(arithm_folge_d) + r'.} \quad (3BE)')
             loesung.append(table_b)
 
         if auswahl_folgenart == 1:
@@ -191,7 +205,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
                             Rational(data[3] / data[2]))
             table_b.add_hline(2, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
-                           + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + gzahl(geom_folge_q) + r'.} \quad (3P)')
+                           + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + gzahl(geom_folge_q) + r'.} \quad (3BE)')
             loesung.append(table_b)
         if auswahl_folgenart == 2:
             table_b = Tabular('c|c|c|c|c|c|', row_height=1.2)
@@ -204,7 +218,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             table_b.add_hline(2, 6)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
                                                     r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
-                                                    r'\quad (3P)')
+                                                    r'\quad (3BE)')
             loesung.append(table_b)
         liste_punkte.append(3)
         i += 1
@@ -213,7 +227,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
         # Die SuS sollen das Bildungsgesetz der gegebenen Zahlenfolge finden bzw. nennen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Nenne das Bildungsgesetz der Zahlenfolge. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad a_n~=~' + a_n_str + r' \quad (2BE)')
         liste_punkte.append(3)
         i += 1
 
@@ -231,7 +245,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             ergebnis = n * (wert_a_oben + wert_a_unten) / 2
             loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + gzahl(a_unten) + '}^{' +
                            gzahl(a_oben) + r'} ~ a_n ~=~ ' + gzahl(n) + r' \cdot \frac{~' + gzahl(wert_a_unten) +
-                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + gzahl(N(ergebnis, 5)) + r' \quad (3P) \\')
+                           vorz_str(wert_a_oben) + '~}{~2~} ~=~' + gzahl(N(ergebnis, 5)) + r' \quad (3BE) \\')
         else:
             a_unten = nzahl(11, 20)
             a_oben = nzahl(21, 30)
@@ -242,15 +256,20 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None):
             loesung.append(str(liste_teilaufg[i]) + r') \quad \displaystyle\sum_{i=' + gzahl(a_unten) + '}^{' +
                            gzahl(a_oben) + r'} ~ q^n ~=~ \frac{~1~-~ \left(' + gzahl(geom_folge_q) + r' \right)^{'
                            + gzahl(n + 1) + '~}}{~1~-~' + gzahl(geom_folge_q) + '} ~=~' + gzahl(N(ergebnis, 5))
-                           + r' \quad (3P) \\')
+                           + r' \quad (3BE) \\')
         liste_punkte.append(3)
         i += 1
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es werden die Standardpunkte übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def grenzwerte_folge(nr, ausw_folgenart=None):
+def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
     # In dieser Aufgabe sollen die SuS den Grenzwert einer bestimmten Zahlenfolgen berechnen. Die Aufgabe hat keine Teilaufgaben.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     start_arithm_folge = zzahl(2, 10)
     start_geom_folge = nzahl(2, 10)
@@ -289,14 +308,18 @@ def grenzwerte_folge(nr, ausw_folgenart=None):
                r'a_{n}~=~' + a_n_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     loesung.append(r' \lim \limits_{n \to \infty } ' + a_n_str + '~=~'
-                   + latex(grenzwert) + r' \quad (2P)')
+                   + latex(grenzwert) + r' \quad (2BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
-    liste_punkte = [2]
+    if BE != []:
+        liste_punkte = BE
+    else:
+        liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def grenzwerte_funktionen(nr):
+def grenzwerte_funktionen(nr, BE=[]):
     # In dieser Aufgabe sollen die SuS den Grenzwert einer rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     faktor = zzahl(1, 10)
     polstelle = zzahl(1, 8)
@@ -312,15 +335,19 @@ def grenzwerte_funktionen(nr):
     loesung.append(r'\quad \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch +
                    r'~=~ \lim \limits_{x \to ' + gzahl(polstelle) + r'} ~ \frac{' + vorz_v_aussen(faktor,'(x') +
                    vorz_v_innen(polstelle, r') \cdot (x~') + vorz_v_innen(-1 * polstelle, ')}{') + latex(nenner) + '}' +
-                   Bruch_gekuerzt + r'~=~' + gzahl(faktor * (polstelle * 2)) + r'\quad (4P) \\')
+                   Bruch_gekuerzt + r'~=~' + gzahl(faktor * (polstelle * 2)) + r'\quad (4BE) \\')
     grafiken_aufgaben = []
     grafiken_loesung = []
-    liste_punkte = [2]
+    if BE != []:
+        liste_punkte = BE
+    else:
+        liste_punkte = [2]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
+def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
     # In dieser Aufgabe sollen die SuS die mittlere Änderungsrate in einem gegebenen Intervall und lokale Änderungsrate an einer gegebenen Stelle einer Funktion rechnerisch und zeichnerisch bestimmen.
     # Der Parameter "ableitung=" kann 'True' oder 'False' sein und gibt die mögliche Lösung für Teilaufgabe d) vor. Bei 'False' kennen die SuS die Ableitung einer Funktion noch nicht und müssen die lokale Änderungsrate mit einer Grenzwertberechnung bestimmen. Bei 'True' ist es die triviale Lösung mithilfe der Ableitung der Funktion.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -354,6 +381,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
     fkt_abl = diff(fkt, x)
     fkt_abl_x0 = fkt_abl.subs(x, x_wert_2)
 
+    print(fkt)
+
     # print("f(x)=" + str(fkt))
     # print("f'(x)=" + str(fkt_abl))
     # print("f'(x_0)=" + str(fkt_abl_x0))
@@ -377,7 +406,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
         dx = x_wert_2 - x_wert_1
         fkt_sekante = dy / dx * (x - x_wert_2) + y_wert_2
         xwerte = [-6 + n / 5 for n in range(60)]
-        ywerte = [fkt.subs(x, xwerte[i]) for element in range(60)]
+        ywerte = [fkt.subs(x, xwerte[element]) for element in range(60)]
+        print(ywerte)
         graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, r'',
                          'f', f'Aufgabe_{nr}{liste_teilaufg[i]}')
 
@@ -391,8 +421,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
         ywerte_sekante = [fkt_sekante.subs(x, -6), fkt_sekante.subs(x, 6)]
 
         loesung.append(str(liste_teilaufg[i])
-                       + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1P),~~Steigungsdreieck~(1P),~Steigung~}'
-                         r'\bm{m=' + gzahl(steigung_dreieck) + r'}~\mathrm{bestimmt~(1P)}')
+                       + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1BE),~~Steigungsdreieck~(1BE),~Steigung~}'
+                         r'\bm{m=' + gzahl(steigung_dreieck) + r'}~\mathrm{bestimmt~(1BE)}')
 
         if 'c' not in teilaufg:
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '',
@@ -439,7 +469,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
 
         if 'a' not in teilaufg:
             xwerte = [-6 + n / 5 for n in range(60)]
-            ywerte = [fkt.subs(x, xwerte[i]) for element in range(60)]
+            ywerte = [fkt.subs(x, xwerte[element]) for element in range(60)]
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '',
                              'f',f'Aufgabe_{nr}{liste_teilaufg[i]}')
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '', 'f',
@@ -452,7 +482,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
 
         else:
             xwerte = [-6 + n / 5 for n in range(60)]
-            ywerte = [fkt.subs(x, xwerte[i]) for element in range(60)]
+            ywerte = [fkt.subs(x, xwerte[element]) for element in range(60)]
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt,
                              r'',
                              'f', f'Loesung_{nr}{liste_teilaufg[i]}',
@@ -463,8 +493,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
                            + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         loesung.extend((str(liste_teilaufg[i])
-                       + r') \quad \mathrm{Tangente~an~Punkt~(1P),~~Steigungsdreieck~(1P),~Steigung~}\bm{m='
-                       + gzahl(steigung_dreieck) + r'}\mathrm{~bestimmt~(1P)}', 'Figure'))
+                       + r') \quad \mathrm{Tangente~an~Punkt~(1BE),~~Steigungsdreieck~(1BE),~Steigung~}\bm{m='
+                       + gzahl(steigung_dreieck) + r'}\mathrm{~bestimmt~(1BE)}', 'Figure'))
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(3)
         i += 1
@@ -510,8 +540,8 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
                            + r'} ~=~ \lim \limits_{x \to ' + gzahl(x_wert_2) + r'} ~ \frac{' + fkt_str + '-('
                            + gzahl(N(fkt.subs(x, x_wert_2), 3)) + ')}{x' + vorz_str(-1 * x_wert_2)
                            + '} ~=~' + r' \lim \limits_{x \to ' + gzahl(x_wert_2) + '}~' + partialbruch + r'~=~ \bm{'
-                           + gzahl(N(fkt_abl_x0, 3)) + r'} \quad (3P) \\'
-                           + r' \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1P)')
+                           + gzahl(N(fkt_abl_x0, 3)) + r'} \quad (3BE) \\'
+                           + r' \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (1BE)')
             loesung.append(table)
             loesung.append(' \n\n')
             liste_punkte.append(4)
@@ -519,16 +549,20 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False):
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl)
                            + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\bm{'
                            + gzahl(fkt_abl.subs(x, x_wert_2))
-                           + r'} \quad (2P) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
-                           r'\quad (1P) \\')
+                           + r'} \quad (2BE) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
+                           r'\quad (1BE) \\')
             liste_punkte.append(3)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def differentialqoutient(nr, teilaufg=['a', 'b']):
+def differentialqoutient(nr, teilaufg=['a', 'b'], BE=[]):
     # Die SuS sollen die Ableitung einer linearen bzw. quadratischen Funktion mithilfe des Differentialqoutienten berechnen.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -573,7 +607,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                            + str(a1) + r'x' + vorz_str(a2) + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{'
                            + str(a1) + 'x~' + vorz_str(a1) + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
                            + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
-                           + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3P)')
+                           + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3BE)')
         else:
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~=~'
@@ -582,7 +616,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                            + r')}{h}' + r' \\ =~ \lim \limits_{ h \to 0} \frac{' + str(a1) + 'x~' + vorz_str(a1)
                            + 'h~' + vorz_str(a2) + '~' + vorz_str(-1 * a1) + r'x~'
                            + vorz_str(-1 * a2) + r'}{h} =~ \lim \limits_{ h \to 0} \frac{~' + str(a1)
-                           + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3P) \\')
+                           + r'h~}{h} ~=~\bm{' + str(a1) + r'} \quad (3BE) \\')
         liste_punkte.append(punkte)
         i += 1
     if 'b' in teilaufg:
@@ -620,12 +654,17 @@ def differentialqoutient(nr, teilaufg=['a', 'b']):
                            + r'} \quad (5P)')
             liste_punkte.append(punkte)
         i += 1
-    loesung.append(r' \mathrm{insgesamt~' + str(sum(liste_punkte)) + r'~Punkte}')
+    loesung.append(r' \mathrm{insgesamt~' + str(sum(liste_punkte)) + r'~BE}')
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def grafisches_ableiten(nr, teilaufg=['a', 'b']):
+def grafisches_ableiten(nr, teilaufg=['a', 'b'], BE=[]):
     # Die SuS sollen in einem gegebenen Graphen einer Funktion den Graphen der Ableitungsfunktion skizzieren und den skizzierten Verlauf begründen.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -654,7 +693,7 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
 
         aufgabe.extend((str(liste_teilaufg[i])
                         + r') Skizzieren Sie im Koordinatensystem den Graphen der Ableitungsfunktion.', 'Figure'))
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{~Graph~der~Ableitungsfunktion~(2P)} ', 'Figure'))
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{~Graph~der~Ableitungsfunktion~(2BE)} ', 'Figure'))
         Graph(xmin, xmax, fkt, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         Graph(xmin, xmax, fkt, fkt_abl, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
 
@@ -674,24 +713,28 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b']):
         wendepkt_art = fkt_3.subs(x, wendepkt[0])
         if wendepkt_art < 0:
             art = (r'  \mathrm{Es~ist~ein~\mathbf{links-rechts-Wendepunkt},~deswegen~ist~das~Extrema~ein~Hochpunkt'
-                   + r' \quad (1P)} \\')
+                   + r' \quad (1BE)} \\')
         else:
             art = (r'  \mathrm{Es~ist~ein~\mathbf{rechts-links-Wendepunkt},~deswegen~ist~das~Extrema~ein~Tiefpunkt'
-                   + r' \quad (1P)} \\')
+                   + r' \quad (1BE)} \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Begründen Sie Ihre Skizze. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~}\bm{x_1~=~'
                        + gzahl(N(extrema[0],3)) + r'}\mathrm{~und~}\bm{x_2 ~=~' + gzahl(N(extrema[1], 3))
-                       + r'}\mathrm{~sind~Nullstellen~der~Ableitung \quad (1P)} \\'
+                       + r'}\mathrm{~sind~Nullstellen~der~Ableitung \quad (1BE)} \\'
                        + r' \mathrm{Wendepunkte~an~Stelle~}\bm{x_w~=~' + gzahl(N(wendepkt[0], 3))
-                       + r'}\mathrm{~ist~Extrema~der~Ableitung \quad (1P)} \\' + art
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r'}\mathrm{~ist~Extrema~der~Ableitung \quad (1BE)} \\' + art
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
         liste_punkte.append(punkte)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
+def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) ganzrationales Polynom
@@ -706,6 +749,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     # j) verkettete Wurzelfunktion
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -869,20 +913,25 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         else:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt + fkt_uf
-               + r' \quad \to \quad \bm{f^{ \prime }(x)~=~ ' + fkt_abl + r'} \quad (' + str(pkt) + r'P) \\')
+               + r' \quad \to \quad \bm{f^{ \prime }(x)~=~ ' + fkt_abl + r'} \quad (' + str(pkt) + r'BE) \\')
         punkte += pkt
         i += 1
 
-    lsg = lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    lsg = lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'
     aufgabe.append(aufg)
     loesung.append(lsg)
-
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # In dieser Aufgabe sollen die SuS verschiedene Anwendungen der Ableitung am Beispiel eines Hügels, dessen Gipfel mit einer Seilbahn erreicht werden kann, kennenlernen.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -945,14 +994,14 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Fußpunkte des Hügels. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
-                       + fkt_str_pq + r' \quad (2P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
+                       + fkt_str_pq + r' \quad (2BE) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
                        + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
                        + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
-                       + gzahl_klammer(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2P) \\'
+                       + gzahl_klammer(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2BE) \\'
                        + r' x_1 ~=~\mathbf{' + str(x_wert_x1) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
-                       + str(x_wert_x2) + r'} \quad (1P) \quad \mathbf{P_1(' + str(x_wert_x1)
+                       + str(x_wert_x2) + r'} \quad (1BE) \quad \mathbf{P_1(' + str(x_wert_x1)
                        + r' \vert 0)} \quad \mathrm{und} \quad \mathbf{P_2(' + str(x_wert_x2)
-                       + r' \vert 0)} \quad (1P) \\\\')
+                       + r' \vert 0)} \quad (1BE) \\\\')
         liste_punkte.append(5)
         i += 1
 
@@ -966,9 +1015,9 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Steigung und den Steigungswinkel '
                        + 'am westlichen Fußpunkt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
-                       + str(x_wert_x1) + r') ~=~ \mathbf{' + str(N(m_x1,3)) + r'} \quad (2P) \\'
+                       + str(x_wert_x1) + r') ~=~ \mathbf{' + str(N(m_x1,3)) + r'} \quad (2BE) \\'
                        + r' \alpha ~=~ arctan(' + str(N(m_x1,3)) + r') ~=~ \mathbf{' + str(N(winkel_x1,3))
-                       + r'^\circ} \quad (2P) \\\\')
+                       + r'^\circ} \quad (2BE) \\\\')
         liste_punkte.append(4)
         i += 1
 
@@ -991,18 +1040,18 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         aufgabe.append(r' \mathrm{m~=~}' + latex(m_tangente_str) + r' \mathrm{~beträgt}. \hspace{38em}')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{B~und~m~einsetzen~in~}  t(x)~=~m~x~+~n \to \quad '
                        + r' 0 ~=~' + latex(N(m_tangente,3)) + r' \cdot 1 ~+~n \quad \vert '
-                       + vorz_str(N(-1 * m_tangente,3)) + r' \quad (1P) \\ n ~=~' + vorz_str(N(-1 * m_tangente,3))
+                       + vorz_str(N(-1 * m_tangente,3)) + r' \quad (1BE) \\ n ~=~' + vorz_str(N(-1 * m_tangente,3))
                        + r' \quad t(x)~=~' + str(N(m_tangente,3)) + r' \cdot x ' + vorz_str(N(-1 * m_tangente,3))
-                       + r' \quad (2P) \\' + fkt_str + '~=~' + latex(fkt_tangente) + r'~ \vert -('
-                       + latex(fkt_tangente) + r') \quad (1P) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
+                       + r' \quad (2BE) \\' + fkt_str + '~=~' + latex(fkt_tangente) + r'~ \vert -('
+                       + latex(fkt_tangente) + r') \quad (1BE) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
                        + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~'
-                       + fkt_tp_pq + r' \quad (1P) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt_tp, 3))
+                       + fkt_tp_pq + r' \quad (1BE) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt_tp, 3))
                        + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
                        + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
-                       + gzahl_klammer(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2P) \\'
+                       + gzahl_klammer(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2BE) \\'
                        + r' x_1 ~=~\mathbf{' + str(N(x_werte_tp[0],3)) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
-                       + str(N(x_werte_tp[1],3)) + r'} \quad (1P) \quad \mathbf{P_1(' + str(N(x_werte_tp[0],3))
-                       + r' \vert' + str(N(y_wert_tp,3)) + r')} \quad (1P) \\\\')
+                       + str(N(x_werte_tp[1],3)) + r'} \quad (1BE) \quad \mathbf{P_1(' + str(N(x_werte_tp[0],3))
+                       + r' \vert' + str(N(y_wert_tp,3)) + r')} \quad (1BE) \\\\')
         liste_punkte.append(9)
         i += 1
 
@@ -1015,23 +1064,23 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         winkel_alpha = N(math.degrees(atan(m_fkt_x_tp)),3)
         winkel_beta = N(math.degrees(atan(m_tangente)),3)
         loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
-                   + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
+                   + r'^\circ \vert ~=~\mathbf{' + str(abs(winkel_beta-winkel_alpha)) + r'^\circ} \quad (2BE) \\\\')
         if abs(winkel_beta-winkel_alpha) > 90:
             loesung_1 = (r' \gamma ~=~ \vert ' + str(winkel_beta) + r'^\circ~-~' + gzahl_klammer(winkel_alpha)
                          + r'^\circ \vert ~=~' + str(abs(winkel_beta - winkel_alpha))
                          + r'^\circ \quad \to \quad \gamma ~=~ 180^\circ ~-~'
                          + str(abs(winkel_beta - winkel_alpha)) + r'^\circ~=~\mathbf{'
-                         + str(180 - abs(winkel_beta - winkel_alpha)) + r'^\circ} \quad (2P) \\\\')
+                         + str(180 - abs(winkel_beta - winkel_alpha)) + r'^\circ} \quad (2BE) \\\\')
             pkt += 1
         # print(m_fkt_x_tp)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
                        + str(N(x_werte_tp[0],3)) + r') ~=~ ' + str(N(m_fkt_x_tp,3))
-                       + r' \quad (1P) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
-                       + latex(winkel_alpha) + r'^\circ \quad (2P) \\'
+                       + r' \quad (1BE) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
+                       + latex(winkel_alpha) + r'^\circ \quad (2BE) \\'
                        + r' t^{ \prime}(x) ~=~' + str(N(m_tangente,3)) + r' \quad \to \quad'
                        + r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta)
-                       + r'^\circ \quad (2P) \\' + loesung_1)
+                       + r'^\circ \quad (2BE) \\' + loesung_1)
         pkt += 6
         liste_punkte.append(pkt)
         i += 1
@@ -1049,10 +1098,10 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
                        + gzahl_klammer(N(x_werte_tp[0],3)) + r'+~n \quad \vert '
                        + vorz_str(N(-1*m_fkt_x_tp*x_werte_tp[0],3)) + r' \quad n~=~'
                        + latex(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3))
-                       + r' \quad (3P) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
+                       + r' \quad (3BE) \\ x_0 ~=~ - \frac{n}{m} ~=~ - \frac{'
                        + str(N(y_wert_tp-m_fkt_x_tp*x_werte_tp[0],3)) + '}{'+ str(N(m_fkt_x_tp,3))
                        + r'} ~=~\mathbf{' + str(N(-1*((y_wert_tp-m_fkt_x_tp*x_werte_tp[0])/m_fkt_x_tp),3))
-                       + r'} \quad (2P) \\\\')
+                       + r'} \quad (2BE) \\\\')
 
         liste_punkte.append(5)
         i += 1
@@ -1063,21 +1112,26 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Höhe des Hügels. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~' + fkt_str + '~=~' + gzahl(faktor) + r' \cdot (~x^2~'
-                                        + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~'
+                                        + vorz_str(p_fkt) + '~x)~' + vorz_str(faktor*q_fkt) + r' \quad (1BE) \\ ~=~'
                                         + str(faktor) + r' \cdot (~x^2~' + vorz_str(p_fkt) + '~x~'
                                         + vorz_str((p_fkt/2)**2) + vorz_str(-1*(p_fkt/2)**2) + ')'
-                                        + vorz_str(faktor*q_fkt) + r' \quad (1P) \\ ~=~' + gzahl(faktor) + r' \cdot ((x'
+                                        + vorz_str(faktor*q_fkt) + r' \quad (1BE) \\ ~=~' + gzahl(faktor) + r' \cdot ((x'
                                         + vorz_str(-1*x_wert_s) + ')^2' + vorz_str(-1 * (p_fkt / 2) ** 2) + ')'
                                         + vorz_str(faktor * q_fkt) + '~=~' + gzahl(faktor)
                                         + '(~x~' + vorz_str(-1*x_wert_s) + r'~)^2\mathbf{' + vorz_str(y_wert_s)
-                                        + r'} \quad (1P) \\ \mathrm{Die~Höhe~beträgt~' + gzahl(y_wert_s) +  r'.} \quad (1P)')
+                                        + r'} \quad (1BE) \\ \mathrm{Die~Höhe~beträgt~' + gzahl(y_wert_s) +  r'.} \quad (1BE)')
         liste_punkte.append(4)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
+def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
     # Die SuS sollen mithilfe der Ableitung den Wert von x bzw. der Variablen a bestimmen.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1121,16 +1175,16 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
 
         loesung_liste = [r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert ~-~'
                          + gzahl_klammer(a2) + r'~ \vert \div ' + gzahl_klammer(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
-                         + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3P)',
+                         + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3BE)',
                          r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                          + gzahl_klammer(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
                          + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
-                         + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3P)',
+                         + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3BE)',
                          r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                          + gzahl_klammer(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
                          + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
                          + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~\mathbf{'
-                         + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3P)']
+                         + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3BE)']
 
         loesung_1 = loesung_liste[Aufgabe]
         aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den Wert x, an der die Funktion f die Steigung m hat. ')
@@ -1153,21 +1207,26 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b']):
         loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
                          + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
                          + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
-                         + r' \quad (3P) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
+                         + r' \quad (3BE) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
                          + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
                          + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
                          + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
                          + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
                          + r' \quad \to \quad a~=~\mathbf{' + latex(N((a2**2/(2*a1)) + a3 - (a2**2)/(4*a1),3))
-                         + r'} \quad (3P)')
+                         + r'} \quad (3BE)')
         liste_punkte.append(6)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=True):
+def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=True, BE=[]):
     # Den SuS ist ein Grah einer quadratischen Funktion gegeben, dessen Funktionsgleichung Sie rekonstruieren müssen, um damit ein Extremalproblem zu lösen.
     # Mit dem Paramter 'gleichung=' kann festgelegt, ob den SuS die Funktionsgleichung aus Teilaufgabe a) bei b) gegeben ist. Wurde Teilaufgabe a) nicht ausgewählt, ist die Funktionsgleichung automatisch gegeben.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1288,12 +1347,12 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
         table2.add_row('', 'III', ' ', gzahl(a3), gzahl(b3), gzahl(c3), gzahl(d3), '')
         table2.add_hline(2, 7)
         table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
-        table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1P)')
-        table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1P)')
+        table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1BE)')
+        table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1BE)')
         table2.add_hline(2, 7)
         table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
         table2.add_row('', 'II', ' ', gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '')
-        table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1P)')
+        table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1BE)')
         table2.add_hline(2, 7)
 
         # Aufgaben und Lösungen
@@ -1303,42 +1362,42 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
                        + ' | ' + gzahl(ywert_3) + ' ) \n\n')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Funktionsgleichung von f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
-                       + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
+                       + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) } \\'
                        + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                        + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                        + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
-                       + r' \quad (2P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                       + r' \quad (2BE)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
                        + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
-                       + gzahl(ywert_2) + r' \quad (2P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                       + gzahl(ywert_2) + r' \quad (2BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
                        + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
-                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2P) }')
+                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2BE) }')
         loesung.append(table2)
         if gleichung != True:
             punkte += 1
             loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2BE) } \\'
                            + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
                            + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                            + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2BE) } \\'
                            + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
                            + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                            + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                            + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                           + r' \quad (2P) } \\ \to \quad f(x)~=~' + fkt_str + r' \quad  (1P) \\ \mathrm{insgesamt~'
-                           + str(punkte) + '~Punkte}')
+                           + r' \quad (2BE) } \\ \to \quad f(x)~=~' + fkt_str + r' \quad  (1BE) \\ \mathrm{insgesamt~'
+                           + str(punkte) + '~BE}')
         else:
             loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2P) } \\'
+                           + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (2BE) } \\'
                            + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4)
                            + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                            + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2P) } \\'
+                           + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (2BE) } \\'
                            + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
                            + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                            + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                            + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                           + r' \quad (2P) } \\ \mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+                           + r' \quad (2BE) } \\ \mathrm{insgesamt~' + str(punkte) + '~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -1372,23 +1431,23 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
             aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechnen Sie den x-Wert von Punkt P, für den '
                                                              'maximalen Flächeninhalt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)=~' + fkt_str
-                       + r' \quad ges: x~für~A_{max} \quad (1P) } \\'
+                       + r' \quad ges: x~für~A_{max} \quad (1BE) } \\'
                        + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
-                       + fkt_str + r' \quad (2P)}  \\'
+                       + fkt_str + r' \quad (2BE)}  \\'
                        + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
-                       + r' \quad (1P) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
-                       + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2P) } \\'
+                       + r' \quad (1BE) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
+                       + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2BE) } \\'
                        + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
-                       + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2P) }\\'
+                       + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2BE) }\\'
                        + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
                        + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
-                       + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2P) } \\'
+                       + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2BE) } \\'
                        + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
-                       + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2P) } \\ \mathrm{A^{ \prime \prime }('
+                       + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2BE) } \\ \mathrm{A^{ \prime \prime }('
                        + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
                        + gzahl_klammer(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
-                       + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3P) } \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3BE) } \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
 
     if 'c' in teilaufg:
@@ -1403,18 +1462,21 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
                        + gzahl(x_1) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
                        + vorz_str(x_2) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
                        + vorz_str(x_3) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
-                       + ') ~=~' + gzahl(flaeche) + r' \quad (2P)')
+                       + ') ~=~' + gzahl(flaeche) + r' \quad (2BE)')
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rekonstruktion(nr, xwerte=[], faktor=None):
+def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     # In dieser Aufgabe sollen die SuS eine einfache quadratische Funktion rekonstruieren. Die Aufgaben besitzt keine Teilaufgaben.
     # Mit dem Parameter 'xwerte=' können die x-Werte von drei Punkten der Funktion in der Form [x1, x2, x3] vorgegeben werden. Standardmäßig ist die Liste leer und die x-Werte werden zufällig zwischen -3 und 3 gebildet.
     # Mit dem Parameter 'faktor=' kann der Streckungs- bzw. Stazchungsfaktor der Funktion festgelegt werden. Standardmäßig ist der Wert None und der Faktor wird zufällig zwischen 0,5 und 4 gebildet.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     punkte = 11
-    liste_punkte = [punkte]
     liste_bez = [f'{str(nr)}']
     i = 0
     # hier wird die Funktion erstellt.
@@ -1495,49 +1557,52 @@ def rekonstruktion(nr, xwerte=[], faktor=None):
     table2.add_row('', 'III', ' ', gzahl(a3), gzahl(b3), gzahl(c3), gzahl(d3), '')
     table2.add_hline(2, 7)
     table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
-    table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1P)')
-    table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1P)')
+    table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1BE)')
+    table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1BE)')
     table2.add_hline(2, 7)
     table2.add_row('', 'I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
     table2.add_row('', 'II', ' ', gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '')
-    table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1P)')
+    table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1BE)')
     table2.add_hline(2, 7)
 
     # Aufgaben und Lösungen
     loesung.append(r'\mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
-                   + r'~f(x)~=~ax^2~+~bx~+~c \quad (1P) } \\'
+                   + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) } \\'
                    + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                    + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                    + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)
-                   + r' \quad (1P)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                   + r' \quad (1BE)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
                    + r' \quad \to \quad ' + vorz_v_aussen(xwert_2**2, 'a') + vorz_v_innen(xwert_2, 'b')
-                   + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1P)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                   + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
                    + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
-                   + vorz_v_innen(xwert_3,'b' + ' + c ~=~' + gzahl(ywert_3) + r' \quad (1P) }'))
+                   + vorz_v_innen(xwert_3,'b' + ' + c ~=~' + gzahl(ywert_3) + r' \quad (1BE) }'))
     loesung.append(table2)
     loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
-                   + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1P) } \\'
+                   + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1BE) } \\'
                    + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4, null=True)
                    + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                    + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                   + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1P) } \\'
+                   + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1BE) } \\'
                    + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
                    + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                    + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                    + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                   + r' \quad (1P) }  \\' + r' \bm{f(x)~=~' + vorz_v_aussen(lsg_a,'x^2')
-                   + vorz_v_innen(lsg_b,'x') + vorz_str(lsg_c) + r'} \quad (1P) \\'
-                   + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                   + r' \quad (1BE) }  \\' + r' \bm{f(x)~=~' + vorz_v_aussen(lsg_a,'x^2')
+                   + vorz_v_innen(lsg_b,'x') + vorz_str(lsg_c) + r'} \quad (1BE) \\'
+                   + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
     i += 1
-
+    if BE != []:
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False):
+def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
     # Die SuS sollen verschiedene Exponentialgleichungen lösen.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Exponentfkt, b) schwierige Exponentfkt, c) Exponentialfkt mit einf. lin. Fkt als Exponenten, d) Exponentialfkt mit lin. Fkt als Exponenten, e) Summe von Exponentialfkt, f) Logarithmusfkt
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{str(nr)}']
     i = 0
 
@@ -1553,7 +1618,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         ergebnis_1 = basis_1 ** exponent_1
         aufg = gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1)
         lsg = (gzahl(basis_1) + '^x ~=~ ' + gzahl(ergebnis_1) + r' \quad \vert \log_{'
-               + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1) + r' \quad (1P)')
+               + gzahl(basis_1) + r'} \quad \to \quad x ~=~ ' + gzahl(exponent_1) + r' \quad (1BE)')
         pkt = 1
         return aufg, lsg, pkt
 
@@ -1569,9 +1634,9 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ '
                + gzahl(faktor*ergebnis_2) + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad '
                + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2)
-               + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad (1P) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
+               + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad (1BE) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
-               + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2)) + r' \quad (2P)'
+               + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2)) + r' \quad (2BE)'
         return aufg, lsg, pkt
 
     def exp_linear_einfach():
@@ -1583,7 +1648,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
                + r' \quad \vert \ln() \quad \to \quad ' + vorz_str(faktor_exp) + r'x ~=~ \ln('
                + gzahl(erg_gl) + r') \quad \vert \div ' + gzahl_klammer(faktor_exp)
                + r' \quad \to \quad x~=~' + vorz_str(N(log(erg_gl) / faktor_exp, 3))
-               + r' \quad (2P)')
+               + r' \quad (2BE)')
         return aufg, lsg, pkt
 
     def exp_linear_schwer():
@@ -1595,11 +1660,11 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         lsg = ('e^{' + vorz_v_aussen(faktor_exp, 'x') + vorz_str(summand) + '} ~=~ ' + gzahl(erg_gl)
                + r' \quad \vert \ln() \quad \to \quad ' + vorz_v_aussen(faktor_exp, 'x')
                + vorz_str(summand) + r' ~=~ \ln(' + gzahl(erg_gl) + r') \quad \vert '
-               + vorz_str(-1*summand) + r' \quad (1P) \\' + vorz_v_aussen(faktor_exp,'x')
+               + vorz_str(-1*summand) + r' \quad (1BE) \\' + vorz_v_aussen(faktor_exp,'x')
                + r' ~=~ \ln(' + gzahl(erg_gl) + r')' + vorz_str(-1*summand) + r' \quad \vert \div '
                + gzahl_klammer(faktor_exp) + r' \quad \to \quad x~=~'
                + vorz_str(N((log(erg_gl) - summand)/ faktor_exp, 3))
-               + r' \quad (2P)')
+               + r' \quad (2BE)')
         return aufg, lsg, pkt
 
     def exp_summe():
@@ -1618,14 +1683,14 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
                + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
                + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Rational(faktor_2,faktor_1))
                + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
-               + gzahl(faktor_exp_2) + r'x} \quad (1P) \\'
+               + gzahl(faktor_exp_2) + r'x} \quad (1BE) \\'
                + 'e^{' + gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
                + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln() \quad \to \quad '
                + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \Big('
                + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
-               + r' \quad (3P)')
+               + r' \quad (3BE)')
         return aufg, lsg, pkt
 
     def logarithmus():
@@ -1640,11 +1705,11 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         lsg = (r' \ln(x^{' + gzahl(faktor_exp_1) + r'}) ~=~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
                + vorz_str(summand) + r' \quad \vert ~-~ \ln(x^{' + gzahl(faktor_exp_2) + '})'
                + r' \quad \to \quad \ln(x^{' + gzahl(faktor_exp_1-faktor_exp_2) + '}) ~=~'
-               + gzahl(summand) + r' \quad \vert e^{\Box} \quad (1P) \\ x^{'
+               + gzahl(summand) + r' \quad \vert e^{\Box} \quad (1BE) \\ x^{'
                + gzahl(faktor_exp_1-faktor_exp_2) + '} ~=~ e^{' + gzahl(summand)
                + r'} \quad \vert \sqrt[' + gzahl(faktor_exp_1-faktor_exp_2)
                + r'] \quad \to \quad x ~=~'
-               + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2P)')
+               + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2BE)')
         return aufg, lsg, pkt
 
     auswahl = {'a': exp_einfach, 'b': exp_schwer, 'c': exp_linear_einfach, 'd': exp_linear_schwer,
@@ -1673,16 +1738,19 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         punkte += pkt
         i += 1
 
-    lsg_aufg = lsg_aufg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    lsg_aufg = lsg_aufg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'
+    if BE != []:
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg_text)
     loesung.append(lsg_aufg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
+def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # In dieser Aufgabe sollen die SuS in einer Sachaufgaben zum Wachstum ihre Kenntnisse der Logarithmusgesetze nutzen.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1775,8 +1843,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         aufgabe.extend((table2, '\n\n\n', str(liste_teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
                                             'Wachstum handelt.\n\n'))
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
-                                           r'um~exponentielles~Wachstum. \quad (1P)}', table3,
-                                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+                                           r'um~exponentielles~Wachstum. \quad (1BE)}', table3,
+                                            r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}'))
         i += 1
 
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
@@ -1788,8 +1856,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
         # Aufgaben und Lösungen
         aufgabe.append(str(liste_teilaufg[i]) + ') Stellen Sie die Wachstumsfunktion f(x) auf. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad f(x)~=~' + str(Aufg_c0) + r' \cdot '
-                                           + str(Aufg_a) + r'^x \quad (2P) \\'
-                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+                                           + str(Aufg_a) + r'^x \quad (2BE) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}'))
         i += 1
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Mithilfe der Gleichung aus Teilaufgabe 'b' sollen die SuS einen x-Wert bei gegebenen y-Wert berechnen.
@@ -1809,8 +1877,8 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                            + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
                                            + r'} \quad \to \quad x~=~'
                                            + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
-                                           + r' \quad (3P) \\'
-                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+                                           + r' \quad (3BE) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}'))
         i += 1
 
     if 'd' in teilaufg:
@@ -1827,14 +1895,18 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd']):
                                           f' erreicht wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad f(' + str(Aufg_wert_t) + r')~=~' + str(Aufg_c0)
                                            + r' \cdot '+ str(Aufg_a) + r'^{'+ str(Aufg_wert_t)+ r'} ~=~ '
-                                           + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2P) \\'
-                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}'))
+                                           + latex(N(Aufg_c0*Aufg_a**Aufg_wert_t,4)) + r' \quad (2BE) \\'
+                                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}'))
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Integralrechnung
-def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False):
+def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Die SuS sollen verschiedene Funktionen ableiten.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfaches Polynom
@@ -1846,7 +1918,7 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
     # g) Wurzelfunktion
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [nr]
     i = 0
 
@@ -1965,23 +2037,29 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
         else:
             aufg = aufg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx \\\\'
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \int ~' + fkt + r'~ \,dx ' + fkt_uf
-               + r' \quad \to \quad \bm{F(x)~=~' + Fkt + r'} \quad (' + str(pkt) + r'P) \\')
+               + r' \quad \to \quad \bm{F(x)~=~' + Fkt + r'} \quad (' + str(pkt) + r'BE) \\')
         punkte += pkt
         i += 1
 
-    lsg = lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    lsg = lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
+def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, BE=[]):
     # Die SuS sollen die vom Graph einer Funktion (zweiten oder dritten Grades) mit der x-Achse eingeschlossene Fläche berechnen.
     # Mit dem Parameter 'grad=' kann der Grad der Funktion festgelegt werden. Es ist momentan nur die Wahl zwischen grad=2 oder grad=3 möglich. Werden andere Werte angegeben, wird der Grad der Funktion zufällig ausgewählt.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     # Hinweis: Die Funktion zweiten Grades ist für den hilfsmittelfreien Teil geeignet.
-
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -2038,16 +2116,16 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                            + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
-                           + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
+                           + r' \quad (2BE) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
                            + latex(fkt_partial) + r' \quad (4P)')
             loesung.append(table2)
             loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
                            + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
-                           + r' \quad (2P) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
+                           + r' \quad (2BE) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
-                           + gzahl_klammer(fkt_partial_q) + r'} \quad (2P) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
-                           + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P)} \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + gzahl_klammer(fkt_partial_q) + r'} \quad (2BE) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
+                           + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE)} \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             i += 1
 
         if 'b' in teilaufg:
@@ -2065,13 +2143,13 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
                            + f'die der Graph mit der x-Achse einschließt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad A~=~ \left| \int_{' + gzahl(N(nst_3,2)) + '}^{'
                            + gzahl(nst_1) + '}' + fkt_str + r' ~ \,dx \right| + \left| \int_{' + gzahl(nst_1) + '}^{'
-                           + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (2P) \\ =~ \left| \left[ '
+                           + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| \quad (2BE) \\ =~ \left| \left[ '
                            + Fkt_str + r' \right]_{' + gzahl(N(nst_3,2)) + '}^{' + gzahl(nst_1)
                            + r'} \right| + \left| \left[ ' + Fkt_str + r' \right]_{'
-                           + gzahl(N(nst_1,2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2P) \\'
+                           + gzahl(N(nst_1,2)) + '}^{' + gzahl(nst_2) + r'} \right| \quad (2BE) \\'
                            + r'=~ \left| ' + gzahl(lsg_A1) + r' \right| + \left| ' + gzahl(lsg_A2)
-                           + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2P) \\'
-                           + r'\mathrm{insgesamt~' + str(punkte) + '~Punkte}')
+                           + r' \right| ~=~' + gzahl(lsg_A) + r' \quad (2BE) \\'
+                           + r'\mathrm{insgesamt~' + str(punkte) + '~BE}')
 
             i += 1
     elif grad == 2:
@@ -2106,11 +2184,11 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                            + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + fkt_pq_str
-                           + r' \quad (2P) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
+                           + r' \quad (2BE) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
                            + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
-                           + gzahl_klammer(fkt_q) + r'} \quad (2P) \\' + r' \bm{x_1~=~' + gzahl(nst_1)
-                           + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r'} \quad (2P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + gzahl_klammer(fkt_q) + r'} \quad (2BE) \\' + r' \bm{x_1~=~' + gzahl(nst_1)
+                           + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r'} \quad (2BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             i += 1
 
         if 'b' in teilaufg:
@@ -2126,18 +2204,23 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3):
                            + gzahl(nst_2) + '}' + fkt_str + r' ~ \,dx \right| =~ \left| \left[ '
                            + Fkt_str + r' \right]_{' + gzahl(nst_1) + '}^{' + gzahl(nst_2)
                            + r'} \right| ~=~ \left| ' + gzahl(lsg_A) + r' \right| ~=~ \bm{'
-                           + gzahl(abs(lsg_A)) + r'} \quad (3P) \\')
+                           + gzahl(abs(lsg_A)) + r'} \quad (3BE) \\')
 
             i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
-def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True):
+def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
     # Mit dem Parameter 'ngrad=' wird die Art der Nullstellen der Funktion festgelegt. Bei Funktionen dritten Grades gibt es immer eine ganzzahlige Nullstelle. Bei 'grad=4' handelt es sich um eine biquadratische Funktion. Standardmäßig ist 'grad=3' eingestellt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
     liste_bez = []
@@ -2208,7 +2291,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + gzahl(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2P)')
+                       + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2BE)')
         liste_punkte.append(2)
         i += 1
     if 'b' in teilaufg:
@@ -2218,13 +2301,13 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         fkt_sym = fkt.subs(x, -x)
         if fkt_sym == fkt:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
-                   + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3P)')
+                   + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3BE)')
         elif fkt_sym == -1 * fkt:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
-                   + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3P)')
+                   + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
         else:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
-                                                          r'\mathrm{nicht~symmetrisch} \quad (3P)')
+                                                          r'\mathrm{nicht~symmetrisch} \quad (3BE)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg)
         liste_punkte.append(3)
@@ -2240,14 +2323,14 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 fkt_x_ausgekl_str = vorz_v_aussen(fkt_a1, 'x^2') + vorz_str(fkt_a3)
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad 0~=~'
                                + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str
-                               + r') \quad \to \quad x_1 = 0 \quad (3P) \\ 0~=~' + fkt_x_ausgekl_str
+                               + r') \quad \to \quad x_1 = 0 \quad (3BE) \\ 0~=~' + fkt_x_ausgekl_str
                                + r' \quad \vert ' + vorz_str(-1 * fkt_a3) + r' \quad \vert \div'
                                + gzahl_klammer(fkt_a1) + r' \quad \to \quad x_{2,3}~=~ \pm \sqrt{'
                                + latex(Rational(-1 * fkt_a3, fkt_a1)) + r'} ~=~ \pm ' + gzahl(N(nst_3,3))
-                               + r' \quad (3P) \\ \mathrm{ S_{x_2}(' + gzahl(N(nst_1, 3))
+                               + r' \quad (3BE) \\ \mathrm{ S_{x_2}(' + gzahl(N(nst_1, 3))
                                + r'\vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}(' + gzahl(N(nst_3, 3))
-                               + r' \vert 0) \quad (2P)} \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \vert 0) \quad (2BE)} \\'
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             elif fkt_a4 == 0:
                 punkte = 11
                 fkt_x_ausgekl_str = vorz_v_aussen(fkt_a1, 'x^2') + vorz_v_innen(fkt_a2,'x') + vorz_str(fkt_a3)
@@ -2257,16 +2340,16 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 fkt_diskr = sqrt((fkt_p/2)**2 - fkt_q)
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)}~=~0 \quad \to \quad 0~=~'
                                + fkt_str + r' ~=~ x \cdot ' + fkt_x_ausgekl_str
-                               + r' \quad \to \quad x_1 = 0 \quad (3P)  \\ 0~=~' + fkt_x_ausgekl_str
+                               + r' \quad \to \quad x_1 = 0 \quad (3BE)  \\ 0~=~' + fkt_x_ausgekl_str
                                + r' \quad \vert \div' + gzahl_klammer(fkt_a1) + r' \quad \to \quad 0~=~' + fkt_pq_str
-                               + r' \quad (2P)  \\ x_{2,3}~=~ - \frac{' + gzahl(fkt_p)
+                               + r' \quad (2BE)  \\ x_{2,3}~=~ - \frac{' + gzahl(fkt_p)
                                + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(fkt_p) + r'}{2} \right) ^2'
                                + vorz_str(-1 * fkt_q) + r'} ~=~ ' + gzahl(Rational(-1*fkt_a2,2*fkt_a1)) + r' \pm '
                                + gzahl(N(fkt_diskr,3)) + r' \quad \to \quad x_2 ~=~' + gzahl(N(nst_1,3))
-                               + r' \quad und \quad x_3 ~=~' + gzahl(N(nst_3,3)) + r' \quad (4P) \\ \mathrm{ S_{x_2}('
+                               + r' \quad und \quad x_3 ~=~' + gzahl(N(nst_3,3)) + r' \quad (4BE) \\ \mathrm{ S_{x_2}('
                                + gzahl(round(nst_1, 3)) + r'\vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}('
-                               + gzahl(round(nst_3, 3)) + r' \vert 0) \quad (2P)} \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + gzahl(round(nst_3, 3)) + r' \vert 0) \quad (2BE)} \\'
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             else:
                 punkte = 14
                 # Berechnung der Werte für Hornerschema
@@ -2296,19 +2379,19 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
                                + fkt_str + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_2)
-                               + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_2) + ')~=~'
+                               + r' \quad (2BE) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_2) + ')~=~'
                                + latex(fkt_partial) + r' \quad (4P)')
                 loesung.append(table2)
                 loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(fkt_a1)
-                               + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2P) \\'
+                               + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2BE) \\'
                                + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \left('
                                + r' \frac{' + latex(fkt_partial_p) + r'}{2} \right)^2-' + gzahl_klammer(fkt_partial_q)
-                               + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_1, 3))
-                               + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
+                               + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_1, 3))
+                               + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
                                + r'S_{x_1}(' + gzahl(nst_2) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_1, 3))
                                + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)'
-                               + r' \quad S_y(0 \vert' + gzahl(fkt_a4) + r') \quad (2P) \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \quad S_y(0 \vert' + gzahl(fkt_a4) + r') \quad (2BE) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         elif grad == 4:
             punkte = 14
             fkt_z_str = (vorz_v_aussen(faktor,'z^2') + vorz_v_innen(-1*faktor*(nst_12 + nst_34),'z')
@@ -2330,19 +2413,19 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 S4 = r' S_{x_4}( \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad \mathrm{und} \quad '
 
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Lösung~durch~Substitution~von}~z=x^2:'
-                           + r' \quad f(x) ~ \to ~ f(z) ~=~ ' + fkt_z_str + r'  \quad (1P) \\ '
+                           + r' \quad f(x) ~ \to ~ f(z) ~=~ ' + fkt_z_str + r'  \quad (1BE) \\ '
                            + r'\mathrm{Ansatz:}~f(z)~=~0 \quad \to \quad 0~=~' + fkt_z_str
                            + r' \quad \to \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad 0 ~=~'
-                           + fkt_z_pq + r' \quad (3P) \\ z_{1,2}~=~ - \frac{' + gzahl(fkt_z_p)
+                           + fkt_z_pq + r' \quad (3BE) \\ z_{1,2}~=~ - \frac{' + gzahl(fkt_z_p)
                            + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(fkt_z_p) + r'}{2} \right) ^2'
                            + vorz_str(-1 * fkt_z_q) + r'} ~=~ ' + gzahl((nst_12 + nst_34)/2) + r' \pm '
                            + gzahl(sqrt(((nst_12 + nst_34)**2)/4-(nst_12*nst_34))) + r' \quad \to \quad z_1 ~=~'
                            + gzahl(nst_12) + r' \quad und \quad z_2 ~=~' + gzahl(nst_34)
-                           + r' \quad (4P) \\ \mathrm{Rücksubstitution} ~ \sqrt{z} = \pm x \quad \to \quad x_{1,2} ~=~ '
+                           + r' \quad (4BE) \\ \mathrm{Rücksubstitution} ~ \sqrt{z} = \pm x \quad \to \quad x_{1,2} ~=~ '
                            + r'\pm \sqrt{' + gzahl(nst_12) + r'} \quad \mathrm{und} \quad x_{3,4} ~=~ \pm \sqrt{'
-                           + gzahl(nst_34) + r'} \quad (3P) \\' + S1 + S2 + S3 + S4
-                           + r' S_{y}( 0 \vert ' + gzahl(fkt_a3) + r') \quad (3P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + gzahl(nst_34) + r'} \quad (3BE) \\' + S1 + S2 + S3 + S4
+                           + r' S_{y}( 0 \vert ' + gzahl(fkt_a3) + r') \quad (3BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2377,8 +2460,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
                            + r' \hspace{5em} f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                           + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \quad (3P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \quad (3BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
     if len([element for element in ['e', 'f'] if element in teilaufg]) > 0:
@@ -2397,31 +2480,31 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
             if fkt_2.subs(x, x_1_fkt_1) < 0:
                 loesung_f_monotonie_1 = (r'~<~0~ \to HP(~' + gzahl(x_1_fkt_1) + r'~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3P) \\')
+                                         + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3BE) \\')
             else:
                 loesung_f_monotonie_1 = (r'~>~0~ \to TP(~' + gzahl(x_1_fkt_1) + r'~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3P) \\')
+                                         + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3BE) \\')
 
             if fkt_2.subs(x, x_2_fkt_1) < 0:
                 loesung_f_monotonie_2 = (r'~<~0~ \to HP(~' + gzahl(x_2_fkt_1) + r'~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3P) \\')
+                                         + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3BE) \\')
             else:
                 loesung_f_monotonie_2 = (r'~>~0~ \to TP(~' + gzahl(x_2_fkt_1) + r'~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3P) \\')
+                                         + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3BE) \\')
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                     ' mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                           + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * fkt_a1) + r' \quad (1P) \\  0 ~=~'
+                           + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * fkt_a1) + r' \quad (1BE) \\  0 ~=~'
                            + fkt_1_pq_str + r' \quad \to \quad ' + r' x_{1/2} ~=~ - \frac{' + gzahl_klammer(p_fkt_1_pq)
                            + r'}{2} \pm \sqrt{ \left(' + r' \frac{' + latex(p_fkt_1_pq) + r'}{2} \right)^2-'
-                           + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3P) \\'
+                           + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3BE) \\'
                            + r'x_1~=~' + gzahl(x_1_fkt_1) + r' \quad \mathrm{und} \quad x_2~=~' + gzahl(x_2_fkt_1)
-                           + r' \quad (2P) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'
+                           + r' \quad (2BE) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'
                            + gzahl(round(fkt_2.subs(x, x_1_fkt_1), 3)) + loesung_f_monotonie_1
                            + r' f^{ \prime \prime }(' + gzahl(x_2_fkt_1) + ')~=~'
                            + gzahl(round(fkt_2.subs(x, x_2_fkt_1), 3)) + loesung_f_monotonie_2
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if grad == 4:
             punkte = 13
             x_12_fkt_1 = solve(fkt_1, x)
@@ -2431,39 +2514,39 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
             if fkt_2.subs(x, x_1_fkt_1) < 0:
                 loesung_f_monotonie_1 = (r'~<~0~ \to HP(~ - \sqrt{' + gzahl((nst_12+nst_34)/2) + r'}~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[0]), 3)) + r'~) \quad (2P) \\')
+                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[0]), 3)) + r'~) \quad (2BE) \\')
             else:
                 loesung_f_monotonie_1 = (r'~>~0~ \to TP(~ - \sqrt{' + gzahl((nst_12+nst_34)/2) + r'}~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[0]), 3)) + r'~) \quad (2P) \\')
+                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[0]), 3)) + r'~) \quad (2BE) \\')
 
             if fkt_2.subs(x, 0) < 0:
                 loesung_f_monotonie_2 = (r'~<~0~ \to HP(~0~ \vert ~' + gzahl(round(fkt.subs(x, 0), 3))
-                                         + r'~) \quad (2P) \\')
+                                         + r'~) \quad (2BE) \\')
             else:
                 loesung_f_monotonie_2 = (r'~>~0~ \to TP(~0~ \vert ~' + gzahl(round(fkt.subs(x, 0), 3))
-                                         + r'~) \quad (2P) \\')
+                                         + r'~) \quad (2BE) \\')
 
             if fkt_3.subs(x, x_3_fkt_1) < 0:
                 loesung_f_monotonie_3 = (r'~<~0~ \to HP(~ \sqrt{' + gzahl((nst_12+nst_34)/2) + r'}~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[2]), 3)) + r'~) \quad (2P) \\')
+                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[2]), 3)) + r'~) \quad (2BE) \\')
             else:
                 loesung_f_monotonie_3 = (r'~>~0~ \to TP(~ \sqrt{' + gzahl((nst_12+nst_34)/2) + r'}~ \vert ~'
-                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[2]), 3)) + r'~) \quad (2P) \\')
+                                         + gzahl(round(fkt.subs(x, x_12_fkt_1[2]), 3)) + r'~) \quad (2BE) \\')
 
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                     ' mithilfe des hinreichenden Kriteriums. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                           + fkt_1_str + r' ~=~ x \cdot (' + fkt_1_str_ausg + r') \quad \to \quad x_1 ~=~0 \quad (3P) \\'
+                           + fkt_1_str + r' ~=~ x \cdot (' + fkt_1_str_ausg + r') \quad \to \quad x_1 ~=~0 \quad (3BE) \\'
                            + r' 0 ~=~ ' + fkt_1_str_ausg + r' \quad \vert ' + vorz_str(2*faktor * (nst_12 + nst_34))
-                           + r' \quad \vert \div ' + gzahl_klammer(4 * faktor) + r' \quad (1P) \\'
+                           + r' \quad \vert \div ' + gzahl_klammer(4 * faktor) + r' \quad (1BE) \\'
                            + r' x^2 ~=~ ' + gzahl((nst_12+nst_34)/2) + r' \quad \vert \sqrt{} \quad \to \quad x_{2,3}'
-                           + r'~=~ \pm ~ \sqrt{' + gzahl((nst_12+nst_34)/2) + r'} \quad (3P) \\'
+                           + r'~=~ \pm ~ \sqrt{' + gzahl((nst_12+nst_34)/2) + r'} \quad (3BE) \\'
                            + r' f^{ \prime \prime }( - \sqrt{' + gzahl((nst_12+nst_34)/2) + r'})~=~'
                            + gzahl(round(fkt_2.subs(x, x_12_fkt_1[0]), 3)) + loesung_f_monotonie_1
                            + r' f^{ \prime \prime }(0)~=~' + gzahl(round(fkt_2.subs(x, 0), 3)) + loesung_f_monotonie_2
                            + r' f^{ \prime \prime }( \sqrt{' + gzahl((nst_12+nst_34)/2) + r'})~=~'
                            + gzahl(round(fkt_2.subs(x, x_12_fkt_1[2]), 3)) + loesung_f_monotonie_3
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2511,10 +2594,10 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ' + vorz_str(-1*2*fkt_a2)
                            + r' \quad \vert \div ' + gzahl_klammer(6 * fkt_a1) + r' \quad \to \quad x_1~=~'
-                           + gzahl(xwert_wp1) + r' \quad (2P) \\ f^{ \prime \prime \prime }('
+                           + gzahl(xwert_wp1) + r' \quad (2BE) \\ f^{ \prime \prime \prime }('
                            + gzahl(xwert_wp1) + r') \quad \neq 0 \quad \to \quad WP('
                            + gzahl(xwert_wp1) + r' \vert ' + gzahl(round(fkt.subs(x, xwert_wp1), 3))
-                           + r') \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r') \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if grad == 4:
             punkte = 8
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2524,16 +2607,16 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_12 + nst_34))
-                           + r' \quad \vert \div ' + gzahl_klammer(12 * faktor) + r' \quad (2P) \\ x^2~=~ \pm'
+                           + r' \quad \vert \div ' + gzahl_klammer(12 * faktor) + r' \quad (2BE) \\ x^2~=~ \pm'
                            + gzahl(Rational((nst_12 + nst_34), 6)) + r' \quad \vert \sqrt{} \quad \to \quad '
-                           + r' x_{W_{1,2}} ~=~ \pm ' + gzahl(xwert_wp2) + r'(2P) \\ f^{ \prime \prime \prime }('
+                           + r' x_{W_{1,2}} ~=~ \pm ' + gzahl(xwert_wp2) + r'(2BE) \\ f^{ \prime \prime \prime }('
                            + gzahl(xwert_wp1) + ')~=~' + gzahl(N(fkt_3.subs(x, xwert_wp1),3))
                            + r' \quad \neq 0 \quad \to \quad WP(' + gzahl(xwert_wp1) + r' \vert '
-                           + gzahl(round(fkt.subs(x, xwert_wp1), 3)) + r') \quad (2P) \\  f^{ \prime \prime \prime }('
+                           + gzahl(round(fkt.subs(x, xwert_wp1), 3)) + r') \quad (2BE) \\  f^{ \prime \prime \prime }('
                            + gzahl(xwert_wp2) + ')~=~' + gzahl(N(fkt_3.subs(x, xwert_wp2),3))
                            + r' \quad \neq 0 \quad \to \quad WP(' + gzahl(xwert_wp2)
                            + r' \vert ' + gzahl(round(fkt.subs(x, xwert_wp2), 3))
-                           + r') \quad (2P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r') \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2559,14 +2642,14 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp1_fkt_1) + '(x' + vorz_str(-1*xwert_wp1) + ')'
                                + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                               + r' \quad (3P) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
                                + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                                + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                                + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(N(-1 / ywert_wp1_fkt_1,3)) + '(x'
                                + vorz_str(-1 * xwert_wp1) + ')' + vorz_str(ywert_wp1) + '~=~'
                                + vorz_v_aussen(N(-1 / ywert_wp1_fkt_1,3), 'x')
                                + vorz_str(N(xwert_wp1 / ywert_wp1_fkt_1 + ywert_wp1, 3))
-                               + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
             if wendenormale == False:
                 punkte = 3
@@ -2578,7 +2661,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp1_fkt_1) + '(x' + vorz_str(-1 * xwert_wp1) + ')'
                                + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                               + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if grad == 4:
             ywert_wp2 = N(fkt.subs(x, Rational((nst_12 + nst_34), 6)), 3)
             ywert_wp2_fkt_1 = N(fkt_1.subs(x, Rational((nst_12 + nst_34), 6)), 3)
@@ -2597,14 +2680,14 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp2_fkt_1) + '(x' + vorz_str(-1*xwert_wp2) + ')'
                                + vorz_str(ywert_wp2) + '~=~' + vorz_v_aussen(ywert_wp2_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp2_fkt_1 * ((nst_12 + nst_34)/6) + ywert_wp2, 3))
-                               + r' \quad (3P) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
                                + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                                + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                                + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(N(-1 / ywert_wp2_fkt_1,3)) + '(x'
                                + vorz_str(-1 * xwert_wp2) + ')' + vorz_str(ywert_wp2) + '~=~'
                                + vorz_v_aussen(N(-1 / ywert_wp2_fkt_1,3), 'x')
                                + vorz_str(N(((nst_12 + nst_34)/6) / ywert_wp2_fkt_1 + ywert_wp2, 3))
-                               + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
             if wendenormale == False:
                 punkte = 3
@@ -2616,7 +2699,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp2_fkt_1) + '(x' + vorz_str(-1 * xwert_wp2) + ')'
                                + vorz_str(ywert_wp2) + '~=~' + vorz_v_aussen(ywert_wp2_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp2_fkt_1 * ((nst_12 + nst_34)/6) + ywert_wp2, 3))
-                               + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2632,8 +2715,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
             aufgabe.append(str(liste_teilaufg[i])
                            + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2P) \quad Werte~(2P)'
-                                                    r' \quad Graph~(1P) \to \quad insgesamt~(5P)}')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
         if grad == 4:
@@ -2643,8 +2726,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
 
             aufgabe.append(str(liste_teilaufg[i])
                            + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2P) \quad Werte~(2P)'
-                                                    r' \quad Graph~(1P) \to \quad insgesamt~(5P)}')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
 
@@ -2676,7 +2759,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                                         f'im Intervall I(0|{gzahl(obere_grenze)}). \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \int \limits_0^{' + gzahl(obere_grenze) + '}' + fkt_str
                            + r'~ \mathrm{d}x \right| ~=~ \left| \left[' + Fkt_str + r' \right]_{0}^{' + gzahl(obere_grenze)
-                           + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4P) \\')
+                           + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4BE) \\')
         if grad == 4:
             Fkt = integrate(fkt, x)
             Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 5), 'x^5') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
@@ -2696,16 +2779,21 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + '}^{'  + gzahl(N(obere_grenze,3)) + '}' + fkt_str
                            + r'~ \mathrm{d}x \right| ~=~ \left| \left[' + Fkt_str + r' \right]_{'
                            + gzahl(N(untere_grenze,3)) + '}^{' + gzahl(N(obere_grenze,3))
-                           + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4P) \\')
+                           + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4BE) \\')
 
         liste_punkte.append(4)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None):
+def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, BE=[]):
     # In dieser Aufgaben sollen die SuS eine Kurvendiskussion einer Polynomfunktion (dritten Grades) mit einem Parameter durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
     liste_bez = []
@@ -2769,8 +2857,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + ') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + r'~=~\bm{' + \
                        gzahl(grenzwert_pos) + r'} \\ \lim\limits_{x \to - \infty} ' + \
-                       fkt_str + r'~=~\bm{' + gzahl(grenzwert_neg) + r'} \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       fkt_str + r'~=~\bm{' + gzahl(grenzwert_neg) + r'} \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'b' in teilaufg:
@@ -2784,15 +2872,15 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + vorz_str(-1 * fkt_a1) + r'a^2 \cdot x ~' + vorz_str(fkt_a0) + r'a^3')
         if fkt_sym == fkt:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str
-                   + r'~=~f(x) \\ \to \quad \mathbf{Achsensymmetrie} \quad (3P) \\')
+                   + r'~=~f(x) \\ \to \quad \mathbf{Achsensymmetrie} \quad (3BE) \\')
         elif fkt_sym == -1 * fkt:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str
-                   + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3P) \\')
+                   + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3BE) \\')
         else:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad'
-                                                       r'\mathbf{nicht~symmetrisch} \quad (3P) \\')
+                                                       r'\mathbf{nicht~symmetrisch} \quad (3BE) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+        loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'c' in teilaufg:
@@ -2829,24 +2917,24 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion, '
                                                 f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1P) \\ \mathrm{mit~x_2='
+                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{mit~x_2='
                                                  + nst_2_str + r'~folgt:} \quad (' + fkt_str
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))
         loesung.append(table2)
         loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
-                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
+                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
                        r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
                        r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                        r'a^2)} ~=~ ' + gzahl(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
-                       + latex(fkt_disk) + r' a^2} \quad (2P) \\ x_{1/3}~=~'
+                       + latex(fkt_disk) + r' a^2} \quad (2BE) \\ x_{1/3}~=~'
                        + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
                        + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_1~=~'
                        + vorz_v_aussen(faktor_1,'a', null=True) + r' \quad \mathrm{und} \quad x_3~=~'
-                       + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3P) \\ \bm{S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
+                       + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3BE) \\ \bm{S_{x_1}(' + nst_1_str + r'\vert 0) \quad S_{x_2}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
-                       + r' \bm{\quad S_y(0 \vert' + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \bm{\quad S_y(0 \vert' + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if len([element for element in ['d', 'e', 'f', 'g'] if element in teilaufg]) > 0:
@@ -2897,7 +2985,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ f^{ \prime }(x) ~=~' + fkt_1_str
                            + r'} \\ \mathrm{f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r'} \\ \mathrm{f^{ \prime \prime \prime }(x) ~=~ ' + fkt_3_str
-                           + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                           + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         liste_punkte.append(punkte)
         i += 1
 
@@ -2919,17 +3007,17 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         # print(x_1_fkt_2), print(x_2_fkt_2)
         if x_1_fkt_2.subs(a,1) < 0:
             lsg_extrema_1 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \mathbf{HP}\bm{(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
-                             + gzahl(N(y_1_fkt,3)) + r')} \quad (2P) \\')
+                             + gzahl(N(y_1_fkt,3)) + r')} \quad (2BE) \\')
         else:
             lsg_extrema_1 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \mathbf{TP}\bm{(' + gzahl(N(x_1_fkt_1,3)) + r' \vert '
-                             + gzahl(N(y_1_fkt,3)) + r')} \quad (2P) \\')
+                             + gzahl(N(y_1_fkt,3)) + r')} \quad (2BE) \\')
 
         if x_2_fkt_2.subs(a,1) < 0:
             lsg_extrema_2 = (r' \quad \mathrm{<~0~da~a>0} \quad \to \quad \mathbf{HP}\bm{(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
-                             + gzahl(N(y_2_fkt,3)) + r')} \quad (2P) \\')
+                             + gzahl(N(y_2_fkt,3)) + r')} \quad (2BE) \\')
         else:
             lsg_extrema_2 = (r' \quad \mathrm{>~0~da~a>0} \quad \to \quad \mathbf{TP}\bm{(' + gzahl(N(x_2_fkt_1,3)) + r' \vert '
-                             + gzahl(N(y_2_fkt,3)) + r')} \quad (2P) \\')
+                             + gzahl(N(y_2_fkt,3)) + r')} \quad (2BE) \\')
 
         # Koeffizienten der ersten Ableitung
         # fkt_a3 = faktor
@@ -2953,24 +3041,24 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrempunkte der Funktion und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
-                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
+                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
+                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
                        + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \Big( \frac{'
                        + gzahl(fkt_1_p) + r' a}{2} \Big)^2 - \Big(' + gzahl(fkt_1_q)
-                       + r' a^2 \Big) } \quad (1P) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
+                       + r' a^2 \Big) } \quad (1BE) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
                        + gzahl(N(fkt_1_disk,3)) + r' a^2} \quad ~=~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm '
-                       + gzahl(N(fkt_1_sqrt,3)) + r' a \quad (1P) \\'
+                       + gzahl(N(fkt_1_sqrt,3)) + r' a \quad (1BE) \\'
                        + r'x_1~=~' + gzahl(-1*fkt_1_p/2) + r' a ~-~' + gzahl(N(fkt_1_sqrt,3))
                        + r' a~=~' + gzahl(N(x_1_fkt_1,3)) + r' \quad \mathrm{und} \quad '
                        + r'x_2~=~' + gzahl(-1*fkt_1_p/2) + r' a~+~' + gzahl(N(fkt_1_sqrt,3))
-                       + r' a~=~' + gzahl(N(x_2_fkt_1,3)) + r' \quad (2P) \\'
+                       + r' a~=~' + gzahl(N(x_2_fkt_1,3)) + r' \quad (2BE) \\'
                        + r'f^{ \prime \prime } (' + gzahl(N(x_1_fkt_1,3)) +') ~=~' + gzahl(6*faktor) + r' \cdot ('
                        + gzahl(N(x_1_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + r' a ~=~'
-                       + gzahl(N(x_1_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_1
+                       + gzahl(N(x_1_fkt_2,3)) + r' \quad (1BE)' + lsg_extrema_1
                        + r' f^{ \prime \prime } (' + gzahl(N(x_2_fkt_1,3)) + ') ~=~' + gzahl(6 * faktor)
                        + r' \cdot (' + gzahl(N(x_2_fkt_1,3)) + ')' + vorz_str(fkt_1_a1) + 'a  ~=~'
-                       + gzahl(N(x_2_fkt_2,3)) + r' \quad (1P)' + lsg_extrema_2
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + gzahl(N(x_2_fkt_2,3)) + r' \quad (1BE)' + lsg_extrema_2
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'f' in teilaufg:
@@ -2989,12 +3077,12 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
-                       + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
-                       + gzahl(xwert_wp_dezimal) + r'a \quad (1P) \quad \to \quad f^{ \prime \prime \prime }\Big('
+                       + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
+                       + gzahl(xwert_wp_dezimal) + r'a \quad (1BE) \quad \to \quad f^{ \prime \prime \prime }\Big('
                        + gzahl(xwert_wp_bruch) + r'a \Big) ~=~ ' + fkt_3_str
                        + r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} \bm{\Big(' + gzahl(xwert_wp_bruch)
-                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r'\Big)} \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r'\Big)} \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'g' in teilaufg:
@@ -3015,10 +3103,10 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
                        + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                        + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad' + abhängigkeit
-                       + r'\quad (2P) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
+                       + r'\quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
                        + gzahl(ywert_wp_dezimal/a**3) + r' \Big(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                        + r'x \Big)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
-                       + r'x^3} \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r'x^3} \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'h' in teilaufg:
@@ -3043,7 +3131,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + r'.~} \mathrm{Die~berechnete~Nullstelle~liegt~bei~x_2=' + nst_2_str
                        + r'.~} \\ \mathrm{Damit~gilt:~}' + str(faktor_2*a1) + '~=~' + nst_2_str
                        + r' \quad \to \quad \bm{a~=~' + str(a1) + r'} \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'i' in teilaufg:
@@ -3115,21 +3203,27 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
                        + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
                        + r' \right]_{' + gzahl(grenze_a) + 'a' + '}^{' + gzahl(grenze_b)+ 'a'
-                       + r'} \right| \quad (2P) \\ ~=~  \left| (' + latex(Fkt_grenze_b_wert) + 'a^4)-('
+                       + r'} \right| \quad (2BE) \\ ~=~  \left| (' + latex(Fkt_grenze_b_wert) + 'a^4)-('
                        + latex(Fkt_grenze_a_wert) + r'a^4) \right| \quad \to \quad '
                        + gzahl(flaeche_a_wert) + '~=~' + latex(integral_wert)
                        + r'a^4 \quad \vert \div ' + gzahl(integral_wert) + r' \quad \vert \sqrt[4]{~}'
                        + r' \\ \quad \to \quad \bm{a ~=~' + gzahl(N((flaeche_a/integral_wert)**(1/4),4))
-                       + r'} \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r'} \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, expfkt=2, verschiebung=True):
+def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, expfkt=2, verschiebung=True, BE=[]):
     # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.
     # Mit dem Parameter 'expfkt=' kann die Art der Exponentialfunktion ausgewählt werden. Bei 'expfkt=1' hat die Funktion die Form ax^2*exp(bx+2)+c und bei 'expfkt=2' die Form (x+a)*exp(b*x). Standardmäßig ist 'expfkt=None' festgelegt und die Funktion wird zufällig ausgewählt.
     # Mit dem Parameter 'verschiebung=' kann die Verschiebung der ersten Exponentialfunktion (ax^2*exp(bx+2)+c) auf der y-Achse festgelegt werden. Standardmäßig ist die 'verschiebung=True' und die Funktion ist auf der y-Achse verschoben bzw. besitzt die Gleichung eine Konstante. Wird 'verschiebung=None' gesetzt, besitzt die e-Funktion keine Konstante.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -3238,8 +3332,8 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                       + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         liste_punkte.append(punkte_aufg)
         i += 1
     if 'b' in teilaufg:
@@ -3256,31 +3350,31 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                                + r' \quad da~e^{' + vorz_v_aussen(lsg[0][1],'x+2') + r'} ~immer~ \neq 0'
                                + r' \quad \to \quad ' + (vorz_v_innen(lsg[0][0],'x^2'))
                                + r'~=~ 0} \quad \vert \div ' + gzahl_klammer(lsg[0][0]) + r' \quad \vert \sqrt{~} \\'
-                               + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4P) \\'
-                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                               + r' x~=~0 \quad \to \quad S_y ~=~ S_x (0 \vert 0) \quad (4BE) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
             else:
                 punkte_aufg = 2
                 aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der'
                                                         f' Funktion f mit der y-Achse. \n\n')
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~y-Achse:}'
                                + r' \hspace{5em} \\ \mathrm{Ansatz:~f(0)~=~ ' + gzahl(y_vers)
-                               + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2P) \\'
-                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                               + r' \quad \to \quad S_y (0 \vert ' + gzahl(y_vers) + r')} \quad (2BE) \\'
+                               + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 6
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der'
                                                     f' Funktion f mit den Achsen. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
                            + r' \hspace{5em} f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
-                           + r' \quad (1P) \\ \mathrm{ da~e^{' + vorz_v_aussen(lsg[0], 'x') + r'} ~immer~ \neq 0 }'
+                           + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(lsg[0], 'x') + r'} ~immer~ \neq 0 }'
                            + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(b, 'x') + vorz_str(c)
                            + r' \quad \vert ' + vorz_str(-1*c) + r' \quad \vert \div ' + gzahl_klammer(b)
                            + r' \quad \to \quad ' + r' x ~=~' + gzahl(Rational(-1*c,b)) + r' \quad \to \quad S_x ( '
-                           + gzahl(Rational(-1*c,b)) + r'\vert 0) \quad (4P) \\ '
+                           + gzahl(Rational(-1*c,b)) + r'\vert 0) \quad (4BE) \\ '
                            + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                            + r' f(0) = e^0 \cdot (0' + vorz_str(c) + r') \quad \to \quad S_y( 0 \vert '
-                           + gzahl(c) + r') \quad (1P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + gzahl(c) + r') \quad (1BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
 
         liste_punkte.append(punkte_aufg)
         i += 1
@@ -3296,7 +3390,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
                            + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \\ \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
-                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
             i += 1
         else:
             punkte_aufg = 3
@@ -3309,7 +3403,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str_zw + '~=~' + fkt_1_str
                            + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str_zw + '~=~' + fkt_2_str
                            + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str_zw + '~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
-                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
             i += 1
     if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
         # Hier sollen die SuS die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
@@ -3319,35 +3413,35 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
         if expfkt == 1:
             punkte_aufg = 10
             if fkt_2.subs(x,0) < 0:
-                lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
+                lsg_extrema1 = r'~<~0~ \to HP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2BE)'
             elif fkt_2.subs(x,0) > 0:
-                lsg_extrema1 = r'~>~0~ \to TP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2P)'
+                lsg_extrema1 = r'~>~0~ \to TP(~0~ \vert ~' + gzahl(N(fkt.subs(x, 0), 3)) + r') \quad (2BE)'
             else:
                 lsg_extrema1 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
 
             if fkt_2.subs(x,-2/lsg_b) < 0:
                 lsg_extrema2 = (r'~<~0~ \to HP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
-                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
+                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2BE)')
             elif fkt_2.subs(x,-2/lsg_b) > 0:
                 lsg_extrema2 = (r'~>~0~ \to TP(~' + gzahl(-2/lsg_b) + r'~ \vert ~'
-                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2P)')
+                                + gzahl(N(fkt.subs(x, -2/lsg_b), 3)) + r') \quad (2BE)')
             else:
                 lsg_extrema2 = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium}'
 
             loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
                            + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
-                           + vorz_v_innen(2*lsg_a,'x') + r'\quad (3P) \\'
+                           + vorz_v_innen(2*lsg_a,'x') + r'\quad (3BE) \\'
                            + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
                            + vorz_str(2*lsg_a) + r' \Big)'
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
                            + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
                            + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
-                           + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3P) \\'
+                           + r' \quad \to \quad x_2~=~' + gzahl(-2/lsg_b) + r' \quad (3BE) \\'
                            + r' f^{ \prime \prime }(0) ~=~ ' + gzahl(N(fkt_2.subs(x,0),2)) + lsg_extrema1
                            + r' \quad \mathrm{und} \quad f^{ \prime \prime }(' + gzahl(-2/lsg_b) + ') ~=~ '
                            + gzahl(N(fkt_2.subs(x,-2/lsg_b),2)) + lsg_extrema2 + r' \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         elif expfkt == 2:
             punkte_aufg = 7
             xwert_extr = Rational(-1*(lsg[0]*c+b), lsg[0]*b)
@@ -3364,13 +3458,13 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg[0],'x')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg[0]*b,'x') + vorz_str(lsg[0]*c+b)
                            + r' \quad \vert ' + vorz_str(-1*(lsg[0]*c+b)) + r' \quad \vert \div '
-                           + gzahl_klammer(lsg[0]*b) + r' \quad (3P) \\ x~=~ ' + gzahl(N(xwert_extr, 3))
+                           + gzahl_klammer(lsg[0]*b) + r' \quad (3BE) \\ x~=~ ' + gzahl(N(xwert_extr, 3))
                            + r' \quad \to \quad f^{ \prime \prime }(' + gzahl(N(xwert_extr, 3)) + ') ~=~ '
                            + r' \left(' + gzahl(lsg[0] ** 2 * b) + r' \cdot ' + gzahl(N(xwert_extr, 3))
                            + vorz_str(lsg[0] ** 2 * c + 2 * lsg[0] * b) + r' \right) \cdot e^{' + gzahl(lsg[0])
                            + r' \cdot' + gzahl(N(xwert_extr, 3)) + r'} ~=~'
-                           + gzahl(N(fkt_2.subs(x,xwert_extr),3)) + lsg_extrema + r') \quad (4P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + gzahl(N(fkt_2.subs(x,xwert_extr),3)) + lsg_extrema + r') \quad (4BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         liste_punkte.append(punkte_aufg)
         i += 1
     if 'e' in teilaufg:
@@ -3399,11 +3493,11 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             if grenzwert_neg == 0:
                 table1.add_row('',NoEscape('Da die Funktion ein Extrema hat und '
                                            r'$ \lim\limits_{x \to - \infty} = 0 $ ist, '
-                                           r'muss dazwischen eine Wendestelle existieren.'),'(3P)')
+                                           r'muss dazwischen eine Wendestelle existieren.'),'(3BE)')
             if grenzwert_pos == 0:
                 table1.add_row('',NoEscape('Da die Funktion ein Extrema hat und '
                                            r'$ \lim\limits_{x \to \infty} = 0 $ ist, '
-                                           r'muss dazwischen eine Wendestelle existieren.', '(3P)'))
+                                           r'muss dazwischen eine Wendestelle existieren.', '(3BE)'))
             loesung.append(table1)
             loesung.append('\n')
         liste_punkte.append(punkte)
@@ -3420,24 +3514,24 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2')
                            + vorz_v_innen(4 * lsg_a*lsg_b, 'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
-                           + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3P) \\'
+                           + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3BE) \\'
                            + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
                            + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
                            + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
-                           + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2P) \\'
+                           + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2BE) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
-                           + gzahl(N(xwert_wp2,3)) + r' \quad (1P) \\'
+                           + gzahl(N(xwert_wp2,3)) + r' \quad (1BE) \\'
                            + r' f^{ \prime \prime \prime }(' + gzahl(N(xwert_wp1,3)) + ') ~=~ '
                            + gzahl(N(fkt_3.subs(x,xwert_wp1),3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_wp1,3)) + r'~ \vert ~ '
                            + gzahl(N(fkt.subs(x,xwert_wp1),3))
-                           + r') \quad (2P) \\ f^{ \prime \prime \prime }('
+                           + r') \quad (2BE) \\ f^{ \prime \prime \prime }('
                            + gzahl(N(xwert_wp2,3)) + ') ~=~ '
                            + gzahl(N(fkt_3.subs(x,xwert_wp2),3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_wp2,2)) + r'~ \vert ~ '
-                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quad (2P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + gzahl(N(fkt.subs(x, xwert_wp2),2)) + r') \quad (2BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 7
             xwert_w = Rational(-1*(lsg[0]*c+2*b),lsg[0]*b)
@@ -3446,14 +3540,14 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg[0],'x')
                            + r'} \neq 0 \quad \to \quad 0~=~ ' + vorz_v_aussen(lsg[0]**2*b,'x')
                            + vorz_str(lsg[0]**2*c+2*lsg[0]*b) + r' \quad \vert ' + vorz_str(-1*(lsg[0]**2*c+2*lsg[0]*b))
-                           + r' \quad \vert \div ' + gzahl_klammer(lsg[0]**2*b) + r' \quad (4P) \\ x~=~'
+                           + r' \quad \vert \div ' + gzahl_klammer(lsg[0]**2*b) + r' \quad (4BE) \\ x~=~'
                            + gzahl_klammer(N(xwert_w,3)) + r' \quad \to \quad f^{ \prime \prime \prime }('
                            + gzahl(N(xwert_w, 3)) + r') ~=~ \left(' + gzahl(lsg[0]**3*b) + r' \cdot '
                            + gzahl(N(xwert_w, 3)) + vorz_str(lsg[0]**3*c+3*lsg[0]**2*b) + r' \right) \cdot e^{'
                            + gzahl(lsg[0]) + r' \cdot '+ gzahl(N(xwert_w, 3)) + r'} ~=~'
                            + gzahl(N(fkt_3.subs(x, xwert_w), 3)) + r' \neq 0 \quad \to \quad WP(~'
                            + gzahl(N(xwert_w, 3)) + r'~ \vert ~ ' + gzahl(N(fkt.subs(x, xwert_w), 3))
-                           + r') \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r') \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         liste_punkte.append(punkte_aufg)
         i += 1
     if 'g' in teilaufg:
@@ -3474,13 +3568,13 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
                            + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
-                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
+                           + r' \quad (3BE) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                            r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
                            + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'x')
                            + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
-                           + r' \quad (3P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r' \quad (3BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 6
             ywert_w = N(fkt_3.subs(x, xwert_w), 3)
@@ -3491,11 +3585,11 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_w_fkt_1,'(x')
                            + vorz_v_innen(-1 * N(xwert_w,3),')') + vorz_str(ywert_w) + '~=~'
                            + vorz_v_aussen(ywert_w_fkt_1,'x') + vorz_str(N(-1*ywert_w_fkt_1*xwert_w + ywert_w,3))
-                           + r' \quad (3P) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
+                           + r' \quad (3BE) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                            r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(-1/ywert_w_fkt_1) + '(x'
                            + vorz_str(-1 * N(xwert_w,3)) + ')' + vorz_str(ywert_w) + '~=~'
                            + vorz_v_aussen(-1/ywert_w_fkt_1,'x') + vorz_str(N(xwert_w/ywert_w_fkt_1 + ywert_w,3))
-                           + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte}')
+                           + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
 
         liste_punkte.append(punkte_aufg)
         i += 1
@@ -3528,13 +3622,17 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
         liste_punkte.append(punkte_aufg)
 
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # in Entwicklung:
-def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f']):
+def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 1
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -3589,8 +3687,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + gzahl(grenzwert_pos) + r' \\ \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + gzahl(grenzwert_neg) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + fkt_str + '~=~' + gzahl(grenzwert_neg) + r' \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'b' in teilaufg:
@@ -3607,7 +3705,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
                                                  + r' \neq  f(x)  \neq -f(x) \\'
-                                                 + r'\mathrm{nicht~symmetrisch} \quad (3P) \\'))
+                                                 + r'\mathrm{nicht~symmetrisch} \quad (3BE) \\'))
         i += 1
 
     if 'c' in teilaufg:
@@ -3647,20 +3745,20 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1P) \\ \mathrm{durch~probieren:~x_1~=~}'
-                                                 + vorz_str(nst_1) + r' \quad (1P) \\'
+                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{durch~probieren:~x_1~=~}'
+                                                 + vorz_str(nst_1) + r' \quad (1BE) \\'
                                                  + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
                                                  + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
         loesung.append(table2)
         loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
-                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2P) \\'
+                       r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
                        r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
                        r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
                        r')} ~=~ ' + gzahl(-1*fkt_p/2) + r' \pm \sqrt{'
-                       + fkt_disk_str + r' } \quad (4P) \\ x_{2/3}~=~' + gzahl(-1*fkt_p/2) + r' \pm ('
+                       + fkt_disk_str + r' } \quad (4BE) \\ x_{2/3}~=~' + gzahl(-1*fkt_p/2) + r' \pm ('
                        + gzahl((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + gzahl(nst_3)
-                       + r' \quad \mathrm{und} \quad x_3~=~a \quad (3P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \quad \mathrm{und} \quad x_3~=~a \quad (3BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'd' in teilaufg:
@@ -3722,26 +3820,26 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extremstellen der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
-                       + r' \quad (1P) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                       + r' \quad (1BE) \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
                        + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
-                       + r' \quad (2P) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\'
-                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1P) \\' + r' x_{1/2}~=~ - \frac{'
+                       + r' \quad (2BE) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
+                       + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
+                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
                        + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                       + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2P) \\ =~ '
+                       + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2BE) \\ =~ '
                        + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
                        + r'}{4}' + fkt_1_q3_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
-                       + r'} \quad (4P) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
+                       + r'} \quad (4BE) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
                        + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
-                       + fkt_1_disk_str + r'}  \quad (2P) \\'
+                       + fkt_1_disk_str + r'}  \quad (2BE) \\'
                        + r'f^{ \prime \prime } (x_2) ~=~' + gzahl(6*faktor)
                        + r' \cdot \Big( ' + fkt_1_x1 + r' \Big) ' + fkt_1_a1_str
-                       + r' \quad (1P) \\ ~=~ + \sqrt{' + fkt_1_disk_str
-                       + r'} \quad \mathrm{>~0} \quad \to TP \quad (2P) \\ f^{ \prime \prime } (x_2) ~=~'
+                       + r' \quad (1BE) \\ ~=~ + \sqrt{' + fkt_1_disk_str
+                       + r'} \quad \mathrm{>~0} \quad \to TP \quad (2BE) \\ f^{ \prime \prime } (x_2) ~=~'
                        + gzahl(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
-                       + r' \Big) ' + fkt_1_a1_str + r' \quad (1P) \\ ~=~ - \sqrt{' + fkt_1_disk_str
-                       + r'} \quad \mathrm{<~0} \quad \to HP \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \Big) ' + fkt_1_a1_str + r' \quad (1BE) \\ ~=~ - \sqrt{' + fkt_1_disk_str
+                       + r'} \quad \mathrm{<~0} \quad \to HP \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'e' in teilaufg:
@@ -3763,11 +3861,11 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                                                 'mithilfe des hinr. Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
-                       + gzahl_klammer(6 * faktor) + r' \quad (1P) \\ x_1~=~ \frac{1}{3} a'
+                       + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~ \frac{1}{3} a'
                        + vorz_str(Rational((nst_1+nst_3),3))
-                       + r' \quad (1P) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
-                       + r') ~=~ ' + gzahl(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \quad (1BE) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
+                       + r') ~=~ ' + gzahl(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'f' in teilaufg:
@@ -3784,18 +3882,24 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + gzahl(xwert_wp) + '~=~' + xwert_wendepunkt
                                                  + r' \quad \vert ~' + gzahl(Rational(-1 * (nst_1 + nst_3), 3))
                                                  + r' \quad \vert \cdot 3 \quad \to \quad a~=~'
-                                                 + str(wert_a_wp) + r' \quad (3P) \\'
-                                                 + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\'))
+                                                 + str(wert_a_wp) + r' \quad (3BE) \\'
+                                                 + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\'))
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # alte Aufgaben, die nicht mehr benötigt werden bzw. von denen eine verbesserte Version existiert
-def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True):
+def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms dritten Grades durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
     # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen rational bzw. irrational sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -3888,7 +3992,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
                        + gzahl(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
-                       + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2P)')
+                       + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2BE)')
         liste_punkte.append(2)
         i += 1
 
@@ -3899,13 +4003,13 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         fkt_sym = fkt.subs(x, -x)
         if fkt_sym == fkt:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
-                   + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3P)')
+                   + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3BE)')
         elif fkt_sym == -1 * fkt:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
-                   + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3P)')
+                   + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
         else:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
-                                                          r'\mathrm{nicht~symmetrisch} \quad (3P)')
+                                                          r'\mathrm{nicht~symmetrisch} \quad (3BE)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg)
         liste_punkte.append(3)
@@ -3923,27 +4027,27 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         table2.add_row('', fkt_a1, fkt_c2, fkt_c3, fkt_c4)
 
         if nst_1 == 0 or nst_2 == 0 or nst_3 == 0:
-            lsg = r' \quad (3P) \\'
+            lsg = r' \quad (3BE) \\'
             punkte = 15
         else:
-            lsg = r' \quad S_y(0 \vert' + gzahl(s_fkt) + r') \quad (4P) \\'
+            lsg = r' \quad S_y(0 \vert' + gzahl(s_fkt) + r') \quad (4BE) \\'
             punkte = 16
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_1)
-                       + r' \quad (2P) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
+                       + r' \quad (2BE) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1) + ')~=~'
                        + latex(fkt_partial) + r' \quad (4P)')
         loesung.append(table2)
         loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(faktor)
-                       + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2P) \\'
+                       + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2BE) \\'
                        + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \Big('
                        + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-' + gzahl_klammer(fkt_partial_q)
-                       + r'} \quad (2P) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
-                       + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2P) \\'
+                       + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
+                       + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
                        + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
                        + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -3979,8 +4083,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
                            + r' \hspace{5em} f^{ \prime \prime }(x) ~=~' + fkt_2_str
-                           + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + gzahl(fkt_3) + r' \quad (3P) \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + gzahl(fkt_3) + r' \quad (3BE) \\'
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -4000,30 +4104,30 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
 
         if fkt_2.subs(x, x_1_fkt_1) < 0:
             loesung_f_monotonie_1 = (r'~<~0~ \to HP(~' + gzahl(x_1_fkt_1) + r'~ \vert ~'
-                                     + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3P) \\')
+                                     + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3BE) \\')
         else:
             loesung_f_monotonie_1 = (r'~>~0~ \to TP(~' + gzahl(x_1_fkt_1) + r'~ \vert ~'
-                                     + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3P) \\')
+                                     + gzahl(round(fkt.subs(x, x_1_fkt_1), 3)) + r') \quad (3BE) \\')
 
         if fkt_2.subs(x, x_2_fkt_1) < 0:
             loesung_f_monotonie_2 = (r'~<~0~ \to HP(~' + gzahl(x_2_fkt_1) + r'~ \vert ~'
-                                     + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3P) \\')
+                                     + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3BE) \\')
         else:
             loesung_f_monotonie_2 = (r'~>~0~ \to TP(~' + gzahl(x_2_fkt_1) + r'~ \vert ~'
-                                     + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3P) \\')
+                                     + gzahl(round(fkt.subs(x, x_2_fkt_1), 3)) + r') \quad (3BE) \\')
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
-                       + latex(fkt_1) + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1P) \\  0 ~=~'
+                       + latex(fkt_1) + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\  0 ~=~'
                        + fkt_1_pq + r' \quad \to \quad ' + r' x_{1/2} ~=~ - \frac{' + gzahl_klammer(p_fkt_1_pq)
                        + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(p_fkt_1_pq) + r'}{2} \Big)^2-'
-                       + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3P) \\'
+                       + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3BE) \\'
                        + r'x_1~=~' + gzahl(x_1_fkt_1) + r' \quad \mathrm{und} \quad x_2~=~' + gzahl(x_2_fkt_1)
-                       + r' \quad (2P) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'
+                       + r' \quad (2BE) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'
                        + gzahl(round(fkt_2.subs(x, x_1_fkt_1), 3)) + loesung_f_monotonie_1 + r' f^{ \prime \prime }('
                        + gzahl(x_2_fkt_1) + ')~=~' + gzahl(round(fkt_2.subs(x, x_2_fkt_1), 3))
-                       + loesung_f_monotonie_2 + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + loesung_f_monotonie_2 + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -4059,10 +4163,10 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_1 + nst_2 + nst_3))
                        + r' \quad \vert \div ' + gzahl_klammer(6 * faktor) + r' \quad \to \quad x_1~=~'
-                       + gzahl(xwert_Wendepunkt) + r' \quad (2P) \\ f^{ \prime \prime \prime }('
+                       + gzahl(xwert_Wendepunkt) + r' \quad (2BE) \\ f^{ \prime \prime \prime }('
                        + gzahl(xwert_Wendepunkt) + r') \quad \neq 0 \quad \to \quad WP('
                        + gzahl(xwert_Wendepunkt) + r' \vert ' + gzahl(round(fkt.subs(x, xwert_Wendepunkt), 3))
-                       + r') \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r') \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -4091,14 +4195,14 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                            + vorz_v_aussen(ywert_wp1_fkt_1, '(x') + vorz_v_innen(-1 * N(xwert_wp1, 3), ')')
                            + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                            + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                           + r' \quad (3P) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                           + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
                            + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                            + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                            + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1 / ywert_wp1_fkt_1, '(x')
                            + vorz_v_innen(-1 * N(xwert_wp1, 3), ')') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(-1 / ywert_wp1_fkt_1, 'x')
                            + vorz_str(N(xwert_wp1 / ywert_wp1_fkt_1 + ywert_wp1, 3))
-                           + r' \quad (3P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         if wendenormale == False:
             punkte = 3
@@ -4110,7 +4214,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                            + vorz_v_aussen(ywert_wp1_fkt_1, '(x') + vorz_v_innen(-1 * N(xwert_wp1, 3), ')')
                            + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                            + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                           + r' \quad (3P) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
 
         # xmin = int(round(nst_3 - 0.4, 0))
@@ -4130,8 +4234,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
 
         aufgabe.append(str(liste_teilaufg[i])
                        + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2P) \quad Werte~(2P)'
-                                                r' \quad Graph~(1P) \to \quad insgesamt~(5P)}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                                                r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
         Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
         loesung.append('Figure')
 
@@ -4166,10 +4270,14 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                                                     f'im Intervall I(0|{gzahl(obere_grenze)}). \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \int \limits_0^{' + gzahl(obere_grenze) + '}' + fkt_str
                        + r'~ \mathrm{d}x \right| ~=~ \left| \left[' + Fkt_str + r' \right]_{0}^{' + gzahl(obere_grenze)
-                       + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4P) \\')
+                       + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4BE) \\')
         liste_punkte.append(4)
         i += 1
 
     # noch Teilaufgabe mit Flächenberechnung ergänzen
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

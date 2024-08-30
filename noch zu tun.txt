@@ -1,5 +1,6 @@
 allgemein:
 - alte Skripte in neue Form anpassen
+- Paramter BE=[] in allen Aufgaben ergänzen (erledigt: Analysis)
 
 Berechnungen:
  - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus

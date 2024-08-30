@@ -93,7 +93,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
                 Aufgabe.extend(element[0])
                 Aufgabe.append(NewPage())
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=False)
+            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=True)
 
         # Erwartungshorizont
         @timer
@@ -108,7 +108,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
             for element in liste_seiten:
                 Loesung.extend(element[1])
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=False)
+            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=True)
 
         # Druck der Seiten
         Hausaufgabenkontrolle()
@@ -131,7 +131,6 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # erstellen der Tabelle zur Punkteübersicht
-        print(liste_punkte)
         Punkte = (sum(liste_punkte[1:]))
         liste_bez.append('Summe')
         liste_punkte.append(Punkte)
