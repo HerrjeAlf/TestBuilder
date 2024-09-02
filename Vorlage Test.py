@@ -19,8 +19,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[ableitungen(1,['a', 'b'], anzahl=10)]]
-
+    Aufgaben = [[brueche_erweitern(1,3,0,0), brueche_erweitern(2, 0,3,3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

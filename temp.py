@@ -105,3 +105,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #print(lsg)
 #print(fkt)
 print(kgv(15,21))
+
+teilaufg = ['a', 'a', 'a', 'b', 'c']
+
+print(teilaufg.count('a'))

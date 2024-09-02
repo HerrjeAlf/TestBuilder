@@ -15,23 +15,49 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 nr_aufgabe = 0
 
-def brueche_erweitern(nr, trivial=1, einfach=1, schwer=1, anzahl_fakt=3):
+def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3, BE=[]):
     # Die SuS sollen Brüche mit vorgebenen Zahlen erweitern.
-    # Die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
+    # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) trivialer Bruch
+    # b) einfacher Bruch
+    # c) schwerer Bruch
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
-    # Erstellen der Liste der Brüche mit Zähler und Nenner
-    trivial = 9 if trivial > 9 else trivial
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 12:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
+
+    print(teilaufg)
+    # Erstellen der Liste der Brüche mit Zähler und NenneR
+    if teilaufg.count('a') > 9:
+        print('Die maximale Anzahl an trivialen Brüchen ist 9.')
+        trivial = 9
+    else:
+        trivial = teilaufg.count('a')
     liste_nenner = np.random.choice(list(range(2,12)), trivial, False)
     liste_nenner.sort()
     liste_brueche = [[1,element] for element in liste_nenner]
-    einfach = 9 if einfach > 9 else einfach
+
+    if teilaufg.count('b') > 9:
+        print('Die maximale Anzahl an einfachen Brüchen ist 9.')
+        einfach = 9
+    else:
+        einfach = teilaufg.count('b')
     for zahl in range(einfach):
         zaehler, nenner = np.random.choice([2, 3, 5, 7], 2, False)
         while [zaehler, nenner] in liste_brueche:
             zaehler, nenner = np.random.choice([2, 3, 5, 7], 2, False)
         liste_brueche.append([zaehler, nenner])
-    schwer = 8 if schwer > 8 else schwer
+
+    if teilaufg.count('c') > 9:
+        print('Die maximale Anzahl an schwierigen Brüchen ist 9.')
+        schwer = 9
+    else:
+        schwer = teilaufg.count('c')
     for zahl in range(schwer):
         zaehler, nenner = np.random.choice([5, 7, 11, 13], 2, False)
         while [zaehler, nenner] in liste_brueche:
@@ -45,8 +71,11 @@ def brueche_erweitern(nr, trivial=1, einfach=1, schwer=1, anzahl_fakt=3):
 
     # Erstellen der Aufgabenstellung
     aufg_faktoren = ''
-    for faktoren in liste_faktoren:
-        aufg_faktoren = aufg_faktoren + gzahl(faktoren) + ', '
+    for faktor in liste_faktoren:
+        if faktor != liste_faktoren[-1]:
+            aufg_faktoren = aufg_faktoren + gzahl(faktor) + ', '
+        else:
+            aufg_faktoren = aufg_faktoren + gzahl(faktor)
 
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -86,7 +115,15 @@ def brueche_erweitern(nr, trivial=1, einfach=1, schwer=1, anzahl_fakt=3):
         punkte += 1
         i += 1
     lsg = lsg + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    if BE != []:
+        if len(BE) > 1:
+            print(
+                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
