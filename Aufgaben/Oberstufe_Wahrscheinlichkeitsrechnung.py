@@ -8,7 +8,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def begriffe_wahrscheinlichkeit(nr, anzahl=1):
+def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
     # Grundbegriffe der Wahrscheinlichkeitsrechnung erläutern
 
     liste_bez = [f'{nr}']
@@ -27,7 +27,14 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
                     r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \quad (1P) \\'}
 
     anzahl = len(begriffe) if anzahl > len(begriffe) else anzahl
-    liste_punkte = [anzahl]
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [len(anzahl)]
+        liste_punkte = BE
+    else:
+        liste_punkte = [len(anzahl)]
     auswahl = np.random.choice(list(begriffe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Erläutern Sie die folgenden Grundbegriffe der Wahrscheinlichkeitsrechnung.']
@@ -48,8 +55,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'],
-                 stufen=None, art='zmZ', zieh_aufg_g=None):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', BE=[]):
     # Urnenmodell
 
     liste_punkte = []
@@ -434,9 +440,15 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         pass
         # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def faires_spiel(nr):
+def faires_spiel(nr, BE=[]):
     # Überprüfung eines Zufallsversuches (zweimal Würfeln) auf "faires Spiel"
 
     pkt = 5
@@ -480,11 +492,18 @@ def faires_spiel(nr):
                + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ ' + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
-    liste_punkte = [pkt]
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [pkt]
+        liste_punkte = BE
+    else:
+        liste_punkte = [pkt]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
+def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
     # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
 
     liste_punkte = []
@@ -580,9 +599,15 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True):
         liste_punkte.append(punkte)
         i += 1
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sicheres_passwort(nr, teilaufg=['a', 'b']):
+def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
     # Berechnung von Permutationen am Beispiel eines sicheren Passwortes
 
     liste_punkte = []
@@ -655,13 +680,17 @@ def sicheres_passwort(nr, teilaufg=['a', 'b']):
         liste_punkte.append(punkte)
         i += 1
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def lotto_modell_01(nr):
+def lotto_modell_01(nr, BE=[]):
     # Berechnung der Wahrscheinlichkeit nach dem Lottomodell
-    liste_punkte = [3]
+
     liste_bez = [f'{str(nr)}']
-    i = 0
     begriff = random.choice(['Transistoren', 'Batterien', 'Stiften', 'Fußbällen'])
     anzahl = nzahl(5,10)*100
     defekte = int(nzahl(2,5)*anzahl/100)
@@ -692,5 +721,13 @@ def lotto_modell_01(nr):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [3]
+        liste_punkte = BE
+    else:
+        liste_punkte = [3]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

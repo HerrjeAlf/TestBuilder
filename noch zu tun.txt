@@ -1,6 +1,6 @@
 allgemein:
 - alte Skripte in neue Form anpassen
-- Paramter BE=[] in allen Aufgaben ergänzen (erledigt: Analysis, Primarstufe)
+- Paramter BE=[] in allen Aufgaben ergänzen (erledigt: Analysis, Primarstufe, Oberstufe_Wahrscheinlichkeit)
 
 Berechnungen:
  - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus

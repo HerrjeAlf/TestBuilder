@@ -312,6 +312,10 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
     if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [2]
         liste_punkte = BE
     else:
         liste_punkte = [2]
@@ -339,6 +343,11 @@ def grenzwerte_funktionen(nr, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
     if BE != []:
+        if len(BE) > 1:
+            print(
+                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [2]
         liste_punkte = BE
     else:
         liste_punkte = [2]
