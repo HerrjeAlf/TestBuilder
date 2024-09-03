@@ -1,6 +1,5 @@
 allgemein:
 - alte Skripte in neue Form anpassen
-- Paramter BE=[] in allen Aufgaben ergänzen (erledigt: Analysis, Primarstufe, Oberstufe_Wahrscheinlichkeit)
 
 Berechnungen:
  - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus
@@ -23,7 +22,6 @@ funktionen
 
 Physik
 - Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
-
 
 langfristig:
 - GUI
