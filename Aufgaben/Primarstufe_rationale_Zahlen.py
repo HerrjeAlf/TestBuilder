@@ -27,11 +27,10 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3,
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 12:
+        if type(anzahl) != int or anzahl > 27:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
 
-    print(teilaufg)
     # Erstellen der Liste der Brüche mit Zähler und NenneR
     if teilaufg.count('a') > 9:
         print('Die maximale Anzahl an trivialen Brüchen ist 9.')
@@ -129,9 +128,16 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
-    # Die SuS sollen Brüche mit soweit wie möglich kürzen.
-    # Die Parameter "trivial=",  "einfach=" und "schwer=" geben die Anzahl der trivialen Brüche (Zähler 1), der einfachen sowie der schweren Brüchen vor. Die Parameter "trivial" und "einfach" können maximal 9 sein, der Parameter "schwer" kann maximal 8 sein.
+def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3, BE=[]):
+    # Die SuS sollen Brüche mit so weit wie möglich kürzen.
+    # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) trivialer Bruch
+    # b) einfacher Bruch
+    # c) schwerer Bruch
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -139,8 +145,17 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
     lsg = ''
     punkte = 0
 
-    # Erstellen der Liste der Brüche mit Zähler und Nenner
-    trivial = 9 if trivial > 9 else trivial
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 27:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
+
+    # Erstellen der Liste der Brüche mit Zähler und NenneR
+    if teilaufg.count('a') > 9:
+        print('Die maximale Anzahl an trivialen Brüchen ist 9.')
+        trivial = 9
+    else:
+        trivial = teilaufg.count('a')
     liste_nenner = np.random.choice(list(range(2,12)), trivial, False)
     liste_nenner.sort()
     liste_brueche_aufg = []
@@ -149,16 +164,21 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
         liste_brueche_aufg.append([faktor, faktor*zahl])
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(faktor) + '~}{~' + gzahl(faktor * zahl)
                + r'~} ~=~ \frac{ ~' + gzahl(1) + '~}{~' + gzahl(zahl) + r'~}')
-        if (i + 1) % 3 != 0 and i + 1 < trivial + einfach + schwer:
+        if (i + 1) % 3 != 0 and i + 1 < len(teilaufg):
             lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 or i + 1 == trivial and i + 1 < trivial + einfach + schwer:
+        elif (i + 1) % 3 == 0 or i + 1 == trivial and i + 1 < len(teilaufg):
             lsg = lsg + r' \\\\'
         else:
             pass
         i += 1
         punkte += 1
 
-    einfach = 9 if einfach > 9 else einfach
+    if teilaufg.count('b') > 9:
+        print('Die maximale Anzahl an einfachen Brüchen ist 9.')
+        einfach = 9
+    else:
+        einfach = teilaufg.count('b')
+
     for zahl in range(einfach):
         fkt = np.random.choice([2, 3, 4, 5, 6, 7, 10], 2, False)
         fkt.sort()
@@ -169,16 +189,20 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{~' + gzahl(zaehler * fkt[0] * fkt[1]) + '~}{~'
                + gzahl(nenner * fkt[0] * fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler * fkt[0]) + '~}{~'
                + gzahl(nenner * fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
-        if (i + 1) % 3 != 0 and i + 1 < trivial + einfach + schwer:
+        if (i + 1) % 3 != 0 and i + 1 < len(teilaufg):
             lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 or i + 1 == einfach and i + 1 < trivial + einfach + schwer:
+        elif (i + 1) % 3 == 0 or i + 1 == einfach and i + 1 < len(teilaufg):
             lsg = lsg + r' \\\\'
         else:
             pass
         i += 1
         punkte += 1
 
-    schwer = 9 if schwer > 9 else schwer
+    if teilaufg.count('c') > 9:
+        print('Die maximale Anzahl an schwierigen Brüchen ist 9.')
+        schwer = 9
+    else:
+        schwer = teilaufg.count('c')
     for zahl in range(schwer):
         fkt = np.random.choice([2, 3, 4, 5, 6, 7, 10], 3, False)
         fkt.sort()
@@ -191,9 +215,9 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
                     zaehler * fkt[0] * fkt[1]) + '~}{~'
                + gzahl(nenner * fkt[0] * fkt[1]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler * fkt[0]) + '~}{~'
                + gzahl(nenner * fkt[0]) + r'~} ~=~ \frac{ ~' + gzahl(zaehler) + '~}{~' + gzahl(nenner) + r'~}')
-        if (i + 1) % 2 != 0 and i + 1 < trivial + einfach + schwer:
+        if (i + 1) % 2 != 0 and i + 1 < len(teilaufg):
                 lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 or i + 1 == einfach and i + 1 < trivial + einfach + schwer:
+        elif (i + 1) % 2 == 0 or i + 1 == einfach and i + 1 < len(teilaufg):
             lsg = lsg + r' \\\\'
         else:
             pass
@@ -221,19 +245,38 @@ def brueche_kuerzen(nr, trivial=1, einfach=1, schwer=1):
         k += 1
 
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    if BE != []:
+        if len(BE) > 1:
+            print(
+                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
+def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, anzahl_fakt=3, BE=[]):
     # Die SuS sollen eine vorgegebene Gleichung von Bruchtermen so ergänzen, dass diese richtig ist.
-    # Die Parameter "unbek_nenner=" und "unbek_zaehler=" legen die Anzahl der Teilaufgaben fest, in denen der Nenner bzw. der Zähler ergänzt werden muss. Maximal sind jeweils 6 Teilaufgaben möglich.
+    # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) Gleichung von Bruchtermen mit unbekannten Nenner
+    # b) Gleichung von Bruchtermen mit unbekannten Zähler
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     liste_bez = [f'{str(nr)}']
     i = 0
     punkte = 0
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 13:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 13 sein.")
+        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ergänzen Sie die Terme so, dass die jeweilige Gleichung stimmt.']
@@ -243,6 +286,7 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
     liste_brueche = []
     aufg = ''
     lsg = ''
+    unbek_nenner = teilaufg.count('a')
     for zahl in range(unbek_nenner):
         fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
         zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
@@ -256,14 +300,14 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         if (i + 1) % 3 != 0 and i + 1 < nenner + zaehler:
                 aufg = aufg + r' \hspace{5em} '
                 lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
+        elif (i + 1) % 3 == 0 and (i + 1) < len(teilaufg):
             aufg = aufg + r' \\\\'
             lsg = lsg + r' \\\\'
         else:
             pass
         punkte += 1
         i += 1
-
+    unbek_zaehler = teilaufg.count('b')
     for zahl in range(unbek_zaehler):
         fakt = random.choice([2, 3, 4, 5, 6, 7, 10])
         zaehler, nenner = np.random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 2, False)
@@ -277,7 +321,7 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         if (i + 1) % 3 != 0 and i + 1 < nenner + zaehler:
                 aufg = aufg + r' \hspace{5em} '
                 lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 3 == 0 and (i + 1) < unbek_nenner + unbek_zaehler:
+        elif (i + 1) % 3 == 0 and (i + 1) < len(teilaufg):
             aufg = aufg + r' \\\\'
             lsg = lsg + r' \\\\'
         else:
@@ -285,22 +329,31 @@ def brueche_ergaenzen(nr, unbek_nenner=3, unbek_zaehler=3):
         punkte += 1
         i += 1
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    if BE != []:
+        if len(BE) > 1:
+            print(
+                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def bruchteile_berechnen(nr, anzahl=2):
+def bruchteile_berechnen(nr, anzahl=2, BE=[]):
     # Die SuS sollen von einer gegebenen Menge den angegebenen Bruchteil berechnen.
     # Der Parameter "anzahl=" legt die Anzahl der Teilaufgaben fest. Sie kann maximal 12 betragen.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
     i = 0
     punkte = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Berechne die Größe x.']
+               f'Berechne.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -329,13 +382,21 @@ def bruchteile_berechnen(nr, anzahl=2):
         i += 1
 
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    if BE != []:
+        if len(BE) > 1:
+            print(
+                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False):
+def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Hier sollen die SuS gleichnamige und ungleichnamige Brüche addieren und subtrahieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfacher gleichnamiger Bruchterm (beide positiv)
@@ -350,6 +411,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     # j) beliebiger ungleichnamiger Bruchterm
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
     i = 0
@@ -507,7 +569,13 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         i += 1
 
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
-    liste_punkte = [punkte]
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
     aufgabe.append(aufg)
     loesung.append(lsg)
 

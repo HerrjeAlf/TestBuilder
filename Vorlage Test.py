@@ -11,7 +11,7 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Vorlage'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 3 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
@@ -19,7 +19,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[brueche_erweitern(1,3,0,0), brueche_erweitern(2, 0,3,3)]]
+    Aufgaben = [[kongruente_Dreiecke(1,['a', 'b'])]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
