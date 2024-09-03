@@ -13,7 +13,6 @@ from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
-nr_aufgabe = 0
 
 def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3, BE=[]):
     # Die SuS sollen Brüche mit vorgebenen Zahlen erweitern.

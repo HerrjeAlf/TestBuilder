@@ -15,7 +15,6 @@ from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
-nr_aufgabe = 0
 
 # Berechnung für die Aufgaben
 def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c']):
