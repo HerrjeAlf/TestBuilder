@@ -93,7 +93,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
                 Aufgabe.extend(element[0])
                 Aufgabe.append(NewPage())
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=True)
+            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=True)
 
         # Erwartungshorizont
         @timer
@@ -108,7 +108,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
             for element in liste_seiten:
                 Loesung.extend(element[1])
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=True)
+            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=True)
 
         # Druck der Seiten
         Hausaufgabenkontrolle()
@@ -118,7 +118,6 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
     alphabet = string.ascii_uppercase
     arbeitsblatt(f'{alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
-
 
 
 # hier wird ein Test erzeugt
@@ -193,7 +192,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             Aufgabe.append('\n\n')
             Aufgabe.append(table2)
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - {Art} {Teil}', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - {Art} {Teil}', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -210,7 +209,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
         # Druck der Seiten
         Hausaufgabenkontrolle()
@@ -341,7 +340,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
             Aufgabe.append(' \n\n')
             Aufgabe.append(table3)
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil I {Gruppe}', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - Klausur im {Semester}. Semester - Teil I {Gruppe}', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -359,7 +358,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil I {Gruppe}', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - Klausur im {Semester}. Semester - EWH Teil I {Gruppe}', clean_tex=true)
 
         # Druck der Seiten
         Teil_1()
@@ -423,7 +422,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             Aufgabe.append(table3)
 
-            Aufgabe.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - Teil II {Gruppe}', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - Klausur im {Semester}. Semester - Teil II {Gruppe}', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -441,7 +440,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Ma {Klasse} - Klausur im {Semester}. Semester - EWH Teil II {Gruppe}', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - Klausur im {Semester}. Semester - EWH Teil II {Gruppe}', clean_tex=true)
 
         # Druck der Seiten
         Teil_2()
@@ -603,7 +602,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
             Aufgabe.append(' \n\n')
 
-            Aufgabe.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - Teil I', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Kl. 13 - Klausur im 3. Semester - Teil I', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -619,7 +618,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 Loesung.extend(element[1])
 
 
-            Loesung.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - EWH Teil I', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Kl. 13 - Klausur im 3. Semester - EWH Teil I', clean_tex=true)
 
         # Druck der Seiten
         Teil_1()
@@ -758,7 +757,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                         Aufgabe.append(NewPage())
                 i += 1
 
-            Aufgabe.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - Teil II', clean_tex=true)
+            Aufgabe.generate_pdf(f'pdf/Kl. 13 - Klausur im 3. Semester - Teil II', clean_tex=true)
 
         # Erwartungshorizont
         @timer
@@ -776,7 +775,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 Loesung.append(NewPage())
                 i += 1
 
-            Loesung.generate_pdf(f'pdf/Ma 13 - Klausur im 3. Semester - EWH Teil II', clean_tex=true)
+            Loesung.generate_pdf(f'pdf/Kl. 13 - Klausur im 3. Semester - EWH Teil II', clean_tex=true)
 
         # Druck der Seiten
         Teil_2()

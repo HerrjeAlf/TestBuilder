@@ -16,7 +16,7 @@ liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
 
-def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
+def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     # hier müssen Kongruenzsätze erkannt und die Dreiecke konstruiert werden
 
     liste_punkte = []
@@ -85,10 +85,14 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b']):
         dreieck_zeichnen(pkt_werte, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b']):
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
     #
 
     liste_punkte = []
@@ -158,10 +162,16 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b']):
         liste_punkte.append(5)
         i += 1
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b']):
-    #
+def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], BE=[]):
+    # sadsda
 
     liste_punkte = []
     liste_bez = []
@@ -324,10 +334,15 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b']):
         liste_punkte.append(6)
         i += 1
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
-def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
+def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
 
     liste_punkte = []
@@ -433,9 +448,14 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c']):
         liste_punkte.append(pkt)
         i += 1
 
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
+def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
     liste_punkte = []
     liste_bez = []
@@ -539,5 +559,9 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd']):
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
-
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
