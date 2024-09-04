@@ -119,7 +119,6 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
     arbeitsblatt(f'{alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
 
-
 # hier wird ein Test erzeugt
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
     def erzeugen_test(Teil, liste_seiten, angaben):
@@ -164,7 +163,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table1 = Tabular('|p{1.2cm}|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{3cm}|', row_height=1.2)
+            table1 = Tabular('|c|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{3cm}|', row_height=1.2)
             table1.add_row((MultiColumn(6, align='c', data=MediumText(bold(schule))),))
             table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()

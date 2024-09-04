@@ -41,13 +41,16 @@ def physikalische_groessen(nr, klasse=8, BE=[]):
     table1.add_row(uebersicht[1][0], '', '', '')
     table1.add_hline()
 
-    table2 = Tabular('|c|c|c|c|', row_height=1.2)
+    table2 = Tabular('|c|c|c|c|c|', row_height=1.2)
     table2.add_hline()
-    table2.add_row(bold('physikalische Größe'), bold('Formelzeichen'), bold('Einheit(en)'), bold('Messgerät'))
+    table2.add_row(bold('physikalische Größe'), bold('Formelzeichen'), bold('Einheit(en)'),
+                   bold('Messgerät'), bold('Punkte'))
     table2.add_hline()
-    table2.add_row(uebersicht[ausw[0]][0], uebersicht[ausw[0]][1], uebersicht[ausw[0]][2], uebersicht[ausw[0]][3])
+    table2.add_row(uebersicht[ausw[0]][0], bold(uebersicht[ausw[0]][1]), bold(uebersicht[ausw[0]][2]),
+                   bold(uebersicht[ausw[0]][3]), uebersicht[ausw[0]][4])
     table2.add_hline()
-    table2.add_row(uebersicht[ausw[1]][0], uebersicht[ausw[1]][1], uebersicht[ausw[1]][2], uebersicht[ausw[1]][3])
+    table2.add_row(uebersicht[ausw[1]][0], bold(uebersicht[ausw[1]][1]), bold(uebersicht[ausw[1]][2]),
+                   bold(uebersicht[ausw[1]][3]), uebersicht[ausw[1]][4])
     table2.add_hline()
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -59,7 +62,8 @@ def physikalische_groessen(nr, klasse=8, BE=[]):
 
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2].'
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [punkte]
         liste_punkte = BE
     else:

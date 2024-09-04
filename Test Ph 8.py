@@ -4,12 +4,12 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = 'Grundkurs'
+Kurs = 'keine Diff.'
 Fach = 'Physik'
-Klasse = 'Ph 8'
+Klasse = '8'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 01'
-Titel = 'Elektrizität'
+Titel = 'Hausaufgabenkontrolle zum Thema Elektrizität'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw

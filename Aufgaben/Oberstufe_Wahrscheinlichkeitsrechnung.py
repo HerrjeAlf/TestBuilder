@@ -10,7 +10,7 @@ liste_teilaufg = list(string.ascii_lowercase)
 
 def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
     # Grundbegriffe der Wahrscheinlichkeitsrechnung erläutern
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     i = 0
     begriffe = {r' \mathrm{Zufallsversuch: ~ \hspace{30em}}':
@@ -57,7 +57,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
 
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', BE=[]):
     # Urnenmodell
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -450,7 +450,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
 def faires_spiel(nr, BE=[]):
     # Überprüfung eines Zufallsversuches (zweimal Würfeln) auf "faires Spiel"
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     pkt = 5
     liste_bez = [str(nr)]
     i = 0
@@ -505,7 +505,7 @@ def faires_spiel(nr, BE=[]):
 
 def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
     # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -609,7 +609,7 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]
 
 def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
     # Berechnung von Permutationen am Beispiel eines sicheren Passwortes
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -689,7 +689,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
 
 def lotto_modell_01(nr, BE=[]):
     # Berechnung der Wahrscheinlichkeit nach dem Lottomodell
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{str(nr)}']
     begriff = random.choice(['Transistoren', 'Batterien', 'Stiften', 'Fußbällen'])
     anzahl = nzahl(5,10)*100

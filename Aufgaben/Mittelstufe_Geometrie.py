@@ -18,7 +18,7 @@ liste_teilaufg = list(string.ascii_lowercase)
 
 def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     # hier müssen Kongruenzsätze erkannt und die Dreiecke konstruiert werden
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -94,6 +94,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
 
 def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
     #
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
     liste_bez = []
@@ -171,8 +172,8 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], BE=[]):
-    # sadsda
-
+    # Test
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -344,7 +345,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], BE=[]):
 
 def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
-
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -457,6 +458,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
 
 def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
