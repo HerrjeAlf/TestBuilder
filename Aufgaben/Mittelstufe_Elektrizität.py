@@ -55,28 +55,30 @@ def physikalische_groessen(nr, klasse=8, phys_ein=False, BE=[]):
 
     if klasse == 8:
         uebersicht.extend(klasse_8)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_9[0:phys_ein])
     if klasse == 9:
         uebersicht.extend(klasse_8 + klasse_9)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_10[0:phys_ein])
     if klasse == 10:
         uebersicht.extend(klasse_8 + klasse_9 + klasse_10)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_11[0:phys_ein])
     if klasse == 11:
         uebersicht.extend(klasse_8 + klasse_9 + klasse_10 + klasse_11)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_12[0:phys_ein])
     if klasse == 12:
         uebersicht.extend(klasse_8 + klasse_9 + klasse_10 + klasse_11 + klasse_12)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_13[0:phys_ein])
     if klasse == 13:
         uebersicht.extend(klasse_8 + klasse_9 + klasse_10 + klasse_11 + klasse_12 + klasse_13)
-        if phys_ein != False and phys_ein in list(range(0,phys_ein)):
+        if phys_ein in list(range(0,phys_ein)):
             uebersicht.extend(klasse_14[0:phys_ein])
+    if klasse not in list(range(8,14)):
+        print('Der Parameter klasse= muss von 8 bis 13 gehen!')
 
     ausw = np.random.choice(list(range(len(uebersicht))),2, False)
 

@@ -17,8 +17,10 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung
+    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Der Parameter "ks=" legt fest, ob die Aufgabe ein leeres dreidimensionales Koordinatensystem oder kariertes Papier enthält. Der Parameter kann "None", "True" oder "False" sein". Standardmäßig ist "ks=None" und somit gibt kein Koordinatensystem und kein kariertes Papier.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -80,24 +82,31 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], BE=[]):
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
                      + r'\end{pmatrix}  \quad (3P) \\')
 
-    print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
-    print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
+    # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
+    # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-               'A( ' + gzahl(ortsvektor_a[0])  + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), ' 
-               'B( ' + gzahl(ortsvektor_b[0])  + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und ' 
-               'C( ' + gzahl(ortsvektor_c[0])  + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+               'A(' + gzahl(ortsvektor_a[0]) + '|' + gzahl(ortsvektor_a[1]) + '|' + gzahl(ortsvektor_a[2]) + '), ' 
+               'B(' + gzahl(ortsvektor_b[0]) + '|' + gzahl(ortsvektor_b[1]) + '|' + gzahl(ortsvektor_b[2]) + ') und ' 
+               'C(' + gzahl(ortsvektor_c[0]) + '|' + gzahl(ortsvektor_c[1]) + '|' + gzahl(ortsvektor_c[2]) + '). \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
+        pkt = 2
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie das Dreieck ABC im Koordinatensystem ein. \n\n')
+        if ks:
+            aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
+                                              f'und verbinden diese. \n\n')
+        else:
+            aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
+                                              f'und verbinden diese. \n\n')
+            pkt += 2
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
-        liste_punkte.append(2)
-        i +=1
+        liste_punkte.append(pkt)
+        i += 1
 
     if 'b' in teilaufg:
         # Abstände von Punkten berechnen und vergleichen
@@ -117,7 +126,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         i += 1
 
     if 'c' in teilaufg:
-        # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm
+        # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
@@ -127,6 +136,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], BE=[]):
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
         i += 1
+    if ks != None:
+        if ks == True:
+            aufgabe.append('3dim_Koordinatensystem')
+            loesung.append('3dim_Koordinatensystem')
+        else:
+            aufgabe.append('kariertes_Papier')
+            loesung.append('kariertes_Papier')
 
     if BE != []:
         if len(BE) != len(teilaufg):

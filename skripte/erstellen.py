@@ -40,6 +40,9 @@ def seite(aufgaben):
             elif '3dim_Koordinatensystem' in elements:
                 with Aufgabe.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
+            elif 'kariertes_Papier' in elements:
+                with Aufgabe.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/{elements}.png', width='300px')
             else:
                 Aufgabe.append(elements)
 
