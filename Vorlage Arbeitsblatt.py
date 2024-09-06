@@ -11,7 +11,7 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[brueche_add_subr(1, ['a', 'b'], 10)]]
+    Aufgaben = [[brueche_erweitern(1, ['a'], 5)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

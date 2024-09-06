@@ -156,6 +156,7 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     else:
         trivial = teilaufg.count('a')
     liste_nenner = np.random.choice(list(range(2,12)), trivial, False)
+    print(liste_nenner)
     liste_nenner.sort()
     liste_brueche_aufg = []
     for zahl in liste_nenner:
@@ -171,7 +172,7 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
             pass
         i += 1
         punkte += 1
-
+    print(liste_brueche_aufg)
     if teilaufg.count('b') > 9:
         print('Die maximale Anzahl an einfachen Brüchen ist 9.')
         einfach = 9
@@ -230,6 +231,8 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
     k = 0
+
+    print(liste_brueche_aufg)
     for element in liste_brueche_aufg:
         zaehler, nenner = element[0], element[1]
         if (k + 1) % 5 != 0:
