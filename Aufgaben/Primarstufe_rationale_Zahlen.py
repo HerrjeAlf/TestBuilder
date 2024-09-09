@@ -156,7 +156,6 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     else:
         trivial = teilaufg.count('a')
     liste_nenner = np.random.choice(list(range(2,12)), trivial, False)
-    print(liste_nenner)
     liste_nenner.sort()
     liste_brueche_aufg = []
     for zahl in liste_nenner:
@@ -172,7 +171,6 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
             pass
         i += 1
         punkte += 1
-    print(liste_brueche_aufg)
     if teilaufg.count('b') > 9:
         print('Die maximale Anzahl an einfachen Brüchen ist 9.')
         einfach = 9
@@ -232,7 +230,6 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     grafiken_loesung = []
     k = 0
 
-    print(liste_brueche_aufg)
     for element in liste_brueche_aufg:
         zaehler, nenner = element[0], element[1]
         if (k + 1) % 5 != 0:
@@ -333,8 +330,7 @@ def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     lsg = lsg + r' \\\\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'
     if BE != []:
         if len(BE) > 1:
-            print(
-                'Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                 'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [punkte]
         liste_punkte = BE
@@ -372,13 +368,13 @@ def bruchteile_berechnen(nr, anzahl=2, BE=[]):
         wert = zaehler * zahl
         punkte += 1
         aufg = (aufg + str(liste_teilaufg[i]) + r') \quad  \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner)
-                + r'} \quad \mathrm{von} \quad ' + gzahl(zahl * nenner) + einheiten)
+                + r'} ~ \mathrm{von} ~ ' + gzahl(zahl * nenner) + einheiten)
         lsg = (lsg + str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'} \cdot '
                + gzahl(zahl * nenner) + einheiten + '~=~' + gzahl(wert) + einheiten)
-        if (i + 1) % 2 != 0 and i + 1 < anzahl:
+        if (i + 1) % 3 != 0 and i + 1 < anzahl:
             aufg = aufg + r' \hspace{5em} '
             lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i + 1 < anzahl:
+        elif (i + 1) % 3 == 0 and i + 1 < anzahl:
             aufg = aufg + r' \\\\'
             lsg = lsg + r' \\\\'
         i += 1
@@ -757,3 +753,231 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, B
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def potenzgesetze(nr, anzahl=1, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen Logarithmusgesetze vervollständigen.
+    # Mit dem Argument "anzahl=" kann die Anzahl der zufällig ausgewählten Logarithmusgesetze festgelegt werden.
+    # Standardmäßig wird immer ein Gesetz erstellt.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{nr}']
+    # hier wird die Funktion erstellt.
+    regeln_aufgabe = {r' a^m \cdot a^n ~=~ \hspace{15em}': r' a^m \cdot a^n ~=~ a^{m+n} ',
+                      r' \frac{a^m}{a^n} ~=~ \hspace{15em}': r' \frac{a^m}{a^n} ~=~ a^{m-n} ',
+                      r' a^n \cdot b^n ~=~ \hspace{15em}': r' a^n \cdot b^n ~=~ \left( a \cdot b \right) ^n',
+                      r' \left( a^m \right) ^n ~=~ \hspace{15em}': r' \left( a^m \right) ^n ~=~ a^{m \cdot n}',
+                      r' \frac{a^n}{b^n} ~=~ \hspace{15em}': r' \frac{a^n}{b^n} ~=~ \left( \frac{a}{b} \right) ^n ',
+                      r' a^0 ~=~ \hspace{15em}': r' a^0 ~=~ 1',
+                      r' \frac{1}{a^n} ~=~ \hspace{15em}': r' \frac{1}{a^n} ~=~ a^{-n} ',
+                      r' \sqrt[m]{a^n} ~=~ \hspace{15em}': r'\sqrt[m]{a^n} ~=~ a^{ \frac{n}{m}} '}
+
+    exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
+    anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
+    auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vervollständigen Sie die folgenden Logarithmusgesetze.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    aufg = lsg = ''
+    for element in range(anzahl):
+        if (element + 1) % 2 != 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element]
+        elif (element + 1) % 2 == 0 and (element + 1) != anzahl:
+            aufg = aufg + auswahl[element] + r' \\\\'
+        else:
+            aufg = aufg + auswahl[element]
+        lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
+
+    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~BE}'
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [anzahl]
+        liste_punkte = BE
+    else:
+        liste_punkte = [anzahl]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def potenzgesetz_gbm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
+    # Hier sollen die SuS zwei Potenzen multiplizieren.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) Potenzen mit Zahlen und pos. Exponenten
+    # b)
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Berechne den engegebenen Bruchterm.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def pos_zahl_bas():
+        pot = nzahl(2,6)
+        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        aufg = (gzahl(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(pot) + '^{' + gzahl(exp2) + '}')
+        lsg = (gzahl(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(pot) + '^{' + gzahl(exp2) + '} ~=~~ '
+               + gzahl(pot) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(pot) + '^{' + gzahl(exp1+exp2)
+               + '} ~=~ ' + gzahl(pot**(exp1+exp2)))
+        return aufg, lsg
+
+    def zahl_bas():
+        pot = zzahl(2,6)
+        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        aufg = (gzahl_klammer(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(pot) + '^{' + gzahl(exp2) + '}')
+        lsg = (gzahl_klammer(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(pot) + '^{' + gzahl(exp2)
+               + '} ~=~~ ' + gzahl_klammer(pot) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl_klammer(pot)
+               + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
+
+    def einf_bruchterm_multi():
+        zahlen = np.random.choice(range(1,10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bruch1 = Rational(vorz1 * zaehler1, nenner1)
+        bruch2 = Rational(vorz2 * zaehler2, nenner2)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        aufg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2)
+        lsg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2) + '~=~' + gzahl(ergebnis)
+        return aufg, lsg
+
+    def bruchterm_kuerz_multi():
+        zahlen = np.random.choice(range(1,12), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        while (nenner1/zaehler1) % 1 == 0 or (nenner2/zaehler2) % 1 == 0:
+            zahlen = np.random.choice(range(1, 12), 4, False)
+            zahlen.sort()
+            zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        fakt1, fakt2 = np.random.choice(range(2,12), 2, False)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        if vorz2 < 0:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2*zaehler1) + '}{' + gzahl(fakt1*nenner1)
+                    + r'}~ \cdot ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                    + gzahl(fakt2 * nenner2) + r'} \right)')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \cdot ~ \left( ' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                   + gzahl(fakt2 * nenner2) + r'} \right) ~=~' + vorz_aussen(vorz1*vorz2) + r' \frac{'
+                   + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{' + gzahl(zaehler2) + '}{'
+                   + gzahl(nenner2) + r'} ~=~' + gzahl(ergebnis))
+        else:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'} ~ \cdot ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                    + gzahl(fakt2 * nenner2) + r'}')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \cdot ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
+                   + gzahl(fakt2 * nenner2) + r'} ~=~' + vorz_aussen(vorz1 * vorz2) + r' \frac{'
+                   + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{'
+                   + gzahl(zaehler2) + '}{' + gzahl(nenner2) + r'} ~=~' + gzahl(ergebnis))
+        return aufg, lsg
+    def einf_pp_bruchterm_div():
+        zahlen = np.random.choice(range(1, 10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        bruch1 = Rational(zaehler1, nenner1)
+        bruch2 = Rational(zaehler2, nenner2)
+        bruch2_kw = Rational(nenner2, zaehler2)
+        ergebnis = Rational(zaehler1 * nenner2, nenner1 * zaehler2)
+        aufg = gzahl(bruch1) + r'~ \div ~' + gzahl(bruch2)
+        lsg = (gzahl(bruch1) + r' \div ' + gzahl(bruch2) + '~=~' + gzahl(bruch1) + r' \cdot '
+               + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+    def einf_bruchterm_div():
+        zahlen = np.random.choice(range(1,10), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bruch1 = Rational(zaehler1, nenner1)
+        bruch2 = Rational(zaehler2, nenner2)
+        bruch2_kw = Rational(nenner2, zaehler2)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        aufg = gzahl(vorz1 * bruch1) + r'~ \div ~' + gzahl_klammer(vorz2 * bruch2)
+        lsg = (gzahl(vorz1 * bruch1) + r' \div ' + gzahl_klammer(vorz2*bruch2) + '~=~' + vorz_aussen(vorz1*vorz2)
+               + gzahl(bruch1) + r' \cdot ' + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+    def bruchterm_kuerz_div():
+        zahlen = np.random.choice(range(1, 12), 4, False)
+        zahlen.sort()
+        zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        while (nenner1 / zaehler1) % 1 == 0 or (nenner2 / zaehler2) % 1 == 0:
+            zahlen = np.random.choice(range(1, 12), 4, False)
+            zahlen.sort()
+            zaehler1, zaehler2, nenner1, nenner2 = zahlen
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        fakt1, fakt2 = np.random.choice(range(2, 12), 2, False)
+        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        if vorz2 < 0:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'} ~ \div ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                    + gzahl(fakt1 * nenner2) + r'} \right)')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \div \left(' + vorz_aussen(vorz2) + r'~ \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                   + gzahl(fakt1 * nenner2) + r'} \right) ~=~' + vorz_aussen(vorz1 * vorz2) + r' \frac{'
+                   + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1) + r'} \cdot \frac{'
+                   + gzahl(fakt1 * nenner2) + '}{' + gzahl(fakt2 * zaehler2) + r'} ~=~'
+                   + vorz_aussen(vorz1 * vorz2) + r' \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1)
+                   + r'} \cdot \frac{' + gzahl(nenner2) + '}{' + gzahl(zaehler2) + r'} ~=~' + gzahl(ergebnis))
+        else:
+            aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                    + r'}~ \div ~' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                    + gzahl(fakt1 * nenner2) + r'} ')
+            lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
+                   + r'} ~ \div ' + vorz_aussen(vorz2) + r'~ \frac{' + gzahl(fakt2 * zaehler2) + '}{'
+                   + gzahl(fakt1 * nenner2) + r'} ~=~' + vorz_aussen(vorz1) + r' \frac{'
+                   + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1) + r'} ~ \cdot \frac{'
+                   + gzahl(fakt1 * nenner2) + '}{' + gzahl(fakt2 * zaehler2) + r'} ~=~' + vorz_aussen(vorz1)
+                   + r' \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{' + gzahl(nenner2)
+                   + '}{' + gzahl(zaehler2)+ r'} ~=~' + gzahl(ergebnis))
+        return aufg, lsg
+
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
+    aufgaben = {'a': einf_pp_bruchterm_multi, 'b': einf_bruchterm_multi, 'c': bruchterm_kuerz_multi,
+                'd': einf_pp_bruchterm_div, 'e': einf_bruchterm_div, 'f': bruchterm_kuerz_div}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \\\\'
+        else:
+            pass
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+

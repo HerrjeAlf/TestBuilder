@@ -62,7 +62,7 @@ def seite(aufgaben):
                 with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
             elif 'kariertes_Papier' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
+                with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
             else:
                 Loesung.append(elements)

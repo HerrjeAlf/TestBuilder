@@ -104,8 +104,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 #print(fkt)
-print(kgv(15,21))
-
-teilaufg = ['a', 'a', 'a', 'b', 'c']
-
-print(teilaufg.count('a'))
+exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+print(exp1)
+print(exp2)
