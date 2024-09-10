@@ -37,8 +37,12 @@ def logarithmusgesetze(nr, anzahl=1, BE=[]):
     exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständigen Sie die folgenden Logarithmusgesetze.']
+    if anzahl == 1:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Vervollständigen Sie das folgende Logarithmusgesetz.']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Vervollständigen Sie die folgenden Logarithmusgesetze.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
