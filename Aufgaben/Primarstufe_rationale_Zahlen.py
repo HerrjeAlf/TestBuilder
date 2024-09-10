@@ -10,7 +10,6 @@ from sympy.plotting import plot
 from skripte.funktionen import *
 from skripte.plotten import *
 
-
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
@@ -126,7 +125,7 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3,
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
+a, b, c, d, e, f, g, h, x, y, z
 def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     # Die SuS sollen Brüche mit so weit wie möglich kürzen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
@@ -774,8 +773,12 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
     exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
     auswahl = np.random.choice(list(regeln_aufgabe.keys()), anzahl, False)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vervollständigen Sie die folgenden Logarithmusgesetze.']
+    if anzahl == 1:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Vervollständigen Sie das folgende Potenzgesetz.']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Vervollständigen Sie die folgenden Potenzgesetze.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -803,11 +806,16 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_gbm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
+def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit nat. Zahlen und ganzrat. Exponenten
-    # b) Potenzen mit ganzrat. Zahlen und Exponenten
+    # a) Potenzen mit nat. Zahlen und Exponenten
+    # b) Potenzen mit nat. Zahlen und ganzz. Exponenten
+    # c) Potenzen mit neg. Zahlen und ganzz. Exponenten
+    # d) Potenzen mit bel. ganzen Zahlen und Exponenten
+    # e) Potenzen mit Variablen und nat. Exponenten
+    # f) Potenzen mit Variablen und ganzz. Exponenten
+    # g) Potenzen mit Variablen, Faktoren und ganzz. Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
 
@@ -819,33 +827,74 @@ def potenzgesetz_gbm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, 
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    def pos_zahl_bas_exp():
+        bas = nzahl(2,6)
+        exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
+        lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~~ ' + gzahl(bas)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
+
     def pos_zahl_bas():
-        pot = nzahl(2,6)
+        bas = nzahl(2,6)
         exp1, exp2 = np.random.choice(range(-5,5), 2, False)
-        aufg = (gzahl(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(pot) + '^{' + gzahl(exp2) + '}')
-        lsg = (gzahl(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(pot) + '^{' + gzahl(exp2) + '} ~=~~ '
-               + gzahl(pot) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(pot) + '^{' + gzahl(exp1+exp2)
-               + '} ~=~ ' + gzahl(pot**(exp1+exp2)))
+        aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
+        lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~~ ' + gzahl(bas)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
         return aufg, lsg
 
-    def zahl_bas():
-        pot = zzahl(2,6)
+    def neg_zahl_bas():
+        bas = -1 * nzahl(2,6)
         exp1, exp2 = np.random.choice(range(-5,5), 2, False)
-        aufg = (gzahl_klammer(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(pot) + '^{' + gzahl(exp2) + '}')
-        lsg = (gzahl_klammer(pot) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(pot) + '^{' + gzahl(exp2)
-               + '} ~=~~ ' + gzahl_klammer(pot) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl_klammer(pot)
-               + '^{' + gzahl(exp1+exp2) + '} ~=~ ' + gzahl(pot**(exp1+exp2)))
+        aufg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~')
+        lsg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~=~~ ('
+               + gzahl(bas) + ')^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ (' + gzahl(bas) + ')^{'
+               + gzahl(exp1+exp2) + '}')
         return aufg, lsg
 
+    def bel_zahl_bas():
+        bas = zzahl(2,6)
+        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        aufg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2) + '} ~')
+        lsg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2)
+               + '} ~=~~ ' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl_klammer(bas)
+               + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
 
+    def var_bas_pos_exp():
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        aufg = (bas+ '^{' + gzahl(exp1) + r'} ~ \cdot ~' + bas + '^{' + gzahl(exp2) + '} ~')
+        lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~~ ' + bas + '^{'
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
 
+    def var_bas_exp():
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
+        lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~~ ' + bas + '^{'
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
+
+    def var_bas_fakt():
+        fakt1, fakt2 = faktorliste(2, 12, 2)
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        aufg = (gzahl(fakt1) + bas+ '^{' + gzahl(exp1) + r'} \cdot '
+                + gzahl_klammer(fakt2, bas + '^{' + gzahl(exp2) + '} ~'))
+        lsg = (gzahl(fakt1) + r' \cdot ' + bas + '^{' + gzahl(exp1) + r'} \cdot '
+               + gzahl_klammer(fakt2, bas + '^{' + gzahl(exp2) + '}') + ' ~=~~ ' + gzahl(fakt1) + r' \cdot '
+               + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ '
+               + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': pos_zahl_bas, 'b': zahl_bas, 'c': ,
-                'd': , 'e': , 'f': }
+    aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
+                'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': var_bas_fakt}
 
     aufg = ''
     lsg = ''
@@ -878,4 +927,5 @@ def potenzgesetz_gbm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, 
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 

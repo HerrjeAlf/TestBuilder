@@ -5,13 +5,13 @@ from skripte.erstellen import *
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Klasse = '12'
-Thema = 'Analysis'
+Thema = 'Analysis 02'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[brueche_erweitern(1, ['a'], 5)]]
+    Aufgaben = [[shdsajhdj(1)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
