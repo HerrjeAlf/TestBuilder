@@ -73,14 +73,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + gzahl(vektor_bc[0]) + r' \\' + gzahl(vektor_bc[1])
                      + r' \\' + gzahl(vektor_bc[2]) + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{('
                      + gzahl(vektor_bc[0]) + ')^2 ~+~(' + gzahl(vektor_bc[1]) + ')^2 ~+~(' + gzahl(vektor_bc[2])
-                     + ')^2 } ~=~' + laenge_vektor_bc + r' \quad (3P) \\')
+                     + ')^2 } ~=~' + laenge_vektor_bc + r' \quad (2P) \\')
         loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OA} ~+~ \overrightarrow{BC} ~=~ '
                      + r' \begin{pmatrix} ' + gzahl(ortsvektor_a[0]) + r' \\' + gzahl(ortsvektor_a[1]) + r' \\'
                      + gzahl(ortsvektor_a[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_bc[0])
                      + r' \\' + gzahl(vektor_bc[1]) + r' \\' + gzahl(vektor_bc[2]) + r' \\'
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
-                     + r'\end{pmatrix}  \quad (3P) \\')
+                     + r'\end{pmatrix}  \quad (2P) \\')
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
@@ -97,7 +97,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         pkt = 2
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if ks:
+        if ks == True:
             aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
         else:
@@ -111,13 +111,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     if 'b' in teilaufg:
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 7
+        punkte = 5
         aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
         loesung.append(str(teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
                                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\'
                                            + gzahl(vektor_ab[2]) + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{('
                                            + gzahl(vektor_ab[0]) + ')^2 ~+~(' + gzahl(vektor_ab[1]) + ')^2 ~+~('
-                                           + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab + r' \quad (3P) \\'
+                                           + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab + r' \quad (2P) \\'
                                            + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
                                            + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
                                            + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'))
@@ -130,7 +130,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 7
         aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
-                                           + f' ein Parallelogramm bilden. \n\n'))
+                                           + f' ein Parallelogramm bilden.'))
         loesung.append(str(teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
