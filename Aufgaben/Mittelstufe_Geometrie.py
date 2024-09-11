@@ -65,9 +65,11 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         # Kongruenzsatzes benennen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 1
-        aufgabe.append(str(liste_teilaufg[i]) + ') Nenne den Kongruenzsatz, nachdem das Dreieck kongruent ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r')~ \quad ' + str(auswahl[0]) + r' \quad (1P)')
+        pkt = 3
+        aufgabe.append(str(liste_teilaufg[i]) + ')  Fertige eine Planskizze an, markiere die gegebenen Größen und '
+                                                'nenne den Kongruenzsatz. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad \to \quad '
+                       + str(auswahl[0]) + r' \quad (1P)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -76,15 +78,21 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
-        pkt = 7
-        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. Fertige dazu eine Planskizze an und'
-                                                ' markiere die gegebenen Größen. \n\n')
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
-                       + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
-                       + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
+        pkt = 5
+        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. \n\n')
+        if 'a' not in teilaufg:
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
+                            + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+                            + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
+            pkt += 2
+        else:
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[1])
+                           + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+                            + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
         i += 1
+
     if BE != []:
         if len(BE) != len(teilaufg):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')

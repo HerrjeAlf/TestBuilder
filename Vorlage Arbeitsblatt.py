@@ -4,14 +4,18 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Klasse = '12'
-Thema = 'Analysis 02'
+Klasse = '10f'
+Thema = 'Übung Konstruktion von Dreiecken'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[shdsajhdj(1)]]
+    Aufgaben = [[kongruente_Dreiecke(1),
+                 kongruente_Dreiecke(2),
+                 kongruente_Dreiecke(3),
+                 kongruente_Dreiecke(4),
+                 kongruente_Dreiecke(5)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
