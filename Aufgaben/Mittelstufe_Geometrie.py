@@ -22,26 +22,25 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     liste_punkte = []
     liste_bez = []
     i = 0
-
-    n = random.randint(1, 5)
-    m = n + random.randint(1, 5)
-    l_a = (m ** 2 - n ** 2) / 10
-    l_b = 2 * m * n / 10
-    l_c = (m ** 2 + n ** 2) / 10
-    gamma = 90
-    beta = int(math.degrees(math.asin(l_b / l_c)))
-    alpha = gamma - beta
-    auswahl = random.sample([0, 1, 2], 3)
-    pkt_bez = [['A', 'B', 'C'][x] for x in auswahl]
-    st = [['a', 'b', 'c'][x] for x in auswahl]
-    st_werte = [l_a, l_b, l_c]
-    wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+    alpha = 30 + nzahl(1, 6)*5
+    beta = 70 + nzahl(1, 8)*5 - alpha
+    gamma = 180 - alpha - beta
+    seite_c = nzahl(4, 10)
+    seite_a = round(seite_c * math.sin(math.radians(alpha)) / math.sin(math.radians(gamma)), 1)
+    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
+    xwert_punkt_c = round(math.cos(math.radians(alpha)) * seite_b, 3)
+    ywert_punkt_c = round(math.sin(math.radians(alpha)) * seite_b, 3)
+    # Listen für die Zeichung des Dreiecks
+    pkt_list = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c]]
+    pkt_bez = ['A', 'B', 'C']
+    st = ['a', 'b', 'c']
+    st_werte = [seite_a, seite_b, seite_c]
+    wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
-    pkt_werte = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
 
-    auswahl = random.choice([['sss', st[0] + '~=~' + str(l_a) + 'cm',
-                              st[1] + '~=~' + str(l_b) + 'cm',
-                              st[2] + '~=~' + str(l_c) + 'cm'],
+    auswahl = random.choice([['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                              st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                              st[2] + '~=~' + gzahl(st_werte[2]) + 'cm'],
                              ['sws', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                               st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                               wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
@@ -51,8 +50,8 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
                              ['sww',  st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                               wk[0] + '~=~' + gzahl(wk_werte[0]) + r' ^{  \circ}',
                               wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}'],
-                             ['Ssw', st[1] + '~=~' + str(l_b) + 'cm',
-                              st[2] + '~=~' + str(l_c) + 'cm',
+                             ['Ssw', st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                              st[2] + '~=~' + gzahl(st_werte[2]) + 'cm',
                               wk[2] + '~=~' + str(gamma) + r' ^{  \circ}']])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
@@ -78,11 +77,12 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         pkt = 7
-        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck mithilfe der gegebenen Daten. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. Fertige dazu eine Planskizze an und'
+                                                ' markiere die gegebenen Größen. \n\n')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
                        + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
                        + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
-        dreieck_zeichnen(pkt_werte, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
+        dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
         i += 1
     if BE != []:
