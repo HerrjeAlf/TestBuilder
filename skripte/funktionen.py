@@ -153,9 +153,6 @@ def vektor_rational(vec,p,q=1000):
 def punkt_vektor(p):
     return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
 
-def faktorliste(n, p=1,q=10):
-    return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
-
 def vektor_runden(vec,p):
     return [N(elements,p) for elements in vec]
 
@@ -355,7 +352,7 @@ def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'
     return wkt_erg, wkt_str, punkte
 
 # Funktionen zur Analysis
-def faktorliste(p, q, n):
+def faktorliste(n, p, q):
     return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
 
 def exponenten(n):
@@ -363,6 +360,20 @@ def exponenten(n):
     while len(menge) < n:
         menge.add(nzahl(2, 6 + n))
     return menge
+
+def ganzz_exponenten(n,p=1,q=6, wdh=True):
+    if wdh == True:
+        liste = []
+        while len(liste) < n:
+            liste.append(zzahl(p,q))
+        return liste
+    elif wdh == False:
+        menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
+        while len(menge) < n:
+            menge.add(zzahl(p, q))
+        return menge
+    else:
+        print('wdh muss "True" or "False" sein')
 
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])

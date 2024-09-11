@@ -830,63 +830,91 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
     def pos_zahl_bas_exp():
         bas = nzahl(2,6)
         exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def pos_zahl_bas():
         bas = nzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def neg_zahl_bas():
         bas = -1 * nzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~')
         lsg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~=~ ('
                + gzahl(bas) + ')^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ (' + gzahl(bas) + ')^{'
-               + gzahl(exp1+exp2) + '}')
+               + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def bel_zahl_bas():
         bas = zzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2)
                + '} ~=~ ' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl_klammer(bas)
-               + '^{' + gzahl(exp1+exp2) + '}')
+               + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_pos_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (bas+ '^{' + gzahl(exp1) + r'} ~ \cdot ~' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{'
-               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{'
-               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_fakt():
-        fakt1, fakt2 = faktorliste(2, 12, 2)
+        fakt1, fakt2 = faktorliste(2, 2, 12)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ ' + gzahl(fakt1*fakt2)
+        else:
+            w_erg = ''
         aufg = (gzahl(fakt1) + bas + '^{' + gzahl(exp1) + r'} \cdot '
-                + gzahl_klammer(fakt2, bas) + '^{' + gzahl(exp2) + '} ~')
+                + gzahl_klammer(fakt2) + r'\cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(fakt1) + r' \cdot ' + bas + '^{' + gzahl(exp1) + r'} \cdot '
-               + gzahl_klammer(fakt2, bas) + '^{' + gzahl(exp2) + '}' + ' ~=~ ' + gzahl(fakt1) + r' \cdot '
-               + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ '
-               + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+               + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp2) + '}' + ' ~=~ ' + gzahl(fakt1)
+               + r' \cdot ' + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1) + vorz_str(exp2)
+               + '} ~=~ ' + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
@@ -952,54 +980,78 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
     def pos_zahl_bas_exp():
         bas = nzahl(2,6)
         exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1-exp2) + '}')
+               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
     def pos_zahl_bas():
         bas = nzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1-exp2) + '}')
+               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
     def neg_zahl_bas():
         bas = -1 * nzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'}} {(' + gzahl(bas) + ')^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ ('
                + gzahl(bas) + ')^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ (' + gzahl(bas)
-               + ')^{' + gzahl(exp1-exp2) + '}')
+               + ')^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
     def bel_zahl_bas():
         bas = zzahl(2,6)
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl_klammer(bas) + '^{'
                 + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl_klammer(bas) + '^{' + gzahl(exp2)
                + '}} ~=~ ' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl_klammer(bas)
-               + '^{' + gzahl(exp1-exp2) + '}')
+               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_pos_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(1,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~')
-        lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ '
-               + bas + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}')
+        lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas
+               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~')
-        lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ '
-               + bas + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}')
+        lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas
+               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
         return aufg, lsg
 
 
@@ -1007,28 +1059,42 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
         fakt = zzahl(2,7)
         fakt1, fakt2 = np.random.choice([fakt, fakt*zzahl(1,7)],2, False)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = np.random.choice(range(-5,5), 2, False)
+        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        if exp1 - exp2 == 0:
+            w_erg = '~=~ ' + gzahl(Rational(fakt1,fakt2))
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas + '^{' + gzahl(exp1) + r'}}{'
                 + gzahl(fakt2) + '~' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(fakt1) + bas + '^{' + gzahl(exp1) + r'}}{' + gzahl(fakt2) + '~' + bas + '^{'
                + gzahl(exp2) + '}} ~=~ ' + gzahl(Rational(fakt1,fakt2)) + r' \cdot ' + bas + '^{' + gzahl(exp1)
-               + vorz_str(-1*exp2) + '} ~=~ ' + gzahl(Rational(fakt1,fakt2)) + '~' + bas
-               + '^{' + gzahl(exp1-exp2) + '}')
+               + vorz_str(-1*exp2) + '} ~=~ ' + vorz_v_aussen(Rational(fakt1,fakt2), bas + '^{' + gzahl(exp1-exp2)+ '}')
+               + w_erg)
         return aufg, lsg
 
     def einf_var_bas_fakt():
         fakt_bas = zzahl(2, 7)
         erw1, erw2 = np.random.choice([2,3,4,5,6,7,8,10],2, False)
         fakt1, fakt2 = np.random.choice([fakt_bas*erw1, fakt_bas * erw2], 2, False)
-        bas1, bas2 = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],2,False)
-        exp1, exp2, exp3, exp4 = np.random.choice(range(-8, 8), 4, True)
+        bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],2,False)
+        bas.sort()
+        bas1, bas2 = bas
+        exp1, exp2, exp3, exp4 = ganzz_exponenten(4,2,8, True)
+        if exp1 - exp3 == 0 or exp2 - exp4 == 0:
+            w_erg = ' ~=~ ' + gzahl(Rational(fakt1, fakt2))
+            if exp1 - exp3 != 0:
+                w_erg = w_erg + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
+            if exp2 - exp4 != 0:
+                w_erg =  w_erg + bas2 + '^{' + gzahl(exp2 - exp4) + '}'
+        else:
+            w_erg = ''
         aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
                 + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + '}} ~')
         lsg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
                 + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + r'}} ~=~ \frac{'
                + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
                + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
-               + '~' + bas1 + '^{' + gzahl(exp1 - exp2) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}')
+               + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + w_erg)
 
         return aufg, lsg
 
@@ -1061,7 +1127,8 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
 
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [punkte]
         liste_punkte = BE
     else:
