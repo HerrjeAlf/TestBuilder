@@ -361,6 +361,21 @@ def exponenten(n):
         menge.add(nzahl(2, 6 + n))
     return menge
 
+def elemente_sort(st_werte):
+    t = 0
+    st_werte_sort = []
+    for element in st_werte:
+        k = 0
+        while k < len(st_werte):
+            if element >= st_werte[k]:
+                st_werte_sort.insert(k, t)
+                k = len(st_werte)
+            else:
+                k += 1
+        t += 1
+    return st_werte_sort
+
+
 def ganzz_exponenten(n,p=1,q=6, wdh=True):
     if wdh == True:
         liste = []

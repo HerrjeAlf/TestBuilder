@@ -38,19 +38,15 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    auswahl_kongruenz = random.choice(range(0,5))
-    if auswahl_kongruenz < 3:
+    aw_kgr = random.choice(range(0,5))
+    if aw_kgr < 3:
         rf = random.choice([[0,1,2], [1,2,0], [0,2,1]])
-    elif auswahl_kongruenz == 3:
-        rf = random.choice([[0,1], [1,2], [2,0]])
+    elif aw_kgr == 3:
+        rf = random.choice([[0,1,0], [1,2,0], [2,0,0]])
     else:
-        if seite_c > seite_a and seite_a > seite_b:
-            rf = [[0,1,0], [1,2,2], [0,2,2]]
-        elif seite_c > seite_b and seite_b > seite_a:
-            rf = [[0, 1, 1], [1, 2, 2], [0, 2, 2]]
-        elif seite_a > seite_b and seite_b > seite_c:
-            rf = [[0, 1, 0], [1, 2, 1], [0, 2, 0]]
-        elif 
+        rf_elem = elemente_sort(st_werte)
+        rf = random.choice([[rf_elem[0],rf_elem[1],0], [rf_elem[0],rf_elem[2],0], [rf_elem[0], rf_elem[2],0]])
+
     auswahl = [['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                 st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                 st[2] + '~=~' + gzahl(st_werte[2]) + 'cm'],
@@ -63,13 +59,14 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
                ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
                 wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}',
                 wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}'],
-               ['Ssw', st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                st[2] + '~=~' + gzahl(st_werte[2]) + 'cm',
-                wk[2] + '~=~' + str(wk_werte[2]) + r' ^{  \circ}']]
+               ['Ssw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
+                wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}']]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
-    aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~' + str(auswahl[3]) + r'.')
+    aufgabe.append(str(auswahl[aw_kgr][1]) + ',~' + str(auswahl[aw_kgr][2]) + r'~ \mathrm{und} ~'
+                   + str(auswahl[aw_kgr][3]) + r'.')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -82,7 +79,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ')  Fertige eine Planskizze an, markiere die gegebenen Größen und '
                                                 'nenne den Kongruenzsatz. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad \to \quad '
-                       + str(auswahl[0]) + r' \quad (1P)')
+                       + str(auswahl[aw_kgr][0]) + r' \quad (1P)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -94,13 +91,14 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         pkt = 5
         aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. \n\n')
         if 'a' not in teilaufg:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad ' + str(auswahl[1])
-                            + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
-                            + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad '
+                            + str(auswahl[aw_kgr][1]) + '~(1P),~' + str(auswahl[aw_kgr][2]) + '~(1P),~'
+                            + str(auswahl[aw_kgr][3]) + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)',
+                            'Figure'))
             pkt += 2
         else:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[1])
-                           + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[aw_kgr][1])
+                           + '~(1P),~' + str(auswahl[aw_kgr][2]) + '~(1P),~' + str(auswahl[aw_kgr][3])
                             + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
