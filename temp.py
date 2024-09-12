@@ -104,6 +104,5 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 #print(fkt)
-exp1, exp2 = np.random.choice(range(-5,5), 2, False)
-print(exp1)
-print(exp2)
+
+print(random.choice(range(0,4)))

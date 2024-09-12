@@ -38,21 +38,34 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    auswahl = random.choice([['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                              st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                              st[2] + '~=~' + gzahl(st_werte[2]) + 'cm'],
-                             ['sws', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                              st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                              wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
-                             ['wsw', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                              wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}',
-                              wk[2] + '~=~' + gzahl(wk_werte[2]) + r' ^{  \circ}'],
-                             ['sww',  st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                              wk[0] + '~=~' + gzahl(wk_werte[0]) + r' ^{  \circ}',
-                              wk[1] + '~=~' + gzahl(wk_werte[1]) + r' ^{  \circ}'],
-                             ['Ssw', st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                              st[2] + '~=~' + gzahl(st_werte[2]) + 'cm',
-                              wk[2] + '~=~' + str(gamma) + r' ^{  \circ}']])
+    auswahl_kongruenz = random.choice(range(0,5))
+    if auswahl_kongruenz < 3:
+        rf = random.choice([[0,1,2], [1,2,0], [0,2,1]])
+    elif auswahl_kongruenz == 3:
+        rf = random.choice([[0,1], [1,2], [2,0]])
+    else:
+        if seite_c > seite_a and seite_a > seite_b:
+            rf = [[0,1,0], [1,2,2], [0,2,2]]
+        elif seite_c > seite_b and seite_b > seite_a:
+            rf = [[0, 1, 1], [1, 2, 2], [0, 2, 2]]
+        elif seite_a > seite_b and seite_b > seite_c:
+            rf = [[0, 1, 0], [1, 2, 1], [0, 2, 0]]
+        elif 
+    auswahl = [['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                st[2] + '~=~' + gzahl(st_werte[2]) + 'cm'],
+               ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
+                wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}'],
+               ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
+                wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}'],
+               ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}',
+                wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}'],
+               ['Ssw', st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                st[2] + '~=~' + gzahl(st_werte[2]) + 'cm',
+                wk[2] + '~=~' + str(wk_werte[2]) + r' ^{  \circ}']]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']

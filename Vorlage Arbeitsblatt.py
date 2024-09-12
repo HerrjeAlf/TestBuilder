@@ -5,7 +5,7 @@ from skripte.erstellen import *
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Klasse = '10f'
-Thema = 'Übung Konstruktion von Dreiecken'
+Thema = 'Konstr. Dreiecke'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 

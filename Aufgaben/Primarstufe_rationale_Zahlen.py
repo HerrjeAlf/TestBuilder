@@ -1073,9 +1073,9 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
         return aufg, lsg
 
     def einf_var_bas_fakt():
-        fakt_bas = zzahl(2, 7)
-        erw1, erw2 = np.random.choice([2,3,4,5,6,7,8,10],2, False)
-        fakt1, fakt2 = np.random.choice([fakt_bas*erw1, fakt_bas * erw2], 2, False)
+        zaehler, nenner = np.random.choice([2,3,5,7,9,11],2, False)
+        fakt_erw = zzahl(2, 10)
+        fakt1, fakt2 = np.random.choice([zaehler*fakt_erw, nenner * fakt_erw], 2, False)
         bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],2,False)
         bas.sort()
         bas1, bas2 = bas
@@ -1085,7 +1085,7 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
             if exp1 - exp3 != 0:
                 w_erg = w_erg + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
             if exp2 - exp4 != 0:
-                w_erg =  w_erg + bas2 + '^{' + gzahl(exp2 - exp4) + '}'
+                w_erg = w_erg + bas2 + '^{' + gzahl(exp2 - exp4) + '}'
         else:
             w_erg = ''
         aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
@@ -1095,7 +1095,36 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
                + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
                + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
                + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + w_erg)
+        return aufg, lsg
 
+    def nor_var_bas_fakt():
+        ausw_bruch = np.random.choice([2,3,5,7,9,11], 2, False)
+        zaehler, nenner = random.choice([-1,1])*ausw_bruch[0], random.choice([-1,1])*ausw_bruch[1]
+        erw1, erw2 = nzahl(2,10), nzahl(5,12)
+        zaehler1, nenner2, zaehler2, nenner1 = zaehler*erw1, erw1, erw2, nenner*erw2
+        bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],4,False)
+        bas.sort()
+        bas1, bas2, bas3, bas4 = bas
+        list_exp = ganzz_exponenten(8,2,12, True)
+        exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8 = list_exp
+        list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
+        exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
+        if 0 in list_exp_diff:
+            w_erg = ' ~=~ ' + gzahl(Rational(zaehler, nenner))
+            n = 0
+            for element in list_exp_diff:
+                if element != 0:
+                    w_erg = w_erg + bas[n] + '^{' + gzahl(element) + '}'
+                n += 1
+        else:
+            w_erg = ''
+        aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
+                + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + '}} ~')
+        lsg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
+                + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + r'}} ~=~ \frac{'
+               + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
+               + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
+               + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
