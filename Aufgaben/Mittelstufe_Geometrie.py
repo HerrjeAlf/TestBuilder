@@ -16,8 +16,9 @@ liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
 
-def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
+def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
     # hier müssen Kongruenzsätze erkannt und die Dreiecke konstruiert werden
+    # Mit dem Parameter "kongr=" kann festgelegt werden, welcher Kongruenzsatz erzeugt werden soll (0: sss, 1: sws, 2: wsw, 3:sww, 4: Ssw).
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -38,35 +39,42 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    aw_kgr = random.choice(range(0,5))
-    if aw_kgr < 3:
-        rf = random.choice([[0,1,2], [1,2,0], [0,2,1]])
-    elif aw_kgr == 3:
-        rf = random.choice([[0,1,0], [1,2,0], [2,0,0]])
+    if kongr not in list(range(5)):
+        kongr = random.choice(range(0,5)) # hier wird ausgewürfelt, welcher Kongruenzsatz erzeugt werden soll
+    if kongr < 3:
+        rf = random.choice([[0,1,2], [1,2,0], [0,2,1]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
+        if kongr == 0:
+            auswahl = ['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                        st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                        st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']
+        elif kongr == 1:
+            auswahl = ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                       st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
+                       wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
+        else:
+             auswahl = ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                        wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
+                        wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
+    elif kongr == 3:
+        rf = random.choice([[0,1], [1,2], [2,0]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
+        auswahl = ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                   wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}',
+                   wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}']
     else:
         rf_elem = elemente_sort(st_werte)
-        rf = random.choice([[rf_elem[0],rf_elem[1],0], [rf_elem[0],rf_elem[2],0], [rf_elem[0], rf_elem[2],0]])
-
-    auswahl = [['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                st[2] + '~=~' + gzahl(st_werte[2]) + 'cm'],
-               ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
-                wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}'],
-               ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
-                wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}'],
-               ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}',
-                wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}'],
-               ['Ssw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
-                wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}']]
+        rf = random.choice([[rf_elem[0],rf_elem[1]], [rf_elem[0],rf_elem[2]], [rf_elem[1], rf_elem[2]]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
+        if rf[1] < rf[0]:
+            aufg2 = st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm'
+            aufg1 = st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm'
+        else:
+            aufg1 = st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm'
+            aufg2 = st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm'
+        auswahl = ['Ssw', aufg1, aufg2, wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}']
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
-    aufgabe.append(str(auswahl[aw_kgr][1]) + ',~' + str(auswahl[aw_kgr][2]) + r'~ \mathrm{und} ~'
-                   + str(auswahl[aw_kgr][3]) + r'.')
+    aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~'
+                   + str(auswahl[3]) + r'.')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -79,7 +87,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ')  Fertige eine Planskizze an, markiere die gegebenen Größen und '
                                                 'nenne den Kongruenzsatz. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad \to \quad '
-                       + str(auswahl[aw_kgr][0]) + r' \quad (1P)')
+                       + str(auswahl[0]) + r' \quad (1P)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -92,13 +100,13 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. \n\n')
         if 'a' not in teilaufg:
             loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad '
-                            + str(auswahl[aw_kgr][1]) + '~(1P),~' + str(auswahl[aw_kgr][2]) + '~(1P),~'
-                            + str(auswahl[aw_kgr][3]) + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)',
+                            + str(auswahl[1]) + '~(1P),~' + str(auswahl[2]) + '~(1P),~'
+                            + str(auswahl[3]) + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)',
                             'Figure'))
             pkt += 2
         else:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[aw_kgr][1])
-                           + '~(1P),~' + str(auswahl[aw_kgr][2]) + '~(1P),~' + str(auswahl[aw_kgr][3])
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[1])
+                           + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
                             + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)

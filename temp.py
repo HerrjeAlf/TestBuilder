@@ -104,19 +104,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 #print(fkt)
+print(kgv(15,21))
 
-st_werte = [3, 3, 7]
-st_werte_sort = []
-t = 0
-for element in st_werte:
-    k = 0
-    print(element)
-    while k < len(st_werte):
-        if element >= st_werte[k]:
-            st_werte_sort.insert(k, t)
-            k = len(st_werte)
-        else:
-            k += 1
-    t += 1
-    # print(k)
-print(st_werte_sort)
+teilaufg = ['a', 'a', 'a', 'b', 'c']
+
+print(teilaufg.count('a'))

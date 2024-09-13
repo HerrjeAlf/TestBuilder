@@ -732,12 +732,13 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, B
             aufg = aufg + r' \hspace{5em} '
         elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \\\\'
+        if element != 'f':
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \hspace{5em} '
+            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \\\\'
         else:
-            pass
+            lsg = lsg + r' \\\\'
         punkte += 1
         i += 1
 
@@ -935,12 +936,13 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
             aufg = aufg + r' \hspace{5em} '
         elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \\\\'
+        if element != 'g':
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \hspace{5em} '
+            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \\\\'
         else:
-            pass
+            lsg = lsg + r' \\\\'
         punkte += 1
         i += 1
 
@@ -955,7 +957,8 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], anzahl=False, BE=[]):
+
+def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen dividieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und Exponenten
@@ -1098,10 +1101,10 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
         return aufg, lsg
 
     def nor_var_bas_fakt():
-        ausw_bruch = np.random.choice([2,3,5,7,9,11], 2, False)
-        zaehler, nenner = random.choice([-1,1])*ausw_bruch[0], random.choice([-1,1])*ausw_bruch[1]
-        erw1, erw2 = nzahl(2,10), nzahl(5,12)
-        zaehler1, nenner2, zaehler2, nenner1 = zaehler*erw1, erw1, erw2, nenner*erw2
+        ausw_bruch = np.random.choice([2,3,5,7,9], 3, False)
+        erw1, erw2 = np.random.choice(range(2, 10), 2, False)
+        zaehler1, nenner1 = random.choice([-1,1])*ausw_bruch[0]*erw1, random.choice([-1,1])*ausw_bruch[1]*erw2
+        zaehler2, nenner2 = random.choice([-1,1])*erw2, random.choice([-1,1])*ausw_bruch[2]*erw1
         bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],4,False)
         bas.sort()
         bas1, bas2, bas3, bas4 = bas
@@ -1110,21 +1113,75 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
         list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
         exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
         if 0 in list_exp_diff:
-            w_erg = ' ~=~ ' + gzahl(Rational(zaehler, nenner))
+            w_erg = gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2))
             n = 0
             for element in list_exp_diff:
                 if element != 0:
                     w_erg = w_erg + bas[n] + '^{' + gzahl(element) + '}'
                 n += 1
         else:
-            w_erg = ''
-        aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
-                + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + '}} ~')
-        lsg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
-                + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + r'}} ~=~ \frac{'
-               + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
-               + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
-               + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + w_erg)
+            w_erg = (gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
+                     + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + bas3 + '^{' + gzahl(exp5 - exp7) + '}' + bas4 + '^{'
+                     + gzahl(exp6 - exp8) + '}')
+
+        aufg = (r' \frac{' + gzahl(zaehler1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2)
+                + r'}}{' + gzahl(nenner1) + '~' + bas3 + '^{' + gzahl(exp7) + '}' + bas4 + '^{' + gzahl(exp8)
+                + r'}} ~ \cdot ~' + r' \frac{' + gzahl(zaehler2) + '~' + bas3 + '^{' + gzahl(exp5) + r'}' + bas4 + '^{'
+                + gzahl(exp6) + r'}}{' + gzahl(nenner2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2
+                + '^{' + gzahl(exp4) + '}}')
+        lsg = (r' \frac{' + gzahl(zaehler1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2)
+                + r'}}{' + gzahl(nenner1) + '~' + bas3 + '^{' + gzahl(exp7) + '}' + bas4 + '^{' + gzahl(exp8)
+                + r'}} ~ \cdot ~' + r' \frac{' + gzahl(zaehler2) + '~' + bas3 + '^{' + gzahl(exp5) + r'}' + bas4 + '^{'
+                + gzahl(exp6) + r'}}{' + gzahl(nenner2) + r' \cdot ' + bas1 + '^{' + gzahl(exp3) + '}' + bas2
+                + '^{' + gzahl(exp4) + r'}} ~=~ \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1) + r'} \cdot \frac{'
+                + gzahl(zaehler2) + '}{' + gzahl(nenner2) + '}' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
+               + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '}' + bas3 + '^{' + gzahl(exp5)
+               + vorz_str(-1 * exp7) + '}' + bas4 + '^{' + gzahl(exp6) + vorz_str(-1 * exp8) + '} ~=~ '
+               + w_erg)
+        return aufg, lsg
+
+    def schw_var_bas_fakt():
+        ausw_bruch = np.random.choice([2,3,5,7,9], 3, False)
+        erw1, erw2 = np.random.choice(range(2, 10), 2, False)
+        zaehler1, nenner1 = random.choice([-1,1])*ausw_bruch[0]*erw1, random.choice([-1,1])*ausw_bruch[1]*erw2
+        zaehler2, nenner2 = random.choice([-1,1])*erw2, random.choice([-1,1])*ausw_bruch[2]*erw1
+        bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],4,False)
+        bas.sort()
+        bas1, bas2, bas3, bas4 = bas
+        list_exp = ganzz_exponenten(8,2,12, True)
+        exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8 = list_exp
+        list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
+        exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
+        if 0 in list_exp_diff:
+            w_erg = gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2))
+            n = 0
+            for element in list_exp_diff:
+                if element != 0:
+                    w_erg = w_erg + bas[n] + '^{' + gzahl(element) + '}'
+                n += 1
+        else:
+            w_erg = (gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
+                     + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + bas3 + '^{' + gzahl(exp5 - exp7) + '}' + bas4 + '^{'
+                     + gzahl(exp6 - exp8) + '}')
+
+        aufg = (r' \frac{' + gzahl(zaehler1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2)
+                + r'}}{' + gzahl(nenner1) + '~' + bas3 + '^{' + gzahl(exp7) + '}' + bas4 + '^{' + gzahl(exp8)
+                + r'}} ~ \div ~' + r' \frac{' + gzahl(nenner2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2
+                + '^{' + gzahl(exp4) + r'}}{' + gzahl(zaehler2) + '~' + bas3 + '^{' + gzahl(exp5) + r'}' + bas4 + '^{'
+                + gzahl(exp6) + '}}')
+        lsg = (r' \frac{' + gzahl(zaehler1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2)
+               + r'}}{' + gzahl(nenner1) + '~' + bas3 + '^{' + gzahl(exp7) + '}' + bas4 + '^{' + gzahl(exp8)
+               + r'}} ~ \div ~' + r' \frac{' + gzahl(nenner2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2
+               + '^{' + gzahl(exp4) + r'}}{' + gzahl(zaehler2) + '~' + bas3 + '^{' + gzahl(exp5) + r'}' + bas4 + '^{'
+               + gzahl(exp6) + r'}} ~=~ \frac{' + gzahl(zaehler1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2
+               + '^{' + gzahl(exp2) + r'}}{' + gzahl(nenner1) + '~' + bas3 + '^{' + gzahl(exp7) + '}' + bas4 + '^{'
+               + gzahl(exp8) + r'}} ~ \cdot ~' + r' \frac{' + gzahl(zaehler2) + '~' + bas3 + '^{' + gzahl(exp5) + r'}'
+               + bas4 + '^{' + gzahl(exp6) + r'}}{' + gzahl(nenner2) + r' \cdot ' + bas1 + '^{' + gzahl(exp3) + '}'
+               + bas2 + '^{' + gzahl(exp4) + r'}} \\\\ =~ \frac{' + gzahl(zaehler1) + '}{' + gzahl(nenner1)
+               + r'} \cdot \frac{' + gzahl(zaehler2) + '}{' + gzahl(nenner2) + '}' + bas1 + '^{' + gzahl(exp1)
+               + vorz_str(-1 * exp3) + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '}' + bas3 + '^{'
+               + gzahl(exp5) + vorz_str(-1 * exp7) + '}' + bas4 + '^{' + gzahl(exp6) + vorz_str(-1 * exp8) + '} ~=~ '
+               + w_erg)
         return aufg, lsg
 
     if anzahl != False:
@@ -1132,7 +1189,8 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
-                'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': triv_var_bas_fakt, 'h': einf_var_bas_fakt}
+                'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': triv_var_bas_fakt, 'h': einf_var_bas_fakt,
+                'i': nor_var_bas_fakt, 'j': schw_var_bas_fakt}
 
     aufg = ''
     lsg = ''
@@ -1141,16 +1199,22 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
-            aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
-            aufg = aufg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-            lsg = lsg + r' \\\\'
+        if element not in ['h', 'i', 'j']:
+            if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+            elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+        if element not in ['h', 'i', 'j']:
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \hspace{5em} '
+            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+                lsg = lsg + r' \\\\'
         else:
-            pass
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
         punkte += 1
         i += 1
 
