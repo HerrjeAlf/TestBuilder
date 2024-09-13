@@ -80,7 +80,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                      + r' \\' + gzahl(vektor_bc[1]) + r' \\' + gzahl(vektor_bc[2]) + r' \\'
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
-                     + r'\end{pmatrix}  \quad (2P) \\')
+                     + r'\end{pmatrix}  \quad (3P) \\')
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
@@ -128,7 +128,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     if 'c' in teilaufg:
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 7
+        punkte = 4
         aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
                                            + f' ein Parallelogramm bilden.'))
         loesung.append(str(teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
