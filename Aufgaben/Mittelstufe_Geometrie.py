@@ -39,27 +39,27 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    if kongr not in list(range(5)):
+    if kongr == None or kongr not in list(range(5)):
         kongr = random.choice(range(0,5)) # hier wird ausgewürfelt, welcher Kongruenzsatz erzeugt werden soll
-    if kongr < 3:
-        rf = random.choice([[0,1,2], [1,2,0], [0,2,1]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
-        if kongr == 0:
-            auswahl = ['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
-                        st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
-                        st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']
-        elif kongr == 1:
-            auswahl = ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                       st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
-                       wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
-        else:
-             auswahl = ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                        wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
-                        wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
+    if kongr == 0:
+        auswahl = ['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
+                   st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
+                   st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']
+    elif kongr == 1:
+        rf = random.choice([[0,2,1], [0,1,2], [1,0,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für sws festgelegt
+        auswahl = ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                   st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
+                   wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
+    elif kongr == 2:
+        rf = random.choice([[0,2,1], [1,0,2], [0,1,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für wsw festgelegt
+        auswahl = ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
+                   wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
+                   wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
     elif kongr == 3:
-        rf = random.choice([[0,1], [1,2], [2,0]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
+        rf = random.choice([[0,0,2], [1,0,1], [2,1,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für sww festgelegt
         auswahl = ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
-                   wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}',
-                   wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}']
+                   wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
+                   wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
     else:
         rf_elem = elemente_sort(st_werte)
         rf = random.choice([[rf_elem[0],rf_elem[1]], [rf_elem[0],rf_elem[2]], [rf_elem[1], rf_elem[2]]]) # mit rf wird die Reihenfolge der gegebenen Werte festgelegt
