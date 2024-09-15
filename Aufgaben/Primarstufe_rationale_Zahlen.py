@@ -831,10 +831,6 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
     def pos_zahl_bas_exp():
         bas = nzahl(2,6)
         exp1, exp2 = np.random.choice(range(1,5), 2, False)
-        if exp1 + exp2 == 0:
-            w_erg = '~=~ 1'
-        else:
-            w_erg = ''
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
                + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
@@ -1230,5 +1226,123 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', '
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+    # Hier sollen die SuS zwei Potenzen multiplizieren.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) Potenzen mit nat. Zahlen und Exponenten
+    # b) Potenzen mit nat. Zahlen und ganzz. Exponenten
+    # c) Potenzen mit neg. Zahlen und ganzz. Exponenten
+    # d) Potenzen mit bel. ganzen Zahlen und Exponenten
+    # e) Potenzen mit Variablen und nat. Exponenten
+    # f) Potenzen mit Variablen und ganzz. Exponenten
+    # g) Potenzen mit Variablen, Faktoren und ganzz. Exponenten
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vereinfache.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def pos_zahl_und_gln_exp():
+        zaehler_1, zaehler_2 = np.random.choice([1, 2, 3, 4, 5, 6], 2, False)
+        nenner = zaehler_1 + zaehler_2 + nzahl(2,4)
+        bas = nzahl(2,8)
+        exp1, exp2 = Rational(zaehler_1, nenner), Rational(zaehler_2, nenner)
+        aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
+        lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
+
+    def zahl_gln_exp():
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bas = nzahl(2,6)
+        exp1, exp2 = Rational(vorz1 * zaehler_1,nenner), Rational(vorz2*zaehler_2, nenner)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
+        aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
+        lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+        return aufg, lsg
+
+    def var_pos_gln_exp():
+        zaehler_1, zaehler_2 = np.random.choice([1, 2, 3, 4, 5, 6], 2, False)
+        nenner = zaehler_1 + zaehler_2 + nzahl(2,4)
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        exp1, exp2 = Rational(zaehler_1, nenner), Rational(zaehler_2, nenner)
+        aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
+        lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1)
+               + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}')
+        return aufg, lsg
+
+    def var_gln_exp():
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
+        vorz1, vorz2 = np.random.choice([1, -1], 2, True)
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        exp1, exp2 = Rational(vorz1 * zaehler_1,nenner), Rational(vorz2*zaehler_2, nenner)
+        if exp1 + exp2 == 0:
+            w_erg = '~=~ 1'
+        else:
+            w_erg = ''
+        aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
+        lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1)
+               + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+        return aufg, lsg
+
+
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
+    aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
+        else:
+            pass
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 
 
