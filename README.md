@@ -1,4 +1,4 @@
-Mit TestBuilder zu nutzen benötigen Sie:
+Um TestBuilder zu nutzen benötigen Sie:
 1. MiKTeX: https://miktex.org/download
 2. Perl: https://strawberryperl.com/
 3. GitHub Desktop: https://github.com/apps/desktop
