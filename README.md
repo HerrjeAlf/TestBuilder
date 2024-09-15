@@ -10,4 +10,4 @@ Intallieren Sie die Software in der gegebenen Reihenfolge. Melden Sie sich danac
      - numpy 1.26.4
      - sympy 1.13.0cr2
 
-Jetzt sollte alles ohne Fehlermeldung funktionieren. Viele Spaß beim Nutzen :-)
+Jetzt sollte alles ohne Fehlermeldung funktionieren. Sollten Sie Bugs oder fehlerhafte Rechnungen bzw. Ergebnisse finden, würde ich mich um eine Rückmeldung freuen.
