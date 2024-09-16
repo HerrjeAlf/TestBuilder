@@ -1238,6 +1238,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     # f) Potenzen mit nat. Zahlen und ungleichnamigen rationalen Exponenten
     # g) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
     # h) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten
+    # i) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten, dargestellt als Wurzel
+    # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Qoutient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1466,7 +1468,6 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
 
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [punkte]
@@ -1477,7 +1478,5 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-
 
 
