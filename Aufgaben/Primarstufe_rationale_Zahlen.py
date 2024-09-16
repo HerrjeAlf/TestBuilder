@@ -1250,8 +1250,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def pos_zahl_und_gln_exp():
-        zaehler_1, zaehler_2, nenner = np.random.choice(range(1,12), 3, False)
+    def pos_zahl_und_gln_exp(): # Teilaufgabe a)
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
         erg = Rational(zaehler_1+zaehler_2,nenner)
@@ -1261,8 +1261,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + '^{' + exp1 + '+' + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg) + '}')
         return aufg, lsg
 
-    def zahl_gln_exp():
-        zaehler_1, zaehler_2, nenner = np.random.choice(range(1,12), 3, False)
+    def zahl_gln_exp(): # Teilaufgabe b)
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
@@ -1279,8 +1279,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + gzahl(bas) + '^{' + gzahl(erg) + '}' + w_erg)
         return aufg, lsg
 
-    def var_pos_gln_exp():
-        zaehler_1, zaehler_2, nenner = np.random.choice(range(1,12), 3, False)
+    def var_pos_gln_exp(): # Teilaufgabe c)
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
         erg = Rational(zaehler_1+zaehler_2,nenner)
@@ -1290,8 +1290,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + '} ~=~ ' + bas + '^{' + gzahl(erg) + '}')
         return aufg, lsg
 
-    def var_gln_exp():
-        zaehler_1, zaehler_2, nenner = np.random.choice(range(1,12), 3, False)
+    def var_gln_exp(): # Teilaufgabe d)
+        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
@@ -1307,13 +1307,13 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + bas + '^{' + gzahl(erg) + '}' + w_erg)
         return aufg, lsg
 
-    def pos_zahl_und_ungln_exp():
+    def pos_zahl_und_ungln_exp(): # Teilaufgabe e)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         nenner = kgv(nenner_1, nenner_2)
-        zaehler_1_erw = nenner / nenner_1 * zaehler_1
-        zaehler_2_erw = nenner / nenner_2 * zaehler_2
+        zaehler_1_erw = (nenner / nenner_1) * zaehler_1
+        zaehler_2_erw = (nenner / nenner_2) * zaehler_2
         bas = nzahl(2, 8)
         exp1, exp2 = Rational(zaehler_1, nenner_1), Rational(zaehler_2, nenner_2)
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
@@ -1323,7 +1323,7 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + gzahl(exp1 + exp2) + '}')
         return aufg, lsg
 
-    def zahl_ungln_exp():
+    def zahl_ungln_exp():  # Teilaufgabe f)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
@@ -1344,7 +1344,7 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + gzahl(exp1 + exp2) + '}' + w_erg)
         return aufg, lsg
 
-    def var_pos_ungln_exp():
+    def var_pos_ungln_exp():  # Teilaufgabe g)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
@@ -1355,11 +1355,11 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas
-               + '^{' + gzahl(exp1) + vorz_str(exp2) + r'^{ \frac{' + gzahl(zaehler_1_erw)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + r'}  ~=~ ' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
                + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(exp1 + exp2) + '}')
         return aufg, lsg
 
-    def var_ungln_exp():
+    def var_ungln_exp(): # Teilaufgabe h)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
@@ -1381,7 +1381,7 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
                + w_erg)
         return aufg, lsg
 
-    def var_pos_sqrt():
+    def var_pos_sqrt(): # Teilaufgabe i)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
@@ -1397,12 +1397,12 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         erg = Rational(zaehler_1 * nenner_2 + zaehler_2 * nenner_1, nenner_1 * nenner_2)
         exp1_erw, exp2_erw = Rational(zaehler_1_erw, nenner), Rational(zaehler_2_erw, nenner)
         aufg = pot1 + r'~ \cdot ~' + pot2
-        lsg = (pot1 + r'~ \cdot ~' + pot2 + r' ~=~ ' + bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ '
-               + bas + '^{' + exp1 + '+' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw) + vorz_str(exp2_erw)
-               + '} ~=~' + bas + '^{' + gzahl(erg) + '}')
+        lsg = (pot1 + r'~ \cdot ~' + pot2 + '~=~' + bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ '
+               + bas + '^{' + exp1 + '+' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
+               + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}')
         return aufg, lsg
 
-    def var_sqrt():
+    def var_sqrt(): # Teilaufgabe j)
         zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
         while (zaehler_1 / nenner_1) % 1 == 0 or (zaehler_2 / nenner_2) % 1 == 0:
             zaehler_1, zaehler_2, nenner_1, nenner_2 = np.random.choice(range(2, 12), 4, False)
@@ -1431,8 +1431,8 @@ def zweites_potenzgesetz_brueche(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
         aufg = pot1 + r'~ \cdot ~' + pot2
         lsg = (pot1 + r'~ \cdot ~' + pot2 + r' ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot ' + bas
                + '^{' + vorz(vorz2) + exp2 + '} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + vorz(vorz2) + exp2
-               + '} ~=~' + bas + '^{' + gzahl(exp1_erw) + vorz_str(exp2_erw) + '} ~=~' + bas + '^{' + gzahl(erg) + '}'
-               + w_erg)
+               + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw) + vorz_str(zaehler_2_erw) + '}{'
+               + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
