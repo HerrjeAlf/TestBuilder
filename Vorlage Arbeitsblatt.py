@@ -4,7 +4,7 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Klasse = '10f'
+Klasse = '10c'
 Thema = 'Konstr. Dreiecke'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden

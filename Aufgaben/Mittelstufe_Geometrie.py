@@ -46,7 +46,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
                    st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                    st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']
     elif kongr == 1:
-        rf = random.choice([[0,2,1], [0,1,2], [1,0,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für sws festgelegt
+        rf = random.choice([[0,2,1], [0,1,2], [1,2,0]]) # mit rf wird die Reihenfolge der gegebenen Werte für sws festgelegt
         auswahl = ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
                    st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
                    wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
