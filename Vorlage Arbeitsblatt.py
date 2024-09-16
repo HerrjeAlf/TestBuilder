@@ -11,11 +11,7 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kongruente_Dreiecke(1, kongr=0),
-                 kongruente_Dreiecke(2, kongr=1),
-                 kongruente_Dreiecke(3, kongr=2),
-                 kongruente_Dreiecke(4, kongr=3),
-                 kongruente_Dreiecke(5, kongr=4)]]
+    Aufgaben = [[]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
