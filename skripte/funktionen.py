@@ -390,6 +390,23 @@ def ganzz_exponenten(n,p=1,q=6, wdh=True):
     else:
         print('wdh muss "True" or "False" sein')
 
+def random_selection(list, anzahl=2, wdh=True):
+    if wdh == True:
+        liste = []
+        while len(liste) < anzahl:
+            liste.append(random.choice(list))
+        return liste
+    elif wdh == False:
+        if anzahl > len(set(list)):
+            anzahl = len(set(list))
+        menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
+        while len(menge) < anzahl:
+            menge.add(random.choice(list))
+        return menge
+    else:
+        print('wdh muss "True" or "False" sein')
+
+
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
     koeffizienten = faktorliste(1, 15, p)

@@ -1478,12 +1478,11 @@ def erstes_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
-    # Hier sollen die SuS mehrere Potenzen multiplizieren, mit verschiedenen .
+def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
+    # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
-    # h) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten
-    # i) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten, dargestellt als Wurzel
+    # a) Potenzen mit Variablen und ganzzahligen Exponenten
+    # b) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
     # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quostient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
@@ -1498,16 +1497,21 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
     grafiken_loesung = []
 
     def aufg_lsg(exponenten, anz_bas):
-        ausw_bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
+        ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
+        ausw_bas = [element for element in ar_ausw_bas]
+        list_basen = ausw_bas
+        for step in range(len(exponenten)-len(ausw_bas)):
+            random.shuffle(ausw_bas)
+            list_basen.append(random.choice(ausw_bas))
+        bas_exp = [[list_basen[k], exponenten[k]] for k in range(len(exponenten))]
         ausw_bas.sort()
-        bas_exp = [[random.choice([ausw_bas]), element] for element in exponenten]
         aufg = ''
-        m = 0
+        m = 1
         for element in bas_exp:
             if m != len(bas_exp):
-                aufg = aufg + element[0] + '^{' + element[1] + r'}~ \cdot ~'
+                aufg = aufg + element[0] + '^{' + gzahl(element[1]) + r'}~ \cdot ~'
             else:
-                aufg = aufg + element[0] + '^{' + element[1]
+                aufg = aufg + element[0] + '^{' + gzahl(element[1]) + '}'
             m += 1
         lsg = aufg + '~=~'
         exp_sort = []
@@ -1518,7 +1522,7 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
                     exp_der_basis.append(element[1])
             lsg = lsg + basis + '^{' + gzahl(exp_der_basis[0])
             k = 1
-            for zahl in range(len(exp_der_basis)-1):
+            for zahl in range(len(exp_der_basis) - 1):
                 lsg = lsg + vorz_str(exp_der_basis[k])
                 k += 1
             lsg = lsg + '}'
@@ -1529,9 +1533,10 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
         k = 0
         for basis in ausw_bas:
             if basis != ausw_bas[-1]:
-                lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '} \cdot '
+                lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
             else:
-                lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '}'
+                lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
+            k += 1
         return aufg, lsg
 
 
@@ -1539,7 +1544,10 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2]}
+    aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
+                'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
+                'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
+                'd': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2]}
 
     aufg = ''
     lsg = ''

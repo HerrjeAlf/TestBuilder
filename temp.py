@@ -105,20 +105,23 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #print(lsg)
 
 def aufg_lsg(exponenten, anz_bas):
-    ar_ausw_bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
+    ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
     ausw_bas = [element for element in ar_ausw_bas]
-    print(ausw_bas)
+    # print(ausw_bas)
     ausw_bas.sort()
-    bas_exp = [[random.choice([ausw_bas]), element] for element in exponenten]
-    print(ausw_bas)
-    print(bas_exp)
+    bas_exp = [[random.choice(ausw_bas), element] for element in exponenten]
+    # print(ausw_bas)
+    # print(bas_exp)
     aufg = ''
-    m = 0
+    m = 1
     for element in bas_exp:
+        # print(element)
         if m != len(bas_exp):
-            aufg = aufg + element[0] + '^{' + element[1] + r'}~ \cdot ~'
+            # print(element[0])
+            # print(element[1])
+            aufg = aufg + element[0] + '^{' + gzahl(element[1]) + r'}~ \cdot ~'
         else:
-            aufg = aufg + element[0] + '^{' + element[1]
+            aufg = aufg + element[0] + '^{' + gzahl(element[1])
         m += 1
     lsg = aufg + '~=~'
     exp_sort = []
@@ -136,13 +139,19 @@ def aufg_lsg(exponenten, anz_bas):
         if basis != ausw_bas[-1]:
             lsg = lsg + r'~ \cdot ~'
         exp_sort.append(exp_der_basis)
+
     lsg = lsg + '~=~'
     k = 0
+    print(exp_sort)
     for basis in ausw_bas:
         if basis != ausw_bas[-1]:
-            lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '} \cdot '
+            lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
         else:
-            lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '}'
+            lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
+        k += 1
     return aufg, lsg
 
-aufg_lsg([2,3,4,5],2)
+aufg, lsg = aufg_lsg([2,3,4,5],2)
+
+print(aufg)
+print(lsg)
