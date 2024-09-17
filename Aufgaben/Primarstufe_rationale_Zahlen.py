@@ -1481,13 +1481,7 @@ def erstes_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
     # Hier sollen die SuS mehrere Potenzen multiplizieren, mit verschiedenen .
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
-    # b) Potenzen mit nat. Zahlen und gleichnamigen rationalen Exponenten
-    # c) Potenzen mit Variablen und gleichnamigen positiven rationalen Exponenten
-    # d) Potenzen mit Variablen und gleichnamigen rationalen Exponenten
-    # e) Potenzen mit nat. Zahlen und ungleichnamigen positiven rationalen Exponenten
-    # f) Potenzen mit nat. Zahlen und ungleichnamigen rationalen Exponenten
-    # g) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
+    # a) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
     # h) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten
     # i) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten, dargestellt als Wurzel
     # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quostient und Wurzel
@@ -1503,12 +1497,41 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def drei_bas_nat_exp(fakt,anz): # Teilaufgabe a)
-        exponenten = []
-        bas1, bas2, bas3 = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 3, False)
-        aufg = (gzahl(bas) + '^{' + exp1 + r'} \cdot ' + gzahl(bas) + '^{' + exp2 + '} ~')
-        lsg = (gzahl(bas) + '^{' + exp1 + r'} \cdot ' + gzahl(bas) + '^{' + exp2 + '} ~=~ ' + gzahl(bas)
-               + '^{' + exp1 + '+' + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg) + '}')
+    def aufg_lsg(exponenten, anz_bas):
+        ausw_bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
+        ausw_bas.sort()
+        bas_exp = [[random.choice([ausw_bas]), element] for element in exponenten]
+        aufg = ''
+        m = 0
+        for element in bas_exp:
+            if m != len(bas_exp):
+                aufg = aufg + element[0] + '^{' + element[1] + r'}~ \cdot ~'
+            else:
+                aufg = aufg + element[0] + '^{' + element[1]
+            m += 1
+        lsg = aufg + '~=~'
+        exp_sort = []
+        for basis in ausw_bas:
+            exp_der_basis = []
+            for element in bas_exp:
+                if basis == element[0]:
+                    exp_der_basis.append(element[1])
+            lsg = lsg + basis + '^{' + gzahl(exp_der_basis[0])
+            k = 1
+            for zahl in range(len(exp_der_basis)-1):
+                lsg = lsg + vorz_str(exp_der_basis[k])
+                k += 1
+            lsg = lsg + '}'
+            if basis != ausw_bas[-1]:
+                lsg = lsg + r'~ \cdot ~'
+            exp_sort.append(exp_der_basis)
+        lsg = lsg + '~=~'
+        k = 0
+        for basis in ausw_bas:
+            if basis != ausw_bas[-1]:
+                lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '} \cdot '
+            else:
+                lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '}'
         return aufg, lsg
 
 
@@ -1516,26 +1539,19 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a'], anzahl=False, BE=[]):
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': test}
+    aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2]}
 
     aufg = ''
     lsg = ''
     punkte = 0
     for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
-                aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
-                aufg = aufg + r' \\\\'
-        if element not in ['i', 'j']:
-            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-                lsg = lsg + r' \hspace{5em} '
-            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-                lsg = lsg + r' \\\\'
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
         else:
-            lsg = lsg + r' \\\\'
+            aufg = aufg + r' \\\\'
         punkte += 1
         i += 1
 

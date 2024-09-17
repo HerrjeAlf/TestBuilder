@@ -104,4 +104,45 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-print(kgv(2,7))
+def aufg_lsg(exponenten, anz_bas):
+    ar_ausw_bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
+    ausw_bas = [element for element in ar_ausw_bas]
+    print(ausw_bas)
+    ausw_bas.sort()
+    bas_exp = [[random.choice([ausw_bas]), element] for element in exponenten]
+    print(ausw_bas)
+    print(bas_exp)
+    aufg = ''
+    m = 0
+    for element in bas_exp:
+        if m != len(bas_exp):
+            aufg = aufg + element[0] + '^{' + element[1] + r'}~ \cdot ~'
+        else:
+            aufg = aufg + element[0] + '^{' + element[1]
+        m += 1
+    lsg = aufg + '~=~'
+    exp_sort = []
+    for basis in ausw_bas:
+        exp_der_basis = []
+        for element in bas_exp:
+            if basis == element[0]:
+                exp_der_basis.append(element[1])
+        lsg = lsg + basis + '^{' + gzahl(exp_der_basis[0])
+        k = 1
+        for zahl in range(len(exp_der_basis) - 1):
+            lsg = lsg + vorz_str(exp_der_basis[k])
+            k += 1
+        lsg = lsg + '}'
+        if basis != ausw_bas[-1]:
+            lsg = lsg + r'~ \cdot ~'
+        exp_sort.append(exp_der_basis)
+    lsg = lsg + '~=~'
+    k = 0
+    for basis in ausw_bas:
+        if basis != ausw_bas[-1]:
+            lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '} \cdot '
+        else:
+            lsg = lsg + basis + '^{' + gzahl(sum[exp_der_basis[k]]) + '}'
+    return aufg, lsg
+
+aufg_lsg([2,3,4,5],2)
