@@ -1499,7 +1499,7 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
     def aufg_lsg(exponenten, anz_bas):
         ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
         ausw_bas = [element for element in ar_ausw_bas]
-        list_basen = ausw_bas
+        list_basen = ausw_bas.copy()
         for step in range(len(exponenten)-len(ausw_bas)):
             random.shuffle(ausw_bas)
             list_basen.append(random.choice(ausw_bas))
