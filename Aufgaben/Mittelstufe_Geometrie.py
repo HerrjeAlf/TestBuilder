@@ -576,18 +576,16 @@ def sachaufgabe_rampe(nr, BE=[]):
     laenge_rampe = N(hoehe/math.sin(math.radians(w_rampe)),4)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-               f'Eine Rollstuhlrampe in einem öffentlichen Gebäude soll eine Höhe von {hoehe}cm überwinden. \n'
-               f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. \n'
-               f'Wie lang muss die Strecke sein, auf der der Rollstuhl nach unten fährt? '
+               f'Eine Rollstuhlrampe in einem öffentlichen Gebäude soll eine Höhe von {hoehe}cm überwinden. '
+               f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. '
+               f'Wie lang muss die Strecke sein, auf der der Rollstuhl nach unten fährt? \n'
                'Fertige dazu eine Planskizze an.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_rampe) + r' ^{ \circ},~a~=~'
-                                                 + str(hoehe) + r'cm, \quad ges: b \quad (1P)} \\'
-                                                 + r' sin( \alpha ) ~=~ \frac{a}{b}'
-                                                 + r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
-                                                 + r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
-                                                 + r' \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
-                                                 + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)'))
+    loesung.append(r' \mathrm{Planskizze \quad (2P) \quad \to \quad geg:~ \alpha ~=~' + str(w_rampe)
+                   + r'^{ \circ},~a ~=~' + str(hoehe) + r'cm, \quad ges: b \quad (1P)} \\ sin( \alpha ) ~=~'
+                   + r'\frac{a}{b} \quad \vert \cdot b \quad \vert \div sin( \alpha ) \quad \to \quad b '
+                   + r'~=~ \frac{a}{ sin( \alpha )} ~=~ \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
+                   + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)')
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -595,10 +593,10 @@ def sachaufgabe_rampe(nr, BE=[]):
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [4]
+            liste_punkte = [6]
         liste_punkte = BE
     else:
-        liste_punkte = [4]
+        liste_punkte = [6]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
