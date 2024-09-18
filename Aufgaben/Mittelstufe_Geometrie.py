@@ -382,10 +382,15 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
+    # Hier sollen die Schüler*innen den Sichtwinkel und den Abstand eines Beobachters von einem Wetterballon berechnen (Trigonometrie im rechtw. Dreieck).
+    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-# noch einarbeiten
-'''
-def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b']):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
     # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
@@ -396,9 +401,8 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b']):
     w_warte = 90
     w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_warte)))
     w_b = w_warte - w_beob
-    i = 0
-    Punkte = 0
-    if a not in teilaufg:
+
+    if 'a' not in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                    f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
                    f' Wenn der Ballon eine Höhe von {hoehe}km erreicht hat, '
@@ -408,10 +412,13 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b']):
                    f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
                    f' Ein Beobachter befindet sich {abstand_beob_warte}km von der Wetterwarte entfernt '
                    f'und der Ballon hat eine Höhe von {hoehe}km erreicht. \n\n']
-
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
+        # Die SuS sollen den Sichtwinkel berechnen, unter dem der Wetterballon gesehen werden kann.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Winkel, unter dem der Beobachter'
                                                 f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
@@ -422,10 +429,12 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b']):
                                                    r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
                                                  + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
                                                  + r' ^{ \circ} \quad (3P)'))
-        Punkte += 6
+        liste_punkte.append(6)
         i += 1
 
-    if 'a' and 'b' in teilaufg:
+    if 'b' in teilaufg:
+        # Die SuS sollen den Abstand des Beobachters vom Wetterballon berechnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~a~=~'
                                                  + str(hoehe) + r'km, \quad ges: b \quad (1P)} \\'
@@ -433,29 +442,47 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b']):
                                                    r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
                                                    r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
                                                    r' \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
-                                                 + ' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3P)'))
-        Punkte += 4
+                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3P)'))
+        liste_punkte.append(4)
         i += 1
 
-    return aufgabe, loesung, Punkte
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der '
+                  f'Anzahl der Teilaufgaben ({len(teilaufg)}) überein. '
+                  f'Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
 
-def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=):
-    # hier wird die Länge der Leiter und die Deckenhöhe berechnet
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
+    # Hier sollen die Schüler*innen den Anstellwinkel einer Klappleiter berechnen und beurteilen, ob dieser sicher aufgestellt werden kann (Trigonometrie im rechtw. Dreieck).
+    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
     laenge_leiter = nzahl(23,50)/10
     deckenhoehe = N(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
     anstellwinkel = int(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
-    i = 0
-    Punkte = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-               f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar.'
-               f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m.'
-               f'Die Leiter ist gut zu begehen, wenn die Leiter mit dem Fußboden höchstens einen Winkel von 61° bildet. \n',
+               f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar. '
+               + f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m. '
+               + 'Die Leiter ist gut zu begehen, wenn der Anstellwinkel der Leiter mit dem Fußboden '
+               + 'mindestens einen Winkel von 61° beträgt. \n',
                'Fertige dazu eine Planskizze an. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if 'a' in teilaufg:
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n')
+        # Die SuS sollen den Anstellwinkel einer Klappleiter berechnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
                                                  + str(deckenhoehe) + 'm,~b~=~' + str(laenge_leiter)
                                                  + r'm, \quad ges: \alpha \quad (1P)} \\'
@@ -464,52 +491,82 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=):
                                                    r' sin^{-1} \Big( \frac{' + str(deckenhoehe) + 'm }{'
                                                  + str(laenge_leiter) + r'm } \Big) ~=~' + str(N(anstellwinkel,2))
                                                  + r' ^{ \circ} \quad (3P)'))
-        Punkte += 6
+        liste_punkte.append(6)
         i += 1
 
     if 'a' and 'b' in teilaufg:
+        # Die SuS sollen beurteilen, ob die Dachleiter sicher aufgestellt werden kann.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
-            loesung.append(str(liste_teilaufg[i])
-                           + (r') Der Anstellwinkel ist kleiner als 61° und somit der Dachboden gut zu begehen. (1P)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist kleiner als 61° und somit der '
+                                                     r'Dachboden gut zu begehen. (1P)'))
         else:
-            loesung.append(str(liste_teilaufg[i])
-                           + (r') Der Anstellwinkel ist größer als 61° und somit der Dachboden nicht gut zu begehen. (1P)'))
-        Punkte += 1
+            loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist größer als 61° und somit der '
+                                                     r'Dachboden nicht gut zu begehen. (1P)'))
+        liste_punkte.append(1)
         i += 1
 
-    return aufgabe, loesung, Punkte
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der '
+                  f'Anzahl der Teilaufgaben ({len(teilaufg)}) überein. '
+                  f'Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
 
-def sachaufgabe_turm(nr, teilaufg):
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sachaufgabe_turm(nr, BE=[]):
+    # Hier sollen die Schüler*innen die Höhe eines Turms berechnen (Trigonometrie im rechtw. Dreieck).
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{nr}']
+    i = 0
+
     n = random.randint(2, 5)
     m = n + random.randint(2, 5)
+
     # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
     abstand_beob_turm = (m ** 2 - n ** 2)
     hoehe = 2 * m * n
     abstand_beob_spitze = (m ** 2 + n ** 2)
+
     # hier werden die Winkel berechnet
     w_warte = 90
     w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_turm)))
     w_b = w_warte - w_beob
-    i = 0
-    Punkte = 0
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Ein Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
                f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n',
                'Berechne aus den gegebenen Werte die Höhe des Turms.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~'
-                                             + str(abstand_beob_turm) + r'm, \quad ges: a \quad (1P)} \\'
-                                             + r' tan( \alpha ) ~=~ \frac{a}{b}'
-                                               r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
-                                             ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob)
-                                             + ' ^{ \circ}  ) ~=~' + str(hoehe) + r'm  \quad (3P)'))
-    Punkte += 4
-    i += 1
-    return aufgabe, loesung, Punkte
+    loesung.append(r' \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~' + str(abstand_beob_turm)
+                   + r'm, \quad ges: a \quad (1P)} \\ tan( \alpha ) ~=~ \frac{a}{b}'
+                   + r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
+                   + ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob) + r' ^{ \circ}  ) ~=~'
+                   + str(hoehe) + r'm  \quad (3P)')
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
-def sachaufgabe_rampe(nr, teilaufg):
-    # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [4]
+        liste_punkte = BE
+    else:
+        liste_punkte = [4]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sachaufgabe_rampe(nr, BE=[]):
+    # Hier sollen die Schüler*innen die Länge einer Rampe berechnen, damit diese gut befahrbar ist (Trigonometrie im rechtw. Dreieck).
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{nr}']
+    i = 0
     hoehe = nzahl(30,60)
     tiefe_rampe = hoehe + nzahl(30, 120)
     # hier werden die Winkel berechnet
@@ -518,8 +575,6 @@ def sachaufgabe_rampe(nr, teilaufg):
     w_haus = w_haus - w_rampe
     laenge_rampe = N(hoehe/math.sin(math.radians(w_rampe)),4)
 
-    i = 0
-    Punkte = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Eine Rollstuhlrampe in einem öffentlichen Gebäude soll eine Höhe von {hoehe}cm überwinden. \n'
                f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. \n'
@@ -529,14 +584,23 @@ def sachaufgabe_rampe(nr, teilaufg):
     loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_rampe) + r' ^{ \circ},~a~=~'
                                                  + str(hoehe) + r'cm, \quad ges: b \quad (1P)} \\'
                                                  + r' sin( \alpha ) ~=~ \frac{a}{b}'
-                                                   r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
-                                                   r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
-                                                   r' \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
-                                                 + ' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)'))
-    Punkte += 4
-    i += 1
-    return aufgabe, loesung, Punkte
-'''
+                                                 + r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
+                                                 + r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
+                                                 + r' \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
+                                                 + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)'))
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [4]
+        liste_punkte = BE
+    else:
+        liste_punkte = [4]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
