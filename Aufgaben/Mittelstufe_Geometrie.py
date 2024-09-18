@@ -17,7 +17,8 @@ liste_teilaufg = list(string.ascii_lowercase)
 # Trigonometrie
 
 def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
-    # hier müssen Kongruenzsätze erkannt und die Dreiecke konstruiert werden
+    # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks den Kongruenzsatz erkennen und das Dreieck konstruieren.
+    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "kongr=" kann festgelegt werden, welcher Kongruenzsatz erzeugt werden soll (0: sss, 1: sws, 2: wsw, 3:sww, 4: Ssw).
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -80,7 +81,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Kongruenzsatzes benennen
+        # Hier sollen die SuS eine Planskizze zeichnen, die gegebenen Größen markieren und den daraus folgenden Kongruenzsatz nennen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 3
@@ -92,7 +93,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
         i += 1
 
     if 'b' in teilaufg:
-        # Konstruktion des kongruenten Dreieckes
+        # Hier sollen die SuS mithilfe der gegebenen Daten das Dreieck konstruieren.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -119,8 +120,10 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
-    #
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
+    # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks die fehlende Seiten und Winkel mithilfe des Satz des Pythagoras und Sinus, Konsinus und Tnagens berechnen.
+    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Mit dem Parameter "gegegeben=" kann festgelegt werden, welcher Seiten vom Dreieck gegeben sind. (0: zwei Katheten, 1: eine Kathete und eine Hypothenuse).
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
@@ -156,8 +159,13 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
                  + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{ (' + gzahl(l_c)
                  + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~' + gzahl(l_b) + r'cm \quad (3P) \\'
                  + r' \mathrm{Planskizze} \quad (2P)')
-    auswahl = random.choice([[aufgabe_1,loesung_1], [aufgabe_2,loesung_2],[aufgabe_3, loesung_3]])
 
+    if gegeben == 0:
+        auswahl = [aufgabe_1,loesung_1]
+    elif gegeben == 1:
+        auswahl = random.choice([[aufgabe_2,loesung_2],[aufgabe_3, loesung_3]])
+    else:
+        auswahl = random.choice([[aufgabe_1, loesung_1], [aufgabe_2, loesung_2], [aufgabe_3, loesung_3]])
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:', auswahl[0]]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -165,7 +173,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Seitenlänge im rechtw. Dreieck mit Pythagoras berechnen
+        # Hier sollen die SuS aus den gegebenen Daten die fehlende Seitenlänge im rechtw. Dreieck mit dem Satz von Pythagoras berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. '
@@ -175,7 +183,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], BE=[]):
         i += 1
 
     if 'b' in teilaufg:
-        # Winkel im rechtwinkligen Dreieck mit Sinus, Kosinus und Tangens berechnen
+        # Mithilfe der Daten können die SuS die fehlenden Winkel im rechtwinkligen Dreieck mit Sinus, Kosinus und Tangens berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
