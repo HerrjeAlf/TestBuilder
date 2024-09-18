@@ -1478,12 +1478,16 @@ def erstes_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
+def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit Variablen und ganzzahligen Exponenten
-    # b) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
-    # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quostient und Wurzel
+    # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
+    # b) sechs Faktoren aus zwei Basen und ganzzahligen Exponenten
+    # c) sechs Faktoren aus drei Basen und ganzzahligen Exponenten
+    # d) vier Faktoren aus zwei Basen und rationalen Exponenten
+    # e) sechs Faktoren aus drei Basen und rationalen Exponenten
+    # f) vier Faktoren aus zwei Basen und rationalen Exponenten (als Dezimalbruch)
+    # g) sechs Faktoren aus drei Basen und rationalen Exponenten (als Dezimalbruch)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1504,6 +1508,7 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
             random.shuffle(ausw_bas)
             list_basen.append(random.choice(ausw_bas))
         bas_exp = [[list_basen[k], exponenten[k]] for k in range(len(exponenten))]
+        random.shuffle(bas_exp)
         ausw_bas.sort()
         aufg = ''
         m = 1
@@ -1547,7 +1552,10 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
     aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
                 'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
                 'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
-                'd': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2]}
+                'd': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2],
+                'e': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(6)], 3],
+                'f': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(4)], 2],
+                'g': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(6)], 3]}
 
     aufg = ''
     lsg = ''
