@@ -584,9 +584,9 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, B
     # a) einfachen Bruchterm multiplizieren (beide positiv)
     # b) einfachen Bruchterm multiplizieren (beliebige Vorzeichen)
     # c) Bruchterm kürzen und multiplizieren (beliebige Vorzeichen)
-    # a) einfachen Bruchterm dividieren (beide positiv)
-    # b) einfachen Bruchterm dividieren (beliebige Vorzeichen)
-    # c) Bruchterm kürzen und dividieren (beliebige Vorzeichen)
+    # d) einfachen Bruchterm dividieren (beide positiv)
+    # e) einfachen Bruchterm dividieren (beliebige Vorzeichen)
+    # f) Bruchterm kürzen und dividieren (beliebige Vorzeichen)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
 
