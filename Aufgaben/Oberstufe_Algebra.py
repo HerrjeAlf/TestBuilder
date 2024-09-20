@@ -192,7 +192,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_1 = punkt_vektor(5)
         vektor_2 = punkt_vektor(7)
         ergebnis = 0.5 * (np.array(vektor_1) + np.array(vektor_2))
-        print(ergebnis)
+        # print(ergebnis)
         punkte = 3
 
         aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Mittelpunkt der folgenden Punkte '
@@ -216,8 +216,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
-        print('r =' + gzahl(faktor_1))
-        print('s =' + gzahl(faktor_2))
+        # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
         vektor_2 = [x_2, y_2, z_2] = np.array(punkt_vektor(5))
         vektor_3 = [x_3, y_3, z_3] = np.array([zzahl(1,7), zzahl(0,5),zzahl(1,7)])
 
