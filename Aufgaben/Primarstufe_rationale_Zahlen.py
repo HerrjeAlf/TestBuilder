@@ -125,7 +125,7 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3,
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-a, b, c, d, e, f, g, h, x, y, z
+
 def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     # Die SuS sollen Brüche mit so weit wie möglich kürzen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
@@ -806,7 +806,7 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und Exponenten
@@ -944,7 +944,8 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
 
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [punkte]
         liste_punkte = BE
     else:
@@ -954,7 +955,7 @@ def erstes_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
+def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen dividieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und Exponenten
@@ -1227,7 +1228,7 @@ def zweites_potenzgesetz(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', '
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def erstes_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
+def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen multiplizieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
@@ -1478,7 +1479,7 @@ def erstes_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
@@ -1584,7 +1585,7 @@ def erstes_potenzgesetz_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def zweites_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
+def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
     # Hier sollen die SuS zwei Potenzen dividieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
@@ -1818,6 +1819,116 @@ def zweites_potenzgesetz_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h
                 lsg = lsg + r' \\\\'
         else:
             lsg = lsg + r' \\\\'
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
+    # Hier sollen die SuS das Produkt und die Potenz mehrerer Potenzen multiplizieren.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) Potenzen
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Vereinfache.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def var_pot_ganzz_exp(): # Teilaufgabe a)
+        exp1, exp2 = exponenten(2)
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        aufg = r' \left( ~' + bas + r'^{' + gzahl(exp1) + r'}~ \right) ^{' + gzahl(exp2) + '}'
+        lsg = (r' \left( ' + bas + r'^{' + gzahl(exp1) + r'} \right) ^{' + gzahl(exp2) + '} ~=~' + bas + r'^{'
+               + gzahl(exp1) + r' \cdot ' + gzahl(exp2) + r'} ~=~' + bas + '^{' + gzahl(exp1*exp2) + '}')
+        return aufg, lsg
+
+    def var_pot_pos_rat_exp(): # Teilaufgabe b)
+        zaehler_1,nenner_1 = random_selection([1, 2, 3, 5, 7], 2, False)
+        zaehler_2,nenner_2 = random_selection([1, 2, 3, 5, 7], 2, False)
+        fakt1, fakt2 = random_selection(list(range(1, 8)), 2, False)
+        exp1 = r' \frac{' + str(fakt1*zaehler_1) + '}{' + str(fakt2*nenner_1) + '}'
+        exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
+        erg = gzahl(Rational(zaehler_1*zaehler_2,nenner_1*nenner_2))
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        aufg = r' \left(~' + bas + r'^{' + exp1 + r'}~ \right) ^{' + exp2 + '}'
+        lsg = (r' \left(' + bas + r'^{' + exp1 + r'} \right) ^{' + exp2 + '} ~=~' + bas + r'^{ \left(' + exp1
+               + r' \cdot' + exp2 + r' \right) } ~=~' + bas + '^{' + erg + '}')
+        return aufg, lsg
+
+    def var_pot_rat_exp(): # Teilaufgabe c)
+        zaehler_1,nenner_1 = random_selection([1, 2, 3, 5, 7], 2, False)
+        zaehler_2,nenner_2 = random_selection([1, 2, 3, 5, 7], 2, False)
+        vorz1, vorz2 = random_selection([-1, 1], 2, True)
+        fakt1, fakt2 = random_selection(list(range(1, 8)), 2, False)
+        exp1 = r' \frac{' + str(fakt1*zaehler_1) + '}{' + str(fakt2*nenner_1) + '}'
+        exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
+        erg = gzahl(Rational(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2))
+        bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
+        aufg = r' \left(' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ^{' + vorz_aussen(vorz2) + exp2 + '}'
+        lsg = (r' \left(' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ^{' + vorz_aussen(vorz2) + exp2
+               + '} ~=~' + bas + r'^{ \left(' + vorz_v_aussen(vorz1, exp1) + r' \cdot' + vorz_v_aussen(vorz2,exp2)
+               + r' \right) } ~=~' + bas + '^{' + erg + '}')
+        return aufg, lsg
+
+    def var_ganzz_exp(): # Teilaufgabe d)
+        fakt = zzahl(2,9)
+        bas1, bas2 = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 2, False)
+        aufg = bas1 + r'^{' + gzahl(fakt) + r'}~ \cdot ~' + bas2 + r'^{' + gzahl(fakt) + r'}'
+        lsg = (bas1 + r'^{' + gzahl(fakt) + r'} \cdot ' + bas2 + r'^{' + gzahl(fakt) + r'} ~=~ \left(' + bas1 + bas2
+               + r' \right)^{' + gzahl(fakt) + r'}')
+        return aufg, lsg
+
+    def var_rat_exp(): # Teilaufgabe d)
+        zaehler, nenner = random_selection(list(range(2,12)), 2, False)
+        bas1, bas2 = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 2, False)
+        aufg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
+                + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}}')
+        lsg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
+               + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} ~=~ \left(' + bas1 + bas2 + r' \right)^{'
+               + gzahl(Rational(zaehler, nenner)) + r'}')
+        return aufg, lsg
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    aufgaben = {'a': var_pot_ganzz_exp, 'b': var_pot_pos_rat_exp, 'c': var_pot_rat_exp,
+                'd': var_ganzz_exp, 'e': var_rat_exp}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+        elif (i + 1) % 3 == 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+        if (i + 1) % 2 != 0 and i + 1 < len(teilaufg):
+            lsg = lsg + r' \hspace{5em} '
+        elif (i + 1) % 2 == 0 and i + 1 < len(teilaufg):
+            lsg = lsg + r' \\\\'
+        else:
+            pass
         punkte += 1
         i += 1
 
