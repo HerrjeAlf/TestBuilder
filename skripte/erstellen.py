@@ -137,6 +137,10 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
         # erstellen der Tabelle zur Punkteübersicht
         Punkte = (sum(liste_punkte[1:]))
         liste_bez.append('Summe')
+        spalten = '|c|'
+        for step in range(len(liste_punkte) - 1):
+            spalten += 'p{0.5 cm}|'
+        spalten += 'c|'
         liste_punkte.append(Punkte)
         anzahl_spalten = len(liste_punkte)
         liste_ergebnis_z1 = ['erhaltene']
@@ -145,10 +149,6 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
         liste_ergebnis_z2 = ['Punkte']
         for p in range(anzahl_spalten - 1):
             liste_ergebnis_z2.append('')
-
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
 
         table2 = Tabular(spalten, row_height=1.2)
         table2.add_hline()
