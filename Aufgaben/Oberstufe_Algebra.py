@@ -297,6 +297,79 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'd' in teilaufg:
+        # Linearkombination von Vektoren überprüfen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 8
+        faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
+        # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
+        vektor_2 = [x_2, y_2, z_2] = np.array(punkt_vektor(5))
+        vektor_3 = [x_3, y_3, z_3] = np.array(punkt_vektor(5))
+        vektor_1 = [x_1, y_1, z_1] = np.array(vektor_2*faktor_1) + np.array(vektor_3*faktor_2)
+        loesung_2 = (r' \mathrm{w.A. \quad \to \quad Vektor~ \overrightarrow{a} ~lässt~sich~als~Linearkombination~'
+                     r'von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.} \quad (1P) \\')
+
+        aufgabe.extend((str(teilaufg[i]) + ') Berechnen Sie den Wert des Parameters a, '
+                        + 'für den die gegebenen Vektoren linear abhängig sind.',
+                        r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
+                        + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
+                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
+                        + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{c} ~=~\begin{pmatrix}'
+                        + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
+                        + r' \end{pmatrix} \\'))
+
+        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + gzahl(x_2) + r' \cdot r'
+                     + vorz_str(x_3) + r's \cdot \quad \to \quad r~=~'
+                     + gzahl(Rational(x_1,x_2)) + vorz_str(Rational(-1*x_3,x_2))
+                     + r' \cdot s \quad (2P) \\')
+
+        if y_3 != 0:
+            lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
+            lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
+            print(lsg_r)
+            print(lsg_s)
+            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
+                         + gzahl(y_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
+                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
+                         + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
+                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \Big('
+                         + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
+                         + r' \Big) \quad (1P) \quad \to \quad'
+                         + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
+                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
+                         + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
+                         + r' ~=~ ' + gzahl(N(z_2*lsg_r+z_3*lsg_s,3)) + r'} \quad (1P)')
+        elif z_3 != 0:
+            lsg_r = N(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)),3)
+            lsg_s = N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3)
+            print(lsg_r)
+            print(lsg_s)
+            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
+                         + gzahl(z_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
+                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
+                         + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
+                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \Big('
+                         + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
+                         + r' \cdot s \Big) \quad (2P) \quad \to \quad'
+                         + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
+                         + r' \quad (1P) \quad  r~=~ '
+                         + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
+                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~II: ' + gzahl(y_1) + '~=~' + gzahl(lsg_r)
+                         + r' \cdot ' + gzahl_klammer(y_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(y_3)
+                         + r' ~=~ ' + gzahl(N(y_2*lsg_r+y_3*lsg_s,3)) + r'} \quad (1P)')
+        else:
+            pass
+
+        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
+                       + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
+                       + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+                       + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
+                       + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
+                       + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\' + loesung_2
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
         # Vektoren auf Kollinearität überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_2 = punkt_vektor(5)
@@ -331,7 +404,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -368,7 +441,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
+    if 'g' in teilaufg:
         # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
