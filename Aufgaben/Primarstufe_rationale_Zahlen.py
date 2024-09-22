@@ -1871,7 +1871,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
         erg = gzahl(Rational(zaehler_1*zaehler_2,nenner_1*nenner_2))
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        aufg = r' \left(~' + bas + r'^{' + exp1 + r'}~ \right) ^{' + exp2 + '}'
+        aufg = r' \left( ~' + bas + r'^{' + exp1 + r'}~ \right) ^{' + exp2 + '}'
         lsg = (r' \left(' + bas + r'^{' + exp1 + r'} \right) ^{' + exp2 + '} ~=~' + bas + r'^{ \left(' + exp1
                + r' \cdot' + exp2 + r' \right) } ~=~' + bas + '^{' + erg + '}')
         return aufg, lsg
@@ -1885,7 +1885,8 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
         erg = gzahl(Rational(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2))
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        aufg = r' \left(' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ^{' + vorz_aussen(vorz2) + exp2 + '}'
+        aufg = (r' \left( ~' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ~ ^{' + vorz_aussen(vorz2) + exp2
+                + '}')
         lsg = (r' \left(' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ^{' + vorz_aussen(vorz2) + exp2
                + '} ~=~' + bas + r'^{ \left(' + vorz_v_aussen(vorz1, exp1) + r' \cdot' + vorz_v_aussen(vorz2,exp2)
                + r' \right) } ~=~' + bas + '^{' + erg + '}')
@@ -1902,7 +1903,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
     def mult_var_rat_exp(): # Teilaufgabe d)
         zaehler, nenner = random_selection(list(range(2,12)), 2, False)
         bas1, bas2 = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 2, False)
-        aufg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
+        aufg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}}~ \cdot ~' + bas2 + r'^{ \frac{'
                 + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}}')
         lsg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
                + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} ~=~ \left(' + bas1 + bas2 + r' \right)^{'
