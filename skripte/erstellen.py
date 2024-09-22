@@ -14,7 +14,7 @@ try:
 except FileExistsError:
     pass
 
-geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.4in", "rmargin": "0.7in"}
+geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 
 def seite(aufgaben):
     Aufgabe = Document(geometry_options=geometry_options)
@@ -181,14 +181,27 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             Aufgabe.append(' \n\n\n\n')
             Aufgabe.append(LargeText(bold(f' {Titel} \n\n')))
 
+            # Kopf nach der ersten Seite
+            def tabelle_kopf(Text):
+                table3 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+                table3.add_row(MediumText(bold(f'{Teil}')), MediumText(bold(f'{Text}')))
+                table3.add_hline()
+                table3.add_empty_row()
+                return table3
+
             # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
             k = 0
             for element in liste_seiten:
+                if k > 0:
+                    Aufgabe.append(tabelle_kopf(Titel))
+                    Aufgabe.append('\n\n')
                 Aufgabe.extend(element[0])
                 Aufgabe.append(NewPage())
+                k += 1
+
 
             if len(liste_seiten) % 2 == 0:
-                Aufgabe.append('für Notizen und Rechnungen:')
+                Aufgabe.append(tabelle_kopf('für Notizen und Rechnungen'))
                 Aufgabe.append(NewPage())
 
             Aufgabe.append(LargeText(bold(Teil + ' - bearbeitet von:')))
