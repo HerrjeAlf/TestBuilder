@@ -1838,7 +1838,11 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
 def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
     # Hier sollen die SuS das Produkt und die Potenz mehrerer Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen
+    # a) Potenz einer Potenz mit ganzzahligen Exponenten
+    # b) Potenz einer Potenz mit positiven rationalen Exponenten
+    # c) Potenz einer Potenz mit rationalen Exponenten
+    # d) Produkt zweier Potenzen mit gleichem ganzzahligem Exponenten
+    # e) Produkt zweier Potenzen mit gleichem rationalen Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1887,7 +1891,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
                + r' \right) } ~=~' + bas + '^{' + erg + '}')
         return aufg, lsg
 
-    def var_ganzz_exp(): # Teilaufgabe d)
+    def mult_var_ganzz_exp(): # Teilaufgabe d)
         fakt = zzahl(2,9)
         bas1, bas2 = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 2, False)
         aufg = bas1 + r'^{' + gzahl(fakt) + r'}~ \cdot ~' + bas2 + r'^{' + gzahl(fakt) + r'}'
@@ -1895,7 +1899,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
                + r' \right)^{' + gzahl(fakt) + r'}')
         return aufg, lsg
 
-    def var_rat_exp(): # Teilaufgabe d)
+    def mult_var_rat_exp(): # Teilaufgabe d)
         zaehler, nenner = random_selection(list(range(2,12)), 2, False)
         bas1, bas2 = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], 2, False)
         aufg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
@@ -1910,7 +1914,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': var_pot_ganzz_exp, 'b': var_pot_pos_rat_exp, 'c': var_pot_rat_exp,
-                'd': var_ganzz_exp, 'e': var_rat_exp}
+                'd': mult_var_ganzz_exp, 'e': mult_var_rat_exp}
 
     aufg = ''
     lsg = ''
@@ -1946,10 +1950,10 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
-    # Hier sollen die SuS Dezimalzahlen als Bruch und in wissenschaftlicher Schreibeweise darstellen.
+    # Hier sollen die SuS Dezimalzahlen als Bruch und in wissenschaftlicher Schreibweise darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Dezimalbruche deren Betrag der kleiner als eins ist.
-    # b) Dezimalbruche deren Betrag der größer als eins ist.
+    # a) Dezimalbrüche deren Betrag kleiner eins ist.
+    # b) Dezimalbrüche deren Betrag größer eins ist.
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
