@@ -252,8 +252,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         if y_3 != 0:
             lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
             lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
-            print(lsg_r)
-            print(lsg_s)
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
                          + gzahl(y_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
                          + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
@@ -291,7 +289,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
                        + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
-                       + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\' + loesung_2
+                       + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\ ' + loesung_2
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
         i += 1
@@ -299,14 +297,72 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     if 'd' in teilaufg:
         # Linearkombination von Vektoren überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 8
+        punkte = 0
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
-        vektor_2 = [x_2, y_2, z_2] = np.array(punkt_vektor(5))
-        vektor_3 = [x_3, y_3, z_3] = np.array(punkt_vektor(5))
-        vektor_1 = [x_1, y_1, z_1] = np.array(vektor_2*faktor_1) + np.array(vektor_3*faktor_2)
-        loesung_2 = (r' \mathrm{w.A. \quad \to \quad Vektor~ \overrightarrow{a} ~lässt~sich~als~Linearkombination~'
-                     r'von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.} \quad (1P) \\')
+        vektor_a = [a1, a2, a3] = np.array(punkt_vektor(5))
+        vektor_b = [b1, b2, b3] = np.array(punkt_vektor(5))
+        vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
+        vektor_c_var = [c1, c2, 'a']
+        while 0 in vektor_c:
+            faktor_1, faktor_2 = random.randint(1, 10) / 2, random.randint(1, 10) / 2
+            vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
+        rf = random.choice([[0,1,2], [0,2,1], [1,2,0], [1, 0, 2], [2, 0, 1], [2, 1, 0]])
+        print(rf)
+        print(rf[2])
+        vektor_1 = [x_1, y_1, z_1] = [vektor_a[rf[0]], vektor_a[rf[1]], vektor_a[rf[2]]]
+        vektor_2 = [x_2, y_2, z_2] = [vektor_b[rf[0]], vektor_b[rf[1]], vektor_b[rf[2]]]
+        vektor_3 = [x_3, y_3, z_3] = [vektor_c_var[rf[0]], vektor_c_var[rf[1]], vektor_c_var[rf[2]]]
+        zl = ['I', 'II', 'III']
+
+        table1 = Tabular('r r r r', row_height=1.2)
+        table1.add_row(str(teilaufg[i]) + ') aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
+                       zl[rf[0]] + ':', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
+                                      + gzahl(x_3) + '$'), '(1P)')
+        table1.add_row('', zl[rf[1]] + ':', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
+                                           + ' = ' + gzahl(y_3) + '$'), '(1P)')
+        table1.add_row('', zl[rf[2]] + ':', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
+                                            + ' = ' + gzahl(z_3) + '$'),'(1P)')
+        loesung.append(table1)
+        punkte += 3
+        if faktor_1 == 1:
+            lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
+                     + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \to \quad r~=~'
+                     + gzahl(c1) + vorz_v_innen(-1*b1,'s') + r' \quad (2P) \\')
+            punkte += 2
+            lsg_2 = (r'\mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( ' + gzahl(c1)
+                     + vorz_v_innen(-1*b1,'s') + r' \right) ' + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2)
+                     + r' \quad \to \quad ' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1, 's') + vorz_v_innen(b2,'s')
+                     + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1+b2, 's')
+                     + '~=~' + gzahl(c2) + r' \quad \vert' + vorz_str(-1*a2*c1) + r' \quad \vert \div '
+                     + gzahl_klammer(-1*a2*b1+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
+                     + r' \quad \to \quad r~=~' + gzahl(c1) + vorz_str(-1*b1) + r' \cdot ' + gzahl_klammer(faktor_2)
+                     + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
+            punkte += 4
+
+        else:
+            lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
+                     + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \vert \div '
+                     + gzahl_klammer(a1) + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1))
+                     + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \quad 2P) \\')
+            punkte += 2
+            lsg_2 = (r' \mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( '
+                     + gzahl(Rational(c1,a1)) + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \right) '
+                     + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2)
+                     + r' \quad \to \quad ' + gzahl(Rational(a2*c1,a1)) + vorz_v_innen(Rational(-1*a2*b1,a1), 's')
+                     + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(Rational(a2*c1,a1))
+                     + vorz_v_innen(Rational(-1*a2*b1,a1)+b2, 's') + '~=~' + gzahl(c2) + r' \quad \to \vert'
+                     + vorz_str(Rational(-1*a2*c1,a1)) + r' \quad \vert \div '
+                     + gzahl_klammer(Rational(-1*a2*b1,a1)+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
+                     + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1)) + vorz_str(Rational(-1*b1,a1)) + r' \cdot '
+                     + gzahl_klammer(faktor_2) + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
+            punkte += 4
+        lsg_3 = (r' \mathrm{r ~=~ ' + gzahl(faktor_1) + r' \quad und \quad s~=~' + gzahl(faktor_2) + r' \quad in ~ '
+                 + zl[rf[2]] + r'~einsetzen: \quad } \\ ' + gzahl(a3) + r' \cdot ' + gzahl_klammer(faktor_1)
+                 + vorz_str(b3) + r' \cdot ' + gzahl_klammer(faktor_2)
+                 + r'~=~a \quad \to \quad \mathrm{für \quad a ~=~' + gzahl(c3)
+                 + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2P) }')
+        punkte += 2
 
         aufgabe.extend((str(teilaufg[i]) + ') Berechnen Sie den Wert des Parameters a, '
                         + 'für den die gegebenen Vektoren linear abhängig sind.',
@@ -316,56 +372,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{c} ~=~\begin{pmatrix}'
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
                         + r' \end{pmatrix} \\'))
-
-        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + gzahl(x_2) + r' \cdot r'
-                     + vorz_str(x_3) + r's \cdot \quad \to \quad r~=~'
-                     + gzahl(Rational(x_1,x_2)) + vorz_str(Rational(-1*x_3,x_2))
-                     + r' \cdot s \quad (2P) \\')
-
-        if y_3 != 0:
-            lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
-            lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
-            print(lsg_r)
-            print(lsg_s)
-            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
-                         + gzahl(y_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
-                         + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
-                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \Big('
-                         + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
-                         + r' \Big) \quad (1P) \quad \to \quad'
-                         + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
-                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
-                         + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
-                         + r' ~=~ ' + gzahl(N(z_2*lsg_r+z_3*lsg_s,3)) + r'} \quad (1P)')
-        elif z_3 != 0:
-            lsg_r = N(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)),3)
-            lsg_s = N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3)
-            print(lsg_r)
-            print(lsg_s)
-            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
-                         + gzahl(z_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
-                         + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
-                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \Big('
-                         + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
-                         + r' \cdot s \Big) \quad (2P) \quad \to \quad'
-                         + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
-                         + r' \quad (1P) \quad  r~=~ '
-                         + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
-                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~II: ' + gzahl(y_1) + '~=~' + gzahl(lsg_r)
-                         + r' \cdot ' + gzahl_klammer(y_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(y_3)
-                         + r' ~=~ ' + gzahl(N(y_2*lsg_r+y_3*lsg_s,3)) + r'} \quad (1P)')
-        else:
-            pass
-
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
-                       + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
-                       + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                       + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
-                       + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
-                       + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\' + loesung_2
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        loesung.append(lsg_1+lsg_2+lsg_3)
         liste_punkte.append(punkte)
         i += 1
 
