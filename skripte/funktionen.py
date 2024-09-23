@@ -101,6 +101,8 @@ def ganz(k):
         return k
 
 def gzahl(k):
+    if type(k) == str:
+        return k
     if k % 1 == 0:
         return latex(int(k))
     else:
