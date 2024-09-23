@@ -965,6 +965,9 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     # e) Potenzen mit Variablen und nat. Exponenten
     # f) Potenzen mit Variablen und ganzz. Exponenten
     # g) Potenzen mit Variablen, Faktoren und ganzz. Exponenten
+    # h) Potenzen mit zwei Variablen, Faktoren und ganzz. Exponenten
+    # i) Produkt von Potenzen mit jeweils zwei Variablen, Faktoren und ganzz. Exponenten
+    # j) Division von Potenzen mit jeweils zwei Variablen, Faktoren und ganzz. Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
