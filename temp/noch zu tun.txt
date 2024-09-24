@@ -1,0 +1,32 @@
+allgemein:
+- alte Skripte in neue Form anpassen
+
+Berechnungen:
+ - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus
+ - kleine Kurvendiskussion
+ - Graphen zeichnen
+
+Fehler / Entwicklung:
+in Aufgaben Analysis:
+- Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
+- Biquadratische Funktion mit ganzahligen Extrema, da Nullstellen irrational sein können
+
+in Aufgaben Wahrscheinlichkeit:
+- Baumdiagramm - Aufgabe k zur kummulierten Bernoullikette erstellen
+
+in Algebra:
+- in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
+- Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
+
+funktionen
+
+Physik
+- Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
+
+langfristig:
+- GUI
+- *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
+
+neue Projekte
+- Planung Stundenplan mit Graphentheorie in Python programmieren
+- Mathe KI von Google (in Arbeit) zur automatischen Korrektur von Test/Klausuren anpassen
