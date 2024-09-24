@@ -796,7 +796,8 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
 
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
             liste_punkte = [anzahl]
         liste_punkte = BE
     else:
@@ -1953,7 +1954,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, BE=[]):
+def wiss_schreibweise(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     # Hier sollen die SuS Dezimalzahlen als Bruch und in wissenschaftlicher Schreibweise darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Dezimalbrüche deren Betrag kleiner eins ist.
@@ -1965,29 +1966,44 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     liste_bez = [f'{str(nr)}']
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Vereinfache.']
+               'Notiere die gegebene Zahl in wissenschaftlicher Schreibweise.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def pos_zahl_und_gln_exp(): # Teilaufgabe a)
-        zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
-        exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
-        exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(zaehler_1-zaehler_2,nenner)
-        bas = nzahl(2,8)
-        aufg = r' \frac{' + (gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~')
-        lsg = (r' \frac{' + gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~=~ ' + gzahl(bas)
-               + '^{' + exp1 + '-' + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg) + '}')
+    def grosse_zahl():
+        exp = nzahl(1, 5)
+        stellen = nzahl(2, 5)
+        faktor = 10 ** stellen
+        basis = int(round(random.random(), stellen) * faktor)
+        if stellen > 3:
+            aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
+        else:
+            aufg = str(basis)
+        for k in range(exp):
+            aufg = aufg + ' 000'
+        lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
+        return aufg, lsg
+
+    def kleine_zahl():
+        exp = nzahl(1, 5)
+        stellen = nzahl(2, 5)
+        faktor = 10 ** stellen
+        basis = int(round(random.random(), stellen) * faktor)
+        if stellen > 3:
+            aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
+        else:
+            aufg = str(basis)
+        for k in range(exp):
+            aufg = aufg + ' 000'
+        lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
         return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp,
-                'e': pos_zahl_und_ungln_exp, 'f': zahl_ungln_exp, 'g': var_pos_ungln_exp, 'h': var_ungln_exp,
-                'i': var_pos_sqrt, 'j': var_sqrt}
+    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl}
 
     aufg = ''
     lsg = ''

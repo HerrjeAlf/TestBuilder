@@ -103,55 +103,24 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-def aufg_lsg(exponenten, anz_bas):
-    ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
-    ausw_bas = [element for element in ar_ausw_bas]
-    # print(ausw_bas)
-    ausw_bas.sort()
-    bas_exp = [[random.choice(ausw_bas), element] for element in exponenten]
-    # print(ausw_bas)
-    # print(bas_exp)
-    aufg = ''
-    m = 1
-    for element in bas_exp:
-        # print(element)
-        if m != len(bas_exp):
-            # print(element[0])
-            # print(element[1])
-            aufg = aufg + element[0] + '^{' + gzahl(element[1]) + r'}~ \cdot ~'
-        else:
-            aufg = aufg + element[0] + '^{' + gzahl(element[1])
-        m += 1
-    lsg = aufg + '~=~'
-    exp_sort = []
-    for basis in ausw_bas:
-        exp_der_basis = []
-        for element in bas_exp:
-            if basis == element[0]:
-                exp_der_basis.append(element[1])
-        lsg = lsg + basis + '^{' + gzahl(exp_der_basis[0])
-        k = 1
-        for zahl in range(len(exp_der_basis) - 1):
-            lsg = lsg + vorz_str(exp_der_basis[k])
-            k += 1
-        lsg = lsg + '}'
-        if basis != ausw_bas[-1]:
-            lsg = lsg + r'~ \cdot ~'
-        exp_sort.append(exp_der_basis)
-
-    lsg = lsg + '~=~'
-    k = 0
-    print(exp_sort)
-    for basis in ausw_bas:
-        if basis != ausw_bas[-1]:
-            lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
-        else:
-            lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
-        k += 1
+def grosse_zahl(nr=1, teilaufg=['a', 'b'], anzahl=None, BE=[]):
+    exp = nzahl(1, 5)
+    stellen = nzahl(2, 5)
+    print(exp)
+    print(stellen)
+    faktor = 10 ** stellen
+    basis = int(round(random.random(), stellen) * faktor)
+    if stellen > 3:
+        aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
+    else:
+        aufg = str(basis)
+    for k in range(exp):
+        aufg = aufg + ' 000'
+    print(3 * exp + stellen - 1)
+    lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
     return aufg, lsg
 
-aufg, lsg = aufg_lsg([2,3,4,5],2)
+aufg, lsg = grosse_zahl()
 
 print(aufg)
 print(lsg)
-
