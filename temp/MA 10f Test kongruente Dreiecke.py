@@ -1,3 +1,7 @@
+import os
+from helpers import root_path
+os.chdir(root_path())
+
 from Aufgaben import *
 from skripte.erstellen import *
 
