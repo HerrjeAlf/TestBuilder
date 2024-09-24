@@ -4,23 +4,22 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = 'Leistungskurs'
-Fach = 'Mathematik'
-Klasse = '12'
+Kurs = 'keine Diff.'
+Fach = 'Physik'
+Klasse = '8'
 Lehrer = 'Herr Herrys'
-Art = 'Testen'
-Titel = 'Hier wird getestet'
+Art = 'HAK 01'
+Titel = 'Hausaufgabenkontrolle zum Thema Elektrizität'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-for ziffer in range(anzahl):
-    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[rechnen_mit_vektoren(1)]]
-
+for i in range(anzahl):
+    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+    Aufgaben = [[physikalische_groessen(1, 8,0)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
@@ -30,4 +29,5 @@ for ziffer in range(anzahl):
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
-    test_erzeugen(liste_seiten, angaben, ziffer, probe)
+    test_erzeugen(liste_seiten, angaben, i, probe)
+

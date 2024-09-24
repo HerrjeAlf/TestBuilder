@@ -307,7 +307,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         while 0 in vektor_c:
             faktor_1, faktor_2 = random.randint(1, 10) / 2, random.randint(1, 10) / 2
             vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
-        rf = random.choice([[0,1,2], [0,2,1], [1,2,0], [1, 0, 2], [2, 0, 1], [2, 1, 0]])
+        rf = random.sample([0, 1, 2], 3)
         print(rf)
         print(rf[2])
         vektor_1 = [x_1, y_1, z_1] = [vektor_a[rf[0]], vektor_a[rf[1]], vektor_a[rf[2]]]
