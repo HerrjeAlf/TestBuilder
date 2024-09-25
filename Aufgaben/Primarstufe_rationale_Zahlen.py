@@ -1954,7 +1954,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
+def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     # Hier sollen die SuS Dezimalzahlen als Bruch und in wissenschaftlicher Schreibweise darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Dezimalbrüche deren Betrag kleiner eins ist.
@@ -1972,17 +1972,31 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     grafiken_loesung = []
 
     def grosse_zahl():
-        exp = nzahl(1, 5)
-        stellen = nzahl(2, 5)
-        faktor = 10 ** stellen
-        basis = int(round(random.random(), stellen) * faktor)
-        if stellen > 3:
-            aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
-        else:
-            aufg = str(basis)
-        for k in range(exp):
-            aufg = aufg + ' 000'
-        lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
+        exp = nzahl(3, 12)
+        anz_ziffern = nzahl(1, 4)
+        ziffern = [nzahl(1, 9)]
+        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
+        ziffern.append(nzahl(1, 9))
+        zahl = ziffern.copy()
+        zahl.extend(([0 for step in range(exp)]))
+        zahl.reverse()
+        zahl_sort = []
+        k = 1
+        for ziffer in zahl:
+            zahl_sort.append(ziffer)
+            if k % 3 == 0 and k != len(zahl):
+                zahl_sort.append(' ')
+            k += 1
+        zahl.reverse()
+        zahl_sort.reverse()
+        aufg = ''
+        for zeichen in zahl_sort:
+            aufg = aufg + str(zeichen)
+        aufg = aufg
+        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
+        for k in range(len(ziffern) - 1):
+            lsg = lsg + str(ziffern[k + 1])
+        lsg = lsg + r' \cdot 10^{' + gzahl(exp + anz_ziffern + 1) + '}'
         return aufg, lsg
 
     def kleine_zahl():
@@ -2012,15 +2026,10 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if (i+1) % 4 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 4 == 0 and i+1 < len(teilaufg):
+        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
                 aufg = aufg + r' \\\\'
-        if element not in ['i', 'j']:
-            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-                lsg = lsg + r' \hspace{5em} '
-            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-                lsg = lsg + r' \\\\'
         else:
             lsg = lsg + r' \\\\'
         punkte += 1
