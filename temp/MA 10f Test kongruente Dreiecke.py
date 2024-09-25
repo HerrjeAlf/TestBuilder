@@ -12,18 +12,19 @@ Kurs = ('EK und GK')
 Fach = 'Mathematik'
 Klasse = '10f'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 02'
+Art = 'HAK 03'
 Titel = 'Satz des Pythagoras'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kongruente_Dreiecke(1,['a', 'b']), rechtwinkliges_dreieck(2, 'a')]]
+    Aufgaben = [[kongruente_Dreiecke(1,['a', 'b']), rechtwinkliges_dreieck(2, 'a'),
+                 verhaeltnisgleichgungen(3, 'a')]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
