@@ -303,10 +303,10 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_a = [a1, a2, a3] = np.array(punkt_vektor(5))
         vektor_b = [b1, b2, b3] = np.array(punkt_vektor(5))
         vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
-        vektor_c_var = [c1, c2, 'a']
         while 0 in vektor_c:
             faktor_1, faktor_2 = random.randint(1, 10) / 2, random.randint(1, 10) / 2
             vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
+        vektor_c_var = [c1, c2, 'a']
         rf = random.choice([[0,1,2], [1,0,2], [2,1,0]])
         vektor_1 = [x_1, y_1, z_1] = [vektor_a[rf[0]], vektor_a[rf[1]], vektor_a[rf[2]]]
         vektor_2 = [x_2, y_2, z_2] = [vektor_b[rf[0]], vektor_b[rf[1]], vektor_b[rf[2]]]
