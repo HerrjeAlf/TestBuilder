@@ -18,7 +18,8 @@ in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
 
-funktionen
+in Primarstufe rationale Zahlen
+- wissenschaftliche Schreibweise, mittlere Zahlen liefert falsche Lösung
 
 Physik
 - Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen

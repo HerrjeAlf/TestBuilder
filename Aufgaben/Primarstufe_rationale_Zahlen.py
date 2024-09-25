@@ -1954,7 +1954,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
+def wiss_schreibweise(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     # Hier sollen die SuS Dezimalzahlen als Bruch und in wissenschaftlicher Schreibweise darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Dezimalbrüche deren Betrag kleiner eins ist.
@@ -2031,27 +2031,30 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         ziffern = [nzahl(1, 9)]
         ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
         ziffern.append(nzahl(1, 9))
-        print(ziffern)
         zahl = []
-        zahl.reverse()
         k = 1
+        ziffern.reverse()
         for step in range(len(ziffern) - 2):
             zahl.append(ziffern[step])
             if k % 3 == 0 and k != len(ziffern) - 2:
                 zahl.append('~')
             k += 1
         zahl.reverse()
+        ziffern.reverse()
         print(zahl)
         zahl.extend((ziffern[-2:]))
         zahl.insert(-2, '.')
         aufg = ''
         for zeichen in zahl:
             aufg = aufg + str(zeichen)
+        while ziffern[-1] == 0:
+            del ziffern[-1]
         aufg = aufg
+
         lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-        for k in range(len(ziffern) - 1):
-            lsg = lsg + str(ziffern[k + 1])
-        lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern) - 3) + '}'
+        for step in range(len(ziffern)-1):
+            lsg = lsg + str(ziffern[step+1])
+        lsg = lsg + r' \cdot 10^{' + gzahl(anz_ziffern-2) + '}'
         return aufg, lsg
 
     if anzahl != False:

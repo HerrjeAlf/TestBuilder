@@ -109,24 +109,23 @@ ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
 ziffern.append(nzahl(1, 9))
 print(ziffern)
 zahl = []
-zahl.reverse()
 k = 1
+ziffern.reverse()
 for step in range(len(ziffern) - 2):
-    zahl.append(ziffern[step])
+    zahl.append(ziffern[(step)])
     if k % 3 == 0 and k != len(ziffern) - 2:
         zahl.append(' ')
     k += 1
-zahl.reverse()
 print(zahl)
+print(ziffern)
 zahl.extend((ziffern[-2:]))
 zahl.insert(-2, '.')
 aufg = ''
 for zeichen in zahl:
     aufg = aufg + str(zeichen)
-aufg = aufg
 lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-for k in range(len(ziffern) - 1):
-    lsg = lsg + str(ziffern[k + 1])
+for zeichen in ziffern:
+    lsg = lsg + str(zeichen)
 lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern)-3) + '}'
 print(aufg)
 print(lsg)
