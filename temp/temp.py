@@ -103,24 +103,34 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-def grosse_zahl(nr=1, teilaufg=['a', 'b'], anzahl=None, BE=[]):
-    exp = nzahl(1, 5)
-    stellen = nzahl(2, 5)
-    print(exp)
-    print(stellen)
-    faktor = 10 ** stellen
-    basis = int(round(random.random(), stellen) * faktor)
-    if stellen > 3:
-        aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
-    else:
-        aufg = str(basis)
-    for k in range(exp):
-        aufg = aufg + ' 000'
-    print(3 * exp + stellen - 1)
-    lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
-    return aufg, lsg
 
-aufg, lsg = grosse_zahl()
+exp = nzahl(3, 12)
+anz_ziffern = nzahl(1, 4)
+ziffern = [nzahl(1,9)]
+ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
+ziffern.append(nzahl(1,9))
+zahl = ziffern.copy()
+zahl.extend(([0 for step in range(exp)]))
+print(zahl)
+zahl.reverse()
+zahl_sort = []
+k = 1
+for ziffer in zahl:
+    zahl_sort.append(ziffer)
+    if k % 3 == 0 and k != len(zahl):
+        zahl_sort.append(' ')
+    k += 1
 
+zahl.reverse()
+print(zahl_sort)
+zahl_sort.reverse()
+aufg = ''
+for zeichen in zahl_sort:
+    aufg = aufg + str(zeichen)
+aufg = aufg
+lsg = aufg + '~=~' + str(ziffern[0]) + '.'
+for k in range(len(ziffern)-1):
+    lsg = lsg + str(ziffern[k+1])
+lsg = lsg + r' \cdot 10^{' + gzahl(exp+anz_ziffern+1) + '}'
 print(aufg)
 print(lsg)
