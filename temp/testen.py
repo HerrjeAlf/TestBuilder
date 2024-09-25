@@ -1,3 +1,7 @@
+import os
+from helpers import root_path
+os.chdir(root_path())
+
 from Aufgaben import *
 from skripte.erstellen import *
 
@@ -19,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[rechnen_mit_vektoren(2)]]
+    Aufgaben = [[wiss_schreibweise(2, ['a', 'a', 'b', 'b', 'c', 'c'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

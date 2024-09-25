@@ -103,34 +103,30 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-
-exp = nzahl(3, 12)
-anz_ziffern = nzahl(1, 4)
-ziffern = [nzahl(1,9)]
+anz_ziffern = nzahl(3, 8)
+ziffern = [nzahl(1, 9)]
 ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-ziffern.append(nzahl(1,9))
-zahl = ziffern.copy()
-zahl.extend(([0 for step in range(exp)]))
-print(zahl)
+ziffern.append(nzahl(1, 9))
+print(ziffern)
+zahl = []
 zahl.reverse()
-zahl_sort = []
 k = 1
-for ziffer in zahl:
-    zahl_sort.append(ziffer)
-    if k % 3 == 0 and k != len(zahl):
-        zahl_sort.append(' ')
+for step in range(len(ziffern) - 2):
+    zahl.append(ziffern[step])
+    if k % 3 == 0 and k != len(ziffern) - 2:
+        zahl.append(' ')
     k += 1
-
 zahl.reverse()
-print(zahl_sort)
-zahl_sort.reverse()
+print(zahl)
+zahl.extend((ziffern[-2:]))
+zahl.insert(-2, '.')
 aufg = ''
-for zeichen in zahl_sort:
+for zeichen in zahl:
     aufg = aufg + str(zeichen)
 aufg = aufg
 lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-for k in range(len(ziffern)-1):
-    lsg = lsg + str(ziffern[k+1])
-lsg = lsg + r' \cdot 10^{' + gzahl(exp+anz_ziffern+1) + '}'
+for k in range(len(ziffern) - 1):
+    lsg = lsg + str(ziffern[k + 1])
+lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern)-3) + '}'
 print(aufg)
 print(lsg)

@@ -1985,7 +1985,7 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         for ziffer in zahl:
             zahl_sort.append(ziffer)
             if k % 3 == 0 and k != len(zahl):
-                zahl_sort.append(' ')
+                zahl_sort.append('~')
             k += 1
         zahl.reverse()
         zahl_sort.reverse()
@@ -2000,24 +2000,65 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         return aufg, lsg
 
     def kleine_zahl():
-        exp = nzahl(1, 5)
-        stellen = nzahl(2, 5)
-        faktor = 10 ** stellen
-        basis = int(round(random.random(), stellen) * faktor)
-        if stellen > 3:
-            aufg = str(basis)[0:-3] + ' ' + str(basis)[:-3]
-        else:
-            aufg = str(basis)
-        for k in range(exp):
-            aufg = aufg + ' 000'
-        lsg = aufg + '~=~' + gzahl(basis / (10 ** (stellen - 1))) + r' \cdot 10^{' + gzahl(3 * exp + stellen - 1) + '}'
+        exp = nzahl(0, 9)
+        anz_ziffern = nzahl(1, 4)
+        ziffern = [nzahl(1, 9)]
+        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
+        ziffern.append(nzahl(1, 9))
+        zahl = ziffern.copy()
+        zahl.reverse()
+        zahl.extend(([0 for step in range(exp)]))
+        zahl.reverse()
+        zahl_sort = [0, '.', 0, 0, '~']
+        k = 1
+        for ziffer in zahl:
+            zahl_sort.append(ziffer)
+            if k % 3 == 0 and k != len(zahl):
+                zahl_sort.append('~')
+            k += 1
+        aufg = ''
+        for zeichen in zahl_sort:
+            aufg = aufg + str(zeichen)
+        aufg = aufg
+        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
+        for k in range(len(ziffern) - 1):
+            lsg = lsg + str(ziffern[k + 1])
+        lsg = lsg + r' \cdot 10^{-' + gzahl(exp + 3) + '}'
+        return aufg, lsg
+
+    def mittlere_zahl():
+        anz_ziffern = nzahl(3, 8)
+        ziffern = [nzahl(1, 9)]
+        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
+        ziffern.append(nzahl(1, 9))
+        print(ziffern)
+        zahl = []
+        zahl.reverse()
+        k = 1
+        for step in range(len(ziffern) - 2):
+            zahl.append(ziffern[step])
+            if k % 3 == 0 and k != len(ziffern) - 2:
+                zahl.append('~')
+            k += 1
+        zahl.reverse()
+        print(zahl)
+        zahl.extend((ziffern[-2:]))
+        zahl.insert(-2, '.')
+        aufg = ''
+        for zeichen in zahl:
+            aufg = aufg + str(zeichen)
+        aufg = aufg
+        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
+        for k in range(len(ziffern) - 1):
+            lsg = lsg + str(ziffern[k + 1])
+        lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern) - 3) + '}'
         return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl}
+    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
 
     aufg = ''
     lsg = ''
@@ -2025,13 +2066,12 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     for element in teilaufg:
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-                aufg = aufg + r' \hspace{5em} '
-        elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-                aufg = aufg + r' \\\\'
+            aufg = aufg + r' \hspace{5em} '
         else:
-            lsg = lsg + r' \\\\'
+            aufg = aufg + r' \\\\'
+
         punkte += 1
         i += 1
 
