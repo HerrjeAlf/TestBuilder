@@ -307,22 +307,24 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         while 0 in vektor_c:
             faktor_1, faktor_2 = random.randint(1, 10) / 2, random.randint(1, 10) / 2
             vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
-        rf = random.sample([0, 1, 2], 3)
+        rf = random.choice([[0,1,2], [1,0,2], [2,1,0]])
         print(rf)
         print(rf[2])
         vektor_1 = [x_1, y_1, z_1] = [vektor_a[rf[0]], vektor_a[rf[1]], vektor_a[rf[2]]]
         vektor_2 = [x_2, y_2, z_2] = [vektor_b[rf[0]], vektor_b[rf[1]], vektor_b[rf[2]]]
         vektor_3 = [x_3, y_3, z_3] = [vektor_c_var[rf[0]], vektor_c_var[rf[1]], vektor_c_var[rf[2]]]
+        print(vektor_a)
+        print(vektor_1)
         zl = ['I', 'II', 'III']
 
         table1 = Tabular('r r r r', row_height=1.2)
         table1.add_row(str(teilaufg[i]) + ') aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
-                       zl[rf[0]] + ':', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
-                                      + gzahl(x_3) + '$'), '(1P)')
-        table1.add_row('', zl[rf[1]] + ':', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
-                                           + ' = ' + gzahl(y_3) + '$'), '(1P)')
-        table1.add_row('', zl[rf[2]] + ':', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
-                                            + ' = ' + gzahl(z_3) + '$'),'(1P)')
+                        'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
+                                                 + gzahl(x_3) + '$'), '(1P)')
+        table1.add_row('', 'II:', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
+                                                           + ' = ' + gzahl(y_3) + '$'), '(1P)')
+        table1.add_row('', 'III:', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
+                                                           + ' = ' + gzahl(z_3) + '$'),'(1P)')
         loesung.append(table1)
         punkte += 3
         if faktor_1 == 1:
