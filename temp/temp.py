@@ -128,4 +128,3 @@ for zeichen in ziffern:
     lsg = lsg + str(zeichen)
 lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern)-3) + '}'
 print(aufg)
-print(lsg)
