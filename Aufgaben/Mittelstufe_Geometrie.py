@@ -145,20 +145,21 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
     aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
                  + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
     loesung_1 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
-                 + st[2] + r'~=~ \sqrt{ (' + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
+                 + st[2] + r'~=~ \sqrt{' + st[0] + r'^2 ~+~ ' + st[1] + r'^2 } ~=~ \sqrt{ ('
+                 + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
                  + r'cm \quad (3P) \\ \mathrm{Planskizze} \quad (2P)')
     aufgabe_2 = (st[1] + '~=~' + gzahl(l_b) + r'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm, ~ \mathrm{und} ~'
                  + wk[2] + r'~=~ 90^{  \circ} .')
     loesung_2 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[1]
-                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{ ('
-                 + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_a) + r'cm \quad (3P) \\'
-                 + r' \mathrm{Planskizze} \quad (2P)')
+                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[1]
+                 + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~'
+                 + gzahl(l_a) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
     aufgabe_3 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[2] + '~=~' + gzahl(l_c)
                  + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
     loesung_3 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[0]
-                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{ (' + gzahl(l_c)
-                 + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~' + gzahl(l_b) + r'cm \quad (3P) \\'
-                 + r' \mathrm{Planskizze} \quad (2P)')
+                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[0]
+                 + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~'
+                 + gzahl(l_b) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
 
     if gegeben == 0:
         auswahl = [aufgabe_1,loesung_1]
