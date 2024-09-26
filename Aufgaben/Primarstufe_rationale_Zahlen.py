@@ -1892,7 +1892,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         aufg = (r' \left( ~' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ~ ^{' + vorz_aussen(vorz2) + exp2
                 + '}')
         lsg = (r' \left(' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ^{' + vorz_aussen(vorz2) + exp2
-               + '} ~=~' + bas + r'^{ \left(' + vorz_v_aussen(vorz1, exp1) + r' \cdot' + vorz_v_aussen(vorz2,exp2)
+               + '} ~=~' + bas + r'^{ \left(' + vorz_v_aussen(vorz1*vorz2, exp1) + r' \cdot' + exp2
                + r' \right) } ~=~' + bas + '^{' + erg + '}')
         return aufg, lsg
 
