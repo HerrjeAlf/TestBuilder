@@ -138,35 +138,53 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
     gamma = 90
     beta = int(math.degrees(math.asin(l_b / l_c)))
     alpha = gamma - beta
-    auswahl = random.sample([0, 1, 2], 3)
+    auswahl = random.choice([[0, 1, 2], [0,2,1], []])
     st = [['a', 'b', 'c'][x] for x in auswahl]
     wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
     # die verschiedenen Aufgaben  ['a', 'b', 'c', r' \alpha ', r' \beta ', r' \gamma ']
-    aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
-                 + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
-    loesung_1 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
-                 + st[2] + r'~=~ \sqrt{' + st[0] + r'^2 ~+~ ' + st[1] + r'^2 } ~=~ \sqrt{ ('
-                 + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
-                 + r'cm \quad (3P) \\ \mathrm{Planskizze} \quad (2P)')
-    aufgabe_2 = (st[1] + '~=~' + gzahl(l_b) + r'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm, ~ \mathrm{und} ~'
-                 + wk[2] + r'~=~ 90^{  \circ} .')
-    loesung_2 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[1]
-                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[1]
-                 + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~'
-                 + gzahl(l_a) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
-    aufgabe_3 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[2] + '~=~' + gzahl(l_c)
-                 + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
-    loesung_3 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[0]
-                 + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[0]
-                 + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~'
-                 + gzahl(l_b) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+    def kat_kat():
+        auswahl = random.choice([[0, 1, 2], [0,2,1], [1,2,0]])
+        st = [['a', 'b', 'c'][x] for x in auswahl]
+        wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+        aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
+                     + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
+        loesung_1 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
+                     + st[2] + r'~=~ \sqrt{' + st[0] + r'^2 ~+~ ' + st[1] + r'^2 } ~=~ \sqrt{ ('
+                     + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
+                     + r'cm \quad (3P) \\ \mathrm{Planskizze} \quad (2P)')
+        return aufgabe_1, loesung_1, st, wk
+    def kat_hyp():
+        auswahl = random.choice([[0, 1, 2], [1,0,2], [2,0,1]])
+        st = [['a', 'b', 'c'][x] for x in auswahl]
+        wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+        aufgabe_2 = (st[1] + '~=~' + gzahl(l_b) + r'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm, ~ \mathrm{und} ~'
+                     + wk[2] + r'~=~ 90^{  \circ} .')
+        loesung_2 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[1]
+                     + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ '
+                     + st[1] + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~'
+                     + gzahl(l_a) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+        return aufgabe_2, loesung_2, st, wk
+    def hyp_kat():
+        auswahl = random.choice([[0, 1, 2], [1,0,2], [0,2,1]])
+        st = [['a', 'b', 'c'][x] for x in auswahl]
+        wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
+        aufgabe_3 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[2] + '~=~' + gzahl(l_c)
+                     + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
+        loesung_3 = (st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[0]
+                     + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[0]
+                     + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~'
+                     + gzahl(l_b) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+        return aufgabe_3, loesung_3, st, wk
 
     if gegeben == 0:
-        auswahl = [aufgabe_1,loesung_1]
+        auswahl = kat_kat()
     elif gegeben == 1:
-        auswahl = random.choice([[aufgabe_2,loesung_2],[aufgabe_3, loesung_3]])
+        auswahl = random.choice([kat_hyp, hyp_kat])()
     else:
-        auswahl = random.choice([[aufgabe_1, loesung_1], [aufgabe_2, loesung_2], [aufgabe_3, loesung_3]])
+        auswahl = random.choice([kat_kat, kat_hyp, hyp_kat])()
+
+    st, wk = auswahl[2], auswahl[3]
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                'Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:', auswahl[0]]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
