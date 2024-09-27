@@ -1,4 +1,4 @@
-import random
+import random, math
 
 from sympy import *
 from skripte.funktionen import *
@@ -128,3 +128,11 @@ for zeichen in ziffern:
     lsg = lsg + str(zeichen)
 lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern)-3) + '}'
 print(aufg)
+print(lsg)
+
+def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
+    exponent = math.floor(math.log10(zahl))
+    stellen = max(1,int(-exponent+15))
+    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+
+print(min_float_to_str(Rational(1,12500000000000000000)))
