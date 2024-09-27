@@ -2226,3 +2226,71 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def einheiten_umrechnen(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
+    # Hier sollen die SuS Zahlen in wissenschaftlicher Schreibweise als natürliche Zahl oder Dezimalzahl darstellen.
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) grosse Zahlen als natürliche Zahl
+    # b) kleine Zahlen als Dezimalbruch
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Notiere die gegebene Zahl als natürliche Zahl oder Dezimalbruch.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def vorsaetze(n, p=1):
+        if p == 1:
+            return random_selection([['m', -3], ['c', -2], ['d', -1], ['k', 3]], n, False)
+        elif p == 2:
+            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
+                                         ['k', 3], ['M', 6], ['G', 9], ['T', 12]], n, False)
+        elif p == 3:
+            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
+                                         ['da', 1], ['h', 2], ['k',3], ['M', 6], ['G', 9], ['T', 12]], n, False)
+        else:
+            print('p muss 1, 2 odere 3 sein.')
+
+
+    def laengen():
+        auswahl_einheiten = random.choice([['mm',-3], ['cm', -2], ['dm', -1], ['m', 0], ['']])
+        return aufg, lsg
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = np.random.choice(teilaufg, anzahl, True)
+    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        else:
+            aufg = aufg + r' \\\\'
+
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
