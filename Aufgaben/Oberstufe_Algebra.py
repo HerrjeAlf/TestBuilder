@@ -28,10 +28,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
-
     ortsvektor_a = punkt_vektor(3)
-    a_x, a_y, a_z = punkt_vektor(4)
-    vektor_ab = [a_x, a_y, a_z]
+    vektor_ab = [a_x, a_y, a_z] = punkt_vektor(4)
     laenge_vektor_ab = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}'
                         + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_ab),3))))
     ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
@@ -48,7 +46,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ac)) + '}' + '~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_ac),3))))
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
-        ortsvektor_d = np.array(ortsvektor_a) - np.array(vektor_ab)
+        ortsvektor_d = np.array(ortsvektor_c) - np.array(vektor_ab)
         loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
                      + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
                      + r' \end{pmatrix} \to \mathrm{d(A,C)~=~} \sqrt{(' + gzahl(vektor_ac[0]) + ')^2 ~+~('
@@ -98,10 +96,10 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if ks == True:
-            aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
         else:
-            aufgabe.append(str(teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
             pkt += 2
         loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
@@ -129,9 +127,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(str(teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
+        aufgabe.append(str(liste_teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
                                            + f' ein Parallelogramm bilden.'))
-        loesung.append(str(teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
+        loesung.append(str(liste_teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
@@ -195,17 +193,17 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # print(ergebnis)
         punkte = 3
 
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Mittelpunkt der folgenden Punkte '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Mittelpunkt der folgenden Punkte '
                        'A( ' + gzahl(vektor_1[0])  + ' | ' + gzahl(vektor_1[1]) + ' | ' + gzahl(vektor_1[2]) + ' ) und '
                        'B( ' + gzahl(vektor_2[0])  + ' | ' + gzahl(vektor_2[1]) + ' | ' + gzahl(vektor_2[2])
                        + ' ). \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
                        + r'\begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\'
                        + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_2[0])
                        + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} \end{pmatrix}  ~=~ \begin{pmatrix}' + gzahl(ergebnis[0]) + r' \\'
                        + gzahl(ergebnis[1]) + r' \\' + gzahl(ergebnis[2]) + r' \\'
-                       + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~D~hat~die~Koordinaten:~}~M('
+                       + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
                        + gzahl(ergebnis[0]) + ' | ' + gzahl(ergebnis[1]) + ' | ' + gzahl(ergebnis[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
@@ -235,7 +233,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                          r' Linearkombination~von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.}'
                          r' \quad (1P) \\')
 
-        aufgabe.extend((str(teilaufg[i]) + ') Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
+        aufgabe.extend((str(liste_teilaufg[i]) + ') Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
                         + ' von b und c dargestellt werden kann.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
                         + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
@@ -284,7 +282,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         else:
             pass
 
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
                        + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
                        + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
@@ -314,7 +312,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         zl = ['I', 'II', 'III']
 
         table1 = Tabular('r r r r', row_height=1.2)
-        table1.add_row(str(teilaufg[i]) + ') aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
+        table1.add_row(str(liste_teilaufg[i]) + ') aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
                         'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
                                                  + gzahl(x_3) + '$'), '(1P)')
         table1.add_row('', 'II:', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
@@ -362,7 +360,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                  + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2P) }')
         punkte += 2
 
-        aufgabe.extend((str(teilaufg[i]) + ') Berechnen Sie den Wert des Parameters a, '
+        aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie den Wert des Parameters a, '
                         + 'für den die gegebenen Vektoren linear abhängig sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
                         + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
@@ -392,13 +390,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             vektor_1 = (vektor_2[0]*zzahl(1,6)/2,vektor_2[1]*zzahl(3,8)/2,vektor_2[2]*zzahl(5,10)/2)
             ergebnis = r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
 
-        aufgabe.extend((str(teilaufg[i]) + f') Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
+        aufgabe.extend((str(liste_teilaufg[i]) + f') Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                         + r' \end{pmatrix} \\'))
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.} \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.} \\'
                        + gzahl(N(vektor_1[0],3)) + '~=~' + gzahl(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'
                        + gzahl(N(vektor_1[0]/vektor_2[0],3)) + r' \\' + gzahl(N(vektor_1[1],3)) + '~=~'
                        + gzahl(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'
@@ -428,13 +426,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
                             + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
         ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
-        aufgabe.append(str(teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB?')
+        aufgabe.append(str(liste_teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB?')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~ ), \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
                        + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
                        + r'~ ).} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
                        + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
                        + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
@@ -463,11 +461,11 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
-        aufgabe.append(str(teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~), \quad T(~' + gzahl(vektor_t[0]) + r'~ \vert ~' + gzahl(vektor_t[1])
                        + r'~ \vert ~' + gzahl(vektor_t[2]) + r'~) \quad und~r~=~' + gzahl(faktor_r) + r'.} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
                        + r' \cdot \mathrm{ (~1~+~ \frac{1}{r} ~)}  ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0],3))+ r' \\' + gzahl(N(vektor_at[1],3)) + r' \\'
@@ -546,9 +544,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
                      + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\'
                      r' \end{pmatrix} \quad (3P) \\')
 
-        aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1
+        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i +=1
 
@@ -576,8 +574,8 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
         else:
             loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4P) \\'
 
-        aufgabe.append(str(teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad' + loesung_1 + loesung_2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1 + loesung_2
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i +=1
 
@@ -620,11 +618,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         punkte = 8
         liste_punkte.append(punkte)
 
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Geraden:'), 'Punkte')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Geraden:'), 'Punkte')
         table1.add_row('', '-', 'sind parrallel, d.h. die Richtungsvektoren '
                        + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2P' )
         table1.add_row('', '-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
@@ -644,11 +642,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
                                           'Geraden mathematisch überprüfen kann. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
                        'Punkte')
         table1.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
                        + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt.', '2P')
@@ -886,8 +884,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                        r' \end{pmatrix}\\'))
-        aufgabe.append(str(teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + lagebeziehung + r'} \hspace{25em} \\'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + lagebeziehung + r'} \hspace{25em} \\'
                        + loesung_1)
         i += 1
 
@@ -926,8 +924,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                            + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
                            + r' \end{pmatrix} }')
-        aufgabe.append(str(teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
-        loesung.append(str(teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
                        r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
