@@ -2227,7 +2227,7 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einheiten_umrechnen(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
+def einheiten_umrechnen(nr, teilaufg=['a'], anzahl=False, BE=[]):
     # Hier sollen die SuS Zahlen in wissenschaftlicher Schreibweise als natürliche Zahl oder Dezimalzahl darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) grosse Zahlen als natürliche Zahl
@@ -2239,7 +2239,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     liste_bez = [f'{str(nr)}']
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Notiere die gegebene Zahl als natürliche Zahl oder Dezimalbruch.']
+               'Rechne um.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -2257,15 +2257,27 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
             print('p muss 1, 2 odere 3 sein.')
 
 
-    def laengen():
-        auswahl_einheiten = random.choice([['mm',-3], ['cm', -2], ['dm', -1], ['m', 0], ['']])
+    def bel_groessen():
+        ausw = random.randint(0,7)
+        vors = [['p', -12], ['n', -9], [r' \mu ', -6], ['m', -3], ['k', 3], ['M', 6], ['G', 9], ['T', 12]]
+        ausw_gr = random.choice(['s', 'J', 'N', 'C', 'V', 'A', 'W'])
+        k = -2
+        faktor = Rational(1, random.choice([100,1000,10000]))
+        if ausw < 4:
+            k = 2
+            faktor = random.choice([100,1000,10000])
+        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
+        aufg = (gzahl(zahl) + vors[ausw][0] + ausw_gr + r'~=~ \hspace{5em}' + vors[ausw + k][0] + ausw_gr)
+        lsg = (gzahl(zahl) + vors[ausw][0] + ausw_gr + r'~=~' + gzahl(zahl) + r' \cdot 10^{' + gzahl(vors[ausw][1])
+               + '}' + ausw_gr + '~=~' + min_float_to_str(zahl*10**(vors[ausw][1]-vors[ausw+k][1]))
+               + vors[ausw + k][0] + ausw_gr)
         return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
+    aufgaben = {'a': bel_groessen}
 
     aufg = ''
     lsg = ''

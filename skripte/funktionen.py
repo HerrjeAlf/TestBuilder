@@ -1,3 +1,4 @@
+import math
 import random
 import time
 import numpy as np
@@ -33,6 +34,13 @@ def packages(doc: Document):
         doc.packages.append(Package(package))
 
 # Funktionen zur Darstellung von Zahlen
+
+
+def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
+    exponent = math.floor(math.log10(zahl))
+    stellen = max(1,int(-exponent+15))
+    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 
@@ -377,7 +385,6 @@ def elemente_sort(st_werte):
         t += 1
     return st_werte_sort
 
-
 def ganzz_exponenten(n,p=1,q=6, wdh=True):
     if wdh == True:
         liste = []
@@ -407,7 +414,6 @@ def random_selection(list, anzahl=2, wdh=True):
         return menge
     else:
         print('wdh muss "True" or "False" sein')
-
 
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
