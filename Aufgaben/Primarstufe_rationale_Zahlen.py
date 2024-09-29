@@ -2026,7 +2026,7 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
         lsg = lsg + r' \cdot 10^{-' + gzahl(exp + 3) + '}'
         return aufg, lsg
 
-    def mittlere_zahl():
+    def mittlere_zahl(): # noch verbessern!
         anz_ziffern = nzahl(3, 8)
         ziffern = [nzahl(1, 9)]
         ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
@@ -2149,7 +2149,7 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
         k = 1
         for ziffer in zahl:
             zahl_sort.append(ziffer)
-            if k % 3 == 0 and k != len(zahl):
+            if k % 4 == 0 and k != len(zahl):
                 zahl_sort.append('~')
             k += 1
 
@@ -2162,7 +2162,7 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
             lsg = lsg + str(zeichen)
         return aufg, lsg
 
-    def mittlere_zahl():
+    def mittlere_zahl(): # noch verbessern!
         anz_ziffern = nzahl(3, 8)
         ziffern = [nzahl(1, 9)]
         ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
@@ -2206,7 +2206,7 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
         else:
             aufg = aufg + r' \\\\'
@@ -2227,11 +2227,13 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einheiten_umrechnen(nr, teilaufg=['a'], anzahl=False, BE=[]):
-    # Hier sollen die SuS Zahlen in wissenschaftlicher Schreibweise als natürliche Zahl oder Dezimalzahl darstellen.
+def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
+    # Hier sollen die SuS gegebenen Zahlen mit verschiedenen Vorsätzen einer Einheit ineinander umrechnen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) grosse Zahlen als natürliche Zahl
-    # b) kleine Zahlen als Dezimalbruch
+    # a) Umrechnen von physikalischen Einheiten wie s, V oder W
+    # b) Umrechnen von Längeneinheiten
+    # c) Umrechnen von Flächeneinheiten
+    # d) Umrechnen von Volumeneinheiten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -2267,17 +2269,66 @@ def einheiten_umrechnen(nr, teilaufg=['a'], anzahl=False, BE=[]):
             k = 2
             faktor = random.choice([100,1000,10000])
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + vors[ausw][0] + ausw_gr + r'~=~ \hspace{5em}' + vors[ausw + k][0] + ausw_gr)
-        lsg = (gzahl(zahl) + vors[ausw][0] + ausw_gr + r'~=~' + gzahl(zahl) + r' \cdot 10^{' + gzahl(vors[ausw][1])
-               + '}' + ausw_gr + '~=~' + min_float_to_str(zahl*10**(vors[ausw][1]-vors[ausw+k][1]))
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + vors[ausw + k][0] + ausw_gr)
+        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
+               + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
+               + r'}' + '~' + ausw_gr + '~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~'
                + vors[ausw + k][0] + ausw_gr)
         return aufg, lsg
+
+    def laengen():
+        ausw = random.randint(0,5)
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        k = -2
+        faktor = Rational(1, random.choice([100,1000,10000]))
+        if ausw < 3:
+            k = 2
+            faktor = random.choice([100,1000,10000])
+        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm ~=~ ...' + vors[ausw + k][0] + 'm')
+        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r' m ~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
+               + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
+               + r'}~ m ~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~' + vors[ausw + k][0] + 'm')
+        return aufg, lsg
+
+    def flaechen():
+        ausw = random.randint(0,5)
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        k = -2
+        faktor = Rational(1, random.choice([10**2,10**4,10**6]))
+        if ausw < 4:
+            k = 2
+            faktor = random.choice([10**2,10**4,10**6])
+        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~ ...' + vors[ausw + k][0] + 'm^2')
+        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
+               + gzahl(vors[ausw][1]) + '})^2}{(10^{' + gzahl(vors[ausw+k][1]*2) + r'})^2} \cdot (10^{'
+               + gzahl(vors[ausw+k][1]) + r'})^2 ~ m^2 ~=~' + gzahl(zahl*10**(2*(vors[ausw][1]-vors[ausw+k][1])))
+               + '~' + vors[ausw + k][0] + 'm^2')
+        return aufg, lsg
+
+    def volumen():
+        ausw = random.randint(0,5)
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        k = -1
+        faktor = Rational(1, random.choice([10**3,10**6]))
+        if ausw < 4:
+            k = 1
+            faktor = random.choice([10**3,10**6])
+        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~ ...' + vors[ausw + k][0] + 'm^3')
+        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
+               + gzahl(vors[ausw][1]) + '})^3}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^3} \cdot (10^{'
+               + gzahl(vors[ausw+k][1]) + r'})^3 ~m^3 ~=~' + gzahl(zahl*10**(3*(vors[ausw][1] - vors[ausw+k][1])))
+               + '~' + vors[ausw + k][0] + 'm^3')
+        return aufg, lsg
+
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = np.random.choice(teilaufg, anzahl, True)
-    aufgaben = {'a': bel_groessen}
+    aufgaben = {'a': bel_groessen, 'b': laengen, 'c': flaechen, 'd': volumen}
 
     aufg = ''
     lsg = ''
@@ -2286,7 +2337,7 @@ def einheiten_umrechnen(nr, teilaufg=['a'], anzahl=False, BE=[]):
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
         else:
             aufg = aufg + r' \\\\'
