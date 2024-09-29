@@ -15,8 +15,11 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[in_wiss_schreibweise_umf(1, anzahl=4), wiss_schreibweise_umf(2, anzahl=4),
-                 einheiten_umrechnen(3)]]
+    Aufgaben = [[in_wiss_schreibweise_umf(1, anzahl=6), wiss_schreibweise_umf(2, anzahl=6),
+                 einheiten_umrechnen(3, ['a'], anzahl=6),
+                 einheiten_umrechnen(4, ['b'], anzahl=6)],
+                 [einheiten_umrechnen(5, ['c'], anzahl=3),
+                 einheiten_umrechnen(5, ['d'], anzahl=3)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
