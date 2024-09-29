@@ -143,6 +143,8 @@ def kgv(q, p):
             return int(zahl*min)
     return max*min
 
+
+
 # Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
 def vektor_rational(vec,p,q=1000):
     vec_p = [element*p for element in vec]
