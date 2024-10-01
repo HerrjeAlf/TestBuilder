@@ -1543,10 +1543,17 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
         k = 0
         for basis in ausw_bas:
             if basis != ausw_bas[-1]:
-                lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
+                if sum(exp_sort[k]) == 0:
+                    pass
+                else:
+                    lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
             else:
-                lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
+                if sum(exp_sort[k]) == 0:
+                    pass
+                else:
+                    lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
             k += 1
+
         return aufg, lsg
 
 
