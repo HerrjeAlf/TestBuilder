@@ -19,7 +19,7 @@ for i in range(anzahl):
                  einheiten_umrechnen(3, ['a'], anzahl=6),
                  einheiten_umrechnen(4, ['b'], anzahl=6)],
                  [einheiten_umrechnen(5, ['c'], anzahl=3),
-                 einheiten_umrechnen(5, ['d'], anzahl=3)]]
+                 einheiten_umrechnen(6, ['d'], anzahl=3)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

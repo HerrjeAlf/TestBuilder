@@ -136,3 +136,11 @@ def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
     return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
 
 print(min_float_to_str(Rational(1,12500000000000000000)))
+
+
+def erste():
+    print('erste Funktion')
+    def zweite():
+        print('zweite Funktion')
+
+erste.zweite()
