@@ -1876,8 +1876,8 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         erg = gzahl(Rational(zaehler_1*zaehler_2,nenner_1*nenner_2))
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = r' \left( ~' + bas + r'^{' + exp1 + r'}~ \right) ^{' + exp2 + '}'
-        lsg = (r' \left(' + bas + r'^{' + exp1 + r'} \right) ^{' + exp2 + '} ~=~' + bas + r'^{ \left(' + exp1
-               + r' \cdot' + exp2 + r' \right) } ~=~' + bas + '^{' + erg + '}')
+        lsg = (r' \left(' + bas + r'^{' + exp1 + r'} \right) ^{' + exp2 + '} ~=~' + bas + r'^{' + exp1
+               + r' \cdot' + exp2 + r'} ~=~' + bas + '^{' + erg + '}')
         return aufg, lsg
 
     def var_pot_rat_exp(): # Teilaufgabe c)
