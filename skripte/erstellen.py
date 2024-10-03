@@ -569,15 +569,15 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                                MediumText('Die Aufgaben 1, 2 und 3 müssen bearbeitet werden.'))
                 table1.add_row(MediumText(bold('Wahlaufgaben:')),
                                MediumText('Von den Aufgaben 4, 5 und 6 muss genau eine bearbeitet werden.'))
-                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 4 bzw. '
-                                                            + r'$ \square $' + ' Aufgabe 5 bzw. ' + r'$ \square $'
+                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 4  '
+                                                            + r'$ \square $' + ' Aufgabe 5 ' + r'$ \square $'
                                                             + ' Aufgabe 6'))))
 
                 table1.add_empty_row()
                 table1.add_row(MediumText(bold('Wahlaufgaben:')),
                                MediumText('Von den Aufgaben 7, 8 und 9 muss genau eine bearbeitet werden.'))
-                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 7 bzw. '
-                                                            + r'$ \square $' + ' Aufgabe 8 bzw. ' + r'$ \square $'
+                table1.add_row('', MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 7 '
+                                                            + r'$ \square $' + ' Aufgabe 8 ' + r'$ \square $'
                                                             + ' Aufgabe 9'))))
 
             else:
@@ -587,11 +587,11 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 table1.add_row(MediumText(bold('Wahlaufgaben:')),
                                MediumText('Von den Aufgaben 5 bis 10 müssen genau zwei Aufgaben bearbeitet werden.'))
                 table1.add_row(MediumText(bold('')),
-                               MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 5 bzw. ' + r'$ \square $'
-                                                        + ' Aufgabe 6 bzw. ' + r'$ \square $' + ' Aufgabe 7'))))
+                               MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 5 ' + r'$ \square $'
+                                                        + ' Aufgabe 6 ' + r'$ \square $' + ' Aufgabe 7'))))
                 table1.add_row(MediumText(bold('')),
-                               MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 8 bzw. ' + r'$ \square $'
-                                                        + ' Aufgabe 9 bzw. ' + r'$ \square $' + ' Aufgabe 10'))))
+                               MediumText(bold(NoEscape(r'$ \square $' + ' Aufgabe 8 ' + r'$ \square $'
+                                                        + ' Aufgabe 9 ' + r'$ \square $' + ' Aufgabe 10'))))
 
             table1.add_hline(1, 2)
             table1.add_empty_row()

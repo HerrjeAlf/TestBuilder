@@ -26,8 +26,10 @@ for titel in liste_Aufgaben:
                 Aufgabenstellung.append(liste_file[i+p][2:] + ' \n')
                 p += 1
             Aufgabenstellung.append(' \n')
-        if 'in teilaufg' in element and '#' in liste_file[i+1]:
+        if 'in teilaufg' in element and '#' in liste_file[i+1] and 'if len([element for' not in element:
             Aufgabenstellung.append('Teilaufgabe ' + liste_file[i][4] + '): ' + liste_file[i+1][2:] + ' \n')
+        if 'if len([element for element in' in element and '#' in liste_file[i+1]:
+            Aufgabenstellung.append('Teilaufgabe ' + liste_file[i][33] + '): ' + liste_file[i+1][2:] + ' \n')
         i += 1
     alle_Aufgaben.append(Aufgabenstellung)
 # print(alle_Aufgaben)

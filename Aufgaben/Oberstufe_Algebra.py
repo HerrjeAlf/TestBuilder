@@ -506,9 +506,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
     if T_auf_g:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
     elif T_auf_g == False:
-        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,10)/2)*[vy,vx,vz+zzahl(1,3)])
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,10)/2)* np.array([vy,vx,vz+zzahl(1,3)]))
         while (tx-ax)/vx == (ty-ay)/ty == (tz-az)/tz:
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * [vy, vx, vz + zzahl(1, 3)])
+            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
     else:
         exit("T_auf_g muss None, True oder False sein!")
 

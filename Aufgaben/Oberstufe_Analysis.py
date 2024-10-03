@@ -806,7 +806,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         return fkt, fkt_uf, fkt_abl, pkt
 
     def poly_wurzel():
-        a1, a2, a3 = faktorliste(2, 12, 3)
+        a1, a2, a3 = faktorliste(3, 3, 12)
         e1, e2, e3 = exponenten(3)
         fkt = (vorz_aussen(a1 / a2) + r' \frac{' + gzahl(abs(a1)) + '}{' + gzahl(abs(a2)) + r'x^{'
                    + gzahl(e1) + '}}' + vorz(a3) + r' \frac{' + gzahl(abs(a3)) + r'}{ \sqrt[' + gzahl(e2) + r']{'
@@ -1209,7 +1209,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
     if 'b' in teilaufg:
         # Die SuS sollen den Wert von a einer quadratischen Parameterfunktion berechnen, an dem diese eine lineare Funktion berührt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        a1, a2, a3 = faktorliste(2, 10, 3)
+        a1, a2, a3 = faktorliste(3, 3, 10)
         verschiebung = zzahl(2,10)/2
         fkt_parabel, fkt_str_parabel, fkt_abl_str_parabel = (a1 * x ** 2 + a, str(a1) + 'x^2 + a', str(2*a1) + 'x')
         fkt_gerade, fkt_str_gerade, fkt_abl_str_gerade = (a2*x+a3, str(a2) + 'x' + vorz_str(a3), str(a2))
@@ -1613,7 +1613,13 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
 def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
     # Die SuS sollen verschiedene Exponentialgleichungen lösen.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) einfache Exponentfkt, b) schwierige Exponentfkt, c) Exponentialfkt mit einf. lin. Fkt als Exponenten, d) Exponentialfkt mit lin. Fkt als Exponenten, e) Summe von Exponentialfkt, f) Logarithmusfkt
+    # a) einfache Exponentfkt
+    # b) schwierige Exponentfkt
+    # c) Exponentialfkt mit einf. lin. Fkt als Exponenten
+    # d) Exponentialfkt mit lin. Fkt als Exponenten
+    # e) Summe von Exponentialfkt
+    # f) Logarithmusfkt
+    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{str(nr)}']
@@ -2598,7 +2604,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_punkte.append(punkte)
         i += 1
     if len([element for element in ['g', 'h'] if element in teilaufg]) > 0:
-        # Die SuS sollen den Wendepunkt der Funktion berechnen,
+        # Die SuS sollen den Wendepunkt der Funktion berechnen
         if grad == 3:
             punkte = 5
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2614,9 +2620,9 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         if grad == 4:
             punkte = 8
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            # fkt_2_str = vorz_v_aussen(12 * faktor, 'x^2') + vorz_str(-2 * faktor * (nst_12 + nst_34))
             xwert_wp1 = N(-1*sqrt(Rational((nst_12 + nst_34),6)),3)
             xwert_wp2 = N(sqrt(Rational((nst_12 + nst_34), 6)),3)
+            # fkt_2_str = vorz_v_aussen(12 * faktor, 'x^2') + vorz_str(-2 * faktor * (nst_12 + nst_34))
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_12 + nst_34))

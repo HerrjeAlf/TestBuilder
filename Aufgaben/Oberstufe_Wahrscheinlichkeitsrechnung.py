@@ -61,6 +61,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     liste_punkte = []
     liste_bez = []
     i = 0
+    if art not in ['zmZ', 'zoZ']:
+        exit("art muss 'zmZ' oder 'zoZ' sein!")
     if stufen == None:
         anzahl_ziehen = random.choice([[2, 'zweimal'], [3, 'dreimal']])
         stufen = anzahl_ziehen[0]
@@ -258,9 +260,15 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # Wahrscheinlichkeit von Ereignissen berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((str(liste_teilaufg[i]) + (') Berechnen Sie die Wahrscheinlichkeit für'
-                        + ' die folgenden Ereignisse.'), r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
-                        + r' und \quad E_3: ~}' + ereignis_3))
+        if 'b' in teilaufg:
+            aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für'
+                            + ' die folgenden Ereignisse.', r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
+                            + r' und \quad E_3: ~}' + ereignis_3))
+        else:
+            aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
+                            + f'die folgenden Ereignisse.', r' E_1: ' + ereignis_1 + r', \quad E_2: '
+                            + ereignis_2 + r', \quad ' + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
+
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
                         r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'P) \qquad P(E_2) ~=~' + wkt2_str
                         + r' \quad (' + gzahl(pkt2) + r'P) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \quad ('
@@ -279,7 +287,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         else:
             lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3P) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1P)')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
+        if 'b' in teilaufg or 'c' in teilaufg:
+            aufgabe.append(str(liste_teilaufg[i])
+                           + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
+        else:
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
+                           + f'Unabhängigkeit von E1 und E2, mit: ', r' E_1: ' + ereignis_1 + r', \quad E_2: '
+                           + ereignis_2))
         loesung.append(str(liste_teilaufg[i]) + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
                        + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
                        + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg)
@@ -287,7 +301,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         i += 1
 
 
-    if 'e' or 'f' or 'g' in teilaufg:
+    if len([element for element in teilaufg if element in liste_teilaufg[5:7]]) > 0:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -339,7 +353,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' or 'g' in teilaufg:
+    if len([element for element in teilaufg if element in liste_teilaufg[6:7]]) > 0:
         # Erwartungswert einer Zufallsgröße
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = int(len(x_werte)/2)+1
