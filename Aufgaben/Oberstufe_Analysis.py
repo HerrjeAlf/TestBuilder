@@ -996,7 +996,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                'In der folgenden Abbildung ist die Profilkurve eines Hügels aufgetragen, '
                'dessen Gipfel mit einer Seilbahn erreicht werden kann.', 'Grafik',
                r' \mathrm{ f(x)~=~' + fkt_str + '}']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [str(nr)]
     grafiken_loesung = []
 
@@ -1149,7 +1149,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
     liste_bez = []
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -1166,7 +1166,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
         steigung = 0
         while steigung == 0:
             try:
-                a1, a2, a3 = faktorliste(2, 10, 3)
+                a1, a2, a3 = faktorliste(3, 2, 8)
                 e1 = (nzahl(2,4)*2)-1
                 e2 = e1 + (nzahl(0,2)*2)+1
                 funktionen_liste = ([[a1*x**2 + a2*x + a3, str(a1) + 'x^2' + vorz_str(a2) + 'x' + vorz_str(a3), str(2*a1) + r'x' + vorz_str(a2)],
@@ -1499,10 +1499,17 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
         xwert_3 = xwert_2 + 1
         xwert_1 = xwert_2 - 1
 
+    while (-1*(xwert_1**2 - xwert_2**2)*(xwert_1**2*xwert_3 - xwert_1*xwert_3**2)
+           + (xwert_1**2 - xwert_3**2)*(xwert_1**2*xwert_2 - xwert_1*xwert_2**2) == 0):
+        if len(xwerte) != 3 or not all(type(n) == int for n in xwerte):
+            xwert_2 = zzahl(1, 2)
+            xwert_3 = xwert_2 + 1
+            xwert_1 = xwert_2 - 1
+
     ywert_2 = zzahl(1, 3)
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
-    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2,'x')
+    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2, 'x')
                + vorz_str((faktor * (xwert_2 ** 2)) + ywert_2))
     fkt = faktor * (x - xwert_2) ** 2 + ywert_2
 
@@ -1845,7 +1852,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     table3.add_hline(2, 6)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 

@@ -415,9 +415,9 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_ab = punkt_vektor(5)
         vektor_b = np.array(vektor_a) + np.array(vektor_ab)
         faktor = nzahl(1,9)/10
-        vektor_t = [N(vektor_a[0] + vektor_ab[0]*faktor,3),
-                    N(vektor_a[1] + vektor_ab[1]*faktor,3),
-                    N(vektor_a[2] + vektor_ab[2]*faktor,3)]
+        vektor_t = [vektor_a[0] + vektor_ab[0]*faktor,
+                    vektor_a[1] + vektor_ab[1]*faktor,
+                    vektor_a[2] + vektor_ab[2]*faktor]
         vektor_at = np.array(vektor_t) - np.array(vektor_a)
         vektor_tb = vektor_b - np.array(vektor_t)
         laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
@@ -432,6 +432,15 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
                        + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
                        + r'~ ).} \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r.} \\'
+                       + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~'
+                       + gzahl(N(faktor/(1-faktor),3)) + r' \\' + gzahl(vektor_at[1]) + r'~=~'
+                       + gzahl_klammer(vektor_tb[1]) + r' \cdot r \quad \to \quad r~=~' + gzahl(N(faktor/(1-faktor),3))
+                       + r' \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
+                       + r' \cdot r \quad \to \quad r~=~' + gzahl(N(faktor/(1-faktor),3)) + r' \\'
+                       + r' \quad \to \quad \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        # alternative Variante
+        '''
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
                        + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
@@ -441,6 +450,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
                        + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        '''
         liste_punkte.append(punkte)
         i += 1
 
@@ -605,7 +615,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                         zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
-    uz = (vx*ux + vy * uy)/vz
+    uz = (vx*ux + vy * uy)/ (-1 * vz)
     u = vektor_ganzzahl([ux, uy, uz])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
@@ -1648,5 +1658,67 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+# in Entwicklung
+
+def vektoren_koll_ortho(nr, BE=[]):
+    # Hier sollen die SuS Vektoren zuordnen, die kollinear oder orthogonal sind.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    vec_a = vec_b = vec_c = [ax, ay, az] = punkt_vektor(4)
+    # Vektor der kollinear zu Vektor a ist
+    fakt_a = zzahl(3, 10) / 2
+    vec_k = [kx, ky, kz] = fakt_a * vec_a
+    # Vektor der Orthogonal zu Vektor a ist
+    vx, vy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
+    vz = (ax * vx + ay * vy) / (-1* az)
+    vec_s = [sx, sy, sz] = vektor_kürzen([vx, vy, vz])
+    # beliebige Vektoren
+    while vektor_kollinear(vec_a, vec_b) == True or vektor_senk(vec_a, vec_b) == True:
+        vec_b = [bx, by, bz] = punkt_vektor(3)
+    while vektor_kollinear(vec_a, vec_c) == True or vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
+        vec_c = [cx, cy, cz] = punkt_vektor(3)
+    ausw = random.sample([vec_b, vec_c, vec_s, vec_k], 4)
+
+    ausw_k = stelle(ausw, vec_k)
+    ausw_s = stelle(ausw, vec_s)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               NoEscape(r'Nennen Sie alle Vektoren, die zum Vektor $ \overrightarrow{a} $ kollinear bzw. '
+                        r'orthogonal sind. Begründen Sie ihre Zuordnung.'),
+               r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\'
+               + gzahl(az) + r' \\' + r' \end{pmatrix} ~ ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
+               + gzahl(ausw[0][0]) + r' \\' + gzahl(ausw[0][1]) + r' \\' + gzahl(ausw[0][2]) + r' \\'
+               + r' \end{pmatrix} ~ ~ \overrightarrow{c} ~=~\begin{pmatrix}'
+               + gzahl(ausw[1][0]) + r' \\' + gzahl(ausw[1][1]) + r' \\' + gzahl(ausw[1][2]) + r' \\'
+               + r' \end{pmatrix} ~ ~ \overrightarrow{d} ~=~\begin{pmatrix}'
+               + gzahl(ausw[2][0]) + r' \\' + gzahl(ausw[2][1]) + r' \\' + gzahl(ausw[2][2]) + r' \\'
+               + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{e} ~=~\begin{pmatrix}'
+               + gzahl(ausw[3][0]) + r' \\' + gzahl(ausw[3][1]) + r' \\' + gzahl(ausw[3][2]) + r' \\'
+               + r' \end{pmatrix} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_k+1] + '} ~ist~kollinear~zu~'
+               + r'\overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
+               + r' \\' + r' \end{pmatrix} ~=~ ' + gzahl(fakt_a) + r' \cdot \begin{pmatrix} ' + gzahl(ax) + r' \\'
+               + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3P) \\'
+               + r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_s + 1] + '} ~ist~ortogonal~zu~'
+               + r'\overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
+               + r' \cdot ' + gzahl_klammer(sy) + '+' + gzahl_klammer(az) + r' \cdot ' + gzahl_klammer(sz)
+               + r' ~=~ 0 \quad (3P)']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    pkt = 6
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [pkt]
+        liste_punkte = BE
+    else:
+        liste_punkte = [pkt]
+
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

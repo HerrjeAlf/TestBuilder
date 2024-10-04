@@ -834,7 +834,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
         exp1, exp2 = np.random.choice(range(1,5), 2, False)
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}')
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2, exp=True) + '}')
         return aufg, lsg
 
     def pos_zahl_bas():
@@ -846,7 +846,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
             w_erg = ''
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def neg_zahl_bas():
@@ -859,7 +859,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
         aufg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~')
         lsg = ('(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'} \cdot (' + gzahl(bas) + ')^{' + gzahl(exp2) + '} ~=~ ('
                + gzahl(bas) + ')^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ (' + gzahl(bas) + ')^{'
-               + gzahl(exp1+exp2) + '}' + w_erg)
+               + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def bel_zahl_bas():
@@ -872,7 +872,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
         aufg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl_klammer(bas) + '^{' + gzahl(exp2)
                + '} ~=~ ' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + gzahl_klammer(bas)
-               + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_pos_exp():
@@ -884,7 +884,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
             w_erg = ''
         aufg = (bas+ '^{' + gzahl(exp1) + r'} ~ \cdot ~' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{'
-               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_exp():
@@ -896,7 +896,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
             w_erg = ''
         aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas + '^{'
-               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+               + gzahl(exp1) + vorz_str(exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_fakt():
@@ -912,7 +912,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
         lsg = (gzahl(fakt1) + r' \cdot ' + bas + '^{' + gzahl(exp1) + r'} \cdot '
                + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp2) + '}' + ' ~=~ ' + gzahl(fakt1)
                + r' \cdot ' + gzahl_klammer(fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1) + vorz_str(exp2)
-               + '} ~=~ ' + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2) + '}' + w_erg)
+               + '} ~=~ ' + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
@@ -991,7 +991,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def pos_zahl_bas():
@@ -1004,7 +1004,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl(bas)
-               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def neg_zahl_bas():
@@ -1017,7 +1017,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         aufg = (r' \frac{(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'}} {(' + gzahl(bas) + ')^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{(' + gzahl(bas) + ')^{' + gzahl(exp1) + r'}} {(' + gzahl(bas) + ')^{' + gzahl(exp2) + '}} ~=~ ('
                + gzahl(bas) + ')^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ (' + gzahl(bas)
-               + ')^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + ')^{' + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def bel_zahl_bas():
@@ -1031,7 +1031,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + r'}} {' + gzahl_klammer(bas) + '^{' + gzahl(exp2)
                + '}} ~=~ ' + gzahl_klammer(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + gzahl_klammer(bas)
-               + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_pos_exp():
@@ -1043,7 +1043,8 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
             w_erg = ''
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas
-               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas
+               + '^{' + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_bas_exp():
@@ -1055,7 +1056,8 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
             w_erg = ''
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}} {' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas
-               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{' + gzahl(exp1-exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~ ' + bas + '^{'
+               + gzahl(exp1-exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
 
@@ -1072,8 +1074,8 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 + gzahl(fakt2) + '~' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(fakt1) + bas + '^{' + gzahl(exp1) + r'}}{' + gzahl(fakt2) + '~' + bas + '^{'
                + gzahl(exp2) + '}} ~=~ ' + gzahl(Rational(fakt1,fakt2)) + r' \cdot ' + bas + '^{' + gzahl(exp1)
-               + vorz_str(-1*exp2) + '} ~=~ ' + vorz_v_aussen(Rational(fakt1,fakt2), bas + '^{' + gzahl(exp1-exp2)+ '}')
-               + w_erg)
+               + vorz_str(-1*exp2) + '} ~=~ '
+               + vorz_v_aussen(Rational(fakt1,fakt2), bas + '^{' + gzahl(exp1-exp2, exp=True) + '}') + w_erg)
         return aufg, lsg
 
     def einf_var_bas_fakt():
@@ -1098,7 +1100,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                 + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + r'}} ~=~ \frac{'
                + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
                + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
-               + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}' + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + w_erg)
+               + '~' + bas1 + '^{' + gzahl(exp1 - exp3, exp=True) + '}' + bas2 + '^{' + gzahl(exp2 - exp4, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def nor_var_bas_fakt():
@@ -1283,7 +1285,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
                 + exp2 + '} ~')
         lsg = (gzahl(bas) + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot ' + gzahl(bas) + '^{' + vorz_aussen(vorz2)
                + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + vorz_aussen(vorz1) + exp1 + vorz(vorz2) + exp2 + '} ~=~ '
-               + gzahl(bas) + '^{' + gzahl(erg) + '}' + w_erg)
+               + gzahl(bas) + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_pos_gln_exp(): # Teilaufgabe c)
@@ -1294,7 +1296,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~')
         lsg = (bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ ' + bas + '^{' + exp1 + '+' + exp2
-               + '} ~=~ ' + bas + '^{' + gzahl(erg) + '}')
+               + '} ~=~ ' + bas + '^{' + gzahl(erg, exp=True) + '}')
         return aufg, lsg
 
     def var_gln_exp(): # Teilaufgabe d)
@@ -1311,7 +1313,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = (bas + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot ' + bas + '^{' + vorz_aussen(vorz2) + exp2 + '} ~')
         lsg = (bas + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot ' + bas + '^{' + vorz_aussen(vorz2) + exp2
                + '} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + vorz(vorz2) + exp2 + '} ~=~ '
-               + bas + '^{' + gzahl(erg) + '}' + w_erg)
+               + bas + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def pos_zahl_und_ungln_exp(): # Teilaufgabe e)
@@ -1406,7 +1408,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = pot1 + r'~ \cdot ~' + pot2
         lsg = (pot1 + r'~ \cdot ~' + pot2 + '~=~' + bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ '
                + bas + '^{' + exp1 + '+' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
-               + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}')
+               + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg, exp=True) + '}')
         return aufg, lsg
 
     def var_sqrt(): # Teilaufgabe j)
@@ -1438,7 +1440,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         lsg = (pot1 + r'~ \cdot ~' + pot2 + r' ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot ' + bas
                + '^{' + vorz(vorz2) + exp2 + '} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + vorz(vorz2) + exp2
                + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw) + vorz_str(zaehler_2_erw) + '}{'
-               + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}' + w_erg)
+               + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
@@ -1629,7 +1631,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         bas = nzahl(2,8)
         aufg = r' \frac{' + (gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~=~ ' + gzahl(bas)
-               + '^{' + exp1 + '-' + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg) + '}')
+               + '^{' + exp1 + '-' + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg, exp=True) + '}')
         return aufg, lsg
 
     def zahl_gln_exp(): # Teilaufgabe b)
@@ -1647,7 +1649,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
                 + vorz_aussen(vorz2) + exp2 + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + vorz_aussen(vorz1) + exp1 + r'}}{' + gzahl(bas) + '^{'
                + vorz_aussen(vorz2) + exp2 + '}} ~=~ ' + gzahl(bas) + '^{' + vorz_aussen(vorz1) + exp1 + vorz(-1*vorz2)
-               + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg) + '}' + w_erg)
+               + exp2 + '} ~=~ ' + gzahl(bas) + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_pos_gln_exp(): # Teilaufgabe c)
@@ -1658,7 +1660,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (r' \frac{' + bas + '^{' + exp1 + '}}{' + bas + '^{' + exp2 + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + exp1 + r'}}{' + bas + '^{' + exp2 + '}} ~=~ ' + bas + '^{' + exp1 + '-' + exp2
-               + '} ~=~ ' + bas + '^{' + gzahl(erg) + '}')
+               + '} ~=~ ' + bas + '^{' + gzahl(erg, exp=True) + '}')
         return aufg, lsg
 
     def var_gln_exp(): # Teilaufgabe d)
@@ -1676,7 +1678,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
                 + exp2 + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + vorz_aussen(vorz1) + exp1 + r'}}{' + bas + '^{' + vorz_aussen(vorz2)
                + exp2 + '}} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + vorz(-1*vorz2) + exp2 + '} ~=~ '
-               + bas + '^{' + gzahl(erg) + '}' + w_erg)
+               + bas + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def pos_zahl_und_ungln_exp(): # Teilaufgabe e)
@@ -1691,8 +1693,8 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}}{' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}}{' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~' + gzahl(bas) + r'^{ \frac{'
-               + gzahl(zaehler_1_erw) + vorz_str(-1*zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + gzahl(bas) + '^{'
-               + gzahl(exp1 - exp2) + '}')
+               + gzahl(zaehler_1_erw) + vorz_str(-1*zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + gzahl(bas)
+               + '^{' + gzahl(exp1 - exp2, exp=True) + '}')
         return aufg, lsg
 
     def zahl_ungln_exp():  # Teilaufgabe f)
@@ -1713,7 +1715,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}}{' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~' + gzahl(bas) + r'^{ \frac{'
                + gzahl(zaehler_1_erw) + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + gzahl(bas)
-               + '^{' + gzahl(exp1 - exp2) + '}' + w_erg)
+               + '^{' + gzahl(exp1 - exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
     def var_pos_ungln_exp():  # Teilaufgabe g)
@@ -1728,7 +1730,8 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas + '^{'
                + gzahl(exp1) + vorz_str(-1*exp2) + r'}  ~=~ ' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
-               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(exp1 - exp2) + '}')
+               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{'
+               + gzahl(exp1 - exp2, exp=True) + '}')
         return aufg, lsg
 
     def var_ungln_exp(): # Teilaufgabe h)
@@ -1748,7 +1751,8 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{ ' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas
                + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
-               + vorz_str(-1*zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(exp1 - exp2) + '}'
+               + vorz_str(-1*zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{'
+               + gzahl(exp1 - exp2, exp=True) + '}'
                + w_erg)
         return aufg, lsg
 
@@ -1769,7 +1773,8 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         aufg = r' \frac{~' + pot1 + r'~}{~' + pot2 + '~}'
         lsg = (r' \frac{' + pot1 + r'~ }{ ~' + pot2 + r'} ~=~ \frac{' + bas + '^{' + exp1 + r'}}{' + bas + '^{' + exp2
                + '}} ~=~ ' + bas + '^{' + exp1 + '-' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
-               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}')
+               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg, exp=True)
+               + '}')
         return aufg, lsg
 
     def var_sqrt(): # Teilaufgabe j)
@@ -1801,7 +1806,8 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         lsg = (r' \frac{' + pot1 + r'~ }{ ~' + pot2 + r'} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1 + r'} \cdot '
                + bas + '^{' + vorz(-1*vorz2) + exp2 + '} ~=~ ' + bas + '^{' + vorz_aussen(vorz1) + exp1
                + vorz(-1 * vorz2) + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
-               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg) + '}' + w_erg)
+               + vorz_str(-1 * zaehler_2_erw) + '}{' + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg, exp=True)
+               + '}' + w_erg)
         return aufg, lsg
 
     if anzahl != False:
@@ -1871,7 +1877,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = r' \left( ~' + bas + r'^{' + gzahl(exp1) + r'}~ \right) ^{' + gzahl(exp2) + '}'
         lsg = (r' \left( ' + bas + r'^{' + gzahl(exp1) + r'} \right) ^{' + gzahl(exp2) + '} ~=~' + bas + r'^{'
-               + gzahl(exp1) + r' \cdot ' + gzahl(exp2) + r'} ~=~' + bas + '^{' + gzahl(exp1*exp2) + '}')
+               + gzahl(exp1) + r' \cdot ' + gzahl(exp2) + r'} ~=~' + bas + '^{' + gzahl(exp1*exp2, exp=True) + '}')
         return aufg, lsg
 
     def var_pot_pos_rat_exp(): # Teilaufgabe b)
@@ -1894,7 +1900,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         fakt1, fakt2 = random_selection(list(range(1, 8)), 2, False)
         exp1 = r' \frac{' + str(fakt1*zaehler_1) + '}{' + str(fakt2*nenner_1) + '}'
         exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
-        erg = gzahl(Rational(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2))
+        erg = gzahl(Rational(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2), exp=True)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (r' \left( ~' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ~ ^{' + vorz_aussen(vorz2) + exp2
                 + '}')
@@ -1918,7 +1924,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
                 + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}}')
         lsg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
                + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} ~=~ \left(' + bas1 + bas2 + r' \right)^{'
-               + gzahl(Rational(zaehler, nenner)) + r'}')
+               + gzahl(Rational(zaehler, nenner), exp=True) + r'}')
         return aufg, lsg
 
     if anzahl != False:

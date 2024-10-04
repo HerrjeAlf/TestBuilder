@@ -103,44 +103,52 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-anz_ziffern = nzahl(3, 8)
-ziffern = [nzahl(1, 9)]
-ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-ziffern.append(nzahl(1, 9))
-print(ziffern)
-zahl = []
-k = 1
-ziffern.reverse()
-for step in range(len(ziffern) - 2):
-    zahl.append(ziffern[(step)])
-    if k % 3 == 0 and k != len(ziffern) - 2:
-        zahl.append(' ')
-    k += 1
-print(zahl)
-print(ziffern)
-zahl.extend((ziffern[-2:]))
-zahl.insert(-2, '.')
-aufg = ''
-for zeichen in zahl:
-    aufg = aufg + str(zeichen)
-lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-for zeichen in ziffern:
-    lsg = lsg + str(zeichen)
-lsg = lsg + r' \cdot 10^{' + gzahl(len(ziffern)-3) + '}'
-print(aufg)
-print(lsg)
+faktor = zzahl(1, 8) / 2
+xwert_2 = zzahl(1, 2)
+xwert_3 = xwert_2 + 1
+xwert_1 = xwert_2 - 1
 
-def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
-    exponent = math.floor(math.log10(zahl))
-    stellen = max(1,int(-exponent+15))
-    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+ywert_2 = zzahl(1, 3)
+ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
+ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
+fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2, 'x')
+           + vorz_str((faktor * (xwert_2 ** 2)) + ywert_2))
+fkt = faktor * (x - xwert_2) ** 2 + ywert_2
 
-print(min_float_to_str(Rational(1,12500000000000000000)))
+# Rekonstruktion der Funktion
+# Zeilen 1 bis 3 vom LGS:
 
+a1 = a ** 2
+b1 = a
+c1 = 1
+d1 = b
 
-def erste():
-    print('erste Funktion')
-    def zweite():
-        print('zweite Funktion')
+a2 = c ** 2
+b2 = c
+c2 = 1
+d2 = d
 
-erste.zweite()
+a3 = e ** 2
+b3 = e
+c3 = 1
+d3 = f
+
+# Zeile 4 und 5 vom LGS:
+
+a4 = 0
+b4 = a1 * b2 - a2 * b1
+c4 = a1 - a2
+d4 = a1 * d2 - a2 * d1
+
+a5 = 0
+b5 = a1 * b3 - a3 * b1
+c5 = a1 - a3
+d5 = a1 * d3 - a3 * d1
+
+# Zeile 6 vom LGS:
+
+b6 = 0
+c6 = b4 * c5 - b5 * c4
+d6 = b4 * d5 - b5 * d4
+
+print(c6)

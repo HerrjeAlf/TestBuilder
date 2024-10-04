@@ -487,8 +487,8 @@ def faires_spiel(nr, BE=[]):
     if gewinn != 0:
         lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
-               + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ ' + gzahl(preis_fair)
-               + r' ~\text{\texteuro}~sein \quad (3P)}')
+               + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
+               + gzahl(preis_fair) + r' ~\text{\texteuro}~sein \quad (3P)}')
         pkt += 3
     else:
         lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3P) \\')
@@ -502,8 +502,9 @@ def faires_spiel(nr, BE=[]):
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
                + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2P)} \\'
-               + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot ' + gzahl(N(wkt_proz,3))
-               + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ ' + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
+               + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot '
+               + gzahl(N(wkt_proz,3)) + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ '
+               + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
     if BE != []:
@@ -517,7 +518,7 @@ def faires_spiel(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
+def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
     # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -615,7 +616,8 @@ def vierfeldertafel_01(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
 
@@ -675,7 +677,8 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.extend((f'Es wird ein Passwort aus {auswahl_text} mit {gzahl(laenge)} Stellen erstellt, '
                         f'wobei sich die Zeichen {wiederholung} wiederholen dürfen. \n'
                         'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen und Sonderzeichen 33 Zeichen \n\n',
-                        str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Kombinationen für ein Passwort. \n\n'))
+                        str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Kombinationen für ein '
+                                                 'Passwort. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P)')
         liste_punkte.append(punkte)
         i += 1
@@ -696,7 +699,8 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

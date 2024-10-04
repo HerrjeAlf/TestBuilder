@@ -35,12 +35,6 @@ def packages(doc: Document):
 
 # Funktionen zur Darstellung von Zahlen
 
-
-def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
-    exponent = math.floor(math.log10(zahl))
-    stellen = max(1,int(-exponent+15))
-    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
-
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 
@@ -108,9 +102,11 @@ def ganz(k):
     else:
         return k
 
-def gzahl(k):
+def gzahl(k, exp=False):
     if type(k) == str:
         return k
+    if exp == True:
+        return '' if k == 1 else k
     if k % 1 == 0:
         return latex(int(k))
     else:
@@ -203,6 +199,12 @@ def vektor_kollinear(vec1, vec2):
         # print(element / lsg[0])
         if element / lsg[0] != 1:
             return False
+    return True
+
+def vektor_senk(vec1, vec2):
+    lsg = [vec1[k] * vec2[k] for k in range(len(vec1))]
+    if sum(lsg) != 0:
+        return False
     return True
 
 def vektor_max(vec, p):
@@ -427,3 +429,19 @@ def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden u
     fkt_abl_2 = collect(expand(diff(fkt, x, 2)), x)
 
     return fkt, fkt_abl_1, fkt_abl_2
+
+# keine Ahnung wo ich das noch brauche
+
+def stelle(liste, vec):
+    k = 0
+    for tuble in liste:
+        if vektor_vergleich(tuble, vec) == True:
+            return k
+        else:
+            k+=1
+    return print('Element nicht in Liste')
+def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
+    exponent = math.floor(math.log10(zahl))
+    stellen = max(1,int(-exponent+15))
+    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+
