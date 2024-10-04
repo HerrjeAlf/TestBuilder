@@ -414,33 +414,39 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_a = punkt_vektor(5)
         vektor_ab = punkt_vektor(5)
         vektor_b = np.array(vektor_a) + np.array(vektor_ab)
-        faktor = nzahl(1,9)/10
-        vektor_t = [vektor_a[0] + vektor_ab[0]*faktor,
-                    vektor_a[1] + vektor_ab[1]*faktor,
-                    vektor_a[2] + vektor_ab[2]*faktor]
+        faktor = nzahl(1,9)
+        vektor_t = [vektor_a[0] + vektor_ab[0]*faktor/10,
+                    vektor_a[1] + vektor_ab[1]*faktor/10,
+                    vektor_a[2] + vektor_ab[2]*faktor/10]
         vektor_at = np.array(vektor_t) - np.array(vektor_a)
         vektor_tb = vektor_b - np.array(vektor_t)
-        laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
-                            + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
-        ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
-        laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
-                            + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
-        ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
         aufgabe.append(str(liste_teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB?')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~ ), \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
                        + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
                        + r'~ ).} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r.} \\'
-                       + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~'
-                       + gzahl(N(faktor/(1-faktor),3)) + r' \\' + gzahl(vektor_at[1]) + r'~=~'
-                       + gzahl_klammer(vektor_tb[1]) + r' \cdot r \quad \to \quad r~=~' + gzahl(N(faktor/(1-faktor),3))
-                       + r' \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
-                       + r' \cdot r \quad \to \quad r~=~' + gzahl(N(faktor/(1-faktor),3)) + r' \\'
-                       + r' \quad \to \quad \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~'
+                       + r'der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
+                       + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
+                       + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
+                       + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
+                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \\'
+                       + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~ \frac{'
+                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[1]) + r'~=~'
+                       + gzahl_klammer(vektor_tb[1]) + r' \cdot r \quad \to \quad r~=~ \frac{'
+                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[2]) + r'~=~'
+                       + gzahl_klammer(vektor_tb[2]) + r' \cdot r \quad \to \quad r~=~ \frac{'
+                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + r' \quad \to \quad \mathrm{insgesamt~'
+                       + str(punkte) + r'~Punkte}')
         # alternative Variante
         '''
+        laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
+                            + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
+        ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
+        laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
+                            + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
+        ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
                        + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
