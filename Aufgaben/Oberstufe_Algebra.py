@@ -431,14 +431,14 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
                        + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
-                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \\'
-                       + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~ \frac{'
+                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad'
+                       +  r'\begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~ \frac{'
                        + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[1]) + r'~=~'
                        + gzahl_klammer(vektor_tb[1]) + r' \cdot r \quad \to \quad r~=~ \frac{'
                        + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[2]) + r'~=~'
                        + gzahl_klammer(vektor_tb[2]) + r' \cdot r \quad \to \quad r~=~ \frac{'
-                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + r' \quad \to \quad \mathrm{insgesamt~'
-                       + str(punkte) + r'~Punkte}')
+                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\ \end{matrix} \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         # alternative Variante
         '''
         laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
