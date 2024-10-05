@@ -212,7 +212,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     if 'c' in teilaufg:
         # Linearkombination von Vektoren überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 8
+        punkte = 9
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
         vektor_2 = [x_2, y_2, z_2] = np.array(punkt_vektor(5))

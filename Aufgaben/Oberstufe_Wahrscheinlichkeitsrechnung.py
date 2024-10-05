@@ -14,17 +14,17 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
     liste_bez = [f'{nr}']
     i = 0
     begriffe = {r' \mathrm{Zufallsversuch: ~ \hspace{30em}}':
-                    r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \quad (1P) \\',
+                    r' \mathrm{Zufallsversuch: \quad Ein~Versuch~dessen~Resultat~nicht~vorhersehbar~sind} \quad (1BE) \\',
                 r' \mathrm{Ergebnis ~ e_i : \hspace{30em}}':
-                    r' \mathrm{Ergebnis ~ e_i : \quad Die~möglichen~Resultate~des~Zufallsversuches} \quad (1P) \\',
+                    r' \mathrm{Ergebnis ~ e_i : \quad Die~möglichen~Resultate~des~Zufallsversuches} \quad (1BE) \\',
                 r' \mathrm{Ergebnisraum ~ \Omega : \hspace{30em}}':
-                    r' \mathrm{Ergebnisraum ~ \Omega : \quad Die~Menge~aller~möglichen~Ergebnisse} \quad (1P) \\',
+                    r' \mathrm{Ergebnisraum ~ \Omega : \quad Die~Menge~aller~möglichen~Ergebnisse} \quad (1BE) \\',
                 r' \mathrm{Ereignis ~ E: \hspace{30em}}':
-                    r' \mathrm{Ereignis ~ E: \quad Teilmenge~des~Ergebnisraumes} \quad (1P) \\',
+                    r' \mathrm{Ereignis ~ E: \quad Teilmenge~des~Ergebnisraumes} \quad (1BE) \\',
                 r' \mathrm{unmögliches~Ereignis: \hspace{30em}}':
-                    r' \mathrm{unmögliches~Ereignis: \quad Ergebnisse,~die~nicht~eintreten~können} \quad (1P) \\',
+                    r' \mathrm{unmögliches~Ereignis: \quad Ergebnisse,~die~nicht~eintreten~können} \quad (1BE) \\',
                 r' \mathrm{sicheres~Ereignis: \hspace{30em}}':
-                    r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \quad (1P) \\'}
+                    r' \mathrm{sicheres~Ereignis: \quad Ergebnisse~die~immer~eintreten} \quad (1BE) \\'}
 
     anzahl = len(begriffe) if anzahl > len(begriffe) else anzahl
     if BE != []:
@@ -270,9 +270,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                             + ereignis_2 + r', \quad ' + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
 
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                        r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'P) \qquad P(E_2) ~=~' + wkt2_str
-                        + r' \quad (' + gzahl(pkt2) + r'P) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \quad ('
-                        + gzahl(pkt5) + r'P) \qquad P(E_3) ~=~' + wkt3_str + r' \quad (' + gzahl(pkt3) + r'P)'))
+                        r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'BE) \qquad P(E_2) ~=~' + wkt2_str
+                        + r' \quad (' + gzahl(pkt2) + r'BE) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \quad ('
+                        + gzahl(pkt5) + r'BE) \qquad P(E_3) ~=~' + wkt3_str + r' \quad (' + gzahl(pkt3) + r'BE)'))
         punkte = pkt1 + pkt2 + pkt3 + pkt5
         liste_punkte.append(punkte)
         i += 1
@@ -282,11 +282,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if wkt5/wkt2 == wkt1:
-            lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3P) \\'
-                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabhängig} \quad (1P)')
+            lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3BE) \\'
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~unabhängig} \quad (1BE)')
         else:
-            lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3P) \\'
-                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1P)')
+            lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3BE) \\'
+                   + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
             aufgabe.append(str(liste_teilaufg[i])
                            + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
@@ -343,7 +343,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         table1.add_row(liste_wkt)
         table1.add_hline(2)
         loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + wkt_berechn + r' \\', table1,
-                        r' \mathrm{Tabelle~(' + gzahl(pkt) + r'P) }'))
+                        r' \mathrm{Tabelle~(' + gzahl(pkt) + r'BE) }'))
         punkte = 2*pkt + 1
         # erstellen vom Histogramm
         loeschen()
@@ -364,7 +364,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             ew_wert = ew_wert + x*y
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
-                       + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'P)')
+                       + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -386,9 +386,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        + 'der Zufallsgröße X. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
                        + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{E(X)}} \\'
-                       + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2P) \\'
+                       + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2BE) \\'
                        + r' \sigma (X) ~=~ \sqrt{' + gzahl((N(var_wert,3))) + '} ~=~ ' + gzahl(N(sqrt(var_wert),3))
-                       + r' \quad (2P)')
+                       + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -406,7 +406,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
-                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2P)')
+                       + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2BE)')
         liste_punkte.append(2)
         i += 1
 
@@ -427,7 +427,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        + latex(N(binomial(anzahl_1,anzahl_k)
                                  * binomial(anzahl_2,anzahl_n-anzahl_k)
                                  / binomial(20,anzahl_n),3) * 100)
-                       + r'\% \quad (2P)')
+                       + r'\% \quad (2BE)')
 
         liste_punkte.append(2)
         i += 1
@@ -444,7 +444,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
-                       + r' \% \quad (4P)')
+                       + r' \% \quad (4BE)')
 
         liste_punkte.append(4)
         i += 1
@@ -485,13 +485,13 @@ def faires_spiel(nr, BE=[]):
     preis = int(preis_fair - int(preis_fair/5))
     gewinn = N(preis*wkt-einsatz,3)
     if gewinn != 0:
-        lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3P) \\'
+        lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3BE) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
                + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
-               + gzahl(preis_fair) + r' ~\text{\texteuro}~sein \quad (3P)}')
+               + gzahl(preis_fair) + r' ~\text{\texteuro}~sein \quad (3BE)}')
         pkt += 3
     else:
-        lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3P) \\')
+        lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3BE) \\')
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Wurf mit zwei Würfeln kostet {gzahl(einsatz)}€ Einsatz. Ist {auswahl[0]} '
                f'der beiden Augenzahlen größer als {gzahl(auswahl[2])}, werden {gzahl(preis)}€ ausbezahlt. '
@@ -501,7 +501,7 @@ def faires_spiel(nr, BE=[]):
                r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
                + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
-               + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2P)} \\'
+               + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2BE)} \\'
                + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot '
                + gzahl(N(wkt_proz,3)) + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ '
                + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
@@ -589,11 +589,11 @@ def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cap H \vert }'
                        + r'{ \vert M \vert } ~=~ \frac{' + gzahl(M_H) + '}{' + gzahl(M) + '} ~=~ '
                        + gzahl(Rational(M_H,M)) + '~=~' + gzahl(Rational(M_H*100,M))
-                       + r' \%  \quad (2P)  \quad und \quad P_{P}(H) = \frac{ \vert P \cap H \vert }'
+                       + r' \%  \quad (2BE)  \quad und \quad P_{P}(H) = \frac{ \vert P \cap H \vert }'
                        + r'{ \vert P \vert } ~=~ \frac{' + gzahl(P_H) + '}{' + gzahl(P) + '} ~=~ '
                        + gzahl(Rational(P_H,P)) + '~=~' + gzahl(Rational(P_H*100,P))
-                       + r' \% \quad (2P) } \\ \mathrm{Die~Gruppe,~welche~die~Medikamente~erhalten~hat,~'
-                       + r'hat~eine~höhere~Heilungschance. \quad (1P)} \\'
+                       + r' \% \quad (2BE) } \\ \mathrm{Die~Gruppe,~welche~die~Medikamente~erhalten~hat,~'
+                       + r'hat~eine~höhere~Heilungschance. \quad (1BE)} \\'
                        + r'\mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
         i += 1
@@ -679,7 +679,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
                         'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen und Sonderzeichen 33 Zeichen \n\n',
                         str(liste_teilaufg[i]) + ') Berechne die Anzahl der möglichen Kombinationen für ein '
                                                  'Passwort. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N= ' + lsg + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -693,7 +693,7 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
                                                 ' zum Ausprobieren aller Kombinationen. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad t ~=~ \frac{' + latex(N(ergebnis,3)) + r'}{ '
                        + latex(N(grafikkarten[auswahl_g][2],3)) + r' \frac{1}{s} } ~=~'
-                       + latex(zeit) + r's \quad (2P)')
+                       + latex(zeit) + r's \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -735,7 +735,7 @@ def lotto_modell_01(nr, BE=[]):
                + r'~=~' + latex(N(binomial(defekte, ziehungen_defekt)
                                   * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
                                   / binomial(anzahl, ziehungen), 3) * 100)
-               + r'\% \quad (3P)']
+               + r'\% \quad (3BE)']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
