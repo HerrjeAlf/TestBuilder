@@ -2315,7 +2315,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
         aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~ ...' + vors[ausw + k][0] + 'm^2')
         lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
-               + gzahl(vors[ausw][1]) + '})^2}{(10^{' + gzahl(vors[ausw+k][1]*2) + r'})^2} \cdot (10^{'
+               + gzahl(vors[ausw][1]) + '})^2}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^2} \cdot (10^{'
                + gzahl(vors[ausw+k][1]) + r'})^2 ~ m^2 ~=~' + gzahl(zahl*10**(2*(vors[ausw][1]-vors[ausw+k][1])))
                + '~' + vors[ausw + k][0] + 'm^2')
         return aufg, lsg

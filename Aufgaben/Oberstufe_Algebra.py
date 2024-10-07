@@ -432,13 +432,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
                        + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
                        + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad'
-                       +  r'\begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0]) + r' \cdot r \quad \to \quad r~=~ \frac{'
-                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[1]) + r'~=~'
-                       + gzahl_klammer(vektor_tb[1]) + r' \cdot r \quad \to \quad r~=~ \frac{'
-                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\' + gzahl(vektor_at[2]) + r'~=~'
-                       + gzahl_klammer(vektor_tb[2]) + r' \cdot r \quad \to \quad r~=~ \frac{'
-                       + gzahl(faktor) + '}{' + gzahl(10-faktor) + r'} \\ \end{matrix} \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r'\begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
+                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+                       + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
+                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+                       + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
+                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         # alternative Variante
         '''
         laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
@@ -449,10 +449,10 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
                        + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
-                       + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (2P) \\'
+                       + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (1P) \\'
                        + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
                        + ')^2 ~+~(' + gzahl(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + gzahl(vektor_b[2])
-                       + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (2P) \\'
+                       + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (1P) \\'
                        + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
                        + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
@@ -907,13 +907,17 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     if 'e' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
-        pass
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 7
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad noch programmieren\\')
+        liste_punkte.append(punkte_aufg)
+        i += 1
 
     if 'f' in teilaufg:
         # Schnittwinkel zweier gegebener Geraden berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
-        liste_punkte.append(punkte_aufg)
         punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
         punkt_e =  [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
         p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
@@ -961,11 +965,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
                        + r'} \Big) ~=~' + gzahl(N(np.degrees(np.arccos(abs(sp_vp)/(l_v*l_p))),3))
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+        liste_punkte.append(punkte_aufg)
         i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
 
