@@ -276,6 +276,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
     grafiken_loesung = []
 
     p = random.choice([0, 1])
+    p = 0 if auswahl_seite != None else p
 
     if 'a' in teilaufg:
         # Hier sollen die SuS die gegebenen Verhältnisgleichungen für sin, cos und tan vervollständigen.
@@ -301,6 +302,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
     if 'b' in teilaufg:
         # Hier sollen die Schüler*innen mithilfe der gegebenen Daten die restlichen Größen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        p = 0 if auswahl_seite != None else p
         auswahl_seite = random.randint(0,2) if auswahl_seite == None else auswahl_seite
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, '
                        + 'wenn außer dem rechten Winkel, noch folgende Werte gegeben sind.')
