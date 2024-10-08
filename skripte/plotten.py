@@ -12,7 +12,7 @@ class AngleAnnotation(Arc):
     """
     Draws an arc between two vectors which appears circular in display space.
     """
-    def __init__(self, xy, p1, p2, size=75, unit="points", ax=None,
+    def __init__(self, xy, p1, p2, size=100, unit="points", ax=None,
                  text="", textposition="inside", text_kw=None, **kwargs):
         """
         Parameters
@@ -77,7 +77,7 @@ class AngleAnnotation(Arc):
     def get_size(self):
         factor = 1
         if self.unit == "points":
-            factor = self.ax.figure.dpi / 72.
+            factor = self.ax.figure.dpi / 150.
         elif self.unit[:4] == "axes":
             b = TransformedBbox(Bbox.unit(), self.ax.transAxes)
             dic = {"max": max(b.width, b.height),
@@ -174,25 +174,25 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     l2 = [pkt[0],pkt[2]]
     l3 = [pkt[0],pkt[1]]
 
-    name_pkt1 = ax.annotate(pkt_bez[0], xy=pkt[0], xycoords='data', xytext=(-10,0),  textcoords='offset points', fontsize=12)
-    name_pkt2 = ax.annotate(pkt_bez[1], xy=pkt[1], xycoords='data', xytext=(+2,0),  textcoords='offset points', fontsize=12)
-    name_pkt3 = ax.annotate(pkt_bez[2], xy=pkt[2], xycoords='data', xytext=(+2,+2),  textcoords='offset points', fontsize=12)
+    name_pkt1 = ax.annotate(pkt_bez[0], xy=pkt[0], xycoords='data', xytext=(-10,0),  textcoords='offset points', fontsize=18)
+    name_pkt2 = ax.annotate(pkt_bez[1], xy=pkt[1], xycoords='data', xytext=(+2,0),  textcoords='offset points', fontsize=18)
+    name_pkt3 = ax.annotate(pkt_bez[2], xy=pkt[2], xycoords='data', xytext=(+2,+2),  textcoords='offset points', fontsize=18)
 
     line1, = ax.plot(*zip(*l1), 'k')
     name_line1 = ax.annotate(st[2], xy=((pkt[1][0]+pkt[0][0])/2,(pkt[1][1]+pkt[0][1])/2), xycoords='data',
-                             xytext=(+8,+8),  textcoords='offset points', fontsize=12)
+                             xytext=(+8,+8),  textcoords='offset points', fontsize=18)
     line2, = ax.plot(*zip(*l2), 'k')
     name_line2 = ax.annotate(st[0], xy=((pkt[2][0]+pkt[1][0])/2,(pkt[2][1]+pkt[1][1])/2), xycoords='data',
-                             xytext=(+4,+4),  textcoords='offset points', fontsize=12)
+                             xytext=(+4,+4),  textcoords='offset points', fontsize=18)
     line3 = ax.plot(*zip(*l3), 'k')
     name_line3 = ax.annotate(st[1], xy=((pkt[0][0]+pkt[2][0])/2,(pkt[0][1]+pkt[2][1])/2), xycoords='data',
-                             xytext=(+4,+4),  textcoords='offset points', fontsize=12)
+                             xytext=(+4,+4),  textcoords='offset points', fontsize=18)
 
     # point, = ax.plot(*p1, marker="o")
 
-    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=300, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels')
-    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=300, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels')
-    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=300, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels')
+    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=600, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
+    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=600, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
+    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=600, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
     # plt.show()
     return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=400)
 
