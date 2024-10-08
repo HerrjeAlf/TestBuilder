@@ -775,7 +775,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     def polynom():  # erzeugt eine Funktion und deren Ableitungen mit p Summanden
         p = nzahl(1, 2)
         fkt = nzahl(1,9)
-        koeffizienten = faktorliste(1, 15, p)
+        koeffizienten = faktorliste(p, 1, 15)
         potenzen = exponenten(p)
         pkt = p
         for koeffizient in koeffizienten:
