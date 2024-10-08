@@ -1089,9 +1089,9 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Seilbahn mit dem Hügel. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') f^{ \prime } (x) ~=~ ' + fkt_abl_str + r' \quad \to \quad f^{ \prime } ('
                        + str(N(x_werte_tp[0],3)) + r') ~=~ ' + str(N(m_fkt_x_tp,3))
-                       + r' \quad (1BE) \quad \to \quad' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
+                       + r' \quad (1BE) \quad \to \quad ' + r' \alpha ~=~ arctan(' + str(N(m_fkt_x_tp,3))+ ') ~=~'
                        + latex(winkel_alpha) + r'^\circ \quad (2BE) \\'
-                       + r' t^{ \prime}(x) ~=~' + str(N(m_tangente,3)) + r' \quad \to \quad'
+                       + r' t^{ \prime}(x) ~=~' + str(N(m_tangente,3)) + r' \quad \to \quad '
                        + r'\beta ~=~ arctan(' + str(N(m_tangente,3))+ ') ~=~' + latex(winkel_beta)
                        + r'^\circ \quad (2BE) \\' + loesung_1)
         pkt += 6
@@ -1106,7 +1106,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                                           ' Steigung des Hügels besitzt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{aus~} f^{ \prime } (' + str(N(x_werte_tp[0],3))
                        + ') ~=~ ' + str(N(m_fkt_x_tp,3)) + r' \mathrm{~und~} P_1(' + str(N(x_werte_tp[0],3))
-                       + r' \vert' + str(N(y_wert_tp,3)) + r') \mathrm{~folgt~} \quad \to \quad'
+                       + r' \vert' + str(N(y_wert_tp,3)) + r') \mathrm{~folgt~} \quad \to \quad '
                        + str(N(y_wert_tp,3)) + '~=~' + str(N(m_fkt_x_tp,3)) + r' \cdot '
                        + gzahl_klammer(N(x_werte_tp[0],3)) + r'+~n \quad \vert '
                        + vorz_str(N(-1*m_fkt_x_tp*x_werte_tp[0],3)) + r' \quad n~=~'
@@ -1202,7 +1202,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
         loesung_1 = loesung_liste[Aufgabe]
         aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den Wert x, an der die Funktion f die Steigung m hat. ')
         aufgabe.append(r' f(x)~=~' + fkt_str + r' \quad \mathrm{und} \quad m~=~' + str(steigung) + r' \hspace{20em} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1)
         liste_punkte.append(3)
         i += 1
 
@@ -1217,11 +1217,11 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den Wert von a, für den sich beide Funktionen berühren.')
         aufgabe.append(r'f(x)~=~' + fkt_str_parabel + r' \quad \mathrm{und} \quad g(x)~=~' + fkt_str_gerade
                        + r' \hspace{15em}')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad '
                          + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
                          + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
                          + r' \quad (3BE) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
-                         + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad'
+                         + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad '
                          + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
                          + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
                          + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
@@ -2332,7 +2332,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
                    + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
         else:
-            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
+            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
                                                           r'\mathrm{nicht~symmetrisch} \quad (3BE)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg)
@@ -2435,7 +2435,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 S3 = r'S_{x_3}(-' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad '
                 S4 = r'S_{x_4}(' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad \mathrm{und} \quad '
             else:
-                S3 = r' S_{x_3}( - \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad'
+                S3 = r' S_{x_3}( - \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad '
                 S4 = r' S_{x_4}( \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad \mathrm{und} \quad '
 
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Lösung~durch~Substitution~von}~z=x^2:'
@@ -2668,7 +2668,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp1_fkt_1) + '(x' + vorz_str(-1*xwert_wp1) + ')'
                                + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad '
                                + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                                + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                                + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(N(-1 / ywert_wp1_fkt_1,3)) + '(x'
@@ -2706,7 +2706,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl(ywert_wp2_fkt_1) + '(x' + vorz_str(-1*xwert_wp2) + ')'
                                + vorz_str(ywert_wp2) + '~=~' + vorz_v_aussen(ywert_wp2_fkt_1, 'x')
                                + vorz_str(N(-1 * ywert_wp2_fkt_1 * ((nst_12 + nst_34)/6) + ywert_wp2, 3))
-                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                               + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad '
                                + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                                + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                                + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(N(-1 / ywert_wp2_fkt_1,3)) + '(x'
@@ -2903,7 +2903,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str
                    + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3BE) \\')
         else:
-            lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad'
+            lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad '
                                                        r'\mathbf{nicht~symmetrisch} \quad (3BE) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
@@ -3128,7 +3128,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Ortskurve der Wendepunkte der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
                        + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
-                       + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad' + abhängigkeit
+                       + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
                        + r'\quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
                        + gzahl(ywert_wp_dezimal/a**3) + r' \Big(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                        + r'x \Big)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
@@ -4034,7 +4034,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
                    + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
         else:
-            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad'
+            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
                                                           r'\mathrm{nicht~symmetrisch} \quad (3BE)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg)
@@ -4221,7 +4221,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                            + vorz_v_aussen(ywert_wp1_fkt_1, '(x') + vorz_v_innen(-1 * N(xwert_wp1, 3), ')')
                            + vorz_str(ywert_wp1) + '~=~' + vorz_v_aussen(ywert_wp1_fkt_1, 'x')
                            + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
-                           + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad'
+                           + r' \quad (3BE) \\ \mathrm{Die~Steigung~der~Normale~am~Wendepunkt~wird~berechnet~mit \quad '
                            + r' m_n ~=~ \frac{-1}{f^{ \prime }(x_{w})} \quad und~daraus~folgt:} \\'
                            + r'n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
                            + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1 / ywert_wp1_fkt_1, '(x')

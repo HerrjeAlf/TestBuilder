@@ -262,7 +262,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if 'b' in teilaufg:
             aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für'
-                            + ' die folgenden Ereignisse.', r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad'
+                            + ' die folgenden Ereignisse.', r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad '
                             + r' und \quad E_3: ~}' + ereignis_3))
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
@@ -500,7 +500,7 @@ def faires_spiel(nr, BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '
                r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
-               + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad'
+               + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad '
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2BE)} \\'
                + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot '
                + gzahl(N(wkt_proz,3)) + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ '
