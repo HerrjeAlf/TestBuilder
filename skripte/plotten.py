@@ -174,7 +174,7 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
     l2 = [pkt[0],pkt[2]]
     l3 = [pkt[0],pkt[1]]
 
-    name_pkt1 = ax.annotate(pkt_bez[0], xy=pkt[0], xycoords='data', xytext=(-10,0),  textcoords='offset points', fontsize=18)
+    name_pkt1 = ax.annotate(pkt_bez[0], xy=pkt[0], xycoords='data', xytext=(-18,0),  textcoords='offset points', fontsize=18)
     name_pkt2 = ax.annotate(pkt_bez[1], xy=pkt[1], xycoords='data', xytext=(+2,0),  textcoords='offset points', fontsize=18)
     name_pkt3 = ax.annotate(pkt_bez[2], xy=pkt[2], xycoords='data', xytext=(+2,+2),  textcoords='offset points', fontsize=18)
 
@@ -186,13 +186,13 @@ def dreieck_zeichnen(pkt, pkt_bez, st, wk, name):
                              xytext=(+4,+4),  textcoords='offset points', fontsize=18)
     line3 = ax.plot(*zip(*l3), 'k')
     name_line3 = ax.annotate(st[1], xy=((pkt[0][0]+pkt[2][0])/2,(pkt[0][1]+pkt[2][1])/2), xycoords='data',
-                             xytext=(+4,+4),  textcoords='offset points', fontsize=18)
+                             xytext=(-4,+8),  textcoords='offset points', fontsize=18)
 
     # point, = ax.plot(*p1, marker="o")
 
-    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=600, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
-    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=600, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
-    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=600, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
+    am1 = AngleAnnotation(pkt[0], l3[1], l2[1], ax=ax, size=500, text=r'$' + wk[0] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
+    am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=500, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
+    am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
     # plt.show()
     return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=400)
 

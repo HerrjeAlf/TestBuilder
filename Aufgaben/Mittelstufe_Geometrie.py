@@ -302,10 +302,10 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
         # Hier sollen die Schüler*innen mithilfe der gegebenen Daten die restlichen Größen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         auswahl_seite = random.randint(0,2) if auswahl_seite == None else auswahl_seite
-        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, '
-                                + 'wenn außer dem rechten Winkel noch $' + wk[p] + '=' + gzahl(wk_werte[p])
-                                + r'$ und $' + st[auswahl_seite] + '=' + gzahl(st_werte[auswahl_seite])
-                                + '$ cm  gegeben ist.'), '\n\n'))
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, '
+                       + 'wenn außer dem rechten Winkel, noch folgende Werte gegeben sind.')
+        aufgabe.append(wk[p] + '~=~' + gzahl(wk_werte[p]) + r'^{ \circ } \quad \mathrm{und} \quad ' + st[auswahl_seite]
+                       + '~=~' + gzahl(st_werte[auswahl_seite]) + 'cm')
         if p == 0:
             if auswahl_seite == 0:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
