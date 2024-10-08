@@ -8,17 +8,16 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Klasse = '13'
-Thema = 'Kurvendiskussion'
+Klasse = '10f'
+Thema = 'Sin, Kos, Tan'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[aenderungsrate(1),
-                 kurvendiskussion_polynome(2, ['c']),
-                 kurvendiskussion_polynome(3, ['c'], grad=4)],
-                [grafisches_ableiten(4)]]
+    Aufgaben = [[verhaeltnisgleichgungen(1, auswahl_seite=0),
+                 verhaeltnisgleichgungen(2, auswahl_seite=1)],
+                 [verhaeltnisgleichgungen(3, auswahl_seite=2)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
