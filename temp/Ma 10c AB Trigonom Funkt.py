@@ -15,9 +15,9 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[verhaeltnisgleichgungen(1, auswahl_seite=0),
-                 verhaeltnisgleichgungen(2, auswahl_seite=1)],
-                 [verhaeltnisgleichgungen(3, auswahl_seite=2)]]
+    Aufgaben = [[verhaeltnisgleichgungen(1, ['a'], auswahl_seite=0),
+                 verhaeltnisgleichgungen(2, ['a'], auswahl_seite=1),
+                 verhaeltnisgleichgungen(3, ['a'], auswahl_seite=2)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
