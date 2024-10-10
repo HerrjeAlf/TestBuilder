@@ -23,14 +23,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[brueche_erweitern(1), brueche_kuerzen(2), brueche_ergaenzen(3), bruchteile_berechnen(4),
-                 brueche_add_subr(5, ['e', 'j']), brueche_mul_div(6, ['b', 'c', 'e', 'f']),
-                 potenzgesetze(7), potenzgesetz_eins(8, ['d', 'g'], anzahl=3)],
-                [potenzgesetz_zwei(9, ['d', 'g', 'i', 'j']),
-                 potenzgesetz_eins_erw(10, ['f', 'h', 'i', 'j']),
-                 potenzgesetz_eins_mehrfach(11, ['c', 'e', 'g']),
-                 potenzgesetz_zwei_erw(12, ['f', 'h', 'i', 'j']),
-                 potenzgesetz_drei_vier(13, ['c', 'e'])]]
+    Aufgaben = [[]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

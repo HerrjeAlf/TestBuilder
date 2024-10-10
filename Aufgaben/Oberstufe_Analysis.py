@@ -1586,7 +1586,7 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     table2.add_hline(2, 7)
 
     # Aufgaben und Lösungen
-    loesung.append(r'\mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
+    loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
                    + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) } \\'
                    + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                    + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
@@ -2942,8 +2942,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{durch~probieren:} ~ x_2 ~=~'
-                                                 + nst_2_str + r'~folgt:} \quad (' + fkt_str
+                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{durch~probieren:} \quad x_2 ~=~ '
+                                                 + nst_2_str + r'\quad \to \quad (' + fkt_str
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))
         loesung.append(table2)
