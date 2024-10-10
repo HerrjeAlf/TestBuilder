@@ -15,7 +15,7 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Test Einheiten umrechnen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
@@ -23,7 +23,9 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[]]
+    Aufgaben = [[in_wiss_schreibweise_umf(1),
+                 wiss_schreibweise_umf(2),
+                 einheiten_umrechnen(3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
