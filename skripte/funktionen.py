@@ -106,7 +106,8 @@ def gzahl(k, exp=False):
     if type(k) == str:
         return k
     if exp == True:
-        return '' if k == 1 else k
+        if k == 1:
+            return ''
     if k % 1 == 0:
         return latex(int(k))
     else:

@@ -2940,10 +2940,9 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         table2.add_row('', NoEscape('$' + gzahl(fkt_a3) + '$'),
                        NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gzahl(fkt_c1*a**2) + '$'), '0')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion, '
-                                                f'wenn eine Nullstelle bei {nst_2_str} ist. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{mit~x_2='
+                                                 + fkt_str + r' \quad (1BE) \\ \mathrm{durch~probieren:} ~ x_2 ~=~'
                                                  + nst_2_str + r'~folgt:} \quad (' + fkt_str
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))

@@ -41,7 +41,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
 
     if random.random() < 0.5:
         vektor_ac = random.choice(vektoren_auswahl)
-        while vektor_ac == vektor_ab:
+        while vektor_vergleich(vektor_ac, vektor_ab) == True:
             vektor_ac = random.choice(vektoren_auswahl)
         laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ac)) + '}' + '~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_ac),3))))
@@ -62,7 +62,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
 
     else:
         vektor_bc = random.choice(vektoren_auswahl)
-        while vektor_bc == vektor_ab:
+        while vektor_vergleich(vektor_bc, vektor_ab) == True:
             vektor_bc = random.choice(vektoren_auswahl)
         laenge_vektor_bc = r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_bc),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
