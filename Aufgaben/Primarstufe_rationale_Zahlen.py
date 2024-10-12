@@ -2282,7 +2282,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
             k = 2
             faktor = random.choice([100,1000,10000])
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~ in ~' + vors[ausw + k][0] + ausw_gr)
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + vors[ausw + k][0] + ausw_gr)
         lsg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
                + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
                + r'}' + '~' + ausw_gr + '~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~'
@@ -2298,7 +2298,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
             k = 2
             faktor = random.choice([100,1000,10000])
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm ~ in ~' + vors[ausw + k][0] + 'm')
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm ~=~ ...' + vors[ausw + k][0] + 'm')
         lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r' m ~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
                + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
                + r'}~ m ~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~' + vors[ausw + k][0] + 'm')
@@ -2313,7 +2313,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
             k = 2
             faktor = random.choice([10**2,10**4,10**6])
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~ in ~' + vors[ausw + k][0] + 'm^2')
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~ ...' + vors[ausw + k][0] + 'm^2')
         lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
                + gzahl(vors[ausw][1]) + '})^2}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^2} \cdot (10^{'
                + gzahl(vors[ausw+k][1]) + r'})^2 ~ m^2 ~=~' + gzahl(zahl*10**(2*(vors[ausw][1]-vors[ausw+k][1])))
@@ -2329,7 +2329,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
             k = 1
             faktor = random.choice([10**3,10**6])
         zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~ in ~' + vors[ausw + k][0] + 'm^3')
+        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~ ...' + vors[ausw + k][0] + 'm^3')
         lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
                + gzahl(vors[ausw][1]) + '})^3}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^3} \cdot (10^{'
                + gzahl(vors[ausw+k][1]) + r'})^3 ~m^3 ~=~' + gzahl(zahl*10**(3*(vors[ausw][1] - vors[ausw+k][1])))
