@@ -18,8 +18,8 @@ liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
 def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
-    # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung
-    # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Der Parameter "ks=" legt fest, ob die Aufgabe ein leeres dreidimensionales Koordinatensystem oder kariertes Papier enthält. Der Parameter kann "None", "True" oder "False" sein". Standardmäßig ist "ks=None" und somit gibt kein Koordinatensystem und kein kariertes Papier.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -151,7 +151,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None, BE=[]):
-    # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen
+    # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -506,8 +507,70 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def vektoren_koll_ortho(nr, BE=[]):
+    # Hier sollen die SuS Vektoren zuordnen, die kollinear oder orthogonal sind.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    vec_a = vec_b = vec_c = [ax, ay, az] = punkt_vektor(4)
+    # Vektor der kollinear zu Vektor a ist
+    fakt_a = zzahl(3, 10) / 2
+    vec_k = [kx, ky, kz] = fakt_a * vec_a
+    # Vektor der Orthogonal zu Vektor a ist
+    vx, vy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
+    vz = (ax * vx + ay * vy) / (-1* az)
+    vec_s = [sx, sy, sz] = vektor_kürzen([vx, vy, vz])
+    # beliebige Vektoren
+    while vektor_kollinear(vec_a, vec_b) == True or vektor_senk(vec_a, vec_b) == True:
+        vec_b = [bx, by, bz] = punkt_vektor(3)
+    while vektor_kollinear(vec_a, vec_c) == True or vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
+        vec_c = [cx, cy, cz] = punkt_vektor(3)
+    ausw = random.sample([vec_b, vec_c, vec_s, vec_k], 4)
+
+    ausw_k = stelle(ausw, vec_k)
+    ausw_s = stelle(ausw, vec_s)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               NoEscape(r'Nennen Sie alle Vektoren, die zum Vektor $ \overrightarrow{a} $ kollinear bzw. '
+                        r'orthogonal sind. Begründen Sie ihre Zuordnung.'),
+               r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\'
+               + gzahl(az) + r' \\' + r' \end{pmatrix} ~ ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
+               + gzahl(ausw[0][0]) + r' \\' + gzahl(ausw[0][1]) + r' \\' + gzahl(ausw[0][2]) + r' \\'
+               + r' \end{pmatrix} ~ ~ \overrightarrow{c} ~=~\begin{pmatrix}'
+               + gzahl(ausw[1][0]) + r' \\' + gzahl(ausw[1][1]) + r' \\' + gzahl(ausw[1][2]) + r' \\'
+               + r' \end{pmatrix} ~ ~ \overrightarrow{d} ~=~\begin{pmatrix}'
+               + gzahl(ausw[2][0]) + r' \\' + gzahl(ausw[2][1]) + r' \\' + gzahl(ausw[2][2]) + r' \\'
+               + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{e} ~=~\begin{pmatrix}'
+               + gzahl(ausw[3][0]) + r' \\' + gzahl(ausw[3][1]) + r' \\' + gzahl(ausw[3][2]) + r' \\'
+               + r' \end{pmatrix} \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_k+1] + '} ~ist~kollinear~zu~'
+               + r'\overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
+               + r' \\' + r' \end{pmatrix} ~=~ ' + gzahl(fakt_a) + r' \cdot \begin{pmatrix} ' + gzahl(ax) + r' \\'
+               + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3P) \\'
+               + r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_s + 1] + '} ~ist~ortogonal~zu~'
+               + r'\overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
+               + r' \cdot ' + gzahl_klammer(sy) + '+' + gzahl_klammer(az) + r' \cdot ' + gzahl_klammer(sz)
+               + r' ~=~ 0 \quad (3P)']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    pkt = 6
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [pkt]
+        liste_punkte = BE
+    else:
+        liste_punkte = [pkt]
+
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
-    # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade
+    # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -604,7 +667,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, BE=[]):
-    # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden
+    # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -978,7 +1043,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=[]):
-    # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene
+    # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "t_in_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E liegt "t_in_ebene=True" oder auch nicht "t_in_ebene=False".  Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
@@ -1178,7 +1245,10 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False, BE=[]):
-    # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen
+    # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "form=" kann die Form der Ebenengleichung festgelegt werden. Sie kann "form="normalenform" oder "form=koordinatenform" sein. Standardmäßig wird die Form zufällig ausgewählt.
+    # Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -1270,7 +1340,9 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[]):
-    # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung
+    # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung.# Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "g_in_E=" kann die Lagebeziehung der Geraden g zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -1468,7 +1540,9 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
-    # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung
+    # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "F_in_E=" kann die Lagebeziehung der Ebene F zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -1674,63 +1748,3 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # in Entwicklung
-
-def vektoren_koll_ortho(nr, BE=[]):
-    # Hier sollen die SuS Vektoren zuordnen, die kollinear oder orthogonal sind.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-
-    liste_bez = [f'{str(nr)}']
-    i = 0
-    vec_a = vec_b = vec_c = [ax, ay, az] = punkt_vektor(4)
-    # Vektor der kollinear zu Vektor a ist
-    fakt_a = zzahl(3, 10) / 2
-    vec_k = [kx, ky, kz] = fakt_a * vec_a
-    # Vektor der Orthogonal zu Vektor a ist
-    vx, vy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
-    vz = (ax * vx + ay * vy) / (-1* az)
-    vec_s = [sx, sy, sz] = vektor_kürzen([vx, vy, vz])
-    # beliebige Vektoren
-    while vektor_kollinear(vec_a, vec_b) == True or vektor_senk(vec_a, vec_b) == True:
-        vec_b = [bx, by, bz] = punkt_vektor(3)
-    while vektor_kollinear(vec_a, vec_c) == True or vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
-        vec_c = [cx, cy, cz] = punkt_vektor(3)
-    ausw = random.sample([vec_b, vec_c, vec_s, vec_k], 4)
-
-    ausw_k = stelle(ausw, vec_k)
-    ausw_s = stelle(ausw, vec_s)
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               NoEscape(r'Nennen Sie alle Vektoren, die zum Vektor $ \overrightarrow{a} $ kollinear bzw. '
-                        r'orthogonal sind. Begründen Sie ihre Zuordnung.'),
-               r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\'
-               + gzahl(az) + r' \\' + r' \end{pmatrix} ~ ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
-               + gzahl(ausw[0][0]) + r' \\' + gzahl(ausw[0][1]) + r' \\' + gzahl(ausw[0][2]) + r' \\'
-               + r' \end{pmatrix} ~ ~ \overrightarrow{c} ~=~\begin{pmatrix}'
-               + gzahl(ausw[1][0]) + r' \\' + gzahl(ausw[1][1]) + r' \\' + gzahl(ausw[1][2]) + r' \\'
-               + r' \end{pmatrix} ~ ~ \overrightarrow{d} ~=~\begin{pmatrix}'
-               + gzahl(ausw[2][0]) + r' \\' + gzahl(ausw[2][1]) + r' \\' + gzahl(ausw[2][2]) + r' \\'
-               + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{e} ~=~\begin{pmatrix}'
-               + gzahl(ausw[3][0]) + r' \\' + gzahl(ausw[3][1]) + r' \\' + gzahl(ausw[3][2]) + r' \\'
-               + r' \end{pmatrix} \\']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
-               r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_k+1] + '} ~ist~kollinear~zu~'
-               + r'\overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
-               + r' \\' + r' \end{pmatrix} ~=~ ' + gzahl(fakt_a) + r' \cdot \begin{pmatrix} ' + gzahl(ax) + r' \\'
-               + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3P) \\'
-               + r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_s + 1] + '} ~ist~ortogonal~zu~'
-               + r'\overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
-               + r' \cdot ' + gzahl_klammer(sy) + '+' + gzahl_klammer(az) + r' \cdot ' + gzahl_klammer(sz)
-               + r' ~=~ 0 \quad (3P)']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-    pkt = 6
-    if BE != []:
-        if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [pkt]
-        liste_punkte = BE
-    else:
-        liste_punkte = [pkt]
-
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
