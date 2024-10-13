@@ -3654,6 +3654,168 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, BE=[]):
+    # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion mit einem Parameter durchführen.
+    # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.
+    # Mit dem Parameter 'verschiebung=' kann die Verschiebung der ersten Exponentialfunktion (ax^2*exp(bx+2)+c) auf der y-Achse festgelegt werden. Standardmäßig ist die 'verschiebung=True' und die Funktion ist auf der y-Achse verschoben bzw. besitzt die Gleichung eine Konstante. Wird 'verschiebung=None' gesetzt, besitzt die e-Funktion keine Konstante.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    c = zzahl(1, 10) / 5
+    n1 = nzahl(1, 10) / 2
+    a = n1 * c
+    n2 = nzahl(1, 10)
+    b = -1 * a * n2
+    nst = -1 / c - b / a
+
+    while nst * 10 % 1 != 0:
+        c = zzahl(1, 10) / 5
+        n1 = nzahl(1, 10) / 2
+        a = n1 * c
+        n2 = nzahl(1, 10)
+        b = -1 * a * n2
+        nst = -1 / c - b / a
+
+    wp = -(2 * a + b * c) / a * c
+
+    fkt = (a * x + b) * exp(c * x)
+    fkt_b = (a * (x - n2)) * exp(c * x)
+    fkt_str = '(' + vorz_v_aussen(a,r'x + b ) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
+    fkt_1_str_zw = (gzahl(a) + r' \cdot e^{' + vorz_v_aussen(c,'x') + r'} + ('
+                    + vorz_v_aussen(a, r'x + b) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
+                    + r' \cdot ' + gzahl_klammer(c))
+    fkt_1_str = (r' \left( ' + vorz_v_aussen( a * c ,r'x') + vorz_str(a) + vorz_v_innen(c, r'~ b \right) \cdot e^{'
+                 + vorz_v_aussen(c,'x') + r'}'))
+    fkt_2_str_zw = (gzahl(a * c) + r' \cdot e^{' + vorz_v_aussen(c,'x') + r'} + \left( '
+                    + vorz_v_aussen(a * c,r'x') + vorz_str(a) + vorz_v_innen(c, r'~ b \right) \cdot e^{'
+                    + vorz_v_aussen(c,'x') + r'}') + r' \cdot ' + gzahl_klammer(c))
+    fkt_2_str = (r' \left( ' + vorz_v_aussen( a * c**2 ,r'x') + vorz_str(2*a*c)
+                 + vorz_v_innen(c**2, r'~ b \right) \cdot e^{' + vorz_v_aussen(c,'x') + r'}'))
+    fkt_3_str_zw = (gzahl(a * c**2) + r' \cdot e^{' + vorz_v_aussen(c,'x') + r'} + \left( '
+                    + vorz_v_aussen(a * c**2,r'x') + vorz_str(2*a*c)
+                    + vorz_v_innen(c**2, r'~ b \right) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
+                    + r' \cdot ' + gzahl_klammer(c))
+    fkt_3_str = (r' \left( ' + vorz_v_aussen( a * c**3 ,r'x') + vorz_str(3*a*c**2)
+                 + vorz_v_innen(c**3, r'~ b \right) \cdot e^{' + vorz_v_aussen(c,'x') + r'}'))
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
+               r' f(x)~=~' + fkt_str]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if len([element for element in ['a', 'e'] if element in teilaufg]) > 0:
+        # Hier sollen die SuS das Verhalten der Funktion im Unendlichen untersuchen.
+
+        punkte_aufg = 2
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        grenzwert_neg = limit(fkt_b, x, -oo)
+        grenzwert_pos = limit(fkt_b, x, oo)
+        # print(grenzwert_min), # print(grenzwert_pos)
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
+                       + latex(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
+                       + fkt_str + '~=~' + latex(grenzwert_neg) + r' \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+        liste_punkte.append(punkte_aufg)
+        i += 1
+    if 'b' in teilaufg:
+        # In dieser Aufgabe sollen die SuS die Schnittpunkte mit den Achsen (immer bei x=0) berechnen, wenn der Parameter 'verschiebung=False' ist. Ist der Parameter 'verschiebung=True' sollen die SuS nur den Schnittpunkt mit der y-Achse berechnen.
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 6
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der'
+                                                f' Funktion f mit den Achsen. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Schnittpunkt~mit~der~x-Achse:}'
+                       + r' \hspace{5em} f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
+                       + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(c, 'x') + r'} ~immer~ \neq 0 }'
+                       + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(a, 'x + b') + r' \quad \vert ~ -b'
+                       + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ ' + vorz_aussen(-1*a)
+                       + r' \frac{b}{' + gzahl(abs(a)) + r'} \quad \to \quad S_x ( ' + vorz_aussen(-1*a) + r' \frac{b}{ '
+                       + gzahl(abs(a)) + r'} \vert 0) \quad (4BE) \\ '
+                       + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
+                       + r' f(0) = e^0 \cdot (0 + b) \quad \to \quad S_y( 0 \vert b) \quad (1BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+
+        liste_punkte.append(punkte_aufg)
+        i += 1
+
+    if len([element for element in ['c', 'd', 'f'] if element in teilaufg]) > 0:
+        # Hier sollen die SuS, abhängig vom Parameter 'ableitung=', die drei Ableitungen bzw. die Zwischenschritte der drei gegebenen Ableitungen berechnen.
+
+        if ableitung == None:
+            punkte_aufg = 6
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die ersten drei Ableitungen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \\ \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+            i += 1
+        else:
+            punkte_aufg = 3
+            liste_punkte.append(punkte_aufg)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Geben Sie den Zwischenschritt bei der Berechnung '
+                           + f'der folgenden Ableitungen an.', r' f^{ \prime }(x) ~=~' + fkt_1_str
+                           + r' \\ f^{ \prime \prime }(x) ~=~' + fkt_2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~' + fkt_1_str_zw + '~=~' + fkt_1_str
+                           + r' \\ \quad f^{ \prime \prime }(x) ~=~' + fkt_2_str_zw + '~=~' + fkt_2_str
+                           + r' \\ f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str_zw + '~=~' + fkt_3_str  # passt sonst manchmal nicht aufs blatt
+                           + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+            i += 1
+
+    if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
+        # Hier sollen die SuS die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
+                                                ' mithilfe des hinreichenden Kriteriums. \n\n')
+        punkte_aufg = 7
+        xwert_extr = wp
+
+        if fkt_2.subs(x, xwert_extr) < 0:
+            lsg_extrema = (r'~<~0~ \to HP(~' + gzahl(N(xwert_extr, 3)) + r'~ \vert ~'
+                           + gzahl(N(fkt.subs(x, xwert_extr), 3)))
+        elif fkt_2.subs(x, xwert_extr) > 0:
+            lsg_extrema = (r'~>~0~ \to TP(~ ' + gzahl(N(xwert_extr, 3)) + r' ~ \vert ~'
+                           + gzahl(N(fkt.subs(x, xwert_extr), 3)))
+        else:
+            lsg_extrema = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium} \\'
+
+        loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
+                       + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x')
+                       + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(a * c,'x') + vorz_str(a)
+                       + vorz_v_innen(c, r'~ b \right) ') + r' \quad \vert ' + vorz_str(a) + vorz_str(-1*c)
+                       + r'b \quad \vert \div ' + 
+                       + gzahl_klammer(lsg[0]*b) + r' \quad (3BE) \\ x~=~ ' + gzahl(N(xwert_extr, 3))
+                       + r' \quad \to \quad f^{ \prime \prime }(' + gzahl(N(xwert_extr, 3)) + ') ~=~ '
+                       + r' \left(' + gzahl(lsg[0] ** 2 * b) + r' \cdot ' + gzahl(N(xwert_extr, 3))
+                       + vorz_str(lsg[0] ** 2 * c + 2 * lsg[0] * b) + r' \right) \cdot e^{' + gzahl(lsg[0])
+                       + r' \cdot' + gzahl(N(xwert_extr, 3)) + r'} ~=~'
+                       + gzahl(N(fkt_2.subs(x,xwert_extr),3)) + lsg_extrema + r') \quad (4BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+        liste_punkte.append(punkte_aufg)
+        i += 1
+
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der '
+                  f'Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 # in Entwicklung:
 def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 1

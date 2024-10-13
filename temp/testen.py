@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[rekonstruktion(2, BE=[5])]]
+    Aufgaben = [[kurvendiskussion_exponentialfkt_parameter(1, ['a', 'b', 'c'], ableitung=True)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
