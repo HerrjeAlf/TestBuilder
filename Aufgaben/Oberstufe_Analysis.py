@@ -3071,7 +3071,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_1_pq_str = 'x^2' + vorz_str(fkt_1_p) + r'a \cdot x' + vorz_str(fkt_1_q) + r'a^2'
         fkt_2_str = gzahl(6*faktor) + 'x' + vorz_str(fkt_1_a1) + r'a'
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Extrempunkte der Funktion und deren Art'
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrempunkte der Funktion und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
@@ -3107,7 +3107,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
         fkt_3_str = gzahl(6*faktor)
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die möglichen Wendepunkte der Funktion. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die möglichen Wendepunkte der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
                        + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
@@ -3132,7 +3132,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         else:
             abhängigkeit = r'\mathrm{mit~x \in \mathbb{R} ~und~ x < 0}'
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Ortskurve der Wendepunkte der Funktion. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Wendepunkte. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
                        + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                        + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
@@ -3157,8 +3157,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         Graph(xmin_f,xmax_f,fkt_a1,name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
         aufgabe.extend(('In der folgenden Abbildung ist ein Graph der Parameterfunktion dargestellt. '
                         'Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt.', 'Figure',
-                        str(liste_teilaufg[i]) + f') Bestimme aus dem Graphen den zugehörigen Wert von a. '
-                        + f'Begründe deine Aussage. \n\n'))
+                        str(liste_teilaufg[i]) + f') Bestimmen Sie aus dem Graphen den zugehörigen Wert von a. '
+                        + f'Begründen Sie ihre Aussage. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~zweite~Nullstelle~des'
                        + r'~Graphen~liegt~bei~ca.~x_2=' + str(faktor_2*a1)
                        + r'.~} \mathrm{Die~berechnete~Nullstelle~liegt~bei~x_2=' + nst_2_str
@@ -3180,7 +3180,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         xmin_f = int(round(nst_1_a2 - 0.5,0))
         xmax_f = int(round(nst_3_a2 + 0.5,0))
         Graph(xmin_f,xmax_f,fkt_a2,name=f'Loesung_{nr}{liste_teilaufg[i]}')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen für a = {gzahl(a2)} im '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen für a = {gzahl(a2)} im '
                        + f'Intervall [ {xmin_f} | {xmax_f} ]. \n\n')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}',
                         'Figure'))
@@ -3231,7 +3231,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                    + vorz_v_innen(Rational(fkt_a1,2), r'a^2 \cdot x^2')
                    + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
         aufgabe.extend(('Der Graph schließt oberhalb der x-Achse eine Fläche mit der x-Achse ein. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechne den Wert für a, wenn '
+                        str(liste_teilaufg[i]) + f') Berechnen Sie den Wert für a, wenn '
                        + f'diese Fläche A = {gzahl(flaeche_a_wert)} FE beträgt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad A ~=~ \left| \int_{' + gzahl(grenze_a) + 'a' + '}^{'
                        + gzahl(grenze_b) + 'a' + '} ' + fkt_str + r' \,dx \right| ~=~ \left| \left[ ' + Fkt_str
@@ -3243,6 +3243,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + r' \\ \quad \to \quad \bm{a ~=~' + gzahl(N((flaeche_a/integral_wert)**(1/4),4))
                        + r'} \quad (3BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
+
     if BE != []:
         if len(BE) != len(teilaufg):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
@@ -3672,27 +3673,23 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
     liste_punkte = []
     liste_bez = []
     i = 0
-
-    c = zzahl(1, 10) / 5
-    n1 = nzahl(1, 10) / 2
+    c = random.choice([Rational(zzahl(1, 10), 5), Rational(zzahl(1, 8), 4)])
+    n1 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
     a = n1 * c
-    n2 = nzahl(1, 10)
+    n2 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
     b = -1 * a * n2
     xe = -1 / c - b / a
 
-    while xe * 10 % 1 != 0:
-        c = zzahl(1, 10) / 5
-        n1 = nzahl(1, 10) / 2
+    while (100/a) % 1 != 0 and (100/c) % 1 != 0 and (10*xe)%1 != 0:
+        c = random.choice([Rational(zzahl(1, 10), 5), Rational(zzahl(1,8),4)])
+        n1 = Rational(random.choice([2, 4, 5, 6, 8, 10]),2)
         a = n1 * c
-        n2 = nzahl(1, 10)
+        n2 = Rational(random.choice([2, 4, 5, 6, 8, 10]),2)
         b = -1 * a * n2
         xe = -1 / c - b / a
 
-    wp = -(2 * a + b * c) / a * c
-
-    fkt = (a * x + b) * exp(c * x)
     fkt_b = (a * (x - n2)) * exp(c * x)
-    fkt_str = '(' + vorz_v_aussen(a,r'x + b ) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
+    fkt_str = '(' + vorz_v_aussen(a, r'x + b ) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
     fkt_1_str_zw = (gzahl(a) + r' \cdot e^{' + vorz_v_aussen(c,'x') + r'} + ('
                     + vorz_v_aussen(a, r'x + b) \cdot e^{' + vorz_v_aussen(c,'x') + r'}')
                     + r' \cdot ' + gzahl_klammer(c))
@@ -3746,8 +3743,8 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(c, 'x') + r'} ~immer~ \neq 0 }'
                        + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(a, 'x + b') + r' \quad \vert ~ -b'
                        + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ ' + vorz_aussen(-1*a)
-                       + r' \frac{b}{' + gzahl(abs(a)) + r'} \quad \to \quad S_x ( ' + vorz_aussen(-1*a) + r' \frac{b}{ '
-                       + gzahl(abs(a)) + r'} \vert 0) \quad (4BE) \\ '
+                       + vorz_v_innen(Rational(1,a),'b') + r' \quad \to \quad S_x ( ' + vorz_aussen(-1*a)
+                       + vorz_v_innen(Rational(1,a),'b') + r' \vert 0) \quad (4BE) \\ '
                        + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                        + r' f(0) = e^0 \cdot (0 + b) \quad \to \quad S_y( 0 \vert b) \quad (1BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
@@ -3755,7 +3752,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte_aufg)
         i += 1
 
-    if len([element for element in ['c', 'd', 'f'] if element in teilaufg]) > 0:
+    if len([element for element in ['c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
         # Hier sollen die SuS, abhängig vom Parameter 'ableitung=', die drei Ableitungen bzw. die Zwischenschritte der drei gegebenen Ableitungen berechnen.
 
         if ableitung == None:
@@ -3783,19 +3780,19 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                            + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
             i += 1
 
-    if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
+    if len([element for element in ['d', 'e', 'f', 'g'] if element in teilaufg]) > 0:
         # Hier sollen die SuS die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
-        punkte_aufg = 6
+        punkte_aufg = 8
 
         if a*c < 0:
-            lsg_extrema = (r'~<~0 \quad \to \quad HP \left( ~' + gzahl(-1/c) + vorz_str(-1*a) + r' \cdot b'
-                           + r' ~ \vert ~' + gzahl(a*c) + 'e^{' + vorz_str(-1*c/a) + r'b -1} \right)')
+            lsg_extrema = (r'~<~0 \quad \to \quad HP \left( ~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
+                           + r' ~ \vert ~' + gzahl(-1*a/c)+ 'e^{' + vorz_str(-1*c/a) + r'b -1} \right)')
         elif a*c > 0:
-            lsg_extrema = (r'~>~0 \quad \to \quad TP \left( ~' + gzahl(-1/c) + vorz_str(-1*a) + r' \cdot b'
-                           + r' ~ \vert ~' + gzahl(a*c) + 'e^{' + vorz_str(-1*c/a) + r'b -1} \right) ')
+            lsg_extrema = (r'~>~0 \quad \to \quad TP \left( ~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
+                           + r' ~ \vert ~' + gzahl(-1*a/c) + 'e^{' + vorz_str(-1*c/a) + r'b -1} \right) ')
         else:
             lsg_extrema = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium} \\'
 
@@ -3804,17 +3801,47 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(a * c,'x') + vorz_str(a)
                        + vorz_v_innen(c, 'b') + r' \quad \vert ' + vorz_str(-1*a) + vorz_str(-1*c)
                        + r'b \quad \vert \div ' + gzahl_klammer(a*c) + r' \quad \to \quad x_E~=~ '
-                       + gzahl(-1/c) + vorz_str(-1*a) + r' \frac{b}{' + gzahl(abs(a)) + '}'
-                       + r' \quad (3BE) \\ f^{ \prime \prime } \left( ' + gzahl(-1/c) + vorz_str(-1*a)
-                       + r' \cdot b \right) ~=~ \left( ' + gzahl(a*c**2) + r' \cdot \left( ' + gzahl(-1/c)
-                       + vorz_str(-1*a) + r' \cdot b \right) ' + vorz_str(2*a*c) + vorz_str(c**2)
-                       + r'b \right) \cdot e^{' + gzahl(c) + r' \cdot \left( ' + gzahl(-1/c) + vorz_str(-1*a)
-                       + r' \cdot b \right)} ~=~ ' + gzahl(a*c) + r' \cdot e^{' + vorz_str(-1*c/a)
-                       + r'b -1} \quad (2BE) \\ \mathrm{da~e^{' + vorz(-1*c/a) + r'b -1} ~immer~ \neq 0 }'
-                       + r' \quad \to \quad x_E~=~' + gzahl(a*c) + lsg_extrema
-                       + r' \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+                       + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \quad (3BE) \\ f^{ \prime \prime } \left( '
+                       + gzahl(-1/c) + vorz_v_innen(-1/a,r'b') + r' \right) ~=~ \left( ' + gzahl(a*c**2)
+                       + r' \cdot \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) '
+                       + vorz_str(2*a*c) + vorz_v_innen(c**2,'b') + r' \right) \cdot e^{' + gzahl(c)
+                       + r' \cdot \left( ' + gzahl(-1/c) + vorz_str(-1/a) + r' \cdot b \right)} ~=~ '
+                       + gzahl(a*c) + r' \cdot e^{' + vorz_str(-1*c/a) + r'b -1} \quad (2BE) \\ \mathrm{da~e^{'
+                       + vorz(-1*c/a) + r'b -1} ~immer~ \neq 0 }' + r' \quad \to \quad '
+                       + r' f^{ \prime \prime } \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,r'b') + r' \right)~=~'
+                       + gzahl(a*c) + lsg_extrema + r' \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         liste_punkte.append(punkte_aufg)
         i += 1
+
+    if 'd' in teilaufg:
+        # Hier sollen die SuS beurteilen, welchen Einfluss der Faktor b auf die Extremstelle und dessen Art hat.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die Abhängigkeit des Extremwertes und dessen Art '
+                                                '(HP oder TP) von der Variablen b. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Der~Extremwert~ist~x_E ~=~' + gzahl(-1/c)
+                       + vorz_v_innen(-1/a,'b') + r'~und~somit~von~b~abhängig.} \quad (2BE) \\'
+                       + r' \mathrm{Da} \quad f^{ \prime \prime } (' + gzahl(-1/c)
+                       + vorz_v_innen(-1/a, r'b') + ') ~=~ ' + gzahl(a*c)
+                       + r' \quad \mathrm{nicht~von~b~abhängt,~ist~die~Art~des~Extrema~unabhängig~von~b.} \quad (2BE)')
+        liste_punkte.append(4)
+        i += 1
+
+    if 'e' in teilaufg:
+        # Die SuS sollen die Ortskurve der Extrema berechnen.
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        liste_punkte.append(4)
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Extrema. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
+                       + r' \quad \vert ' + vorz_str(1/c) + r' \quad \vert \cdot ' + gzahl_klammer(-a)
+                       + r' \quad \to \quad b~=~ ' + gzahl(-a) + r'x' + vorz_str(-a/c) + r'\quad (2BE) \\ '
+                       + r'\mathrm{einsetzen~in~y} ~=~' + vorz_v_aussen(-a/c,'e^{' + vorz_str(-c/a) + r' \cdot \left('
+                       + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \right) -1 })') + ' ~=~ ' + vorz_v_aussen(-a/c,'e^{'
+                       + vorz_v_aussen(c,'x') + '}') + r' \quad (2BE)')
+        i += 1
+
 
 
     if BE != []:

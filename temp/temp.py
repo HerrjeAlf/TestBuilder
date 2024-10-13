@@ -110,7 +110,7 @@ n2 = nzahl(1, 10)
 b = -1*a*n2
 xe = -1/c-b/a
 
-while xe*10%1!=0:
+while (10/a)%1 == 0 and (10/c) % 1 == 0:
     c = zzahl(1, 10) / 5
     n1 = nzahl(1, 10) / 2
     a = n1 * c
