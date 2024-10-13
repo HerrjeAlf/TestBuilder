@@ -3678,15 +3678,15 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
     a = n1 * c
     n2 = nzahl(1, 10)
     b = -1 * a * n2
-    nst = -1 / c - b / a
+    xe = -1 / c - b / a
 
-    while nst * 10 % 1 != 0:
+    while xe * 10 % 1 != 0:
         c = zzahl(1, 10) / 5
         n1 = nzahl(1, 10) / 2
         a = n1 * c
         n2 = nzahl(1, 10)
         b = -1 * a * n2
-        nst = -1 / c - b / a
+        xe = -1 / c - b / a
 
     wp = -(2 * a + b * c) / a * c
 
@@ -3788,30 +3788,31 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Funktion f und deren Art'
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
-        punkte_aufg = 7
-        xwert_extr = wp
+        punkte_aufg = 6
 
-        if fkt_2.subs(x, xwert_extr) < 0:
-            lsg_extrema = (r'~<~0~ \to HP(~' + gzahl(N(xwert_extr, 3)) + r'~ \vert ~'
-                           + gzahl(N(fkt.subs(x, xwert_extr), 3)))
-        elif fkt_2.subs(x, xwert_extr) > 0:
-            lsg_extrema = (r'~>~0~ \to TP(~ ' + gzahl(N(xwert_extr, 3)) + r' ~ \vert ~'
-                           + gzahl(N(fkt.subs(x, xwert_extr), 3)))
+        if a*c < 0:
+            lsg_extrema = (r'~<~0 \quad \to \quad HP \left( ~' + gzahl(-1/c) + vorz_str(-1*a) + r' \cdot b'
+                           + r' ~ \vert ~' + gzahl(a*c) + 'e^{' + vorz_str(-1*c/a) + r'b -1} \right)')
+        elif a*c > 0:
+            lsg_extrema = (r'~>~0 \quad \to \quad TP \left( ~' + gzahl(-1/c) + vorz_str(-1*a) + r' \cdot b'
+                           + r' ~ \vert ~' + gzahl(a*c) + 'e^{' + vorz_str(-1*c/a) + r'b -1} \right) ')
         else:
             lsg_extrema = r' ~=~0 \to \mathrm{Vorzeichenwechselkriterium} \\'
 
         loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
-                       + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x')
+                       + fkt_1_str + r' \quad (1BE) \\ \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x')
                        + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(a * c,'x') + vorz_str(a)
-                       + vorz_v_innen(c, r'~ b \right) ') + r' \quad \vert ' + vorz_str(a) + vorz_str(-1*c)
-                       + r'b \quad \vert \div ' + 
-                       + gzahl_klammer(lsg[0]*b) + r' \quad (3BE) \\ x~=~ ' + gzahl(N(xwert_extr, 3))
-                       + r' \quad \to \quad f^{ \prime \prime }(' + gzahl(N(xwert_extr, 3)) + ') ~=~ '
-                       + r' \left(' + gzahl(lsg[0] ** 2 * b) + r' \cdot ' + gzahl(N(xwert_extr, 3))
-                       + vorz_str(lsg[0] ** 2 * c + 2 * lsg[0] * b) + r' \right) \cdot e^{' + gzahl(lsg[0])
-                       + r' \cdot' + gzahl(N(xwert_extr, 3)) + r'} ~=~'
-                       + gzahl(N(fkt_2.subs(x,xwert_extr),3)) + lsg_extrema + r') \quad (4BE) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+                       + vorz_v_innen(c, 'b') + r' \quad \vert ' + vorz_str(-1*a) + vorz_str(-1*c)
+                       + r'b \quad \vert \div ' + gzahl_klammer(a*c) + r' \quad \to \quad x_E~=~ '
+                       + gzahl(-1/c) + vorz_str(-1*a) + r' \frac{b}{' + gzahl(abs(a)) + '}'
+                       + r' \quad (3BE) \\ f^{ \prime \prime } \left( ' + gzahl(-1/c) + vorz_str(-1*a)
+                       + r' \cdot b \right) ~=~ \left( ' + gzahl(a*c**2) + r' \cdot \left( ' + gzahl(-1/c)
+                       + vorz_str(-1*a) + r' \cdot b \right) ' + vorz_str(2*a*c) + vorz_str(c**2)
+                       + r'b \right) \cdot e^{' + gzahl(c) + r' \cdot \left( ' + gzahl(-1/c) + vorz_str(-1*a)
+                       + r' \cdot b \right)} ~=~ ' + gzahl(a*c) + r' \cdot e^{' + vorz_str(-1*c/a)
+                       + r'b -1} \quad (2BE) \\ \mathrm{da~e^{' + vorz(-1*c/a) + r'b -1} ~immer~ \neq 0 }'
+                       + r' \quad \to \quad x_E~=~' + gzahl(a*c) + lsg_extrema
+                       + r' \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         liste_punkte.append(punkte_aufg)
         i += 1
 
