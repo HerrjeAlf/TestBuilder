@@ -15,18 +15,22 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], anzahl=False, BE=[]):
+def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Terme mit einer Basis und ganzzahligen Faktoren (zwei Summanden)
     # b) Terme mit einer Basis und ganzzahligen Faktoren (drei Summanden)
     # c) Terme mit einer Basis und rationalen Faktoren (zwei Summanden)
     # d) Terme mit einer Basis und rationalen Faktoren (drei Summanden)
-    # e) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (3 Summanden)
-    # f) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (5 Summanden)
-    # g) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (4 Summanden)
-    # h) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (6 Summanden)
-    # i) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (8 Summanden)
+    # e) Bruchterme mit einer Basis (zwei Summanden)
+    # f) Bruchterme mit einer Basis (drei Summanden)
+    # g) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (3 Summanden)
+    # h) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (5 Summanden)
+    # i) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (4 Summanden)
+    # j) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (6 Summanden)
+    # k) gemischte Terme mit vers. gleichwertigen Termen und ganzzahligen Faktoren (8 Summanden)
+    # l) gemischte Bruchterme mit vers. gleichwertigen Termen (4 Summanden)
+    # d) gemischte Bruchterme mit vers. gleichwertigen Termen (6 Summanden)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -69,7 +73,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     def einf_gem_ganzz_terme(anz_sum):
         fakt = faktorliste(anz_sum, 2,12)
         bas = random_selection([a, b, c, d, e, f, g, h, x, y, z])
-        liste_bas = [random.choice(['', str(bas[0])]) for step in range(anz_sum)]
+        liste_bas = [['', str(bas[0])][step%2] for step in range(anz_sum)]
         liste_bas_zahl = [1 if element == '' else bas[0] for element in liste_bas]
         summe = 0
         for k in range(len(liste_bas_zahl)):
@@ -112,6 +116,37 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         lsg = aufg + '~=~' + latex(summe)
         return aufg, lsg
 
+    def gem_glw_rat_terme(anz_sum):
+        if anz_sum == 1:
+            anz_sum = anz_sum + 1
+            anz_glw = 1
+        elif anz_sum < 5:
+            anz_glw = 2
+        else:
+            anz_glw = 3
+        bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], 2,False)
+        liste_glw_terme = []
+        for step in range(anz_glw):
+            glw_term = 1
+            for element in bas:
+                exp = nzahl(0,5)
+                glw_term = glw_term*(element**exp)
+            liste_glw_terme.append(glw_term)
+        print(liste_glw_terme)
+        liste_terme = []
+        for step in range(anz_sum):
+            liste_terme.append([Rational(zzahl(1,12), zzahl(1,12)), liste_glw_terme[step % anz_glw]])
+        random.shuffle(liste_terme)
+        print(liste_terme)
+        summe = 0
+        for element in liste_terme:
+            summe += element[0] * element[1]
+        aufg =  '~' + vorz_v_aussen(liste_terme[0][0],latex(liste_terme[0][1]))
+        del liste_terme[0]
+        for element in liste_terme:
+            aufg = aufg + vorz_v_innen(element[0],latex(element[1]))
+        lsg = aufg + '~=~' + latex(summe)
+        return aufg, lsg
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
@@ -121,7 +156,8 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
                 'e': [einf_bruch_terme, 2], 'f': [einf_bruch_terme, 3],
                 'g': [einf_gem_ganzz_terme, 3], 'h': [einf_gem_ganzz_terme, 5],
                 'i': [gem_glw_ganzz_terme, 4], 'j': [gem_glw_ganzz_terme, 6],
-                'k': [gem_glw_ganzz_terme, 8]}
+                'k': [gem_glw_ganzz_terme, 8], 'l': [gem_glw_rat_terme, 4],
+                'm': [gem_glw_rat_terme, 6]}
 
     aufg = ''
     lsg = ''
