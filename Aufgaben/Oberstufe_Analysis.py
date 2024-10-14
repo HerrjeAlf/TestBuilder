@@ -3714,7 +3714,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if len([element for element in ['a', 'e'] if element in teilaufg]) > 0:
+    if 'a' in teilaufg:
         # Hier sollen die SuS das Verhalten der Funktion im Unendlichen untersuchen.
 
         punkte_aufg = 2
@@ -3814,24 +3814,27 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte_aufg)
         i += 1
 
-    if 'd' in teilaufg:
+    if 'e' in teilaufg:
         # Hier sollen die SuS beurteilen, welchen Einfluss der Faktor b auf die Extremstelle und dessen Art hat.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die Abhängigkeit des Extremwertes und dessen Art '
                                                 '(HP oder TP) von der Variablen b. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Der~Extremwert~ist~x_E ~=~' + gzahl(-1/c)
                        + vorz_v_innen(-1/a,'b') + r'~und~somit~von~b~abhängig.} \quad (2BE) \\'
                        + r' \mathrm{Da} \quad f^{ \prime \prime } (' + gzahl(-1/c)
                        + vorz_v_innen(-1/a, r'b') + ') ~=~ ' + gzahl(a*c)
-                       + r' \quad \mathrm{nicht~von~b~abhängt,~ist~die~Art~des~Extrema~unabhängig~von~b.} \quad (2BE)')
-        liste_punkte.append(4)
+                       + r' \quad \mathrm{nicht~von~b~abhängt,~ist~die~Art~des~Extrema~unabhängig~von~b.} \quad (2BE)'
+                       + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+        liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         # Die SuS sollen die Ortskurve der Extrema berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        liste_punkte.append(4)
+        punkte = 4
+        liste_punkte.append(punkte)
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Extrema. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
@@ -3839,8 +3842,36 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \quad \to \quad b~=~ ' + gzahl(-a) + r'x' + vorz_str(-a/c) + r'\quad (2BE) \\ '
                        + r'\mathrm{einsetzen~in~y} ~=~' + vorz_v_aussen(-a/c,'e^{' + vorz_str(-c/a) + r' \cdot \left('
                        + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \right) -1 })') + ' ~=~ ' + vorz_v_aussen(-a/c,'e^{'
-                       + vorz_v_aussen(c,'x') + '}') + r' \quad (2BE)')
+                       + vorz_v_aussen(c,'x') + '}') + r' \quad (2BE)'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
+
+    if 'g' in teilaufg:
+        # Die SuS sollen dem Wendepunkt der Funktion berechnen.
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        liste_punkte.append(punkte)
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die möglichen Wendepunkte der Funktion. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~ ' + fkt_2_str
+                       + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x') + r'} ~ \neq 0 \quad (2BE) \\ 0 ~=~'
+                       + vorz_v_aussen( a * c**2 ,r'x') + vorz_str(2*a*c) + vorz_v_innen(c**2, r'')
+                       + r' \quad \vert ~' + vorz_str(-2*a*c) + vorz_v_innen(-1*c**2,'b') + r' \quad \vert \div '
+                       + gzahl_klammer(a*c**2) + r' \quad \quad \to \quad x_{WP}~=~' + gzahl(-1/c)
+                       + vorz_v_innen(-1/a,'b') + r' \quad (3BE) \\ f^{ \prime \prime \prime } \left( '
+                       + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ~=~  \left( '
+                       + vorz_v_aussen( a * c**3 ,r' \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ')
+                       + vorz_str(3*a*c**2) + vorz_v_innen(c**3, r'~ b \right)') + r' \cdot e^{'
+                       + vorz_v_aussen(c,r' \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ') + r'}'
+                       + r' (1BE) \\ \mathrm{da~e^{' + vorz(-c/a) + r'b -2} ~immer~ \neq 0 } \quad \to \quad '
+                       + r'f^{ \prime \prime \prime } \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
+                       + r' \right) ~=~' + gzahl(a*c**2)+ r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} '
+                       + r' \bm{ \left( ' + gzahl(-2/c) + vorz_v_innen(-1/a, 'b') + r' \vert '
+                       + vorz_v_aussen(-2*a/c, r' \cdot e^{' + vorz_v_aussen(-c/a,'b-2') + '}')
+                       + r' \right) }  \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+        i += 1
+
 
 
 

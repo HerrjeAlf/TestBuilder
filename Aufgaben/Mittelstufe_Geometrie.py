@@ -312,7 +312,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             if auswahl_seite == 0:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon ~'
-                             + st[1] + ', ~' + st[2] + ', ~' + wk[1] + r' \\ sin(' + wk[p] + r')~=~ \frac{'
+                             + st[1] + ', ~' + st[2] + ', ~' + wk[1] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{'
                              + st[auswahl_seite] + '}{' + st[2] + r'} \quad \vert ~ \cdot ' + st[2]
                              + r' ~ \vert ~ \div sin(' + wk[p] + r') \quad \to \quad ' + st[2]
                              + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
@@ -328,7 +328,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             elif auswahl_seite == 1:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
-                             + st[0] + ', ~' + st[2] + ', ~' + wk[1] + r' \\ cos(' + wk[p] + r')~=~ \frac{'
+                             + st[0] + ', ~' + st[2] + ', ~' + wk[1] + r' \quad (1BE) \\ cos(' + wk[p] + r')~=~ \frac{'
                              + st[auswahl_seite] + '}{' + st[2] + r'} \quad \vert ~ \cdot ' + st[2]
                              + r' ~ \vert ~ \div cos(' + wk[p] + ')' + r' \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
@@ -343,7 +343,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             else:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
-                             + st[0] + ', ~' + st[1] + ', ~' + wk[1] + r' \\ sin(' + wk[p] + r')~=~ \frac{' + st[0]
+                             + st[0] + ', ~' + st[1] + ', ~' + wk[1] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{' + st[0]
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[0] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
@@ -362,7 +362,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             if auswahl_seite == 0:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
-                             + st[1] + ', ~' + st[2] + ', ~' + wk[0] + r' \\ cos(' + wk[p] + r')~=~ \frac{'
+                             + st[1] + ', ~' + st[2] + ', ~' + wk[0] + r' \quad (1BE) \\ cos(' + wk[p] + r')~=~ \frac{'
                              + st[auswahl_seite] + '}{' + st[2] + r'} \quad \vert ~ \cdot ' + st[2]
                              + r' ~ \vert ~ \div cos(' + wk[p] + r') \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
@@ -378,7 +378,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             elif auswahl_seite == 1:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
-                             + st[0] + ', ~' + st[2] + ', ~' + wk[0] + r' \\ sin(' + wk[p] + r')~=~ \frac{'
+                             + st[0] + ', ~' + st[2] + ', ~' + wk[0] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{'
                              + st[auswahl_seite] + '}{' + st[2] + r'} \quad \vert ~ \cdot ' + st[2]
                              + r' \vert \div sin(' + wk[p] + r') \quad \to \quad ' + st[2] + r'~=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
@@ -394,7 +394,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             else:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
-                             + st[0] + ', ~' + st[1] + ', ~' + wk[0] + r' \\ sin(' + wk[p] + r')~=~ \frac{' + st[1]
+                             + st[0] + ', ~' + st[1] + ', ~' + wk[0] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{' + st[1]
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[1] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
@@ -409,7 +409,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
                            + str(wk_werte[0]) + r'^{ \circ} \quad (2P)')
-        liste_punkte.append(6)
+        liste_punkte.append(7)
         i += 1
 
     if BE != []:
