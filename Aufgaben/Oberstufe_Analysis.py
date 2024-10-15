@@ -3859,25 +3859,25 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         # Die SuS sollen dem Wendepunkt der Funktion berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
+        punkte = 8
         liste_punkte.append(punkte)
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Wendepunkte der Parameterfunktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~ ' + fkt_2_str
-                       + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x') + r'} ~ \neq 0 \quad (2BE) \\ 0 ~=~'
-                       + vorz_v_aussen( a * c**2 ,r'x') + vorz_str(2*a*c) + vorz_v_innen(c**2, r'')
+                       + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(c,'x') + r'} ~ \neq 0 \quad (1BE) \\ 0 ~=~'
+                       + vorz_v_aussen( a * c**2 ,r'x') + vorz_str(2*a*c) + vorz_v_innen(c**2, r'b')
                        + r' \quad \vert ~' + vorz_str(-2*a*c) + vorz_v_innen(-1*c**2,'b') + r' \quad \vert \div '
-                       + gzahl_klammer(a*c**2) + r' \quad \quad \to \quad x_{WP}~=~' + gzahl(-1/c)
-                       + vorz_v_innen(-1/a,'b') + r' \quad (3BE) \\ f^{ \prime \prime \prime } \left( '
-                       + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ~=~  \left( '
-                       + vorz_v_aussen( a * c**3 ,r' \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ')
-                       + vorz_str(3*a*c**2) + vorz_v_innen(c**3, r'~ b \right)') + r' \cdot e^{'
-                       + vorz_v_aussen(c,r' \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b') + r' \right) ') + r'}'
-                       + r' (1BE) \\ \mathrm{da~e^{' + vorz(-c/a) + r'b -2} ~immer~ \neq 0 } \quad \to \quad '
-                       + r'f^{ \prime \prime \prime } \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
-                       + r' \right) ~=~' + gzahl(a*c**2)+ r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} '
+                       + gzahl_klammer(a*c**2) + r' \quad \quad \to \quad x_{WP}~=~' + gzahl(-2/c)
+                       + vorz_v_innen(-1/a,'b') + r' \quad (2BE) \\ f^{ \prime \prime \prime } \left( '
+                       + gzahl(-2/c) + vorz_v_innen(-1/a,'b') + r' \right) ~=~  \left( '
+                       + vorz_v_aussen( a * c**3 ,r' \left( ' + gzahl(-2/c) + vorz_v_innen(-1/a,'b') + r' \right) ')
+                       + vorz_str(3*a*c**2) + vorz_v_innen(c**3, r'~ b \right)') + r' e^{'
+                       + vorz_v_aussen(c,r' \left( ' + gzahl(-2/c) + vorz_v_innen(-1/a,'b') + r' \right) ') + r'}'
+                       + r' (1BE) \\ \mathrm{da~e^{' + vorz_str(-c/a) + r'b -2} ~immer~ \neq 0 } \quad \to \quad '
+                       + r'f^{ \prime \prime \prime } \left( ' + gzahl(-2/c) + vorz_v_innen(-1/a,'b')
+                       + r' \right) ~=~' + gzahl(a*c**2)+ r' \quad \neq 0 \quad (2BE) \\ \mathbf{Wendepunkt} '
                        + r' \bm{ \left( ' + gzahl(-2/c) + vorz_v_innen(-1/a, 'b') + r' \vert '
-                       + vorz_v_aussen(-2*a/c, r' \cdot e^{' + vorz_v_aussen(-c/a,'b-2') + '}')
+                       + vorz_v_aussen(a*c**2, r' e^{' + vorz_v_aussen(-c/a,'b-2') + '}')
                        + r' \right) }  \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
