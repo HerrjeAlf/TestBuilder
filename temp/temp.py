@@ -103,26 +103,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-c = zzahl(1,10)/5
-n1 = nzahl(1, 10)/2
-a = n1*c
-n2 = nzahl(1, 10)
-b = -1*a*n2
-xe = -1/c-b/a
-
-while (10/a)%1 == 0 and (10/c) % 1 == 0:
-    c = zzahl(1, 10) / 5
-    n1 = nzahl(1, 10) / 2
-    a = n1 * c
-    n2 = nzahl(1, 10)
-    b = -1 * a * n2
-    xe = -1 / c - b / a
-
-wp = -(2*a+b*c)/a*c
-
-print(gzahl(xe))
-print(gzahl(wp))
-print(gzahl(a))
-print(gzahl(b))
-print(c)
-print(Rational(1/c))
+print(list(range(-21, -1)))

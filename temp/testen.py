@@ -10,10 +10,10 @@ schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
-Klasse = '12'
+Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'Testen'
-Titel = 'Hier wird getestet'
+Art = 'Probe'
+Titel = 'Übung Wahrscheinlichkeit'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[kurvendiskussion_exponentialfkt_parameter(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], ableitung=True)]]
+    Aufgaben = [[kurvendiskussion_exponentialfkt_parameter(1)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

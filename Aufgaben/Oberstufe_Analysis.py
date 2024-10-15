@@ -3905,22 +3905,26 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         punkte = 5
         b_ij = float(b_ij) if b_h%1 !=0 else b_ij
         nst = - b_ij/a
+        xe_bij = -1 / c - b_ij / a
         print(fkt_b)
         print(nst)
+        print(xe_bij)
+        print(limit(fkt_b, x, oo))
         if limit(fkt_b, x, oo) == 0:
-            ywerte = [(element, fkt_b.subs(x, element)) for element in range(-20, 20)]
-            wertetabelle = [ywerte[k][0] for k in range(len(ywerte)-1) if abs(ywerte[k][1] - ywerte[k+1][1]) < 0.25 and abs(ywerte[k][1]) < 0.1]
+            ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij), int(xe_bij)+20)]
+            wertetabelle = [ywerte[k][0] for k in range(len(ywerte)-1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
             print(wertetabelle)
             xmax = wertetabelle[0]
-            xmin = round(nst-0.5,1)
+            xmin = round(nst,1)
             print(xmin)
             print(xmax)
         else:
-            ywerte = [(element, fkt_b.subs(x, element)) for element in range(-20, 20)]
-            wertetabelle = [ywerte[k][0] for k in range(len(ywerte) - 1) if abs(ywerte[k][1] - ywerte[k + 1][1]) < 0.25 and abs(ywerte[k][1]) < 0.1]
+            ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij)-20, int(xe_bij))]
+            print(range(int(xe_bij)-20, int(xe_bij)-1))
+            wertetabelle = [ywerte[k][0] for k in range(len(ywerte) - 1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
             print(wertetabelle)
             xmin = wertetabelle[-1]
-            xmax = round(nst + 0.5,1)
+            xmax = round(nst,1)
             print(xmin)
             print(xmax)
 
