@@ -3872,7 +3872,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
                        + r' \quad \vert ' + vorz_str(1/c) + r' \quad \vert \cdot ' + gzahl_klammer(-a)
                        + r' \quad \to \quad b~=~ ' + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \quad (2BE) \\ '
-                       + r'\mathrm{einsetzen~in~y} ~=~' + vorz_v_aussen(-a/c,'e^{' + vorz_str(-c/a) + r' \cdot \left('
+                       + r' \mathrm{einsetzen~in~y} ~=~' + vorz_v_aussen(-a/c,'e^{' + vorz_str(-c/a) + r' \cdot \left('
                        + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \right) -1 })') + ' ~=~ ' + vorz_v_aussen(-a/c,'e^{'
                        + vorz_v_aussen(c,'x') + '}') + r' \quad (2BE)'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
