@@ -3777,7 +3777,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ ' + vorz_aussen(-1*a)
                        + vorz_v_innen(Rational(1,a),'b') + r' \quad \to \quad S_x ( ' + vorz_aussen(-1*a)
                        + vorz_v_innen(Rational(1,a),'b') + r' \vert 0) \quad (4BE) \\ '
-                       + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
+                       + r' \mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                        + r' f(0) = e^0 \cdot (0 + b) \quad \to \quad S_y( 0 \vert b) \quad (1BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
 
