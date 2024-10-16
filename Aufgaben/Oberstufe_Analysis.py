@@ -224,7 +224,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
             table_b.add_hline(2, 6)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
                                                     r'~ist~weder~eine~arithmetische,~noch~eine~geometrische~Folge.} '
-                                                    r'\quad (3BE)')
+                                                    r' \quad (3BE)')
             loesung.append(table_b)
         liste_punkte.append(3)
         i += 1
@@ -342,10 +342,10 @@ def grenzwerte_funktionen(nr, BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     aufgabe.extend(('Bestimmen Sie den Grenzwert durch Termumformungen.',
                     r' \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch))
-    loesung.append(r'\quad \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch +
+    loesung.append(r' \quad \lim \limits_{x \to ' + gzahl(polstelle) + '} ~' + Bruch +
                    r'~=~ \lim \limits_{x \to ' + gzahl(polstelle) + r'} ~ \frac{' + vorz_v_aussen(faktor,'(x') +
                    vorz_v_innen(polstelle, r') \cdot (x~') + vorz_v_innen(-1 * polstelle, ')}{') + latex(nenner) + '}' +
-                   Bruch_gekuerzt + r'~=~' + gzahl(faktor * (polstelle * 2)) + r'\quad (4BE) \\')
+                   Bruch_gekuerzt + r'~=~' + gzahl(faktor * (polstelle * 2)) + r' \quad (4BE) \\')
     grafiken_aufgaben = []
     grafiken_loesung = []
     if BE != []:
@@ -566,7 +566,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
                            + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\bm{'
                            + gzahl(fkt_abl.subs(x, x_wert_2))
                            + r'} \quad (2BE) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
-                           r'\quad (1BE) \\')
+                           r' \quad (1BE) \\')
             liste_punkte.append(3)
         i += 1
     if BE != []:
@@ -2953,7 +2953,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
                                                  + fkt_str + r' \quad (1BE) \\ \mathrm{durch~probieren:} \quad x_2 ~=~ '
-                                                 + nst_2_str + r'\quad \to \quad (' + fkt_str
+                                                 + nst_2_str + r' \quad \to \quad (' + fkt_str
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))
         loesung.append(table2)
@@ -3138,7 +3138,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
                        + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                        + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
-                       + r'\quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
+                       + r' \quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
                        + gzahl(ywert_wp_dezimal/a**3) + r' \Big(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
                        + r'x \Big)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
                        + r'x^3} \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
@@ -3468,7 +3468,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime }(x) ~=~'
                            + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
-                           + vorz_v_innen(2*lsg_a,'x') + r'\quad (3BE) \\'
+                           + vorz_v_innen(2*lsg_a,'x') + r' \quad (3BE) \\'
                            + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
                            + vorz_str(2*lsg_a) + r' \Big)'
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
@@ -3666,7 +3666,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], ableitung=None, BE=[]):
+def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitung=None, BE=[]):
     # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion mit einem Parameter durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.
@@ -3741,6 +3741,28 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         i += 1
 
     if 'b' in teilaufg:
+        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        liste_punkte.append(punkte)
+        fkt_sym = fkt_b.subs(x, -x)
+        fkt_sym_str = '(' + vorz_v_aussen(-1*a, r'x + b ) \cdot e^{' + vorz_v_aussen(-1*c,'x') + r'}')
+        if fkt_sym == fkt_b:
+            lsg = (r') \quad f(-x)~=~' + fkt_sym_str
+                   + r'~=~f(x) \\ \to \quad \mathbf{Achsensymmetrie} \quad (3BE) \\')
+        elif fkt_sym == -1 * fkt_b:
+            lsg = (r') \quad f(-x)~=~' + fkt_sym_str
+                   + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3BE) \\')
+        else:
+            lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad '
+                                                       r'\mathbf{nicht~symmetrisch} \quad (3BE) \\')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
         # In dieser Aufgabe sollen die SuS die Schnittpunkte mit den Achsen (immer bei x=0) berechnen, wenn der Parameter 'verschiebung=False' ist. Ist der Parameter 'verschiebung=True' sollen die SuS nur den Schnittpunkt mit der y-Achse berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -3761,7 +3783,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte_aufg)
         i += 1
 
-    if len([element for element in ['c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+    if len([element for element in ['d', 'e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
         # Hier sollen die SuS, abhängig vom Parameter 'ableitung=', die drei Ableitungen bzw. die Zwischenschritte der drei gegebenen Ableitungen berechnen.
 
         if ableitung == None:
@@ -3789,7 +3811,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                            + r' \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
             i += 1
 
-    if len([element for element in ['d', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+    if len([element for element in ['e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
         # Hier sollen die SuS die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Extrema der Parameterfunktion f und deren Art'
@@ -3823,7 +3845,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte_aufg)
         i += 1
 
-    if 'e' in teilaufg:
+    if 'f' in teilaufg:
         # Hier sollen die SuS beurteilen, welchen Einfluss der Faktor b auf die Extremstelle und dessen Art hat.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -3838,7 +3860,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte)
         i += 1
 
-    if 'f' in teilaufg:
+    if 'g' in teilaufg:
         # Die SuS sollen die Ortskurve der Extrema berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -3848,14 +3870,14 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Extrema. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + gzahl(-1/c) + vorz_v_innen(-1/a,'b')
                        + r' \quad \vert ' + vorz_str(1/c) + r' \quad \vert \cdot ' + gzahl_klammer(-a)
-                       + r' \quad \to \quad b~=~ ' + gzahl(-a) + r'x' + vorz_str(-a/c) + r'\quad (2BE) \\ '
+                       + r' \quad \to \quad b~=~ ' + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \quad (2BE) \\ '
                        + r'\mathrm{einsetzen~in~y} ~=~' + vorz_v_aussen(-a/c,'e^{' + vorz_str(-c/a) + r' \cdot \left('
                        + gzahl(-a) + r'x' + vorz_str(-a/c) + r' \right) -1 })') + ' ~=~ ' + vorz_v_aussen(-a/c,'e^{'
                        + vorz_v_aussen(c,'x') + '}') + r' \quad (2BE)'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
-    if 'g' in teilaufg:
+    if 'h' in teilaufg:
         # Die SuS sollen dem Wendepunkt der Funktion berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -3881,7 +3903,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \right) }  \quad (2BE) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
-    if 'h' in teilaufg:
+    if 'i' in teilaufg:
         # Die SuS sollen dem Wendepunkt der Funktion berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -3897,39 +3919,28 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_punkte.append(punkte)
         i += 1
 
-    if 'i' in teilaufg:
+    if 'j' in teilaufg:
         # Die SuS sollen den Graphen für einen vorgegebenen Wert für b in einem festgelegten Intervall zeichnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         punkte = 5
-        b_ij = float(b_ij) if b_h%1 !=0 else b_ij
+        b_ij = N(float(b_ij),3) if b_h%1 !=0 else b_ij
         nst = - b_ij/a
         xe_bij = -1 / c - b_ij / a
-        print(fkt_b)
-        print(nst)
-        print(xe_bij)
-        print(limit(fkt_b, x, oo))
         if limit(fkt_b, x, oo) == 0:
             ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij), int(xe_bij)+20)]
             wertetabelle = [ywerte[k][0] for k in range(len(ywerte)-1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
-            print(wertetabelle)
             xmax = wertetabelle[0]
             xmin = round(nst,1)
-            print(xmin)
-            print(xmax)
         else:
             ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij)-20, int(xe_bij))]
-            print(range(int(xe_bij)-20, int(xe_bij)-1))
             wertetabelle = [ywerte[k][0] for k in range(len(ywerte) - 1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
-            print(wertetabelle)
             xmin = wertetabelle[-1]
             xmax = round(nst,1)
-            print(xmin)
-            print(xmax)
 
         Graph(xmin, xmax, fkt_b, name=f'Loesung_{nr}{liste_teilaufg[i]}')
-        plt.show()
+        # plt.show()
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen für b = {gzahl(b_ij)} im '
                        + f'Intervall [ {xmin} | {xmax} ]. \n\n')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Die~folgende~Abbildung~zeigt~die~Lösung.~(5P)}',
