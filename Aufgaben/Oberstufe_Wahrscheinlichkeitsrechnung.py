@@ -303,7 +303,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(4)
         i += 1
 
-
     if len([element for element in teilaufg if element in liste_teilaufg[5:7]]) > 0:
         # Wahrscheinlichkeitsverteilung und Histogramm einer Zufallsgröße
 
@@ -350,7 +349,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         punkte = 2*pkt + 1
         # erstellen vom Histogramm
         loeschen()
-        histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}','Histogramm')
+        histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}.png','Histogramm')
         loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1P,~Balken~' + str(pkt) + r'P} \\'
                         + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'))
         liste_punkte.append(punkte)

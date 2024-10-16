@@ -257,7 +257,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                          + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
                          + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \Big('
                          + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
-                         + r' \Big) \quad (1P) \quad \to \quad'
+                         + r' \Big) \quad (1P) \quad \to \quad '
                          + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
                          + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
                          + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
@@ -273,7 +273,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                          + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
                          + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \Big('
                          + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
-                         + r' \cdot s \Big) \quad (2P) \quad \to \quad'
+                         + r' \cdot s \Big) \quad (2P) \quad \to \quad '
                          + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
                          + r' \quad (1P) \quad  r~=~ '
                          + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
@@ -338,7 +338,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             punkte += 4
 
         else:
-            lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
+            lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \vert \div '
                      + gzahl_klammer(a1) + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1))
                      + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \quad 2P) \\')
@@ -432,7 +432,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
                        + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
-                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad'
+                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad '
                        + r'\begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
                        + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
@@ -625,7 +625,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i +=1
 
@@ -654,7 +654,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
             loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4P) \\'
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad' + loesung_1 + loesung_2
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1 + loesung_2
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i +=1
 
@@ -666,10 +666,11 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, gerade_k=False, BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "gerade_k=" kann festgelegt ('True' oder 'False') werden, ob der Schnittwinkel bei Geraden, die sich schneiden zwischen den gegebenen Geraden g und h oder einer neuen Geraden k berechnet werden soll. Standardmäßig wird dann keine Gerade k erzeugt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -950,7 +951,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
                          + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
                          + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                         r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
+                         r' \end{matrix} \quad (2P) \\\\' + loesung_2 + loesung_3 + loesung_4 + r' \\'
                          + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
 
             # print(v), print(w), print(punkt_c)
@@ -970,7 +971,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + loesung_1)
         i += 1
 
-    if 'e' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
+    if 'd' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
@@ -979,8 +980,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_punkte.append(punkte_aufg)
         i += 1
 
-    if 'f' in teilaufg:
-        # Schnittwinkel zweier gegebener Geraden berechnen
+    if 'e' in teilaufg:
+        # Schnittwinkel zweier gegebener Geraden berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         punkt_f =  [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
@@ -991,14 +992,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         l_v = np.linalg.norm(v)
         l_p = np.linalg.norm(p)
 
-        if 'c' in teilaufg:
-            aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
-            aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
-                   + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                   r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
-                   + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
-                   r' \end{pmatrix} ')
-        if 'c' not in teilaufg:
+        if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
+            [ex, ey, ez] = [cx,cy,cz]
+            [px, py, pz] = [wx, wy, wz]
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und h. \n\n')
+
+        elif 'c' not in teilaufg:
             aufgabe.append('Gegeben sind die beiden Geraden mit folgenden Gleichungen:')
             aufgabe.append(r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -1008,8 +1007,18 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
                            + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                            + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
-                           + r' \end{pmatrix} }')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+                               + r' \end{pmatrix} }')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+
+        else:
+            aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
+            aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                           + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                           r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                           + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
+                           r' \end{pmatrix} ')
+            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+
         loesung.append(str(liste_teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
@@ -1681,7 +1690,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                        + r' \quad (1P) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
                        + vorz_v_innen(nx_gk * k_vx, 's') + vorz_str(ny_gk * ay) + vorz_v_innen(ny_gk * g_vy, 'r')
                        + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
-                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r'\quad (1P) \\'
+                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1P) \\'
                        + lsg)
         liste_punkte.append(punkte)
         i += 1
