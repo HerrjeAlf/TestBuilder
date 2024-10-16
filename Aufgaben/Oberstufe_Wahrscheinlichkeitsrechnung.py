@@ -312,7 +312,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         farbwahl, kuerzelwahl = auswahl()
         aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {farbwahl}. \n\n',
                         str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
-                                                 f' zeichen Sie das zugehörige Histogramm. \n\n'))
+                                                 f' zeichnen Sie das zugehörige Histogramm. \n\n'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
         spalten = 'c|c|'
         for p in range(stufen+1):

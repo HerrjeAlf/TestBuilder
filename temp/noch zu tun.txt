@@ -10,6 +10,9 @@ Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
 - Biquadratische Funktion mit ganzahligen Extrema, da Nullstellen irrational sein können
+- Kurvendiskussion von Exponentialfkt mit Parameter um zwei Teilaufgaben ergänzen
+    --> 1. weise nach das Stammfunktion stimmt
+    --> 2. berechne mit x-Achse eingeschlossene Fläche (x, oo)
 
 in Aufgaben Wahrscheinlichkeit:
 - Baumdiagramm - Aufgabe k zur kummulierten Bernoullikette erstellen
