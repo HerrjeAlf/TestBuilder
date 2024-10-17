@@ -454,7 +454,7 @@ def zahl_darstellen(zahl):
         stellen = max(1, int(-exp + 15))
         zahl_str = ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
         ziffern = [ziffer for ziffer in zahl_str]
-        ziffern.remove('.'w) if '.' in ziffern else ziffern
+        ziffern.remove('.') if '.' in ziffern else ziffern
         if exp < 0:
             for k in range(len(ziffern)):
                 if ziffern[0] == '0':
