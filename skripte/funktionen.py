@@ -448,3 +448,27 @@ def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
     stellen = max(1,int(-exponent+15))
     return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
 
+def zahl_darstellen(zahl):
+    exp = math.floor(math.log10(zahl))
+    if zahl < 1:
+        stellen = max(1, int(-exp + 15))
+        zahl_str = ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+        ziffern = [ziffer for ziffer in zahl_str]
+        ziffern.remove('.'w) if '.' in ziffern else ziffern
+        if exp < 0:
+            for k in range(len(ziffern)):
+                if ziffern[0] == '0':
+                    ziffern.pop(0)
+                else:
+                    break
+    else:
+        ziffern = [ziffer for ziffer in str(zahl)]
+        ziffern.remove('.') if '.' in ziffern else ziffern
+        for k in range(len(ziffern)):
+            if ziffern[-1] == '0':
+                ziffern.pop()
+            else:
+                break
+
+    return [ziffern,[exp]]
+

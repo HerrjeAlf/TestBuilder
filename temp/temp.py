@@ -1,6 +1,7 @@
 import random, math
 
 from sympy import *
+from decimal import *
 from skripte.funktionen import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -103,4 +104,31 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #plot(fkt,(x,xmin,xmax))
 #print(lsg)
 
-print(list(range(-21, -1)))
+# def schreibweise(zahl, darstellung='wiss'):
+
+def zahl_darstellen(zahl):
+    exp = math.floor(math.log10(zahl))
+    if zahl < 1:
+        stellen = max(1, int(-exp + 15))
+        zahl_str = ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+        ziffern = [ziffer for ziffer in zahl_str]
+        ziffern.remove('.') if '.' in ziffern else ziffern
+        if exp < 0:
+            for k in range(len(ziffern)):
+                if ziffern[0] == '0':
+                    ziffern.pop(0)
+                else:
+                    break
+    else:
+        ziffern = [ziffer for ziffer in str(zahl)]
+        ziffern.remove('.') if '.' in ziffern else ziffern
+        for k in range(len(ziffern)):
+            if ziffern[-1] == '0':
+                ziffern.pop()
+            else:
+                break
+
+    return [ziffern,[exp]]
+
+liste_zahl = zahl_darstellen(432003000000)
+print(liste_zahl)
