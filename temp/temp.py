@@ -109,8 +109,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 def zahl_darstellen(zahl):
     exp = math.floor(math.log10(zahl))
     if zahl < 1:
-        stellen = max(1, int(-exp + 15))
-        zahl_str = ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
+        zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0').rstrip('.')
         ziffern = [ziffer for ziffer in zahl_str]
         ziffern.remove('.') if '.' in ziffern else ziffern
         if exp < 0:
@@ -127,8 +126,7 @@ def zahl_darstellen(zahl):
                 ziffern.pop()
             else:
                 break
-
     return [ziffern,[exp]]
 
-liste_zahl = zahl_darstellen(432003000000)
+liste_zahl = zahl_darstellen(0.0000000761606326)
 print(liste_zahl)
