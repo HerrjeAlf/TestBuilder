@@ -106,27 +106,55 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-def zahl_darstellen(zahl):
-    exp = math.floor(math.log10(zahl))
-    if zahl < 1:
-        zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0').rstrip('.')
-        ziffern = [ziffer for ziffer in zahl_str]
-        ziffern.remove('.') if '.' in ziffern else ziffern
-        if exp < 0:
-            for k in range(len(ziffern)):
-                if ziffern[0] == '0':
-                    ziffern.pop(0)
-                else:
-                    break
-    else:
-        ziffern = [ziffer for ziffer in str(zahl)]
-        ziffern.remove('.') if '.' in ziffern else ziffern
-        for k in range(len(ziffern)):
-            if ziffern[-1] == '0':
-                ziffern.pop()
-            else:
-                break
-    return [ziffern,[exp]]
+def darstellung_zahl(zahl, darstellung='wiss'):
+    def liste(zahl):
+        exp = math.floor(math.log10(zahl))
+        if zahl < 1:
+            zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
+            ziffern = [ziffer for ziffer in zahl_str]
+            ziffern.remove('.') if '.' in ziffern else ziffern
+        else:
+            zahl_str = str(zahl).rstrip('0.').lstrip('0.')
+            ziffern = [ziffer for ziffer in zahl_str]
+            ziffern.remove('.') if '.' in ziffern else ziffern
+        return [ziffern, [exp]]
 
-liste_zahl = zahl_darstellen(0.0000000761606326)
-print(liste_zahl)
+    list = liste(zahl)
+    print(list)
+    darstellung = 'wiss' if darstellung not in ['wiss', 'dezi'] else darstellung
+
+    if darstellung == 'wiss':
+        laenge = len(list[0])
+        div, rest = divmod(abs(laenge), 3)
+        zp = 0
+        for k in range(div):
+            if k == 0:
+                zahl = list[0][zp] + '.' + list[0][zp+1] + list[0][zp+2] + '~'
+            else:
+                zahl = zahl + list[0][zp] + list[0][zp+1] + list[0][zp+2]
+                if k < div-1:
+                    zahl = zahl + '~'
+                elif rest != 0:
+                    zahl = zahl + '~'
+            zp += 3
+        for k in range(rest):
+            zahl = zahl + list[0][zp+k]
+        zahl = zahl + r' \cdot 10^{' + gzahl(list[1][0]) + '}'
+
+    elif darstellung == 'dezi':
+        laenge = len(list[0])
+        div, rest = divmod(abs(laenge), 3)
+        zp = 0
+        if list[1] > 0:
+            pass
+
+
+    return zahl
+
+
+
+zahl = darstellung_zahl(4323*10**-12, darstellung='wiss')
+print(zahl)
+
+
+
