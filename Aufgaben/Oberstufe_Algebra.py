@@ -58,7 +58,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                      + r' \\' + gzahl(-1*vektor_ab[1]) + r' \\' + gzahl(-1*vektor_ab[2]) + r' \\'
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
-                     + r'\end{pmatrix}  \quad (3P) \\')
+                     + r'  \end{pmatrix}  \quad (3P) \\')
 
     else:
         vektor_bc = random.choice(vektoren_auswahl)
@@ -78,7 +78,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                      + r' \\' + gzahl(vektor_bc[1]) + r' \\' + gzahl(vektor_bc[2]) + r' \\'
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
-                     + r'\end{pmatrix}  \quad (3P) \\')
+                     + r'  \end{pmatrix}  \quad (3P) \\')
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
@@ -173,15 +173,15 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
         aufgabe.append(gzahl(faktor_1) + r' \cdot \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                        + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
-                       + vorz_str(faktor_2) + r' \cdot' + r'\begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
+                       + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \hspace{20em} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'\cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
+        loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
                        + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
-                       + vorz_str(faktor_2) + r' \cdot' + r'\begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
+                       + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
                        + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1]) + r' \\' + gzahl(ergebnis[2]) + r' \\'
-                       + r'\end{pmatrix}  \quad (2P)')
+                       + r'  \end{pmatrix}  \quad (2P)')
         liste_punkte.append(2)
         i += 1
 
@@ -199,7 +199,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        'B( ' + gzahl(vektor_2[0])  + ' | ' + gzahl(vektor_2[1]) + ' | ' + gzahl(vektor_2[2])
                        + ' ). \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
-                       + r'\begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\'
+                       + r'  \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\'
                        + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_2[0])
                        + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} \end{pmatrix}  ~=~ \begin{pmatrix}' + gzahl(ergebnis[0]) + r' \\'
@@ -327,7 +327,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \to \quad r~=~'
                      + gzahl(c1) + vorz_v_innen(-1*b1,'s') + r' \quad (2P) \\')
             punkte += 2
-            lsg_2 = (r'\mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( ' + gzahl(c1)
+            lsg_2 = (r'  \mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( ' + gzahl(c1)
                      + vorz_v_innen(-1*b1,'s') + r' \right) ' + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2)
                      + r' \quad \to \quad ' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1, 's') + vorz_v_innen(b2,'s')
                      + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1+b2, 's')
@@ -433,7 +433,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
                        + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
                        + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad '
-                       + r'\begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
+                       + r'  \begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
                        + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
@@ -546,11 +546,11 @@ def vektoren_koll_ortho(nr, BE=[]):
                + r' \end{pmatrix} \\']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_k+1] + '} ~ist~kollinear~zu~'
-               + r'\overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
+               + r'  \overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
                + r' \\' + r' \end{pmatrix} ~=~ ' + gzahl(fakt_a) + r' \cdot \begin{pmatrix} ' + gzahl(ax) + r' \\'
                + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3P) \\'
                + r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_s + 1] + '} ~ist~ortogonal~zu~'
-               + r'\overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
+               + r'  \overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
                + r' \cdot ' + gzahl_klammer(sy) + '+' + gzahl_klammer(az) + r' \cdot ' + gzahl_klammer(sz)
                + r' ~=~ 0 \quad (3P)']
     grafiken_aufgaben = []
@@ -753,7 +753,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                          + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                          r' \end{pmatrix} \quad \to \quad \begin{matrix} '
@@ -785,7 +785,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                          + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                          r' \end{pmatrix} \quad \to \quad \begin{matrix} '
@@ -842,7 +842,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                      + r' \cdot (' + gzahl(N(lsgs,3)) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
                                      + '~=~' + gzahl(N(cz+wz*lsgs,3))
                                      + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
-                                       r'\mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
+                                       r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
                     else:
                         sys.exit('vz oder wz ist null.')
                 else:
@@ -852,7 +852,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
 
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                          + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                          r' \end{pmatrix} \quad \to \quad \begin{matrix} '
@@ -916,7 +916,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                      + r' \cdot (' + gzahl(N(lsgs, 3)) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
                                      + '~=~' + gzahl(N(cz + wz * lsgs, 3))
                                      + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
-                                       r'\mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
+                                       r'  \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
                                      + str(sy) + r' \vert ' + str(sz) + r').} \quad (2P)')
                     else:
                         sys.exit('vz oder wz ist null.')
@@ -927,7 +927,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
 
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'\begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                          + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                          r' \end{pmatrix} \quad \to \quad \begin{matrix} '

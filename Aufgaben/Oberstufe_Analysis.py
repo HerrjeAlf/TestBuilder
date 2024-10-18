@@ -25,16 +25,16 @@ def logarithmusgesetze(nr, anzahl=1, BE=[]):
 
     liste_bez = [f'{nr}']
     # hier wird die Funktion erstellt.
-    regeln_aufgabe = {r'\log_a(u \cdot v) ~=~ \hspace{15em}': r'\log_a(u \cdot v) ~=~ \log_a u + \log_a v',
-                      r'\log_a \frac{u}{v} ~=~ \hspace{15em}': r'\log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
-                      r'\log_a u^r ~=~ \hspace{15em}': r'\log_a u^r ~=~ r \cdot \log_a u',
-                      r'\log_a \sqrt[n]{u} ~=~ \hspace{15em}': r'\log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
-                      r'\log_c b ~=~ \hspace{15em}': r'\log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
+    regeln_aufgabe = {r' \log_a(u \cdot v) ~=~ \hspace{15em}': r' \log_a(u \cdot v) ~=~ \log_a u + \log_a v',
+                      r' \log_a \frac{u}{v} ~=~ \hspace{15em}': r' \log_a \frac{u}{v} ~=~ \log_a u - \log_a v',
+                      r' \log_a u^r ~=~ \hspace{15em}': r' \log_a u^r ~=~ r \cdot \log_a u',
+                      r' \log_a \sqrt[n]{u} ~=~ \hspace{15em}': r' \log_a \sqrt[n]{u} ~=~ \frac{1}{n} \cdot \log_a u',
+                      r' \log_c b ~=~ \hspace{15em}': r' \log_c b ~=~ \frac{\log_a b}{\log_a c} ~=~ \frac{\ln b}{\ln c}',
                       r'a^{\log_a b} ~=~ \hspace{15em}': r'a^{\log_a b} ~=~ b',
-                      r'\log_a 1 ~=~ \hspace{15em}': r'\log_a 1 ~=~ 0',
-                      r'\log_a a ~=~ \hspace{15em}': r'\log_a a ~=~ 1',
-                      r'\log_e ~=~ \hspace{15em}': r'\log_e ~=~ \ln',
-                      r'\log_{10} ~=~ \hspace{15em}': r'\log_{10} ~=~ \lg'}
+                      r' \log_a 1 ~=~ \hspace{15em}': r' \log_a 1 ~=~ 0',
+                      r' \log_a a ~=~ \hspace{15em}': r' \log_a a ~=~ 1',
+                      r' \log_e ~=~ \hspace{15em}': r' \log_e ~=~ \ln',
+                      r' \log_{10} ~=~ \hspace{15em}': r' \log_{10} ~=~ \lg'}
 
     exit("Die Eingabe bei anzahl muss eine Zahl sein") if type(anzahl) != int else anzahl
     anzahl = len(regeln_aufgabe) if anzahl > len(regeln_aufgabe) else anzahl
@@ -438,7 +438,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
 
         loesung.append(str(liste_teilaufg[i])
                        + r') \quad \mathrm{Gerade~durch~beide~Punkte~(1BE),~~Steigungsdreieck~(1BE),~Steigung~}'
-                         r'\bm{m=' + gzahl(steigung_dreieck) + r'}~ \mathrm{bestimmt~(1BE)}')
+                         r' \bm{m=' + gzahl(steigung_dreieck) + r'}~\mathrm{bestimmt~(1BE)}')
 
         if 'c' not in teilaufg:
             graph_xyfix_plus(xwerte, ywerte, s_xwert, fkt, '',
@@ -566,7 +566,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
                            + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\bm{'
                            + gzahl(fkt_abl.subs(x, x_wert_2))
                            + r'} \quad (2BE) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
-                           r'\quad (1BE) \\')
+                           r' \quad (1BE) \\')
             liste_punkte.append(3)
         i += 1
     if BE != []:
@@ -1874,7 +1874,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.extend((table2, '\n\n\n', str(liste_teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
+        aufgabe.extend((table2, ' \n\n\n', str(liste_teilaufg[i]) + ') Weisen Sie nach, dass es sich um exponentielles '
                                             'Wachstum handelt.\n\n'))
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
                                            r'um~exponentielles~Wachstum. \quad (1BE)}', table3,
@@ -2342,7 +2342,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                    + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
         else:
             lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
-                                                          r'\mathrm{nicht~symmetrisch} \quad (3BE)')
+                                                          r' \mathrm{nicht~symmetrisch} \quad (3BE)')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg)
         liste_punkte.append(3)
@@ -2363,7 +2363,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + gzahl_klammer(fkt_a1) + r' \quad \to \quad x_{2,3}~=~ \pm \sqrt{'
                                + latex(Rational(-1 * fkt_a3, fkt_a1)) + r'} ~=~ \pm ' + gzahl(N(nst_3,3))
                                + r' \quad (3BE) \\ \mathrm{ S_{x_2}(' + gzahl(N(nst_1, 3))
-                               + r'\vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}(' + gzahl(N(nst_3, 3))
+                               + r' \vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}(' + gzahl(N(nst_3, 3))
                                + r' \vert 0) \quad (2BE)} \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             elif fkt_a4 == 0:
@@ -2382,7 +2382,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + vorz_str(-1 * fkt_q) + r'} ~=~ ' + gzahl(Rational(-1*fkt_a2,2*fkt_a1)) + r' \pm '
                                + gzahl(N(fkt_diskr,3)) + r' \quad \to \quad x_2 ~=~' + gzahl(N(nst_1,3))
                                + r' \quad und \quad x_3 ~=~' + gzahl(N(nst_3,3)) + r' \quad (4BE) \\ \mathrm{ S_{x_2}('
-                               + gzahl(round(nst_1, 3)) + r'\vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}('
+                               + gzahl(round(nst_1, 3)) + r' \vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}('
                                + gzahl(round(nst_3, 3)) + r' \vert 0) \quad (2BE)} \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             else:
@@ -2423,7 +2423,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + r' \frac{' + latex(fkt_partial_p) + r'}{2} \right) ^2-' + gzahl_klammer(fkt_partial_q)
                                + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_1, 3))
                                + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
-                               + r'S_{x_1}(' + gzahl(nst_2) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_1, 3))
+                               + r'S_{x_1}(' + gzahl(nst_2) + r' \vert 0) \quad S_{x_2}(' + gzahl(round(nst_1, 3))
                                + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)'
                                + r' \quad S_y(0 \vert' + gzahl(fkt_a4) + r') \quad (2BE) \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -2457,7 +2457,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + gzahl(sqrt(((nst_12 + nst_34)**2)/4-(nst_12*nst_34))) + r' \quad \to \quad z_1 ~=~'
                            + gzahl(nst_12) + r' \quad und \quad z_2 ~=~' + gzahl(nst_34)
                            + r' \quad (4BE) \\ \mathrm{Rücksubstitution} ~ \sqrt{z} = \pm x \quad \to \quad x_{1,2} ~=~ '
-                           + r'\pm \sqrt{' + gzahl(nst_12) + r'} \quad \mathrm{und} \quad x_{3,4} ~=~ \pm \sqrt{'
+                           + r' \pm \sqrt{' + gzahl(nst_12) + r'} \quad \mathrm{und} \quad x_{3,4} ~=~ \pm \sqrt{'
                            + gzahl(nst_34) + r'} \quad (3BE) \\' + S1 + S2 + S3 + S4
                            + r' S_{y}( 0 \vert ' + gzahl(fkt_a3) + r') \quad (3BE) \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -2601,7 +2601,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie auch einen Wendepunkt.', '2P')
                 punkte = 2
             loesung.append(table1)
-            loesung.append('\n')
+            loesung.append(' \n')
         if grad == 4:
             aufgabe.append(str(liste_teilaufg[i]) + ') Nennen und begründen Sie ohne Rechnung, die Anzahl der möglichen'
                                                     ' Wendepunkte dieser Funktion. \n\n')
@@ -2615,7 +2615,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                 table1.add_row('', f'Da die Funktion drei Extrema hat, besitzt sie auch zwei Wendepunkte.', '2P')
                 punkte = 2
             loesung.append(table1)
-            loesung.append('\n')
+            loesung.append(' \n')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2914,7 +2914,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                    + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3BE) \\')
         else:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad '
-                                                       r'\mathbf{nicht~symmetrisch} \quad (3BE) \\')
+                                                       r' \mathbf{nicht~symmetrisch} \quad (3BE) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
@@ -2966,10 +2966,9 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
                        + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_1~=~'
                        + vorz_v_aussen(faktor_1,'a', null=True) + r' \quad \mathrm{und} \quad x_3~=~'
-                       + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3BE) \\ \bm{S_{x_1}(' + nst_1_str
-                       + r'\vert 0) \quad S_{x_2}(' + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str
-                       + r' \vert 0) \quad }\mathrm{sowie}' + r' \bm{\quad S_y(0 \vert'
-                       + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2BE) \\'
+                       + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3BE) \\ \bm{S_{x_1}(' + nst_1_str + r' \vert 0) \quad S_{x_2}('
+                       + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
+                       + r' \bm{\quad S_y(0 \vert' + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
@@ -3116,8 +3115,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
                        + gzahl(xwert_wp_dezimal) + r'a \quad \quad \to \quad f^{ \prime \prime \prime }\Big('
                        + gzahl(xwert_wp_bruch) + r'a \Big) ~=~ ' + fkt_3_str
-                       + r' \quad \neq 0 \quad (2BE) \\ \mathbf{Wendepunkt} \bm{\Big(' + gzahl(xwert_wp_bruch)
-                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r'\Big)} \quad (1BE) \\'
+                       + r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} \bm{\Big(' + gzahl(xwert_wp_bruch)
+                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r' \Big)} \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
@@ -3131,9 +3130,9 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3) / 3)
         ywert_wp_dezimal = N(fkt.subs(x, xwert_wp_bruch*a), 3)
         if Rational(3,(faktor_1 + faktor_2 + faktor_3)) > 0:
-            abhängigkeit = r'\mathrm{mit~x \in \mathbb{R} ~und~ x > 0}'
+            abhängigkeit = r' \mathrm{mit~x \in \mathbb{R} ~und~ x > 0}'
         else:
-            abhängigkeit = r'\mathrm{mit~x \in \mathbb{R} ~und~ x < 0}'
+            abhängigkeit = r' \mathrm{mit~x \in \mathbb{R} ~und~ x < 0}'
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Wendepunkte. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
@@ -3408,8 +3407,8 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(b, 'x') + vorz_str(c)
                            + r' \quad \vert ' + vorz_str(-1*c) + r' \quad \vert \div ' + gzahl_klammer(b)
                            + r' \quad \to \quad ' + r' x ~=~' + gzahl(Rational(-1*c,b)) + r' \quad \to \quad S_x ( '
-                           + gzahl(Rational(-1*c,b)) + r'\vert 0) \quad (4BE) \\ '
-                           + r'\mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
+                           + gzahl(Rational(-1*c,b)) + r' \vert 0) \quad (4BE) \\ '
+                           + r' \mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                            + r' f(0) = e^0 \cdot (0' + vorz_str(c) + r') \quad \to \quad S_y( 0 \vert '
                            + gzahl(c) + r') \quad (1BE) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
@@ -3521,7 +3520,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             table1.add_row('', f'Einen weiteren Wendepunkt besitzt die Funktion, nach dem Extrema, wenn '
                                f'sich der Graph der Asymptote nähert.', '2P')
             loesung.append(table1)
-            loesung.append('\n')
+            loesung.append(' \n')
         if expfkt == 2:
             punkte = 3
             aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie ohne Rechnung,'
@@ -3537,7 +3536,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                                            r'$ \lim\limits_{x \to \infty} = 0 $ ist, '
                                            r'muss dazwischen eine Wendestelle existieren.', '(3BE)'))
             loesung.append(table1)
-            loesung.append('\n')
+            loesung.append(' \n')
         liste_punkte.append(punkte)
         i += 1
     if len([element for element in ['f', 'g'] if element in teilaufg]) > 0:
@@ -3757,7 +3756,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                    + r'~=~-f(x) \\ \to \quad \mathbf{Punktsymmetrie} \quad (3BE) \\')
         else:
             lsg = (r') \quad f(-x)~=~' + fkt_sym_str + r' \neq  f(x)  \neq -f(x) \\ \to \quad '
-                                                       r'\mathbf{nicht~symmetrisch} \quad (3BE) \\')
+                                                       r' \mathbf{nicht~symmetrisch} \quad (3BE) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         liste_punkte.append(punkte)
@@ -3909,7 +3908,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         wp_h = -2 / c - b_h / a
-        wp_h = N(float(wp_h),2) if wp_h % 1 != 0 else wp_h
+        wp_h = float(wp_h) if wp_h % 1 != 0 else wp_h
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie b, wenn die Parameterfunktion die Wendestelle bei '
                        + f' x = {gzahl(wp_h)} hat. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x_E ~=~ ' + gzahl(-2/c) + vorz_v_innen(-1/a,'b')
@@ -3926,21 +3925,18 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         punkte = 5
-        b_ij = float(b_ij) if b_h%1 !=0 else b_ij
+        b_ij = N(float(b_ij),3) if b_h%1 !=0 else b_ij
         nst = - b_ij/a
         xe_bij = -1 / c - b_ij / a
-
         if limit(fkt_b, x, oo) == 0:
             ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij), int(xe_bij)+20)]
             wertetabelle = [ywerte[k][0] for k in range(len(ywerte)-1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
-            print(wertetabelle)
             xmax = wertetabelle[0]
             xmin = round(nst,1)
-
         else:
             ywerte = [(element, fkt_b.subs(x, element)) for element in range(int(xe_bij)-20, int(xe_bij))]
             wertetabelle = [ywerte[k][0] for k in range(len(ywerte) - 1) if abs(ywerte[k+1][1] - ywerte[k][1]) < 0.1*abs(ywert_xe_bij)]
-            xmin = round(wertetabelle[-1])
+            xmin = wertetabelle[-1]
             xmax = round(nst,1)
 
         Graph(xmin, xmax, fkt_b, name=f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -4037,7 +4033,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad f(-x)~=~' + fkt_sym
                                                  + r' \neq  f(x)  \neq -f(x) \\'
-                                                 + r'\mathrm{nicht~symmetrisch} \quad (3BE) \\'))
+                                                 + r' \mathrm{nicht~symmetrisch} \quad (3BE) \\'))
         i += 1
 
     if 'c' in teilaufg:
@@ -4322,8 +4318,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         grenzwert_pos = limit(fkt, x, oo)
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie das Verhalten der Funktion im Unendlichen. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \lim \limits_{x \to \infty} ' + fkt_str + '~=~'
-                       + gzahl(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim \limits_{x \to - \infty} '
+        loesung.append(str(liste_teilaufg[i]) + r') \lim\limits_{x \to \infty} ' + fkt_str + '~=~'
+                       + gzahl(grenzwert_pos) + r' \quad \mathrm{und} \quad \lim\limits_{x \to - \infty} '
                        + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2BE)')
         liste_punkte.append(2)
         i += 1
@@ -4377,7 +4373,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
                        + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-' + gzahl_klammer(fkt_partial_q)
                        + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
                        + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
-                       + r'S_{x_1}(' + gzahl(nst_1) + r'\vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
+                       + r'S_{x_1}(' + gzahl(nst_1) + r' \vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
                        + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)' + lsg
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
@@ -4480,7 +4476,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
             table1.add_row('', f'Da die Funktion zwei Extrema hat, besitzt sie auch einen Wendepunkt.' , '2P')
             punkte = 2
         loesung.append(table1)
-        loesung.append('\n')
+        loesung.append(' \n')
         liste_punkte.append(punkte)
         i += 1
 

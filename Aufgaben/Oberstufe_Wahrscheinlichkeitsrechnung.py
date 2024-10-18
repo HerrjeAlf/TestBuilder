@@ -429,7 +429,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        + latex(N(binomial(anzahl_1,anzahl_k)
                                  * binomial(anzahl_2,anzahl_n-anzahl_k)
                                  / binomial(20,anzahl_n),3) * 100)
-                       + r'\% \quad (2BE)')
+                       + r' \% \quad (2BE)')
 
         liste_punkte.append(2)
         i += 1
@@ -489,7 +489,7 @@ def faires_spiel(nr, BE=[]):
     if gewinn != 0:
         lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3BE) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
-               + gzahl(einsatz) + r'\text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
+               + gzahl(einsatz) + r' \text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
                + gzahl(preis_fair) + r' ~\text{\texteuro}~sein \quad (3BE)}')
         pkt += 3
     else:
@@ -506,7 +506,7 @@ def faires_spiel(nr, BE=[]):
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2BE)} \\'
                + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot '
                + gzahl(N(wkt_proz,3)) + r' \% - ' + gzahl(einsatz) + r' \text{\texteuro} ~=~ '
-               + gzahl(gewinn) + r'\text{\texteuro}}' + lsg]
+               + gzahl(gewinn) + r' \text{\texteuro}}' + lsg]
     grafiken_aufgaben = []
     grafiken_loesung = []
     if BE != []:
@@ -596,7 +596,7 @@ def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
                        + gzahl(Rational(P_H,P)) + '~=~' + gzahl(Rational(P_H*100,P))
                        + r' \% \quad (2BE) } \\ \mathrm{Die~Gruppe,~welche~die~Medikamente~erhalten~hat,~'
                        + r'hat~eine~höhere~Heilungschance. \quad (1BE)} \\'
-                       + r'\mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -737,7 +737,7 @@ def lotto_modell(nr, BE=[]):
                + r'~=~' + latex(N(binomial(defekte, ziehungen_defekt)
                                   * binomial(anzahl-defekte, ziehungen-ziehungen_defekt)
                                   / binomial(anzahl, ziehungen), 3) * 100)
-               + r'\% \quad (3BE)']
+               + r' \% \quad (3BE)']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
