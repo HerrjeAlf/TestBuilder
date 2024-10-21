@@ -1967,11 +1967,15 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
-    # Hier sollen die SuS natürliche Zahlen und Dezimalzahlen in wissenschaftlicher Schreibweise darstellen.
+def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
+    # Hier sollen die SuS Zahlen in wissenschaftliche Schreibweise oder als Dezimalzahl umformen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) grosse Zahlen als natürliche Zahl
-    # b) kleine Zahlen als Dezimalbruch
+    # a) grosse natürliche Zahl in wissenschaftliche Schreibweise (exp > 5) umformen
+    # b) grosse Zahl in wissenschaftliche Schreibweise (exp > 5) in eine natürliche Zahl umformen
+    # c) kleine natürliche Zahl in wissenschaftliche Schreibweise (exp < 0) umformen
+    # d) kleine Zahl in wissenschaftliche Schreibweise (exp < 0) in Dezimalzahl umformen
+    # e) Dezimalzahl in wissenschaftliche Schreibweise (1 < exp < 5) umformen
+    # e) Zahl in wissenschaftliche Schreibweise (1 < exp < 5) in Dezimalzahl umformen
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1984,7 +1988,7 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def grosse_zahl():
+    def grosse_zahl_dezi_wiss():
         ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
         stellen = math.floor(math.log10(ziffern))
         exp = nzahl(6,12)
@@ -1993,7 +1997,7 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
-    def kleine_zahl():
+    def kleine_zahl_dezi_wiss():
         ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
         stellen = math.floor(math.log10(ziffern))
         exp = math.floor(math.log10(ziffern)) + nzahl(3, 12)
@@ -2002,7 +2006,7 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
-    def mittlere_zahl():
+    def mittlere_zahl_dezi_wiss():
         zp = nzahl(5, 8)
         zahl = nzahl(1,9)
         for k in range(zp):
@@ -2012,11 +2016,40 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
         lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
+    def grosse_zahl_wiss_dezi():
+        ziffern = random.choice([random.randint(10, 100), random.randint(100, 1000), random.randint(1000, 10000)])
+        stellen = math.floor(math.log10(ziffern))
+        exp = nzahl(6, 12)
+        zahl = ziffern * 10 ** exp
+        aufg = darstellung_zahl(zahl, darstellung='wiss')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='dezi')
+        return aufg, lsg
+
+    def kleine_zahl_wiss_dezi():
+        ziffern = random.choice([random.randint(10, 100), random.randint(100, 1000), random.randint(1000, 10000)])
+        stellen = math.floor(math.log10(ziffern))
+        exp = math.floor(math.log10(ziffern)) + nzahl(3, 12)
+        zahl = ziffern * 10 ** (-1 * exp)
+        aufg = darstellung_zahl(zahl, darstellung='wiss')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='dezi')
+        return aufg, lsg
+
+    def mittlere_zahl_wiss_dezi():
+        zp = nzahl(5, 8)
+        zahl = nzahl(1, 9)
+        for k in range(zp):
+            zahl += nzahl(1, 9) * 10 ** k
+        zahl = zahl / (10 ** nzahl(2, 5))
+        aufg = darstellung_zahl(zahl, darstellung='wiss')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
+        return aufg, lsg
+
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
+    aufgaben = {'a': grosse_zahl_dezi_wiss, 'b': grosse_zahl_wiss_dezi, 'c': kleine_zahl_dezi_wiss,
+                'd': kleine_zahl_wiss_dezi, 'e': mittlere_zahl_dezi_wiss, 'f': mittlere_zahl_wiss_dezi}
 
     aufg = ''
     lsg = ''
@@ -2024,11 +2057,13 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     for element in teilaufg:
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
+            lsg = lsg + r' \hspace{2em} '
         else:
             aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
 
         punkte += 1
         i += 1
@@ -2046,141 +2081,6 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
-    # Hier sollen die SuS Zahlen in wissenschaftlicher Schreibweise als natürliche Zahl oder Dezimalzahl darstellen.
-    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) grosse Zahlen als natürliche Zahl
-    # b) kleine Zahlen als Dezimalbruch
-    #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-
-    liste_bez = [f'{str(nr)}']
-    i = 0
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Notiere die gegebene Zahl als natürliche Zahl oder Dezimalbruch.']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
-
-    def grosse_zahl():
-        exp = nzahl(3, 12)
-        anz_ziffern = nzahl(1, 4)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = ziffern.copy()
-        zahl.extend(([0 for step in range(exp)]))
-        zahl.reverse()
-        zahl_sort = []
-        k = 1
-        for ziffer in zahl:
-            zahl_sort.append(ziffer)
-            if k % 3 == 0 and k != len(zahl):
-                zahl_sort.append('~')
-            k += 1
-        zahl.reverse()
-        zahl_sort.reverse()
-        aufg = str(ziffern[0]) + '.'
-        for k in range(len(ziffern) - 1):
-            aufg = aufg + str(ziffern[k + 1])
-        aufg = aufg + r' \cdot 10^{~' + gzahl(exp + anz_ziffern + 1) + '~}'
-        lsg = aufg + '~=~'
-        for zeichen in zahl_sort:
-            lsg = lsg + str(zeichen)
-        return aufg, lsg
-
-    def kleine_zahl():
-        exp = nzahl(0, 9)
-        anz_ziffern = nzahl(1, 4)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = ziffern.copy()
-        zahl.reverse()
-        zahl.extend(([0 for step in range(exp)]))
-        zahl.reverse()
-        zahl_sort = [0, '.', 0, 0, '~']
-        k = 1
-        for ziffer in zahl:
-            zahl_sort.append(ziffer)
-            if k % 4 == 0 and k != len(zahl):
-                zahl_sort.append('~')
-            k += 1
-
-        aufg = str(ziffern[0]) + '.'
-        for k in range(len(ziffern) - 1):
-            aufg = aufg + str(ziffern[k + 1])
-        aufg = aufg + r' \cdot 10^{~ -' + gzahl(exp + 3) + '~}'
-        lsg = aufg + '~=~'
-        for zeichen in zahl_sort:
-            lsg = lsg + str(zeichen)
-        return aufg, lsg
-
-    def mittlere_zahl(): # noch verbessern!
-        anz_ziffern = nzahl(3, 8)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = []
-        k = 1
-        ziffern.reverse()
-        for step in range(len(ziffern) - 2):
-            zahl.append(ziffern[step])
-            if k % 3 == 0 and k != len(ziffern) - 2:
-                zahl.append('~')
-            k += 1
-        zahl.reverse()
-        ziffern.reverse()
-        print(zahl)
-        zahl.extend((ziffern[-2:]))
-        zahl.insert(-2, '.')
-        aufg = ''
-        for zeichen in zahl:
-            aufg = aufg + str(zeichen)
-        while ziffern[-1] == 0:
-            del ziffern[-1]
-        aufg = aufg
-
-        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-        for step in range(len(ziffern)-1):
-            lsg = lsg + str(ziffern[step+1])
-        lsg = lsg + r' \cdot 10^{' + gzahl(anz_ziffern-2) + '}'
-        return aufg, lsg
-
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
-
-    aufg = ''
-    lsg = ''
-    punkte = 0
-    for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
-        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
-            aufg = aufg + r' \hspace{5em} '
-        else:
-            aufg = aufg + r' \\\\'
-
-        punkte += 1
-        i += 1
-
-    if BE != []:
-        if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
-                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
-
-    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen mit verschiedenen Vorsätzen einer Einheit ineinander umrechnen.
