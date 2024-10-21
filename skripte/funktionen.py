@@ -35,6 +35,117 @@ def packages(doc: Document):
 
 # Funktionen zur Darstellung von Zahlen
 
+def darstellung_zahl(zahl, darstellung='wiss'):
+    def liste(zahl):
+        exp = math.floor(math.log10(zahl))
+        if zahl < 1:
+            zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
+            ziffern = [ziffer for ziffer in zahl_str]
+            ziffern.remove('.') if '.' in ziffern else ziffern
+        else:
+            zahl_str = str(zahl).rstrip('0.').lstrip('0.')
+            ziffern = [ziffer for ziffer in zahl_str]
+            ziffern.remove('.') if '.' in ziffern else ziffern
+        return [ziffern, exp]
+
+    list = liste(zahl)
+    darstellung = 'wiss' if darstellung not in ['wiss', 'dezi'] else darstellung
+
+    if darstellung == 'wiss':
+        zahl = ''
+        laenge = len(list[0])
+        div, rest = divmod(abs(laenge), 3)
+        zp = 0
+        for k in range(div):
+            if k == 0:
+                zahl = list[0][zp] + '.' + list[0][zp + 1] + list[0][zp + 2] + '~'
+            else:
+                zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2]
+                if k < div - 1:
+                    zahl += '~'
+                elif rest != 0:
+                    zahl += '~'
+            zp += 3
+        for k in range(rest):
+            zahl = zahl + list[0][zp + k]
+        zahl = zahl + r' \cdot 10^{' + gzahl(list[1]) + '}'
+
+    elif darstellung == 'dezi':
+        laenge = len(list[0])
+        exp = list[1]
+        if exp < 0:
+            for step in range(abs(exp)):
+                list[0].insert(0, '0')
+            zp = 0
+            div, rest = divmod(len(list[0]), 3)
+            for k in range(div):
+                if k == 0:
+                    zahl = list[0][zp] + '.' + list[0][zp + 1] + list[0][zp + 2] + '~'
+                else:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                    elif rest != 0:
+                        zahl += '~'
+                zp += 3
+            for k in range(rest):
+                zahl = zahl + list[0][zp + k]
+
+        elif exp > 0 and exp >= laenge:
+            for step in range(exp + 1):
+                if step >= laenge:
+                    list[0].append('0')
+            div, rest = divmod(len(list[0]), 3)
+            zahl = ''
+            for k in range(rest):
+                zahl = zahl + list[0][k]
+            if div != 0:
+                zahl += '~'
+            zp = rest
+            for k in range(div):
+                if k == 0:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2] + '~'
+                else:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                zp += 3
+
+        elif abs(exp) <= laenge:
+            new_list = [[list[0][k] for k in range(abs(exp) + 1)], [list[0][k] for k in range(laenge) if k > abs(exp)],
+                        exp]
+            zahl = ''
+            # Ziffern vorm Komma
+            div, rest = divmod(len(new_list[0]), 3)
+            for k in range(rest):
+                zahl = zahl + new_list[0][k]
+            zahl += '~'
+            zp = rest
+            for k in range(div):
+                zahl = zahl + new_list[0][zp] + new_list[0][zp + 1] + new_list[0][zp + 2]
+                if k < div - 1:
+                    zahl += '~'
+                zp += 3
+            zahl = zahl + '.'
+            # Ziffern hinter dem Komma
+            if len(new_list[1]) < 3:
+                for element in new_list[1]:
+                    zahl += element
+            else:
+                zahl += new_list[1][0] + new_list[1][1]
+                zahl += '~'
+                zp = 2
+                div, rest = divmod(len(new_list[1]) - 2, 3)
+                for k in range(div):
+                    zahl = zahl + new_list[1][zp] + new_list[1][zp + 1] + new_list[1][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                    zp += 3
+                for k in range(rest):
+                    zahl = zahl + list[0][zp + k]
+
+    return zahl
+
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 
@@ -407,8 +518,10 @@ def ganzz_exponenten(n,p=1,q=6, wdh=True):
 def random_selection(list, anzahl=2, wdh=True):
     if wdh == True:
         liste = []
-        while len(liste) < anzahl:
-            liste.append(random.choice(list))
+        random.shuffle(list)
+        for k in range(anzahl):
+            liste.append(list[k % len(list)])
+        random.shuffle(liste)
         return liste
     elif wdh == False:
         if anzahl > len(set(list)):
@@ -443,32 +556,6 @@ def stelle(liste, vec):
         else:
             k+=1
     return print('Element nicht in Liste')
-def min_float_to_str(zahl): # geklaut von Sirius3 im python-forum.de
-    exponent = math.floor(math.log10(zahl))
-    stellen = max(1,int(-exponent+15))
-    return ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
 
-def zahl_darstellen(zahl):
-    exp = math.floor(math.log10(zahl))
-    if zahl < 1:
-        stellen = max(1, int(-exp + 15))
-        zahl_str = ('%.*f' % (stellen, zahl)).rstrip('0').rstrip('.')
-        ziffern = [ziffer for ziffer in zahl_str]
-        ziffern.remove('.') if '.' in ziffern else ziffern
-        if exp < 0:
-            for k in range(len(ziffern)):
-                if ziffern[0] == '0':
-                    ziffern.pop(0)
-                else:
-                    break
-    else:
-        ziffern = [ziffer for ziffer in str(zahl)]
-        ziffern.remove('.') if '.' in ziffern else ziffern
-        for k in range(len(ziffern)):
-            if ziffern[-1] == '0':
-                ziffern.pop()
-            else:
-                break
 
-    return [ziffern,[exp]]
 

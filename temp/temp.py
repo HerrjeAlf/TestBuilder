@@ -117,13 +117,13 @@ def darstellung_zahl(zahl, darstellung='wiss'):
             zahl_str = str(zahl).rstrip('0.').lstrip('0.')
             ziffern = [ziffer for ziffer in zahl_str]
             ziffern.remove('.') if '.' in ziffern else ziffern
-        return [ziffern, [exp]]
+        return [ziffern, exp]
 
     list = liste(zahl)
-    print(list)
     darstellung = 'wiss' if darstellung not in ['wiss', 'dezi'] else darstellung
 
     if darstellung == 'wiss':
+        zahl = ''
         laenge = len(list[0])
         div, rest = divmod(abs(laenge), 3)
         zp = 0
@@ -133,27 +133,102 @@ def darstellung_zahl(zahl, darstellung='wiss'):
             else:
                 zahl = zahl + list[0][zp] + list[0][zp+1] + list[0][zp+2]
                 if k < div-1:
-                    zahl = zahl + '~'
+                    zahl += '~'
                 elif rest != 0:
-                    zahl = zahl + '~'
+                    zahl += '~'
             zp += 3
         for k in range(rest):
             zahl = zahl + list[0][zp+k]
-        zahl = zahl + r' \cdot 10^{' + gzahl(list[1][0]) + '}'
-
+        zahl = zahl + r' \cdot 10^{' + gzahl(list[1]) + '}'
+    
     elif darstellung == 'dezi':
         laenge = len(list[0])
-        div, rest = divmod(abs(laenge), 3)
-        zp = 0
-        if list[1] > 0:
-            pass
+        exp = list[1]
+        print(laenge)
+        print(exp)
+        if exp < 0:
+            for step in range(abs(exp)):
+                list[0].insert(0,'0')
+            zp = 0
+            div, rest = divmod(len(list[0]), 3)
+            print(div)
+            print(rest)
+            for k in range(div):
+                if k == 0:
+                    zahl = list[0][zp] + '.' + list[0][zp + 1] + list[0][zp + 2] + '~'
+                else:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                    elif rest != 0:
+                        zahl += '~'
+                zp += 3
+            for k in range(rest):
+                zahl = zahl + list[0][zp + k]
 
+        elif exp > 0 and exp >= laenge:
+            print(list)
+            for step in range(exp+1):
+                if step >= laenge:
+                    list[0].append('0')
+            print(list[0])
+            div, rest = divmod(len(list[0]), 3)
+            print(div)
+            print(rest)
+            zahl = ''
+            for k in range(rest):
+                zahl = zahl + list[0][k]
+            print(zahl)
+            if div != 0:
+                zahl += '~'
+            zp = rest
+            for k in range(div):
+                if k == 0:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2] + '~'
+                else:
+                    zahl = zahl + list[0][zp] + list[0][zp + 1] + list[0][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                zp += 3
+
+        elif abs(exp) <= laenge:
+            new_list = [[list[0][k] for k in range(abs(exp)+1)], [list[0][k] for k in range(laenge) if k > abs(exp)], exp]
+            zahl = ''
+            # Ziffern vorm Komma
+            div, rest = divmod(len(new_list[0]), 3)
+            for k in range(rest):
+                zahl = zahl + new_list[0][k]
+            zahl += '~'
+            zp = rest
+            for k in range(div):
+                zahl = zahl + new_list[0][zp] + new_list[0][zp + 1] + new_list[0][zp + 2]
+                if k < div - 1:
+                    zahl += '~'
+                zp += 3
+            zahl = zahl + '.'
+            # Ziffern hinter dem Komma
+            if len(new_list[1]) < 3:
+                for element in new_list[1]:
+                    zahl += element
+            else:
+                zahl += new_list[1][0] + new_list[1][1]
+                zahl += '~'
+                zp = 2
+                div, rest = divmod(len(new_list[1])-2,3)
+                print(new_list[1])
+                print(div)
+                print(rest)
+                for k in range(div):
+                    zahl = zahl + new_list[1][zp] + new_list[1][zp + 1] + new_list[1][zp + 2]
+                    if k < div - 1:
+                        zahl += '~'
+                    zp += 3
+                for k in range(rest):
+                    zahl = zahl + list[0][zp + k]
 
     return zahl
 
-
-
-zahl = darstellung_zahl(4323*10**-12, darstellung='wiss')
+zahl = darstellung_zahl(4323.423274* 10**3, darstellung='dezi')
 print(zahl)
 
 

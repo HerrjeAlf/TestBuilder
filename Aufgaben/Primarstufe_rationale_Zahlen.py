@@ -540,7 +540,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': einf_pp_gleichn_bruchterm, 'b': pp_gleichn_bruchterm, 'c': pn_gleichn_bruchterm,
                 'd': nn_gleichn_bruchterm, 'e': bel_gleichn_bruchterm, 'f': einf_pp_ungl_bruchterm,
                 'g': pp_ungl_bruchterm, 'h': pn_ungl_bruchterm, 'i': nn_ungl_bruchterm, 'j':bel_ungl_bruchterm}
@@ -717,7 +717,7 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, B
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': einf_pp_bruchterm_multi, 'b': einf_bruchterm_multi, 'c': bruchterm_kuerz_multi,
                 'd': einf_pp_bruchterm_div, 'e': einf_bruchterm_div, 'f': bruchterm_kuerz_div}
 
@@ -918,7 +918,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
                 'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': var_bas_fakt}
 
@@ -1190,7 +1190,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
                 'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': triv_var_bas_fakt, 'h': einf_var_bas_fakt,
                 'i': nor_var_bas_fakt, 'j': schw_var_bas_fakt}
@@ -1446,7 +1446,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp,
                 'e': pos_zahl_und_ungln_exp, 'f': zahl_ungln_exp, 'g': var_pos_ungln_exp, 'h': var_ungln_exp,
                 'i': var_pos_sqrt, 'j': var_sqrt}
@@ -1562,7 +1562,7 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
                 'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
                 'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
@@ -1813,7 +1813,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp,
                 'e': pos_zahl_und_ungln_exp, 'f': zahl_ungln_exp, 'g': var_pos_ungln_exp, 'h': var_ungln_exp,
                 'i': var_pos_sqrt, 'j': var_sqrt}
@@ -1967,7 +1967,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
+def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     # Hier sollen die SuS natürliche Zahlen und Dezimalzahlen in wissenschaftlicher Schreibweise darstellen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) grosse Zahlen als natürliche Zahl
@@ -1985,95 +1985,37 @@ def in_wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     grafiken_loesung = []
 
     def grosse_zahl():
-        exp = nzahl(3, 12)
-        anz_ziffern = nzahl(1, 4)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = ziffern.copy()
-        zahl.extend(([0 for step in range(exp)]))
-        zahl.reverse()
-        zahl_sort = []
-        k = 1
-        for ziffer in zahl:
-            zahl_sort.append(ziffer)
-            if k % 3 == 0 and k != len(zahl):
-                zahl_sort.append('~')
-            k += 1
-        zahl.reverse()
-        zahl_sort.reverse()
-        aufg = ''
-        for zeichen in zahl_sort:
-            aufg = aufg + str(zeichen)
-        aufg = aufg
-        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-        for k in range(len(ziffern) - 1):
-            lsg = lsg + str(ziffern[k + 1])
-        lsg = lsg + r' \cdot 10^{' + gzahl(exp + anz_ziffern + 1) + '}'
+        ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
+        stellen = math.floor(math.log10(ziffern))
+        exp = nzahl(6,12)
+        zahl = ziffern*10**exp
+        aufg = darstellung_zahl(zahl,darstellung='dezi')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
     def kleine_zahl():
-        exp = nzahl(0, 9)
-        anz_ziffern = nzahl(1, 4)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = ziffern.copy()
-        zahl.reverse()
-        zahl.extend(([0 for step in range(exp)]))
-        zahl.reverse()
-        zahl_sort = [0, '.', 0, 0, '~']
-        k = 1
-        for ziffer in zahl:
-            zahl_sort.append(ziffer)
-            if k % 3 == 0 and k != len(zahl):
-                zahl_sort.append('~')
-            k += 1
-        aufg = ''
-        for zeichen in zahl_sort:
-            aufg = aufg + str(zeichen)
-        aufg = aufg
-        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-        for k in range(len(ziffern) - 1):
-            lsg = lsg + str(ziffern[k + 1])
-        lsg = lsg + r' \cdot 10^{-' + gzahl(exp + 3) + '}'
+        ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
+        stellen = math.floor(math.log10(ziffern))
+        exp = math.floor(math.log10(ziffern)) + nzahl(3, 12)
+        zahl = ziffern * 10 ** (-1*exp)
+        aufg = darstellung_zahl(zahl, darstellung='dezi')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
-    def mittlere_zahl(): # noch verbessern!
-        anz_ziffern = nzahl(3, 8)
-        ziffern = [nzahl(1, 9)]
-        ziffern.extend(([nzahl(0, 9) for step in range(anz_ziffern)]))
-        ziffern.append(nzahl(1, 9))
-        zahl = []
-        k = 1
-        ziffern.reverse()
-        for step in range(len(ziffern) - 2):
-            zahl.append(ziffern[step])
-            if k % 3 == 0 and k != len(ziffern) - 2:
-                zahl.append('~')
-            k += 1
-        zahl.reverse()
-        ziffern.reverse()
-        print(zahl)
-        zahl.extend((ziffern[-2:]))
-        zahl.insert(-2, '.')
-        aufg = ''
-        for zeichen in zahl:
-            aufg = aufg + str(zeichen)
-        while ziffern[-1] == 0:
-            del ziffern[-1]
-        aufg = aufg
-
-        lsg = aufg + '~=~' + str(ziffern[0]) + '.'
-        for step in range(len(ziffern)-1):
-            lsg = lsg + str(ziffern[step+1])
-        lsg = lsg + r' \cdot 10^{' + gzahl(anz_ziffern-2) + '}'
+    def mittlere_zahl():
+        zp = nzahl(5, 8)
+        zahl = nzahl(1,9)
+        for k in range(zp):
+            zahl += nzahl(1,9)*10**k
+        zahl = zahl / (10**nzahl(2,5))
+        aufg = darstellung_zahl(zahl, darstellung='dezi')
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
         return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
 
     aufg = ''
@@ -2209,7 +2151,7 @@ def wiss_schreibweise_umf(nr, teilaufg=['a', 'b'], anzahl=False, BE=[]):
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': grosse_zahl, 'b': kleine_zahl, 'c': mittlere_zahl}
 
     aufg = ''
@@ -2340,7 +2282,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': bel_groessen, 'b': laengen, 'c': flaechen, 'd': volumen}
 
     aufg = ''

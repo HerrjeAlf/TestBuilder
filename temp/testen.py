@@ -12,8 +12,8 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'Probe'
-Titel = 'Übung Wahrscheinlichkeit'
+Art = 'Testen'
+Titel = 'Hier wird getestet'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[baumdiagramm(4.1,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], art='zoZ', BE=[4,4,8,2,4,2,2,4])]]
+    Aufgaben = [[in_wiss_schreibweise_umf(1, anzahl=6)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
