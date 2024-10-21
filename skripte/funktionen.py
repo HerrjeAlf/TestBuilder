@@ -66,8 +66,11 @@ def darstellung_zahl(zahl, darstellung='wiss'):
                 elif rest != 0:
                     zahl += '~'
             zp += 3
-        for k in range(rest):
-            zahl = zahl + list[0][zp + k]
+        if div == 0 and rest == 2:
+            zahl = zahl + list[0][zp] + '.' + list[0][zp + 1]
+        else:
+            for k in range(rest):
+                zahl = zahl + list[0][zp + k]
         zahl = zahl + r' \cdot 10^{' + gzahl(list[1]) + '}'
 
     elif darstellung == 'dezi':
@@ -119,7 +122,10 @@ def darstellung_zahl(zahl, darstellung='wiss'):
             div, rest = divmod(len(new_list[0]), 3)
             for k in range(rest):
                 zahl = zahl + new_list[0][k]
-            zahl += '~'
+            if div == 0:
+                zahl += '.'
+            else:
+                zahl += '~'
             zp = rest
             for k in range(div):
                 zahl = zahl + new_list[0][zp] + new_list[0][zp + 1] + new_list[0][zp + 2]
