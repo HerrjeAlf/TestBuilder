@@ -909,7 +909,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}
@@ -1751,7 +1751,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
 
     aufg_text = ''
     lsg_aufg = (r' \mathrm{Lösen~Sie~die~Exponentialgleichungen.} \\')
@@ -2057,7 +2057,7 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
 
     aufg = ''
     lsg = (r' \mathrm{~Bestimme~die~Stammfunktionen~der~gegebenen~Funktionen.} \\')

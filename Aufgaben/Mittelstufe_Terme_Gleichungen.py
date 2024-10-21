@@ -150,7 +150,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': [einf_ganzz_terme, 2], 'b': [einf_ganzz_terme, 3],
                 'c': [einf_ratio_terme, 2], 'd': [einf_ratio_terme, 3],
                 'e': [einf_bruch_terme, 2], 'f': [einf_bruch_terme, 3],
@@ -272,7 +272,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = np.random.choice(teilaufg, anzahl, True)
+        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
                 'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
                 'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
