@@ -44,7 +44,7 @@ def ganze_zahl(gzahl):
 
 def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
     def liste(zahl):
-        if exponent and ganze_zahl(exponent) == True:
+        if exponent and ganze_zahl(exponent)==True:
             exp = exponent
             zahl_str = str(zahl)
             zahl_str.rstrip('0.').lstrip('0.')
