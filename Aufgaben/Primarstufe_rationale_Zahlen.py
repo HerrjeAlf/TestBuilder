@@ -2115,20 +2115,19 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
 
 
     def bel_groessen():
-        ausw = random.randint(0,7)
         vors = [['p', -12], ['n', -9], [r' \mu ', -6], ['m', -3], ['k', 3], ['M', 6], ['G', 9], ['T', 12]]
         ausw_gr = random.choice(['s', 'J', 'N', 'C', 'V', 'A', 'W'])
-        k = -2
-        faktor = Rational(1, random.choice([100,1000,10000]))
-        if ausw < 4:
-            k = 2
-            faktor = random.choice([100,1000,10000])
-        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + vors[ausw + k][0] + ausw_gr)
-        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + ausw_gr + r'~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
-               + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
-               + r'}' + '~' + ausw_gr + '~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~'
-               + vors[ausw + k][0] + ausw_gr)
+        ausw = nzahl(0,7)
+        komma = nzahl(1,2)
+        exp = vors[ausw][1]
+        anz_ziffern = nzahl(1, 2)
+        zahl = nzahl(1,9)
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1,9) * 10**(step+1)
+        zahl_str = darstellung_zahl(zahl * (10 ** (-1 * (exp+komma))), darstellung='dezi')
+        aufg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + ausw_gr)
+        lsg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~' + zahl_str + r' \cdot 10^{' + gzahl(exp) + '}~'
+               + ausw_gr + '~=~' + gzahl(zahl*10**(-1*komma)) + '~' + ausw_gr)
         return aufg, lsg
 
     def laengen():

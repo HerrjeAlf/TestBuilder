@@ -37,6 +37,7 @@ def packages(doc: Document):
 
 def darstellung_zahl(zahl, darstellung='wiss'):
     def liste(zahl):
+        print(zahl)
         exp = math.floor(math.log10(zahl))
         if zahl < 1:
             zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
@@ -81,6 +82,8 @@ def darstellung_zahl(zahl, darstellung='wiss'):
                 list[0].insert(0, '0')
             zp = 0
             div, rest = divmod(len(list[0]), 3)
+            print(div)
+            print(rest)
             for k in range(div):
                 if k == 0:
                     zahl = list[0][zp] + '.' + list[0][zp + 1] + list[0][zp + 2] + '~'
@@ -122,10 +125,8 @@ def darstellung_zahl(zahl, darstellung='wiss'):
             div, rest = divmod(len(new_list[0]), 3)
             for k in range(rest):
                 zahl = zahl + new_list[0][k]
-            if div == 0:
-                zahl += '.'
-            else:
-                zahl += '~'
+            if div != 0:
+               zahl += '~'
             zp = rest
             for k in range(div):
                 zahl = zahl + new_list[0][zp] + new_list[0][zp + 1] + new_list[0][zp + 2]
