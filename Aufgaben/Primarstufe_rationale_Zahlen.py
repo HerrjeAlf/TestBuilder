@@ -2002,18 +2002,18 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': [zahldarstellung, nzahl(6,12), 'dezi'],
-                'b': [zahldarstellung, nzahl(6,12), 'wiss'],
-                'c': [zahldarstellung, -1* nzahl(6,12), 'dezi'],
-                'd': [zahldarstellung, -1*nzahl(6,12), 'wiss'],
-                'e': [zahldarstellung, 0, 'dezi'],
-                'f': [zahldarstellung, 0, 'wiss']}
+    aufgaben = {'a': [nzahl(6,12), 'dezi'],
+                'b': [nzahl(6,12), 'wiss'],
+                'c': [-1* nzahl(6,12), 'dezi'],
+                'd': [-1*nzahl(6,12), 'wiss'],
+                'e': [0, 'dezi'],
+                'f': [0, 'wiss']}
 
     aufg = ''
     lsg = ''
     punkte = 0
     for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
+        teilaufg_aufg, teilaufg_lsg = zahldarstellung(aufgaben[element][0], aufgaben[element][1])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
@@ -2108,33 +2108,37 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
     def flaechen():
         ausw = random.randint(0,5)
         vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        k = -2
-        faktor = Rational(1, random.choice([10**2,10**4,10**6]))
-        if ausw < 4:
-            k = 2
-            faktor = random.choice([10**2,10**4,10**6])
-        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~ ...' + vors[ausw + k][0] + 'm^2')
-        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^2 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
-               + gzahl(vors[ausw][1]) + '})^2}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^2} \cdot (10^{'
-               + gzahl(vors[ausw+k][1]) + r'})^2 ~ m^2 ~=~' + gzahl(zahl*10**(2*(vors[ausw][1]-vors[ausw+k][1])))
-               + '~' + vors[ausw + k][0] + 'm^2')
+        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
+        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
+        exp_anf = exp2 - exp1 - komma
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
+        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*2 - exp1*2) - komma + anz_ziffern), darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm^2 ~=~ ...' + vors2 + 'm^2'
+        lsg = (zahl_str_anf + '~' + vors1 + r'm^2 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
+               + gzahl(exp1) + '})^2}{(10^{' + gzahl(exp2) + r'})^2} \cdot (10^{' + gzahl(exp2)
+               + r'})^2~ m^2 ~=~' + zahl_str_erg + '~' + vors2 + 'm^2')
         return aufg, lsg
 
     def volumen():
         ausw = random.randint(0,5)
         vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        k = -1
-        faktor = Rational(1, random.choice([10**3,10**6]))
-        if ausw < 4:
-            k = 1
-            faktor = random.choice([10**3,10**6])
-        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~ ...' + vors[ausw + k][0] + 'm^3')
-        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm^3 ~=~' + gzahl(zahl) + r' \cdot \frac{(10^{'
-               + gzahl(vors[ausw][1]) + '})^3}{(10^{' + gzahl(vors[ausw+k][1]) + r'})^3} \cdot (10^{'
-               + gzahl(vors[ausw+k][1]) + r'})^3 ~m^3 ~=~' + gzahl(zahl*10**(3*(vors[ausw][1] - vors[ausw+k][1])))
-               + '~' + vors[ausw + k][0] + 'm^3')
+        ausw, schritt, komma = nzahl(0, 5), 1, nzahl(1,2)
+        schritt = -1 if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
+        exp_anf = exp2 - exp1 - komma
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
+        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*3 - exp1*3) - komma + anz_ziffern), darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm^3 ~=~ ...' + vors2 + 'm^3'
+        lsg = (zahl_str_anf + '~' + vors1 + r'm^3 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
+               + gzahl(exp1) + '})^3}{(10^{' + gzahl(exp2) + r'})^3} \cdot (10^{' + gzahl(exp2)
+               + r'})^3~ m^3 ~=~' + zahl_str_erg + '~' + vors2 + 'm^3')
         return aufg, lsg
 
 

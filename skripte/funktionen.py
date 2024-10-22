@@ -546,8 +546,8 @@ def random_selection(list, anzahl=2, wdh=True):
         if anzahl > len(list):
             anzahl = len(list)
         random.shuffle(list)
-        menge = [list[k] for k in range(anzahl)]
-        return menge
+        Liste = [list[k] for k in range(anzahl)]
+        return Liste
     else:
         print('wdh muss "True" or "False" sein')
 
