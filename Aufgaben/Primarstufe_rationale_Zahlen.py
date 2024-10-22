@@ -2103,7 +2103,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
 
     def vorsaetze(n, p=1):
         if p == 1:
-            return random_selection([['m', -3], ['c', -2], ['d', -1], ['k', 3]], n, False)
+            return random_selection([['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]], n, False)
         elif p == 2:
             return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
                                          ['k', 3], ['M', 6], ['G', 9], ['T', 12]], n, False)
@@ -2131,18 +2131,19 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         return aufg, lsg
 
     def laengen():
-        ausw = random.randint(0,5)
         vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        k = -2
-        faktor = Rational(1, random.choice([100,1000,10000]))
-        if ausw < 3:
-            k = 2
-            faktor = random.choice([100,1000,10000])
-        zahl = round(random.random(), random.choice([2, 3, 4])) * faktor
-        aufg = (gzahl(zahl) + '~' + vors[ausw][0] + r'm ~=~ ...' + vors[ausw + k][0] + 'm')
-        lsg = (gzahl(zahl) + '~' + vors[ausw][0] + r' m ~=~' + gzahl(zahl) + r' \cdot \frac{10^{'
-               + gzahl(vors[ausw][1]) + '}}{10^{' + gzahl(vors[ausw+k][1]) + r'}} \cdot 10^{' + gzahl(vors[ausw+k][1])
-               + r'}~ m ~=~' + gzahl(zahl*10**(vors[ausw][1]-vors[ausw+k][1])) + '~' + vors[ausw + k][0] + 'm')
+        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
+        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw+schritt][0], vors[ausw+schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1,9)
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1,9) * 10**(step+1)
+        zahl_str_anf = darstellung_zahl(zahl * (10 ** (exp2-exp1-komma)), darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1*komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm ~=~ ...' + vors2 + 'm'
+        lsg = (zahl_str_anf + '~' + vors1 + r' m ~=~' + zahl_str_anf + r' \cdot \frac{10^{'
+               + gzahl(exp1) + '}}{10^{' + gzahl(exp2) + r'}} \cdot 10^{' + gzahl(exp2)
+               + r'}~ m ~=~' + zahl_str_erg + '~' + vors2 + 'm')
         return aufg, lsg
 
     def flaechen():
