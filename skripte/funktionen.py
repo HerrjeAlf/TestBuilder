@@ -37,7 +37,6 @@ def packages(doc: Document):
 
 def darstellung_zahl(zahl, darstellung='wiss'):
     def liste(zahl):
-        print(zahl)
         exp = math.floor(math.log10(zahl))
         if zahl < 1:
             zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
@@ -82,8 +81,6 @@ def darstellung_zahl(zahl, darstellung='wiss'):
                 list[0].insert(0, '0')
             zp = 0
             div, rest = divmod(len(list[0]), 3)
-            print(div)
-            print(rest)
             for k in range(div):
                 if k == 0:
                     zahl = list[0][zp] + '.' + list[0][zp + 1] + list[0][zp + 2] + '~'
@@ -133,7 +130,7 @@ def darstellung_zahl(zahl, darstellung='wiss'):
                 if k < div - 1:
                     zahl += '~'
                 zp += 3
-            zahl = zahl + '.'
+            zahl = zahl + '.' if len(new_list[1]) > 0 else zahl
             # Ziffern hinter dem Komma
             if len(new_list[1]) < 3:
                 for element in new_list[1]:
@@ -531,11 +528,10 @@ def random_selection(list, anzahl=2, wdh=True):
         random.shuffle(liste)
         return liste
     elif wdh == False:
-        if anzahl > len(set(list)):
-            anzahl = len(set(list))
-        menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
-        while len(menge) < anzahl:
-            menge.add(random.choice(list))
+        if anzahl > len(list):
+            anzahl = len(list)
+        random.shuffle(list)
+        menge = [list[k] for k in range(anzahl)]
         return menge
     else:
         print('wdh muss "True" or "False" sein')
