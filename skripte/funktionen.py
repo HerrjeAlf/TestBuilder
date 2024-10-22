@@ -23,7 +23,6 @@ def timer(func):
         return result
     return wrapper
 
-
 def packages(doc: Document):
     """
     Fügt unsere benutzten Pakete an jeweiliges Dokument an.
@@ -33,19 +32,35 @@ def packages(doc: Document):
     for package in packages_lst:
         doc.packages.append(Package(package))
 
+
+def ganze_zahl(gzahl):
+    try:
+        int(abs(gzahl))  # positive und negative Int-Werte
+        return True
+    except ValueError:
+        return print('Sie haben keine ganze Zahl angegeben!')
+
 # Funktionen zur Darstellung von Zahlen
 
-def darstellung_zahl(zahl, darstellung='wiss'):
+def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
     def liste(zahl):
-        exp = math.floor(math.log10(zahl))
-        if zahl < 1:
-            zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
+        if exponent and ganze_zahl(exponent) == True:
+            exp = exponent
+            zahl_str = str(zahl)
+            zahl_str.rstrip('0.').lstrip('0.')
             ziffern = [ziffer for ziffer in zahl_str]
             ziffern.remove('.') if '.' in ziffern else ziffern
         else:
-            zahl_str = str(zahl).rstrip('0.').lstrip('0.')
-            ziffern = [ziffer for ziffer in zahl_str]
-            ziffern.remove('.') if '.' in ziffern else ziffern
+            exp = math.floor(math.log10(zahl))
+            if zahl < 1:
+                zahl_str = ('%.*f' % (int(-exp + 15), zahl)).rstrip('0.').lstrip('0.')
+                ziffern = [ziffer for ziffer in zahl_str]
+                ziffern.remove('.') if '.' in ziffern else ziffern
+            else:
+                zahl_str = str(zahl).rstrip('0.').lstrip('0.')
+                ziffern = [ziffer for ziffer in zahl_str]
+                ziffern.remove('.') if '.' in ziffern else ziffern
+
         return [ziffern, exp]
 
     list = liste(zahl)
