@@ -1967,7 +1967,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
+def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
     # Hier sollen die SuS Zahlen in wissenschaftliche Schreibweise oder als Dezimalzahl umformen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) grosse natürliche Zahl in wissenschaftliche Schreibweise (exp > 5) umformen
@@ -1988,74 +1988,32 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c'], anzahl=False, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def grosse_zahl_dezi_wiss():
-        ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
-        stellen = math.floor(math.log10(ziffern))
-        exp = nzahl(6,12)
-        zahl = ziffern*10**exp
-        aufg = darstellung_zahl(zahl,darstellung='dezi')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
-        return aufg, lsg
-
-    def kleine_zahl_dezi_wiss():
-        ziffern = random.choice([random.randint(10,100), random.randint(100,1000), random.randint(1000,10000)])
-        stellen = math.floor(math.log10(ziffern))
-        exp = math.floor(math.log10(ziffern)) + nzahl(3, 12)
-        zahl = ziffern * 10 ** (-1*exp)
-        aufg = darstellung_zahl(zahl, darstellung='dezi')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
-        return aufg, lsg
-
-    def mittlere_zahl_dezi_wiss():
-        zp = nzahl(5, 8)
-        zahl = nzahl(1,9)
-        for k in range(zp):
-            zahl += nzahl(1,9)*10**k
-        zahl = zahl / (10**nzahl(2,5))
-        aufg = darstellung_zahl(zahl, darstellung='dezi')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
-        return aufg, lsg
-
-    def grosse_zahl_wiss_dezi():
-        ziffern = random.choice([random.randint(10, 100), random.randint(100, 1000), random.randint(1000, 10000)])
-        stellen = math.floor(math.log10(ziffern))
-        exp = nzahl(6, 12)
-        zahl = ziffern * 10 ** exp
-        aufg = darstellung_zahl(zahl, darstellung='wiss')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='dezi')
-        return aufg, lsg
-
-    def kleine_zahl_wiss_dezi():
-        ziffern = random.choice([random.randint(10, 100), random.randint(100, 1000), random.randint(1000, 10000)])
-        stellen = math.floor(math.log10(ziffern))
-        exp = math.floor(math.log10(ziffern)) + nzahl(3, 12)
-        zahl = ziffern * 10 ** (-1 * exp)
-        aufg = darstellung_zahl(zahl, darstellung='wiss')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='dezi')
-        return aufg, lsg
-
-    def mittlere_zahl_wiss_dezi():
-        zp = nzahl(5, 8)
-        zahl = nzahl(1, 9)
+    def zahldarstellung(exp, art_ein):
+        zp, komma, zahl = nzahl(2, 5), nzahl(0,2), nzahl(1, 9)
+        art_aus = 'wiss'
+        art_aus = 'dezi' if art_ein != 'dezi' else art_aus
         for k in range(zp):
             zahl += nzahl(1, 9) * 10 ** k
-        zahl = zahl / (10 ** nzahl(2, 5))
-        aufg = darstellung_zahl(zahl, darstellung='wiss')
-        lsg = aufg + '~=~' + darstellung_zahl(zahl, darstellung='wiss')
+        aufg = darstellung_zahl(zahl, exponent=(zp+exp-komma), darstellung=art_ein)
+        lsg = aufg + '~=~' + darstellung_zahl(zahl, exponent=(zp+exp-komma), darstellung=art_aus)
         return aufg, lsg
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': grosse_zahl_dezi_wiss, 'b': grosse_zahl_wiss_dezi, 'c': kleine_zahl_dezi_wiss,
-                'd': kleine_zahl_wiss_dezi, 'e': mittlere_zahl_dezi_wiss, 'f': mittlere_zahl_wiss_dezi}
+    aufgaben = {'a': [zahldarstellung, nzahl(6,12), 'dezi'],
+                'b': [zahldarstellung, nzahl(6,12), 'wiss'],
+                'c': [zahldarstellung, -1* nzahl(6,12), 'dezi'],
+                'd': [zahldarstellung, -1*nzahl(6,12), 'wiss'],
+                'e': [zahldarstellung, 0, 'dezi'],
+                'f': [zahldarstellung, 0, 'wiss']}
 
     aufg = ''
     lsg = ''
     punkte = 0
     for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
@@ -2124,7 +2082,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         zahl = nzahl(1,9)
         for step in range(anz_ziffern):
             zahl = zahl + nzahl(1,9) * 10**(step+1)
-        zahl_str = darstellung_zahl(zahl * (10 ** (-1 * (exp+komma))), darstellung='dezi')
+        zahl_str = darstellung_zahl(zahl, exponent=anz_ziffern-exp-komma, darstellung='dezi')
         aufg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + ausw_gr)
         lsg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~' + zahl_str + r' \cdot 10^{' + gzahl(exp) + '}~'
                + ausw_gr + '~=~' + gzahl(zahl*10**(-1*komma)) + '~' + ausw_gr)
@@ -2136,9 +2094,10 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
         vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw+schritt][0], vors[ausw+schritt][1]
         anz_ziffern, zahl = nzahl(1, 2), nzahl(1,9)
+        exp_anf = exp2-exp1-komma
         for step in range(anz_ziffern):
             zahl = zahl + nzahl(1,9) * 10**(step+1)
-        zahl_str_anf = darstellung_zahl(zahl * (10 ** (exp2-exp1-komma)), darstellung='dezi')
+        zahl_str_anf = darstellung_zahl(zahl, exponent=exp2-exp1-komma+anz_ziffern, darstellung='dezi')
         zahl_str_erg = gzahl(zahl * (10 ** (-1*komma)))
         aufg = zahl_str_anf + '~' + vors1 + r'm ~=~ ...' + vors2 + 'm'
         lsg = (zahl_str_anf + '~' + vors1 + r' m ~=~' + zahl_str_anf + r' \cdot \frac{10^{'
