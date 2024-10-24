@@ -263,26 +263,21 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # Wahrscheinlichkeit von Ereignissen berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if 'b' in teilaufg:
-            aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für'
-                            + ' die folgenden Ereignisse.', r' \mathrm{ \quad E_1, ~ E_2, ~ E_1 \cap E_2 \quad '
-                            + r' und \quad E_3: ~}' + ereignis_3))
-            loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                            r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(
-                                pkt1) + r'BE) \qquad P(E_2) ~=~' + wkt2_str
-                            + r' \quad (' + gzahl(pkt2) + r'BE) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str + r' \quad ('
-                            + gzahl(pkt5) + r'BE) \qquad P(E_3) ~=~' + wkt3_str + r' \quad (' + gzahl(pkt3) + r'BE)'))
-            punkte = pkt1 + pkt2 + pkt3 + pkt5
-        else:
+
+        if 'b' not in teilaufg:
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
                             + f'die folgenden Ereignisse.', r' E_1: ' + ereignis_1 + r', \quad E_2: '
                             + ereignis_2 + r', \quad ' + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
-            loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
-                            r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'BE) \qquad P(E_2) ~=~'
-                            + wkt2_str + r' \quad (' + gzahl(pkt2) + r'BE) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str
-                            + r' \quad (' + gzahl(pkt5) + r'BE) \qquad P( E1 \cup E2 ) ~=~' + wkt4_str
-                            + r' \quad (' + gzahl(pkt4) + r'BE)'))
-            punkte = pkt1 + pkt2 + pkt4 + pkt5
+        else:
+            aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
+                            + f'die folgenden Ereignisse.', r' E_1,~E_2,~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
+
+        loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
+                        r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'BE) \qquad P(E_2) ~=~'
+                        + wkt2_str + r' \quad (' + gzahl(pkt2) + r'BE) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str
+                        + r' \quad (' + gzahl(pkt5) + r'BE) \qquad P( E1 \cup E2 ) ~=~' + wkt4_str
+                        + r' \quad (' + gzahl(pkt4) + r'BE)'))
+        punkte = pkt1 + pkt2 + pkt4 + pkt5
 
         liste_punkte.append(punkte)
         i += 1
