@@ -292,8 +292,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3BE) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
-            aufgabe.append(str(liste_teilaufg[i])
-                           + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
                            + f'Unabhängigkeit von E1 und E2, mit: ', r' E_1: ' + ereignis_1 + r', \quad E_2: '
