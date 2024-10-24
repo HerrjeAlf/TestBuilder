@@ -523,9 +523,9 @@ def vektoren_koll_ortho(nr, BE=[]):
     vz = (ax * vx + ay * vy) / (-1* az)
     vec_s = [sx, sy, sz] = vektor_kürzen([vx, vy, vz])
     # beliebige Vektoren
-    while vektor_kollinear(vec_a, vec_b) == True or vektor_senk(vec_a, vec_b) == True:
+    while vektor_kollinear(vec_a, vec_b) == True or test_vektor_senk(vec_a, vec_b) == True:
         vec_b = [bx, by, bz] = punkt_vektor(3)
-    while vektor_kollinear(vec_a, vec_c) == True or vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
+    while vektor_kollinear(vec_a, vec_c) == True or test_vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
         vec_c = [cx, cy, cz] = punkt_vektor(3)
     ausw = random.sample([vec_b, vec_c, vec_s, vec_k], 4)
 
@@ -884,10 +884,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
             punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u))
             w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
-            if
             lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
             lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
             schnittpunkt_s = punkt_c + lsgs*w
@@ -972,7 +971,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + loesung_1)
         i += 1
 
-    if 'd' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
+    if len([element for element in ['c', 'd'] if element in teilaufg]) > 0 and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
@@ -989,16 +988,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
         p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
         [px, py, pz] = vektor_ganzzahl(vektor_runden(p, 3))
-        sp_vp = abs(vx*px + vy*py + vz*pz)
-        l_v = sqrt(vx**2 + vy**2 + vz**2)
-        l_p = sqrt(px**2 + py**2 + pz**2)
-        schnittwinkel = 90 if sp_vp == 0 else N(np.degrees(np.arccos(sp_vp/(l_v*l_p))),3)
 
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
             [ex, ey, ez] = [cx,cy,cz]
             [px, py, pz] = [wx, wy, wz]
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und h. \n\n')
-
         elif 'c' not in teilaufg:
             aufgabe.append('Gegeben sind die beiden Geraden mit folgenden Gleichungen:')
             aufgabe.append(r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
@@ -1021,6 +1015,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            r' \end{pmatrix} ')
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
+        sp_vp = skalarprodukt([vx, vy, vz], [px, py, pz])
+        l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
+        l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
+        schnittwinkel = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
+
         loesung.append(str(liste_teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
@@ -1039,7 +1038,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2P) \\'
                        + r' \gamma ~=~ cos^{-1} \Big( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
-                       + r'} \Big) ~=~' + gzahl(schwnittwinkel)
+                       + r'} \Big) ~=~' + gzahl(schnittwinkel)
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         liste_punkte.append(punkte_aufg)
         i += 1
