@@ -2985,7 +2985,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_1_sqrt = sqrt((faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9)
 
         # Funktionsgleichung und Partialpolynomne
-        fkt_1_str = (latex(fkt_1_a2) + 'x^2' + vorz_str(fkt_1_a1) + r'a \cdot x'
+        fkt_1_str = (latex(fkt_1_a2) + 'x^2' + vorz_str(fkt_1_a1) + 'ax'
                      + vorz_str(fkt_1_a0) + r'a^2')
         fkt_1_pq_str = 'x^2' + vorz_str(fkt_1_p) + r'a \cdot x' + vorz_str(fkt_1_q) + r'a^2'
         fkt_2_str = gzahl(6*faktor) + 'x' + vorz_str(fkt_1_a1) + r'a'

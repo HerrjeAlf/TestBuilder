@@ -34,6 +34,7 @@ def packages(doc: Document):
 
 
 def ganze_zahl(gzahl):
+    # überprüft ob die gegebene Zahl eine ganze Zahl ist
     try:
         int(abs(gzahl))  # positive und negative Int-Werte
         return True
@@ -41,8 +42,8 @@ def ganze_zahl(gzahl):
         return print('Sie haben keine ganze Zahl angegeben!')
 
 # Funktionen zur Darstellung von Zahlen
-
 def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
+    # schreibt Zahlen in wissenschaftlicher Schreibweise oder als Dezimalbruch
     def liste(zahl):
         if exponent and ganze_zahl(exponent)==True:
             exp = exponent
@@ -233,6 +234,24 @@ def ganz(k):
         return int(k)
     else:
         return k
+
+
+def ganzz_exponenten(n,p=1,q=6, wdh=True):
+    if wdh == True:
+        liste = []
+        while len(liste) < n:
+            liste.append(zzahl(p,q))
+        return liste
+    elif wdh == False:
+        liste_max = [element for element in range(p+1,q+1)]
+        random.shuffle(liste_max)
+        if n <= len(liste_max):
+            liste_n = [liste_max[k] for k in range(n)]
+        else:
+            exit("kleineren Wert für n wählen (n muss kleiner sein als q-p")
+        return liste_n
+    else:
+        print('wdh muss "True" or "False" sein')
 
 def gzahl(k, exp=False):
     if type(k) == str:
@@ -520,20 +539,6 @@ def elemente_sort(st_werte):
         t += 1
     return st_werte_sort
 
-def ganzz_exponenten(n,p=1,q=6, wdh=True):
-    if wdh == True:
-        liste = []
-        while len(liste) < n:
-            liste.append(zzahl(p,q))
-        return liste
-    elif wdh == False:
-        menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
-        while len(menge) < n:
-            menge.add(zzahl(p, q))
-        return menge
-    else:
-        print('wdh muss "True" or "False" sein')
-
 def random_selection(list, anzahl=2, wdh=True):
     if wdh == True:
         liste = []
@@ -567,6 +572,7 @@ def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden u
 # keine Ahnung wo ich das noch brauche
 
 def stelle(liste, vec):
+    # hier wird die Stelle eines gesuchten Elements in der Liste ausgegeben
     k = 0
     for tuble in liste:
         if vektor_vergleich(tuble, vec) == True:
