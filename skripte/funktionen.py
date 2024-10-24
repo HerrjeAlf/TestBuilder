@@ -235,7 +235,6 @@ def ganz(k):
     else:
         return k
 
-
 def ganzz_exponenten(n,p=1,q=6, wdh=True):
     if wdh == True:
         liste = []
@@ -248,7 +247,8 @@ def ganzz_exponenten(n,p=1,q=6, wdh=True):
         if n <= len(liste_max):
             liste_n = [liste_max[k] for k in range(n)]
         else:
-            exit("kleineren Wert für n wählen (n muss kleiner sein als q-p")
+            exit("kleineren Wert für n oder größeren Wert für q wählen (n muss kleiner sein als q-p")
+        random.shuffle(liste_n)
         return liste_n
     else:
         print('wdh muss "True" or "False" sein')
@@ -353,7 +353,7 @@ def vektor_kollinear(vec1, vec2):
             return False
     return True
 
-def vektor_senk(vec1, vec2):
+def test_vektor_senk(vec1, vec2):
     lsg = [vec1[k] * vec2[k] for k in range(len(vec1))]
     if sum(lsg) != 0:
         return False
@@ -381,6 +381,13 @@ def vektor_vergleich(vec1, vec2):
             return False
     return True
 
+def skalarprodukt(vec1, vec2):
+    if len(vec1) != len(vec2):
+        exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
+    liste = [x * y for x, y in zip(vec1, vec2)]
+    print(liste)
+    print(sum(liste))
+    return sum(liste)
 # Wahrscheinlichkeitsrechnung
 def darstellung_mengen(lsg_menge):
     # korrekte Darstellung der Lösungsmenge
