@@ -4379,7 +4379,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' or 'e' or 'f' or 'g' in teilaufg:
+    if 'd' in teilaufg:
         # Je nach gewählten Parameter 'ableitung=' müssen die SuS entweder die ersten drei Ableitungen berechnen bzw. die Berechnung der Ableitung begründen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         fkt_3 = 6 * faktor
@@ -4416,7 +4416,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' or 'f' in teilaufg:
+    if 'e' in teilaufg:
         # Hier sollen die SuS die Extrema und deren Art mithilfe des notwendigen und hinreichenden Kriteriums berechnen.
         punkte = 12
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -4481,7 +4481,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         i += 1
 
 
-    if 'g' or 'h' in teilaufg:
+    if 'g' in teilaufg:
         # Die SuS sollen den Wendepunkt der Funktion berechnen,
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
