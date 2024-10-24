@@ -170,8 +170,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     # Auswahl für Aufgabe b, c und d
     ereignis_1, menge_1, lsg_1, wkt1, wkt1_str, pkt1 = ereig_1()
-    ereignis_2, menge_2, lsg_2, wkt2, wkt2_str, pkt2 = ereig_2()
-    ereignis_3, menge_3, lsg_3, wkt3, wkt3_str, pkt3 = ereig_3()
+    ereignis_2, menge_2, lsg_2, wkt2, wkt2_str, pkt2 = random.choice([ereig_2(), ereig_3()])
 
     def vereinigung(menge1, menge2, bez1='E_1', bez2='E_2'):
         text = r' \mathrm{' + bez1 + r' \cup ' + bez2 + '}'
@@ -267,7 +266,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         if 'b' not in teilaufg:
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
                             + f'die folgenden Ereignisse.', r' E_1: ' + ereignis_1 + r', \quad E_2: '
-                            + ereignis_2 + r', \quad ' + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
+                            + ereignis_2 + r',~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
                             + f'die folgenden Ereignisse.', r' E_1,~E_2,~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
