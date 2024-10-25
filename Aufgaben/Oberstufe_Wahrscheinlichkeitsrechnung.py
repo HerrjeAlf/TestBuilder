@@ -359,11 +359,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # Erwartungswert einer Zufallsgröße
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = int(len(x_werte)/2)+1
-        print(x_werte)
-        print(y_werte)
+        # print(x_werte), print(y_werte)
         for x, y in zip(x_werte, y_werte):
-            ew_wert_str = ew_wert_str + vorz_str(x, null=True) + r' \cdot ' + gzahl(y)
-            ew_wert = ew_wert + x*y
+            if x == x_werte[0] and y == y_werte[0]:
+                ew_wert_str = gzahl(x, null=True) + r' \cdot ' + gzahl(y)
+            else:
+                ew_wert_str = ew_wert_str + vorz_str(x, null=True) + r' \cdot ' + gzahl(y)
+        ew_wert = [x*y for x, y in zip(x_werte, y_werte)]
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
                        + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'BE)')
