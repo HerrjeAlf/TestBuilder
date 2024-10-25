@@ -3773,9 +3773,9 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \hspace{5em} f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(c, 'x') + r'} ~immer~ \neq 0 }'
                        + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(a, 'x + b') + r' \quad \vert ~ -b'
-                       + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ ' + vorz_aussen(-1*a)
-                       + vorz_v_innen(Rational(1,a),'b') + r' \quad \to \quad S_x ( ' + vorz_aussen(-1*a)
-                       + vorz_v_innen(Rational(1,a),'b') + r' \vert 0) \quad (4BE) \\ '
+                       + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ '
+                       + vorz_v_innen(Rational(-1,a),'b') + r' \quad \to \quad S_x ( '
+                       + vorz_v_innen(Rational(-1,a),'b') + r' \vert 0) \quad (4BE) \\ '
                        + r' \mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                        + r' f(0) = e^0 \cdot (0 + b) \quad \to \quad S_y( 0 \vert b) \quad (1BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
