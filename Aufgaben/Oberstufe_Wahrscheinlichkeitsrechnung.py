@@ -219,7 +219,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             Baumdiagramm_zoZ(anzahl_ziehen[0], anzahl_1, anzahl_2, f'Loesung_{nr}{liste_teilaufg[i]}',
                              bz1=farben_kuerzel_1, bz2=farben_kuerzel_2)
         else:
-            print(farben_kuerzel_1)
+            # print(farben_kuerzel_1)
             Baumdiagramm_zmZ(stufen, Rational(anzahl_1,(anzahl_1+anzahl_2)),
                              f'Loesung_{nr}{liste_teilaufg[i]}',
                              bz=farben_kuerzel_1, bz2=farben_kuerzel_2)
