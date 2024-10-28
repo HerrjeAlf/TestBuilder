@@ -253,7 +253,9 @@ def ganzz_exponenten(n,p=1,q=6, wdh=True):
     else:
         print('wdh muss "True" or "False" sein')
 
-def gzahl(k, exp=False):
+def gzahl(k, exp=False, null=False):
+    if k == 0:
+        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if type(k) == str:
         return k
     if exp == True:
@@ -317,7 +319,7 @@ def vektor_runden(vec,p):
 def vektor_ganzzahl(vec):
     return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
-def vektor_kürzen(vec, p = 50):
+def vektor_kuerzen(vec, p = 50):
     faktor = [x + 1 for x in range(p)]
     list = np.array(vec)
     i = 0

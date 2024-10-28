@@ -2273,7 +2273,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            (3 * xwert_extrema1 ** 2, 2 * xwert_extrema1, 1, 0, 0),
                            (3 * xwert_extrema2 ** 2, 2 * xwert_extrema2, 1, 0, 0)))
         lsg = solve_linear_system(glsystem, a, b, c, d)
-        lsg_gzahl = vektor_kürzen((lsg[a], lsg[b], lsg[c], lsg[d]))
+        lsg_gzahl = vektor_kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
         faktor = zzahl(3, 7) / 2
         fkt_a1, fkt_a2, fkt_a3, fkt_a4 = [ganz(faktor*element) for element in lsg_gzahl]
         fkt = fkt_a1 * x ** 3 + fkt_a2 * x ** 2 + fkt_a3 * x + fkt_a4
@@ -3745,7 +3745,6 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 3
-        liste_punkte.append(punkte)
         fkt_sym = fkt_b.subs(x, -x)
         fkt_sym_str = '(' + vorz_v_aussen(-1*a, r'x + b ) \cdot e^{' + vorz_v_aussen(-1*c,'x') + r'}')
         if fkt_sym == fkt_b:

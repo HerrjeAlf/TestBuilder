@@ -521,7 +521,7 @@ def vektoren_koll_ortho(nr, BE=[]):
     # Vektor der Orthogonal zu Vektor a ist
     vx, vy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
     vz = (ax * vx + ay * vy) / (-1* az)
-    vec_s = [sx, sy, sz] = vektor_kürzen([vx, vy, vz])
+    vec_s = [sx, sy, sz] = vektor_kuerzen([vx, vy, vz])
     # beliebige Vektoren
     while vektor_kollinear(vec_a, vec_b) == True or test_vektor_senk(vec_a, vec_b) == True:
         vec_b = [bx, by, bz] = punkt_vektor(3)
@@ -676,12 +676,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     liste_punkte = []
     liste_bez = []
     i = 0
+    if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
+        sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     if lagebeziehung == None:
         lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-    elif 'e' in teilaufg:
+    if 'e' in teilaufg and lagebeziehung not in ['windschief', 'schneiden']:
         lagebeziehung = random.choice(['windschief', 'schneiden'])
-    elif lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
-        sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
     v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
@@ -884,9 +884,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
             punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u))
-            w = vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
-            [wx, wy, wz] = vektor_ganzzahl(vektor_runden(w,3))
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(u))
+            [wx, wy, wz] = w = vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
             lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
             schnittpunkt_s = punkt_c + lsgs*w
@@ -985,9 +984,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         punkt_f = [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
-        punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_f) - nzahl(1,7) / 2 * np.array(punkt_vektor(4)))
-        p = vektor_ganzzahl(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
-        [px, py, pz] = vektor_ganzzahl(vektor_runden(p, 3))
+        punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1,4) * np.array(u) )
+        [px, py, pz] = p = vektor_kuerzen(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
 
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
             [ex, ey, ez] = [cx,cy,cz]
@@ -1076,7 +1074,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
     w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
     [wx, wy, wz] = vektor_runden(w, 3)
     n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
-    n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kürzen(n)
+    n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kuerzen(n)
     n_betrag = np.linalg.norm(n_gk)
     koordinatenform = ('E:~' + vorz_v_aussen(nx_gk, 'x') + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk, 'z')
                        + '~=~' + gzahl(np.dot(punkt_a, n_gk)))
@@ -1265,8 +1263,8 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     i = 0
     teiler = zzahl(1,3)
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
-    fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kürzen([1/sx,1/sy,1/sz,e])
-    n = [nx,ny,nz] = vektor_kürzen([int(kfx),int(kfy),int(kfz)])
+    fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
+    n = [nx,ny,nz] = vektor_kuerzen([int(kfx), int(kfy), int(kfz)])
     print(schnittpunkte)
     print(fkt_kf)
     print(n)
@@ -1594,11 +1592,11 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         while vektor_kollinear(n, n_gk) == True:
             n = [nx, ny, nz] = punkt_vektor(4)
 
-        g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
-        k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+        g_v = [g_vx, g_vy, g_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+        k_v = [k_vx, k_vy, k_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
         while np.dot(n_gk, k_v) == 0 or np.dot(n_gk, g_v) == 0:
-            g_v = [g_vx, g_vy, g_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
-            k_v = [k_vx, k_vy, k_vz] = vektor_kürzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+            g_v = [g_vx, g_vy, g_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+            k_v = [k_vx, k_vy, k_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
 
         # print('Vektor n: ' + str(n))
         # print('Vektor g_v: ' + str(g_v))
