@@ -12,6 +12,7 @@ from sympy.plotting import plot
 from skripte.funktionen import *
 from skripte.plotten import *
 
+
 # Definition der Funktionen
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -253,12 +254,12 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
             lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
-                         + gzahl(y_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
+                         + gzahl(y_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
+                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
                          + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
-                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \Big('
+                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \left('
                          + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
-                         + r' \Big) \quad (1P) \quad \to \quad '
+                         + r' \right) \quad (1P) \quad \to \quad '
                          + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
                          + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
                          + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
@@ -269,12 +270,12 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             print(lsg_r)
             print(lsg_s)
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
-                         + gzahl(z_2) + r' \cdot \Big(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \Big)'
+                         + gzahl(z_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
+                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
                          + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
-                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \Big('
+                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \left('
                          + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
-                         + r' \cdot s \Big) \quad (2P) \quad \to \quad '
+                         + r' \cdot s \right) \quad (2P) \quad \to \quad '
                          + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
                          + r' \quad (1P) \quad  r~=~ '
                          + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
@@ -487,8 +488,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \cdot \mathrm{ (~1~+~ \frac{1}{r} ~)}  ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0],3))+ r' \\' + gzahl(N(vektor_at[1],3)) + r' \\'
-                       + gzahl(N(vektor_at[2],3)) + r' \\ \end{pmatrix} \cdot \Big( ~1~+~ '
-                       + gzahl(Rational(10-a1,a1)) + r' \Big) \\ ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
+                       + gzahl(N(vektor_at[2],3)) + r' \\ \end{pmatrix} \cdot \left( ~1~+~ '
+                       + gzahl(Rational(10-a1,a1)) + r' \right) \\ ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0]*(1+(10-a1)/a1),3)) + r' \\'
                        + gzahl(N(vektor_at[1]*(1+(10-a1)/a1),3)) + r' \\'
@@ -682,19 +683,20 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
     if 'e' in teilaufg and lagebeziehung not in ['windschief', 'schneiden']:
         lagebeziehung = random.choice(['windschief', 'schneiden'])
-    v_teiler = zzahl(1, 3)
+    v_teiler = random.choice([1, 2, 5])
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
-    v = [vx, vy, vz] = vektor_ganzzahl([zzahl(1, 6) / 2 * v_teiler,
-                                        zzahl(1, 6) / 2 * v_teiler, v_teiler]) # Vektor v ist der Richtungsvektor von Geraden g_1
+    # Vektor v ist der Richtungsvektor von Geraden g_1
+    v = [vx, vy, vz] = vektor_kuerzen([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler, v_teiler])
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
     uz = (vx*ux + vy * uy)/ (-1 * vz)
-    u = vektor_ganzzahl([ux, uy, uz])
+    u = vektor_kuerzen([ux, uy, uz])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+
     if 'a' in teilaufg:
         # lagebeziehungen zweier Geraden und die dafür nötigen Eigenschaften erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -704,18 +706,20 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Geraden:'), 'Punkte')
-        table1.add_row('', '-', 'sind parrallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2P' )
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
+        table1.add_row(str(liste_teilaufg[i]) + ')',
+                       MultiColumn(2, align='l', data='Die Geraden '), 'Punkte')
+        table1.add_row('', '-', 'sind parallel, d.h. die Richtungsvektoren '
+                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2P')
         table1.add_row('', '-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gemeinsam ', '2P' )
+                       + 'haben alle Punkte gemeinsam ', '2P')
         table1.add_row('', '-', 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gemeinsam', '2P' )
+                       + 'und die Geraden haben einen Punkt gemeinsam', '2P')
         table1.add_row('', '-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben keine gem. Punkte.', '2P' )
-        table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
+                       + 'und die Geraden haben keine gem. Punkte.', '2P')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
+
         if 'b' in teilaufg:
             loesung.append(' \n\n')
         i += 1
@@ -728,19 +732,20 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
                                           'Geraden mathematisch überprüfen kann. \n\n')
         # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
+        table2 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
+        table2.add_row(str(liste_teilaufg[i]) + ')',
+                       MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
                        'Punkte')
-        table1.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
+        table2.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
                        + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt.', '2P')
-        table1.add_row('', '-', 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), '
+        table2.add_row('', '-', 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), '
                        + 'setzt man einen Stützvektor in die andere Geradengleichung ein. Ist dieser in der anderen '
                        + 'Geraden enthalten, sind die Geraden identisch, ansonsten "echt" parallel.', '2P')
-        table1.add_row('', '-', 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
+        table2.add_row('', '-', 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
                        + 'löst das Gleichungssystem. Erhält man eine Lösung für r und s, schneiden sich die Geraden. '
                        + 'erhält man keine Lösung, sind die Geraden windschief. ', '2P')
-        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
-        loesung.append(table1)
+        table2.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        loesung.append(table2)
 
         i += 1
 
@@ -752,7 +757,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
+            w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -782,7 +787,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
             punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+            w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
             while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
@@ -813,12 +818,16 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         elif lagebeziehung == 'windschief':
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
-            punkt_d = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v))
-            punkt_d = [dx,dy,dz] = [punkt_d[0], punkt_d[1], punkt_d[2] + zzahl(1,3)]
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
-            w = [wx, wy, wz]= vektor_ganzzahl(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            fakt_r = zzahl(1, 7) / 2
+            [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+            punkt_d = [dx, dy, dz + zzahl(1,3)]
+            fakt_s = zzahl(1, 7) / 2
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
+            w = [wx, wy, wz]= vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             lsgr = -1*(ax*wy-ay*wx-cx*wy+cy*wx)/(vx*wy-vy*wx)
             lsgs = (-1*(ax*vy)/(vx*wy-vy*wx))+((ay*vx)/(vx*wy-vy*wx))+((cx*vy)/(vx*wy-vy*wx))-((cy*vx)/(vx*wy-vy*wx))
+            print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
+            print('faktor s ist:' + str(fakt_s) + ' und s ist:' + str(lsgs))
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                              + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
@@ -834,14 +843,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
                                  + gzahl(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + gzahl(N((vx*wy-vy*wx)/wx,3))
                                  + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
-                                 + r' \quad \to \quad r~=~' + gzahl(N(lsgr,3))
+                                 + r' \quad \to \quad r~=~' + gzahl(fakt_r)
                                  + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(N(lsgs,3)) + r' \quad (3P) \\')
+                                 + gzahl(fakt_s) + r' \quad (3P) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(N(lsgr,3)) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(N(lsgs,3)) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
-                                     + '~=~' + gzahl(N(cz+wz*lsgs,3))
+                                     + r' \cdot (' + gzahl(fakt_r) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(fakt_s) + r') \quad \to \quad ' + gzahl(N(az+vz*fakt_r,3))
+                                     + '~=~' + gzahl(N(cz+wz*fakt_s,3))
                                      + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
                                        r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
                     else:
@@ -879,16 +888,19 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
                          r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
                          + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
-
         else:
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
-            punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(u))
+            fakt_r = zzahl(1, 3)
+            fakt_s = zzahl(1, 7) / 2
+            punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
+            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + fakt_s * np.array(u))
             [wx, wy, wz] = w = vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
             lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
-            schnittpunkt_s = punkt_c + lsgs*w
+            print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
+            print('faktor s ist:' + str(fakt_s) + ' und s ist:' + str(lsgs))
+            schnittpunkt_s = punkt_c + fakt_s*w
             [sx, sy, sz] = vektor_ganzzahl(vektor_runden(schnittpunkt_s,3))
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
@@ -906,14 +918,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + gzahl(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
                                  + gzahl(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
                                  + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
-                                 + r' \quad \to \quad r~=~' + gzahl(N(lsgr, 3))
+                                 + r' \quad \to \quad r~=~' + gzahl(fakt_r)
                                  + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(N(lsgs, 3)) + r' \quad (3P) \\')
+                                 + gzahl(fakt_s) + r' \quad (3P) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(N(lsgr, 3)) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(N(lsgs, 3)) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
-                                     + '~=~' + gzahl(N(cz + wz * lsgs, 3))
+                                     + r' \cdot (' + gzahl(fakt_r) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(fakt_s) + r') \quad \to \quad ' + gzahl(N(az + vz * fakt_r, 3))
+                                     + '~=~' + gzahl(N(cz + wz * fakt_s, 3))
                                      + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
                                        r'  \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
                                      + str(sy) + r' \vert ' + str(sz) + r').} \quad (2P)')
@@ -983,9 +995,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         # Schnittwinkel zweier gegebener Geraden berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
-        punkt_f = [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1, 7) / 2 * np.array(v)) # Punkte C und D liegen auf h
-        punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_a) + zzahl(1,4) * np.array(u) )
+        fakt_r = zzahl(1, 3)
+        fakt_s = zzahl(1, 7) / 2
+        punkt_f = [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + fakt_r * np.array(v)) # Punkte C und D liegen auf h
+        punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_a) + fakt_s * np.array(u))
         [px, py, pz] = p = vektor_kuerzen(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
+
 
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
             [ex, ey, ez] = [cx,cy,cz]
@@ -1021,9 +1036,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         loesung.append(str(liste_teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
-                       r' \gamma ~=~ cos^{-1} \Big( \frac{ \vert \overrightarrow{v}'
+                       r' \gamma ~=~ cos^{-1} \left( \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                       r' \vert \overrightarrow{u} \vert } \Big) \quad (1P) \\'
+                       r' \vert \overrightarrow{u} \vert } \right) \quad (1P) \\'
                        r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
                        r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
                        + '+' + gzahl_klammer(vy) + r' \cdot ' + gzahl_klammer(py)
@@ -1034,9 +1049,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
                        + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
                        + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2P) \\'
-                       + r' \gamma ~=~ cos^{-1} \Big( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
+                       + r' \gamma ~=~ cos^{-1} \left( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
-                       + r'} \Big) ~=~' + gzahl(schnittwinkel)
+                       + r'} \right) ~=~' + gzahl(schnittwinkel)
                        + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         liste_punkte.append(punkte_aufg)
         i += 1

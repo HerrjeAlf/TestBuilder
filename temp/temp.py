@@ -107,17 +107,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-vec_v = [vx, vy, vz] =[3,1.5,3]
-vec_p = [px, py, pz] = [1.5,1.5,-2.25]
-
-
-sp_vp = skalarprodukt(vec_v, vec_p)
-l_v = N(sqrt(vx ** 2 + vy ** 2 + vz ** 2),3)
-l_p = N(sqrt(px ** 2 + py ** 2 + pz ** 2), 3)
-print((acos(sp_vp/(l_v*l_p)))*180/pi)
-print(sp_vp)
-print(l_v)
-print(l_p)
-
-print(acos(0))
-print(float(pi))
+vektor = [zzahl(1,100)/20,zzahl(1,100)/20,zzahl(1,100)/20]
+print(str(vektor))
+vektor_norm = sqrt(sum([element**2 for element in vektor])) * np.array(vektor)
+print(vektor_kuerzen(vektor_norm))
+print(vektor_norm)

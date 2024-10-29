@@ -900,8 +900,8 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
                + vorz_str(summand) + '}')
         fkt_uf = ('~=~(' + vorz_v_aussen(faktor, 'x') + '^{' + gzahl(exponent) + r'} '
                   + vorz_str(summand) + r')^{' + gzahl(Rational(1, wurzel)) + '}')
-        fkt_abl = (r' \Big(' + vorz_v_aussen(Rational(faktor * exponent, wurzel), 'x')
-                   + '^{' + gzahl(exponent - 1) + r'} \Big) \cdot (' + vorz_v_aussen(faktor, 'x')
+        fkt_abl = (r' \left(' + vorz_v_aussen(Rational(faktor * exponent, wurzel), 'x')
+                   + '^{' + gzahl(exponent - 1) + r'} \right) \cdot (' + vorz_v_aussen(faktor, 'x')
                    + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r')^{'
                    + gzahl(Rational(1 - wurzel, wurzel)) + r'}')
         return fkt, fkt_uf, fkt_abl, pkt
@@ -1013,7 +1013,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x)~=~0 \quad \to \quad 0~=~' + fkt_str
                        + r' \quad \vert ~ \div ~' + gzahl_klammer(faktor) + r' \\ 0~=~'
                        + fkt_str_pq + r' \quad (2BE) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt, 4))
-                       + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt, 4)) + r'}{2} \Big) ^2'
+                       + r'}{2} \pm' + r' \sqrt{ \left( \frac{' + str(N(p_fkt, 4)) + r'}{2} \right) ^2'
                        + vorz_str(N(-1 * q_fkt, 4)) + r'} ~=~' + str(N(-0.5 * p_fkt, 4)) + r' \pm '
                        + gzahl_klammer(N(sqrt((p_fkt * 0.5) ** 2 - q_fkt), 4)) + r' \quad (2BE) \\'
                        + r' x_1 ~=~ \mathbf{' + str(x_wert_x1) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
@@ -1064,7 +1064,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + latex(fkt_tangente) + r') \quad (1BE) \\' + ' 0 ~=~ ' + fkt_tp_str + r'~ \vert \div '
                        + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~'
                        + fkt_tp_pq + r' \quad (1BE) \\ x_{^1/_2} ~=~ - ~ \frac{' + gzahl_klammer(N(p_fkt_tp, 3))
-                       + r'}{2} \pm' + r' \sqrt{ \Big( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \Big) ^2'
+                       + r'}{2} \pm' + r' \sqrt{ \left( \frac{' + str(N(p_fkt_tp, 3)) + r'}{2} \right) ^2'
                        + vorz_str(N(-1 * q_fkt_tp, 3)) + r'} ~=~' + str(N(-0.5 * p_fkt_tp, 3)) + r' \pm '
                        + gzahl_klammer(N(sqrt((p_fkt_tp * 0.5) ** 2 - q_fkt_tp), 3)) + r' \quad (2BE) \\'
                        + r' x_1 ~=~\mathbf{' + str(N(x_werte_tp[0],3)) + r'} \quad \mathrm{und} \quad x_2 ~=~\mathbf{'
@@ -1201,8 +1201,8 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
                          + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3BE)',
                          r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
                          + gzahl_klammer(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
-                         + r'} \quad \to \quad x~=~ \Big(' + latex(Rational(steigung*e1, a1 * e2))
-                         + r' \Big) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~ \mathbf{'
+                         + r'} \quad \to \quad x~=~ \left(' + latex(Rational(steigung*e1, a1 * e2))
+                         + r' \right) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~ \mathbf{'
                          + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3BE)']
 
         loesung_1 = loesung_liste[Aufgabe]
@@ -1228,8 +1228,8 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
                          + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
                          + r' \quad (3BE) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
                          + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad '
-                         + str(a1) + r' \cdot \Big(' + latex(Rational(a2,(2*a1))) + r' \Big) ^2 + a ~=~'
-                         + str(a2) + r' \cdot \Big( ' + latex(Rational(a2,(2*a1))) + r' \Big)' + vorz_str(a3)
+                         + str(a1) + r' \cdot \left(' + latex(Rational(a2,(2*a1))) + r' \right) ^2 + a ~=~'
+                         + str(a2) + r' \cdot \left( ' + latex(Rational(a2,(2*a1))) + r' \right)' + vorz_str(a3)
                          + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
                          + r' \quad \to \quad a~=~ \mathbf{' + latex(N((a2**2/(2*a1)) + a3 - (a2**2)/(4*a1),3))
                          + r'} \quad (3BE)')
@@ -1459,8 +1459,8 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
                        + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2BE) } \\'
                        + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
                        + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2BE) }\\'
-                       + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \Big( \frac{'
-                       + gzahl(fkt_1_a_p) + r'}{2} \Big) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
+                       + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \left( \frac{'
+                       + gzahl(fkt_1_a_p) + r'}{2} \right) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
                        + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2BE) } \\'
                        + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
                        + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2BE) } \\ \mathrm{A^{ \prime \prime }('
@@ -1719,8 +1719,8 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
                + gzahl(faktor_exp_2) + r'x} \quad (1BE) \\'
                + 'e^{' + gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
                + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln () \quad \to \quad '
-               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \Big('
-               + gzahl(Rational(faktor_2,faktor_1)) + r' \Big) \quad \vert \div '
+               + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \left('
+               + gzahl(Rational(faktor_2,faktor_1)) + r' \right) \quad \vert \div '
                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
                + r' \quad (3BE)')
@@ -2156,7 +2156,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, BE=[]):
             loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div '
                            + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq)
                            + r' \quad (2BE) \\' + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p)
-                           + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-'
+                           + r'}{2} \pm \sqrt{ \left(' + r' \frac{' + latex(fkt_partial_p) + r'}{2} \right)^2-'
                            + gzahl_klammer(fkt_partial_q) + r'} \quad (2BE) \\' + r' \mathrm{x_2~=~' + gzahl(round(nst_2, 3))
                            + r' \quad und \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE)} \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -2219,7 +2219,7 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, BE=[]):
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                            + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad 0~=~' + fkt_pq_str
                            + r' \quad (2BE) \\ x_{1/2}~=~ - \frac{' + gzahl_klammer(fkt_p)
-                           + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(fkt_p) + r'}{2} \Big)^2-'
+                           + r'}{2} \pm \sqrt{ \left(' + r' \frac{' + latex(fkt_p) + r'}{2} \right)^2-'
                            + gzahl_klammer(fkt_q) + r'} \quad (2BE) \\' + r' \bm{x_1~=~' + gzahl(nst_1)
                            + r'} \quad \mathrm{und} \quad \bm{x_2~=~' + gzahl(nst_2) + r'} \quad (2BE) \\'
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -2959,12 +2959,12 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(table2)
         loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
-                       r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \Big(' +
-                       r' \frac{' + latex(fkt_p) + r'a}{2} \Big)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
+                       r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \left(' +
+                       r' \frac{' + latex(fkt_p) + r'a}{2} \right)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
                        r'a^2)} ~=~ ' + gzahl(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
                        + latex(fkt_disk) + r' a^2} \quad (2BE) \\ x_{1/3}~=~'
-                       + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \Big('
-                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \Big) a \quad \to \quad x_1~=~'
+                       + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \left('
+                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \right) a \quad \to \quad x_1~=~'
                        + vorz_v_aussen(faktor_1,'a', null=True) + r' \quad \mathrm{und} \quad x_3~=~'
                        + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3BE) \\ \bm{S_{x_1}(' + nst_1_str + r' \vert 0) \quad S_{x_2}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
@@ -3078,9 +3078,9 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
                        r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
-                       + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \Big( \frac{'
-                       + gzahl(fkt_1_p) + r' a}{2} \Big)^2 - \Big(' + gzahl(fkt_1_q)
-                       + r' a^2 \Big) } \quad (1BE) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
+                       + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \left( \frac{'
+                       + gzahl(fkt_1_p) + r' a}{2} \right)^2 - \left(' + gzahl(fkt_1_q)
+                       + r' a^2 \right) } \quad (1BE) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
                        + gzahl(N(fkt_1_disk,3)) + r' a^2} \quad ~=~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm '
                        + gzahl(N(fkt_1_sqrt,3)) + r' a \quad (1BE) \\'
                        + r'x_1~=~' + gzahl(-1*fkt_1_p/2) + r' a ~-~' + gzahl(N(fkt_1_sqrt,3))
@@ -3113,10 +3113,10 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + vorz_str(-1*fkt_2_a0) + r'a \quad \vert \div '
                        + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~' + gzahl(xwert_wp_bruch) + 'a ~=~'
-                       + gzahl(xwert_wp_dezimal) + r'a \quad \quad \to \quad f^{ \prime \prime \prime }\Big('
-                       + gzahl(xwert_wp_bruch) + r'a \Big) ~=~ ' + fkt_3_str
-                       + r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} \bm{\Big(' + gzahl(xwert_wp_bruch)
-                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r' \Big)} \quad (2BE) \\'
+                       + gzahl(xwert_wp_dezimal) + r'a \quad \quad \to \quad f^{ \prime \prime \prime }\left('
+                       + gzahl(xwert_wp_bruch) + r'a \right) ~=~ ' + fkt_3_str
+                       + r' \quad \neq 0 \quad \to \quad \mathbf{Wendepunkt} \bm{\left(' + gzahl(xwert_wp_bruch)
+                       + r'a \vert ' + gzahl(ywert_wp_dezimal) + r' \right)} \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
@@ -3139,8 +3139,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
                        + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
                        + r' \quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
-                       + gzahl(ywert_wp_dezimal/a**3) + r' \Big(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
-                       + r'x \Big)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
+                       + gzahl(ywert_wp_dezimal/a**3) + r' \left(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
+                       + r'x \right)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
                        + r'x^3} \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
@@ -3299,24 +3299,24 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
         fkt_1_str_zw = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot' + gzahl_klammer(lsg_b) + r' \cdot ('
                          + vorz_v_aussen(lsg_a,'x^2') + r') + e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot ('
                          + vorz_v_aussen(2*lsg_a,'x')) + ')'
-        fkt_2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big('
-                         + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x') + r' \Big) + e^{'
-                         + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
-                         + vorz_str(2*lsg_a) + r' \Big)')
-        fkt_3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+        fkt_2_str_zw = (gzahl(lsg_b) + r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \left('
+                         + vorz_v_aussen(lsg_a*lsg_b,'x^2') + vorz_v_innen(2*lsg_a,'x') + r' \right) + e^{'
+                         + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \left(' + vorz_v_aussen(2*lsg_a * lsg_b, 'x')
+                         + vorz_str(2*lsg_a) + r' \right)')
+        fkt_3_str_zw = (gzahl(lsg_b) + 'e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \left('
                          + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
-                         + vorz_str(2*lsg_a) + r' \Big)' + ' + e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
-                         + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \Big)'))
+                         + vorz_str(2*lsg_a) + r' \right)' + ' + e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \left('
+                         + vorz_v_aussen(2*lsg_a * lsg_b**2, 'x') + vorz_v_innen(4 * lsg_a*lsg_b, r' \right)'))
 
 
-        fkt_1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
-                      + vorz_v_innen(2*lsg_a,'x' + r' \Big)'))
-        fkt_2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+        fkt_1_str = (r'e^{' + vorz_v_aussen(lsg_b,'x+2') + r'} \cdot \left(' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
+                      + vorz_v_innen(2*lsg_a,'x' + r' \right)'))
+        fkt_2_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \left('
                       + vorz_v_aussen(lsg_a * lsg_b**2, 'x^2') + vorz_v_innen(4 * lsg_a*lsg_b, 'x')
-                      + vorz_str(2*lsg_a) + r' \Big)')
-        fkt_3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \Big('
+                      + vorz_str(2*lsg_a) + r' \right)')
+        fkt_3_str = ('e^{' + vorz_v_aussen(lsg_b, 'x+2') + r'} \cdot \left('
                       + vorz_v_aussen(lsg_a * lsg_b**3, 'x^2') + vorz_v_innen(6 * lsg_a * lsg_b**2, 'x')
-                      + vorz_str(6*lsg_a*lsg_b) + r' \Big)')
+                      + vorz_str(6*lsg_a*lsg_b) + r' \right)')
     else:
         b = zzahl(2, 5)
         extrema_xwert = nzahl(1, 4)
@@ -3469,8 +3469,8 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                            + vorz_v_innen(2*lsg_a,'x') + r' \quad (3BE) \\'
-                           + r'0~=~x \cdot \Big(' + vorz_v_aussen(lsg_a*lsg_b,'x')
-                           + vorz_str(2*lsg_a) + r' \Big)'
+                           + r'0~=~x \cdot \left(' + vorz_v_aussen(lsg_a*lsg_b,'x')
+                           + vorz_str(2*lsg_a) + r' \right)'
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
                            + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
                            + gzahl_klammer(lsg_a*lsg_b) + r' \quad \to \quad 0~=~x' + vorz_str(2/lsg_b)
@@ -3554,7 +3554,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + gzahl_klammer(lsg_a*lsg_b**2) + r' \quad (3BE) \\'
                            + r' 0 ~=~ x^2 ' + vorz_v_innen(4/lsg_b, 'x') + vorz_str(2/lsg_b**2)
                            + r' \quad \to \quad x_{1/2} ~=~  - \frac{' + gzahl_klammer(4/lsg_b)
-                           + r'}{2} \pm \sqrt{ \Big( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \Big)^2'
+                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl_klammer(4/lsg_b) + r'}{2} \right)^2'
                            + vorz_str(-2/lsg_b**2) + r'} ~=~ ' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(abs(sqrt(2)/lsg_b))
                            + '~=~' + gzahl(-2/lsg_b) + r' \pm ' + gzahl(N(abs(sqrt(2)/lsg_b),3)) + r' \quad (2BE) \\'
                            + r' x_1 ~=~ ' + gzahl(N(xwert_wp1,3)) + r' \quad \mathrm{und} \quad x_2 ~=~'
@@ -4079,8 +4079,8 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         loesung.append(table2)
         loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
-                       r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \Big(' +
-                       r' \frac{' + fkt_p_str + r'}{2} \Big)^2-(' + latex(fkt_q) +
+                       r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \left(' +
+                       r' \frac{' + fkt_p_str + r'}{2} \right)^2-(' + latex(fkt_q) +
                        r')} ~=~ ' + gzahl(-1*fkt_p/2) + r' \pm \sqrt{'
                        + fkt_disk_str + r' } \quad (4BE) \\ x_{2/3}~=~' + gzahl(-1*fkt_p/2) + r' \pm ('
                        + gzahl((a-nst_3)/2) + r') \quad \to \quad x_2~=~' + gzahl(nst_3)
@@ -4152,19 +4152,19 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r' \quad (2BE) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
                        r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
-                       + fkt_1_p_str + r'}{2} \pm \sqrt{ \Big(' + r' \frac{'
-                       + fkt_1_p_str + r'}{2} \Big)^2-(' + fkt_1_q2_str + r')} \quad (2BE) \\ =~ '
+                       + fkt_1_p_str + r'}{2} \pm \sqrt{ \left(' + r' \frac{'
+                       + fkt_1_p_str + r'}{2} \right)^2-(' + fkt_1_q2_str + r')} \quad (2BE) \\ =~ '
                        + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str
                        + r'}{4}' + fkt_1_q3_str + r'} ~=~' + fkt_1_p3_str + r' \pm \sqrt{' + fkt_1_disk_str
                        + r'} \quad (4BE) \\ x_1~=~' + fkt_1_p3_str + r' + \sqrt{' + fkt_1_disk_str
                        + r'} \quad \mathrm{und} \quad x_2~=~' + fkt_1_p3_str + r' - \sqrt{'
                        + fkt_1_disk_str + r'}  \quad (2BE) \\'
                        + r'f^{ \prime \prime } (x_2) ~=~' + gzahl(6*faktor)
-                       + r' \cdot \Big( ' + fkt_1_x1 + r' \Big) ' + fkt_1_a1_str
+                       + r' \cdot \left( ' + fkt_1_x1 + r' \right) ' + fkt_1_a1_str
                        + r' \quad (1BE) \\ ~=~ + \sqrt{' + fkt_1_disk_str
                        + r'} \quad \mathrm{>~0} \quad \to TP \quad (2BE) \\ f^{ \prime \prime } (x_2) ~=~'
-                       + gzahl(6 * faktor) + r' \cdot \Big( ' + fkt_1_x2
-                       + r' \Big) ' + fkt_1_a1_str + r' \quad (1BE) \\ ~=~ - \sqrt{' + fkt_1_disk_str
+                       + gzahl(6 * faktor) + r' \cdot \left( ' + fkt_1_x2
+                       + r' \right) ' + fkt_1_a1_str + r' \quad (1BE) \\ ~=~ - \sqrt{' + fkt_1_disk_str
                        + r'} \quad \mathrm{<~0} \quad \to HP \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
@@ -4368,8 +4368,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         loesung.append(table2)
         loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(faktor)
                        + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2BE) \\'
-                       + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \Big('
-                       + r' \frac{' + latex(fkt_partial_p) + r'}{2} \Big)^2-' + gzahl_klammer(fkt_partial_q)
+                       + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \left('
+                       + r' \frac{' + latex(fkt_partial_p) + r'}{2} \right)^2-' + gzahl_klammer(fkt_partial_q)
                        + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_2, 3))
                        + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
                        + r'S_{x_1}(' + gzahl(nst_1) + r' \vert 0) \quad S_{x_2}(' + gzahl(round(nst_2, 3))
@@ -4448,7 +4448,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + latex(fkt_1) + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\  0 ~=~'
                        + fkt_1_pq + r' \quad \to \quad ' + r' x_{1/2} ~=~ - \frac{' + gzahl_klammer(p_fkt_1_pq)
-                       + r'}{2} \pm \sqrt{ \Big(' + r' \frac{' + latex(p_fkt_1_pq) + r'}{2} \Big)^2-'
+                       + r'}{2} \pm \sqrt{ \left(' + r' \frac{' + latex(p_fkt_1_pq) + r'}{2} \right)^2-'
                        + gzahl_klammer(q_fkt_1_pq) + r'} \quad (3BE) \\'
                        + r'x_1~=~' + gzahl(x_1_fkt_1) + r' \quad \mathrm{und} \quad x_2~=~' + gzahl(x_2_fkt_1)
                        + r' \quad (2BE) \\' + r' f^{ \prime \prime }(' + gzahl(x_1_fkt_1) + ')~=~'

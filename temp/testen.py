@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[kurvendiskussion_exponentialfkt_parameter(2, ['a', 'b'])]]
+    Aufgaben = [[geraden_lagebeziehung(1, lagebeziehung='schneiden')]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

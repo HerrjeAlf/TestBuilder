@@ -253,7 +253,7 @@ def ganzz_exponenten(n,p=1,q=6, wdh=True):
     else:
         print('wdh muss "True" or "False" sein')
 
-def gzahl(k, exp=False, null=False):
+def gzahl(k, exp=False, null=True):
     if k == 0:
         return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if type(k) == str:
