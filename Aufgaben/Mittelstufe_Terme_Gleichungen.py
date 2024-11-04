@@ -197,7 +197,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
 
 def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
     # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
-    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
     # b) sechs Faktoren aus zwei Basen und ganzzahligen Exponenten
     # c) sechs Faktoren aus drei Basen und ganzzahligen Exponenten
@@ -280,6 +280,82 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
                 'e': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(6)], 3],
                 'f': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(4)], 2],
                 'g': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(6)], 3]}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        else:
+            aufg = aufg + r' \\\\'
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+    # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
+    # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a)
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Löse die Klammern auf und fasse zusammen.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def terme_in_klammer(anz_terme, anz_var, fakt=True, p=1, q=10):
+        anz_var = anz_terme if anz_var > anz_terme else anz_var
+        if fakt == False:
+            liste_var = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],
+                                           anzahl=anz_var, wdh=False)
+            liste_terme = [liste_var[(k+1) % anz_var] for k in range(anz_terme)]
+            random.shuffle(liste_terme)
+            aufg = liste_terme[0]
+            for k in range(anz_terme-1):
+                aufg += '+' + liste_terme[k+1]
+        else:
+            fakt = random.choice(['nat', 'ganz', 'rat', 'dez']) if fakt not in ['nat', 'ganz', 'rat', 'dez'] else fakt
+            if fakt == 'nat':
+                liste_fakt = [nzahl(p, q) for _ in range(anz_terme)]
+            elif fakt == 'ganz':
+                liste_fakt = [nzahl(p, q) for _ in range(anz_terme)]
+            elif fakt == 'rat':
+                liste_fakt = [Rational(zzahl(p,q), nzahl(p,q)) for _ in range(anz_terme)]
+            else:
+                liste_fakt = [zzahl(p,q)/10 for _ in range(anz_terme)]
+            liste_var = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],
+                                         anzahl=anz_var, wdh=False)
+            
+
+
+
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    aufgaben = {'a': }
 
     aufg = ''
     lsg = ''

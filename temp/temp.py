@@ -107,8 +107,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-vektor = [zzahl(1,100)/20,zzahl(1,100)/20,zzahl(1,100)/20]
-print(str(vektor))
-vektor_norm = sqrt(sum([element**2 for element in vektor])) * np.array(vektor)
-print(vektor_kuerzen(vektor_norm))
-print(vektor_norm)
+var = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anzahl=0)
+
+print(str(3) + var[0])
