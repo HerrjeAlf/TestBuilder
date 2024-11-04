@@ -831,10 +831,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 fakt_s = zzahl(1, 7) / 2
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
                 w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
-            lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx)/(vx * wy - vy * wx)
-            lsgs = (-1 * (ax * vy) + (ay * vx) + (cx * vy) - (cy * vx)) / (vx * wy - vy * wx)
-            print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
-            print('faktor s ist:' + str(fakt_s) + ' und s ist:' + str(lsgs))
+            lsgs = (dx-cx)/wx
+            lsgr = fakt_r
+            # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
+            # lsgs = (-1 * (ax * vy) + (ay * vx) + (cx * vy) - (cy * vx)) / (vx * wy - vy * wx)
+
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                              + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
@@ -850,13 +851,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
                                  + gzahl(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + gzahl(N((vx*wy-vy*wx)/wx,3))
                                  + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
-                                 + r' \quad \to \quad r~=~' + gzahl(fakt_r)
+                                 + r' \quad \to \quad r~=~' + gzahl(lsgr)
                                  + r' \quad \mathrm{und} \quad s ~=~'
                                  + gzahl(lsgs) + r' \quad (3P) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(fakt_r) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az+vz*fakt_r,3))
+                                     + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
                                      + '~=~' + gzahl(N(cz+wz*lsgs,3))
                                      + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
                                        r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
@@ -909,15 +910,17 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 punkt_d = [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a + fakt_s * np.array(u))
                 [wx, wy, wz] = w = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
-            fakt_p = wx/(dx-cx)
-            lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
-            lsgs = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
-            print('vektor d-c: ' + str(np.array(punkt_d-punkt_c)))
-            print('Vektor w ist: ' + str(w))
-            print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
-            print('faktor s ist: ' + str(fakt_s) + ', faktor p ist:' + str(fakt_p) + ' und s ist:' + str(lsgs))
-            schnittpunkt_s = punkt_c + lsgs*w
-            [sx, sy, sz] = vektor_ganzzahl(vektor_runden(schnittpunkt_s,3))
+            lsgs = (dx-cx)/wx
+            lsgr = fakt_r
+            # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
+            # lsgs_alt = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
+            # print('vektor d-c: ' + str(np.array(punkt_d-punkt_c)))
+            # print('Vektor w ist: ' + str(w))
+            # print('Punkt D: ' + str(punkt_d))
+            # print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
+            # print('faktor p ist:' + str(fakt_p) + ' und s ist:' + str(lsgs_alt))
+            schnittpunkt_s = [sx, sy, sz] = (vektor_ganzzahl(punkt_c + lsgs*w))
+
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                              + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
@@ -934,13 +937,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + gzahl(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
                                  + gzahl(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
                                  + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
-                                 + r' \quad \to \quad r~=~' + gzahl(fakt_r)
+                                 + r' \quad \to \quad r~=~' + gzahl(lsgr)
                                  + r' \quad \mathrm{und} \quad s ~=~'
                                  + gzahl(lsgs) + r' \quad (3P) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(fakt_r) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az + vz * fakt_r, 3))
+                                     + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
+                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
                                      + '~=~' + gzahl(N(cz + wz * lsgs, 3))
                                      + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
                                        r'  \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
