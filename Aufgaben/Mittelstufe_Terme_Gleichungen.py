@@ -57,7 +57,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg =  '~' + vorz_v_aussen(fakt[0]/10,bas[0])
         for k in range(len(fakt) - 1):
-            aufg = aufg + vorz_v_innen(fakt[k + 1], bas[0])
+            aufg = aufg + vorz_v_innen(fakt[k + 1]/10, bas[0])
         lsg = aufg + '~=~' + latex(sum(fakt)/10) + bas[0]
         return aufg, lsg
 

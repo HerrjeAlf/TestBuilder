@@ -1983,7 +1983,7 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
     liste_bez = [f'{str(nr)}']
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Notiere die gegebene Zahl in wissenschaftlicher Schreibweise.']
+               'Notiere die gegebene Zahl in wissenschaftlicher Schreibweise bzw. als Dezimalbruch.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []

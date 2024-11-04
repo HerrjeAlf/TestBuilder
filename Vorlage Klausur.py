@@ -39,7 +39,7 @@ liste_bez_teil2 = ['Aufgabe']
 
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[kurvendiskussion_polynome_01(2)]]
+aufgaben_teil2 = [[kurvendiskussion_polynome(2)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil2 = []
