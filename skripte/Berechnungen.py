@@ -11,6 +11,7 @@ from skripte.funktionen import *
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
 
 def Ableitungen(fkt):
+
     fkt_1 = diff(fkt,x,1)
     fkt_2 = diff(fkt,x,2)
     fkt_3 = diff(fkt,x,3)
@@ -44,7 +45,6 @@ def Extrema(fkt):
 
 # def Wendepunkte(fkt):
 
-
 def Graph(x_min, x_max, *funktionen):
     fig, ax = plt.subplots()
     ax.spines['top'].set_color('none')
@@ -70,7 +70,6 @@ def integral(a,b,fkt):
     print('F(x)=' + str(Fkt))
     print('Fläche unter dem Graphen von ' + str(a) + ' bis ' + str(b) + ' ist A= ' + str(flaeche) + ' FE.')
 
-
 def schnittpunkte(fkt_1,fkt_2):
     i = 0
     xwerte = solve(Eq(fkt_1,fkt_2),x)
@@ -78,6 +77,3 @@ def schnittpunkte(fkt_1,fkt_2):
         ywert = fkt_1.subs(x, xwert)
         print('S_'+ str(i) + '(' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
         i += 1
-
-
-
