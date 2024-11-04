@@ -324,16 +324,17 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def terme_in_klammer(anz_terme, anz_var, fakt=True, p=1, q=10):
+    def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
         anz_var = anz_terme if anz_var > anz_terme else anz_var
+        liste_exp = [1 for k in range(anz_var)]
+        liste_exp = ganzz_exponenten(anz_var, wdh=True) if exp != False else liste_exp
         if fakt == False:
-            liste_var = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],
-                                           anzahl=anz_var, wdh=False)
-            liste_terme = [liste_var[(k+1) % anz_var] for k in range(anz_terme)]
+            liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
+            liste_terme = [[liste_var[k % anz_var], exp[k % anz_var]] for k in range(anz_terme)]
             random.shuffle(liste_terme)
-            aufg = liste_terme[0]
+            aufg_str = latex(liste_terme[0][0] ** liste_terme[0][1])
             for k in range(anz_terme-1):
-                aufg += '+' + liste_terme[k+1]
+                aufg_str += '+' + latex(liste_terme[k + 1][0] ** liste_terme[k + 1][1])
         else:
             fakt = random.choice(['nat', 'ganz', 'rat', 'dez']) if fakt not in ['nat', 'ganz', 'rat', 'dez'] else fakt
             if fakt == 'nat':
@@ -344,8 +345,13 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
                 liste_fakt = [Rational(zzahl(p,q), nzahl(p,q)) for _ in range(anz_terme)]
             else:
                 liste_fakt = [zzahl(p,q)/10 for _ in range(anz_terme)]
-            liste_var = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],
-                                         anzahl=anz_var, wdh=False)
+            liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
+            liste_terme = [[liste_var[k % anz_var], liste_var[k % anz_var], exp[k % anz_var]] for k in range(anz_terme)]
+            random.shuffle(liste_terme)
+            aufg_str = latex(liste_terme[0][0]*(liste_terme[0][1]**liste_terme[0][2]))
+            for k in range(anz_terme - 1):
+                aufg_str += vorz_str(liste_terme[k + 1][0]) + latex(liste_terme[k + 1][1] ** liste_terme[k + 1][2])
+
             
 
 

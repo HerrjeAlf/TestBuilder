@@ -28,13 +28,13 @@ def Extrema(fkt):
     # print(xwerte_extrema_alle)
     # print(xwerte_extrema_reell)
     for xwert in xwerte_extrema_reell:
-        wert_in_fkt_2 = fkt_2.subs(x,xwert)
+        wert_in_fkt_2 = fkt_2.subs(x, xwert)
         if wert_in_fkt_2 < 0:
-            ywert = fkt.subs(x,xwert)
+            ywert = fkt.subs(x, xwert)
             print('Hochpunkt bei H_{' + str(i) +  '}( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
             i += 1
         elif wert_in_fkt_2 > 0:
-            ywert = fkt.subs(x,xwert)
+            ywert = fkt.subs(x, xwert)
             print('Tiefpunkt bei  T_{' + str(i) +  '}( ' + latex(N(xwert,3)) + ' | ' + latex(N(ywert,3)) + ' )')
             i += 1
         else:
