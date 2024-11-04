@@ -23,8 +23,8 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[wiss_schreibweise(1),
-                 einheiten_umrechnen(2),
+    Aufgaben = [[wiss_schreibweise(1, anzahl=12),
+                 einheiten_umrechnen(2, anzahl=8),
                  terme_addieren(3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
