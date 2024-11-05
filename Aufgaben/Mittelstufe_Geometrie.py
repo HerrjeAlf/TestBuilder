@@ -87,8 +87,8 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
         pkt = 3
         aufgabe.append(str(liste_teilaufg[i]) + ')  Fertige eine Planskizze an, markiere die gegebenen Größen und '
                                                 'nenne den Kongruenzsatz. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad \to \quad '
-                       + str(auswahl[0]) + r' \quad (1P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2BE), \quad \to \quad '
+                       + str(auswahl[0]) + r' \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -100,15 +100,15 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, BE=[]):
         pkt = 5
         aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. \n\n')
         if 'a' not in teilaufg:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2P), \quad '
-                            + str(auswahl[1]) + '~(1P),~' + str(auswahl[2]) + '~(1P),~'
-                            + str(auswahl[3]) + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)',
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2BE), \quad '
+                            + str(auswahl[1]) + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~'
+                            + str(auswahl[3]) + r'~(1BE), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2BE)',
                             'Figure'))
             pkt += 2
         else:
             loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[1])
-                           + '~(1P),~' + str(auswahl[2]) + '~(1P),~' + str(auswahl[3])
-                            + r'~(1P), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2P)', 'Figure'))
+                           + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~' + str(auswahl[3])
+                            + r'~(1BE), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2BE)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(pkt)
         i += 1
@@ -148,11 +148,11 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
         wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
         aufgabe_1 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[1] + '~=~' + gzahl(l_b)
                      + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
-        loesung_1 = (r'geg \colon  ~' + aufgabe_1 + 'ges: ~' + st[2] + r' \quad (1P) \\'
+        loesung_1 = (r'geg \colon  ~' + aufgabe_1 + 'ges: ~' + st[2] + r' \quad (1BE) \\'
                      + st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert \sqrt{...} \quad \to \quad '
                      + st[2] + r'~=~ \sqrt{' + st[0] + r'^2 ~+~ ' + st[1] + r'^2 } ~=~ \sqrt{ ('
                      + gzahl(l_a) + r'cm)^2 ~+~ (' + gzahl(l_b) + r'cm)^2 } ~=~' + gzahl(l_c)
-                     + r'cm \quad (3P) \\ \mathrm{Planskizze} \quad (2P)')
+                     + r'cm \quad (3BE) \\ \mathrm{Planskizze} \quad (2BE)')
         return aufgabe_1, loesung_1, st, wk
     def kat_hyp():
         auswahl = random.choice([[0, 1, 2], [1,0,2], [2,0,1]])
@@ -160,11 +160,11 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
         wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
         aufgabe_2 = (st[1] + '~=~' + gzahl(l_b) + r'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm, ~ \mathrm{und} ~'
                      + wk[2] + r'~=~ 90^{  \circ} .')
-        loesung_2 = (r'geg \colon  ~' + aufgabe_2 + 'ges: ~' + st[0] + r' \quad (1P) \\'
+        loesung_2 = (r'geg \colon  ~' + aufgabe_2 + 'ges: ~' + st[0] + r' \quad (1BE) \\'
                      + st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[1]
                      + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[0] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ '
                      + st[1] + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_b) + r'cm)^2 } ~=~'
-                     + gzahl(l_a) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+                     + gzahl(l_a) + r'cm \quad (3BE) \\' + r' \mathrm{Planskizze} \quad (2BE)')
         return aufgabe_2, loesung_2, st, wk
     def hyp_kat():
         auswahl = random.choice([[0, 1, 2], [1,0,2], [0,2,1]])
@@ -172,11 +172,11 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
         wk = [[r'\alpha', r'\beta', r'\gamma'][x] for x in auswahl]
         aufgabe_3 = (st[0] + '~=~' + gzahl(l_a) + r'cm,~' + st[2] + '~=~' + gzahl(l_c)
                      + r'cm, ~ \mathrm{und} ~' + wk[2] + r'~=~ 90^{  \circ} .')
-        loesung_3 = (r'geg \colon  ~' + aufgabe_3 + r' ges \colon  ~' + st[1] + r' \quad (1P) \\'
+        loesung_3 = (r'geg \colon  ~' + aufgabe_3 + r' ges \colon  ~' + st[1] + r' \quad (1BE) \\'
                      + st[2] + '^2 ~=~' + st[0] + '^2 ~+~' + st[1] + r'^2 \quad \vert -' + st[0]
                      + r'^2 \quad \vert \sqrt{...} \quad \to \quad ' + st[1] + r'~=~ \sqrt{' + st[2] + r'^2 ~-~ ' + st[0]
                      + r'^2 } ~=~ \sqrt{ (' + gzahl(l_c) + r'cm)^2 ~-~ (' + gzahl(l_a) + r'cm)^2 } ~=~'
-                     + gzahl(l_b) + r'cm \quad (3P) \\' + r' \mathrm{Planskizze} \quad (2P)')
+                     + gzahl(l_b) + r'cm \quad (3BE) \\' + r' \mathrm{Planskizze} \quad (2BE)')
         return aufgabe_3, loesung_3, st, wk
 
     if gegeben == 0:
@@ -211,12 +211,12 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~}' + st[0] + '~=~' + gzahl(l_a) + 'cm,~'
                        + st[1] + '~=~' + gzahl(l_b) + 'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm ~ \mathrm{und} ~'
-                       + wk[2] + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1P) \\ sin('
+                       + wk[2] + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1BE) \\ sin('
                        + wk[0] + r')~=~ \frac{' + st[0] + 'cm}{' + st[2] + r'cm} ~=~ \frac{' + gzahl(l_a) + 'cm}{'
                        + gzahl(l_c) + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
                        + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
-                       + r' ^{ \circ} \quad (3P) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
-                       + gzahl(alpha) + r'^{ \circ} ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (2P)')
+                       + r' ^{ \circ} \quad (3BE) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
+                       + gzahl(alpha) + r'^{ \circ} ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (2BE)')
         liste_punkte.append(5)
         i += 1
 
@@ -295,7 +295,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3P)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3BE)')
         liste_punkte.append(3)
         i += 1
 
@@ -317,13 +317,13 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div sin(' + wk[p] + r') \quad \to \quad ' + st[2]
                              + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + ' cm ~}{~ sin(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r' cm \quad (2P) \\'
+                             + str(st_werte[2]) + r' cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[1] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[1] + r' ~ \vert ~ \div tan(' + wk[p]
                              + r') \quad \to \quad ' + st[1] +  r'=~ \frac{' + st[auswahl_seite] + r'}{ ~ tan('
                              + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + ' cm ~}{~ tan('
-                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[1]) + r' cm \quad (2P) \\')
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[1]) + r' cm \quad (2BE) \\')
 
             elif auswahl_seite == 1:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
@@ -333,13 +333,13 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div cos(' + wk[p] + ')' + r' \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2P) \\'
+                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[0] + r'}{' + st[auswahl_seite] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[0]
                              + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
                              + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
-                             + str(st_werte[0]) + r' cm \quad (2P) \\')
+                             + str(st_werte[0]) + r' cm \quad (2BE) \\')
             else:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
@@ -347,17 +347,17 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[0] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
-                             + 'cm~=~' + str(st_werte[0]) + r'cm \quad (2P) \\'
+                             + 'cm~=~' + str(st_werte[0]) + r'cm \quad (2BE) \\'
 
                              + ' cos(' + wk[p] + r')~=~ \frac{' + st[1] + '}{' + st[auswahl_seite] + '}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
                              + st[1] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
                              + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
-                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[1]) + r'cm \quad (2P) \\')
+                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[1]) + r'cm \quad (2BE) \\')
 
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
-                           + str(wk_werte[1]) + r'^{ \circ} \quad (2P)')
+                           + str(wk_werte[1]) + r'^{ \circ} \quad (2BE)')
         else:
             if auswahl_seite == 0:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
@@ -367,13 +367,13 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div cos(' + wk[p] + r') \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2P) \\'
+                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[1] + r'}{' + st[auswahl_seite] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[1]
                              + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
                              + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
-                             + str(st_werte[1]) + r' cm \quad (2P) \\')
+                             + str(st_werte[1]) + r' cm \quad (2BE) \\')
 
             elif auswahl_seite == 1:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
@@ -383,14 +383,14 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' \vert \div sin(' + wk[p] + r') \quad \to \quad ' + st[2] + r'~=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ sin(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2P) \\'
+                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[0] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[0] + r' \vert \div tan(' + wk[p] + r')'
                              + r' \quad \to \quad ' + st[0] + r'=~ \frac{' + st[auswahl_seite]
                              + '}{ ~ tan(' + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite])
                              + 'cm~ }{~ tan(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[0]) + r'cm \quad (2P) \\')
+                             + str(st_werte[0]) + r'cm \quad (2BE) \\')
             else:
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
@@ -398,17 +398,17 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[1] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
-                             + 'cm~=~' + str(st_werte[1]) + r'cm \quad (2P) \\'
+                             + 'cm~=~' + str(st_werte[1]) + r'cm \quad (2BE) \\'
 
                              + ' cos(' + wk[p] + r')~=~ \frac{' + st[0] + '}{' + st[auswahl_seite] + '}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
                              + st[0] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
                              + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
-                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[0]) + r'cm \quad (2P) \\')
+                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[0]) + r'cm \quad (2BE) \\')
 
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
-                           + str(wk_werte[0]) + r'^{ \circ} \quad (2P)')
+                           + str(wk_werte[0]) + r'^{ \circ} \quad (2BE)')
         liste_punkte.append(7)
         i += 1
 
@@ -461,14 +461,14 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Winkel, unter dem der Beobachter'
                                                 f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
                                                  + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
-                                                 + r'km, \quad ges \colon  \alpha \quad (1P)} \\'
+                                                 + r'km, \quad ges \colon  \alpha \quad (1BE)} \\'
                                                  + r' tan( \alpha ) ~=~ \frac{a}{c} \quad \vert tan^{-1}()'
                                                    r'\quad \to \quad \alpha ~=~ tan^{-1} \Big( \frac{a}{c} \Big) ~=~'
                                                    r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
                                                  + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
-                                                 + r' ^{ \circ} \quad (3P)'))
+                                                 + r' ^{ \circ} \quad (3BE)'))
         liste_punkte.append(6)
         i += 1
 
@@ -477,12 +477,12 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~a~=~'
-                                                 + str(hoehe) + r'km, \quad ges \colon  b \quad (1P)} \\'
+                                                 + str(hoehe) + r'km, \quad ges \colon  b \quad (1BE)} \\'
                                                  + r' sin( \alpha ) ~=~ \frac{a}{b}'
                                                    r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
                                                    r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
                                                    r' \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
-                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3P)'))
+                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3BE)'))
         liste_punkte.append(4)
         i += 1
 
@@ -523,14 +523,14 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
         # Die SuS sollen den Anstellwinkel einer Klappleiter berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2P)} \quad \mathrm{geg:~a~=~'
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
                                                  + str(deckenhoehe) + 'm,~b~=~' + str(laenge_leiter)
-                                                 + r'm, \quad ges \colon  \alpha \quad (1P)} \\'
+                                                 + r'm, \quad ges \colon  \alpha \quad (1BE)} \\'
                                                  + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert sin^{-1}()'
                                                    r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
                                                    r' sin^{-1} \Big( \frac{' + str(deckenhoehe) + 'm }{'
                                                  + str(laenge_leiter) + r'm } \Big) ~=~' + str(N(anstellwinkel,2))
-                                                 + r' ^{ \circ} \quad (3P)'))
+                                                 + r' ^{ \circ} \quad (3BE)'))
         liste_punkte.append(6)
         i += 1
 
@@ -540,10 +540,10 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
             loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist kleiner als 61° und somit der '
-                                                     r'Dachboden gut zu begehen. (1P)'))
+                                                     r'Dachboden gut zu begehen. (1BE)'))
         else:
             loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist größer als 61° und somit der '
-                                                     r'Dachboden nicht gut zu begehen. (1P)'))
+                                                     r'Dachboden nicht gut zu begehen. (1BE)'))
         liste_punkte.append(1)
         i += 1
 
@@ -583,10 +583,10 @@ def sachaufgabe_turm(nr, BE=[]):
                'Berechne aus den gegebenen Werte die Höhe des Turms.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     loesung.append(r' \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~' + str(abstand_beob_turm)
-                   + r'm, \quad ges \colon  a \quad (1P)} \\ tan( \alpha ) ~=~ \frac{a}{b}'
+                   + r'm, \quad ges \colon  a \quad (1BE)} \\ tan( \alpha ) ~=~ \frac{a}{b}'
                    + r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
                    + ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob) + r' ^{ \circ}  ) ~=~'
-                   + str(hoehe) + r'm  \quad (3P)')
+                   + str(hoehe) + r'm  \quad (3BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -621,11 +621,11 @@ def sachaufgabe_rampe(nr, BE=[]):
                f'Wie lang muss die Strecke sein, auf der der Rollstuhl nach unten fährt? \n'
                'Fertige dazu eine Planskizze an.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    loesung.append(r' \mathrm{Planskizze \quad (2P) \quad \to \quad geg:~ \alpha ~=~' + str(w_rampe)
-                   + r'^{ \circ},~a ~=~' + str(hoehe) + r'cm, \quad ges \colon  b \quad (1P)} \\ sin( \alpha ) ~=~'
+    loesung.append(r' \mathrm{Planskizze \quad (2BE) \quad \to \quad geg:~ \alpha ~=~' + str(w_rampe)
+                   + r'^{ \circ},~a ~=~' + str(hoehe) + r'cm, \quad ges \colon  b \quad (1BE)} \\ sin( \alpha ) ~=~'
                    + r'\frac{a}{b} \quad \vert \cdot b \quad \vert \div sin( \alpha ) \quad \to \quad b '
                    + r'~=~ \frac{a}{ sin( \alpha )} ~=~ \frac{' + str(hoehe) + r'cm }{ sin( ' + str(w_rampe)
-                   + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3P)')
+                   + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -688,24 +688,24 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
                                                  + r'cm, \quad ' + str(seite_2) + '~=~' + latex(seite_wert_2)
                                                  + r'cm, \quad ' + winkel_1 + '~=~' + latex(winkel_wert_1)
                                                  + r'^{ \circ } \quad \mathrm{ges \colon ~}' + winkel_2
-                                                 + r' \quad (1P) \quad \mathrm{aus~der~Planskizze~(2P)~folgt:~} \\'
+                                                 + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(2BE)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
                                                  + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
                                                  + winkel_1 + r')} ~=~ \frac{' + str(seite_2) + '}{'
                                                  + str(seite_1) + r'} \quad \vert \cdot sin(' + winkel_1
-                                                 + r') \quad (2P) \\' + 'sin(' + winkel_2 + r') ~=~ \frac{'
+                                                 + r') \quad (2BE) \\' + 'sin(' + winkel_2 + r') ~=~ \frac{'
                                                  + str(seite_2) + r'}{' + str(seite_1) + r'} \cdot sin(' + winkel_1
                                                  + r') \quad \vert ~ sin^{ -1}() \quad \to \quad ' + winkel_2
                                                  + r' ~=~ sin^{ -1} \Big( \frac{' + str(seite_2)  + r'}{' + str(seite_1)
-                                                 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1P) \\'
+                                                 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1BE) \\'
                                                  + winkel_2 + r' ~=~ sin^{ -1} \Big( \frac{'
                                                  + latex(seite_wert_2) + 'cm}{' + latex(seite_wert_1)
                                                  + r'cm} \cdot sin(' + latex(winkel_wert_1) + r'^{ \circ } ) \Big) ~=~'
-                                                 + latex(winkel_wert_2) + r'^{ \circ } \quad (2P) \\'
+                                                 + latex(winkel_wert_2) + r'^{ \circ } \quad (2BE) \\'
                                                  + winkel_3 + r'~=~ 180^{ \circ} ~-~' + str(winkel_wert_1)
                                                  + r'^{ \circ} ~-~ ' + str(winkel_wert_2) + r'^{ \circ} ~=~ '
-                                                 + str(winkel_wert_3) + r'^{ \circ} \quad (2P) \\'
+                                                 + str(winkel_wert_3) + r'^{ \circ} \quad (2BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -721,10 +721,10 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
                                                  + r' \frac{' + str(seite_3) + '}{~sin(' + winkel_3
                                                  + r')} \quad \vert \cdot sin(' + winkel_3 + r') \quad \to \quad '
                                                  + str(seite_3) + r'~=~ \frac{' + str(seite_1) + r' \cdot sin('
-                                                 + winkel_3 + ') }{ sin(' + winkel_1 + r') } \quad (2P) \\'
+                                                 + winkel_3 + ') }{ sin(' + winkel_1 + r') } \quad (2BE) \\'
                                                  + str(seite_3) + r'~=~ \frac{' + str(seite_wert_1) + r'cm \cdot sin('
                                                  + latex(winkel_wert_3) + r' ^{ \circ } )}{ sin(' + latex(winkel_wert_1)
-                                                 + r' ^{ \circ } )} ~=~' + latex(seite_wert_3) + r'cm \quad (2P) \\'
+                                                 + r' ^{ \circ } )} ~=~' + latex(seite_wert_3) + r'cm \quad (2BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -741,7 +741,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
                                                  + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot '
                                                  + latex(seite_wert_1) + r'cm \cdot ' + latex(seite_wert_2)
                                                  + r'cm \cdot sin(' + latex(winkel_wert_3) + r'^{ \circ } ) ~=~ '
-                                                 + latex(N(flaeche,3)) + r'cm^2 \quad (3P) \\'
+                                                 + latex(N(flaeche,3)) + r'cm^2 \quad (3BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -797,13 +797,13 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $'
                        + r' \\\\'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + str(seite_a) + r'cm,~ h~=~'
-                                                 + str(seite_h) + r' \quad ges \colon  \quad \overline{FB} \quad (1P)} \\'
+                                                 + str(seite_h) + r' \quad ges \colon  \quad \overline{FB} \quad (1BE)} \\'
                                                  + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                                                  r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
-                                                 r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2P) \\'
+                                                 r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2BE) \\'
                                                  r' \overline{FB} ~=~ \sqrt{(' + str(seite_a) + 'cm)^2 - ('
                                                  + str(seite_h) + 'cm)^2 } ~=~'
-                                                 + gzahl(N(seite_c - xwert_punkt_c,3)) + r'cm \quad (2P) \\'
+                                                 + gzahl(N(seite_c - xwert_punkt_c,3)) + r'cm \quad (2BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -817,11 +817,11 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                 + ' und ' + r'$ \beta $' + r'. \\\\'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
                                                  r' ~=~180^{ \circ } - 90^{ \circ } -' + str(gamma_1)
-                                                 + r'^{ \circ} ~=~' + str(alpha) + r'^{ \circ} \quad (2P) \\'
+                                                 + r'^{ \circ} ~=~' + str(alpha) + r'^{ \circ} \quad (2BE) \\'
                                                  r' sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad '
                                                  r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
                                                  r'sin^{-1} \Big( \frac{' + str(seite_h) + '}{' + str(seite_a)
-                                                 + r'} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4P) \\ '
+                                                 + r'} \Big) ~=~ ' + str(beta) + r'^{ \circ} \quad (4BE) \\ '
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -837,7 +837,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                                  r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
                                                  + str(seite_a) + r'cm \cdot sin(' + str(beta) + r'^{ \circ})}'
                                                  r'{sin(' + str(alpha) + r'^{ \circ})} ~=~' + str(seite_b)
-                                                 + r'cm \quad (4P) \\'
+                                                 + r'cm \quad (4BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1
@@ -850,11 +850,11 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
                                                  r'180^{ \circ } - ' + str(alpha) + r'^{ \circ } - ' + str(beta)
-                                                 + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2P) \\'
+                                                 + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
                                                  r' A ~=~ \frac{1}{2} \cdot a \cdot b \cdot sin( \gamma ) ~=~'
                                                  r' \frac{1}{2} \cdot ' + str(seite_a) + r'cm \cdot '
                                                  + str(seite_b) + r'cm \cdot sin(' + str(gamma)
-                                                 + r'^{ \circ }) ~=~' + str(flaeche) + r'cm^2 \quad (3P) \\'
+                                                 + r'^{ \circ }) ~=~' + str(flaeche) + r'cm^2 \quad (3BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
         liste_punkte.append(pkt)
         i += 1

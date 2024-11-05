@@ -358,9 +358,8 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
                 'ganzz': zzahl(1,9),
                 'rat': Rational(zzahl(p,q), nzahl(p,q)),
                 'dez': zzahl(1,100)/10}
-        aufg_str = (latex(fakt[fakt_aus]*var_in) + r' \left( '
+        aufg_str = (latex(fakt[fakt_aus]*var_in) + r' \cdot \left( '
                     + terme_in_klammer(anz_terme, anz_var, fakt_in, exp, p, q)[1] + r' \right)')
-        lsg =
 
 
             
