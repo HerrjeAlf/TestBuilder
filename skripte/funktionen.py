@@ -235,19 +235,19 @@ def ganz(k):
     else:
         return k
 
-def exponenten(n,q=1,p=6, wdh=True, ganzz=False):
+def exponenten(n,p=1,q=6, wdh=True, ganzz=False):
     if wdh != True:
         if ganzz == True:
-            liste = list(range(-1*(p+n), p + n))
+            liste = list(range(-1*(q+n), q + n))
             random.shuffle(liste)
             liste = liste[0:n]
         else:
-            liste = list(range(q, p + n))
+            liste = list(range(p, q + n))
             random.shuffle(liste)
             liste = liste[0:n]
     else:
-        liste = [nzahl(q,p) for _ in range(n)]
-        liste = [zzahl(q,p) for _ in range(n)] if ganzz == True else liste
+        liste = [nzahl(p,q) for _ in range(n)]
+        liste = [zzahl(p,q) for _ in range(n)] if ganzz == True else liste
     return liste
 
 def gzahl(k, exp=False, null=True):

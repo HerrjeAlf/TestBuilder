@@ -339,7 +339,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
             elif fakt == 'rat':
                 liste_fakt = [Rational(zzahl(p,q), nzahl(p,q)) for _ in range(anz_terme)]
             else:
-                liste_fakt = [zzahl(p,q)/10 for _ in range(anz_terme)]
+                liste_fakt = [zzahl(p,10*q)/10 for _ in range(anz_terme)]
 
         liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
         liste_terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
@@ -348,6 +348,20 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
         for k in range(anz_terme - 1):
             aufg_str += vorz_str(liste_terme[k + 1][0]) + latex(liste_terme[k + 1][1] ** liste_terme[k + 1][2])
         return liste_terme, aufg_str
+
+    def einf(anz_terme, anz_var, var_in=1, fakt_aus='vorz', fakt_in=True, exp=False, p=1, q=10):
+        terme_in_klammer(anz_terme, anz_var, fakt_in, exp)
+        fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat', 'dez'] else fakt_aus
+        var_in = random.choice([a, b, c, d, e, f, g, h, x, y, z]) if var_in != 1 else var_in
+        fakt = {'vorz': random.choice([-1,1]),
+                'nat': nzahl(1,9),
+                'ganzz': zzahl(1,9),
+                'rat': Rational(zzahl(p,q), nzahl(p,q)),
+                'dez': zzahl(1,100)/10}
+        aufg_str = (latex(fakt[fakt_aus]*var_in) + r' \left( '
+                    + terme_in_klammer(anz_terme, anz_var, fakt_in, exp, p, q)[1] + r' \right)')
+        lsg =
+
 
             
 
