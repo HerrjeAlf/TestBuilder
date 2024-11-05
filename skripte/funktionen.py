@@ -235,23 +235,20 @@ def ganz(k):
     else:
         return k
 
-def ganzz_exponenten(n,p=1,q=6, wdh=True):
-    if wdh == True:
-        liste = []
-        while len(liste) < n:
-            liste.append(zzahl(p,q))
-        return liste
-    elif wdh == False:
-        liste_max = [element for element in range(p+1,q+1)]
-        random.shuffle(liste_max)
-        if n <= len(liste_max):
-            liste_n = [liste_max[k] for k in range(n)]
+def exponenten(n,q=1,p=6, wdh=True, ganzz=False):
+    if wdh != True:
+        if ganzz == True:
+            liste = list(range(-1*(p+n), p + n))
+            random.shuffle(liste)
+            liste = liste[0:n]
         else:
-            exit("kleineren Wert für n oder größeren Wert für q wählen (n muss kleiner sein als q-p")
-        random.shuffle(liste_n)
-        return liste_n
+            liste = list(range(q, p + n))
+            random.shuffle(liste)
+            liste = liste[0:n]
     else:
-        print('wdh muss "True" or "False" sein')
+        liste = [nzahl(q,p) for _ in range(n)]
+        liste = [zzahl(q,p) for _ in range(n)] if ganzz == True else liste
+    return liste
 
 def gzahl(k, exp=False, null=True):
     if k == 0:
@@ -527,12 +524,6 @@ def wkt_baumdiagramm(menge_aufg, bez1='A', bez2='B', anz1=10, anz2=10, art='zmZ'
 # Funktionen zur Analysis
 def faktorliste(n, p, q):
     return [zzahl(p, q) for _ in range(n)]  # mit dem _ kann man die Variable weglassen
-
-def exponenten(n):
-    menge = set()  # ich habe hier eine Menge verwendet, weil diese keine gleichen Elemente enthält
-    while len(menge) < n:
-        menge.add(nzahl(2, 6 + n))
-    return menge
 
 def elemente_sort(st_werte):
     t = 0

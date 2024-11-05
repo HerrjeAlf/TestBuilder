@@ -1159,12 +1159,6 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def exponenten(n):
-        menge = set()
-        while len(menge) < n:
-            menge.add(nzahl(2, 6 + n))
-        return menge
-
     if 'a' in teilaufg:
         # Die SuS sollen den x-Wert berechnen, an dem eine (rationale) Funktion die gegebene Steigung besitzt.
 

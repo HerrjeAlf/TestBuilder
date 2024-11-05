@@ -839,7 +839,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     def pos_zahl_bas():
         bas = nzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -851,7 +851,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     def neg_zahl_bas():
         bas = -1 * nzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -864,7 +864,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     def bel_zahl_bas():
         bas = zzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -877,7 +877,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     def var_bas_pos_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -889,7 +889,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     def var_bas_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -902,7 +902,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
     def var_bas_fakt():
         fakt1, fakt2 = faktorliste(2, 2, 12)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 + exp2 == 0:
             w_erg = '~=~ ' + gzahl(fakt1*fakt2)
         else:
@@ -996,7 +996,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     def pos_zahl_bas():
         bas = nzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1009,7 +1009,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     def neg_zahl_bas():
         bas = -1 * nzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1022,7 +1022,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     def bel_zahl_bas():
         bas = zzahl(2,6)
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1036,7 +1036,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     def var_bas_pos_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1049,7 +1049,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     def var_bas_exp():
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1065,7 +1065,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         fakt = zzahl(2,7)
         fakt1, fakt2 = np.random.choice([fakt, fakt*zzahl(1,7)],2, False)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = ganzz_exponenten(2,2,7, True)
+        exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
             w_erg = '~=~ ' + gzahl(Rational(fakt1,fakt2))
         else:
@@ -1085,7 +1085,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],2,False)
         bas.sort()
         bas1, bas2 = bas
-        exp1, exp2, exp3, exp4 = ganzz_exponenten(4,2,8, True)
+        exp1, exp2, exp3, exp4 = exponenten(4,2,12, wdh=True, ganzz=True)
         if exp1 - exp3 == 0 or exp2 - exp4 == 0:
             w_erg = ' ~=~ ' + gzahl(Rational(fakt1, fakt2))
             if exp1 - exp3 != 0:
@@ -1111,7 +1111,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],4,False)
         bas.sort()
         bas1, bas2, bas3, bas4 = bas
-        list_exp = ganzz_exponenten(8,2,12, True)
+        list_exp = exponenten(8,2,12, ganzz=True)
         exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8 = list_exp
         list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
         exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
@@ -1151,7 +1151,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         bas = np.random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'],4,False)
         bas.sort()
         bas1, bas2, bas3, bas4 = bas
-        list_exp = ganzz_exponenten(8,2,12, True)
+        list_exp = exponenten(8,2,12, ganzz=True)
         exp1, exp2, exp3, exp4, exp5, exp6, exp7, exp8 = list_exp
         list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
         exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
@@ -1507,14 +1507,14 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def aufg_lsg(exponenten, anz_bas):
+    def aufg_lsg(exp, anz_bas):
         ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
         ausw_bas = [element for element in ar_ausw_bas]
         list_basen = ausw_bas.copy()
-        for step in range(len(exponenten)-len(ausw_bas)):
+        for step in range(len(exp)-len(ausw_bas)):
             random.shuffle(ausw_bas)
             list_basen.append(random.choice(ausw_bas))
-        bas_exp = [[list_basen[k], exponenten[k]] for k in range(len(exponenten))]
+        bas_exp = [[list_basen[k], exp[k]] for k in range(len(exp))]
         random.shuffle(bas_exp)
         ausw_bas.sort()
         aufg = ''
