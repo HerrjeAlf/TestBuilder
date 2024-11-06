@@ -308,7 +308,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a)
@@ -337,30 +337,39 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
             elif fakt == 'ganz':
                 liste_fakt = [nzahl(p, q) for _ in range(anz_terme)]
             elif fakt == 'rat':
-                liste_fakt = [Rational(zzahl(p,q), nzahl(p,q)) for _ in range(anz_terme)]
+                liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz_terme)]
             else:
-                liste_fakt = [zzahl(p,10*q)/10 for _ in range(anz_terme)]
+                liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz_terme)]
 
         liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
-        terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
+        terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
         return terme
 
-    def einf(anz_terme, anz_var, var_aus=1, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
+    def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
         terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
-        fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat', 'dez'] else fakt_aus
-        faktoren = {'vorz': random.choice([-1,1]), 'nat': nzahl(1,9), 'ganz': zzahl(1,9),
-                    'rat': Rational(zzahl(p,q), nzahl(p,q)), 'dez': zzahl(1,100)/10}
+        print(terme)
+        fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz',
+                                                                                            'rat',
+                                                                                            'dez'] else fakt_aus
+        faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
+                    'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
         if var_aus == True:
             var_aus = random.choice([1, a, b, c, d, e, f, g, h, x, y, z])
         else:
             var_aus = 1
         if exp_aus == True:
-            exp_aus = nzahl(p,q)
+            exp_aus = nzahl(p, q)
         else:
             exp_aus = 1
-        ausmulti_terme = [[terme[k][0]*fakt, var_aus*terme[k][1], terme[k][2]] for k in range(anz_terme)]
+        print(fakt)
+        print(var_aus)
+        print(exp_aus)
+        print(anz_terme)
+        ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
+        print(ausmulti_terme)
         kopie_terme = ausmulti_terme.copy()
+        print(kopie_terme)
         gleiche_terme = []
         while len(kopie_terme) != 0:
             gleichartiger_term = []
@@ -370,35 +379,35 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
                     if element1[1] == var:
                         gleichartiger_term.append(element1)
                         kopie_terme.remove(element1)
+                        print(element1)
             gleiche_terme.append(gleichartiger_term)
         terme_erg = []
+        print(gleiche_terme)
         for element in gleiche_terme:
-            fakt = exp = 0
+            zahl = 0
             for k in range(len(element)):
-                fakt += element[k][0]
-                exp += element[k][2]
-            terme_erg.append([fakt,element[0][1],exp])
-        klammer_terme = vorz_v_aussen(terme[0][0],latex(terme[0][1]**terme[0][2]))
+                zahl += element[k][0]
+            terme_erg.append([zahl, element[0][1]])
+        print(terme_erg)
+        klammer_terme = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
         for k in range(anz_terme-1):
-            klammer_terme += vorz_v_innen(terme[k+1][0],latex(terme[k+1][1]**terme[k+1][2]))
+            klammer_terme += vorz_v_innen(terme[k+1][0], fakt_var(terme[k+1][1]))
         if var_aus ==1:
             aufg = vorz_v_aussen(fakt,r' \left( ' + klammer_terme + r' \right) ~')
         else:
             aufg = vorz_v_aussen(fakt,latex(var_aus**exp_aus) + r' \left( ' + klammer_terme + r' \right) ')
 
-        lsg_zw = vorz_v_aussen(ausmulti_terme[0][0],latex(ausmulti_terme[0][1]**ausmulti_terme[0][2]))
+        lsg_zw = vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
         for k in range(anz_terme-1):
-            lsg_zw += vorz_v_innen(ausmulti_terme[k+1][0],latex(ausmulti_terme[k+1][1]**ausmulti_terme[k+1][2]))
-
-        lsg_erg = vorz_v_aussen(terme_erg[0][0], latex(terme_erg[0][1] ** terme_erg[0][2]))
+            lsg_zw += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
+        print(lsg_zw)
+        lsg_erg = vorz_v_aussen(terme_erg[0][0], fakt_var(terme_erg[0][1]))
         for k in range(len(terme_erg) - 1):
-            lsg_zw += vorz_v_innen(terme_erg[k + 1][0], latex(terme_erg[k + 1][1] ** terme_erg[k + 1][2]))
+            lsg_erg += vorz_v_innen(terme_erg[k + 1][0], fakt_var(terme_erg[k + 1][1]))
         if lsg_zw == lsg_erg:
-            lsg = aufg + '~=~' + lsg_zw + lsg_erg
+            lsg = aufg + '~=~' + lsg_zw
         else:
             lsg = aufg + '~=~' + lsg_zw + '~=~' + lsg_erg
-        print(ausmulti_terme)
-        print(terme_erg)
         return aufg, lsg
 
 
@@ -410,8 +419,8 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
                 'b': einf(2, 2, fakt_aus='ganz', fakt_in='ganz'),
                 'c': einf(3, 2, var_aus=True, fakt_aus=True, fakt_in=True),
                 'd': einf(3, 2, exp_in=True, fakt_in=True),
-                'e': einf(2, 2, var_aus=2, fakt_in='ganz'),
-                'f': einf(2, 2, var_aus=2, fakt_in=None)}
+                'e': einf(2, 2, var_aus=True, fakt_in='ganz'),
+                'f': einf(2, 2, var_aus=True, fakt_in=None)}
 
     aufg = ''
     lsg = ''

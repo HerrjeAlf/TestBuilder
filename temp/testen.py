@@ -25,7 +25,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[terme_ausmultiplizieren(1, ['a'])]]
+    Aufgaben = [[terme_ausmultiplizieren(1, ['a', 'b', 'c', 'd', 'e', 'f'])]]
 
     # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []

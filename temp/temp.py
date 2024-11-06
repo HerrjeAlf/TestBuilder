@@ -110,7 +110,6 @@ def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
     anz_var = anz_terme if anz_var > anz_terme else anz_var
     liste_exp = [1 for _ in range(anz_var)]
     liste_exp = exponenten(anz_var, wdh=True) if exp != False else liste_exp
-    print(liste_exp)
     if fakt == False:
         liste_fakt = [1 for _ in range(anz_terme)]
     else:
@@ -122,11 +121,56 @@ def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
         elif fakt == 'rat':
             liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz_terme)]
         else:
-            liste_fakt = [zzahl(p, q) / 10 for _ in range(anz_terme)]
+            liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz_terme)]
 
-    liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
-    liste_terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
+    liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
+    terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
+    return terme
 
-    return liste_terme
 
-print(terme_in_klammer(2,2, exp=True))
+def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
+    terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
+    print(terme)
+    fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat',
+                                                                                        'dez'] else fakt_aus
+    faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
+                'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
+    fakt = faktoren[fakt_aus]
+    if var_aus == True:
+        var_aus = random.choice([1, a, b, c, d, e, f, g, h, x, y, z])
+    else:
+        var_aus = 1
+    if exp_aus == True:
+        exp_aus = nzahl(p, q)
+    else:
+        exp_aus = 1
+    print(fakt)
+    print(var_aus)
+    print(exp_aus)
+    print(anz_terme)
+    ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
+    print(ausmulti_terme)
+    kopie_terme = ausmulti_terme.copy()
+    print(kopie_terme)
+    gleiche_terme = []
+    while len(kopie_terme) != 0:
+        gleichartiger_term = []
+        for element in kopie_terme:
+            var = element[1]
+            for element1 in kopie_terme:
+                if element1[1] == var:
+                    gleichartiger_term.append(element1)
+                    kopie_terme.remove(element1)
+                    print(element1)
+        gleiche_terme.append(gleichartiger_term)
+    terme_erg = []
+    print(gleiche_terme)
+    for element in gleiche_terme:
+        zahl = 0
+        for k in range(len(element)):
+            zahl += element[k][0]
+        terme_erg.append([zahl, element[0][1]])
+    print(terme_erg)
+    return ausmulti_terme, terme_erg
+
+einf(2, 2, fakt_aus='vorz', fakt_in='ganz')
