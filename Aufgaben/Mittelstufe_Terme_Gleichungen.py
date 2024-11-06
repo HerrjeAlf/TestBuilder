@@ -308,7 +308,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a)
@@ -341,43 +341,83 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], an
             else:
                 liste_fakt = [zzahl(p,10*q)/10 for _ in range(anz_terme)]
 
-        liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
-        liste_terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
-        random.shuffle(liste_terme)
-        aufg_str = latex(liste_terme[0][0]*(liste_terme[0][1]**liste_terme[0][2]))
-        for k in range(anz_terme - 1):
-            aufg_str += vorz_str(liste_terme[k + 1][0]) + latex(liste_terme[k + 1][1] ** liste_terme[k + 1][2])
-        return liste_terme, aufg_str
+        liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
+        terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
+        return terme
 
-    def einf(anz_terme, anz_var, var_in=1, fakt_aus='vorz', fakt_in=True, exp=False, p=1, q=10):
-        terme_in_klammer(anz_terme, anz_var, fakt_in, exp)
+    def einf(anz_terme, anz_var, var_aus=1, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
+        terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
         fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat', 'dez'] else fakt_aus
-        var_in = random.choice([a, b, c, d, e, f, g, h, x, y, z]) if var_in != 1 else var_in
-        fakt = {'vorz': random.choice([-1,1]),
-                'nat': nzahl(1,9),
-                'ganzz': zzahl(1,9),
-                'rat': Rational(zzahl(p,q), nzahl(p,q)),
-                'dez': zzahl(1,100)/10}
-        aufg_str = (latex(fakt[fakt_aus]*var_in) + r' \cdot \left( '
-                    + terme_in_klammer(anz_terme, anz_var, fakt_in, exp, p, q)[1] + r' \right)')
+        faktoren = {'vorz': random.choice([-1,1]), 'nat': nzahl(1,9), 'ganz': zzahl(1,9),
+                    'rat': Rational(zzahl(p,q), nzahl(p,q)), 'dez': zzahl(1,100)/10}
+        fakt = faktoren[fakt_aus]
+        if var_aus == True:
+            var_aus = random.choice([1, a, b, c, d, e, f, g, h, x, y, z])
+        else:
+            var_aus = 1
+        if exp_aus == True:
+            exp_aus = nzahl(p,q)
+        else:
+            exp_aus = 1
+        ausmulti_terme = [[terme[k][0]*fakt, var_aus*terme[k][1], terme[k][2]] for k in range(anz_terme)]
+        kopie_terme = ausmulti_terme.copy()
+        gleiche_terme = []
+        while len(kopie_terme) != 0:
+            gleichartiger_term = []
+            for element in kopie_terme:
+                var = element[1]
+                for element1 in kopie_terme:
+                    if element1[1] == var:
+                        gleichartiger_term.append(element1)
+                        kopie_terme.remove(element1)
+            gleiche_terme.append(gleichartiger_term)
+        terme_erg = []
+        for element in gleiche_terme:
+            fakt = exp = 0
+            for k in range(len(element)):
+                fakt += element[k][0]
+                exp += element[k][2]
+            terme_erg.append([fakt,element[0][1],exp])
+        klammer_terme = vorz_v_aussen(terme[0][0],latex(terme[0][1]**terme[0][2]))
+        for k in range(anz_terme-1):
+            klammer_terme += vorz_v_innen(terme[k+1][0],latex(terme[k+1][1]**terme[k+1][2]))
+        if var_aus ==1:
+            aufg = vorz_v_aussen(fakt,r' \left( ' + klammer_terme + r' \right) ~')
+        else:
+            aufg = vorz_v_aussen(fakt,latex(var_aus**exp_aus) + r' \left( ' + klammer_terme + r' \right) ')
 
+        lsg_zw = vorz_v_aussen(ausmulti_terme[0][0],latex(ausmulti_terme[0][1]**ausmulti_terme[0][2]))
+        for k in range(anz_terme-1):
+            lsg_zw += vorz_v_innen(ausmulti_terme[k+1][0],latex(ausmulti_terme[k+1][1]**ausmulti_terme[k+1][2]))
 
-            
-
+        lsg_erg = vorz_v_aussen(terme_erg[0][0], latex(terme_erg[0][1] ** terme_erg[0][2]))
+        for k in range(len(terme_erg) - 1):
+            lsg_zw += vorz_v_innen(terme_erg[k + 1][0], latex(terme_erg[k + 1][1] ** terme_erg[k + 1][2]))
+        if lsg_zw == lsg_erg:
+            lsg = aufg + '~=~' + lsg_zw + lsg_erg
+        else:
+            lsg = aufg + '~=~' + lsg_zw + '~=~' + lsg_erg
+        print(ausmulti_terme)
+        print(terme_erg)
+        return aufg, lsg
 
 
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(anzahl) != int or anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': Test}
+    aufgaben = {'a': einf(2, 2, fakt_aus='vorz', fakt_in='ganz'),
+                'b': einf(2, 2, fakt_aus='ganz', fakt_in='ganz'),
+                'c': einf(3, 2, var_aus=True, fakt_aus=True, fakt_in=True),
+                'd': einf(3, 2, exp_in=True, fakt_in=True),
+                'e': einf(2, 2, var_aus=2, fakt_in='ganz'),
+                'f': einf(2, 2, var_aus=2, fakt_in=None)}
 
     aufg = ''
     lsg = ''
     punkte = 0
     for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):

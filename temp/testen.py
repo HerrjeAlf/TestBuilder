@@ -1,4 +1,6 @@
 import os
+
+from Aufgaben import terme_ausmultiplizieren
 from helpers import root_path
 os.chdir(root_path())
 
@@ -23,9 +25,9 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[geraden_lagebeziehung(1, lagebeziehung='schneiden')]]
+    Aufgaben = [[terme_ausmultiplizieren(1, ['a'])]]
 
-    # hier werden aus der Liste der Aufgaben dieTest erzeugt
+    # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []
     for element in Aufgaben:
         for aufgabe in element:

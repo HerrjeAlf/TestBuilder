@@ -126,10 +126,7 @@ def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
 
     liste_var = random_selection([a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
     liste_terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
-    random.shuffle(liste_terme)
-    aufg_str = latex(liste_terme[0][0] * (liste_terme[0][1] ** liste_terme[0][2]))
-    for k in range(anz_terme - 1):
-        aufg_str += vorz_str(liste_terme[k + 1][0]) + latex(liste_terme[k + 1][1] ** liste_terme[k + 1][2])
-    return liste_terme, aufg_str
+
+    return liste_terme
 
 print(terme_in_klammer(2,2, exp=True))
