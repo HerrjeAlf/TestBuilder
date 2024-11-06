@@ -229,11 +229,11 @@ def vorz_v_aussen(k,v, null=False):
         k = int(k)
     return latex(k) + v
 
-def ganz(k):
-    if k % 1 == 0:
-        return int(k)
+def fakt_var(k):
+    if k == 1:
+        return ''
     else:
-        return k
+        return latex(k)
 
 def exponenten(n,p=1,q=6, wdh=True, ganzz=False):
     if wdh != True:
