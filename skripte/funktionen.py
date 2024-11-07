@@ -263,13 +263,13 @@ def gzahl(k, exp=False, null=True):
     else:
         return latex(k)
 
-def gzahl_klammer(k,string=''):
+def gzahl_klammer(k,str=''):
     if k % 1 == 0:
         k = int(k)
     if k < 0:
-        return r' \left(' + latex(k) + string + r' \right)'
+        return r' \left(' + latex(k) + str + r' \right)'
     else:
-        return latex(k) + string
+        return latex(k) + str
 
 def kgv(q, p):
     if q == 0 or p == 0:

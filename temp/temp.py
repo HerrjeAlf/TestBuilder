@@ -130,7 +130,7 @@ def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
 
 def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
     terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
-    print(terme)
+    #print(terme)
     fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat',
                                                                                         'dez'] else fakt_aus
     faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
@@ -144,12 +144,12 @@ def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_a
         exp_aus = nzahl(p, q)
     else:
         exp_aus = 1
-    print(fakt)
-    print(var_aus)
-    print(exp_aus)
-    print(anz_terme)
+    #print(fakt)
+    #print(var_aus)
+    #print(exp_aus)
+    #print(anz_terme)
     ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
-    print(ausmulti_terme)
+    #print(ausmulti_terme)
     kopie_terme = ausmulti_terme.copy()
     print(kopie_terme)
     gleiche_terme = []
@@ -157,12 +157,15 @@ def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_a
         gleichartiger_term = []
         for element in kopie_terme:
             var = element[1]
+            print(element)
             for element1 in kopie_terme:
                 if element1[1] == var:
                     gleichartiger_term.append(element1)
                     kopie_terme.remove(element1)
                     print(element1)
+            print(gleichartiger_term)
         gleiche_terme.append(gleichartiger_term)
+        # print(gleiche_terme)
     terme_erg = []
     print(gleiche_terme)
     for element in gleiche_terme:
@@ -173,4 +176,4 @@ def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_a
     print(terme_erg)
     return ausmulti_terme, terme_erg
 
-einf(2, 2, fakt_aus='vorz', fakt_in='ganz')
+einf(3, 3, fakt_aus='rat', fakt_in='rat')

@@ -194,10 +194,10 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, BE=[]):
+def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
     # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
+    # a) zwei Faktoren mit einer Basis und natürlichen Exponenten
     # b) sechs Faktoren aus zwei Basen und ganzzahligen Exponenten
     # c) sechs Faktoren aus drei Basen und ganzzahligen Exponenten
     # d) vier Faktoren aus zwei Basen und rationalen Exponenten
@@ -216,81 +216,60 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def aufg_lsg(exponenten, anz_bas):
-        ar_ausw_bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'], anz_bas, False)
-        ausw_bas = [element for element in ar_ausw_bas]
-        list_basen = ausw_bas.copy()
-        for step in range(len(exponenten)-len(ausw_bas)):
-            random.shuffle(ausw_bas)
-            list_basen.append(random.choice(ausw_bas))
-        bas_exp = [[list_basen[k], exponenten[k]] for k in range(len(exponenten))]
-        random.shuffle(bas_exp)
-        ausw_bas.sort()
-        aufg = ''
-        m = 1
-        for element in bas_exp:
-            if m != len(bas_exp):
-                aufg = aufg + element[0] + '^{' + gzahl(element[1]) + r'}~ \cdot ~'
+    def aufg_lsg(anz_fakt, anz_bas, koef, exp):
+        p, q = 1,9
+        anz_bas = anz_fakt if anz_bas > anz_fakt else anz_bas
+        bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], anz_bas, False)
+        liste_bas = bas + [1 for _ in range(anz_fakt - anz_bas)]
+        random.shuffle(liste_bas)
+        liste_exp = [1 for _ in range(anz_fakt)]
+        liste_exp = exponenten(anz_fakt, wdh=True) if exp != False else liste_exp
+        if koef == False:
+            liste_koef = [1 for _ in range(anz_fakt)]
+        else:
+            koef = random.choice(['nat', 'ganz', 'rat', 'dez']) if koef not in ['nat', 'ganz', 'rat', 'dez'] else koef
+            if koef == 'nat':
+                liste_koef = [nzahl(p, q) for _ in range(anz_fakt)]
+            elif koef == 'ganz':
+                liste_koef = [nzahl(p, q) for _ in range(anz_fakt)]
+            elif koef == 'rat':
+                liste_koef = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz_fakt)]
             else:
-                aufg = aufg + element[0] + '^{' + gzahl(element[1]) + '}'
-            m += 1
-        lsg = aufg + '~=~'
-        exp_sort = []
-        for basis in ausw_bas:
-            exp_der_basis = []
-            for element in bas_exp:
-                if basis == element[0]:
-                    exp_der_basis.append(element[1])
-            lsg = lsg + basis + '^{' + gzahl(exp_der_basis[0])
-            k = 1
-            for zahl in range(len(exp_der_basis) - 1):
-                lsg = lsg + vorz_str(exp_der_basis[k])
-                k += 1
-            lsg = lsg + '}'
-            if basis != ausw_bas[-1]:
-                lsg = lsg + r'~ \cdot ~'
-            exp_sort.append(exp_der_basis)
-        lsg = lsg + '~=~'
-        k = 0
-        for basis in ausw_bas:
-            if basis != ausw_bas[-1]:
-                if sum(exp_sort[k]) == 0:
-                    pass
-                else:
-                    lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + r'} \cdot '
-            else:
-                if sum(exp_sort[k]) == 0:
-                    pass
-                else:
-                    lsg = lsg + basis + '^{' + gzahl(sum(exp_sort[k])) + '}'
-            k += 1
-
+                liste_koef = [zzahl(p, 10 * q) / 10 for _ in range(anz_fakt)]
+        # print(liste_bas)
+        # print(liste_exp)
+        # print(liste_koef)
+        aufg = '~' + gzahl_klammer(liste_koef[0], fakt_var(liste_bas[0]**liste_exp[0]))
+        for k in range(anz_fakt-1):
+            aufg += r' \cdot ' + gzahl_klammer(liste_koef[k + 1], fakt_var(liste_bas[k + 1]**liste_exp[k + 1]))
+        lsg = aufg + '~=~' + latex(sum([liste_koef[k]*(liste_bas[k]**liste_exp[k]) for k in range(anz_fakt)]))
+        # print(test)
         return aufg, lsg
-
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
-                'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
-                'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
-                'd': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2],
-                'e': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(6)], 3],
-                'f': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(4)], 2],
-                'g': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(6)], 3]}
+    wb = {'a': (2, 1, False, False),
+          'b': (3, 2, 'ganz', False),
+          'c': (2, 1, random.choice(['rat', 'dez']), False),
+          'd': (3, 2, 'egal', False),
+          'e': (3, 2, 'ganz', True),
+          'f': (3, 2, 'egal', True)}
 
     aufg = ''
     lsg = ''
     punkte = 0
-    for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1], aufgaben[element][2])
+    for st in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufg_lsg(wb[st][0], wb[st][1], wb[st][2], wb[st][3])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
+            lsg = lsg + r' \hspace{5em} '
         elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
+            lsg = lsg + r' \\\\'
         punkte += 1
         i += 1
 
@@ -307,7 +286,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a)
@@ -323,7 +302,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
+    def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, liste_mit_exp=False, p=1, q=10):
         anz_var = anz_terme if anz_var > anz_terme else anz_var
         liste_exp = [1 for _ in range(anz_var)]
         liste_exp = exponenten(anz_var, wdh=True) if exp != False else liste_exp
@@ -341,12 +320,17 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
                 liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz_terme)]
 
         liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
-        terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
+        if liste_mit_exp == False:
+            terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
+        else:
+            terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
+
         return terme
 
-    def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
+    def einf(anz_terme, anz_var, var_aus, fakt_aus, fakt_in, exp_aus, exp_in):
+        p, q = 1, 10
         terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
-        print(terme)
+        # print(terme)
         fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz',
                                                                                             'rat',
                                                                                             'dez'] else fakt_aus
@@ -354,21 +338,18 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
                     'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
         if var_aus == True:
-            var_aus = random.choice([1, a, b, c, d, e, f, g, h, x, y, z])
+            var_aus = random.choice([a, b, c, d, e, f, g, h, x, y, z])
         else:
             var_aus = 1
         if exp_aus == True:
             exp_aus = nzahl(p, q)
         else:
             exp_aus = 1
-        print(fakt)
-        print(var_aus)
-        print(exp_aus)
-        print(anz_terme)
+        # print(fakt), print(var_aus), print(exp_aus), print(anz_terme)
         ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
-        print(ausmulti_terme)
+        # print(ausmulti_terme)
         kopie_terme = ausmulti_terme.copy()
-        print(kopie_terme)
+        # print(kopie_terme)
         gleiche_terme = []
         while len(kopie_terme) != 0:
             gleichartiger_term = []
@@ -378,16 +359,16 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
                     if element1[1] == var:
                         gleichartiger_term.append(element1)
                         kopie_terme.remove(element1)
-                        print(element1)
+                        # print(element1)
             gleiche_terme.append(gleichartiger_term)
         terme_erg = []
-        print(gleiche_terme)
+        # print(gleiche_terme)
         for element in gleiche_terme:
             zahl = 0
             for k in range(len(element)):
                 zahl += element[k][0]
             terme_erg.append([zahl, element[0][1]])
-        print(terme_erg)
+        # print(terme_erg)
         klammer_terme = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
         for k in range(anz_terme-1):
             klammer_terme += vorz_v_innen(terme[k+1][0], fakt_var(terme[k+1][1]))
@@ -399,7 +380,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
         lsg_zw = vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
         for k in range(anz_terme-1):
             lsg_zw += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
-        print(lsg_zw)
+        # print(lsg_zw)
         lsg_erg = vorz_v_aussen(terme_erg[0][0], fakt_var(terme_erg[0][1]))
         for k in range(len(terme_erg) - 1):
             lsg_erg += vorz_v_innen(terme_erg[k + 1][0], fakt_var(terme_erg[k + 1][1]))
@@ -412,24 +393,21 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
     if anzahl != False:
         exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(anzahl) != int or anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
-    aufgaben = {'a': einf(2, 2, fakt_aus='vorz', fakt_in='ganz'),
-                'b': einf(2, 2, fakt_aus='ganz', fakt_in='ganz'),
-                'c': einf(2, 2, var_aus=True, fakt_aus='ganz', fakt_in='ganz'),
-                'd': einf(3, 3, var_aus=True, fakt_aus=random.choice([ 'ganz', 'rat', 'dez']),
-                          fakt_in=random.choice(['rat', 'dezi'])),
-                'e': einf(3, 2, var_aus=True, fakt_aus=random.choice([ 'ganz', 'rat', 'dez']),
-                          fakt_in=random.choice(['rat', 'dezi']), exp_aus=True, exp_in=True)}
-
+    wb = {'a': [einf, 2, 2, False, 'vorz', 'ganz', False, False],
+          'b': [einf, 2, 2, False, 'ganz', 'ganz', False, False],
+          'c': [einf, 2, 2, True, 'ganz', random.choice(['rat', 'dezi']), False, False],
+          'e': [einf, 3, 3, True, 'ganz', 'dezi', True, True],
+          'd': [einf, 3, 3, True, 'rat', 'rat', True, True]}
     aufg = ''
     lsg = ''
     punkte = 0
-    for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element]
+    for st in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = wb[st][0](wb[st][1], wb[st][2], wb[st][3], wb[st][4], wb[st][5], wb[st][5], wb[st][6])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        else:
+        elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
         punkte += 1
         i += 1
