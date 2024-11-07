@@ -100,12 +100,12 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
                 exp = nzahl(0,5)
                 glw_term = glw_term*(element**exp)
             liste_glw_terme.append(glw_term)
-        print(liste_glw_terme)
+        # print(liste_glw_terme)
         liste_terme = []
         for step in range(anz_sum):
             liste_terme.append([zzahl(1,12), liste_glw_terme[step % anz_glw]])
         random.shuffle(liste_terme)
-        print(liste_terme)
+        # print(liste_terme)
         summe = 0
         for element in liste_terme:
             summe += element[0] * element[1]
@@ -132,12 +132,12 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
                 exp = nzahl(0,5)
                 glw_term = glw_term*(element**exp)
             liste_glw_terme.append(glw_term)
-        print(liste_glw_terme)
+        # print(liste_glw_terme)
         liste_terme = []
         for step in range(anz_sum):
             liste_terme.append([Rational(zzahl(1,12), zzahl(1,12)), liste_glw_terme[step % anz_glw]])
         random.shuffle(liste_terme)
-        print(liste_terme)
+        # print(liste_terme)
         summe = 0
         for element in liste_terme:
             summe += element[0] * element[1]
@@ -166,17 +166,16 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if element not in ['i', 'j', 'k']:
+        if element not in ['i', 'j', 'k'] and i+1 < len(teilaufg):
             if (i+1) % 3 != 0 and i+1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
             elif (i + 1) % 3 == 0 and i+1 < len(teilaufg):
                 aufg = aufg + r' \\\\'
-        if element not in ['i', 'j', 'k']:
             if (i+1) % 2 != 0 and i+1 < len(teilaufg):
                 lsg = lsg + r' \hspace{5em} '
             elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
                 lsg = lsg + r' \\\\'
-        else:
+        elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
             lsg = lsg + r' \\\\'
         punkte += 1
@@ -290,7 +289,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzah
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        else:
+        elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
         punkte += 1
         i += 1

@@ -12,8 +12,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
-Art = 'Arbeitsblatt'
-Titel = 'wiss. Schreibweise, Einheiten und Terme'
+Art = 'HAK 05'
+Titel = 'Terme zusammenfassen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
@@ -23,9 +23,10 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[wiss_schreibweise(1, anzahl=12),
-                 einheiten_umrechnen(2, anzahl=8),
-                 terme_addieren(3)]]
+    Aufgaben = [[wiss_schreibweise(1, anzahl=4),
+                 einheiten_umrechnen(2, anzahl=4),
+                 terme_addieren(3, ['b', 'd', 'f', 'h', 'j', 'l']),
+                 terme_multiplizieren(4, ['c', 'e', 'g'])]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

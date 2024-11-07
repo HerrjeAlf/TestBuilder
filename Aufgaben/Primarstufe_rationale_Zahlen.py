@@ -2019,7 +2019,7 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
             lsg = lsg + r' \hspace{2em} '
-        else:
+        elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
             lsg = lsg + r' \\\\'
 
@@ -2157,7 +2157,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
         if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        else:
+        elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'
 
         punkte += 1
