@@ -2155,7 +2155,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
         teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
         elif i+1 < len(teilaufg):
             aufg = aufg + r' \\\\'

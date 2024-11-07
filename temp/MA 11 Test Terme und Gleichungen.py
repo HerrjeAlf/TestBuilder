@@ -25,8 +25,7 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[wiss_schreibweise(1, anzahl=4),
                  einheiten_umrechnen(2, anzahl=4),
-                 terme_addieren(3, ['b', 'd', 'f', 'h', 'j', 'l']),
-                 terme_multiplizieren(4, ['c', 'e', 'g'])]]
+                 terme_addieren(3, ['b', 'd', 'f', 'h', 'j', 'l'])]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

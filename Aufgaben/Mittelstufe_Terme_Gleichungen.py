@@ -409,17 +409,16 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=
             lsg = aufg + '~=~' + lsg_zw + '~=~' + lsg_erg
         return aufg, lsg
 
-
-
     if anzahl != False:
         exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(anzahl) != int or anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': einf(2, 2, fakt_aus='vorz', fakt_in='ganz'),
                 'b': einf(2, 2, fakt_aus='ganz', fakt_in='ganz'),
-                'c': einf(3, 2, var_aus=True, fakt_aus=True, fakt_in=True),
-                'd': einf(3, 2, exp_in=True, fakt_in=True),
-                'e': einf(2, 2, var_aus=True, fakt_in='ganz'),
-                'f': einf(2, 2, var_aus=True, fakt_in=None)}
+                'c': einf(2, 2, var_aus=True, fakt_aus='ganz', fakt_in='ganz'),
+                'd': einf(3, 3, var_aus=True, fakt_aus=random.choice([ 'ganz', 'rat', 'dez']),
+                          fakt_in=random.choice(['rat', 'dezi'])),
+                'e': einf(3, 2, var_aus=True, fakt_aus=random.choice([ 'ganz', 'rat', 'dez']),
+                          fakt_in=random.choice(['rat', 'dezi']), exp_aus=True, exp_in=True)}
 
     aufg = ''
     lsg = ''
