@@ -106,74 +106,36 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #print(lsg)
 
 # def schreibweise(zahl, darstellung='wiss'):
-def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, p=1, q=10):
-    anz_var = anz_terme if anz_var > anz_terme else anz_var
-    liste_exp = [1 for _ in range(anz_var)]
-    liste_exp = exponenten(anz_var, wdh=True) if exp != False else liste_exp
-    if fakt == False:
-        liste_fakt = [1 for _ in range(anz_terme)]
+
+def gem_glw_ganzz_terme(anz_sum):
+    if anz_sum == 1:
+        anz_sum = anz_sum + 1
+        anz_glw = 1
+    elif anz_sum < 5:
+        anz_glw = 2
     else:
-        fakt = random.choice(['nat', 'ganz', 'rat', 'dez']) if fakt not in ['nat', 'ganz', 'rat', 'dez'] else fakt
-        if fakt == 'nat':
-            liste_fakt = [nzahl(p, q) for _ in range(anz_terme)]
-        elif fakt == 'ganz':
-            liste_fakt = [nzahl(p, q) for _ in range(anz_terme)]
-        elif fakt == 'rat':
-            liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz_terme)]
-        else:
-            liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz_terme)]
+        anz_glw = 3
+    bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], 2, False)
+    liste_glw_terme = []
+    for step in range(anz_glw):
+        glw_term = 1
+        for element in bas:
+            exp = nzahl(0, 5)
+            glw_term = glw_term * (element ** exp)
+        liste_glw_terme.append(glw_term)
+    # print(liste_glw_terme)
+    liste_terme = []
+    for step in range(anz_sum):
+        liste_terme.append([zzahl(1, 12), liste_glw_terme[step % anz_glw]])
+    random.shuffle(liste_terme)
+    # print(liste_terme)
+    summe = 0
+    for element in liste_terme:
+        summe += element[0] * element[1]
+    aufg = '~' + vorz_v_aussen(liste_terme[0][0], fakt_var(liste_terme[0][1]))
+    for k in range(len(liste_terme) - 1):
+        aufg = aufg + vorz_v_innen(liste_terme[k + 1][0], fakt_var(liste_terme[k + 1][1]))
+    lsg = aufg + '~=~' + latex(summe)
+    return aufg, lsg
 
-    liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz_var, wdh=False)
-    terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
-    return terme
-
-
-def einf(anz_terme, anz_var, var_aus=False, fakt_aus='vorz', fakt_in=True, exp_aus=False, exp_in=False, p=1, q=10):
-    terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
-    #print(terme)
-    fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz', 'rat',
-                                                                                        'dez'] else fakt_aus
-    faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
-                'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
-    fakt = faktoren[fakt_aus]
-    if var_aus == True:
-        var_aus = random.choice([1, a, b, c, d, e, f, g, h, x, y, z])
-    else:
-        var_aus = 1
-    if exp_aus == True:
-        exp_aus = nzahl(p, q)
-    else:
-        exp_aus = 1
-    #print(fakt)
-    #print(var_aus)
-    #print(exp_aus)
-    #print(anz_terme)
-    ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
-    #print(ausmulti_terme)
-    kopie_terme = ausmulti_terme.copy()
-    print(kopie_terme)
-    gleiche_terme = []
-    while len(kopie_terme) != 0:
-        gleichartiger_term = []
-        for element in kopie_terme:
-            var = element[1]
-            print(element)
-            for element1 in kopie_terme:
-                if element1[1] == var:
-                    gleichartiger_term.append(element1)
-                    kopie_terme.remove(element1)
-                    print(element1)
-            print(gleichartiger_term)
-        gleiche_terme.append(gleichartiger_term)
-        # print(gleiche_terme)
-    terme_erg = []
-    print(gleiche_terme)
-    for element in gleiche_terme:
-        zahl = 0
-        for k in range(len(element)):
-            zahl += element[k][0]
-        terme_erg.append([zahl, element[0][1]])
-    print(terme_erg)
-    return ausmulti_terme, terme_erg
-
-einf(3, 3, fakt_aus='rat', fakt_in='rat')
+print(gem_glw_ganzz_terme(6))

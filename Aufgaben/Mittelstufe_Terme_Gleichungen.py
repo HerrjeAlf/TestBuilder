@@ -1,4 +1,6 @@
 import string
+from importlib.metadata import pass_none
+
 import numpy as np
 import random, math
 from numpy.linalg import solve as slv
@@ -109,10 +111,9 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         summe = 0
         for element in liste_terme:
             summe += element[0] * element[1]
-        aufg =  '~' + vorz_v_aussen(liste_terme[0][0],latex(liste_terme[0][1]))
-        del liste_terme[0]
-        for element in liste_terme:
-            aufg = aufg + vorz_v_innen(element[0],latex(element[1]))
+        aufg = '~' + vorz_v_aussen(liste_terme[0][0], fakt_var(liste_terme[0][1]))
+        for k in range(len(liste_terme) - 1):
+            aufg = aufg + vorz_v_innen(liste_terme[k + 1][0], fakt_var(liste_terme[k + 1][1]))
         lsg = aufg + '~=~' + latex(summe)
         return aufg, lsg
 
@@ -124,29 +125,29 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
             anz_glw = 2
         else:
             anz_glw = 3
-        bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], 2,False)
+        bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], 2, False)
         liste_glw_terme = []
         for step in range(anz_glw):
             glw_term = 1
             for element in bas:
-                exp = nzahl(0,5)
-                glw_term = glw_term*(element**exp)
+                exp = nzahl(0, 5)
+                glw_term = glw_term * (element ** exp)
             liste_glw_terme.append(glw_term)
         # print(liste_glw_terme)
         liste_terme = []
         for step in range(anz_sum):
-            liste_terme.append([Rational(zzahl(1,12), zzahl(1,12)), liste_glw_terme[step % anz_glw]])
+            liste_terme.append([Rational(zzahl(1, 12), zzahl(1, 12)), liste_glw_terme[step % anz_glw]])
         random.shuffle(liste_terme)
         # print(liste_terme)
         summe = 0
         for element in liste_terme:
             summe += element[0] * element[1]
-        aufg =  '~' + vorz_v_aussen(liste_terme[0][0],latex(liste_terme[0][1]))
-        del liste_terme[0]
-        for element in liste_terme:
-            aufg = aufg + vorz_v_innen(element[0],latex(element[1]))
+        aufg = '~' + vorz_v_aussen(liste_terme[0][0], fakt_var(liste_terme[0][1]))
+        for k in range(len(liste_terme) - 1):
+            aufg = aufg + vorz_v_innen(liste_terme[k + 1][0], fakt_var(liste_terme[k + 1][1]))
         lsg = aufg + '~=~' + latex(summe)
         return aufg, lsg
+
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
@@ -195,15 +196,14 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, BE=[]):
-    # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
+    # Hier sollen die SuS das Produkt mehrerer Terme bilden multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) zwei Faktoren mit einer Basis und natürlichen Exponenten
-    # b) sechs Faktoren aus zwei Basen und ganzzahligen Exponenten
-    # c) sechs Faktoren aus drei Basen und ganzzahligen Exponenten
-    # d) vier Faktoren aus zwei Basen und rationalen Exponenten
-    # e) sechs Faktoren aus drei Basen und rationalen Exponenten
-    # f) vier Faktoren aus zwei Basen und rationalen Exponenten (als Dezimalbruch)
-    # g) sechs Faktoren aus drei Basen und rationalen Exponenten (als Dezimalbruch)
+    # a) Produkt aus zwei Termen mit einer Variablen und natürlichen Koeffizienten
+    # b) Produkt aus drei Termen mit zwei Variablen und ganzzahligen Koeffizienten
+    # c) Produkt aus zwei Termen mit einer Variablen und Dezimalbrüchen oder echten Brüchen als Koeffizienten
+    # d) Produkt aus drei Termen und zwei Variablen und beliebig ausgewählten Koeffizienten
+    # e) Produkt aus drei Termen und zwei Potenzen von Variablen mit ganzzahligen Koeffizienten
+    # f) Produkt aus drei Termen und zwei Potenzen von Variablen und beliebig ausgewählten Koeffizienten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -242,7 +242,10 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
         aufg = '~' + gzahl_klammer(liste_koef[0], fakt_var(liste_bas[0]**liste_exp[0]))
         for k in range(anz_fakt-1):
             aufg += r' \cdot ' + gzahl_klammer(liste_koef[k + 1], fakt_var(liste_bas[k + 1]**liste_exp[k + 1]))
-        lsg = aufg + '~=~' + latex(sum([liste_koef[k]*(liste_bas[k]**liste_exp[k]) for k in range(anz_fakt)]))
+        erg = 1
+        for k in range(anz_fakt):
+            erg = erg * liste_koef[k]*(liste_bas[k]**liste_exp[k])
+        lsg = aufg + '~=~' + latex(erg)
         # print(test)
         return aufg, lsg
 
@@ -250,7 +253,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
-    wb = {'a': (2, 1, False, False),
+    wb = {'a': (2, 1, 'nat', False),
           'b': (3, 2, 'ganz', False),
           'c': (2, 1, random.choice(['rat', 'dez']), False),
           'd': (3, 2, 'egal', False),
@@ -263,7 +266,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
     for st in teilaufg:
         teilaufg_aufg, teilaufg_lsg = aufg_lsg(wb[st][0], wb[st][1], wb[st][2], wb[st][3])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
         if (i+1) % 3 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
             lsg = lsg + r' \hspace{5em} '
@@ -289,7 +292,12 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
 def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a)
+    # a) Klammer nur mit Vorzeichen und zwei ganzzahligen Summanden mit Variablen
+    # b) Klammer ganzzahligen Koeffizienten und zwei ganzzahligen Summanden mit Variablen
+    # c) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und zwei rationalen Summanden mit Variablen
+    # d) Klammer mit ganzzahligen Koeffizienten sowie einer Potenz einer Variable und drei Dezimalbrüchen als Summanden mit Potenzen von Variablen
+    # d) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
+    # f)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -302,10 +310,11 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, liste_mit_exp=False, p=1, q=10):
+    def terme_in_klammer(anz_terme, anz_var, fakt=True, exp=False, liste_mit_exp=[], p=1, q=10):
         anz_var = anz_terme if anz_var > anz_terme else anz_var
-        liste_exp = [1 for _ in range(anz_var)]
-        liste_exp = exponenten(anz_var, wdh=True) if exp != False else liste_exp
+        liste_exp = liste_mit_exp
+        liste_exp = [1 for _ in range(anz_var)] if len(liste_mit_exp) == 0 else liste_exp
+        liste_exp = exponenten(anz_var, wdh=True) if exp != False and liste_mit_exp == False else liste_exp
         if fakt == False:
             liste_fakt = [1 for _ in range(anz_terme)]
         else:
@@ -324,16 +333,14 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
             terme = [[liste_fakt[k], liste_var[k % anz_var] ** liste_exp[k % anz_var]] for k in range(anz_terme)]
         else:
             terme = [[liste_fakt[k], liste_var[k % anz_var], liste_exp[k % anz_var]] for k in range(anz_terme)]
-
         return terme
 
-    def einf(anz_terme, anz_var, var_aus, fakt_aus, fakt_in, exp_aus, exp_in):
+    def aufg_lsg(anz_terme, anz_var, var_aus, fakt_aus, fakt_in, exp_aus, exp_in, summe=False):
         p, q = 1, 10
         terme = terme_in_klammer(anz_terme, anz_var, fakt_in, exp_in)
         # print(terme)
-        fakt_aus = random.choice(['vorz', 'nat', 'ganz', 'rat', 'dez']) if fakt_aus not in ['vorz', 'nat', 'ganz',
-                                                                                            'rat',
-                                                                                            'dez'] else fakt_aus
+        art_fakt = ['vorz', 'nat', 'ganz', 'rat', 'dez']
+        fakt_aus = random.choice(art_fakt) if (fakt_aus not in art_fakt) else fakt_aus
         faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
                     'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
@@ -348,56 +355,32 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False
         # print(fakt), print(var_aus), print(exp_aus), print(anz_terme)
         ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz_terme)]
         # print(ausmulti_terme)
-        kopie_terme = ausmulti_terme.copy()
-        # print(kopie_terme)
-        gleiche_terme = []
-        while len(kopie_terme) != 0:
-            gleichartiger_term = []
-            for element in kopie_terme:
-                var = element[1]
-                for element1 in kopie_terme:
-                    if element1[1] == var:
-                        gleichartiger_term.append(element1)
-                        kopie_terme.remove(element1)
-                        # print(element1)
-            gleiche_terme.append(gleichartiger_term)
-        terme_erg = []
-        # print(gleiche_terme)
-        for element in gleiche_terme:
-            zahl = 0
-            for k in range(len(element)):
-                zahl += element[k][0]
-            terme_erg.append([zahl, element[0][1]])
-        # print(terme_erg)
         klammer_terme = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
         for k in range(anz_terme-1):
             klammer_terme += vorz_v_innen(terme[k+1][0], fakt_var(terme[k+1][1]))
-        if var_aus ==1:
-            aufg = vorz_v_aussen(fakt,r' \left( ' + klammer_terme + r' \right) ~')
-        else:
-            aufg = vorz_v_aussen(fakt,latex(var_aus**exp_aus) + r' \left( ' + klammer_terme + r' \right) ')
+        if summe == False:
+            if var_aus ==1:
+                aufg = vorz_v_aussen(fakt,r' \left( ' + klammer_terme + r' \right) ~')
+            else:
+                aufg = vorz_v_aussen(fakt,latex(var_aus**exp_aus) + r' \left( ' + klammer_terme + r' \right) ~')
 
-        lsg_zw = vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
-        for k in range(anz_terme-1):
-            lsg_zw += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
-        # print(lsg_zw)
-        lsg_erg = vorz_v_aussen(terme_erg[0][0], fakt_var(terme_erg[0][1]))
-        for k in range(len(terme_erg) - 1):
-            lsg_erg += vorz_v_innen(terme_erg[k + 1][0], fakt_var(terme_erg[k + 1][1]))
-        if lsg_zw == lsg_erg:
-            lsg = aufg + '~=~' + lsg_zw
+            lsg = aufg + '~=~' + vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
+            for k in range(anz_terme-1):
+                lsg += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
+        elif summe == 'einf':
+            pass
         else:
-            lsg = aufg + '~=~' + lsg_zw + '~=~' + lsg_erg
+            pass
         return aufg, lsg
 
     if anzahl != False:
         exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(anzahl) != int or anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
-    wb = {'a': [einf, 2, 2, False, 'vorz', 'ganz', False, False],
-          'b': [einf, 2, 2, False, 'ganz', 'ganz', False, False],
-          'c': [einf, 2, 2, True, 'ganz', random.choice(['rat', 'dezi']), False, False],
-          'e': [einf, 3, 3, True, 'ganz', 'dezi', True, True],
-          'd': [einf, 3, 3, True, 'rat', 'rat', True, True]}
+    wb = {'a': [aufg_lsg, 2, 2, False, 'vorz', 'ganz', False, False, False],
+          'b': [aufg_lsg, 2, 2, False, 'ganz', 'ganz', False, False, False],
+          'c': [aufg_lsg, 2, 2, True, 'ganz', random.choice(['rat', 'dezi']), False, False, False],
+          'd': [aufg_lsg, 3, 3, True, 'ganz', 'dezi', True, True, False],
+          'e': [aufg_lsg, 3, 3, True, 'rat', 'rat', True, True, False]}
     aufg = ''
     lsg = ''
     punkte = 0
