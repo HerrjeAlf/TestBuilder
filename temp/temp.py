@@ -107,35 +107,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-def gem_glw_ganzz_terme(anz_sum):
-    if anz_sum == 1:
-        anz_sum = anz_sum + 1
-        anz_glw = 1
-    elif anz_sum < 5:
-        anz_glw = 2
-    else:
-        anz_glw = 3
-    bas = random_selection([a, b, c, d, e, f, g, h, x, y, z], 2, False)
-    liste_glw_terme = []
-    for step in range(anz_glw):
-        glw_term = 1
-        for element in bas:
-            exp = nzahl(0, 5)
-            glw_term = glw_term * (element ** exp)
-        liste_glw_terme.append(glw_term)
-    # print(liste_glw_terme)
-    liste_terme = []
-    for step in range(anz_sum):
-        liste_terme.append([zzahl(1, 12), liste_glw_terme[step % anz_glw]])
-    random.shuffle(liste_terme)
-    # print(liste_terme)
-    summe = 0
-    for element in liste_terme:
-        summe += element[0] * element[1]
-    aufg = '~' + vorz_v_aussen(liste_terme[0][0], fakt_var(liste_terme[0][1]))
-    for k in range(len(liste_terme) - 1):
-        aufg = aufg + vorz_v_innen(liste_terme[k + 1][0], fakt_var(liste_terme[k + 1][1]))
-    lsg = aufg + '~=~' + latex(summe)
-    return aufg, lsg
-
-print(gem_glw_ganzz_terme(6))
+print(random.choice(range(3)))

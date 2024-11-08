@@ -208,9 +208,15 @@ def vorz_v_innen(k,v, null=False):
     if k == 0:
         return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if k == -1:
-        return '-' + v
+        if v == '':
+            return '-1'
+        else:
+            return '-' + v
     if k == 1:
-        return '+' + v
+        if v == '':
+            return '+1'
+        else:
+            return '+' + v
     if k%1 == 0:
         k = int(k)
     if k < 0:
@@ -222,9 +228,15 @@ def vorz_v_aussen(k,v, null=False):
     if k == 0:
         return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
     if k == -1:
-        return '-' + v
+        if v == '':
+            return '-1'
+        else:
+            return '-' + v
     if k == 1:
-        return v
+        if v == '':
+            return '1'
+        else:
+            return v
     if k%1 == 0:
         k = int(k)
     return latex(k) + v
