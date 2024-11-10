@@ -64,12 +64,12 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         return aufg, lsg
 
     def einf_bruch_terme(anz_sum):
-        fakt = [random.choice([-1,1])* Rational(nzahl(1,12), random.choice([2, 3, 5, 7, 11])) for step in range(anz_sum)]
+        fakt = [random.choice([-1,1])* Rational(nzahl(1,12), random.choice([2, 3, 5, 7, 11])) for _ in range(anz_sum)]
         bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        aufg =  '~' + vorz_v_aussen(fakt[0], bas[0])
+        aufg = '~' + vorz_v_aussen(fakt[0], bas[0])
         for k in range(len(fakt) - 1):
             aufg = aufg + vorz_v_innen(fakt[k + 1], bas[0])
-        lsg = aufg + '~=~' + latex(sum(fakt)/10) + bas[0]
+        lsg = aufg + '~=~' + latex(sum(fakt)) + bas[0]
         return aufg, lsg
 
     def einf_gem_ganzz_terme(anz_sum):
@@ -464,25 +464,101 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     liste_bez = [f'{str(nr)}']
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Löse die Klammern auf und fasse ggf. zusammen.']
+               'Löse die Klammern auf und kürze gegebenenfalls']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    def terme_in_klammer(anz, fakt=True, exp=False, p=1, q=10):
+        liste_exp = [1 for _ in range(anz)]
+        liste_exp = exponenten(anz, wdh=True) if exp != False else liste_exp
+        if fakt == False:
+            liste_fakt = [1 for _ in range(anz)]
+        else:
+            fakt = random.choice(['nat', 'ganz', 'rat', 'dez']) if fakt not in ['nat', 'ganz', 'rat', 'dez'] else fakt
+            if fakt == 'nat':
+                liste_fakt = [nzahl(p, q) for _ in range(anz)]
+            elif fakt == 'ganz':
+                liste_fakt = [nzahl(p, q) for _ in range(anz)]
+            elif fakt == 'rat':
+                liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz)]
+            else:
+                liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz)]
+
+        liste_var = random_selection([1, a, b, c, d, e, f, g, h, x, y, z], anzahl=anz, wdh=False)
+        terme = [[liste_fakt[k], liste_var[k % anz] ** liste_exp[k % anz]] for k in range(anz)]
+        return terme
+
+    def aufg_lsg(anz, var_aus, fakt_aus, fakt_in, exp_aus, exp_in, bruch=False):
+        p, q = 1, 10
+        art_fakt = ['nat', 'ganz', 'rat', 'dez']
+        fakt_aus = random.choice(art_fakt) if (fakt_aus not in art_fakt) else fakt_aus
+        faktoren = {'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
+                    'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
+        fakt = faktoren[fakt_aus]
+        if var_aus == True:
+            var_aus = random.choice([a, b, c, d, e, f, g, h, x, y, z])
+        else:
+            var_aus = 1
+        if exp_aus == True:
+            exp_aus = nzahl(p, q)
+        else:
+            exp_aus = 1
+        var_str = latex(var_aus ** exp_aus)
+        # print(fakt), print(var_aus), print(exp_aus), print(anz)
+        if bruch == False:
+            terme = terme_in_klammer(anz, fakt_in, exp_in)
+            ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz)]
+            # print(ausmulti_terme)
+            aufg = '~' + vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
+            for k in range(anz-1):
+                aufg += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
+            terme_str = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
+            for k in range(anz-1):
+                terme_str += vorz_v_innen(terme[k+1][0], fakt_var(terme[k+1][1]))
+            if var_aus == 1:
+                lsg = aufg + '~=~' + vorz_v_aussen(fakt, r' \left( ' + terme_str + r' \right)')
+            else:
+                lsg = aufg + '~=~' + vorz_v_aussen(fakt, var_str + r' \left( ' + terme_str + r' \right)')
+            return aufg, lsg
+        elif bruch == 'einf':
+            terme = terme_in_klammer(anz, fakt_in, exp_in)
+            ausmulti_terme = [[fakt * terme[k][0], (var_aus ** exp_aus) * terme[k][1]] for k in range(anz)]
+            terme_str = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
+            nenner = vorz_v_aussen(ausmulti_terme[0][0],fakt_var(ausmulti_terme[0][1]))
+            for k in range(anz-1):
+                nenner += vorz_v_innen(ausmulti_terme[k+1][0], fakt_var(ausmulti_terme[k+1][1]))
+            aufg = r' \frac{~' + nenner + '~}{' + gzahl(fakt * var_aus**exp_aus) + '}'
+            klammer_str = vorz_v_aussen(terme[0][0], fakt_var(terme[0][1]))
+            for k in range(anz-1):
+                klammer_str += vorz_v_innen(terme[k+1][0], fakt_var(terme[k+1][1]))
+            if var_aus == 1:
+                lsg_zw = (r' \frac{' + vorz_v_aussen(fakt, r' \left( ' + klammer_str + r' \right)')
+                          + '~}{' + gzahl(fakt) + '}')
+                lsg = aufg + '~=~' + lsg_zw + r'~=~ \left( ' + klammer_str + r' \right)'
+            else:
+                lsg_zw = (r' \frac{' + vorz_v_aussen(fakt, var_str + r' \left( ' + klammer_str + r' \right) ~')
+                          + '~}{' + gzahl(fakt*var_aus**exp_aus) + '}')
+                lsg = (aufg + '~=~' + lsg_zw + r'~=~ \left( ' + klammer_str + r' \right)')
+            return aufg, lsg
+        else:
+            aufg = ''
+            lsg = ''
+            return aufg, lsg
 
     if anzahl != False:
         exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(anzahl) != int or anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
     wb = {'a': [2, False, 'nat', False, False, False, False],
-          'b': [2, False, 'vorz', 'ganz', False, False, False],
-          'c': [2, False, 'ganz', False, False, False, False],
-          'd': [2, False, 'ganz', 'ganz', False, False, False],
-          'e': [2, True, 'ganz', 'ganz', False, False, 'einf'],
-          'f': [2, True, 'ganz', random.choice(['rat', 'dezi']), False, False, False],
-          'g': [3, True, 'ganz', 'dezi', True, True, False],
-          'h': [2, True, 'ganz', 'dezi', False, True, 'einf'],
-          'i': [2, True, 'rat', 'rat', True, True, False],
-          'j': [3, True, 'rat', 'rat', False, True, 'einf']}
+          'b': [2, True, False, 'nat', False, False, False],
+          'c': [2, True, 'nat', 'ganz', False, False, False],
+          'd': [2, True, 'nat', 'ganz', False, True, False],
+          'e': [2, True, 'ganz', 'ganz', True, True, False],
+          'f': [3, True, 'ganz', 'ganz', True, True, False],
+          'g': [2, True, 'ganz', 'ganz', False, False, 'einf'],
+          'h': [2, True, 'ganz', 'ganz', True, True, 'einf'],
+          'i': [2, True, 'ganz', 'rat', True, True, 'einf'],
+          'j': [3, True, 'rat', 'rat', True, True, 'einf']}
 
     aufg = ''
     lsg = ''
