@@ -2039,7 +2039,6 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
 def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen mit verschiedenen Vorsätzen einer Einheit ineinander umrechnen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
