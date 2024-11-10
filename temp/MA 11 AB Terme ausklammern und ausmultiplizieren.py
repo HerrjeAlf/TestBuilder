@@ -9,14 +9,14 @@ from skripte.erstellen import *
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Klasse = '11c'
-Thema = 'Terme zusammenfassen'
+Thema = 'Terme ausmultiplizieren und ausklammern.'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[terme_addieren(1, ['a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f']),
-                 terme_addieren(2, ['g', 'g', 'h', 'h', 'i', 'i', 'j', 'j', 'k', 'k'])]]
+    Aufgaben = [[terme_ausmultiplizieren(1, repeat(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], 2)),
+                 terme_ausklammern(2, repeat(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], 2))]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

@@ -9,14 +9,14 @@ from skripte.erstellen import *
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Klasse = '11c'
-Thema = 'Terme multipl.'
+Thema = 'Terme zusammenfassen und multiplizieren'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[terme_multiplizieren(1, ['a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f']),
-                 terme_ausmultiplizieren(2, ['a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e'])]]
+    Aufgaben = [[terme_addieren(1, repeat(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'],2)),
+                 terme_multiplizieren(2, repeat(['a', 'b', 'c', 'd', 'e', 'f'],2))]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
