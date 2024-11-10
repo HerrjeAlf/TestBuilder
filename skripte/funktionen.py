@@ -279,8 +279,12 @@ def gzahl_klammer(k,str=''):
     if k % 1 == 0:
         k = int(k)
     if k < 0:
+        if str != '' and k == -1:
+            return r' \left( -' + str + r' \right)'
         return r' \left(' + latex(k) + str + r' \right)'
     else:
+        if str != '' and k == 1:
+            return str
         return latex(k) + str
 
 def kgv(q, p):
@@ -567,6 +571,12 @@ def random_selection(list, anzahl=2, wdh=True):
         return Liste
     else:
         print('wdh muss "True" or "False" sein')
+
+def repeat(list, anzahl=2):
+    new_list = []
+    for element in list:
+        new_list.extend([element for _ in range(anzahl)])
+    return new_list
 
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
