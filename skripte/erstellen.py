@@ -87,13 +87,14 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table1 = Tabular('|c|c|c|c|c|p{5cm}|', row_height=1.2)
-            table1.add_hline(1,6)
-            table1.add_row(MediumText(bold(schule)), 'Arbeitsblatt',
-                           'Kl.', 'Gr.', ' Datum ', MultiRow(2, data=MediumText(bold('Name:'))))
-            table1.add_hline(2,5)
-            table1.add_row(SmallText(bold(schulart)), Thema, Klasse, Teil, Datum, '')
-            table1.add_hline(1,6)
+            table1 = Tabular('|c|c|c|c|p{7cm}|', row_height=1.2)
+            table1.add_row((MultiColumn(5, align='c', data=MediumText(bold('Arbeitsblatt - ' + Thema))),))
+            table1.add_hline(1,5)
+            table1.add_row(MediumText(bold(schule)), 'Kl.', 'Gr.', ' Datum ',
+                           MultiRow(2, data=MediumText(bold('Name:'))))
+            table1.add_hline(2,4)
+            table1.add_row(SmallText(bold(schulart)), Klasse, Teil, Datum, '')
+            table1.add_hline(1,5)
             Aufgabe.append(table1)
             Aufgabe.append(' \n\n\n\n')
 
