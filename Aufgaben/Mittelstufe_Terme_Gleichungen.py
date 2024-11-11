@@ -167,18 +167,19 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if element not in ['i', 'j', 'k'] and i+1 < len(teilaufg):
-            if (i+1) % 3 != 0 and i+1 < len(teilaufg):
+        if element in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] and i + 1 < len(teilaufg):
+            if (i + 1) % 3 != 0 and i + 1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
-            elif (i + 1) % 3 == 0 and i+1 < len(teilaufg):
+            elif i + 1 < len(teilaufg):
                 aufg = aufg + r' \\\\'
-            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            if (i + 1) % 2 != 0 and i + 1 < len(teilaufg):
                 lsg = lsg + r' \hspace{5em} '
-            elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
+            elif i + 1 < len(teilaufg):
                 lsg = lsg + r' \\\\'
-        elif i+1 < len(teilaufg):
-            aufg = aufg + r' \\\\'
-            lsg = lsg + r' \\\\'
+        else:
+            if i + 1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+                lsg = lsg + r' \\\\'
         punkte += 1
         i += 1
 
@@ -267,13 +268,23 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
         teilaufg_aufg, teilaufg_lsg = aufg_lsg(wb[st][0], wb[st][1], wb[st][2], wb[st][3])
         aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
-        if (i+1) % 3 != 0 and i+1 < len(teilaufg):
-            aufg = aufg + r' \hspace{5em} '
-            lsg = lsg + r' \hspace{5em} '
-        elif i+1 < len(teilaufg):
-            aufg = aufg + r' \\\\'
-            lsg = lsg + r' \\\\'
-        punkte += 1
+        if st in ['a', 'b', 'c', 'd'] and i+1 < len(teilaufg):
+            if (i + 1) % 4 != 0 and i + 1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+            elif i + 1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+            if (i + 1) % 2 != 0 and i + 1 < len(teilaufg):
+                lsg = lsg + r' \hspace{5em} '
+            elif i + 1 < len(teilaufg):
+                lsg = lsg + r' \\\\'
+        else:
+            if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+                aufg = aufg + r' \hspace{5em} '
+                lsg = lsg + r' \hspace{5em} '
+            elif i+1 < len(teilaufg):
+                aufg = aufg + r' \\\\'
+                lsg = lsg + r' \\\\'
+            punkte += 1
         i += 1
 
     if BE != []:
@@ -463,8 +474,13 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     liste_bez = [f'{str(nr)}']
     i = 0
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Löse die Klammern auf und kürze gegebenenfalls']
+    if len([element for element in ['g', 'h', 'i', 'j'] if element in teilaufg]) > 0:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Klammere alle möglichen gemeinsamen Faktoren aus und kürze gegebenenfalls.']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+                   'Klammere alle möglichen gemeinsamen Faktoren aus.']
+
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -490,10 +506,10 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         return terme
 
     def aufg_lsg(anz, var_aus, fakt_aus, fakt_in, exp_aus, exp_in, bruch=False):
-        p, q = 1, 10
+        p, q = 2, 10
         art_fakt = ['nat', 'ganz', 'rat', 'dez']
         fakt_aus = random.choice(art_fakt) if (fakt_aus not in art_fakt) else fakt_aus
-        faktoren = {'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
+        faktoren = {'nat': nzahl(2, 9), 'ganz': zzahl(2, 9),
                     'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
         if var_aus == True:

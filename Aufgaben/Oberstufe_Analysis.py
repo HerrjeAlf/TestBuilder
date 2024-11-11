@@ -3528,7 +3528,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             if grenzwert_pos == 0:
                 table1.add_row('',NoEscape('Da die Funktion ein Extrema hat und '
                                            r'$ \lim\limits_{x \to \infty} = 0 $ ist, '
-                                           r'muss dazwischen eine Wendestelle existieren.', '(3BE)'))
+                                           r'muss dazwischen eine Wendestelle existieren.'),'(3BE)')
             loesung.append(table1)
             loesung.append(' \n')
         liste_punkte.append(punkte)
