@@ -480,9 +480,15 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) 
-    #
-    #
+    # a) eine natürliche Zahl aus zwei Summanden ausklammern, z.b. 8x+8y = 8(x+y)
+    # b) eine nat. Zahl und eine Variable aus zwei Summanden ausklammern, z.b. 14ax+6ay = 2a(7x+3y)
+    # c) eine nat. Zahl und Variable ausklammern aus einer Potenz aus zwei Summanden ausklammern, z.b. 14ab²+6a²c = 2a(7b²+3ac)
+    # d) eine ganze Zahl und die Potenz einer Variablen aus zwei Summanden ausklammern, z.b. 14a²b²+6a³c = 2a²(7b²+3ac)
+    # e) eine ganze Zahl und die Potenz einer Variablen aus drei Summanden ausklammern
+    # f) eine ganze Zahl und eine Variable im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
+    # g) eine ganze Zahl und die Potenz einer Variablen im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
+    # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
+    # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
@@ -490,7 +496,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     liste_bez = [f'{str(nr)}']
     i = 0
-    if len([element for element in ['g', 'h', 'i', 'j'] if element in teilaufg]) > 0:
+    if len([element for element in ['f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Klammere alle möglichen gemeinsamen Faktoren aus und kürze gegebenenfalls.']
     else:
@@ -586,15 +592,14 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
              "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
     wb = {'a': [2, False, 'nat', False, False, False, False],
-          'b': [2, True, False, 'nat', False, False, False],
-          'c': [2, True, 'nat', 'ganz', False, False, False],
-          'd': [2, True, 'nat', 'ganz', False, True, False],
-          'e': [2, True, 'ganz', 'ganz', True, True, False],
-          'f': [3, True, 'ganz', 'ganz', True, True, False],
-          'g': [2, True, 'ganz', 'ganz', False, False, 'einf'],
-          'h': [2, True, 'ganz', 'ganz', True, True, 'einf'],
-          'i': [2, True, 'ganz', 'rat', True, True, 'einf'],
-          'j': [3, True, 'rat', 'rat', True, True, 'einf']}
+          'b': [2, True, 'nat', 'ganz', False, False, False],
+          'c': [2, True, 'nat', 'ganz', False, True, False],
+          'd': [2, True, 'ganz', 'ganz', True, True, False],
+          'e': [3, True, 'ganz', 'ganz', True, True, False],
+          'f': [2, True, 'ganz', 'ganz', False, False, 'einf'],
+          'g': [2, True, 'ganz', 'ganz', True, True, 'einf'],
+          'h': [2, True, 'ganz', 'rat', True, True, 'einf'],
+          'i': [3, True, 'rat', 'rat', True, True, 'einf']}
 
     aufg = ''
     lsg = ''
