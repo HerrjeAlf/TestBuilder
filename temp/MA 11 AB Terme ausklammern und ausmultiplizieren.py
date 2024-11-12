@@ -15,8 +15,8 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[terme_ausmultiplizieren(1, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], wdh=2),
-                 terme_ausklammern(2, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], wdh=2)]]
+    Aufgaben = [[terme_ausmultiplizieren(1, wdh=2),
+                 terme_ausklammern(2, wdh=2)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
