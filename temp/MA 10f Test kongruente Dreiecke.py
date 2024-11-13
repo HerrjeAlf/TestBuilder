@@ -12,19 +12,18 @@ Kurs = ('EK und GK')
 Fach = 'Mathematik'
 Klasse = '10f'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 03'
+Art = 'HAK 04'
 Titel = 'Trigonometrie im rechtwinkligen Dreieck'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kongruente_Dreiecke(1,['a', 'b']), rechtwinkliges_dreieck(2, 'a'),
-                 verhaeltnisgleichgungen(3, ['a', 'b'])]]
+    Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
