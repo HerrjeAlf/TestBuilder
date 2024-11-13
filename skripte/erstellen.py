@@ -8,10 +8,10 @@ from skripte.funktionen import *
 from skripte.plotten import *
 
 # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
-try:
-    os.mkdir('img/temp')
-except FileExistsError:
-    pass
+# try:
+#     os.mkdir('img/temp')
+# except FileExistsError:
+#     pass
 
 try:
     os.mkdir('pdf')
