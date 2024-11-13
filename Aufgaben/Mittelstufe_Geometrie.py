@@ -212,7 +212,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~}' + st[0] + '~=~' + gzahl(l_a) + 'cm,~'
                        + st[1] + '~=~' + gzahl(l_b) + 'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm ~ \mathrm{und} ~'
                        + wk[2] + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1BE) \\ sin('
-                       + wk[0] + r')~=~ \frac{' + st[0] + 'cm}{' + st[2] + r'cm} ~=~ \frac{' + gzahl(l_a) + 'cm}{'
+                       + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2] + r'} ~=~ \frac{' + gzahl(l_a) + 'cm}{'
                        + gzahl(l_c) + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
                        + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
                        + r' ^{ \circ} \quad (3BE) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
@@ -310,6 +310,8 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                        + '~=~' + gzahl(st_werte[auswahl_seite]) + 'cm')
         if p == 0:
             if auswahl_seite == 0:
+                lsg_1 = N(st_werte[auswahl_seite]/math.sin(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]/math.tan(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon ~'
                              + st[1] + ', ~' + st[2] + ', ~' + wk[1] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{'
@@ -317,15 +319,17 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div sin(' + wk[p] + r') \quad \to \quad ' + st[2]
                              + r'=~ \frac{' + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + ' cm ~}{~ sin(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r' cm \quad (2BE) \\'
+                             + str(lsg_1) + r' cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[1] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[1] + r' ~ \vert ~ \div tan(' + wk[p]
                              + r') \quad \to \quad ' + st[1] +  r'=~ \frac{' + st[auswahl_seite] + r'}{ ~ tan('
                              + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite]) + ' cm ~}{~ tan('
-                             + str(wk_werte[p]) + r') ~} ~=~' + str(st_werte[1]) + r' cm \quad (2BE) \\')
+                             + str(wk_werte[p]) + r') ~} ~=~' + str(lsg_2) + r' cm \quad (2BE) \\')
 
             elif auswahl_seite == 1:
+                lsg_1 = N(st_werte[auswahl_seite]/math.cos(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]*math.tan(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
                              + st[0] + ', ~' + st[2] + ', ~' + wk[1] + r' \quad (1BE) \\ cos(' + wk[p] + r')~=~ \frac{'
@@ -333,33 +337,37 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div cos(' + wk[p] + ')' + r' \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
+                             + str(lsg_1) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[0] + r'}{' + st[auswahl_seite] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[0]
                              + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
                              + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
-                             + str(st_werte[0]) + r' cm \quad (2BE) \\')
+                             + str(lsg_2) + r' cm \quad (2BE) \\')
             else:
+                lsg_1 = N(st_werte[auswahl_seite]*math.sin(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]*math.cos(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
                              + st[0] + ', ~' + st[1] + ', ~' + wk[1] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{' + st[0]
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[0] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
-                             + 'cm~=~' + str(st_werte[0]) + r'cm \quad (2BE) \\'
+                             + 'cm~=~' + str(lsg_1) + r'cm \quad (2BE) \\'
 
                              + ' cos(' + wk[p] + r')~=~ \frac{' + st[1] + '}{' + st[auswahl_seite] + '}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
                              + st[1] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
                              + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
-                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[1]) + r'cm \quad (2BE) \\')
+                             + str(wk_werte[p]) + r') ~=~' + str(lsg_2) + r'cm \quad (2BE) \\')
 
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
                            + str(wk_werte[1]) + r'^{ \circ} \quad (2BE)')
         else:
             if auswahl_seite == 0:
+                lsg_1 = N(st_werte[auswahl_seite]/math.cos(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]*math.tan(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
                              + st[1] + ', ~' + st[2] + ', ~' + wk[0] + r' \quad (1BE) \\ cos(' + wk[p] + r')~=~ \frac{'
@@ -367,15 +375,17 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' ~ \vert ~ \div cos(' + wk[p] + r') \quad \to \quad ' + st[2] + r'=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ cos(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ cos(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
+                             + str(lsg_1) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[1] + r'}{' + st[auswahl_seite] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad ' + st[1]
                              + '=~' + st[auswahl_seite] + r' \cdot tan(' + wk[p] + r')~ ~=~'
                              + str(st_werte[auswahl_seite]) + r' cm \cdot ~ tan(' + str(wk_werte[p]) + r') ~=~'
-                             + str(st_werte[1]) + r' cm \quad (2BE) \\')
+                             + str(lsg_2) + r' cm \quad (2BE) \\')
 
             elif auswahl_seite == 1:
+                lsg_1 = N(st_werte[auswahl_seite]/math.sin(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]/math.tan(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
                              + st[0] + ', ~' + st[2] + ', ~' + wk[0] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{'
@@ -383,28 +393,30 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' \vert \div sin(' + wk[p] + r') \quad \to \quad ' + st[2] + r'~=~ \frac{'
                              + st[auswahl_seite] + '}{ ~ sin(' + wk[p] + r')~ } ~=~ \frac{'
                              + str(st_werte[auswahl_seite]) + 'cm~ }{~ sin(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[2]) + r'cm \quad (2BE) \\'
+                             + str(lsg_1) + r'cm \quad (2BE) \\'
 
                              + ' tan(' + wk[p] + r') ~=~ \frac{' + st[auswahl_seite] + r'}{' + st[0] + r'}'
                              + r' \quad \vert ~ \cdot ' + st[0] + r' \vert \div tan(' + wk[p] + r')'
                              + r' \quad \to \quad ' + st[0] + r'=~ \frac{' + st[auswahl_seite]
                              + '}{ ~ tan(' + wk[p] + r')~ } ~=~ \frac{' + str(st_werte[auswahl_seite])
                              + 'cm~ }{~ tan(' + str(wk_werte[p]) + r') ~} ~=~'
-                             + str(st_werte[0]) + r'cm \quad (2BE) \\')
+                             + str(lsg_2) + r'cm \quad (2BE) \\')
             else:
+                lsg_1 = N(st_werte[auswahl_seite]*math.sin(wk_werte[p]*pi/180),2)
+                lsg_2 = N(st_werte[auswahl_seite]*math.cos(wk_werte[p]*pi/180),2)
                 loesung_1 = (r'geg \colon ' + wk[p] + '~=~' + gzahl(wk_werte[p]) + r' ^{ \circ } \quad \mathrm{und} \quad '
                              + st[auswahl_seite] + '~=~' + gzahl(st_werte[auswahl_seite]) + r' cm \quad ges \colon  ~'
                              + st[0] + ', ~' + st[1] + ', ~' + wk[0] + r' \quad (1BE) \\ sin(' + wk[p] + r')~=~ \frac{' + st[1]
                              + '}{' + st[auswahl_seite] + r'} \quad \vert ~ \cdot ' + st[auswahl_seite]
                              + r' \quad \to \quad ' + st[1] + r'=~ sin(' + wk[p] + r') ~ \cdot ~' + st[auswahl_seite]
                              + r'~=~ sin(' + str(wk_werte[p]) + r') ~ \cdot ~' + str(st_werte[auswahl_seite])
-                             + 'cm~=~' + str(st_werte[1]) + r'cm \quad (2BE) \\'
+                             + 'cm~=~' + str(lsg_1) + r'cm \quad (2BE) \\'
 
                              + ' cos(' + wk[p] + r')~=~ \frac{' + st[0] + '}{' + st[auswahl_seite] + '}'
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
                              + st[0] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
                              + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
-                             + str(wk_werte[p]) + r') ~=~' + str(st_werte[0]) + r'cm \quad (2BE) \\')
+                             + str(wk_werte[p]) + r') ~=~' + str(lsg_2) + r'cm \quad (2BE) \\')
 
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
