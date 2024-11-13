@@ -107,4 +107,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-print(random.choice(range(3)))
+print(math.sin(67*pi/180))

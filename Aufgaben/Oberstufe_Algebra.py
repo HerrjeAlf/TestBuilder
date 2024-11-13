@@ -578,8 +578,8 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
     liste_bez = []
     i = 0
     punkt_a = [ax, ay, az] = punkt_vektor(3)
-    punkt_b = [bx, by, bz] = punkt_a + punkt_vektor(3)
-    v = [vx, vy, vz] = vektor_ganzzahl((punkt_b) - (punkt_a))
+    v = [vx, vy, vz] = punkt_vektor(3)
+    punkt_b = [bx, by, bz] = punkt_a + v
 
     p = random.choice([0,1])
     if T_auf_g == None:
@@ -659,6 +659,15 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1 + loesung_2
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
         i +=1
+
+    if 'c' in teilaufg:
+        # Berechnung der Spurpunkte der Gerade mit
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte_aufg = 12
+        liste_punkte.append(punkte_aufg)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen die Spurpunkte der Geraden g. \n\n')
+        loesung.append()
+
 
     if BE != []:
         if len(BE) != len(teilaufg):
