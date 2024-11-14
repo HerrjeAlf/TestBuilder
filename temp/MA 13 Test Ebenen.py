@@ -8,22 +8,22 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = ('EK und GK')
+Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
-Klasse = '10f'
+Klasse = '13'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 04'
-Titel = 'Trigonometrie im rechtwinkligen Dreieck'
+Titel = 'Nachschreibtest Rechnen mit Vektoren'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)]]
+    Aufgaben = [[geraden_aufstellen(1, ['a', 'c'])]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

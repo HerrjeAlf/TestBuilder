@@ -569,7 +569,7 @@ def vektoren_koll_ortho(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
+def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=None, BE=[]):
     # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
@@ -580,19 +580,12 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
     punkt_a = [ax, ay, az] = punkt_vektor(3)
     v = [vx, vy, vz] = punkt_vektor(3)
     punkt_b = [bx, by, bz] = punkt_a + v
-
     p = random.choice([0,1])
-    if T_auf_g == None:
-        T_auf_g = random.choice([True,False])
-    if T_auf_g:
-        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,30)/5)*v)
-    elif T_auf_g == False:
-        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1,10)/2)* np.array([vy,vx,vz+zzahl(1,3)]))
-        while (tx-ax)/vx == (ty-ay)/ty == (tz-az)/tz:
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
-    else:
-        exit("T_auf_g muss None, True oder False sein!")
-
+    punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
+    while (tx - ax) / vx == (ty - ay) / ty == (tz - az) / tz:
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
+    T_auf_g = random.choice([True, False]) if T_auf_g not in [None, True, False] else T_auf_g
+    punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 30) / 5) * v) if T_auf_g else punkt_t
     lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
     if 'a' in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
@@ -663,11 +656,64 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b'], T_auf_g=False, BE=[]):
     if 'c' in teilaufg:
         # Berechnung der Spurpunkte der Gerade mit
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 12
-        liste_punkte.append(punkte_aufg)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen die Spurpunkte der Geraden g. \n\n')
-        loesung.append()
+        punkte = 0
+        spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt not in ['x-y', 'x-z', 'y-z', 'all', None] else spurpunkt
+        spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt == None else spurpunkt
+        if spurpunkt == 'all':
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Spurpunkte der Geraden g mit den '
+                           + f' Achsenebenen. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~der~Spurpunkte~'
+                           + r'mit~den~Achsenebenen.} \hspace{10em}')
+        else:
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Spurpunkt der Geraden g mit der '
+                           + spurpunkt + f'-Achsenebene. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~des~Spurpunktes~'
+                           + r'mit~der~' + spurpunkt + r'-Achsenebene.} \hspace{10em}')
 
+        if spurpunkt == 'x-y' or spurpunkt == 'all':
+            lsg_xy = Rational(-az,vz)
+            punkt_s1 = [s1x, s1y, s1z] = punkt_a + lsg_xy * v
+            loesung.append(r' z=0 \quad \to \quad 0~=~' + gzahl(az) + vorz_str(vz) + r'r \quad \vert '
+                           + vorz_str(-1*az) + r' \quad \vert \div ' + gzahl_klammer(vz) + r' \quad \to \quad r~=~'
+                           + gzahl(lsg_xy) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xy}} ~=~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
+                           + gzahl(lsg_xy) + r' \cdot \begin{pmatrix} '
+                           + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
+                           + r' \begin{pmatrix} ' + gzahl(s1x) + r' \\' + gzahl(s1y) + r' \\' + gzahl(s1z) + r' \\'
+                           + r' \end{pmatrix} \quad \to \quad S_{xy} ~=~ \left( ' + gzahl(s1x) + r' \vert '
+                           + gzahl(s1y) + r' \vert ' + gzahl(s1z) + r' \right) \quad (2BE)')
+            punkte += 4
+
+        if spurpunkt == 'x-z' or spurpunkt == 'all':
+            lsg_xz = Rational(-ay,vy)
+            punkt_s2 = [s2x, s2y, s2z] = punkt_a + lsg_xz * v
+            loesung.append(r' y=0 \quad \to \quad 0~=~' + gzahl(ay) + vorz_str(vy) + r'r \quad \vert '
+                           + vorz_str(-1*ay) + r' \quad \vert \div ' + gzahl_klammer(vy) + r' \quad \to \quad r~=~'
+                           + gzahl(lsg_xz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xy}} ~=~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
+                           + gzahl(lsg_xz) + r' \cdot \begin{pmatrix} '
+                           + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
+                           + r' \begin{pmatrix} ' + gzahl(s2x) + r' \\' + gzahl(s2y) + r' \\' + gzahl(s2z) + r' \\'
+                           + r' \end{pmatrix} \quad \to \quad S_{xy} ~=~ \left( ' + gzahl(s2x) + r' \vert '
+                           + gzahl(s2y) + r' \vert ' + gzahl(s2z) + r' \right) \quad (2BE)')
+            punkte += 4
+
+        if spurpunkt == 'y-z' or spurpunkt == 'all':
+            lsg_yz = Rational(-ax,vx)
+            punkt_s3 = [s3x, s3y, s3z] = punkt_a + lsg_yz * v
+            loesung.append(r' x=0 \quad \to \quad 0~=~' + gzahl(ax) + vorz_str(vx) + r'r \quad \vert '
+                           + vorz_str(-1*ax) + r' \quad \vert \div ' + gzahl_klammer(vx) + r' \quad \to \quad r~=~'
+                           + gzahl(lsg_yz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xy}} ~=~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
+                           + gzahl(lsg_yz) + r' \cdot \begin{pmatrix} '
+                           + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
+                           + r' \begin{pmatrix} ' + gzahl(s3x) + r' \\' + gzahl(s3y) + r' \\' + gzahl(s3z) + r' \\'
+                           + r' \end{pmatrix} \quad \to \quad S_{xy} ~=~ \left( ' + gzahl(s3x) + r' \vert '
+                           + gzahl(s3y) + r' \vert ' + gzahl(s3z) + r' \right) \quad (2BE)')
+            punkte += 4
+
+        liste_punkte.append(punkte)
+        i +=1
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -1518,10 +1564,10 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
                                                 f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
         if 'b' not in teilaufg:
-            aufgabe.appemnd(r' \mathrm{Gleichung~der~Geraden~g: \overrightarrow{x} \ ~ = ~ \begin{pmatrix}'
-                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                            + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ')
+            aufgabe.append(r' \mathrm{Gleichung~der~Geraden~g: \overrightarrow{x} \ ~ = ~ \begin{pmatrix}'
+                           + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                           + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                           + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ')
         loesung.append(str(liste_teilaufg[i]) + r') \quad '
                        + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
