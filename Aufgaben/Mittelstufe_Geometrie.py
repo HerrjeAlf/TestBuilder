@@ -206,18 +206,23 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
 
     if 'b' in teilaufg:
         # Mithilfe der Daten können die SuS die fehlenden Winkel im rechtwinkligen Dreieck mit Sinus, Kosinus und Tangens berechnen.
-
+        if 'a' not in teilaufg:
+            geg = (r' \mathrm{geg:~}' + st[0] + '~=~' + gzahl(l_a) + 'cm,~' + st[1] + '~=~' + gzahl(l_b) + 'cm,~'
+                   + st[2] + '~=~' + gzahl(l_c) + r'cm ~ \mathrm{und} ~' + wk[2]
+                   + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1BE) \\')
+            punkte = 6
+        else:
+            geg = ''
+            punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~}' + st[0] + '~=~' + gzahl(l_a) + 'cm,~'
-                       + st[1] + '~=~' + gzahl(l_b) + 'cm,~' + st[2] + '~=~' + gzahl(l_c) + r'cm ~ \mathrm{und} ~'
-                       + wk[2] + r'~=~ 90^{  \circ} \quad \mathrm{ges:} ~' + wk[0] + ',~' + wk[1] + r' ~ (1BE) \\ sin('
-                       + wk[0] + r')~=~ \frac{' + st[0] + '}{' + st[2] + r'} ~=~ \frac{' + gzahl(l_a) + 'cm}{'
-                       + gzahl(l_c) + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + geg + ' sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{'
+                       + st[2] + r'} ~=~ \frac{' + gzahl(l_a) + 'cm}{' + gzahl(l_c)
+                       + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
                        + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
                        + r' ^{ \circ} \quad (3BE) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
                        + gzahl(alpha) + r'^{ \circ} ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (2BE)')
-        liste_punkte.append(5)
+        liste_punkte.append(punkte)
         i += 1
 
     if BE != []:
