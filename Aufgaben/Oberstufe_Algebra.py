@@ -578,7 +578,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
     liste_bez = []
     i = 0
     punkt_a = [ax, ay, az] = punkt_vektor(3)
-    v = [vx, vy, vz] = punkt_vektor(3)
+    v = [vx, vy, vz] = punkt_vektor(4)
     punkt_b = [bx, by, bz] = punkt_a + v
     p = random.choice([0,1])
     punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
@@ -592,6 +592,10 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
                    'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
                    'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
                    'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
+        if 'b' not in teilaufg:
+            aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+                       + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
+                       + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) \n\n']
     if 'a' not in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    r' \mathrm{Gegeben~ist~die~Gerade g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -607,16 +611,11 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 3
         liste_punkte.append(punkte_aufg)
-        loesung_1 = (r' \overrightarrow{AB} ~=~'
-                     r' \begin{pmatrix} '
-                     + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\'
-                     r' \end{pmatrix} \quad \to \quad '
-                     r' g: \overrightarrow{x} \ ~=~'
-                     r' \begin{pmatrix} '
-                     + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                     + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\'
-                     r' \end{pmatrix} \quad (3P) \\')
+        loesung_1 = (r' \overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
+                     + gzahl(v[2]) + r' \\ \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~'
+                     r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
+                     + gzahl(v[2]) + r' \\ \end{pmatrix} \quad (3P) \\')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
@@ -689,12 +688,12 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
             punkt_s2 = [s2x, s2y, s2z] = punkt_a + lsg_xz * v
             loesung.append(r' y=0 \quad \to \quad 0~=~' + gzahl(ay) + vorz_str(vy) + r'r \quad \vert '
                            + vorz_str(-1*ay) + r' \quad \vert \div ' + gzahl_klammer(vy) + r' \quad \to \quad r~=~'
-                           + gzahl(lsg_xz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xy}} ~=~ \begin{pmatrix} '
+                           + gzahl(lsg_xz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xz}} ~=~ \begin{pmatrix} '
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
                            + gzahl(lsg_xz) + r' \cdot \begin{pmatrix} '
                            + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
                            + r' \begin{pmatrix} ' + gzahl(s2x) + r' \\' + gzahl(s2y) + r' \\' + gzahl(s2z) + r' \\'
-                           + r' \end{pmatrix} \quad \to \quad S_{xy} ~=~ \left( ' + gzahl(s2x) + r' \vert '
+                           + r' \end{pmatrix} \quad \to \quad S_{xz} ~=~ \left( ' + gzahl(s2x) + r' \vert '
                            + gzahl(s2y) + r' \vert ' + gzahl(s2z) + r' \right) \quad (2BE)')
             punkte += 4
 
@@ -703,12 +702,12 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
             punkt_s3 = [s3x, s3y, s3z] = punkt_a + lsg_yz * v
             loesung.append(r' x=0 \quad \to \quad 0~=~' + gzahl(ax) + vorz_str(vx) + r'r \quad \vert '
                            + vorz_str(-1*ax) + r' \quad \vert \div ' + gzahl_klammer(vx) + r' \quad \to \quad r~=~'
-                           + gzahl(lsg_yz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{xy}} ~=~ \begin{pmatrix} '
+                           + gzahl(lsg_yz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{yz}} ~=~ \begin{pmatrix} '
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
                            + gzahl(lsg_yz) + r' \cdot \begin{pmatrix} '
                            + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
                            + r' \begin{pmatrix} ' + gzahl(s3x) + r' \\' + gzahl(s3y) + r' \\' + gzahl(s3z) + r' \\'
-                           + r' \end{pmatrix} \quad \to \quad S_{xy} ~=~ \left( ' + gzahl(s3x) + r' \vert '
+                           + r' \end{pmatrix} \quad \to \quad S_{yz} ~=~ \left( ' + gzahl(s3x) + r' \vert '
                            + gzahl(s3y) + r' \vert ' + gzahl(s3z) + r' \right) \quad (2BE)')
             punkte += 4
 

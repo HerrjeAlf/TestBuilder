@@ -293,7 +293,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
             elif i+1 < len(teilaufg):
                 aufg = aufg + r' \\\\'
                 lsg = lsg + r' \\\\'
-            punkte += 1
+        punkte += 1
         i += 1
 
     if BE != []:
