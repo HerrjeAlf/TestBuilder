@@ -22,7 +22,7 @@ in Algebra:
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
 
 in Mittelstufe_Terme_Gleichungen
-- gleichungen noch um rationale Gleichungen (in etwa (2x^2+6x)/2x=und ungleichungen erg
+- in gleichungen noch teilaufgabe zu ungleichungen lösen ergänzen
 
 
 Physik
