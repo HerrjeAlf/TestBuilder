@@ -627,3 +627,137 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, BE=[]):
+    # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
+    # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a)
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Lösen Sie die folgenden Gleichungen.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def gl_fakt(rat=False):
+        fakt = zzahl(1,6)
+        fakt = Rational(fakt, zzahl(1,6)) if rat else fakt
+        xwert = zzahl(1,9)
+        erg = xwert * fakt
+        aufg = gzahl(fakt) + 'x ~=~' + gzahl(erg)
+        lsg = (aufg + r' \quad \vert \div ' + gzahl_klammer(fakt) + r' \quad \to \quad x ~=~'
+               + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_sum(rat=False):
+        fakt = zzahl(1, 6)
+        fakt = Rational(fakt, zzahl(1, 6)) if rat else fakt
+        sum = zzahl(1,5)
+        xwert = zzahl(1, 9)
+        erg = xwert * fakt + sum
+        aufg = vorz_v_aussen(fakt,'x') + vorz_str(sum) + ' ~=~' + gzahl(erg)
+        lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt)
+               + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_sum_beids(rat=False):
+        fakt1 = zzahl(1, 5)
+        fakt1 = Rational(fakt1, zzahl(1, 5)) if rat else fakt1
+        fakt2 = fakt1 + zzahl(1,5)
+        sum = zzahl(1,5)
+        xwert = zzahl(1, 9)
+        erg = xwert * (fakt1 - fakt2) + sum
+        aufg = vorz_v_aussen(fakt1,'x') + vorz_str(sum) + ' ~=~' + vorz_v_aussen(fakt2,'x') + vorz_str(erg)
+        if fakt1 > fakt2:
+            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
+                   + vorz_v_aussen(fakt1-fakt2,'x') + vorz_str(sum) + r' ~=~' + gzahl(erg)
+                   + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1-fakt2)
+                   + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        else:
+            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
+                   + vorz_v_aussen(fakt2 - fakt1,'x' + gzahl(erg)) + r' \quad \vert ' + vorz_str(-1 * erg)
+                   + r' \quad \vert \div ' + gzahl_klammer(fakt2 - fakt1) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_term(rat=False):
+        fakt1 = zzahl(1, 5)
+        fakt2 = zzahl(1,6)
+        fakt2 = Rational(fakt2, zzahl(1, 6)) if rat else fakt2
+        sum = zzahl(1, 9)
+        xwert = zzahl(1,9)
+        erg = fakt2 * (fakt1 * xwert + sum)
+        aufg = (vorz_v_aussen(fakt2, r' \left( ' + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + r' \right)')
+                + ' ~=~' + gzahl(erg))
+        lsg = (aufg + r' \quad \to \quad ' + vorz_v_aussen(fakt2 * fakt1,'x' + vorz_str(fakt2 * sum)) + '~=~' + gzahl(erg)
+               + r' \quad \vert ' + vorz_str(-1*fakt2*sum) + r' \quad \vert \div ' + gzahl_klammer(fakt2 * fakt1)
+               + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_rat(rat=False):
+        fakt1 = zzahl(1, 5)
+        fakt1 = Rational(fakt1, zzahl(1, 6)) if rat else fakt1
+        fakt2 = zzahl(1, 6)
+        fakt2 = Rational(fakt2, zzahl(1, 6)) if rat else fakt2
+        sum = zzahl(1, 9)
+        xwert = zzahl(1, 9)
+        erg = fakt1 * xwert + sum
+        aufg = (r' \frac{' + (vorz_v_aussen(fakt2 * fakt1,'x^2') + vorz_v_innen(fakt2*sum,'x') + '}{'
+                + vorz_v_aussen(fakt2,'x')) + '} ~=~' + gzahl(erg))
+        lsg = (aufg + r' \quad \to \quad ' + r' \frac{' + vorz_v_aussen(fakt2,'x') + r' \left( '
+               + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + r' \right) ' + '}{' +  vorz_v_aussen(fakt2,'x')
+               + '} ~=~' + gzahl(erg) + r' \\' + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + '~=~' + gzahl(erg)
+               + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1)
+               + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    if anzahl != False:
+        exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.") if type(
+            anzahl) != int or anzahl > 26 else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    elif wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+        exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
+             "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
+    wb = {'a': [gl_fakt, False],
+          'b': [gl_fakt, True],
+          'c': [gl_sum, False],
+          'd': [gl_sum, True],
+          'e': [gl_sum_beids, False],
+          'f': [gl_sum_beids, True],
+          'g': [gl_term, False],
+          'h': [gl_term, True],
+          'i': [gl_rat, False],
+          'j': [gl_rat, True]}
+
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for st in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = wb[st][0](wb[st][1])
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        if (i + 1) % 3 != 0 and i + 1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif i + 1 < len(teilaufg):
+            aufg = aufg + r' \\\\'
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

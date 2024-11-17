@@ -20,10 +20,10 @@ in Aufgaben Wahrscheinlichkeit:
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
-- in lagebziehung Geraden erzeugt ab und zu lsgr und lsgs einen Fehler bei division durch null
 
-in Primarstufe rationale Zahlen
-- wissenschaftliche Schreibweise, mittlere Zahlen liefert falsche Lösung
+in Mittelstufe_Terme_Gleichungen
+- gleichungen noch um rationale Gleichungen (in etwa (2x^2+6x)/2x=und ungleichungen erg
+
 
 Physik
 - Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
