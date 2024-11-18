@@ -275,9 +275,10 @@ def gzahl(k, exp=False, null=True):
     else:
         return latex(k)
 
-def gzahl_klammer(k,str=''):
-    if k % 1 == 0:
-        k = int(k)
+def gzahl_klammer(k,str='', null=True):
+    if k == 0:
+        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+    k = int(k) if k % 1 == 0 else k
     if k < 0:
         if str != '' and k == -1:
             return r' \left( -' + str + r' \right)'
