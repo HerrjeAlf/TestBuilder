@@ -628,7 +628,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, BE=[]):
+def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a)
@@ -646,63 +646,126 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
 
     def gl_fakt(rat=False):
         fakt = zzahl(1,6)
-        fakt = Rational(fakt, zzahl(1,6)) if rat else fakt
+        fakt = Rational(fakt, random.choice([2,4,5,10])) if rat else fakt
         xwert = zzahl(1,9)
         erg = xwert * fakt
-        aufg = gzahl(fakt) + 'x ~=~' + gzahl(erg)
-        lsg = (aufg + r' \quad \vert \div ' + gzahl_klammer(fakt) + r' \quad \to \quad x ~=~'
-               + gzahl(xwert))
+        aufg = latex(fakt*x) + '~=~' + gzahl(erg)
+        if abs(fakt) < 1:
+            lsg = (aufg + r' \quad \vert \cdot ' + gzahl_klammer(Rational(1,fakt)) + r' \quad \to \quad x ~=~'
+                   + gzahl(xwert))
+        else:
+            lsg = (aufg + r' \quad \vert \div ' + gzahl_klammer(fakt) + r' \quad \to \quad x ~=~'
+                   + gzahl(xwert))
         return aufg, lsg
 
     def gl_sum(rat=False):
-        fakt = zzahl(1, 6)
-        fakt = Rational(fakt, zzahl(1, 6)) if rat else fakt
+        fakt = zzahl(1,6)
+        fakt = Rational(fakt, random.choice([2,4,5,10])) if rat else fakt
         sum = zzahl(1,5)
         xwert = zzahl(1, 9)
         erg = xwert * fakt + sum
-        aufg = vorz_v_aussen(fakt,'x') + vorz_str(sum) + ' ~=~' + gzahl(erg)
-        lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt)
-               + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        aufg = latex(fakt*x) + vorz_str(sum) + '~=~' + gzahl(erg)
+        if abs(fakt) < 1:
+            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \cdot '
+                   + gzahl_klammer(Rational(1,fakt)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        else:
+            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt)
+                   + r' \quad \to \quad x ~=~' + gzahl(xwert))
         return aufg, lsg
 
     def gl_sum_beids(rat=False):
-        fakt1 = zzahl(1, 5)
-        fakt1 = Rational(fakt1, zzahl(1, 5)) if rat else fakt1
+        fakt1 = zzahl(1,6)
+        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = fakt1 + zzahl(1,5)
         sum = zzahl(1,5)
         xwert = zzahl(1, 9)
         erg = xwert * (fakt1 - fakt2) + sum
-        aufg = vorz_v_aussen(fakt1,'x') + vorz_str(sum) + ' ~=~' + vorz_v_aussen(fakt2,'x') + vorz_str(erg)
+        aufg = latex(fakt1 * x) + vorz_str(sum) + '~=~' + latex(fakt2 * x) + vorz_str(erg)
         if fakt1 > fakt2:
-            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
-                   + vorz_v_aussen(fakt1-fakt2,'x') + vorz_str(sum) + r' ~=~' + gzahl(erg)
-                   + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1-fakt2)
-                   + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            if abs(fakt1-fakt2) < 1:
+                lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
+                       + latex((fakt1 - fakt2)*x) + vorz_str(sum) + r' ~=~' + gzahl(erg)
+                       + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \cdot '
+                       + gzahl_klammer(Rational(1,(fakt1 - fakt2))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            else:
+                lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
+                       + latex((fakt1-fakt2)*x) + vorz_str(sum) + r' ~=~' + gzahl(erg)
+                       + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1-fakt2)
+                       + r' \quad \to \quad x ~=~' + gzahl(xwert))
         else:
-            lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
-                   + vorz_v_aussen(fakt2 - fakt1,'x' + gzahl(erg)) + r' \quad \vert ' + vorz_str(-1 * erg)
-                   + r' \quad \vert \div ' + gzahl_klammer(fakt2 - fakt1) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            if abs(fakt2-fakt1) < 1:
+                lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
+                       + latex((fakt2 - fakt1)*x) + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
+                       + r' \quad \vert \cdot ' + gzahl_klammer(Rational(1,(fakt2 - fakt1)))
+                       + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            else:
+                lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
+                       + latex((fakt2 - fakt1) * x) + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
+                       + r' \quad \vert \div ' + gzahl_klammer(fakt2 - fakt1) + r' \quad \to \quad x ~=~'
+                       + gzahl(xwert))
         return aufg, lsg
 
     def gl_term(rat=False):
         fakt1 = zzahl(1, 5)
         fakt2 = zzahl(1,6)
-        fakt2 = Rational(fakt2, zzahl(1, 6)) if rat else fakt2
+        fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
         sum = zzahl(1, 9)
         xwert = zzahl(1,9)
         erg = fakt2 * (fakt1 * xwert + sum)
-        aufg = (vorz_v_aussen(fakt2, r' \left( ' + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + r' \right)')
+        aufg = (vorz_v_aussen(fakt2, r' \left( ' + latex(fakt1*x) + vorz_str(sum) + r' \right)')
                 + ' ~=~' + gzahl(erg))
-        lsg = (aufg + r' \quad \to \quad ' + vorz_v_aussen(fakt2 * fakt1,'x' + vorz_str(fakt2 * sum)) + '~=~' + gzahl(erg)
-               + r' \quad \vert ' + vorz_str(-1*fakt2*sum) + r' \quad \vert \div ' + gzahl_klammer(fakt2 * fakt1)
-               + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        if abs(fakt2 * fakt1) < 1:
+            lsg = (aufg + r' \quad \to \quad ' + latex(fakt2 * fakt1 * x) + vorz_str(fakt2 * sum) + '~=~'
+                   + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * fakt2 * sum) + r' \quad \vert \cdot '
+                   + gzahl_klammer(Rational(1,(fakt2 * fakt1))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        else:
+            lsg = (aufg + r' \quad \to \quad ' + latex(fakt2 * fakt1 * x) + vorz_str(fakt2 * sum) + '~=~'
+                   + gzahl(erg) + r' \quad \vert ' + vorz_str(-1*fakt2*sum) + r' \quad \vert \div '
+                   + gzahl_klammer(fakt2 * fakt1) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_term_beids(rat=False):
+        fakt1 = zzahl(1, 5)
+        fakt2 = fakt1 + zzahl(1,5)
+        while fakt2 == 0:
+            fakt2 = fakt1 + zzahl(1,5)
+        fakt3 = zzahl(1,6)
+        fakt3 = Rational(fakt3, random.choice([2,4,5,10])) if rat else fakt3
+        sum = zzahl(1, 9)
+        xwert = zzahl(1,9)
+        erg = (fakt3 * fakt1 - fakt2) * xwert + fakt3*sum
+        aufg = (vorz_v_aussen(fakt3, r' \left( ' + latex(fakt1 * x) + vorz_str(sum) + r' \right)')
+                + ' ~=~' + vorz_v_aussen(fakt2,'x') + vorz_str(erg))
+        if fakt1 > fakt2:
+            if abs(fakt3*fakt1-fakt2) < 1:
+                lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
+                       + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt2) + latex(abs(fakt2) * x)
+                       + r' \quad \vert ' + vorz_str(-1 * fakt3 * sum) + r' \quad \vert \cdot '
+                       + gzahl_klammer(Rational(1,fakt3*fakt1-fakt2)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            else:
+                lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
+                       + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt2) + latex(abs(fakt2) * x)
+                       + r' \quad \vert ' + vorz_str(-1 * fakt3 * sum) + r' \quad \vert \div '
+                       + gzahl_klammer(fakt3 * fakt1 - fakt2) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        else:
+            if abs(fakt2 - fakt3*fakt1) < 1:
+                lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
+                       + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt3*fakt1)
+                       + latex(abs(fakt3*fakt1) * x)  + r' \quad \vert ' + vorz_str(-1 * erg) + r' \quad \vert \cdot '
+                       + gzahl_klammer(Rational(1,fakt2 - fakt3*fakt1)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+            else:
+                lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
+                       + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert '+ vorz(-1*fakt3*fakt1)
+                       + latex(abs(fakt3*fakt1) * x) + r' \quad \vert ' + vorz_str(-1 * erg) + r' \quad \vert \div '
+                       + gzahl_klammer(fakt2 - fakt3 * fakt1) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+
         return aufg, lsg
 
     def gl_rat(rat=False):
         fakt1 = zzahl(1, 5)
-        fakt1 = Rational(fakt1, zzahl(1, 6)) if rat else fakt1
+        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = zzahl(1, 6)
-        fakt2 = Rational(fakt2, zzahl(1, 6)) if rat else fakt2
+        fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
         sum = zzahl(1, 9)
         xwert = zzahl(1, 9)
         erg = fakt1 * xwert + sum
@@ -710,9 +773,35 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
                 + vorz_v_aussen(fakt2,'x')) + '} ~=~' + gzahl(erg))
         lsg = (aufg + r' \quad \to \quad ' + r' \frac{' + vorz_v_aussen(fakt2,'x') + r' \left( '
                + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + r' \right) ' + '}{' +  vorz_v_aussen(fakt2,'x')
-               + '} ~=~' + gzahl(erg) + r' \\' + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + '~=~' + gzahl(erg)
-               + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1)
+               + '} ~=~' + gzahl(erg) + r' \quad \to \quad ' + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + '~=~'
+               + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1)
                + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        return aufg, lsg
+
+    def gl_rat_beids(rat=False):
+        fakt1 = zzahl(1, 5)
+        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
+        fakt2 = fakt1 + zzahl(1,5)
+        fakt3 = zzahl(1, 6)
+        fakt3 = Rational(fakt3, random.choice([2,4,5,10])) if rat else fakt3
+        sum = zzahl(1, 9)
+        xwert = zzahl(1, 9)
+        erg = xwert * (fakt1 - fakt2) + sum
+        aufg = (r' \frac{' + (vorz_v_aussen(fakt3 * fakt1,'x^2') + vorz_v_innen(fakt3*sum,'x') + '}{'
+                + vorz_v_aussen(fakt3,'x')) + '} ~=~' + vorz_v_aussen(fakt2,'x') + vorz_str(erg))
+        lsg_1 = (aufg + r' \quad \to \quad ' + r' \frac{' + vorz_v_aussen(fakt3,'x') + r' \left( '
+               + vorz_v_aussen(fakt1,'x') + vorz_str(sum) + r' \right) ' + '}{' +  vorz_v_aussen(fakt3,'x')
+               + '} ~=~'+ vorz_v_aussen(fakt2,'x') + vorz_str(erg) + r' \\' + vorz_v_aussen(fakt1,'x')
+                 + vorz_str(sum) + ' ~=~' + vorz_v_aussen(fakt2,'x') + vorz_str(erg))
+        if fakt1 > fakt2:
+            lsg = (lsg_1 + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
+                   + vorz_v_aussen(fakt1-fakt2,'x') + vorz_str(sum) + r' ~=~' + gzahl(erg)
+                   + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt1-fakt2)
+                   + r' \quad \to \quad x ~=~' + gzahl(xwert))
+        else:
+            lsg = (lsg_1 + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
+                   + vorz_v_aussen(fakt2 - fakt1,'x') + vorz_str(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
+                   + r' \quad \vert \div ' + gzahl_klammer(fakt2 - fakt1) + r' \quad \to \quad x ~=~' + gzahl(xwert))
         return aufg, lsg
 
     if anzahl != False:
@@ -731,8 +820,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
           'f': [gl_sum_beids, True],
           'g': [gl_term, False],
           'h': [gl_term, True],
-          'i': [gl_rat, False],
-          'j': [gl_rat, True]}
+          'i': [gl_term_beids, False],
+          'j': [gl_term_beids, True],
+          'k': [gl_rat, False],
+          'l': [gl_rat, True],
+          'm': [gl_rat_beids, False],
+          'n': [gl_rat_beids, True]}
 
 
     aufg = ''
