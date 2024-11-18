@@ -15,7 +15,8 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[gleichungen(1, wdh=2)]]
+    Aufgaben = [[gleichungen(1, ['a','b', 'c', 'd', 'e', 'f'], wdh=2),
+                 gleichungen(2, ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], wdh=2)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
