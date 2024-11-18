@@ -443,23 +443,23 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
                        + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         # alternative Variante
-        '''
-        laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
-                            + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
-        ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
-        laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
-                            + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
-        ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
-                       + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
-                       + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (1P) \\'
-                       + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
-                       + ')^2 ~+~(' + gzahl(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + gzahl(vektor_b[2])
-                       + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (1P) \\'
-                       + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
-                       + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
-        '''
+
+        # laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
+        #                     + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
+        # ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
+        # laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
+        #                     + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
+        # ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
+        # loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
+        #                + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
+        #                + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (1P) \\'
+        #                + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
+        #                + ')^2 ~+~(' + gzahl(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + gzahl(vektor_b[2])
+        #                + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (1P) \\'
+        #                + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
+        #                + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
+        #                + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+
         liste_punkte.append(punkte)
         i += 1
 
@@ -703,8 +703,8 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
             loesung.append(r' x=0 \quad \to \quad 0~=~' + gzahl(ax) + vorz_str(vx) + r'r \quad \vert '
                            + vorz_str(-1*ax) + r' \quad \vert \div ' + gzahl_klammer(vx) + r' \quad \to \quad r~=~'
                            + gzahl(lsg_yz) + r' \quad (2BE) \\' + r' \overrightarrow{OS_{yz}} ~=~ \begin{pmatrix} '
-                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ~+~'
-                           + gzahl(lsg_yz) + r' \cdot \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} '
+                           + vorz_str(lsg_yz) + r' \cdot \begin{pmatrix} '
                            + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2]) + r' \\' + r' \end{pmatrix} ~=~'
                            + r' \begin{pmatrix} ' + gzahl(s3x) + r' \\' + gzahl(s3y) + r' \\' + gzahl(s3z) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad S_{yz} ~=~ \left( ' + gzahl(s3x) + r' \vert '
