@@ -574,9 +574,13 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_turm(nr, BE=[]):
+def sachaufgabe_turm(nr, koerpergroesse=True, BE=[]):
     # Hier sollen die Schüler*innen die Höhe eines Turms berechnen (Trigonometrie im rechtw. Dreieck).
+    # Mit dem Paramter "koerpergroesse=True" wird festgelegt, ob die Körpergröße des Beobachters in der Aufgabe berücksichtigt werden soll bzw. diese in der Aufgabenstellung genannt wird.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+
+
 
     liste_bez = [f'{nr}']
     i = 0
@@ -594,16 +598,27 @@ def sachaufgabe_turm(nr, BE=[]):
     w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_turm)))
     w_b = w_warte - w_beob
 
+    if koerpergroesse == True:
+        hoehe_beob = random.choice(range(16,21))/10
+        hoehe_beob_str = latex(N(hoehe_beob,1)) + 'm großer'
+        lsg_0 = (r' \quad \to \quad h ~=~' + gzahl(hoehe) + 'm' + vorz_str(hoehe_beob) + 'm ~=~'
+                 + gzahl(N(hoehe+hoehe_beob),1))
+        punkte = 4
+    else:
+        lsg_0 = hoehe_beob_str = ''
+        punkte = 3
+
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-               f'Ein Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
+               f'Ein {hoehe_beob_str} Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
                f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n',
                'Berechne aus den gegebenen Werte die Höhe des Turms.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    loesung.append(r' \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~c~=~' + str(abstand_beob_turm)
+    loesung.append(r' \mathrm{geg:~ \alpha ~=~' + gzahl(w_beob) + r' ^{ \circ},~c~=~' + gzahl(abstand_beob_turm)
                    + r'm, \quad ges \colon  a \quad (1BE)} \\ tan( \alpha ) ~=~ \frac{a}{b}'
                    + r' \quad \vert \cdot b \quad \to \quad a ~=~ b \cdot tan( \alpha )'
-                   + ' ~=~' + str(abstand_beob_turm) + r'm \cdot tan(' + str(w_beob) + r' ^{ \circ}  ) ~=~'
-                   + str(hoehe) + r'm  \quad (3BE)')
+                   + ' ~=~' + gzahl(abstand_beob_turm) + r'm \cdot tan(' + gzahl(w_beob) + r' ^{ \circ}  ) ~=~'
+                   + gzahl(hoehe) + lsg_0 + r'm  \quad (4BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -611,10 +626,10 @@ def sachaufgabe_turm(nr, BE=[]):
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [4]
+            liste_punkte = [punkte]
         liste_punkte = BE
     else:
-        liste_punkte = [4]
+        liste_punkte = [punkte]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
