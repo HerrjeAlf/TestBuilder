@@ -120,7 +120,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                                            + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab + r' \quad (2P) \\'
                                            + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
                                            + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
-                                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'))
+                                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'))
 
         liste_punkte.append(punkte)
         i += 1
@@ -133,7 +133,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                                            + f' ein Parallelogramm bilden.'))
         loesung.append(str(liste_teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
-                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
     if ks != None:
@@ -208,7 +208,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(ergebnis[1]) + r' \\' + gzahl(ergebnis[2]) + r' \\'
                        + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
                        + gzahl(ergebnis[0]) + ' | ' + gzahl(ergebnis[1]) + ' | ' + gzahl(ergebnis[2])
-                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -291,7 +291,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
                        + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
                        + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\ ' + loesung_2
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -406,7 +406,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(N(vektor_1[1]/vektor_2[1],3)) + r' \\' + gzahl(N(vektor_1[2],3)) + '~=~'
                        + gzahl(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'
                        + gzahl(N(vektor_1[2]/vektor_2[2],3)) + r' \\' + ergebnis
-                       + r' \quad \to \quad \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \quad \to \quad \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -441,7 +441,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
                        + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         # alternative Variante
 
         # laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
@@ -458,7 +458,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         #                + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (1P) \\'
         #                + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
         #                + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
-        #                + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        #                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         liste_punkte.append(punkte)
         i += 1
@@ -497,7 +497,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(N(vektor_b[0],3)) + r' \\'
                        + gzahl(N(vektor_b[1],3)) + r' \\' + gzahl(N(vektor_b[2],3)) + r' \\'
                        + r' \end{pmatrix} \quad \to \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
-                       + r'~ \vert ~' + gzahl(vektor_b[2]) + r' ~) \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r'~ \vert ~' + gzahl(vektor_b[2]) + r' ~) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -620,7 +620,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         i +=1
 
     if 'b' in teilaufg:
@@ -643,13 +643,13 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
                      + 'r=' + gzahl(N(lz,3)) + r' \\'
                      r' \end{matrix} \\')
         if lx == ly == lz:
-            loesung_2 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4P) \\'
+            loesung_2 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4BE) \\'
         else:
-            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4P) \\'
+            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4BE) \\'
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1 + loesung_2
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         i +=1
 
     if 'c' in teilaufg:
@@ -771,7 +771,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + 'und die Geraden haben einen Punkt gemeinsam', '2P')
         table1.add_row('', '-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
                        + 'und die Geraden haben keine gem. Punkte.', '2P')
-        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' BE')
         loesung.append(table1)
 
         if 'b' in teilaufg:
@@ -798,7 +798,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         table2.add_row('', '-', 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
                        + 'löst das Gleichungssystem. Erhält man eine Lösung für r und s, schneiden sich die Geraden. '
                        + 'erhält man keine Lösung, sind die Geraden windschief. ', '2P')
-        table2.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
+        table2.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table2)
 
         i += 1
@@ -820,7 +820,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
                          'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
                          'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3BE) \\\\'
                          r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
                          r' \begin{pmatrix} '
                          + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -835,8 +835,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          r' \end{matrix} \quad \to \quad \begin{matrix} '
                          + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
                          + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4P) \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                         r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4BE) \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         elif lagebeziehung == 'parallel':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
@@ -852,7 +852,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
                          'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
                          'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3P) \\\\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3BE) \\\\'
                          r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
                          r' \begin{pmatrix} '
                          + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -867,8 +867,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          r' \end{matrix} \quad \to \quad \begin{matrix} '
                          + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
                          + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4P) \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                         r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4BE) \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         elif lagebeziehung == 'windschief':
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
@@ -894,7 +894,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                              + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
                              + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
-                             + gzahl(N((ax-cx)/wx,3)) + vorz_str(N(vx/wx,3)) + r' \cdot r \quad (2P) \\')
+                             + gzahl(N((ax-cx)/wx,3)) + vorz_str(N(vx/wx,3)) + r' \cdot r \quad (2BE) \\')
                 if vy != 0 and wy != 0:
                     loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
                                  + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax-cx)/wx,3))
@@ -902,19 +902,19 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx*cy + wy*(ax - cx))/wx,3))
                                  + vorz_str(N(wy*vx/wx,3)) + r' \cdot r \quad \vert ~'
                                  + vorz_str(-1*vy) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2P) \\'
+                                 + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2BE) \\'
                                  + gzahl(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + gzahl(N((vx*wy-vy*wx)/wx,3))
                                  + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
                                  + r' \quad \to \quad r~=~' + gzahl(lsgr)
                                  + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(lsgs) + r' \quad (3P) \\')
+                                 + gzahl(lsgs) + r' \quad (3BE) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
                                      + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
                                      + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
                                      + '~=~' + gzahl(N(cz+wz*lsgs,3))
-                                     + r' \quad (2P) \\ \to \mathrm{Widerspruch} ~ \to ~ '
-                                       r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1P)')
+                                     + r' \quad (2BE) \\ \to \mathrm{Widerspruch} ~ \to ~ '
+                                       r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1BE)')
                     else:
                         sys.exit('vz oder wz ist null.')
                 else:
@@ -931,7 +931,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
                          'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
                          'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3BE) \\\\'
                          r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
                          r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -948,8 +948,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
                          + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
                          + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                         r' \end{matrix} \quad (2P) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                         r' \end{matrix} \quad (2BE) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         else:
             punkte_aufg = 17
             liste_punkte.append(punkte_aufg)
@@ -979,7 +979,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
                              + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
                              + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
-                             + gzahl(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2P) \\')
+                             + gzahl(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2BE) \\')
                 if vy != 0 and wy != 0:
                     loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
                                  + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax - cx) / wx, 3))
@@ -987,21 +987,21 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                                  + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx * cy + wy * (ax - cx)) / wx, 3))
                                  + vorz_str(N(wy * vx / wx, 3)) + r' \cdot r \quad \vert ~'
                                  + vorz_str(-1 * vy) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2P) \\'
+                                 + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2BE) \\'
                                  + gzahl(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
                                  + gzahl(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
                                  + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
                                  + r' \quad \to \quad r~=~' + gzahl(lsgr)
                                  + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(lsgs) + r' \quad (3P) \\')
+                                 + gzahl(lsgs) + r' \quad (3BE) \\')
                     if vz != 0 and wz != 0:
                         loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
                                      + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
                                      + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
                                      + '~=~' + gzahl(N(cz + wz * lsgs, 3))
-                                     + r' \quad (2P) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
+                                     + r' \quad (2BE) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
                                        r'  \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
-                                     + str(sy) + r' \vert ' + str(sz) + r').} \quad (2P)')
+                                     + str(sy) + r' \vert ' + str(sz) + r').} \quad (2BE)')
                     else:
                         sys.exit('vz oder wz ist null.')
                 else:
@@ -1018,7 +1018,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
                          'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
                          'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3P) \\\\'
+                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3BE) \\\\'
                          r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
                          r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                          r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -1035,8 +1035,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                          + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
                          + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
                          + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                         r' \end{matrix} \quad (2P) \\\\' + loesung_2 + loesung_3 + loesung_4 + r' \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                         r' \end{matrix} \quad (2BE) \\\\' + loesung_2 + loesung_3 + loesung_4 + r' \\'
+                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
 
             # print(v), print(w), print(punkt_c)
 
@@ -1111,21 +1111,21 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
                        r' \gamma ~=~ cos^{-1} \left( \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                       r' \vert \overrightarrow{u} \vert } \right) \quad (1P) \\'
+                       r' \vert \overrightarrow{u} \vert } \right) \quad (1BE) \\'
                        r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
                        r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
                        + '+' + gzahl_klammer(vy) + r' \cdot ' + gzahl_klammer(py)
                        + '+' + gzahl_klammer(vz) + r' \cdot ' + gzahl_klammer(pz) + r' \vert ~=~'
-                       + gzahl(abs(N(sp_vp,3))) + r' \quad (2P) \\'
+                       + gzahl(abs(N(sp_vp,3))) + r' \quad (2BE) \\'
                        r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
                        + str(vy) + ')^2 ~+~(' + str(vz) + ')^2} ~=~ ' + gzahl(N(l_v,3))
                        + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
                        + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
-                       + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2P) \\'
+                       + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2BE) \\'
                        + r' \gamma ~=~ cos^{-1} \left( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
                        + r'} \right) ~=~' + gzahl(schnittwinkel)
-                       + r' \quad (2P) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~Punkte} \\')
+                       + r' \quad (2BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         liste_punkte.append(punkte_aufg)
         i += 1
 
@@ -1176,11 +1176,11 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
         t_in_ebene = random.choice([True,False])
     if t_in_ebene == True:
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-        lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3P) \\'
+        lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3BE) \\'
     else:
         [x, y, z] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
         punkt_t = [tx, ty, tz] = [x, y, z + zzahl(1,3)]
-        lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3P) \\'
+        lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3BE) \\'
 
     if 'a' in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
@@ -1228,8 +1228,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                        + gzahl(bx - ax) + r' \\' + gzahl(by - ay) + r' \\' + gzahl(bz - az) + r' \\'
                        r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                        + gzahl(cx - ax) + r' \\' + gzahl(cy - ay) + r' \\' + gzahl(cz - az) + r' \\'
-                       r' \end{pmatrix} \quad (3P) \\'
-                       r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       r' \end{pmatrix} \quad (3BE) \\'
+                       r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
 
     if 'b' in teilaufg:
@@ -1247,15 +1247,15 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                        + r' \end{pmatrix} ~=~ ' + gzahl(Rational(ny,ny_gk)) + r' \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} \quad (3P) \\\\'
+                       + r' \end{pmatrix} \quad (3BE) \\\\'
                        + r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} ~=~0 \quad (2P) \\\\ E:~' + gzahl(nx_gk) + r' \cdot x'
+                       + r' \end{pmatrix} ~=~0 \quad (2BE) \\\\ E:~' + gzahl(nx_gk) + r' \cdot x'
                        + vorz_str(ny_gk) + r' \cdot y' + vorz_str(nz_gk) + r' \cdot z' + '~=~'
-                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2P) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
 
     if 'c' in teilaufg:
@@ -1271,7 +1271,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ty) + ')' + vorz_str(nz_gk) + r' \cdot ('
                        + gzahl(tz) + ') ~=~' + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
                        + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk)) + lsg
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
         i += 1
 
@@ -1291,7 +1291,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                            + r' \end{pmatrix} ~=~0 \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             i += 1
 
         if 'e' in teilaufg:
@@ -1310,7 +1310,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0 \quad (4P) \\'
+                               + r' \end{pmatrix} ~=~0 \quad (4BE) \\'
                                + r' d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
@@ -1319,7 +1319,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + gzahl(abs(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
-                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             else:
                 loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
@@ -1329,7 +1329,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + gzahl(abs(N(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
-                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             i += 1
 
     if BE != []:
@@ -1353,11 +1353,9 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
     fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
     n = [nx,ny,nz] = vektor_kuerzen([int(kfx), int(kfy), int(kfz)])
-    print(schnittpunkte)
-    print(fkt_kf)
-    print(n)
+    # print(schnittpunkte), print(fkt_kf), print(n)
     punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
-    print(punkt_a)
+    # print(punkt_a)
     normalenform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                     + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                     r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
@@ -1399,7 +1397,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
                                           f'anderen beiden Darstellungsformen um. \n\n ')
         loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                       r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3P) \\'
+                       r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3BE) \\'
                        r' \overrightarrow{u} ~=~ \begin{pmatrix}'
                        + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
                        r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{v} ~=~ \begin{pmatrix}'
@@ -1409,7 +1407,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
                        + gzahl(-1*ny) + r' \\' + gzahl(nx) + r' \\' + gzahl(0) + r' \\'
                        r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                        + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
-                       r' \end{pmatrix} \quad (4P) \\')
+                       r' \end{pmatrix} \quad (4BE) \\')
         i += 1
 
     if 'b' in teilaufg:
@@ -1424,7 +1422,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
-                       + str(1) + r' \quad (1P) \\ \mathrm{Zeichnung: \quad (2P)}', ''))
+                       + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
         i += 1
 
     if BE != []:
@@ -1473,7 +1471,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
         g_v = [g_vx, g_vy, g_vz] = punkt_f - punkt_e
         lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
-               + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2P) } \\')
+               + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2BE) } \\')
     elif g_in_E == 'schneiden':
         g_v = n_gk
         while vektor_kollinear(g_v, n_gk) == True:
@@ -1488,8 +1486,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \vert '
                + vorz_str(-1 * (nx_gk * ex + ny_gk * ey + nz_gk * ez)) + r' \quad \vert \div '
                + gzahl_klammer(nx_gk * g_vx + ny_gk * g_vy + nz_gk * g_vz) + r' \quad \to \quad r~=~'
-               + gzahl(ergebnis_r) + r' \quad (2P) \\'
-               + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:}  \quad (1P) \\ \begin{pmatrix} '
+               + gzahl(ergebnis_r) + r' \quad (2BE) \\'
+               + r' \mathrm{Die~Gerade~schneidet~die~Ebene~im~Punkt:}  \quad (1BE) \\ \begin{pmatrix} '
                + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
                + r' \end{pmatrix}' + vorz_str(ergebnis_r) + r' \cdot \begin{pmatrix} '
                + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
@@ -1497,7 +1495,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                + gzahl(ex + ergebnis_r * g_vx) + r' \\' + gzahl(ey + ergebnis_r * g_vy) + r' \\'
                + gzahl(ez + ergebnis_r * g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
                + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
-               + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3P) \\')
+               + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3BE) \\')
     elif g_in_E == 'parallel' or 'e' in teilaufg:
         abstand = zzahl(1, 7) / 2 * np.array(n_gk)
         punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
@@ -1505,7 +1503,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
         g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
         lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
-               + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2P)} \\')
+               + r' \quad \mathrm{f.A. \quad Die~Gerade~ist~parallel~zur~Ebene. \quad (2BE)} \\')
     else:
         exit("g_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein!")
 
@@ -1546,8 +1544,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                        + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
                        + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-                       + r' \end{pmatrix} \quad (2P) \\ '
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+                       + r' \end{pmatrix} \quad (2BE) \\ '
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
 
@@ -1571,8 +1569,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                        + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
                        + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
-                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1P) \\'
-                       + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1BE) \\'
+                       + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
     if 'd' in teilaufg:
@@ -1588,7 +1586,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \end{pmatrix} ~=~0 \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
         if 'e' in teilaufg:
@@ -1605,7 +1603,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                                + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \quad (4P) \\'
+                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \quad (4BE) \\'
                                + r' d: \left| \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
@@ -1614,7 +1612,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             else:
                 loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
@@ -1624,7 +1622,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             i += 1
 
     if BE != []:
@@ -1670,8 +1668,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
         lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
-               + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
-               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+               + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2BE) } \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
     elif F_in_E == 'schneiden':
         punkte = 10
@@ -1699,10 +1697,10 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                + vorz_str(-1 * np.dot(punkt_a, n_gk)) + r' \quad \vert ' + vorz_str(-1 * np.dot(n_gk, k_v))
                + r's \quad \to \quad ' + gzahl(np.dot(n_gk, g_v)) + 'r ~=~'
                + gzahl(np.dot(punkt_d - punkt_a, n_gk)) + vorz_str(np.dot(n_gk, k_v))
-               + r's \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2P) \\ r ~=~'
+               + r's \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2BE) \\ r ~=~'
                + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
                + vorz_str(Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
-               + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2P) } \\'
+               + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2BE) } \\'
                + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
                + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az)
                + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
@@ -1711,8 +1709,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
                + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(g_sx) + r' \\' + gzahl(g_sy) + r' \\' + gzahl(g_sz)
                + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(g_rx) + r' \\' + gzahl(g_ry) + r' \\'
-               + gzahl(g_rz) + r' \\' + r' \end{pmatrix} \quad (2P) \\'
-               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+               + gzahl(g_rz) + r' \\' + r' \end{pmatrix} \quad (2BE) \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
     elif F_in_E == 'parallel' or 'd' in teilaufg:
         punkte = 4
@@ -1724,8 +1722,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
         lsg = (gzahl(np.dot(punkt_a, n_gk)) + '~=~' + gzahl(np.dot(punkt_d, n_gk))
-               + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2P) } \\'
-               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+               + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2BE) } \\'
+               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
     if F_in_E not in (None,'identisch', 'parallel', 'schneiden'):
         exit("F_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein.")
@@ -1774,10 +1772,10 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                        + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
                        + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
                        + vorz_str(g_vz) + 'r' + vorz_str(k_vz) + 's) ~=~ ' + gzahl(np.dot(punkt_d, n_gk))
-                       + r' \quad (1P) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
+                       + r' \quad (1BE) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
                        + vorz_v_innen(nx_gk * k_vx, 's') + vorz_str(ny_gk * ay) + vorz_v_innen(ny_gk * g_vy, 'r')
                        + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
-                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1P) \\'
+                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1BE) \\'
                        + lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -1796,7 +1794,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                        + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                        + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                       + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
 
         if 'd' in teilaufg:
@@ -1814,7 +1812,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0 \quad (4P) \\' + r' d~=~ \left| \begin{bmatrix}'
+                               + r' \end{pmatrix} ~=~0 \quad (4BE) \\' + r' d~=~ \left| \begin{bmatrix}'
                                + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
@@ -1822,7 +1820,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             else:
                 loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
                                + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
@@ -1832,7 +1830,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                                + r' \end{pmatrix} \right| ~=~'
                                + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
-                               + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte} \\')
+                               + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             i += 1
 
     if BE != []:
