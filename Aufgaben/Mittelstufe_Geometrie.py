@@ -499,7 +499,7 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
                                                    r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
                                                    r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
                                                    r' \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
-                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'  \quad (3BE)'))
+                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)'))
         liste_punkte.append(4)
         i += 1
 
