@@ -15,7 +15,7 @@ Lehrer = 'Herr Herrys'
 Art = 'HAK 05'
 Titel = 'Ebenen aufstellen und umformen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
@@ -25,7 +25,7 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[geraden_aufstellen(1, ['a', 'c']),
                  ebene_und_punkt(2, ['a', 'b', 'c']),
-                 ebenen_umformen(3,['a'])]]
+                 ebenen_umformen(3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
