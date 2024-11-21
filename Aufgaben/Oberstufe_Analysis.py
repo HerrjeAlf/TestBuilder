@@ -127,6 +127,7 @@ def rechenregeln_integrale(nr, anzahl=1, BE=[]):
 # Aufgaben zur Differenzialrechnung
 def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, BE=[]):
     # Hier sollen die SuS Zahlenfolge um weitere Folgenglieder ergänzen, die Art (arithmetisch oder geometrisch) erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen.
+    # Mit dem Parameter "teilaufg=[]" kann festgelegt werden, welche Teilaufgaben verwendet werden. Standardmäßig werden alle Teilaufgabe verwendet.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -681,6 +682,7 @@ def differentialqoutient(nr, teilaufg=['a', 'b'], BE=[]):
 
 def grafisches_ableiten(nr, teilaufg=['a', 'b'], BE=[]):
     # Die SuS sollen in einem gegebenen Graphen einer Funktion den Graphen der Ableitungsfunktion skizzieren und den skizzierten Verlauf begründen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -3953,6 +3955,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
 # in Entwicklung:
 def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     # Kurvendiskussion einer Polynom- und Parameterfunktion 1
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []

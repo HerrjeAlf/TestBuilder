@@ -33,7 +33,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     # l) gemischte Bruchterme mit vers. gleichwertigen Termen (4 Summanden)
     # d) gemischte Bruchterme mit vers. gleichwertigen Termen (6 Summanden)
     #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -210,7 +210,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
     # e) Produkt aus drei Termen und zwei Potenzen von Variablen mit ganzzahligen Koeffizienten
     # f) Produkt aus drei Termen und zwei Potenzen von Variablen und beliebig ausgewählten Koeffizienten
     #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -323,7 +323,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     # i) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
     # j) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
     #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -489,7 +489,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -631,9 +631,22 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
 def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a)
+    # a) Gleichung der Form a * x = b mit ganzen Zahlen
+    # b) Gleichung der Form a * x = b mit rationalen Zahlen
+    # c) Gleichung der Form a * x + b = c mit ganzen Zahlen
+    # d) Gleichung der Form a * x + b = c mit rationalen Zahlen
+    # e) Gleichung der Form a * x + b = c * x + d mit ganzen Zahlen
+    # f) Gleichung der Form a * x + b = c * x + d mit rationalen Zahlen
+    # g) Gleichung der Form a * (b * x + c) = d mit ganzen Zahlen
+    # h) Gleichung der Form a * (b * x + c) = d mit rationalen Zahlen
+    # i) Gleichung der Form a * (b * x + c) = d * x + e mit ganzen Zahlen
+    # j) Gleichung der Form a * (b * x + c) = d * x + e mit rationalen Zahlen
+    # k) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit ganzen Zahlen
+    # l) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit rationalen Zahlen
+    # m) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit ganzen Zahlen
+    # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit rationalen Zahlen
     #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
