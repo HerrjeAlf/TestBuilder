@@ -695,12 +695,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         else:
             if abs(fakt2-fakt1) < 1:
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
-                       + latex((fakt2 - fakt1)*x) + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
+                       + latex((fakt2 - fakt1)*x) + vorz_str(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
                        + r' \quad \vert \cdot ' + gzahl_klammer(Rational(1,(fakt2 - fakt1)))
                        + r' \quad \to \quad x ~=~' + gzahl(xwert))
             else:
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
-                       + latex((fakt2 - fakt1) * x) + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
+                       + latex((fakt2 - fakt1) * x) + vorz_str(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
                        + r' \quad \vert \div ' + gzahl_klammer(fakt2 - fakt1) + r' \quad \to \quad x ~=~'
                        + gzahl(xwert))
         return aufg, lsg
