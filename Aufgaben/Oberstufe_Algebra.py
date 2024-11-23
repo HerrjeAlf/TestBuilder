@@ -130,19 +130,40 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         aufgabe.append(str(liste_teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
-                                           + f' ein Parallelogramm bilden.'))
+                                           + f' das Parallelogramm ABCD bilden.'))
         loesung.append(str(liste_teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
-    if ks != None:
-        if ks == True:
-            aufgabe.append('3dim_Koordinatensystem')
-            loesung.append('3dim_Koordinatensystem')
-        else:
-            aufgabe.append('kariertes_Papier')
-            loesung.append('kariertes_Papier')
+
+    if 'd' in teilaufg:
+        # mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
+        pass
+
+    if 'e' in teilaufg:
+        # mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
+        pass
+
+    if 'f' in teilaufg:
+        # mithilfe des Kreuzproduktes die Fläche des Parallelogramms ABCD ausrechnen
+        pass
+
+    if 'g' in teilaufg:
+        # mithilfe des Kreuzproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
+        pass
+
+    if 'h' in teilaufg:
+        # mithilfe des Kreuzproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
+        pass
+
+        if ks != None:
+            if ks == True:
+                aufgabe.append('3dim_Koordinatensystem')
+                loesung.append('3dim_Koordinatensystem')
+            else:
+                aufgabe.append('kariertes_Papier')
+                loesung.append('kariertes_Papier')
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -653,7 +674,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         i +=1
 
     if 'c' in teilaufg:
-        # Berechnung der Spurpunkte der Gerade mit
+        # Berechnung der Spurpunkte der Gerade mit den Koordinatenebenen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 0
         spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt not in ['x-y', 'x-z', 'y-z', 'all', None] else spurpunkt
@@ -1352,7 +1373,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     teiler = zzahl(1,3)
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
     fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
-    n = [nx,ny,nz] = vektor_kuerzen([int(kfx), int(kfy), int(kfz)])
+    n = [nx,ny,nz] = vektor_kuerzen(vektor_kuerzen([int(kfx), int(kfy), int(kfz)]))
     # print(schnittpunkte), print(fkt_kf), print(n)
     punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
     # print(punkt_a)
