@@ -690,6 +690,8 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         fakt1 = zzahl(1,6)
         fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = fakt1 + zzahl(1,5)
+        while fakt2 == 0:
+            fakt2 = fakt1 + zzahl(1, 5)
         sum = zzahl(1,5)
         xwert = zzahl(1, 9)
         erg = xwert * (fakt1 - fakt2) + sum
@@ -722,6 +724,9 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         fakt1 = zzahl(1, 5)
         fakt2 = zzahl(1,6)
         fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
+        while fakt2 == 0:
+            fakt2 = zzahl(1, 6)
+            fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
         sum = zzahl(1, 9)
         xwert = zzahl(1,9)
         erg = fakt2 * (fakt1 * xwert + sum)
@@ -778,7 +783,10 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         fakt1 = zzahl(1, 5)
         fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = zzahl(1, 6)
-        fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
+        fakt2 = Rational(fakt2, random.choice([2, 4, 5, 10]))
+        while fakt2 == 0:
+            fakt2 = zzahl(1, 6)
+            fakt2 = Rational(fakt2, random.choice([2,4,5,10]))
         sum = zzahl(1, 9)
         xwert = zzahl(1, 9)
         erg = fakt1 * xwert + sum
@@ -795,6 +803,8 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         fakt1 = zzahl(1, 5)
         fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = fakt1 + zzahl(1,5)
+        while fakt2 == 0:
+            fakt2 = fakt1 + zzahl(1, 5)
         fakt3 = zzahl(1, 6)
         fakt3 = Rational(fakt3, random.choice([2,4,5,10])) if rat else fakt3
         sum = zzahl(1, 9)
