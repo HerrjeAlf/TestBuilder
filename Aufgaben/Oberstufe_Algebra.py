@@ -33,7 +33,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     ortsvektor_a = punkt_vektor(3)
     vektor_ab = [a_x, a_y, a_z] = punkt_vektor(4)
     laenge_vektor_ab = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}'
-                        + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_ab),3))))
+                        + '~=~' + gzahl(N(sqrt(sum(a*a for a in vektor_ab)),3)))
     ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
     vektoren_auswahl = [[zf_vorz(a_x), zf_vorz(a_z), zf_vorz(a_y)],
                         [zf_vorz(a_y), zf_vorz(a_z), zf_vorz(a_x)],
@@ -41,12 +41,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
                         [zf_vorz(a_z), zf_vorz(a_x), zf_vorz(a_y)],
                         [zf_vorz(a_z), zf_vorz(a_y), zf_vorz(a_x)]]
 
-    if random.random() < 0.5:
+    vektor_ac = random.choice(vektoren_auswahl)
+    while vektor_vergleich(vektor_ac, vektor_ab) == True:
         vektor_ac = random.choice(vektoren_auswahl)
-        while vektor_vergleich(vektor_ac, vektor_ab) == True:
-            vektor_ac = random.choice(vektoren_auswahl)
-        laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ac)) + '}' + '~=~'
-                            + gzahl(sqrt(N(sum(a*a for a in vektor_ac),3))))
+    laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
+                        + gzahl(N(sqrt(sum(a * a for a in vektor_ac)),3)))
+
+    if random.random() < 0.5:
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
         ortsvektor_d = np.array(ortsvektor_c) - np.array(vektor_ab)
         loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
@@ -66,7 +67,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         vektor_bc = random.choice(vektoren_auswahl)
         while vektor_vergleich(vektor_bc, vektor_ab) == True:
             vektor_bc = random.choice(vektoren_auswahl)
-        laenge_vektor_bc = r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~' + gzahl(sqrt(N(sum(a*a for a in vektor_bc),3)))
+        laenge_vektor_bc = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~'
+                            + gzahl(N(sqrt(sum(a*a for a in vektor_bc)),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
         vektor_ac = np.array(vektor_ab) + np.array(vektor_bc)
         ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_bc)
@@ -138,11 +140,36 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         i += 1
 
     if 'd' in teilaufg:
-        # mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
-        pass
+        # Hier sollen die SuS mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
+        sprod = skalarprodukt(vektor_ab, vektor_ac)
+        betrag_ab = N(sqrt(sum(a * a for a in vektor_ab)),3)
+        betrag_ac = N(sqrt(sum(a * a for a in vektor_ac)),3)
+        erg = N(0.5 * sqrt(betrag_ab**2*betrag_ac**2-sprod*+2),3)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
+                       f'Skalarproduktes.')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                       + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
+                       + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
+                       + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \\ '
+                       + r' \overrightarrow{a} ~=~ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                       + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
+                       + r' \\ ' + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
+                       + laenge_vektor_ab + r' \quad \mathrm{sowie} \quad \overrightarrow{b} ~=~ '
+                       + r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
+                       + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
+                       + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AC} \right| ~=~ '
+                       + laenge_vektor_ac + r' \\ A ~=~ \frac{1}{2} \sqrt{{' + gzahl(betrag_ab) + r'}^2 \cdot {'
+                       + gzahl(betrag_ac) + r'}^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2} ~=~' + gzahl(erg))
+        pkt = 5
+        pkt = 3 if 'b' in teilaufg else pkt
+        liste_punkte.append(pkt)
+        i += 1
 
     if 'e' in teilaufg:
         # mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
+        kprod = np.cross(vektor_ab, vektor_ac)
+
         pass
 
     if 'f' in teilaufg:

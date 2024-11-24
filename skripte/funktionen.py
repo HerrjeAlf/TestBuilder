@@ -404,6 +404,7 @@ def skalarprodukt(vec1, vec2):
     print(liste)
     print(sum(liste))
     return sum(liste)
+
 # Wahrscheinlichkeitsrechnung
 def darstellung_mengen(lsg_menge):
     # korrekte Darstellung der Lösungsmenge

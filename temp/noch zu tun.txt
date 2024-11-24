@@ -2,14 +2,14 @@ allgemein:
 - alte Skripte in neue Form anpassen
 
 Berechnungen:
- - eine Funktion zum lösen von linearen Gleichungssystemen mit Gaußalgorithmus
+ - eine Funktion zum Lösen von linearen Gleichungssystemen mit Gaußalgorithmus
  - kleine Kurvendiskussion
  - Graphen zeichnen
 
 Fehler / Entwicklung:
 in Aufgaben Analysis:
 - Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
-- Biquadratische Funktion mit ganzahligen Extrema, da Nullstellen irrational sein können
+- Biquadratische Funktion mit ganzzahligen Extrema, da Nullstellen irrational sein können
 - Kurvendiskussion von Exponentialfkt mit Parameter um zwei Teilaufgaben ergänzen
     --> 1. weise nach das Stammfunktion stimmt
     --> 2. berechne mit x-Achse eingeschlossene Fläche (x, oo)
@@ -32,6 +32,7 @@ langfristig:
 - GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
 
-neue Projekte
+neue Projekte (Wunschzettel)
+- GUI für TestBuilder
 - Planung Stundenplan mit Graphentheorie in Python programmieren
 - Mathe KI von Google (in Arbeit) zur automatischen Korrektur von Test/Klausuren anpassen
