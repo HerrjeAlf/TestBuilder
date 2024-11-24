@@ -12,8 +12,8 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 05'
-Titel = 'Terme zusammenfassen'
+Art = 'Test'
+Titel = 'Terme und Gleichungen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
@@ -27,7 +27,8 @@ for i in range(anzahl):
                  einheiten_umrechnen(2, anzahl=4),
                  terme_addieren(3, ['b', 'd', 'f', 'h', 'j', 'l']),
                  terme_multiplizieren(4, ['a', 'c', 'd', 'f']),
-                 terme_ausmultiplizieren(5, ['a', 'c', 'e', 'h', 'j'])]]
+                 terme_ausmultiplizieren(5, ['a', 'c', 'e', 'h', 'j']),
+                 gleichungen(6, ['c', 'f', 'i', 'k'])]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
