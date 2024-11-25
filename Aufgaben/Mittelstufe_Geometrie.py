@@ -493,14 +493,20 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
         # Die SuS sollen den Abstand des Beobachters vom Wetterballon berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob) + r' ^{ \circ},~a~=~'
-                                                 + str(hoehe) + r'km, \quad ges \colon  b \quad (1BE)} \\'
-                                                 + r' sin( \alpha ) ~=~ \frac{a}{b}'
-                                                   r' \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
-                                                   r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} ~=~'
-                                                   r' \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
-                                                 + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)'))
-        liste_punkte.append(4)
+        if 'a' in teilaufg:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
+                           + r'b \quad \vert \div sin( \alpha ) \quad \to \quad b ~=~ '
+                           + r'\frac{a}{ sin( \alpha )} ~=~ \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
+                           + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)')
+            pkt = 3
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob)
+                           + r' ^{ \circ},~a~=~' + str(hoehe) + r'km, \quad ges \colon b \quad (1BE)} \\'
+                           + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
+                           + r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} \frac{' + str(hoehe) + r'km }{ sin( '
+                           + str(w_beob) + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)')
+            pkt = 4
+        liste_punkte.append(pkt)
         i += 1
 
     if BE != []:
