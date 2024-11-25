@@ -148,27 +148,37 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
                        f'Skalarproduktes.')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
-                       + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
-                       + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
-                       + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \\ '
-                       + r' \overrightarrow{a} ~=~ \overrightarrow{AB} ~=~ \begin{pmatrix} '
-                       + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
-                       + r' \\ ' + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
-                       + laenge_vektor_ab + r' \quad \mathrm{sowie} \quad \overrightarrow{b} ~=~ '
-                       + r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
-                       + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
-                       + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AC} \right| ~=~ '
-                       + laenge_vektor_ac + r' \\ A ~=~ \frac{1}{2} \sqrt{{' + gzahl(betrag_ab) + r'}^2 \cdot {'
-                       + gzahl(betrag_ac) + r'}^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2} ~=~' + gzahl(erg))
-        pkt = 5
-        pkt = 3 if 'b' in teilaufg else pkt
+        if 'b' in teilaufg:
+            pkt = 3
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
+                           + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
+                           + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \frac{1}{2} ~=~ \sqrt{{'
+                           + gzahl(betrag_ab) + r'}^2 \cdot {' + gzahl(betrag_ac) + r'}^2 - \left( '
+                           + gzahl(N(sprod,3)) + r' \right) ^2} ~=~' + gzahl(erg))
+        else:
+            pkt = 5
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
+                           + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
+                           + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \\ '
+                           + r' \overrightarrow{a} ~=~ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
+                           + r' \\ ' + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
+                           + laenge_vektor_ab + r' \quad \mathrm{sowie} \quad \overrightarrow{b} ~=~ '
+                           + r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
+                           + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
+                           + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AC} \right| ~=~ ' + laenge_vektor_ac
+                           + r' \\ A ~=~ \frac{1}{2} \sqrt{{' + gzahl(betrag_ab) + r'}^2 \cdot {' + gzahl(betrag_ac)
+                           + r'}^2 - \left( ' + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg))
         liste_punkte.append(pkt)
         i += 1
 
     if 'e' in teilaufg:
         # mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = np.cross(vektor_ab, vektor_ac)
+
 
         pass
 
