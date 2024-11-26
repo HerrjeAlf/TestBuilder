@@ -401,8 +401,6 @@ def skalarprodukt(vec1, vec2):
     if len(vec1) != len(vec2):
         exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
     liste = [x * y for x, y in zip(vec1, vec2)]
-    print(liste)
-    print(sum(liste))
     return sum(liste)
 
 # Wahrscheinlichkeitsrechnung

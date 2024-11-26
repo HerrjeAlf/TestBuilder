@@ -30,20 +30,20 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
-    ortsvektor_a = punkt_vektor(3)
-    vektor_ab = [a_x, a_y, a_z] = punkt_vektor(4)
+    ortsvektor_a = [ax, ay, az] = punkt_vektor(3)
+    vektor_ab = [abx, aby, abz] = punkt_vektor(4)
     laenge_vektor_ab = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}'
                         + '~=~' + gzahl(N(sqrt(sum(a*a for a in vektor_ab)),3)))
     ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
-    vektoren_auswahl = [[zf_vorz(a_x), zf_vorz(a_z), zf_vorz(a_y)],
-                        [zf_vorz(a_y), zf_vorz(a_z), zf_vorz(a_x)],
-                        [zf_vorz(a_y), zf_vorz(a_x), zf_vorz(a_z)],
-                        [zf_vorz(a_z), zf_vorz(a_x), zf_vorz(a_y)],
-                        [zf_vorz(a_z), zf_vorz(a_y), zf_vorz(a_x)]]
+    vektoren_auswahl = [[zf_vorz(abx), zf_vorz(abz), zf_vorz(aby)],
+                        [zf_vorz(aby), zf_vorz(abz), zf_vorz(abx)],
+                        [zf_vorz(aby), zf_vorz(abx), zf_vorz(abz)],
+                        [zf_vorz(abz), zf_vorz(abx), zf_vorz(aby)],
+                        [zf_vorz(abz), zf_vorz(aby), zf_vorz(abx)]]
 
-    vektor_ac = random.choice(vektoren_auswahl)
+    vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
     while vektor_vergleich(vektor_ac, vektor_ab) == True:
-        vektor_ac = random.choice(vektoren_auswahl)
+        vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
     laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
                         + gzahl(N(sqrt(sum(a * a for a in vektor_ac)),3)))
 
@@ -88,9 +88,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
-               'A(' + gzahl(ortsvektor_a[0]) + '|' + gzahl(ortsvektor_a[1]) + '|' + gzahl(ortsvektor_a[2]) + '), ' 
-               'B(' + gzahl(ortsvektor_b[0]) + '|' + gzahl(ortsvektor_b[1]) + '|' + gzahl(ortsvektor_b[2]) + ') und ' 
-               'C(' + gzahl(ortsvektor_c[0]) + '|' + gzahl(ortsvektor_c[1]) + '|' + gzahl(ortsvektor_c[2]) + '). \n\n']
+               'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), ' 
+               'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und ' 
+               'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -142,57 +142,166 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
     if 'd' in teilaufg:
         # Hier sollen die SuS mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
         sprod = skalarprodukt(vektor_ab, vektor_ac)
-        betrag_ab = N(sqrt(sum(a * a for a in vektor_ab)),3)
-        betrag_ac = N(sqrt(sum(a * a for a in vektor_ac)),3)
-        erg = N(0.5 * sqrt(betrag_ab**2*betrag_ac**2-sprod*+2),3)
+        diskr_ab = sum(a * a for a in vektor_ab)
+        diskr_ac = sum(a * a for a in vektor_ac)
+        erg = N(0.5 * sqrt(diskr_ab*diskr_ac-sprod**2),3)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
-                       f'Skalarproduktes.')
+                       f'Skalarproduktes. \n\n')
         if 'b' in teilaufg:
             pkt = 3
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
-                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
-                           + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
-                           + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \frac{1}{2} ~=~ \sqrt{{'
-                           + gzahl(betrag_ab) + r'}^2 \cdot {' + gzahl(betrag_ac) + r'}^2 - \left( '
-                           + gzahl(N(sprod,3)) + r' \right) ^2} ~=~' + gzahl(erg))
+                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
+                           + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
+                           + r' \overrightarrow{AC} \right) }^2 }~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{'
+                           + gzahl(diskr_ab) + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac)
+                           + r'} \right) }^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2 } ~=~' + gzahl(erg))
         else:
             pkt = 5
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
-                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{a} \right| }^2 \cdot '
-                           + r' { \left| \overrightarrow{b} \right| }^2 - { \left( \overrightarrow{a} \cdot '
-                           + r' \overrightarrow{b} \right) }^2 } \hspace{10em} \\ '
-                           + r' \overrightarrow{a} ~=~ \overrightarrow{AB} ~=~ \begin{pmatrix} '
-                           + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
-                           + r' \\ ' + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
-                           + laenge_vektor_ab + r' \quad \mathrm{sowie} \quad \overrightarrow{b} ~=~ '
-                           + r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
-                           + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
+                           + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
+                           + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
+                           + r' \overrightarrow{AC} \right) }^2 } \hspace{10em} \\ '
+                           + r' \overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(vektor_ab[0]) + r' \\'
+                           + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2]) + r' \\ '
+                           + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
+                           + laenge_vektor_ab + r' \quad \mathrm{sowie} \quad \overrightarrow{AC} ~=~ \begin{pmatrix}'
+                           + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
                            + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AC} \right| ~=~ ' + laenge_vektor_ac
-                           + r' \\ A ~=~ \frac{1}{2} \sqrt{{' + gzahl(betrag_ab) + r'}^2 \cdot {' + gzahl(betrag_ac)
-                           + r'}^2 - \left( ' + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg))
+                           + r' \\ A ~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{' + gzahl(diskr_ab)
+                           + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac) + r'} \right) }^2 - \left( '
+                           + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg))
         liste_punkte.append(pkt)
         i += 1
 
     if 'e' in teilaufg:
-        # mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
+        # Hier sollen die SuS mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        kprod = np.cross(vektor_ab, vektor_ac)
-
-
-        pass
+        kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
+        laenge_kprod =  N(sqrt(sum(a*a for a in kprod)),3)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
+                       + f'Kreuzproduktes. \n\n')
+        if len([element for element in ['b', 'd'] if element in teilaufg]) > 0:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
+                           + r'~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
+                           + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
+                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)))
+            pkt = 3
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
+                           + r' \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
+                           + r' \\ ' + r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ '
+                           + r' \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\'
+                           + gzahl(vektor_ac[2]) + r' \\ \end{pmatrix} \quad \to \quad '
+                           + r' A ~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
+                           + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
+                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)))
+            pkt = 5
+        liste_punkte.append(pkt)
+        i += 1
 
     if 'f' in teilaufg:
         # mithilfe des Kreuzproduktes die Fläche des Parallelogramms ABCD ausrechnen
-        pass
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
+        laenge_kprod = N(sqrt(sum(a * a for a in kprod)), 3)
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des '
+                       + f'Kreuzproduktes. \n\n')
+        if len([element for element in ['b', 'd', 'e'] if element in teilaufg]) > 0:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
+                           + r'~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
+                           + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ '
+                           + gzahl(laenge_kprod))
+            pkt = 3
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+                           + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
+                           + r' \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
+                           + r' \\ ' + r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ '
+                           + r' \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\'
+                           + gzahl(vektor_ac[2]) + r' \\ \end{pmatrix} \quad \to \quad '
+                           + r' A ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
+                           + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ ' + gzahl(laenge_kprod))
+            pkt = 5
+        liste_punkte.append(pkt)
+        i += 1
 
     if 'g' in teilaufg:
-        # mithilfe des Kreuzproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
-        pass
+        # mithilfe des Kreuz- und Skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
+        kprod_gek = vektor_kuerzen(kprod)
+        punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
+        vektor_ae = [aex,aey,aez] = [ex - abx, ey - aby, ez - abz]
+        erg = N(abs(skalarprodukt(kprod, punkt_e)),3)
+        aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
+                        + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
+                        str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+        if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
+                           + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\'
+                           + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix} '
+                           + gzahl(aex) + r' \\' + gzahl(aey) + r' \\' + gzahl(aez) + r' \\ '
+                           + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+            pkt = 5
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
+                           + r' \overrightarrow{AE}  \right| \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
+                           + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
+                           + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
+                           + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
+                           + r' \begin{pmatrix}' + gzahl(aex) + r' \\' + gzahl(aey) + r' \\'
+                           + gzahl(aez) + r' \\ \end{pmatrix} \quad \to \quad A ~=~ \left| \begin{pmatrix} '
+                           + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey)
+                           + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+            pkt = 7
+        liste_punkte.append(pkt)
+        i += 1
 
     if 'h' in teilaufg:
-        # mithilfe des Kreuzproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
-        pass
+        # mithilfe des Kreuz- und Skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
+        kprod_gek = vektor_kuerzen(kprod)
+        punkt_f = [fx, fy, fz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
+        vektor_af = [afx, afy, afz] = [fx - abx, fy - aby, fz - abz]
+        erg = Rational(abs(skalarprodukt(kprod, punkt_f)),6)
+        aufgabe.extend(('Gegeben ist ein weiterer Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
+                        + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+                        str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
+        if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
+                           + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\'
+                           + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix} '
+                           + gzahl(afx) + r' \\' + gzahl(afy) + r' \\' + gzahl(afz) + r' \\ '
+                           + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+            pkt = 5
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
+                           + r' \overrightarrow{AE}  \right| \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
+                           + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
+                           + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
+                           + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
+                           + r' \begin{pmatrix}' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
+                           + gzahl(afz) + r' \\ \end{pmatrix} \quad \to \quad A ~=~ \left| \begin{pmatrix} '
+                           + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy)
+                           + r' \\' + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+            pkt = 7
+        liste_punkte.append(pkt)
+        i += 1
 
         if ks != None:
             if ks == True:
