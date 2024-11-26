@@ -12,7 +12,7 @@ Kurs = ('EK und GK')
 Fach = 'Mathematik'
 Klasse = '10f'
 Lehrer = 'Herr Herrys'
-Art = 'Test'
+Art = '1. Klassenarbeit'
 Titel = 'Trigonometrie im rechtwinkligen Dreieck'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
@@ -25,8 +25,9 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[kongruente_Dreiecke(1),
                  rechtwinkliges_dreieck(2),
-                 verhaeltnisgleichgungen(3),
-                 sachaufgabe_wetterballon(4)]]
+                 verhaeltnisgleichgungen(3)],
+                 [sachaufgabe_wetterballon(4),
+                 sachaufgabe_rampe(5)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
