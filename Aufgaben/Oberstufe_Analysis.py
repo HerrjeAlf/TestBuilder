@@ -2271,7 +2271,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         lsg = solve_linear_system(glsystem, a, b, c, d)
         lsg_gzahl = vektor_kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
         faktor = zzahl(3, 7) / 2
-        fkt_a1, fkt_a2, fkt_a3, fkt_a4 = [gzahl(faktor*element) for element in lsg_gzahl]
+        fkt_a1, fkt_a2, fkt_a3, fkt_a4 = [faktor*element for element in lsg_gzahl]
+        print(fkt_a1)
         fkt = fkt_a1 * x ** 3 + fkt_a2 * x ** 2 + fkt_a3 * x + fkt_a4
         fkt_str = (vorz_v_aussen(fkt_a1,'x^3') + vorz_v_innen(fkt_a2,'x^2')
                    + vorz_v_innen(fkt_a3,'x') + vorz_str(fkt_a4))
