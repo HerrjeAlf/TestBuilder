@@ -82,7 +82,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
 
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
-        def Hausaufgabenkontrolle():
+        def Aufgaben():
             Aufgabe = Document(geometry_options=geometry_options)
             packages(Aufgabe)
 
@@ -122,7 +122,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1):
             Loesung.generate_pdf(f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=True)
 
         # Druck der Seiten
-        Hausaufgabenkontrolle()
+        Aufgaben()
         Erwartungshorizont()
 
 
@@ -169,7 +169,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
 
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
-        def Hausaufgabenkontrolle():
+        def Aufgaben():
             Aufgabe = Document(geometry_options=geometry_options)
             packages(Aufgabe)
 
@@ -235,7 +235,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False):
             Loesung.generate_pdf(f'pdf/Kl. {Klasse} - {Art} {Teil} - Lsg', clean_tex=true)
 
         # Druck der Seiten
-        Hausaufgabenkontrolle()
+        Aufgaben()
         Erwartungshorizont()
         del liste_bez[1:]
         del liste_punkte[1:]
