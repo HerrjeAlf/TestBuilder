@@ -492,7 +492,7 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
     if 'b' in teilaufg:
         # Die SuS sollen den Abstand des Beobachters vom Wetterballon berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter.')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter. \n\n')
         if 'a' in teilaufg:
             loesung.append(str(liste_teilaufg[i]) + r') \quad sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
                            + r'b \quad \vert \div sin( \alpha ) \quad \to \quad b ~=~ '
