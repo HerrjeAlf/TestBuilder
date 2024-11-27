@@ -19,7 +19,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ks=None, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Der Parameter "ks=" legt fest, ob die Aufgabe ein leeres dreidimensionales Koordinatensystem oder kariertes Papier enthält. Der Parameter kann "None", "True" oder "False" sein". Standardmäßig ist "ks=None" und somit gibt kein Koordinatensystem und kein kariertes Papier.
@@ -86,11 +86,17 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
+    if len([element for element in ['g', 'h'] if element in teilaufg]) > 0:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+                   + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
+                   + 'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ), '
+                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ) ']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+                   + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
+                   + 'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und '
+                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
-               'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), ' 
-               'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und ' 
-               'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -239,9 +245,15 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
         vektor_ae = [aex,aey,aez] = [ex - abx, ey - aby, ez - abz]
         erg = N(abs(skalarprodukt(kprod, punkt_e)),3)
-        aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
-                        + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+        if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
+            aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
+                            + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
+                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+        else:
+                aufgabe.extend(('und ein weiterer \n Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
+                                + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
+                                str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+
         if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
@@ -275,28 +287,33 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c'], ks=None, BE=[]):
         punkt_f = [fx, fy, fz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
         vektor_af = [afx, afy, afz] = [fx - abx, fy - aby, fz - abz]
         erg = Rational(abs(skalarprodukt(kprod, punkt_f)),6)
-        aufgabe.extend(('Gegeben ist ein weiterer Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
-                        + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
+        if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+            aufgabe.extend(('Gegeben ist ein weiterer Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
+        else:
+            aufgabe.extend(('sowie ein weiterer \n Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
-                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
-                           + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\'
-                           + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix} '
-                           + gzahl(afx) + r' \\' + gzahl(afy) + r' \\' + gzahl(afz) + r' \\ '
-                           + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
+                           + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
+                           + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
+                           + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 5
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
-                           + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
-                           + r' \overrightarrow{AE}  \right| \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
-                           + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
-                           + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
+                           + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
+                           + r' \right) \cdot \overrightarrow{AE}  \right| \hspace{10em} \\'
+                           + r'\overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(abx) + r' \\' + gzahl(aby)
+                           + r' \\' + gzahl(abz) + r' \\ ' + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
                            + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
                            + r' \begin{pmatrix}' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
-                           + gzahl(afz) + r' \\ \end{pmatrix} \quad \to \quad A ~=~ \left| \begin{pmatrix} '
-                           + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
+                           + gzahl(afz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
+                           + r' \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\'
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy)
                            + r' \\' + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 7
