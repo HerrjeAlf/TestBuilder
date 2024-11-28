@@ -311,11 +311,11 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(abz) + r' \\ ' + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
                            + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
-                           + r' \begin{pmatrix}' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
-                           + gzahl(afz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
+                           + r' \begin{pmatrix}' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
+                           + gzahl(asz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
                            + r' \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\'
-                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy)
-                           + r' \\' + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy)
+                           + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 7
         liste_punkte.append(pkt)
         i += 1
