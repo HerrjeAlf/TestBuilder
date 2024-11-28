@@ -136,7 +136,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, BE=[]):
     l_b = 2 * m * n / 10
     l_c = (m ** 2 + n ** 2) / 10
     gamma = 90
-    beta = int(math.degrees(math.asin(l_b / l_c)))
+    beta = round(math.degrees(math.asin(l_b / l_c)))
     alpha = gamma - beta
     auswahl = random.choice([[0, 1, 2], [0,2,1], []])
     st = [['a', 'b', 'c'][x] for x in auswahl]
@@ -456,7 +456,7 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
     abstand_beob_ballon = (m ** 2 + n ** 2) / 10
     # hier werden die Winkel berechnet
     w_warte = 90
-    w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_warte)))
+    w_beob = round(math.degrees(math.atan(hoehe / abstand_beob_warte)))
     w_b = w_warte - w_beob
 
     if 'a' not in teilaufg:
@@ -478,7 +478,7 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Winkel, unter dem der Beobachter'
                                                 f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(1BE)} \quad \mathrm{geg:~a~=~'
                                                  + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
                                                  + r'km, \quad ges \colon  \alpha \quad (1BE)} \\'
                                                  + r' tan( \alpha ) ~=~ \frac{a}{c} \quad \vert tan^{-1}()'
@@ -486,7 +486,7 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
                                                    r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
                                                  + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
                                                  + r' ^{ \circ} \quad (3BE)'))
-        liste_punkte.append(6)
+        liste_punkte.append(5)
         i += 1
 
     if 'b' in teilaufg:
@@ -531,7 +531,7 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
     laenge_leiter = nzahl(23,50)/10
     deckenhoehe = N(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
-    anstellwinkel = int(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
+    anstellwinkel = round(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar. '
                + f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m. '
@@ -601,7 +601,7 @@ def sachaufgabe_turm(nr, koerpergroesse=True, BE=[]):
 
     # hier werden die Winkel berechnet
     w_warte = 90
-    w_beob = int(math.degrees(math.atan(hoehe / abstand_beob_turm)))
+    w_beob = round(math.degrees(math.atan(hoehe / abstand_beob_turm)))
     w_b = w_warte - w_beob
 
     if koerpergroesse == True:
@@ -649,7 +649,7 @@ def sachaufgabe_rampe(nr, BE=[]):
     tiefe_rampe = hoehe + nzahl(30, 120)
     # hier werden die Winkel berechnet
     w_haus = 90
-    w_rampe = int(math.degrees(math.atan(hoehe / tiefe_rampe)))
+    w_rampe = round(math.degrees(math.atan(hoehe / tiefe_rampe)))
     w_haus = w_haus - w_rampe
     laenge_rampe = N(hoehe/math.sin(math.radians(w_rampe)),4)
 
