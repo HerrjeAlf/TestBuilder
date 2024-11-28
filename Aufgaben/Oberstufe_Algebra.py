@@ -284,24 +284,24 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor_kuerzen(kprod)
-        punkt_f = [fx, fy, fz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
-        vektor_af = [afx, afy, afz] = [fx - abx, fy - aby, fz - abz]
-        erg = Rational(abs(skalarprodukt(kprod, punkt_f)),6)
+        punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
+        vektor_as = [asx, asy, asz] = [sx - abx, sy - aby, sz - abz]
+        erg = Rational(abs(skalarprodukt(kprod, punkt_s)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
-            aufgabe.extend(('Gegeben ist ein weiterer Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+            aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
                             str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         else:
-            aufgabe.extend(('sowie ein weiterer \n Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+            aufgabe.extend(('sowie ein weiterer \n Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
                             str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
                            + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
-                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
-                           + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
+                           + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 5
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
