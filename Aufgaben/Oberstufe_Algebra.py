@@ -41,13 +41,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                         [zf_vorz(abz), zf_vorz(abx), zf_vorz(aby)],
                         [zf_vorz(abz), zf_vorz(aby), zf_vorz(abx)]]
 
-    vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
-    while vektor_vergleich(vektor_ac, vektor_ab) == True:
-        vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
-    laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
-                        + gzahl(N(sqrt(sum(a * a for a in vektor_ac)),3)))
+
 
     if random.random() < 0.5:
+        vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
+        while vektor_vergleich(vektor_ac, vektor_ab) == True:
+            vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
+        laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
+                            + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
         ortsvektor_d = np.array(ortsvektor_c) - np.array(vektor_ab)
         loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
@@ -70,7 +71,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         laenge_vektor_bc = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a*a for a in vektor_bc)),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
-        vektor_ac = np.array(vektor_ab) + np.array(vektor_bc)
+        vektor_ac = [acx, acy, acz] = ortsvektor_c - ortsvektor_a
+        laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
+                            + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
         ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_bc)
         loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + gzahl(vektor_bc[0]) + r' \\' + gzahl(vektor_bc[1])
                      + r' \\' + gzahl(vektor_bc[2]) + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{('
@@ -284,7 +287,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor_kuerzen(kprod)
-        punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
+        punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
         erg = Rational(abs(skalarprodukt(kprod, punkt_s)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
