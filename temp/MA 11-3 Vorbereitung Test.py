@@ -15,11 +15,7 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[aenderungsrate(1, ableitung=True),
-                 ableitungen(2, anzahl=6)],
-                 [grafisches_ableiten(3),
-                  anwend_abl_seilbahn(4, ['a', 'b', 'c', 'd', 'e'])],
-                 [kurvendiskussion_polynome(5, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])]]
+    Aufgaben = [[kurvendiskussion_polynome(5, ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

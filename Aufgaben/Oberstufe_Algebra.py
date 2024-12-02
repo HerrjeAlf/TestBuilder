@@ -480,7 +480,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         i += 1
 
     if 'd' in teilaufg:
-        # Linearkombination von Vektoren überprüfen
+        # Parameter a für Linearkombination von Vektoren berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 0
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
@@ -574,7 +574,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             vektor_1 = (faktor * vektor_2[0],faktor * vektor_2[1],faktor * vektor_2[2])
             ergebnis = r' \mathrm{Die~Vektoren~sind~kollinear.} '
         else:
-            vektor_1 = (vektor_2[0]*zzahl(1,6)/2,vektor_2[1]*zzahl(3,8)/2,vektor_2[2]*zzahl(5,10)/2)
+            vektor_1 = (faktor*vektor_2[0],faktor*vektor_2[1],faktor * vektor_2[2] + zzahl(1,6)/2)
             ergebnis = r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
 
         aufgabe.extend((str(liste_teilaufg[i]) + f') Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
@@ -1322,10 +1322,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=[]):
+def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], lagebeziehung_t_ebene=None, BE=[]):
     # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "t_in_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E liegt "t_in_ebene=True" oder auch nicht "t_in_ebene=False".  Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene='Ebene'" bzw. im Dreieck ABC liegt "lagebeziehung_t_ebene='Dreieck'" oder auch nicht "lagebeziehung_t_ebene=False".  Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
@@ -1354,14 +1354,23 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
         ergebnis_n0 = gzahl(n_betrag)
     else:
         ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk**2 + ny_gk**2 + nz_gk**2) + r'}'
-    parameter_r = zzahl(1, 2)
-    parameter_s = zzahl(1, 2)
-    if t_in_ebene == None and 'e' not in teilaufg:
-        t_in_ebene = random.choice([True,False])
-    if t_in_ebene == True:
+
+    lagebeziehung_t_ebene == False if 'f' in teilaufg else lagebeziehung_t_ebene
+    if lagebeziehung_t_ebene == None and 'f' not in teilaufg:
+        lagebeziehung_t_ebene = random.choice([False, 'Ebene', 'Dreieck'])
+    if lagebeziehung_t_ebene == 'Ebene':
+        parameter_r = zzahl(2,6)/2
+        parameter_s = zzahl(2,6)/2
         punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
         lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3BE) \\'
+    elif lagebeziehung_t_ebene == 'Dreieck':
+        parameter_r = nzahl(1, 6) / 10
+        parameter_s = 1 - nzahl(1,2)/10 - parameter_r
+        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+        lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~im~Dreieck~ABC.} \quad (3BE) \\'
     else:
+        parameter_r = zzahl(2, 6) / 2
+        parameter_s = zzahl(2, 6) / 2
         [x, y, z] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
         punkt_t = [tx, ty, tz] = [x, y, z + zzahl(1,3)]
         lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3BE) \\'
@@ -1456,12 +1465,86 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                        + gzahl(tz) + ') ~=~' + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
                        + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk)) + lsg
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-
         i += 1
 
-    if t_in_ebene == False:
+    if 'd' in teilaufg:
+        # Die SuS sollen Überprüfen, ob ein Punkt der von den Punkten A, B und C aufgespannten Ebene bzw. im Dreieck ABC liegt
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 9
+
+        else:
+            vektor_1 = [x_1, y_1, z_1] = (vektor_2[0] * faktor_1 + vektor_3[0] * faktor_2,
+                                          vektor_2[1] * faktor_1 + vektor_3[1] * faktor_2,
+                                          vektor_2[2] * faktor_1 + vektor_3[2] * faktor_2 + zzahl(1, 3))
+            loesung_2 = (r' \mathrm{f.A. \quad \to \quad Vektor~ \overrightarrow{a} ~lässt~sich~nicht~als~'
+                         r' Linearkombination~von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.}'
+                         r' \quad (1P) \\')
+
+        aufgabe.extend((str(liste_teilaufg[i]) + ') Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
+                        + ' von b und c dargestellt werden kann.',
+                        r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
+                        + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
+                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
+                        + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{c} ~=~\begin{pmatrix}'
+                        + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
+                        + r' \end{pmatrix} \\'))
+
+        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + gzahl(x_2) + r' \cdot r'
+                     + vorz_str(x_3) + r's \cdot \quad \to \quad r~=~'
+                     + gzahl(Rational(x_1, x_2)) + vorz_str(Rational(-1 * x_3, x_2))
+                     + r' \cdot s \quad (2P) \\')
+
+        if y_3 != 0:
+            lsg_s = N((y_1 - (x_1 * y_2) / x_2) / (y_3 - (x_3 * y_2) / x_2), 3)
+            lsg_r = N((x_1 / x_2) - (x_3 / x_2) * ((y_1 - (x_1 * y_2) / x_2) / (y_3 - (x_3 * y_2) / x_2)), 3)
+            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
+                         + gzahl(y_2) + r' \cdot \left(' + gzahl(Rational(x_1, x_2))
+                         + vorz_str(Rational(-1 * x_3, x_2)) + r' \cdot s \right)'
+                         + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
+                         + gzahl(y_1) + vorz_str(Rational(-1 * x_1 * y_2, x_2)) + r' ~=~ s \cdot \left('
+                         + gzahl(Rational(-1 * x_3 * y_2, x_2)) + vorz_str(y_3)
+                         + r' \right) \quad (1P) \quad \to \quad '
+                         + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
+                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
+                         + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
+                         + r' ~=~ ' + gzahl(N(z_2 * lsg_r + z_3 * lsg_s, 3)) + r'} \quad (1P)')
+        elif z_3 != 0:
+            lsg_r = N(Rational((z_1 - (x_1 * z_2) / x_2), (z_3 - (x_3 * z_2) / x_2)), 3)
+            lsg_s = N(x_1 / x_2 - (x_3 / x_2) * ((z_1 + (x_1 * z_2) / x_2) / (z_3 - (x_3 * z_2) / x_2)), 3)
+            print(lsg_r)
+            print(lsg_s)
+            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
+                         + gzahl(z_2) + r' \cdot \left(' + gzahl(Rational(x_1, x_2))
+                         + vorz_str(Rational(-1 * x_3, x_2)) + r' \cdot s \right)'
+                         + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
+                         + gzahl(z_1) + vorz_str(Rational(-1 * x_1 * z_2, x_2)) + r' ~=~ s \cdot \left('
+                         + gzahl(Rational(-1 * x_3 * z_2, x_2)) + vorz_str(z_3)
+                         + r' \cdot s \right) \quad (2P) \quad \to \quad '
+                         + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1 * z_2) / x_2), (z_3 - (x_3 * z_2) / x_2)))
+                         + r' \quad (1P) \quad  r~=~ '
+                         + gzahl(
+                        N(x_1 / x_2 - (x_3 / x_2) * ((z_1 + (x_1 * z_2) / x_2) / (z_3 - (x_3 * z_2) / x_2)), 3))
+                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~II: ' + gzahl(y_1) + '~=~' + gzahl(lsg_r)
+                         + r' \cdot ' + gzahl_klammer(y_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(y_3)
+                         + r' ~=~ ' + gzahl(N(y_2 * lsg_r + y_3 * lsg_s, 3)) + r'} \quad (1P)')
+        else:
+            pass
+
+        loesung.append(
+            str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
+            + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
+            + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
+            + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
+            + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
+            + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\ ' + loesung_2
+            + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+
+        liste_punkte.append(punkte)
+        i += 1
+
+    if lagebeziehung_t_ebene == False:
         # Aufstellen der hessischen Normalform der Ebenengleichung
-        if 'd' in teilaufg:
+        if 'e' in teilaufg:
             punkte = 4
             liste_punkte.append(punkte)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1478,7 +1561,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], t_in_ebene=None, BE=
                            + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
             i += 1
 
-        if 'e' in teilaufg:
+        if 'f' in teilaufg:
             # Berechnung des Abstandes eines Punktes von der Ebene
             punkte = 3
             liste_punkte.append(punkte)
