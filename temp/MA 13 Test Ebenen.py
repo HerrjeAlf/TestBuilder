@@ -25,7 +25,12 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[geraden_aufstellen(1, ['a', 'c']),
                  ebene_und_punkt(2, ['a', 'b', 'c']),
-                 ebenen_umformen(3)]]
+                 ebenen_umformen(3),
+                 random.choice([punkte_und_vektoren(4, ['e']),
+                                punkte_und_vektoren(4, ['f']),
+                                punkte_und_vektoren(4, ['g']),
+                                punkte_und_vektoren(4, ['h'])])]]
+
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

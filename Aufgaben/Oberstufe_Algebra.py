@@ -41,13 +41,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                         [zf_vorz(abz), zf_vorz(abx), zf_vorz(aby)],
                         [zf_vorz(abz), zf_vorz(aby), zf_vorz(abx)]]
 
-    vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
-    while vektor_vergleich(vektor_ac, vektor_ab) == True:
-        vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
-    laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
-                        + gzahl(N(sqrt(sum(a * a for a in vektor_ac)),3)))
+
 
     if random.random() < 0.5:
+        vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
+        while vektor_vergleich(vektor_ac, vektor_ab) == True:
+            vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
+        laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
+                            + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
         ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
         ortsvektor_d = np.array(ortsvektor_c) - np.array(vektor_ab)
         loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
@@ -70,7 +71,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         laenge_vektor_bc = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a*a for a in vektor_bc)),3)))
         ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
-        vektor_ac = np.array(vektor_ab) + np.array(vektor_bc)
+        vektor_ac = [acx, acy, acz] = ortsvektor_c - ortsvektor_a
+        laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
+                            + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
         ortsvektor_d = np.array(ortsvektor_a) + np.array(vektor_bc)
         loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + gzahl(vektor_bc[0]) + r' \\' + gzahl(vektor_bc[1])
                      + r' \\' + gzahl(vektor_bc[2]) + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{('
@@ -243,7 +246,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor_kuerzen(kprod)
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
-        vektor_ae = [aex,aey,aez] = [ex - abx, ey - aby, ez - abz]
+        vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
         erg = N(abs(skalarprodukt(kprod, punkt_e)),3)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
@@ -284,24 +287,24 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor_kuerzen(kprod)
-        punkt_f = [fx, fy, fz] = ortsvektor_a + 0.5* (vektor_ab + vektor_ac) + kprod_gek
-        vektor_af = [afx, afy, afz] = [fx - abx, fy - aby, fz - abz]
-        erg = Rational(abs(skalarprodukt(kprod, punkt_f)),6)
+        punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
+        vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
+        erg = Rational(abs(skalarprodukt(kprod, punkt_s)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
-            aufgabe.extend(('Gegeben ist ein weiterer Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+            aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
                             str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         else:
-            aufgabe.extend(('sowie ein weiterer \n Punkt F( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCF bildet. \n\n',
+            aufgabe.extend(('sowie ein weiterer \n Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
+                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
                             str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
                            + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
-                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
-                           + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
+                           + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 5
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
@@ -311,11 +314,11 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(abz) + r' \\ ' + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
                            + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
-                           + r' \begin{pmatrix}' + gzahl(afx) + r' \\' + gzahl(afy) + r' \\'
-                           + gzahl(afz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
+                           + r' \begin{pmatrix}' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
+                           + gzahl(asz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
                            + r' \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\'
-                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(afx) + r' \\' + gzahl(afy)
-                           + r' \\' + gzahl(afz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy)
+                           + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
             pkt = 7
         liste_punkte.append(pkt)
         i += 1

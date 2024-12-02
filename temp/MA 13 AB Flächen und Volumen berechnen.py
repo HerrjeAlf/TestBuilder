@@ -17,9 +17,9 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[punkte_und_vektoren(1, ['d']),
                  punkte_und_vektoren(2, ['e']),
-                 punkte_und_vektoren(2, ['f']),
-                 punkte_und_vektoren(3, ['g']),
-                 punkte_und_vektoren(4, ['h'])]]
+                 punkte_und_vektoren(3, ['f']),
+                 punkte_und_vektoren(5, ['g']),
+                 punkte_und_vektoren(6, ['h'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
