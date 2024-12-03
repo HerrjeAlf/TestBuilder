@@ -116,3 +116,5 @@ laenge = float(sqrt(laenge_quadr))
 print(kvec)
 print(laenge_quadr)
 print(laenge)
+
+print(Rational(1,3))
