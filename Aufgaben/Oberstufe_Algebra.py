@@ -247,7 +247,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         kprod_gek = vektor_kuerzen(kprod)
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
         vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
-        erg = N(abs(skalarprodukt(kprod, punkt_e)),3)
+        erg = N(abs(skalarprodukt(kprod, vektor_ae)),3)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
                             + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
@@ -274,7 +274,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
                            + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
                            + r' \begin{pmatrix}' + gzahl(aex) + r' \\' + gzahl(aey) + r' \\'
-                           + gzahl(aez) + r' \\ \end{pmatrix} \quad \to \quad A ~=~ \left| \begin{pmatrix} '
+                           + gzahl(aez) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey)
                            + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
@@ -289,7 +289,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         kprod_gek = vektor_kuerzen(kprod)
         punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
-        erg = Rational(abs(skalarprodukt(kprod, punkt_s)),6)
+        erg = Rational(abs(skalarprodukt(kprod, vektor_as)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
                             + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',

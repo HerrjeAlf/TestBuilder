@@ -193,7 +193,7 @@ def vorz_fakt(k):
     else:
         return 1
 
-def vorz_str(k, null=False):
+def vorz_str(k, null=True):
     try:
         if k == 0:
             return '+0' if null else ''  # Falls auch Nullen angezeigt werden sollen
