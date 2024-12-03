@@ -1482,7 +1482,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
-                       + f'{gzahl(ty)} ) in der Ebene E liegt. \n\n')
+                       + f'{gzahl(tz)} ) in der Ebene E liegt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E:~' + gzahl(nx_gk) + r' \cdot (' + gzahl(tx) + ')'
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ty) + ')' + vorz_str(nz_gk) + r' \cdot ('
                        + gzahl(tz) + ') ~=~' + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
