@@ -107,4 +107,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-print(math.sin(67*pi/180))
+vec1 = [-3,-4,-1]
+vec2 = [3,1,-2]
+kvec = np.cross(vec1,vec2)
+laenge_quadr = sum([element**2 for element in kvec])
+laenge = float(sqrt(laenge_quadr))
+
+print(kvec)
+print(laenge_quadr)
+print(laenge)
