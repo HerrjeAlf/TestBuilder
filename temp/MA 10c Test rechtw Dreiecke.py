@@ -15,7 +15,7 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Trigonometrie im rechtwinkligen Dreieck'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werdenw
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werdenw
 probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']

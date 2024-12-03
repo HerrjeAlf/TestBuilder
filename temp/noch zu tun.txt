@@ -24,6 +24,8 @@ in Algebra:
 in Mittelstufe_Terme_Gleichungen
 - in gleichungen noch teilaufgabe zu ungleichungen lösen ergänzen
 
+in Mittelstufe_Geometrie
+- Aufgabe zum Kosinussatz im allg. Dreieck
 
 Physik
 - Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
