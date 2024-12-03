@@ -12,11 +12,11 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 05'
-Titel = 'Ebenen aufstellen und umformen'
+Art = 'Test'
+Titel = 'Punkte und Ebenen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
@@ -24,12 +24,9 @@ liste_bez = ['Aufgabe']
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[geraden_aufstellen(1, ['a', 'c']),
-                 ebene_und_punkt(2, ['a', 'b', 'c']),
+                 ebene_und_punkt(2, ['b', 'c', random.choice(['d', 'e'])]),
                  ebenen_umformen(3),
-                 random.choice([punkte_und_vektoren(4, ['e']),
-                                punkte_und_vektoren(4, ['f']),
-                                punkte_und_vektoren(4, ['g']),
-                                punkte_und_vektoren(4, ['h'])])]]
+                 punkte_und_vektoren(4, [random.choice(['e','f', 'g', 'h'])])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
