@@ -194,52 +194,61 @@ def vorz_fakt(k):
         return 1
 
 def vorz_str(k, null=False):
-    if k == 0:
-        return '+0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k)
-    else:
-        return f'+{latex(k)}'
+    try:
+        if k == 0:
+            return '+0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+        if k%1 == 0:
+            k = int(k)
+        if k < 0:
+            return latex(k)
+        else:
+            return f'+{latex(k)}'
+    except Exception as fehler:
+        print('Fehler:', fehler)
 
 # Darstellung der Faktoren bzw. Vorzeichen neu
 def vorz_v_innen(k,v, null=False):
-    if k == 0:
-        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-    if k == -1:
-        if v == '':
-            return '-1'
+    try:
+        if k == 0:
+            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+        if k == -1:
+            if v == '':
+                return '-1'
+            else:
+                return '-' + v
+        if k == 1:
+            if v == '':
+                return '+1'
+            else:
+                return '+' + v
+        if k%1 == 0:
+            k = int(k)
+        if k < 0:
+            return latex(k) + v
         else:
-            return '-' + v
-    if k == 1:
-        if v == '':
-            return '+1'
-        else:
-            return '+' + v
-    if k%1 == 0:
-        k = int(k)
-    if k < 0:
-        return latex(k) + v
-    else:
-        return f'+{latex(k)}' + v
+            return f'+{latex(k)}' + v
+    except Exception as fehler:
+        print('Fehler:', fehler)
 
 def vorz_v_aussen(k,v, null=False):
-    if k == 0:
-        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-    if k == -1:
-        if v == '':
-            return '-1'
-        else:
-            return '-' + v
-    if k == 1:
-        if v == '':
-            return '1'
-        else:
-            return v
-    if k%1 == 0:
-        k = int(k)
-    return latex(k) + v
+    try:
+        if k == 0:
+            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+        if k == -1:
+            if v == '':
+                return '-1'
+            else:
+                return '-' + v
+        if k == 1:
+            if v == '':
+                return '1'
+            else:
+                return v
+        if k%1 == 0:
+            k = int(k)
+        return latex(k) + v
+    except Exception as fehler:
+        print('Fehler:', fehler)
 
 def fakt_var(k):
     if k == 1:
@@ -276,18 +285,20 @@ def gzahl(k, exp=False, null=True):
         return latex(k)
 
 def gzahl_klammer(k,str='', null=True):
-    if k == 0:
-        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-    k = int(k) if k % 1 == 0 else k
-    if k < 0:
-        if str != '' and k == -1:
-            return r' \left( -' + str + r' \right)'
-        return r' \left(' + latex(k) + str + r' \right)'
-    else:
-        if str != '' and k == 1:
-            return str
-        return latex(k) + str
-
+    try:
+        if k == 0:
+            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+        k = int(k) if k % 1 == 0 else k
+        if k < 0:
+            if str != '' and k == -1:
+                return r' \left( -' + str + r' \right)'
+            return r' \left(' + latex(k) + str + r' \right)'
+        else:
+            if str != '' and k == 1:
+                return str
+            return latex(k) + str
+    except Exception as fehler:
+        print('Fehler:', fehler)
 def kgv(q, p):
     if q == 0 or p == 0:
         return 0
