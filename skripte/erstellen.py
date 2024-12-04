@@ -39,8 +39,10 @@ def seite(aufgaben):
                 with Aufgabe.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
                 i += 1
-            elif 'neueSeite' in elements:
-                Aufgabe.append(NewPage())
+            elif 'Bild' in elements:
+                with Aufgabe.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/tasks/{aufgabe[2][i]}', width='250px')
+                i += 1
             elif '3dim_Koordinatensystem' in elements:
                 with Aufgabe.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
@@ -60,8 +62,10 @@ def seite(aufgaben):
                 with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
                 i += 1
-            elif 'neueSeite' in elements:
-                Loesung.append(NewPage())
+            elif 'Bild' in elements:
+                with Aufgabe.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/tasks/{loesung[3][i]}', width='250px')
+                i += 1
             elif '3dim_Koordinatensystem' in elements:
                 with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/{elements}.png', width='300px')
