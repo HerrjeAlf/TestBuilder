@@ -2931,10 +2931,10 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         # hier werden das Partialpolynom (Ergebnis Hornerschema) und die Gleichung für die pq-Formel berechnet
         fkt_partial = faktor * x**2 + fkt_c2 * a * x + fkt_c1 * a**2
         fkt_partial_str = (gzahl(faktor) + r' \cdot x^2' + vorz_str(fkt_c2) + r' a \cdot x'
-                           + vorz_str(fkt_c1, null=True) + r' a^2')
+                           + vorz_str(fkt_c1) + r' a^2')
         fkt_p = -1 * (faktor_1 + faktor_3)
         fkt_q = faktor_1 * faktor_3
-        fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' a \cdot x' + vorz_str(fkt_q, null=True) + r' a^2'
+        fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' a \cdot x' + vorz_str(fkt_q) + r' a^2'
         fkt_disk = Rational((faktor_1 - faktor_3)**2,4)
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)

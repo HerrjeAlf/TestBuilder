@@ -364,7 +364,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             if x == x_werte[0] and y == y_werte[0]:
                 ew_wert_str = gzahl(x, null=True) + r' \cdot ' + gzahl(y)
             else:
-                ew_wert_str = ew_wert_str + vorz_str(x, null=True) + r' \cdot ' + gzahl(y)
+                ew_wert_str = ew_wert_str + vorz_str(x) + r' \cdot ' + gzahl(y)
         ew_wert = sum([x*y for x, y in zip(x_werte, y_werte)])
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
