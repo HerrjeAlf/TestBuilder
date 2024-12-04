@@ -107,14 +107,28 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-vec1 = [-3,-4,-1]
-vec2 = [3,1,-2]
-kvec = np.cross(vec1,vec2)
-laenge_quadr = sum([element**2 for element in kvec])
-laenge = float(sqrt(laenge_quadr))
+steigung = Rational(nzahl(1, 8), 20)
+x_0 = random.choice([3,2.5,2])
+y_vers = Rational(nzahl(2, 8) * 50, 100)
+wertetabelle_fkt_vers = [[element, steigung*element - x_0*steigung - y_vers] for element in range(0, 200)]
+ganze_werte_fkt_vers = [[element[0], int(element[1])] for element in wertetabelle_fkt_vers if element[1] % 1 == 0]
+while len(ganze_werte_fkt_vers) == 0:
+    steigung = Rational(nzahl(1, 8), 20)
+    x_0 = random.choice([3, 2.5, 2])
+    y_vers = Rational(nzahl(2, 8) * 50, 100)
+    wertetabelle_fkt_vers = [[element, steigung * element - x_0 * steigung - y_vers] for element in range(0, 200)]
+    ganze_werte_fkt_vers = [[element[0], int(element[1])] for element in wertetabelle_fkt_vers if element[1] % 1 == 0]
 
-print(kvec)
-print(laenge_quadr)
-print(laenge)
+n = -1 * x_0 * steigung
+fkt = steigung * x + n
+fkt_str = vorz_v_aussen(steigung, 'x') + vorz_str(n)
+fkt_vers = fkt - y_vers
+fkt_vers_str = vorz_v_aussen(steigung, 'x') + vorz_str(n - y_vers)
 
-print(Rational(1,3))
+print(fkt)
+print(x_0)
+print(fkt_str)
+print(fkt_vers)
+print(fkt_vers_str)
+print(wertetabelle_fkt_vers)
+print(ganze_werte_fkt_vers)
