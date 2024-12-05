@@ -1532,7 +1532,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
         aufgabe.extend(('Die Punkte A, B und C aus der Ebene E bilden das Parallelogramm ABCD. \n\n',
                         str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt P( {gzahl(tx)} | {gzahl(ty)} | '
-                        + f'{gzahl(tz)} ) im Parallelogramm der Ebene E liegt. \n\n'))
+                        + f'{gzahl(tz)} ) im Parallelogramm liegt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfen~Sie,~ob~der~gegebenen~Punkt~P~im'
                        + r'~Parallelogramm~liegt.} \\' + r' \begin{pmatrix} ' + gzahl(tx) + r' \\' + gzahl(ty) + r' \\'
                        + gzahl(tz) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\'
@@ -1604,7 +1604,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
             lsg_2 = 's > 1' if parameter_s > 1 else lsg_2
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg_0 = ''
-            lsg_1 + lsg_2 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (1BE) \\'
+            lsg_1 = lsg_2 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (1BE) \\'
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt Q( {gzahl(tx)} | {gzahl(ty)} | '
                         + f'{gzahl(tz)} ) im Dreieck der Punkte A, B und C aus Ebene E liegt. \n\n')
