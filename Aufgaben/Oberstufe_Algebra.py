@@ -1328,12 +1328,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=None, BE=[]):
     # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene='Ebene'" bzw. im Dreieck ABC liegt "lagebeziehung_t_ebene='Dreieck'" oder auch nicht "lagebeziehung_t_ebene=False".  Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene=True" liegt oder auch nicht "lagebeziehung_t_ebene=False". Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
     liste_bez = []
     i = 0
+    if lagebeziehung_t_ebene == None:
+        lagebeziehung_t_ebene = random.choice([True, False])
     n_gk = np.array([100,100,100])
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt auf Gerade g_1
@@ -1345,9 +1347,15 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
     uz = - 1 * (vx * ux + vy * uy) / vz
     u = vektor_ganzzahl([ux, uy, uz])
     punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
-    punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
     vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
+    while len([element for element in vektor_ab if element == 0]) > 0:
+        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
+        vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
+    punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
     vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
+    while len([element for element in vektor_ac if element == 0]) > 0:
+        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
+        vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
     w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
     [wx, wy, wz] = vektor_runden(w, 3)
     n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
@@ -1466,9 +1474,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         # Überprüfen, ob ein Punkt in der Ebene liegt
         punkte = 3
         liste_punkte.append(punkte)
-        if lagebeziehung_t_ebene not in [False, 'Ebene']:
-            lagebeziehung_t_ebene = random.choice([False, 'Ebene'])
-        if lagebeziehung_t_ebene == 'Ebene':
+
+        if lagebeziehung_t_ebene == True:
             parameter_r = zzahl(2, 6) / 2
             parameter_s = zzahl(2, 6) / 2
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
@@ -1495,22 +1502,37 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 9
 
-        if lagebeziehung_t_ebene not in [False, 'Parallelogramm']:
-            lagebeziehung_t_ebene = random.choice([False, 'Parallelogramm'])
-        if lagebeziehung_t_ebene == 'Parallelogramm':
+        if nzahl(1,2) == 1:
             parameter_r = nzahl(1, 5) / 5
             parameter_s = nzahl(1, 5) / 5
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-            lsg = (r' \mathrm{r~und~s~\leq~1 \quad \to \quad Der~Punkt~P~liegt~im~Parallelogramm.} \quad (3BE) \\')
+            lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
+                     + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
+                     + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
+                     + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~' + gzahl(tz)
+                     + r' \mathrm{ \quad w.A. \quad \to  \quad P~liegt~in~Ebene~E \quad (3BE)} \\')
+            lsg_1 = (r' \mathrm{r~und~s~\leq~1 \quad \to \quad Der~Punkt~P~liegt~im~Parallelogramm.} \quad (1BE) \\')
+            punkte += 3
+            if lagebeziehung_t_ebene == False:
+                tz = tz + zzahl(1, 3)
+                lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
+                         + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
+                         + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
+                         + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~'
+                         + gzahl(az + abz * parameter_r + acz * parameter_s)
+                         + r' \mathrm{ \quad f.A. \quad \to  \quad P~liegt~nicht~in~Ebene~E \quad (3BE)}')
+                lsg_1 = ''
+                punkte += -1
         else:
             parameter_r = nzahl(1,5) / 5
             parameter_s = 1 + random.choice([1,2,3,4,5]) / 5
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-            lsg = r' s > 1 \quad \mathrm{Der~Punkt~P~liegt~nicht~im~Parallelogramm.} \quad (3BE) \\'
+            lsg_0 = ''
+            lsg_1 = r' s > 1 \quad \mathrm{Der~Punkt~P~liegt~nicht~im~Parallelogramm.} \quad (1BE) \\'
 
         aufgabe.extend(('Die Punkte A, B und C aus der Ebene E bilden das Parallelogramm ABCD. \n\n',
                         str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt P( {gzahl(tx)} | {gzahl(ty)} | '
-                        + f'{gzahl(tz)} ) im Parallelogramm liegt. \n\n'))
+                        + f'{gzahl(tz)} ) im Parallelogramm der Ebene E liegt. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfen~Sie,~ob~der~gegebenen~Punkt~P~im'
                        + r'~Parallelogramm~liegt.} \\' + r' \begin{pmatrix} ' + gzahl(tx) + r' \\' + gzahl(ty) + r' \\'
                        + gzahl(tz) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\'
@@ -1540,34 +1562,49 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + vorz_v_innen(round(-1*acy*abx/acx,3), 'r') + '~=~'
                        + vorz_v_aussen(round((aby*acx - acy*abx)/acx,3),'r') + r' \quad \vert \div '
                        + gzahl_klammer(round((aby*acx - acy*abx)/acx,3)) + r' \quad \to \quad r ~=~'
-                       + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad \\\\' + lsg)
+                       + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad (2BE) \\\\'
+                       + lsg_0 + lsg_1)
         liste_punkte.append(punkte)
         i += 1
 
     if 'e' in teilaufg:
-        # Die SuS sollen überprüfen, ob der Punkt T im Dreieck ABC liegt.
+        # Die SuS sollen überprüfen, ob der Punkt T im Dreieck ABC der Ebene E liegt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 9
 
-        if lagebeziehung_t_ebene not in [False, 'Dreieck']:
-            lagebeziehung_t_ebene = random.choice([False, 'Dreieck'])
-        if lagebeziehung_t_ebene == 'Dreieck':
+        if nzahl(1,2) == 1:
             parameter_r = nzahl(2, 6) / 10
             parameter_s = 1 - nzahl(1,2)/10 - parameter_r
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
+                     + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
+                     + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
+                     + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~' + gzahl(tz)
+                     + r' \mathrm{ \quad w.A. \quad \to  \quad Q~liegt~in~Ebene~E \quad (3BE)} \\')
+            lsg_1 = (r' \mathrm{r~und~s~\leq~1 \quad \to \quad Der~Punkt~Q~liegt~im~Dreieck~ABC.} \quad (1BE) \\')
+            punkte += 3
+            if lagebeziehung_t_ebene == False:
+                tz = tz + zzahl(1,3)
+                lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
+                         + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
+                         + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
+                         + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~'
+                         + gzahl(az+abz*parameter_r+acz*parameter_s)
+                         + r' \mathrm{ \quad f.A. \quad \to \quad Q~liegt~nicht~in~Ebene~E \quad (3BE)}')
+                lsg_1 = ''
+                punkte += -1
 
-            lsg = r'  \mathrm{s,r~und~r+s~\leq~1 \quad \to \quad Der~Punkt~Q~liegt~im~Dreieck~ABC.} \quad (3BE) \\'
         else:
             parameter_r = nzahl(2,8) / 10
             parameter_s = 1 + random.choice([1,2,3,4,5])/10 - parameter_r
             while parameter_s + parameter_r <= 1:
                 parameter_r = nzahl(4,8) / 10
                 parameter_s = 1 + random.choice([1,2,3,4,5])/10 - parameter_r
-            lsg_1 = 'r + s  > 1'
-            lsg_1 = 's > 1' if parameter_s > 1 else lsg_1
-
+            lsg_2 = 'r + s  > 1'
+            lsg_2 = 's > 1' if parameter_s > 1 else lsg_2
             punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-            lsg = lsg_1 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (3BE) \\'
+            lsg_0 = ''
+            lsg_1 + lsg_2 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (1BE) \\'
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt Q( {gzahl(tx)} | {gzahl(ty)} | '
                         + f'{gzahl(tz)} ) im Dreieck der Punkte A, B und C aus Ebene E liegt. \n\n')
@@ -1600,7 +1637,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + vorz_v_innen(round(-1*acy*abx/acx,3), 'r') + '~=~'
                        + vorz_v_aussen(round(aby - acy*abx/acx,3),'r') + r' \quad \vert \div '
                        + gzahl_klammer(round((aby*acx - acy*abx)/acx,3)) + r' \quad \to \quad r ~=~'
-                       + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad \\\\' + lsg)
+                       + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad (2BE) \\\\'
+                       + lsg_0 + lsg_1)
         liste_punkte.append(punkte)
         i += 1
 

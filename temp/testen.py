@@ -25,7 +25,8 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[stirb_langsam_2(1)]]
+    Aufgaben = [[ebene_und_punkt(1, ['d'], lagebeziehung_t_ebene=None),
+                 ebene_und_punkt(2, ['e'], lagebeziehung_t_ebene=None)]]
 
     # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []

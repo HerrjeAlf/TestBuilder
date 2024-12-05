@@ -297,6 +297,7 @@ def gzahl_klammer(k,str='', null=True):
             return latex(k) + str
     except Exception as fehler:
         print('Fehler:', fehler)
+
 def kgv(q, p):
     if q == 0 or p == 0:
         return 0
