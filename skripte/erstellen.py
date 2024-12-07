@@ -273,9 +273,10 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
         for p in range(anzahl_spalten - 1):
             liste_ergebnis_z2.append('')
 
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
+        spalten = '|c|'
+        for step in range(len(liste_punkte) - 2):
+            spalten += 'p{0.5 cm}|'
+        spalten += 'c|'
 
         table3 = Tabular(spalten, row_height=1.2)
         table3.add_hline()
@@ -410,9 +411,10 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
         liste_ergebnis_z2 = ['Punkte']
         for p in range(anzahl_spalten - 1):
             liste_ergebnis_z2.append('')
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
+        spalten = '|c|'
+        for step in range(len(liste_punkte) - 2):
+            spalten += 'p{0.5 cm}|'
+        spalten += 'c|'
 
         table3 = Tabular(spalten, row_height=1.2)
         table3.add_hline()
@@ -447,6 +449,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2):
                 if element != liste_seiten_teil2[-1]:
                     Aufgabe.append(NewPage())
 
+            Aufgabe.append(' \n\n')
             Aufgabe.append(table3)
 
             Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - Klausur im {Semester}. Semester - Teil II {Gruppe}', clean_tex=true)
