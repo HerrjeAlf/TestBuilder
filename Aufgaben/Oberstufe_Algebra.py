@@ -164,13 +164,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
                            + r' \overrightarrow{AC} \right) }^2 }~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{'
                            + gzahl(diskr_ab) + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac)
-                           + r'} \right) }^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2 } ~=~' + gzahl(erg))
+                           + r'} \right) }^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2 } ~=~' + gzahl(erg)
+                           + r' \quad (3BE) ')
         else:
             pkt = 5
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
                            + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
-                           + r' \overrightarrow{AC} \right) }^2 } \hspace{10em} \\ '
+                           + r' \overrightarrow{AC} \right) }^2 } \quad (1BE) \hspace{10em} \\ '
                            + r' \overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(vektor_ab[0]) + r' \\'
                            + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2]) + r' \\ '
                            + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AB} \right| ~=~ '
@@ -179,7 +180,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \end{pmatrix} ~ \to ~ \left| \overrightarrow{AC} \right| ~=~ ' + laenge_vektor_ac
                            + r' \\ A ~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{' + gzahl(diskr_ab)
                            + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac) + r'} \right) }^2 - \left( '
-                           + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg))
+                           + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg) + r' \quad (4BE)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -195,19 +196,19 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
-                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)))
+                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (3BE)')
             pkt = 3
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
-                           + r' \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + r' \quad (1BE) \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
                            + r' \\ ' + r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\'
                            + gzahl(vektor_ac[2]) + r' \\ \end{pmatrix} \quad \to \quad '
                            + r' A ~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
-                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)))
+                           + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (4BE)')
             pkt = 5
         liste_punkte.append(pkt)
         i += 1
@@ -224,18 +225,19 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ '
-                           + gzahl(laenge_kprod))
+                           + gzahl(laenge_kprod) + r' \quad (3BE)')
             pkt = 3
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
-                           + r' \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                           + r' \quad (1BE) \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
                            + r' \\ ' + r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\' + gzahl(vektor_ac[1]) + r' \\'
                            + gzahl(vektor_ac[2]) + r' \\ \end{pmatrix} \quad \to \quad '
                            + r' A ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
-                           + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ ' + gzahl(laenge_kprod))
+                           + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ ' + gzahl(laenge_kprod)
+                           + r' \quad (4BE)')
             pkt = 5
         liste_punkte.append(pkt)
         i += 1
@@ -260,16 +262,16 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
-                           + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\'
-                           + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix} '
-                           + gzahl(aex) + r' \\' + gzahl(aey) + r' \\' + gzahl(aez) + r' \\ '
-                           + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx)
+                           + r' \quad (1BE) \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
+                           + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey) + r' \\'
+                           + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (4BE)')
             pkt = 5
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
-                           + r' \overrightarrow{AE}  \right| \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
-                           + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
+                           + r' \overrightarrow{AE}  \right| \hspace{10em} \quad (1BE) \\ \overrightarrow{AB} ~=~ '
+                           + r'\begin{pmatrix} ' + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
                            + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
                            + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
@@ -277,7 +279,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + gzahl(aez) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey)
-                           + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
+                           + r' \quad (6BE)')
             pkt = 7
         liste_punkte.append(pkt)
         i += 1
@@ -304,21 +307,22 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
-                           + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (5BE)')
             pkt = 5
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
-                           + r' \right) \cdot \overrightarrow{AE}  \right| \hspace{10em} \\'
+                           + r' \right) \cdot \overrightarrow{AS}  \right| \quad (1BE) \hspace{10em} \\'
                            + r'\overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(abx) + r' \\' + gzahl(aby)
                            + r' \\' + gzahl(abz) + r' \\ ' + r' \end{pmatrix} , \quad \overrightarrow{AC} ~=~ '
                            + r' \begin{pmatrix}' + gzahl(acx) + r' \\' + gzahl(acy) + r' \\' + gzahl(acz)
-                           + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AE} ~=~'
+                           + r' \\ \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AS} ~=~'
                            + r' \begin{pmatrix}' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
                            + gzahl(asz) + r' \\ \end{pmatrix} \quad \to \quad V ~=~ \frac{1}{6} \cdot \left| '
                            + r' \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\'
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy)
-                           + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg))
+                           + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
+                           + r' \quad (6BE)')
             pkt = 7
         liste_punkte.append(pkt)
         i += 1
@@ -1719,7 +1723,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     teiler = zzahl(1,3)
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
     fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
-    n = [nx,ny,nz] = vektor_kuerzen(vektor_kuerzen([int(kfx), int(kfy), int(kfz)]))
+    n = [nx,ny,nz] = vektor_kuerzen([int(kfx), int(kfy), int(kfz)])
     # print(schnittpunkte), print(fkt_kf), print(n)
     punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
     # print(punkt_a)
