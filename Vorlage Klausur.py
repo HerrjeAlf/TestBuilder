@@ -13,8 +13,8 @@ Gruppe = ''
 Semester = 1
 Gesamtzeit = 135
 Zeithmft = 25
-liste_qualiphase = ['Einführungsphase', 'Qualifikationsphase']
-Phase = liste_qualiphase[1]
+# hier bitte 'Einführungsphase' oder 'Qualifikationsphase' eintragen
+Phase = 'Einführungsphase'
 Thema = 'Analysis'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 
