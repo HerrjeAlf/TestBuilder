@@ -19,7 +19,11 @@ in Aufgaben Wahrscheinlichkeit:
 
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
-- Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
+- Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Dreieck oder Viereck hinzufügen
+- Funktion programmieren, die Gleichungen der Art Lsg_vec = ort_vec + r * vec1 + s * vec2 löst
+  in 3-dim und die vollst. Lsg in Latex ausgibt
+  - er soll aber auch Gleichungen mit Lsg_vec = r* vec1, oder Lsg_vec = orts_vec + r*vec1 berücksichtigen
+  - die vec dürfen auch nullen enthalten
 
 in Mittelstufe_Terme_Gleichungen
 - in gleichungen noch teilaufgabe zu ungleichungen lösen ergänzen
