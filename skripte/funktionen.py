@@ -357,11 +357,15 @@ def vektor_kuerzen(vec, p = 50):
             list = list * faktor[k]
             i += 1
     # print('erweitert: ' + str(list))
-    teiler = [x + 1 for x in range(int(max(list)/2),-1,-1)]
+    list_pos = [abs(x) for x in list]
+    teiler = [x + 1 for x in range(1,int(max(list_pos)/2))]
+    teiler.reverse()
     for zahl in teiler:
-        treffer = [1 for x in list if x % zahl == 0]
+        treffer = [1 for x in list if abs(x) % zahl == 0]
         if sum(treffer) == len(vec):
-            list = list / zahl
+            list = [element / zahl for element in list]
+    if len([element for element in list if element < 0]) == len(list):
+        list = [-1 * element for element in list]
     # print('gekürzt: ' + str(list))
     list = np.array([int(element) if element % 1 == 0 else element for element in list])
     return np.array(list)

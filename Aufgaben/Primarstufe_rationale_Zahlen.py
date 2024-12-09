@@ -1580,7 +1580,7 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
         lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
         if (i+1) % 2 != 0 and i+1 < len(teilaufg):
             aufg = aufg + r' \hspace{5em} '
-        else:
+        elif i+1 != len(teilaufg):
             aufg = aufg + r' \\\\'
         punkte += 1
         i += 1
