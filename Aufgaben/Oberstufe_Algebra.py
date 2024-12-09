@@ -1520,7 +1520,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                          + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
                          + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~'
                          + gzahl(az + abz * parameter_r + acz * parameter_s)
-                         + r' \mathrm{ \quad f.A. \quad \to  \quad P~liegt~nicht~in~Ebene~E \quad (3BE)}')
+                         + r' \mathrm{ \quad f.A. \quad \to  \quad P~liegt~nicht~in~Ebene~E~und~damit~nicht~im~'
+                         + r'Parallelogramm~ABCD. \quad (3BE)}')
                 lsg_1 = ''
                 punkte += -1
         else:
@@ -1590,7 +1591,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                          + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
                          + gzahl_klammer(parameter_s) + r' \\' + gzahl(tz) + '~=~'
                          + gzahl(az+abz*parameter_r+acz*parameter_s)
-                         + r' \mathrm{ \quad f.A. \quad \to \quad Q~liegt~nicht~in~Ebene~E \quad (3BE)}')
+                         + r' \mathrm{ \quad f.A. \quad \to \quad Q~liegt~nicht~in~Ebene~E~und~damit~nicht~im~'
+                         + r'Dreieck~ABC. \quad (3BE)}')
                 lsg_1 = ''
                 punkte += -1
 

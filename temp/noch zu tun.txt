@@ -20,6 +20,7 @@ in Aufgaben Wahrscheinlichkeit:
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Viereck hinzufügen
+- Aufgaben zur Geradenschar anfertigen (siehe LB MA 12 LK S. 127 Nr. 5)
 
 in Mittelstufe_Terme_Gleichungen
 - in gleichungen noch teilaufgabe zu ungleichungen lösen ergänzen

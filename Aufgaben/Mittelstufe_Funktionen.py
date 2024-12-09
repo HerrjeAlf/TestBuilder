@@ -97,7 +97,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], BE=[]):
                         str(liste_teilaufg[i]) + f') Erläutern Sie den Unterschied zur ursprünglichen Flugbahn. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Der~Unterschied~ist~der~Schnittpunkt~mit~'
                        + r'der~y-Achse.~Die~manipulierte} \\ \mathrm{Flugbahn~ist~um~' + gzahl(round(y_vers,3)*1000)
-                       + 'm~nach~unten~verschoben. \quad (2BE) }')
+                       + r'm~nach~unten~verschoben. \quad (2BE) }')
         liste_punkte.append(punkte)
         i += 1
 
