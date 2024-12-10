@@ -1453,6 +1453,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        fakt_n = Rational(nx, nx_gk)
+        fakt_n = Rational(ny, ny_gk) if nx_gk == 0 else fakt_n
+        fakt_n = Rational(nz, nz_gk) if nx_gk == 0 and ny_gk == 0 else fakt_n
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Formen Sie die Gleichung für Ebene E in '
                        + 'Normalen- und Koordinatenform um. \n\n')
@@ -1461,15 +1464,15 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(vz * wx) + '-' + gzahl_klammer(vx * wz) + r' \\'
                        + gzahl(vx * wy) + '-' + gzahl_klammer(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
-                       + r' \end{pmatrix} ~=~ ' + gzahl(Rational(ny,ny_gk)) + r' \cdot \begin{pmatrix} '
+                       + r' \end{pmatrix} ~=~ ' + gzahl(fakt_n) + r' \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                        + r' \end{pmatrix} \quad (3BE) \\\\'
                        + r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} ~=~0 \quad (2BE) \\\\ E:~' + gzahl(nx_gk) + r' \cdot x'
-                       + vorz_str(ny_gk) + r' \cdot y' + vorz_str(nz_gk) + r' \cdot z' + '~=~'
+                       + r' \end{pmatrix} ~=~0 \quad (2BE) \\\\ E:~' + vorz_v_aussen(nx_gk,'x') +
+                       + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk,'z') + '~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
@@ -1494,11 +1497,11 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
                        + f'{gzahl(tz)} ) in der Ebene E liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad E:~' + gzahl(nx_gk) + r' \cdot (' + gzahl(tx) + ')'
-                       + vorz_str(ny_gk) + r' \cdot (' + gzahl(ty) + ')' + vorz_str(nz_gk) + r' \cdot ('
-                       + gzahl(tz) + ') ~=~' + gzahl(np.dot(punkt_a, n_gk)) + r' \quad \to \quad '
-                       + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk)) + lsg
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad E:~' + vorz_v_aussen(nx_gk,r' \cdot (' + gzahl(tx) + ')')
+                       + vorz_v_innen(ny_gk,' \cdot (' + gzahl(ty) + ')')
+                       + vorz_v_innen(nz_gk, r' \cdot (' + gzahl(tz) + ')') + '~=~' + gzahl(np.dot(punkt_a, n_gk))
+                       + r' \quad \to \quad ' + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk))
+                       + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
 
     if 'd' in teilaufg:

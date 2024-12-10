@@ -358,7 +358,7 @@ def vektor_kuerzen(vec, p = 50):
             i += 1
     # print('erweitert: ' + str(list))
     list_pos = [abs(x) for x in list]
-    teiler = [x + 1 for x in range(1,int(max(list_pos)/2))]
+    teiler = [x + 1 for x in range(1,int(max(list_pos)))]
     teiler.reverse()
     for zahl in teiler:
         treffer = [1 for x in list if abs(x) % zahl == 0]
