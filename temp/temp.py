@@ -108,4 +108,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-print(vektor_kuerzen([-64,-136,-8]))
+print(vektor_kuerzen([9,0,-9]))

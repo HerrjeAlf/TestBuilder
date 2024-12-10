@@ -12,10 +12,10 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'Test'
+Art = 'Nachtest'
 Titel = 'Punkte und Ebenen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
