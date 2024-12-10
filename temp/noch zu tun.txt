@@ -20,10 +20,10 @@ in Aufgaben Wahrscheinlichkeit:
 in Algebra:
 - in "geraden_lagebeziehung" noch Teilaufgabe zur Abstandberechnung erstellen
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Dreieck oder Viereck hinzufügen
-- Funktion programmieren, die Gleichungen der Art Lsg_vec = ort_vec + r * vec1 + s * vec2 löst
+- Funktion programmieren, die Gleichungen der Art lsg_vec = orts_vec + r * vec1 + s * vec2 löst
   in 3-dim und die vollst. Lsg in Latex ausgibt
-  - er soll aber auch Gleichungen mit Lsg_vec = r* vec1, oder Lsg_vec = orts_vec + r*vec1 berücksichtigen
-  - die vec dürfen auch nullen enthalten
+  --> er soll aber auch Gleichungen mit lsg_vec = r* vec1, oder lsg_vec = orts_vec + r*vec1 berücksichtigen
+  --> die vec dürfen auch nullen enthalten
 - Aufgaben zur Geradenschar anfertigen (siehe LB MA 12 LK S. 127 Nr. 5)
 
 in Mittelstufe_Terme_Gleichungen
