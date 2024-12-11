@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[berechnungen_bel_dreieck(1)]]
+    Aufgaben = [[berechnungen_allg_dreieck(1)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
