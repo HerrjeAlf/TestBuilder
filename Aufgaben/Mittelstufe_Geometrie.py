@@ -678,7 +678,7 @@ def sachaufgabe_rampe(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
+def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -688,7 +688,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         beta = nzahl(30, 60)
         gamma = nzahl(30,60)
         alpha = 180 - gamma - beta
-        print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+        # print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
         seite_a = nzahl(6, 12)
         seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
         seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
@@ -773,7 +773,7 @@ def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 3
         flaeche = 0.5*seite_wert_1*seite_wert_2*math.sin(math.radians(winkel_wert_3))
-        print(N(flaeche,3))
+        # print(N(flaeche,3))
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad A ~ = ~ \frac{1}{2} \cdot ' + seite_1 + r' \cdot ' + seite_2
                                                  + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot '
