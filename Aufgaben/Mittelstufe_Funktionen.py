@@ -48,11 +48,10 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], BE=[]):
     zeit = int(abstand*1000 / v_flugzeug)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Im zweiten Teil der legendären „Stirb langsam“ – Reihe versuchen Terroristen durch eine Manipulation '
-               'des Instrumentenlandesystem (ILS) eines Flughafen, General Ramon Esperanza freizupressen. '
-               'Die Terroristen lassen zur Abschreckung eine Boeing 747 landen, welches beim Landeanflug auf der '
-               'Startbahn zerbricht und ausbrennt. Dafür manipulieren Sie mit dem ILS die Landeautomatik des '
-               f'Flugzeuges, so dass in der Landeautomatik die Landebahn nach unten verschoben wird', 'Bild']
+               'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
+               'des Instrumentenlandesystem (ILS) eines Flughafen, um General Ramon Esperanza freizupressen. '
+               'Dabei lassen die Terroristen zur Abschreckung eine Boeing 747 landen, welche durch die Manipulation '
+               'beim Landeanflug auf der Startbahn zerbricht und ausbrennt. ', 'Bild']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = ['stirb_langsam_2']
     grafiken_loesung = []
@@ -92,9 +91,10 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], BE=[]):
         # die SuS sollen die Veränderung des y-Achsenabschnittes durch die Manipulation der Flugbahn erklären
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
-        aufgabe.extend(('Durch die Manipulation rechnet die Flugzeugelektronik der Boeing mit der Gleichung '
+        aufgabe.extend(('Durch die Manipulation rechnet die Flugzeugelektronik der Boeing mit der Funktion '
                         f' f(x) = {gzahl(round(steigung,3))}x - {gzahl(abs(round(n-y_vers,3)))}. \n\n',
-                        str(liste_teilaufg[i]) + f') Erläutern Sie den Unterschied zur ursprünglichen Flugbahn. \n\n'))
+                        str(liste_teilaufg[i]) + f') Erläutern Sie den Unterschied zur ursprünglichen Funktion '
+                        + f'bzw. Flugbahn. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Der~Unterschied~ist~der~Schnittpunkt~mit~'
                        + r'der~y-Achse.~Die~manipulierte} \\ \mathrm{Flugbahn~ist~um~' + gzahl(round(y_vers,3)*1000)
                        + r'm~nach~unten~verschoben. \quad (2BE) }')
