@@ -1,5 +1,5 @@
 Testbuilder ist eine Software um beliebig viele verschiedene Arbeitsblätter, Test, Klausuren usw. für fast alle Standardaufgaben der Oberstufe und zum Teil für die Mittelstufe (in Arbeit) im Fach Mathematik automatisiert zu erzeugen. Langfristig soll sie für alle Klassenstufen und alle Fächer weiterentwickelt werden.
-Sie soll die Transformation der Schule weg von der Klassenstruktur hin zur Lernstruktur ermöglichen, wie es bereits einige ausgezeichnete Schulen, zum Beispiel die Alemannenschule Wutöschingen  (https://asw-wutoeschingen.de), machen.
+So soll die Transformation der Schule weg von der Klassen- hin zur Lernstruktur ermöglicht werden, wie es bereits einige ausgezeichnete Schulen, zum Beispiel die Alemannenschule Wutöschingen  (https://asw-wutoeschingen.de), gemacht haben. 
 
 Um TestBuilder zu nutzen, benötigen Sie:
 1. [Python](https://www.python.org/downloads/)
