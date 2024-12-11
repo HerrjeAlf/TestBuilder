@@ -678,7 +678,7 @@ def sachaufgabe_rampe(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def berechnungen_bel_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
+def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
