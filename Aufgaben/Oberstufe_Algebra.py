@@ -1471,7 +1471,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                       + r' \end{pmatrix} ~=~0 \quad (2BE) \\\\ E:~' + vorz_v_aussen(nx_gk,'x') +
+                       + r' \end{pmatrix} ~=~0 \quad (2BE) \\\\ E:~' + vorz_v_aussen(nx_gk,'x')
                        + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk,'z') + '~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
