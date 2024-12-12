@@ -553,7 +553,7 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
                                                    r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
                                                    r' sin^{-1} \Big( \frac{' + str(deckenhoehe) + 'm }{'
                                                  + str(laenge_leiter) + r'm } \Big) ~=~' + str(N(anstellwinkel,2))
-                                                 + r' ^{ \circ} \quad (3BE)'))
+                                                 + r' ^{ \circ} \quad (3BE) '))
         liste_punkte.append(6)
         i += 1
 
@@ -562,11 +562,11 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
-            loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist kleiner als 61° und somit der '
-                                                     r'Dachboden gut zu begehen. (1BE)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \mathrm{Der~Anstellwinkel~ist~kleiner~als~61°~und~somit~der~'
+                                                     r'Dachboden~nicht~gut~zu~begehen. \quad (1BE)}'))
         else:
-            loesung.append(str(liste_teilaufg[i]) + (r') Der Anstellwinkel ist größer als 61° und somit der '
-                                                     r'Dachboden nicht gut zu begehen. (1BE)'))
+            loesung.append(str(liste_teilaufg[i]) + (r') \mathrm{Der~Anstellwinkel~ist~größer~als~61°~und~somit~der~'
+                                                     r'Dachboden~gut~zu~begehen. \quad (1BE)}'))
         liste_punkte.append(1)
         i += 1
 
