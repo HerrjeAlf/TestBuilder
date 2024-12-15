@@ -13,13 +13,15 @@ lehrkraft = 'Herr Krehl'
 Thema_teil1 = 'Analysis (1. Semester)' # Thema (Semester)
 Thema_teil2 = 'Stochastik (2. und 4. Semester)'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
+clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
 # Aufgaben für Teil I
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil1 = [[kurvendiskussion_polynome_01(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
+aufgaben_teil1 = [[kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
                                         nullstellen='rational', wendenormale=False)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt

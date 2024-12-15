@@ -17,6 +17,8 @@ Titel = 'Vorlage'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
@@ -33,5 +35,5 @@ for i in range(anzahl):
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
-    test_erzeugen(liste_seiten, angaben, i, probe)
+    test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
 
