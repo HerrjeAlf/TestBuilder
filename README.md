@@ -22,7 +22,7 @@ aufgerufen werden. Außerdem sind alle Parameter und Teilaufgaben erläutert. We
 finden Sie die zugehörige pdf-Datei auch im Ordner "pdf". 
 Die Übersicht wird regelmäßig mit den neu fertig gestellten Aufgaben ergänzt. 
 
-Wenn Sie das erste Mal z.B. einen Test etwas erzeugen, werden Sie aufgefordert für MiKTeX einige Pakete zu installieren.
+Wenn Sie das erste Mal z.B. einen Test erzeugen, werden Sie aufgefordert für MiKTeX einige Pakete zu installieren.
 Sie können die voreingestellte Quelle "Beliebiges Repository im Internet" verwenden.
 
 Die Kopfzeile bei den Vorlagen der Klausur, dem Vorabi und der mündl. Prüfung können Sie ändern, indem Sie im Ordner "img" die Datei kopfzeile.png mit einer Bilddatei der Kopfzeile ihrer Schule ersetzen.
