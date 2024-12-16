@@ -1737,8 +1737,8 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
                     r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                     + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                     r' \end{pmatrix} ~=~ 0')
-    koordinatenform = ('E:~' + gzahl(nx) + 'x' + vorz_str(ny) + 'y'
-                       + vorz_str(nz) + 'z') + '~=~' + gzahl(np.dot(punkt_a,n))
+    koordinatenform = ('E:~' + vorz_v_aussen(nx,'x')  + vorz_v_innen(ny,'y')
+                       + vorz_v_innen(nz,'z') + '~=~' + gzahl(np.dot(punkt_a,n)))
 
     if form == None:
         form = random.choice(['normalenform', 'koordinatenform'])
@@ -1791,7 +1791,6 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
         aufgabe.append('3dim_Koordinatensystem') if koordinatensystem else aufgabe.append(' \n\n')

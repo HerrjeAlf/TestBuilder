@@ -1,4 +1,4 @@
-Testbuilder ist eine Software um beliebig viele verschiedene Arbeitsblätter, Test, Klausuren usw. für fast alle Standardaufgaben der Oberstufe und zum Teil für die Mittelstufe (in Arbeit) im Fach Mathematik automatisiert zu erzeugen. Langfristig soll sie für alle Klassenstufen und alle Fächer weiterentwickelt werden.
+Mit TestBuilder lassen sich beliebig viele verschiedene Arbeitsblätter, Test, Klausuren usw. für fast alle Standardaufgaben der Oberstufe und zum Teil der Mittelstufe (in Arbeit) sowie deren Lösung (Erwartungshorizont) im Fach Mathematik erzeugen. Langfristig soll sie für alle Klassenstufen und Fächer weiterentwickelt werden.
 So soll die Transformation der Schule weg von der Klassen- hin zur Lernstruktur ermöglicht werden, wie es bereits einige ausgezeichnete Schulen, zum Beispiel die Alemannenschule Wutöschingen  (https://asw-wutoeschingen.de), gemacht haben. 
 
 Um TestBuilder zu nutzen, benötigen Sie:
@@ -22,7 +22,7 @@ aufgerufen werden. Außerdem sind alle Parameter und Teilaufgaben erläutert. We
 finden Sie die zugehörige pdf-Datei auch im Ordner "pdf". 
 Die Übersicht wird regelmäßig mit den neu fertig gestellten Aufgaben ergänzt. 
 
-Wenn Sie das erste Mal z.B. einen Test etwas erzeugen, werden Sie aufgefordert für MiKTeX einige Pakete zu installieren.
+Wenn Sie das erste Mal z.B. einen Test erzeugen, werden Sie aufgefordert für MiKTeX einige Pakete zu installieren.
 Sie können die voreingestellte Quelle "Beliebiges Repository im Internet" verwenden.
 
 Die Kopfzeile bei den Vorlagen der Klausur, dem Vorabi und der mündl. Prüfung können Sie ändern, indem Sie im Ordner "img" die Datei kopfzeile.png mit einer Bilddatei der Kopfzeile ihrer Schule ersetzen.

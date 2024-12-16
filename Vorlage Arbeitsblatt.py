@@ -12,6 +12,8 @@ Klasse = '13'
 Thema = 'Kurvendiskussion'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
@@ -26,5 +28,5 @@ for i in range(anzahl):
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Klasse, Thema, datum_delta]
-    arbeitsblatt_erzeugen(liste_seiten, angaben, i)
+    arbeitsblatt_erzeugen(liste_seiten, angaben, i, clean_tex)
 

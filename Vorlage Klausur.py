@@ -17,6 +17,8 @@ Zeithmft = 25
 Phase = 'Einführungsphase'
 Thema = 'Analysis'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
+clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
 # Aufgaben für Teil I
 liste_punkte_teil1 = ['Punkte']
@@ -58,4 +60,4 @@ angb_teil1 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesam
 angb_teil2 = [Kurs, Klasse, Gruppe, Semester, Gesamtzeit, Zeithmft, Phase, Gesamtpunktzahl, Thema, datum_delta,
               liste_bez_teil2, liste_punkte_teil2]
 
-klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2)
+klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex)
