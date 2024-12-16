@@ -421,11 +421,11 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
                              + r' \quad \vert ~ \cdot ' + st[auswahl_seite] + r' \quad \to \quad '
                              + st[0] + '=~' + st[auswahl_seite] + r' ~ \cdot ~ cos('
                              + wk[p] + r')~=~ ' + str(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
-                             + str(wk_werte[p]) + r') ~=~' + str(lsg_2) + r'cm \quad (2BE) \\')
+                             + str(wk_werte[p]) + r') ~=~' + str(lsg_2) + r'cm \quad (3BE) \\')
 
             loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + str(wk_werte[p]) + r'^{ \circ} ~=~ '
-                           + str(wk_werte[0]) + r'^{ \circ} \quad (3BE)')
+                           + str(wk_werte[0]) + r'^{ \circ} \quad (2BE)')
         liste_punkte.append(9)
         i += 1
 
@@ -531,7 +531,7 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
     laenge_leiter = nzahl(23,50)/10
     deckenhoehe = N(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
-    anstellwinkel = round(math.degrees(math.asin(deckenhoehe / laenge_leiter)))
+    anstellwinkel = round(math.degrees(math.asin(deckenhoehe / laenge_leiter)),3)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar. '
                + f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m. '
@@ -719,14 +719,14 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         # Berechnung der Winkel im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 10
+        pkt = 9
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg:~} ' + str(seite_1) + '~=~' + latex(seite_wert_1)
                                                  + r'cm, \quad ' + str(seite_2) + '~=~' + latex(seite_wert_2)
                                                  + r'cm, \quad ' + winkel_1 + '~=~' + latex(winkel_wert_1)
                                                  + r'^{ \circ } \quad \mathrm{ges \colon ~}' + winkel_2
-                                                 + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(2BE)~folgt:~} \\'
+                                                 + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\'
                                                  + r' \frac{' + str(seite_1) + '}{~sin(' + winkel_1 + ')} ~=~'
                                                  + r' \frac{' + str(seite_2) + '}{~sin(' + winkel_2
                                                  + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin('
