@@ -529,7 +529,7 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
     i = 0
 
     laenge_leiter = nzahl(23,50)/10
-    deckenhoehe = N(laenge_leiter * (1-nzahl(5,15)/100),2)
+    deckenhoehe = round(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
     anstellwinkel = round(math.degrees(math.asin(deckenhoehe / laenge_leiter)),3)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
@@ -546,14 +546,13 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
         # Die SuS sollen den Anstellwinkel einer Klappleiter berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
-                                                 + str(deckenhoehe) + 'm,~b~=~' + str(laenge_leiter)
-                                                 + r'm, \quad ges \colon  \alpha \quad (1BE)} \\'
-                                                 + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert sin^{-1}()'
-                                                   r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
-                                                   r' sin^{-1} \Big( \frac{' + str(deckenhoehe) + 'm }{'
-                                                 + str(laenge_leiter) + r'm } \Big) ~=~' + str(N(anstellwinkel,2))
-                                                 + r' ^{ \circ} \quad (3BE) '))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
+                       + latex(deckenhoehe) + 'm,~b~=~' + latex(laenge_leiter)
+                       + r'm, \quad ges \colon  \alpha \quad (1BE)} '
+                       + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert sin^{-1}()'
+                       + r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
+                       + r' sin^{-1} \Big( \frac{' + latex(deckenhoehe) + 'm }{'
+                       + latex(laenge_leiter) + r'm } \Big) ~=~' + latex(anstellwinkel) + r' ^{ \circ} \quad (3BE) \\')
         liste_punkte.append(6)
         i += 1
 
