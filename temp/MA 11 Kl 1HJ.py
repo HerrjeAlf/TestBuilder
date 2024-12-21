@@ -53,7 +53,7 @@ aufgaben_teil2 = [[wiss_schreibweise(1, anzahl=4),
                    terme_ausmultiplizieren(5, ['a', 'c', 'e', 'h', 'j']),
                    terme_ausklammern(6, ['a', 'd', 'e']),
                    gleichungen(7, ['c', 'f', 'i', 'k'])],
-                  [stirb_langsam_2(8)]]
+                  [stirb_langsam_2(8, ['a', 'b', 'c', 'd', 'e'])]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil2 = []

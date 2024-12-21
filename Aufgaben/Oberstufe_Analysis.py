@@ -1600,13 +1600,13 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
                    + vorz_v_innen(xwert_3,'b' + ' + c ~=~' + gzahl(ywert_3) + r' \quad (1BE) }'))
     loesung.append(table2)
-    loesung.append(r' \mathrm{aus~III~folgt:~' + gzahl(c6) + '~c~=~' + gzahl(d6) + r' \quad \vert \div '
+    loesung.append(r' \mathrm{aus~III~folgt:~' + vorz_v_aussen(c6,'c~=~') + vorz_str(d6) + r' \quad \vert \div '
                    + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1BE) } \\'
-                   + r' \mathrm{aus~II~folgt:~' + gzahl(b4) + r'b~' + vorz_str(c4, null=True)
+                   + r' \mathrm{aus~II~folgt:~' + vorz_v_aussen(b4,'b~') + vorz_str(c4)
                    + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                    + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
                    + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1BE) } \\'
-                   + r' \mathrm{aus~I~folgt:~' + gzahl(a1) + r'~a~' + vorz_str(b1) + r' \cdot '
+                   + r' \mathrm{aus~I~folgt:~m' + vorz_v_aussen(a1,'a') + vorz_str(b1) + r' \cdot '
                    + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                    + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                    + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
@@ -3921,7 +3921,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         punkte = 5
-        b_ij = N(float(b_ij),3) if b_h%1 !=0 else b_ij
+        b_ij = N(float(b_ij),3) if b_ij%1 !=0 else b_ij
         nst = - b_ij/a
         xe_bij = -1 / c - b_ij / a
         if limit(fkt_b, x, oo) == 0:

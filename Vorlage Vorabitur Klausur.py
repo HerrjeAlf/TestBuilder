@@ -6,7 +6,7 @@ from Aufgaben import *
 from skripte.erstellen import *
 
 # Angaben für die Klausur im pdf-Dokument
-Kurs = ('Grundkurs')
+Kurs = ('Leistungskurs')
 Klasse = 13
 Gruppe = ''
 Gesamtzeit = 285
@@ -21,11 +21,22 @@ if Kurs != 'Grundkurs' and Kurs != 'Leistungskurs':
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
+
+# Aufgaben für Teil I
+liste_punkte_teil1 = ['Punkte']
+liste_bez_teil1 = ['Aufgabe']
+
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], [ ..., aufgabe(10)]] eintragen
-aufgaben_teil1 = [[ableitungen(1, ['a', 'b', 'c']), ableitungen(2, ['b']), ableitungen(3, ['c'])],
-                  [ableitungen(4, ['d']), ableitungen(5, ['e']), ableitungen(6, ['f'])],
-                  [ableitungen(7, ['a']), ableitungen(8, ['b']), ableitungen(9, ['c']),]]
-                   # ableitungen(10, ['c'])]]
+aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2,3]),
+                   rekonstruktion(2, BE=[5]),
+                   rechnen_mit_vektoren(3,['c'], BE=[5])],
+                  [vierfeldertafel(4, ['a', 'b'], BE=[1,4]),
+                   grafisches_ableiten(5, ['a', 'b'], BE=[2,3]),
+                   bestimmtes_integral(6, grad=2, BE=[2,3])],
+                  [rechnen_mit_vektoren(7, ['f'], BE=[5]),
+                   vektoren_koll_ortho(8, BE=[5]),
+                   faires_spiel(9, BE=[5]),
+                   baumdiagramm(10, ['a', 'b'], stufen=2, art='zmZ', BE=[3,2])]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -43,10 +54,11 @@ else:
     exit('Es müssen 10 Aufgaben für den hilfsmittelfreien Teil ausgewählt werden.') if i != 10 else i
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-ana1 = [[kurvendiskussion_polynome(1)]]
-ana2 = [[kurvendiskussion_exponentialfkt(2)]]
-algebra = [[ebene_ebene(3,F_in_E='parallel')]]
-stochastik = [[baumdiagramm(4)]]
+ana1 = [[kurvendiskussion_polynom_parameter(1, BE=[2,3,10,3,8,3,3,1,3,4])]]
+ana2 = [[kurvendiskussion_exponentialfkt_parameter(2,  BE=[2,1,6,3,8,2,4,8,3,3])]]
+algebra = [[geraden_aufstellen(3.1),
+            geraden_lagebeziehung(3.2, teilaufg=['a', 'c', 'd', 'e', 'f'], lagebeziehung='parallel')]]
+stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], art='zoZ')]]
 
 aufgaben_teil2 = (ana1, ana2, algebra, stochastik)
 liste_seiten_teil2 = []

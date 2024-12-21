@@ -9,7 +9,7 @@ from skripte.erstellen import *
 schuljahr = '2023 - 2024' # Schuljahr in dem das Abitur stattfindet
 pruefungsfach = '4. Abiturprüfungsfach'  # 4. Abiturprüfungsfach oder mündliche Zusatzprüfung
 vorschlag = 'Nr. 1'
-lehrkraft = 'Herr Krehl'
+lehrkraft = 'Herr Herrys'
 Thema_teil1 = 'Analysis (1. Semester)' # Thema (Semester)
 Thema_teil2 = 'Stochastik (2. und 4. Semester)'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
@@ -21,8 +21,7 @@ liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil1 = [[kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True,
-                                        nullstellen='rational', wendenormale=False)]]
+aufgaben_teil1 = [[kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True, wendenormale=False)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -37,7 +36,7 @@ liste_punkte_teil2 = ['Punkte']
 liste_bez_teil2 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel_01(3)]]
+aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel(3)]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil2 = []

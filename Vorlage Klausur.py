@@ -25,7 +25,15 @@ liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil1 = [[ableitungen(1)]]
+aufgaben_teil1 = [[brueche_add_subr(1, ['e', 'j'], anzahl=4),
+                   brueche_mul_div(2, ['b', 'c', 'e', 'f']),
+                   potenzgesetz_eins(3, ['d', 'g'], anzahl=3),
+                   potenzgesetz_zwei(4, ['d', 'g', 'i']),
+                   potenzgesetz_eins_erw(5, ['f', 'h', 'i', 'j']),
+                   potenzgesetz_eins_mehrfach(6, ['c', 'e']),
+                   potenzgesetz_zwei_erw(7, ['f', 'h', 'i', 'j']),
+                   potenzgesetz_drei_vier(8, ['c', 'e'])],
+                  []]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -41,7 +49,14 @@ liste_bez_teil2 = ['Aufgabe']
 
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[kurvendiskussion_polynome(2)]]
+aufgaben_teil2 = [[wiss_schreibweise(1, anzahl=4),
+                   einheiten_umrechnen(2, anzahl=4),
+                   terme_addieren(3, ['b', 'g', 'j', 'l']),
+                   terme_multiplizieren(4, ['a', 'c', 'd']),
+                   terme_ausmultiplizieren(5, ['a', 'c', 'e', 'h', 'j']),
+                   terme_ausklammern(6, ['a', 'd', 'e']),
+                   gleichungen(7, ['c', 'f', 'i', 'k'])],
+                  [stirb_langsam_2(8, ['a', 'b', 'c', 'd', 'e'])]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil2 = []

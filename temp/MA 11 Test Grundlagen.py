@@ -13,10 +13,10 @@ Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
 Art = 'Test 01'
-Titel = 'Brüche und Potenzgesetze'
+Titel = 'Test Einheiten umrechnen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
