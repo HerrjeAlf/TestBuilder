@@ -463,7 +463,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
                        + r'} ~=~ \frac{' + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3))
                        + '}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~\bm{'
                        + gzahl(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
-                       + r'}\quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
+                       + r'} \quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
         liste_punkte.append(4)
         i += 1
 
@@ -510,7 +510,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
                            + f') Bestimme zeichnerisch die lokale Änderungsrate an der Stelle x = {x_wert_2}. \n\n')
 
         loesung.extend((str(liste_teilaufg[i])
-                       + r') \quad \mathrm{Tangente~an~Punkt~(1BE),~~Steigungsdreieck~(1BE),~Steigung~}\bm{m='
+                       + r') \quad \mathrm{Tangente~an~Punkt~(1BE),~~Steigungsdreieck~(1BE),~Steigung~} \bm{m='
                        + gzahl(steigung_dreieck) + r'} \mathrm{~bestimmt~(1BE)}', 'Figure'))
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         liste_punkte.append(3)
@@ -564,7 +564,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, BE=[]):
             liste_punkte.append(4)
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime} (x)~=~' + latex(fkt_abl)
-                           + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~\bm{'
+                           + r' \to f^{ \prime} (' + gzahl(x_wert_2) + r')~=~ \bm{'
                            + gzahl(fkt_abl.subs(x, x_wert_2))
                            + r'} \quad (2BE) \quad \to \quad \mathrm{Zeichnung~stimmt~mit~berechneter~Steigung~überein}'
                            r' \quad (1BE) \\')
@@ -731,16 +731,16 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b'], BE=[]):
         wendepkt = solve(fkt_2, x)
         wendepkt_art = fkt_3.subs(x, wendepkt[0])
         if wendepkt_art < 0:
-            art = (r' \mathrm{Es~ist~ein~\mathbf{links-rechts-Wendepunkt},~deswegen~ist~das~Extrema~ein~Hochpunkt'
-                   + r' \quad (1BE)} \\')
+            art = (r' \mathrm{Es~ist~ein~ \mathbf{links-rechts-Wendepunkt},~deswegen~ist~das~Extrema~ein~Hochpunkt}'
+                   + r' \quad (1BE) \\')
         else:
-            art = (r' \mathrm{Es~ist~ein~\mathbf{rechts-links-Wendepunkt},~deswegen~ist~das~Extrema~ein~Tiefpunkt'
-                   + r' \quad (1BE)} \\')
+            art = (r' \mathrm{Es~ist~ein~ \mathbf{rechts-links-Wendepunkt},~deswegen~ist~das~Extrema~ein~Tiefpunkt}'
+                   + r' \quad (1BE) \\')
         aufgabe.append(str(liste_teilaufg[i]) + f') Begründen Sie Ihre Skizze. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~}\bm{x_1~=~'
-                       + gzahl(N(extrema[0],3)) + r'} \mathrm{~und~}\bm{x_2 ~=~' + gzahl(N(extrema[1], 3))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Extrema~an~Stelle~} \bm{x_1~=~'
+                       + gzahl(N(extrema[0],3)) + r'} \mathrm{~und~} \bm{x_2 ~=~' + gzahl(N(extrema[1], 3))
                        + r'} \mathrm{~sind~Nullstellen~der~Ableitung \quad (1BE)} \\'
-                       + r' \mathrm{Wendepunkte~an~Stelle~}\bm{x_w~=~' + gzahl(N(wendepkt[0], 3))
+                       + r' \mathrm{Wendepunkte~an~Stelle~} \bm{x_w~=~' + gzahl(N(wendepkt[0], 3))
                        + r'} \mathrm{~ist~Extrema~der~Ableitung \quad (1BE)} \\' + art
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
@@ -1589,8 +1589,8 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     table2.add_hline(2, 7)
 
     # Aufgaben und Lösungen
-    loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
-                   + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) } \\'
+    loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet:}'
+                   + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) \\'
                    + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                    + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                    + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)
@@ -1598,7 +1598,7 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + r' \quad \to \quad ' + vorz_v_aussen(xwert_2**2, 'a') + vorz_v_innen(xwert_2, 'b')
                    + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
                    + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
-                   + vorz_v_innen(xwert_3,'b' + ' + c ~=~' + gzahl(ywert_3) + r' \quad (1BE) }'))
+                   + vorz_v_innen(xwert_3,'b + c ~=~' + gzahl(ywert_3) + r' \quad (1BE) }'))
     loesung.append(table2)
     loesung.append(r' \mathrm{aus~III~folgt:~' + vorz_v_aussen(c6,'c~=~') + vorz_str(d6) + r' \quad \vert \div '
                    + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1BE) } \\'

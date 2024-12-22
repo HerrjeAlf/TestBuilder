@@ -436,8 +436,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
                         + r' \end{pmatrix} \\'))
 
-        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + gzahl(x_2) + r' \cdot r'
-                     + vorz_str(x_3) + r's \cdot \quad \to \quad r~=~'
+        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + vorz_v_aussen(x_2,r' \cdot r')
+                     + vorz_v_innen(x_3,'s') + r' \cdot \quad \to \quad r~=~'
                      + gzahl(Rational(x_1,x_2)) + vorz_str(Rational(-1*x_3,x_2))
                      + r' \cdot s \quad (2P) \\')
 
@@ -620,8 +620,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
                        + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
                        + r'~ ).} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~'
-                       + r'der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
+                       + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
                        + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
                        + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
@@ -632,7 +632,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
                        + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
                        + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~}' + str(punkte) + r'BE')
         # alternative Variante
 
         # laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
@@ -955,11 +955,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         table1.add_row(str(liste_teilaufg[i]) + ')',
                        MultiColumn(2, align='l', data='Die Geraden '), 'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. die Richtungsvektoren '
-                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2P')
+                       + 'sind kollinear, aber die Geraden haben keine gemeinsamen Punkte', '2BE')
         table1.add_row('', '-', 'sind identisch, d.h. die Richtungsvektoren sind kollinear und die Geraden '
-                       + 'haben alle Punkte gemeinsam ', '2P')
+                       + 'haben alle Punkte gemeinsam ', '2BE')
         table1.add_row('', '-', 'schneiden sich, d.h. die Richtungsvektoren sind nicht kollinear '
-                       + 'und die Geraden haben einen Punkt gemeinsam', '2P')
+                       + 'und die Geraden haben einen Punkt gemeinsam', '2BE')
         table1.add_row('', '-', 'sind windschief, d.h. die Richtungsvektoren sind nicht kollinear '
                        + 'und die Geraden haben keine gem. Punkte.', '2P')
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' BE')
@@ -982,13 +982,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
                        'Punkte')
         table2.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
-                       + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt.', '2P')
+                       + 'indem man die Richtungsvektoren gleichsetzt und r bestimmt.', '2BE')
         table2.add_row('', '-', 'Sind die Geraden parallel (d.h. die Richtungsvektoren sind kollinear), '
                        + 'setzt man einen Stützvektor in die andere Geradengleichung ein. Ist dieser in der anderen '
-                       + 'Geraden enthalten, sind die Geraden identisch, ansonsten "echt" parallel.', '2P')
+                       + 'Geraden enthalten, sind die Geraden identisch, ansonsten "echt" parallel.', '2BE')
         table2.add_row('', '-', 'Sind die Geraden nicht parallel, setzt man beide Geraden gleich und '
                        + 'löst das Gleichungssystem. Erhält man eine Lösung für r und s, schneiden sich die Geraden. '
-                       + 'erhält man keine Lösung, sind die Geraden windschief. ', '2P')
+                       + 'erhält man keine Lösung, sind die Geraden windschief. ', '2BE')
         table2.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table2)
 

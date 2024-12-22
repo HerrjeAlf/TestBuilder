@@ -55,7 +55,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'], stufen=None, art='zmZ', BE=[]):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -350,8 +350,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # erstellen vom Histogramm
         loeschen()
         histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}.png','Histogramm')
-        loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1P,~Balken~' + str(pkt) + r'P} \\'
-                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}'))
+        loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1BE,~Balken~' + str(pkt) + r'BE} \\'
+                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'))
         liste_punkte.append(punkte)
         i += 1
 
@@ -402,7 +402,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         if art == 'zmZ':
             aufgabe.append(f'Nun wird {anzahl_n} mal eine Kugel mit Zurücklegen gezogen. \n\n')
 
-    if 'i' in teilaufg:
+    if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -414,7 +414,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(2)
         i += 1
 
-    if 'j' in teilaufg and art == 'zoZ':
+    if 'i' in teilaufg and art == 'zoZ':
         # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -436,7 +436,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(2)
         i += 1
 
-    if 'k' in teilaufg and art == 'zmZ':
+    if 'j' in teilaufg and art == 'zmZ':
         # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -453,7 +453,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(4)
         i += 1
 
-    if 'l' in teilaufg and art == 'zmZ':
+    if 'k' in teilaufg and art == 'zmZ':
         # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
         pass
         # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen

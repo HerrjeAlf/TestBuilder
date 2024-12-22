@@ -21,11 +21,6 @@ if Kurs != 'Grundkurs' and Kurs != 'Leistungskurs':
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-
-# Aufgaben für Teil I
-liste_punkte_teil1 = ['Punkte']
-liste_bez_teil1 = ['Aufgabe']
-
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], [ ..., aufgabe(10)]] eintragen
 aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2,3]),
                    rekonstruktion(2, BE=[5]),
@@ -36,7 +31,7 @@ aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2
                   [rechnen_mit_vektoren(7, ['f'], BE=[5]),
                    vektoren_koll_ortho(8, BE=[5]),
                    faires_spiel(9, BE=[5]),
-                   baumdiagramm(10, ['a', 'b'], stufen=2, art='zmZ', BE=[3,2])]]
+                   baumdiagramm(10, ['a', 'b'], stufen=2, art='zoZ', BE=[3,2])]]
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -57,8 +52,10 @@ else:
 ana1 = [[kurvendiskussion_polynom_parameter(1, BE=[2,3,10,3,8,3,3,1,3,4])]]
 ana2 = [[kurvendiskussion_exponentialfkt_parameter(2,  BE=[2,1,6,3,8,2,4,8,3,3])]]
 algebra = [[geraden_aufstellen(3.1),
-            geraden_lagebeziehung(3.2, teilaufg=['a', 'c', 'd', 'e', 'f'], lagebeziehung='parallel')]]
-stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], art='zoZ')]]
+            geraden_lagebeziehung(3.2, teilaufg=['a', 'c', 'e'], lagebeziehung='schneiden',
+                                  gerade_k=False, BE=[4,10,5])]]
+stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i'],
+                            art='zoZ', BE=[9,4,7,2,4,2,2])]]
 
 aufgaben_teil2 = (ana1, ana2, algebra, stochastik)
 liste_seiten_teil2 = []
@@ -68,7 +65,7 @@ for aufgaben in aufgaben_teil2:
     liste_punkte = ['Punkte']
     liste_bez = ['Aufgabe']
 
-    # hier werden aus der Liste der Aufgaben die Test erzeugt
+    # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
     for element in aufgaben:
         for aufgabe in element:
