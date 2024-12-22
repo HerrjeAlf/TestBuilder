@@ -245,7 +245,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
         # Tabelle mit dem Text
-        table1 = Tabular('p{0.2cm} p{3cm} p{8cm} p{2cm}')
+        table1 = Tabular('p{0.2cm} p{3cm} p{7cm} p{2cm}')
         table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
         table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
         table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
@@ -491,8 +491,8 @@ def faires_spiel(nr, BE=[]):
     if gewinn != 0:
         lsg = (r' \quad \mathrm{Das~Spiel~ist~nicht~fair} \quad (3BE) \\'
                + r' \mathrm{für~ein~faires~Spiel~müsste~P ~=~ \frac{E}{p \% } ~=~ \frac{'
-               + gzahl(einsatz) + r' \text{\texteuro}}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
-               + gzahl(preis_fair) + r' ~\text{\texteuro}~sein \quad (3BE)}')
+               + gzahl(einsatz) + r' \text{ \texteuro }}{' + gzahl(N(wkt_proz,3)) + r' \% } ~=~ '
+               + gzahl(preis_fair) + r' ~ \text{ \texteuro }~sein \quad (3BE)}')
         pkt += 3
     else:
         lsg = (r' \mathrm{Das~Spiel~ist~fair} \quad (3BE) \\')
@@ -502,8 +502,8 @@ def faires_spiel(nr, BE=[]):
                f'Ist das Spiel fair? Wenn es unfair ist, wie müsste der Preis geändert werden, '
                f'damit es fair ist?  \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
-               r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis \quad '
-               r'p~ \to ~ Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
+               r' \mathrm{Legende: \quad G~ \to ~Gewinn~(im~Mittel~pro~Spiel) \quad P~ \to ~Preis} \quad '
+               r' \mathrm{p~ \to ~Wahrscheinlichkeit~für~Preis \quad E~ \to ~Einsatz} \\'
                + r' \mathrm{Anzahl~der~günstigen~Ergebnisse ~' + str(i) + r'~von~insgesamt ~ 36 \quad \to \quad '
                + r' p ~=~ \frac{' + str(i) + '}{36} ~=~ ' + str(N(wkt_proz,3)) + r' \% \quad (2BE)} \\'
                + r' \mathrm{G~=~P \cdot p\% - E ~=~' + gzahl(preis) + r' \text{\texteuro} \cdot '

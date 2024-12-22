@@ -1589,8 +1589,8 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     table2.add_hline(2, 7)
 
     # Aufgaben und Lösungen
-    loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet:}'
-                   + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) \\'
+    loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet \quad }'
+                   + r' f(x)~= ~ a  x^2 ~ + ~ b x ~ + ~ c \quad (1BE) \\'
                    + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                    + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
                    + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)

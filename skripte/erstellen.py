@@ -60,10 +60,10 @@ def seite(aufgaben):
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
+                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px', placement=None)
                 i += 1
             elif 'Bild' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
+                with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/aufgaben/{loesung[3][i]}', width='250px')
                 i += 1
             elif '3dim_Koordinatensystem' in elements:
