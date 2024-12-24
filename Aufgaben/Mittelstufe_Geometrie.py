@@ -799,12 +799,12 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     alpha = nzahl(30,60)
     beta = nzahl(70,110)- alpha
     gamma = 180 - alpha - beta
-    print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+    # print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
     seite_c = nzahl(6,12)
     seite_a = round(seite_c * math.sin(math.radians(alpha))/math.sin(math.radians(gamma)),1)
     seite_b = round(seite_c * math.sin(math.radians(beta))/math.sin(math.radians(gamma)),1)
     seite_h = round(seite_a * math.sin(math.radians(beta)),1)
-    print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
+    # print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
     gamma_1 = 90 - alpha
     xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,3)
     ywert_punkt_c = round(math.sin(math.radians(alpha))*seite_b,3)
@@ -812,10 +812,11 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # Listen für die Zeichung des Dreiecks
     pkt_list = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c],[xwert_punkt_c,0]]
     pkt_bez = ['A', 'B', 'C', 'F']
-    st = ['a', 'b', 'c', 'h']
+    st = ['a', 'b', '', 'h']
     st_werte = [seite_a, seite_b, seite_c, seite_h]
     wk = [r' \alpha ', r' \beta ', r' \gamma_1 ',  r' ^{ \circ}']
     wk_werte = [alpha, beta, gamma_1, 90]
+    dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                 NoEscape('Die folgende Abbildung stellt ein beliebiges Dreieck dar, wobei $ h = '
@@ -825,12 +826,12 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
-    if 'a' or 'b' or 'c' or 'd' in teilaufg:
+
+    if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 5
-        dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
         aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $'
                        + r' \\\\'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + str(seite_a) + r'cm,~ h~=~'
@@ -845,7 +846,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'b' or 'c' or 'd' in teilaufg:
+    if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung eines Winkels mit dem Sinus
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -863,7 +864,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'c' or 'd' in teilaufg:
+    if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Berechnung einer Seite mit dem Sinussatz
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
