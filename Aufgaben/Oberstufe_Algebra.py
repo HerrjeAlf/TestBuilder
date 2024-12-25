@@ -2216,4 +2216,67 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
+    # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, einer geg. Geraden und verschiedenen Ebenen der Schar.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    # Normalenvektorschar der Ebene erzeugen
+    punkt_d = punkt_vektor(4)
+    nv = [nx, ny, nz] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+    ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+    while vektor_kollinear(nv,ave) == True:
+        ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+    ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
+    erg = np.dot(punkt_d, nv) + np.dot(punkt_d, ave) * a
+    erg_str = gzahl(np.dot(punkt_d, nv)) + vorz_v_innen(np.dot(punkt_d, ave),'a')
+
+    # Gerade g erzeugen
+    g_var = zzahl(1,4)
+    gx, gy = zzahl(0,4), zzahl(0,4)
+    gz = erg.subs(a,g_var) - gx - gy
+    punkt_g = [gx, gy, gz]
+    g_rv = [g_vx, g_vy, g_vz] = random.choice([[ny + aey * g_var, -1*(nx + aex * g_var), 0],
+                                               [0, nz + aez * g_var, -1*(ny + aey * g_var)],
+                                               [nz + aez * g_var, 0, -1 * (nx + aex * g_var)]])
+
+    # Gerade h erzeugen
+    h_var = zzahl(1,4)
+    hx0, hy0 = zzahl(0,4), zzahl(0,4)
+    hz0 = erg.subs(a,h_var) - hx0 - hy0
+    punkt_h = [hx, hy, hz] = np.array([hx0, hy0, hz0]) + nv
+    h_rv = [h_vx, h_vy, h_vz] = random.choice([[ny + aey * h_var, -1*(nx + aex * h_var), 0],
+                                               [0, nz + aez * h_var, -1*(ny + aey * h_var)],
+                                               [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sei die Ebenenschar E mit',
+               ' E: ~' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
+               + binom_innen(nz, aez, str2='a', var='z') + '~=~'
+               + erg_str + ' \quad \mathrm{sowie~die~Geraden \quad',
+               r' g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
+               + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+               + r' \end{pmatrix} \quad und \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
+               + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
+               + r' \end{pmatrix} }']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+
 # in Entwicklung

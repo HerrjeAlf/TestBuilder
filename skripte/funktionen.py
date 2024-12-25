@@ -205,48 +205,84 @@ def vorz_str(k):
         print('Fehler:', fehler)
 
 # Darstellung der Faktoren bzw. Vorzeichen neu
-def vorz_v_innen(k,v, null=False):
+def vorz_v_innen(zahl,string, null=False):
     try:
-        if k == 0:
+        if zahl == 0:
             return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-        if k == -1:
-            if v == '':
+        if zahl == -1:
+            if string == '':
                 return '-1'
             else:
-                return '-' + v
-        if k == 1:
-            if v == '':
+                return '-' + string
+        if zahl == 1:
+            if string == '':
                 return '+1'
             else:
-                return '+' + v
-        if k%1 == 0:
-            k = int(k)
-        if k < 0:
-            return latex(k) + v
+                return '+' + string
+        if zahl%1 == 0:
+            zahl = int(zahl)
+        if zahl < 0:
+            return latex(zahl) + string
         else:
-            return f'+{latex(k)}' + v
+            return f'+{latex(zahl)}' + string
     except Exception as fehler:
         print('Fehler:', fehler)
 
-def vorz_v_aussen(k,v, null=False):
+def vorz_v_aussen(zahl,string, null=False):
     try:
-        if k == 0:
+        if zahl == 0:
             return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-        if k == -1:
-            if v == '':
+        if zahl == -1:
+            if string == '':
                 return '-1'
             else:
-                return '-' + v
-        if k == 1:
-            if v == '':
+                return '-' + string
+        if zahl == 1:
+            if string == '':
                 return '1'
             else:
-                return v
-        if k%1 == 0:
-            k = int(k)
-        return latex(k) + v
+                return string
+        if zahl%1 == 0:
+            zahl = int(zahl)
+        return latex(zahl) + string
     except Exception as fehler:
         print('Fehler:', fehler)
+
+def binom_aussen(z1, z2, str1='', str2='', var=''):
+    if z1 != 0 and z2 != 0:
+        z1, z2 = random.shuffle([[z1, str1], [z2, str2]])
+        if z1[0] < 0 and z2[0] < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(z1[0]), str(str1[1]))
+                    + vorz_v_innen(abs(z2[0]), str(str2[1])) + r' \right) ' + str(var))
+        elif z1[0] < 0:
+            return (r' \left( ' + vorz_v_aussen(z2[0], str(str2[1]))
+                    + vorz_v_innen(z1[0], str(str1[1])) + r' \right) ' + str(var))
+        elif z2[0] < 0:
+            return (r' \left( ' + vorz_v_aussen(z1[0], str(str1[1]))
+                    + vorz_v_innen(z2[0], str(str2[1])) + r' \right) ' + str(var))
+        else:
+            return (r' \left( ' + vorz_v_aussen(z1[0],str(str1[1]))
+                    + vorz_v_innen(z2[0],str(str2[1])) + r' \right) ' + str(var))
+    else:
+        return vorz_v_aussen(z1[0],str(z1[1] + var)) + vorz_v_aussen(z2[0], str(z2[1] + var))
+
+def binom_innen(z1, z2, str1='', str2='', var=''):
+    if z1 != 0 and z2 != 0:
+        z1, z2 = random.shuffle([[z1, str1], [z2, str2]])
+        if z1[0] < 0 and z2[0] < 0:
+            return (r'- \left( ' + vorz_v_innen(abs(z1[0]), str(str1[1]))
+                    + vorz_v_innen(abs(z2[0]), str(str2[1])) + r' \right) ' + str(var))
+        elif z1[0] < 0:
+            return (r' + \left( ' + vorz_v_aussen(z2[0], str(str2[1]))
+                    + vorz_v_innen(z1[0], str(str1[1])) + r' \right) ' + str(var))
+        elif z2[0] < 0:
+            return (r' + \left( ' + vorz_v_aussen(z1[0], str(str1[1]))
+                    + vorz_v_innen(z2[0], str(str2[1])) + r' \right) ' + str(var))
+        else:
+            return (r' + \left( ' + vorz_v_aussen(z1[0],str(str1[1]))
+                    + vorz_v_innen(z2[0],str(str2[1])) + r' \right) ' + str(var))
+    else:
+        return vorz_v_innen(z1[0],str(z1[1] + var)) + vorz_v_innen(z2[0], str(z2[1] + var))
 
 def fakt_var(k):
     if k == 1:
@@ -334,8 +370,8 @@ def vektor_rational(vec,p,q=1000):
         return False
 
 # Funktionen zur linearen Algebra
-def punkt_vektor(p):
-    return np.array([zzahl(1,p), zzahl(1,p), zzahl(1,p)])
+def punkt_vektor(p,n=3):
+    return np.array([zzahl(1,p) for _ in range(n)])
 
 def vektor_runden(vec,p):
     return [N(elements,p) for elements in vec]
@@ -373,9 +409,8 @@ def vektor_kuerzen(vec, p = 50):
 def vektor_kollinear(vec1, vec2):
     i = 0
     lsg = []
-    for element in vec1:
-        lsg.append(element / vec2[i])
-        i += 1
+    for i in range(len(vec1)):
+        lsg.append(vec1[i] / vec2[i])
     # print(lsg)
     for element in lsg:
         # print(element / lsg[0])
