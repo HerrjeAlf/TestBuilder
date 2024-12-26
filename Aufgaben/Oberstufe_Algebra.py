@@ -2216,7 +2216,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
+def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, einer geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
