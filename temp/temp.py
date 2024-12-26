@@ -108,4 +108,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-print(punkt_vektor(3))
+z1, z2 = random_selection([[3, 'a'], [2, 'b']])
+
+print(z1)
+print(z2)

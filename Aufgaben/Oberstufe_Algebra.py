@@ -2226,48 +2226,72 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
 
     # Normalenvektorschar der Ebene erzeugen
     punkt_d = punkt_vektor(4)
-    nv = [nx, ny, nz] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+    nv = [nx, ny, nz] = [zzahl(1,5), zzahl(0,5), zzahl(0,5)]
     ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
     while vektor_kollinear(nv,ave) == True:
         ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
     ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
     erg = np.dot(punkt_d, nv) + np.dot(punkt_d, ave) * a
-    erg_str = gzahl(np.dot(punkt_d, nv)) + vorz_v_innen(np.dot(punkt_d, ave),'a')
+    erg_str = vorz_v_aussen(np.dot(punkt_d, ave),'a') + vorz_str(np.dot(punkt_d, nv))
 
     # Gerade g erzeugen
-    g_var = zzahl(1,4)
-    gx, gy = zzahl(0,4), zzahl(0,4)
-    gz = erg.subs(a,g_var) - gx - gy
-    punkt_g = [gx, gy, gz]
-    g_rv = [g_vx, g_vy, g_vz] = random.choice([[ny + aey * g_var, -1*(nx + aex * g_var), 0],
-                                               [0, nz + aez * g_var, -1*(ny + aey * g_var)],
-                                               [nz + aez * g_var, 0, -1 * (nx + aex * g_var)]])
+    g_var = zzahl(1, 4)
+    g_rv  = random.choice([[ny + aey * g_var, -1 * (nx + aex * g_var), 0],
+                           [0, nz + aez * g_var, -1 * (ny + aey * g_var)],
+                           [nz + aez * g_var, 0, -1 * (nx + aex * g_var)]])
+    g_rv = [g_vx, g_vy, g_vz] = vektor_kuerzen(g_rv)
+    punkt_g = [gx, gy, gz] = punkt_d + g_var
 
     # Gerade h erzeugen
     h_var = zzahl(1,4)
-    hx0, hy0 = zzahl(0,4), zzahl(0,4)
-    hz0 = erg.subs(a,h_var) - hx0 - hy0
-    punkt_h = [hx, hy, hz] = np.array([hx0, hy0, hz0]) + nv
-    h_rv = [h_vx, h_vy, h_vz] = random.choice([[ny + aey * h_var, -1*(nx + aex * h_var), 0],
-                                               [0, nz + aez * h_var, -1*(ny + aey * h_var)],
-                                               [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
+    h_rv = random.choice([[ny + aey * h_var, -1*(nx + aex * h_var), 0],
+                          [0, nz + aez * h_var, -1*(ny + aey * h_var)],
+                          [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
+    h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
+    punkt_h = [hx, hy, hz] = punkt_d + h_rv + nv
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sei die Ebenenschar E mit',
-               ' E: ~' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               NoEscape('Gegeben sei die Ebenenschar ' + '$ E_a $'+ ' und die Geraden g und h mit'),
+               ' E:' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
                + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + ' \quad \mathrm{sowie~die~Geraden \quad',
-               r' g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + erg_str + r', \quad g: \overrightarrow{x} ~=~ \begin{pmatrix} '
                + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
-               + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
                + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-               + r' \end{pmatrix} \quad und \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + r' \end{pmatrix} , \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
                + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
-               + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+               + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
                + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
-               + r' \end{pmatrix} }']
+               + r' \end{pmatrix}']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Die SuS sollen den Wert für a berechnen, für den ein gegebener Punkt T in einer Ebene der Schar liegt
+        t_var = zzahl(1,4)
+        t_rv = random.choice([[ny + aey * t_var, -1 * (nx + aex * t_var), 0],
+                              [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
+                              [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
+        punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert a, für den Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
+                       + f'{gzahl(tz)} ) in einer Ebene der Schar ' + '$ E_a $' + ' liegt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + erg_str + '~=~'
+                       + binom_aussen(nx, aex, str2='a', var=r' \cdot ' + gzahl_klammer(tx))
+                       + binom_innen(ny, aey, str2='a', var=r' \cdot ' + gzahl_klammer(ty))
+                       + binom_innen(nz, aez, str2='a', var=r' \cdot ' + gzahl_klammer(tz)) + '~=~'
+                       + gzahl(nx*tx) + vorz_str(ny*ty) + vorz_str(nz*tz) + vorz_v_innen(aex*tx,'a') 
+                       + vorz_v_innen(aey*ty,'a') + vorz_v_innen(aez*tz,'a') + '~=~'
+                       + gzahl(nx*tx+ny*ty+nz*tz) + vorz_v_innen(aex*tx+aey*ty+aez*tz,'a')
+                       + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \vert \div '
+                       + gzahl_klammer(aex*tx+aey*ty+aez*tz) + r' \quad \to \quad a~=~' + gzahl(t_var))
+
+        liste_punkte.append(3)
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):

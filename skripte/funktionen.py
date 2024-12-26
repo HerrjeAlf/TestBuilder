@@ -193,8 +193,10 @@ def vorz_fakt(k):
     else:
         return 1
 
-def vorz_str(k):
+def vorz_str(k, null=False):
     try:
+        if k == 0 and null == False:
+            return ''
         if k % 1 == 0:
             k = int(k)
         if k < 0:
@@ -250,39 +252,39 @@ def vorz_v_aussen(zahl,string, null=False):
 
 def binom_aussen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
-        z1, z2 = random.shuffle([[z1, str1], [z2, str2]])
-        if z1[0] < 0 and z2[0] < 0:
-            return (r'- \left( ' + vorz_v_aussen(abs(z1[0]), str(str1[1]))
-                    + vorz_v_innen(abs(z2[0]), str(str2[1])) + r' \right) ' + str(var))
-        elif z1[0] < 0:
-            return (r' \left( ' + vorz_v_aussen(z2[0], str(str2[1]))
-                    + vorz_v_innen(z1[0], str(str1[1])) + r' \right) ' + str(var))
-        elif z2[0] < 0:
-            return (r' \left( ' + vorz_v_aussen(z1[0], str(str1[1]))
-                    + vorz_v_innen(z2[0], str(str2[1])) + r' \right) ' + str(var))
+        zv1, zv2 = random_selection([[z1, str1], [z2, str2]])
+        if zv1[0] < 0 and zv2[0] < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(zv1[0]), str(zv1[1]))
+                    + vorz_v_innen(abs(zv2[0]), str(zv2[1])) + r' \right) ' + str(var))
+        elif zv1[0] < 0:
+            return (r' \left( ' + vorz_v_aussen(zv2[0], str(zv2[1]))
+                    + vorz_v_innen(zv1[0], str(zv1[1])) + r' \right) ' + str(var))
+        elif zv2[0] < 0:
+            return (r' \left( ' + vorz_v_aussen(zv1[0], str(zv1[1]))
+                    + vorz_v_innen(zv2[0], str(zv2[1])) + r' \right) ' + str(var))
         else:
-            return (r' \left( ' + vorz_v_aussen(z1[0],str(str1[1]))
-                    + vorz_v_innen(z2[0],str(str2[1])) + r' \right) ' + str(var))
+            return (r' \left( ' + vorz_v_aussen(zv1[0],str(zv1[1]))
+                    + vorz_v_innen(zv2[0],str(zv2[1])) + r' \right) ' + str(var))
     else:
-        return vorz_v_aussen(z1[0],str(z1[1] + var)) + vorz_v_aussen(z2[0], str(z2[1] + var))
+        return vorz_v_aussen(z1,str(str1 + var)) + vorz_v_aussen(z2, str(str2 + var))
 
 def binom_innen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
-        z1, z2 = random.shuffle([[z1, str1], [z2, str2]])
-        if z1[0] < 0 and z2[0] < 0:
-            return (r'- \left( ' + vorz_v_innen(abs(z1[0]), str(str1[1]))
-                    + vorz_v_innen(abs(z2[0]), str(str2[1])) + r' \right) ' + str(var))
-        elif z1[0] < 0:
-            return (r' + \left( ' + vorz_v_aussen(z2[0], str(str2[1]))
-                    + vorz_v_innen(z1[0], str(str1[1])) + r' \right) ' + str(var))
-        elif z2[0] < 0:
-            return (r' + \left( ' + vorz_v_aussen(z1[0], str(str1[1]))
-                    + vorz_v_innen(z2[0], str(str2[1])) + r' \right) ' + str(var))
+        zv1, zv2 = random_selection([[z1, str1], [z2, str2]])
+        if zv1[0] < 0 and zv2[0] < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(zv1[0]), str(zv1[1]))
+                    + vorz_v_innen(abs(zv2[0]), str(zv2[1])) + r' \right) ' + str(var))
+        elif zv1[0] < 0:
+            return (r' + \left( ' + vorz_v_aussen(zv2[0], str(zv2[1]))
+                    + vorz_v_innen(zv1[0], str(zv1[1])) + r' \right) ' + str(var))
+        elif zv2[0] < 0:
+            return (r' + \left( ' + vorz_v_aussen(zv1[0], str(zv1[1]))
+                    + vorz_v_innen(zv2[0], str(zv2[1])) + r' \right) ' + str(var))
         else:
-            return (r' + \left( ' + vorz_v_aussen(z1[0],str(str1[1]))
-                    + vorz_v_innen(z2[0],str(str2[1])) + r' \right) ' + str(var))
+            return (r' + \left( ' + vorz_v_aussen(zv1[0],str(zv1[1]))
+                    + vorz_v_innen(zv2[0],str(zv2[1])) + r' \right) ' + str(var))
     else:
-        return vorz_v_innen(z1[0],str(z1[1] + var)) + vorz_v_innen(z2[0], str(z2[1] + var))
+        return vorz_v_innen(z1,str(str1 + var)) + vorz_v_innen(z2, str(str2 + var))
 
 def fakt_var(k):
     if k == 1:
@@ -410,7 +412,13 @@ def vektor_kollinear(vec1, vec2):
     i = 0
     lsg = []
     for i in range(len(vec1)):
-        lsg.append(vec1[i] / vec2[i])
+        if vec2[i] == 0:
+            if vec1[i] == 0:
+                pass
+            else:
+                return False
+        else:
+            lsg.append(vec1[i] / vec2[i])
     # print(lsg)
     for element in lsg:
         # print(element / lsg[0])
