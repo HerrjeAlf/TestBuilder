@@ -2392,8 +2392,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                        + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
                        + r' \quad \vert ' + vorz_str(-1*(nx*h_vx + ny*h_vy + nz*h_vz)) + r' \quad \vert \div '
                        + gzahl_klammer(aex*h_vx + aey*h_vy + aez*h_vz) + r' \quad \to \quad a~=~' + gzahl(h_var)
-                       + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
-                       + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+                       + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_a:'
+                       + vorz_v_aussen(nx+aex*erg, 'x') + vorz_v_innen(ny+aey*erg, 'y')
+                       + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
 
