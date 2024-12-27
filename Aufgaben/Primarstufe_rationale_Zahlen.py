@@ -13,7 +13,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, anzahl_fakt=3, BE=[]):
+def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, anzahl_fakt=3, BE=[]):
     # Die SuS sollen Brüche mit vorgebenen Zahlen erweitern.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) trivialer Bruch
