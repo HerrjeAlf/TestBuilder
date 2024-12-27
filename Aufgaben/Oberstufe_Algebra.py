@@ -926,8 +926,6 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     if lagebeziehung == None:
         lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
-    if 'e' in teilaufg and lagebeziehung not in ['windschief', 'schneiden']:
-        lagebeziehung = random.choice(['windschief', 'schneiden'])
     v_teiler = random.choice([1, 2, 5])
     punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
     # Vektor v ist der Richtungsvektor von Geraden g_1
