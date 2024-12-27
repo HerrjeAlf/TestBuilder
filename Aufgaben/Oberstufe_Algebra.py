@@ -2250,14 +2250,15 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
 
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               NoEscape('Gegeben sei die Ebenenschar ' + '$ E_a $'+ ' und die Geraden g und h mit'),
-               ' E:' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
+               NoEscape('Gegeben sei die Ebenenschar ' + '$ E_a $'),
+               ' E_a:' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
                + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + r', \quad g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + erg_str + r' \quad \mathrm{und~die~Geraden~g~und~h~mit} \\ '
+               + r'g: \overrightarrow{x} ~=~ \begin{pmatrix} '
                + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
                + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
                + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-               + r' \end{pmatrix} , \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
+               + r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
                + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
                + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
                + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
@@ -2267,13 +2268,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen den Wert für a berechnen, für den ein gegebener Punkt T in einer Ebene der Schar liegt
+        # Die SuS sollen die Ebene der Schar bestimmen, die den Punkt T enthält (
         t_var = zzahl(1,4)
         t_rv = random.choice([[ny + aey * t_var, -1 * (nx + aex * t_var), 0],
                               [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
                               [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
         punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
-        pkt = 3
+        pkt = 4
         erg_k = skalarprodukt(punkt_d, nv)
         erg_a = skalarprodukt(punkt_d, ave)
         if  erg_a != 0:
@@ -2285,9 +2286,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert a für den Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
-                       + f'{gzahl(tz)} ), der in einer Ebene der Schar ' + '$ E_a $' + ' liegt. \n\n'))
-        loesung.append(str(liste_teilaufg[i])  + r') \quad \mathrm{g~in~E_a~einsetzen~und~die~entstandene~'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar die den '
+                       + f'Punkt T( {gzahl(tx)} | {gzahl(ty)} | {gzahl(tz)} ) enthält. \n\n')
+        loesung.append(str(liste_teilaufg[i])  + r') \quad \mathrm{T~in~E_a~einsetzen~und~die~entstandene~'
                        + r'Gleichung~nach~a~umstellen} \hspace{10em} \\' + erg_str + '~=~'
                        + binom_aussen(nx, aex, str2='a') + r' \cdot ' + gzahl_klammer(tx)
                        + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(ty)
@@ -2299,8 +2300,100 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                        + gzahl(erg_k - (nx*tx+ny*ty+nz*tz)) + '~=~'
                        + vorz_v_aussen(aex*tx + aey*ty + aez*tz - erg_a,'a') + r' \quad \vert \div '
                        + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
-                       + r' \quad (2BE)')
+                       + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx+aex*t_var, 'x')
+                       + vorz_v_innen(ny+aey*t_var, 'y') + vorz_v_innen(nz+aez*t_var,'z')
+                       + r' \quad (1BE)')
 
+        liste_punkte.append(pkt)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Die SuS sollen diejenige Ebene bestimmen, in der die Gerade g liegt
+        erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * g_var
+        pkt = 6
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
+                       + f'in der die Gerade g liegt. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
+                       + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
+                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' \cdot \begin{pmatrix} ' + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                       + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
+                       + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(g_vy)
+                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(g_vz) + r' \quad (1BE) \\'
+                       + '0~=~' + gzahl(nx*g_vx) + vorz_str(ny*g_vy) + vorz_str(nz*g_vz)
+                       + vorz_v_innen(aex*g_vx,'a') + vorz_v_innen(aey*g_vy,'a')
+                       + vorz_v_innen(aez*g_vz,'a') + r'~=~' + gzahl(nx*g_vx + ny*g_vy + nz*g_vz)
+                       + vorz_v_innen(aex*g_vx + aey*g_vy + aez*g_vz,'a')
+                       + r' \quad \vert ' + vorz_str(-1*(nx*g_vx + ny*g_vy + nz*g_vz)) + r' \quad \vert \div '
+                       + gzahl_klammer(aex*g_vx + aey*g_vy + aez*g_vz) + r' \quad \to \quad a~=~' + gzahl(g_var)
+                       + r' \quad (2BE) \\  \mathrm{Stützvektor~von~g~in~E_{' + gzahl(g_var) + r'}~einsetzen:}'
+                       + r' \hspace{20em} \\' + binom_aussen(nx, aex, str2=gzahl_klammer(g_var)) + r' \cdot '
+                       + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2=gzahl_klammer(g_var)) + r' \cdot '
+                       + gzahl_klammer(g_vy) + binom_innen(nz, aez, str2=gzahl_klammer(g_var)) + r' \cdot '
+                       + gzahl_klammer(g_vz) + '~=~'
+                       + vorz_v_aussen(np.dot(punkt_d, ave), r' \cdot ' + gzahl_klammer(g_var))
+                       + vorz_str(np.dot(punkt_d, nv)) + r' \quad (1BE) \\' + gzahl(erg) + '~=~' + gzahl(erg)
+                       + r' \quad \to \quad  \mathrm{g~liegt~in~E_{' + gzahl(g_var) + r'}} \quad (2BE)')
+        liste_punkte.append(pkt)
+        i += 1
+
+    if 'c' in teilaufg:
+        # Die SuS sollen diejenige Ebene bestimmen, in die parallel zu gegebenen Koordinatenachse ist
+        achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
+        print(achse)
+        bez = achse[0][0]
+        vec = achse[0][1]
+        pkt = 5
+        erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]),aex * vec[0] + aey * vec[1] + aez * vec[2])
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
+                       + f' die zur {bez} - Achse parallel ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + bez
+                       + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
+                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
+                       + r' \\' + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
+                       + gzahl_klammer(vec[0]) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(vec[1])
+                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\'
+                       + '0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
+                       + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
+                       + vorz_v_innen(aez * vec[2], 'a') + r' \quad \vert '
+                       + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
+                       + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
+                       + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                       + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+        liste_punkte.append(pkt)
+        i += 1
+
+    if 'd' in teilaufg:
+        # Die SuS sollen diejenige Ebene bestimmen, in die parallel zur Geraden h ist
+        erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * h_var
+        pkt = 4
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
+                       + f'die parallel zur Geraden h ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
+                       + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
+                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' \cdot \begin{pmatrix} ' + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
+                       + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
+                       + gzahl_klammer(h_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(h_vy)
+                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(h_vz) + r' \quad (1BE) \\'
+                       + '0~=~' + gzahl(nx*h_vx) + vorz_str(ny*h_vy) + vorz_str(nz*h_vz)
+                       + vorz_v_innen(aex*h_vx,'a') + vorz_v_innen(aey*h_vy,'a')
+                       + vorz_v_innen(aez*h_vz,'a') + r'~=~' + gzahl(nx*h_vx + ny*h_vy + nz*h_vz)
+                       + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
+                       + r' \quad \vert ' + vorz_str(-1*(nx*h_vx + ny*h_vy + nz*h_vz)) + r' \quad \vert \div '
+                       + gzahl_klammer(aex*h_vx + aey*h_vy + aez*h_vz) + r' \quad \to \quad a~=~' + gzahl(h_var)
+                       + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                       + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
 
