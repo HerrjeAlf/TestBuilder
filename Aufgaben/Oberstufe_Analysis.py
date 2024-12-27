@@ -3362,7 +3362,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                      + r' \right) \cdot e^{' + vorz_v_aussen(lsg[0],'x') + r'}')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
-               r' f(x)~=~' + fkt_str]
+               r' f_{b}(x)~=~' + fkt_str]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []

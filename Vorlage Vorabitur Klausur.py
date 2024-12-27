@@ -13,7 +13,7 @@ Gesamtzeit = 300 # der Leistungskurs hat 300 min und der Grundkurs 270 min
 Zeithmft = 100 # der Leistungskurs hat 100 min und der Grundkurs 90 min
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-clean_tex = True if clean_tex not in [True, False] else clean_tex
+clean_tex = False if clean_tex not in [True, False] else clean_tex
 if Kurs not in ['Grundkurs', 'Leistungskurs']:
     exit("Kurs muss 'Grundkurs' oder 'Leistungskurs' sein.")
 
