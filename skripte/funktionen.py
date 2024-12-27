@@ -457,8 +457,7 @@ def vektor_vergleich(vec1, vec2):
 def skalarprodukt(vec1, vec2):
     if len(vec1) != len(vec2):
         exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
-    liste = [x * y for x, y in zip(vec1, vec2)]
-    return sum(liste)
+    return sum([x * y for x, y in zip(vec1, vec2)])
 
 # Wahrscheinlichkeitsrechnung
 def darstellung_mengen(lsg_menge):

@@ -2231,7 +2231,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     while vektor_kollinear(nv,ave) == True:
         ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
     ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
-    erg = np.dot(punkt_d, nv) + np.dot(punkt_d, ave) * a
+    erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * a
     erg_str = vorz_v_aussen(np.dot(punkt_d, ave),'a') + vorz_str(np.dot(punkt_d, nv))
 
     # Gerade g erzeugen
@@ -2275,22 +2275,35 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                               [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
                               [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
         punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
+        pkt = 3
+        erg_k = skalarprodukt(punkt_d, nv)
+        erg_a = skalarprodukt(punkt_d, ave)
+        if  erg_a != 0:
+            zwlsg = r' \quad \vert ' + vorz_v_innen(-1*skalarprodukt(punkt_d, ave),'a')
+            pkt += 1
+
+        else:
+            zwlsg = ''
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert a, für den Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
-                       + f'{gzahl(tz)} ) in einer Ebene der Schar ' + '$ E_a $' + ' liegt. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + erg_str + '~=~'
-                       + binom_aussen(nx, aex, str2='a', var=r' \cdot ' + gzahl_klammer(tx))
-                       + binom_innen(ny, aey, str2='a', var=r' \cdot ' + gzahl_klammer(ty))
-                       + binom_innen(nz, aez, str2='a', var=r' \cdot ' + gzahl_klammer(tz)) + '~=~'
+        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert a für den Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
+                       + f'{gzahl(tz)} ), der in einer Ebene der Schar ' + '$ E_a $' + ' liegt. \n\n'))
+        loesung.append(str(liste_teilaufg[i])  + r') \quad \mathrm{g~in~E_a~einsetzen~und~die~entstandene~'
+                       + r'Gleichung~nach~a~umstellen} \hspace{10em} \\' + erg_str + '~=~'
+                       + binom_aussen(nx, aex, str2='a') + r' \cdot ' + gzahl_klammer(tx)
+                       + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(ty)
+                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(tz) + '~=~'
                        + gzahl(nx*tx) + vorz_str(ny*ty) + vorz_str(nz*tz) + vorz_v_innen(aex*tx,'a') 
-                       + vorz_v_innen(aey*ty,'a') + vorz_v_innen(aez*tz,'a') + '~=~'
-                       + gzahl(nx*tx+ny*ty+nz*tz) + vorz_v_innen(aex*tx+aey*ty+aez*tz,'a')
-                       + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \vert \div '
-                       + gzahl_klammer(aex*tx+aey*ty+aez*tz) + r' \quad \to \quad a~=~' + gzahl(t_var))
+                       + vorz_v_innen(aey*ty,'a') + vorz_v_innen(aez*tz,'a') + r' \quad (2BE) \\'
+                       + erg_str + '~=~' + gzahl(nx*tx+ny*ty+nz*tz) + vorz_v_innen(aex*tx+aey*ty+aez*tz,'a')
+                       + zwlsg + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \to \quad '
+                       + gzahl(erg_k - (nx*tx+ny*ty+nz*tz)) + '~=~'
+                       + vorz_v_aussen(aex*tx + aey*ty + aez*tz - erg_a,'a') + r' \quad \vert \div '
+                       + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
+                       + r' \quad (2BE)')
 
-        liste_punkte.append(3)
+        liste_punkte.append(pkt)
         i += 1
 
     if BE != []:
