@@ -250,6 +250,20 @@ def vorz_v_aussen(zahl,string, null=False):
     except Exception as fehler:
         print('Fehler:', fehler)
 
+def binom(z1, z2, str1='', str2=''):
+    if z1 != 0 and z2 != 0:
+        if z1 < 0 and z1 < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(z1), str(str1))
+                    + vorz_v_innen(abs(z2), str(str2)) + r' \right) ')
+        elif z1 < 0:
+            return vorz_v_aussen(z2, str(str2)) + vorz_v_innen(z1, str(str1))
+        elif z2 < 0:
+            return vorz_v_aussen(z1, str(str1)) + vorz_v_innen(z2, str(str2))
+        else:
+            return vorz_v_aussen(z1,str(str1)) + vorz_v_innen(z2,str(str2))
+    else:
+        return vorz_v_aussen(z1,str(str1)) + vorz_v_aussen(z2, str(str2))
+
 def binom_aussen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
         zv1, zv2 = random_selection([[z1, str1], [z2, str2]])
