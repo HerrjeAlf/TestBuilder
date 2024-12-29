@@ -108,7 +108,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], BE=[]):
         steigung = round(wert_steigung/20,3)
         swinkel = round(np.arctan(steigung)*180/pi, 1)
         lsg = r' ~ \leq 3.5^{ \circ } \to \mathrm{Die~Boing~ist~nicht~gefährdet.}'
-        lsg = r' ~ > 3.5^{ \circ } \to \mathrm{Die~Boing~ist~gefährdet.}' if swinkel > 3.5 else swinkel
+        lsg = r' ~ > 3.5^{ \circ } \to \mathrm{Die~Boing~ist~gefährdet.}' if swinkel > 3.5 else lsg
         aufgabe.extend(('Ein Flugzeug landet unbeschadet, wenn der Anflugwinkel 3,5° nicht überschreiten. '
                         + 'Aufgrund der Manipulation hat die Boeing vor der Landung keine Zeit die Landeklappen '
                         + 'auszufahren um die Geschwindigkeit und seinen Anflugwinkel zu verringern. \n\n',
