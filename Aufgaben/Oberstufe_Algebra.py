@@ -2223,7 +2223,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     i = 0
 
     # Normalenvektorschar der Ebene erzeugen
-    punkt_d = punkt_vektor(4)
+    punkt_d = [dx, dy, dz] = punkt_vektor(4)
     nv = [nx, ny, nz] = [zzahl(1,5), zzahl(0,5), zzahl(0,5)]
     ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
     while vektor_kollinear(nv,ave) == True:
@@ -2400,29 +2400,36 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
 
     if 'e' in teilaufg:
         # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
+        pkt = 5
         var1 = zzahl(1,2)
         var2 = var1 + 2
+        erg_var1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
+        erg_var2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+        nx_var2 = [nx2, ny2, nz2] = np.array[nx + aex * erg_var2, ny + aey * erg_var2, nz + aez * erg_var2]
+        punkt_e = [ex, ey, ez] = [Rational(erg_var2, nx2), 0, 0]
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade der Ebenen '
-                       + f'für $ E_{latex(var1)} $ und $ E_{latex(var2)} $ ob es eine Ebene der Ebenenschar gibt, '
-                       + f'die parallel zur Geraden h ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
-                       + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
-                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
-                       + r' \cdot \begin{pmatrix} ' + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
-                       + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
-                       + gzahl_klammer(h_vx) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(h_vy)
-                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(h_vz) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx * h_vx) + vorz_str(ny * h_vy) + vorz_str(nz * h_vz)
-                       + vorz_v_innen(aex * h_vx, 'a') + vorz_v_innen(aey * h_vy, 'a')
-                       + vorz_v_innen(aez * h_vz, 'a') + r'~=~' + gzahl(nx * h_vx + ny * h_vy + nz * h_vz)
-                       + vorz_v_innen(aex * h_vx + aey * h_vy + aez * h_vz, 'a')
-                       + r' \quad \vert ' + vorz_str(-1 * (nx * h_vx + ny * h_vy + nz * h_vz)) + r' \quad \vert \div '
-                       + gzahl_klammer(aex * h_vx + aey * h_vy + aez * h_vz) + r' \quad \to \quad a~=~' + gzahl(h_var)
-                       + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx + aex * erg, 'x')
-                       + vorz_v_innen(ny + aey * erg, 'y') + vorz_v_innen(nz + aez * erg, 'z') + r' \quad (1BE)')
+        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade der Ebenen '
+                       + f'$ E_{latex(var1)} $ und $ E_{latex(var2)} $.'), 'Weisen Sie nach, dass diese Schnittgerade '
+                       + 'in allen Ebenen der Schar liegt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r' \quad E_{' + gzahl(var1) + '}:'
+                       + vorz_v_aussen(nx+aex*erg_var1, 'x') + vorz_v_innen(ny+aey*erg_var1, 'y')
+                       + vorz_v_innen(nz+aez*erg_var1,'z') + '~=~' + gzahl(erg_var1)
+                       + r' \quad \mathrm{und} \quad E_{' + gzahl(var2) + '}:'
+                       + vorz_v_aussen(nx+aex*erg_var2, 'x') + vorz_v_innen(ny+aey*erg_var2, 'y')
+                       + vorz_v_innen(nz+aez*erg_var2,'z') + '~=~' + gzahl(erg_var2) + r' \quad (2BE) \\'
+                       + r' \mathrm{E_{'+ gzahl(var2) + '}~umformen~in~Parameterform:} \quad E_{' + gzahl(var2) + '}: '
+                       + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(dx) + r' \\'
+                       + gzahl(dy) + r' \\' + gzahl(dz) + r' \\ \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(-1*ny2) + r' \\' + gzahl(nx2) + r' \\' + gzahl(0) + r' \\'
+                       + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\'
+                       + gzahl(ny) + r' \\' + r' \end{pmatrix} \quad (3BE) \\' + r' \mathrm{und~in~E_{' + gzahl(var1)
+                       + '} ~einsetzen:} \quad E_{' + gzahl(var1) + '}:'
+                       + gzahl(nx+aex*erg_var1) + r' \cdot \left(' + gzahl(dx) + vorz_v_innen(-1*ny2,'r')
+                       + r' \right) ' + gzahl(ny+aey*erg_var1) + r' \cdot \left( ' + gzahl(dy)
+                       + vorz_v_innen(nx2,'r') + vorz_v_innen(-1*nz,'s') + r' \right) '
+                       + gzahl(nz+aez*erg_var1) + r' \cdot \left(' + gzahl(dz) + vorz_v_innen(ny2,'s')
+                       + r' \right) ~=~' + gzahl(erg_var1))
         liste_punkte.append(pkt)
         i += 1
 
