@@ -904,24 +904,42 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def sachaufgabe_vermessung_see(nr, BE=[]):
-    # Berechnungen im allgemeinen Dreieck
+    # Berechnungen der Länge eines Sees mit dem Kosinussatz
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+    liste_bez = [f'{nr}']
     i = 0
-    beta = nzahl(30, 60)
+    # beta = nzahl(30, 60)
+    alpha = nzahl(30, 60)
     gamma = nzahl(30,60)
-    alpha = 180 - gamma - beta
+    # alpha = 180 - gamma - beta
+    beta = 180 - gamma - alpha
     # print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
-    seite_a = nzahl(6, 12)
-    seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
-    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
-
+    # seite_a = nzahl(6, 12)
+    seite_b = nzahl(6, 12)
+    seite_a = round(seite_b * math.sin(math.radians(alpha)) / math.sin(math.radians(beta)), 1)
+    seite_c = round(seite_b * math.sin(math.radians(gamma)) / math.sin(math.radians(beta)), 1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
-               f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und den eingeschlossen Winkel von {gzahl(beta)}° '
-               f'bestimmt.', 'Figure']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
-    grafiken_aufgaben = []
+               f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
+               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild', 'Darstellung der Vermessung des Sees']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
+               r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
+               + r' cm, ~ c ~=~' + gzahl(seite_c) + r'cm \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
+               + r' ^{ \circ} \quad ges \colon  b \quad (1BE)} \\ b ~=~ \sqrt{a^2 + c^2 - 2ac \cdot cos( \beta ) }'
+               + r' ~=~ \sqrt{' + gzahl(seite_a) + '^2 + ' + gzahl(seite_c) + r' ^2 - 2 ~cdot ' + gzahl(seite_a)
+               + r' \cdot ' + gzahl(seite_c) + r' \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~' + gzahl(seite_b)
+               + r'  \quad (3BE)']
+    grafiken_aufgaben = ['vermessung_see']
     grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [5]
+        liste_punkte = BE
+    else:
+        liste_punkte = [5]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

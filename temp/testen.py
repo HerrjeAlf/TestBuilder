@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[ebenenschar_buendel(1, ['a', 'b', 'c', 'd', 'e'])]]
+    Aufgaben = [[sachaufgabe_vermessung_see(1)]]
 
     # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []
