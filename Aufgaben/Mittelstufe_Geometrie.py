@@ -902,3 +902,26 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sachaufgabe_vermessung_see(nr, BE=[]):
+    # Berechnungen im allgemeinen Dreieck
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    beta = nzahl(30, 60)
+    gamma = nzahl(30,60)
+    alpha = 180 - gamma - beta
+    # print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+    seite_a = nzahl(6, 12)
+    seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
+    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
+               f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und den eingeschlossen Winkel von {gzahl(beta)}° '
+               f'bestimmt.', 'Figure']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
