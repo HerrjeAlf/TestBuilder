@@ -2342,13 +2342,18 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
     if 'c' in teilaufg:
         # Die SuS sollen diejenige Ebene bestimmen, in die parallel zu gegebenen Koordinatenachse ist
-        achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
-        # print(achse)
-        bez = achse[0][0]
-        vec = achse[0][1]
         pkt = 5
-        erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]),aex * vec[0] + aey * vec[1] + aez * vec[2])
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        auswahl = nzahl(0,2)
+        achsen = [['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]]
+        bez = achsen[auswahl][0]
+        vec = achsen[auswahl][1]
+        while (nx * vec[0] + ny * vec[1] + nz * vec[2]) == 0 or (aex * vec[0] + aey * vec[1] + aez * vec[2]) == 0:
+            auswahl = (auswahl+1)%3
+            bez = achsen[auswahl][0]
+            vec = achsen[auswahl][1]
+        erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
+
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
@@ -2401,35 +2406,48 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     if 'e' in teilaufg:
         # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
         pkt = 5
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
         var1 = -1 * nzahl(1,2)
         var2 = var1 + nzahl(2,3)
         erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
         erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
-        nx_var1 = [nx_1, ny_1, nz_1]= np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
+        nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
         nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
         nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+        nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+
+        while (nz1*ny2 - ny1*nz2) == 0:
+            var1 = -1 * nzahl(1, 2)
+            var2 = var1 + nzahl(2, 3)
+            erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
+            erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+            nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
+            nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
+            nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+            nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+
+        lsg_kon = Rational(erg_var_1-(nx1*dx+ny1*dy+nz1*dz), nz1*ny2 - ny1*nz2)
+        lsg_var = Rational(ny2*nx1-nx2*ny1, nz1*ny2 - ny1*nz2)
+
         if nx_1 == nx1 and ny_1 == ny1 and nz_1 == nz1:
-            lsg_1 = '~'
+            lsg_1 = r' \quad '
             lsg_3 = ''
         else:
             lsg_1 = (r' \quad \to \quad E_{' + gzahl(var1) + '}:' + vorz_v_aussen(nx1, 'x')
                      + vorz_v_innen(ny1, 'y') + vorz_v_innen(nz1, 'z') + '~=~' + gzahl(erg_var1))
             lsg_3 = r' \quad (1BE) \\'
-        nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+
         if nx_2 == nx2 and ny_2 == ny2 and nz_2 == nz2:
             lsg_2 = ''
             lsg_3 = ''
         else:
-            lsg_2 = (r' \quad \to \quad E_{' + gzahl(var2) + '}:' + vorz_v_aussen(nx2, 'x') + vorz_v_innen(ny2, 'y')
-                     + vorz_v_innen(nz2,'z') + '~=~' + gzahl(erg_var2))
+            lsg_2 = (r' \quad \to \quad E_{' + gzahl(var2) + '}:' + vorz_v_aussen(nx2, 'x')
+                     + vorz_v_innen(ny2, 'y') + vorz_v_innen(nz2,'z') + '~=~' + gzahl(erg_var2))
             lsg_3 = r' \quad (1BE) \\'
 
-        lsg_kon = Rational(erg_var1-(nx1*dx+ny1*dy+nz1*dz),nz1*ny2 - ny1*nz2)
-        lsg_var = Rational(ny2*nx1-nx2*ny1,nz1*ny2 - ny1*nz2)
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Ebenen für a = {gzahl(var1)} sowie '
-                       + f'a = {gzahl(var2)} auf und berechnen Sie die Schnittgerade s dieser beiden Ebenen. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade s der Ebenen für a = {gzahl(var1)} '
+                       + f'und a = {gzahl(var2)} der Schar. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E_{' + gzahl(var1) + '}:'
                        + vorz_v_aussen(nx_1, 'x') + vorz_v_innen(ny_1, 'y')
                        + vorz_v_innen(nz_1,'z') + '~=~' + gzahl(erg_var_1) + lsg_1 + lsg_3
@@ -2442,10 +2460,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + gzahl(-1*ny2) + r' \\' + gzahl(nx2) + r' \\' + gzahl(0) + r' \\'
                        + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\'
                        + gzahl(ny2) + r' \\' + r' \end{pmatrix} \quad (3BE) \\' + r' \mathrm{und~in~E_{' + gzahl(var1)
-                       + r'} ~einsetzen:} \quad '+ gzahl(erg_var1) + '~=~' + gzahl(nx1) + r' \cdot \left(' + gzahl(dx)
-                       + vorz_v_innen(-1*ny2,'r') + r' \right) ' + vorz_str(ny1) + r' \cdot \left( ' + gzahl(dy)
+                       + r'} ~einsetzen:} \quad '+ gzahl(erg_var1) + '~=~' + gzahl(nx1) + r' \cdot \left( ' + gzahl(dx)
+                       + vorz_v_innen(-1*ny2, ' r ') + r' \right) ' + vorz_str(ny1) + r' \cdot \left( ' + gzahl(dy)
                        + vorz_v_innen(nx2,'r') + vorz_v_innen(-1*nz2,'s') + r' \right) '
-                       + vorz_str(nz1) + r' \cdot \left(' + gzahl(dz) + vorz_v_innen(ny2,'s')
+                       + vorz_str(nz1) + r' \cdot \left( ' + gzahl(dz) + vorz_v_innen(ny2,'s')
                        + r' \right) \quad (1BE) \\ ' + gzahl(erg_var1) + '~=~' + gzahl(nx1*dx)  + vorz_str(ny1*dy)
                        + vorz_str(nz1*dz) + vorz_v_innen(-1*ny2*nx1,'r') + vorz_v_innen(nx2*ny1,'r')
                        + vorz_v_innen(nz1*ny2,'s') + vorz_v_innen(-1*ny1*nz2, 's') + '~=~'
@@ -2453,17 +2471,21 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad (2BE) \\' + gzahl(erg_var1) + '~=~'
                        + gzahl(nx1*dx+ny1*dy+nz1*dz) + vorz_v_innen(nx2*ny1 - ny2*nx1,'r')
                        + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad \vert ' + vorz_str(-1*(nx1*dx+ny1*dy+nz1*dz))
-                       + r' \quad \vert ' + vorz_v_innen(ny2*nx1-nx2*ny1,'r') + r' \quad \vert \div '
+                       + r' \quad \vert ' + vorz_v_innen(ny2*nx1-nx2*ny1,' r ') + r' \quad \vert \div '
                        + gzahl_klammer(nz1*ny2 - ny1*nz2) + r' \quad \to \quad s~=~'
                        + gzahl(Rational(erg_var1-(nx1*dx+ny1*dy+nz1*dz),nz1*ny2 - ny1*nz2))
-                       + vorz_v_innen(Rational(ny2*nx1-nx2*ny1,nz1*ny2 - ny1*nz2),'r') + r' \quad (2BE) \\'
-                       + r' \mathrm{s~einsetzen~in~E_{' + gzahl(var2) + r'~} \quad s: '
+                       + vorz_v_innen(Rational(ny2*nx1-nx2*ny1,nz1*ny2 - ny1*nz2),' r ') + r' \quad (2BE) \\'
+                       + r' \mathrm{s~einsetzen~in~E_{' + gzahl(var2) + r'~}} \quad s: '
                        + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(dx) + r' \\'
-                       + gzahl(dy) + r' \\' + gzahl(dz) + r' \\ \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                       + gzahl(dy) + r' \\' + gzahl(dz) + r' \\' + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + gzahl(-1*ny2) + r' \\' + gzahl(nx2) + r' \\' + gzahl(0) + r' \\'
                        + r' \end{pmatrix} ~+~ \left( ' + gzahl(lsg_kon) + vorz_v_innen(lsg_var,'r')
                        + r' \right) \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\' + gzahl(ny2)
-                       + r' \\' + r' \end{pmatrix} ' +  + r' \quad (3BE) \\')
+                       + r' \\' + r' \end{pmatrix} \quad (1BE) \\ s: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                       + gzahl(dx) + r' \\' + gzahl(dy - lsg_kon * nz2) + r' \\'
+                       + gzahl(dz + lsg_kon * ny2) + r' \\' + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
+                       + gzahl(-1*ny2) + r' \\' + gzahl(nx2 - lsg_var * nz2)
+                       + r' \\' + gzahl(lsg_var*ny2) + r' \\' + r' \end{pmatrix} \quad (1BE) \\')
         liste_punkte.append(pkt)
         i += 1
 

@@ -108,4 +108,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-print(simplify(expand(erg_var1)))
+
+def test():
+    a = nzahl(1,3)
+    b = nzahl(1,3)
+    return a,b
+print(test())
+a, b = test()
+print(a)
+print(b)
