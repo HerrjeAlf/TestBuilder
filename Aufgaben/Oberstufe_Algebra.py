@@ -2405,7 +2405,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
     if 'e' in teilaufg:
         # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
-        pkt = 5
+        pkt = 11
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         var1 = -1 * nzahl(1,2)
@@ -2431,7 +2431,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         lsg_var = Rational(ny2*nx1-nx2*ny1, nz1*ny2 - ny1*nz2)
 
         if nx_1 == nx1 and ny_1 == ny1 and nz_1 == nz1:
-            lsg_1 = r' \quad '
+            lsg_1 = r' \quad (1BE) \quad '
             lsg_3 = ''
         else:
             lsg_1 = (r' \quad \to \quad E_{' + gzahl(var1) + '}:' + vorz_v_aussen(nx1, 'x')
@@ -2461,17 +2461,18 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\'
                        + gzahl(ny2) + r' \\' + r' \end{pmatrix} \quad (3BE) \\' + r' \mathrm{und~in~E_{' + gzahl(var1)
                        + r'} ~einsetzen:} \quad '+ gzahl(erg_var1) + '~=~' + gzahl(nx1) + r' \cdot \left( ' + gzahl(dx)
-                       + vorz_v_innen(-1*ny2, ' r ') + r' \right) ' + vorz_str(ny1) + r' \cdot \left( ' + gzahl(dy)
-                       + vorz_v_innen(nx2,'r') + vorz_v_innen(-1*nz2,'s') + r' \right) '
+                       + vorz_v_innen(-1*ny2, ' r ') + r' \right) ' + vorz_str(ny1) + r' \cdot \left( '
+                       + gzahl(dy) + vorz_v_innen(nx2,'r') + vorz_v_innen(-1*nz2,'s') + r' \right) '
                        + vorz_str(nz1) + r' \cdot \left( ' + gzahl(dz) + vorz_v_innen(ny2,'s')
                        + r' \right) \quad (1BE) \\ ' + gzahl(erg_var1) + '~=~' + gzahl(nx1*dx)  + vorz_str(ny1*dy)
                        + vorz_str(nz1*dz) + vorz_v_innen(-1*ny2*nx1,'r') + vorz_v_innen(nx2*ny1,'r')
                        + vorz_v_innen(nz1*ny2,'s') + vorz_v_innen(-1*ny1*nz2, 's') + '~=~'
                        + gzahl(nx1*dx+ny1*dy+nz1*dz) + vorz_v_innen(nx2*ny1 - ny2*nx1,'r')
-                       + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad (2BE) \\' + gzahl(erg_var1) + '~=~'
+                       + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad (1BE) \\' + gzahl(erg_var1) + '~=~'
                        + gzahl(nx1*dx+ny1*dy+nz1*dz) + vorz_v_innen(nx2*ny1 - ny2*nx1,'r')
-                       + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad \vert ' + vorz_str(-1*(nx1*dx+ny1*dy+nz1*dz))
-                       + r' \quad \vert ' + vorz_v_innen(ny2*nx1-nx2*ny1,' r ') + r' \quad \vert \div '
+                       + vorz_v_innen(nz1*ny2 - ny1*nz2, 's') + r' \quad \vert '
+                       + vorz_str(-1*(nx1*dx+ny1*dy+nz1*dz)) + r' \quad \vert '
+                       + vorz_v_innen(ny2*nx1-nx2*ny1,' r ') + r' \quad \vert \div '
                        + gzahl_klammer(nz1*ny2 - ny1*nz2) + r' \quad \to \quad s~=~'
                        + gzahl(Rational(erg_var1-(nx1*dx+ny1*dy+nz1*dz),nz1*ny2 - ny1*nz2))
                        + vorz_v_innen(Rational(ny2*nx1-nx2*ny1,nz1*ny2 - ny1*nz2),' r ') + r' \quad (2BE) \\'
