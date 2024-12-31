@@ -395,7 +395,7 @@ def vektor_runden(vec,p):
 def vektor_ganzzahl(vec):
     return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
-def vektor_kuerzen(vec, p = 50):
+def vektor_kuerzen(vec, p = 50, qout=False):
     faktor = [x + 1 for x in range(p)]
     list = np.array(vec)
     i = 0
@@ -420,7 +420,11 @@ def vektor_kuerzen(vec, p = 50):
         list = [-1 * element for element in list]
     # print('gekürzt: ' + str(list))
     list = np.array([int(element) if element % 1 == 0 else element for element in list])
-    return np.array(list)
+    faktor = [Rational(vec[i],list[i]) for i in range(len(list)) if list[i] !=0 and vec[i] != 0]
+    if qout == False:
+        return np.array(list)
+    else:
+        return np.array(list), faktor[0]
 
 def vektor_kollinear(vec1, vec2):
     i = 0
