@@ -1,7 +1,6 @@
 import os
 from helpers import root_path
 os.chdir(root_path())
-
 from Aufgaben import *
 from skripte.erstellen import *
 
@@ -38,6 +37,18 @@ algebra = [[geraden_aufstellen(3.1),
                                   gerade_k=False, BE=[4,10,5])]]
 stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i'],
                             art='zoZ', BE=[9,4,7,2,4,2,2])]]
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # --------------------------------ab hier wird aus der Liste der Aufgaben die Klausur erzeugt ---------------------------

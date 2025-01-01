@@ -1,7 +1,6 @@
 import os
 from helpers import root_path
 os.chdir(root_path())
-
 from Aufgaben import *
 from skripte.erstellen import *
 
@@ -20,6 +19,18 @@ Aufgabenliste = [[aenderungsrate(1),
                   kurvendiskussion_polynome(2, ['c']),
                   kurvendiskussion_polynome(3, ['c'], grad=4)],
                  [grafisches_ableiten(4)]]
+
+
+
+
+
+
+
+
+
+
+
+
 
 # --------------------------------ab hier werden aus der Liste der Aufgaben die Arbeitsblätter erzeugt ----------------------------
 

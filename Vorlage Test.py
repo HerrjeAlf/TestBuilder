@@ -1,7 +1,6 @@
 import os
 from helpers import root_path
 os.chdir(root_path())
-
 from Aufgaben import *
 from skripte.erstellen import *
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
@@ -23,6 +22,17 @@ clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],
                  [sachaufgabe_wetterballon(4), sachaufgabe_rampe(5)]]
+
+
+
+
+
+
+
+
+
+
+
 
 # --------------------------------ab hier werden aus der Liste der Aufgaben die Tests erzeugt ----------------------------
 

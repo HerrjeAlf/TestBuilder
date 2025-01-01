@@ -14,13 +14,10 @@ Gruppe = ''
 Semester = 1
 Gesamtzeit = 135
 Zeithmft = 25
-# hier bitte 'Einführungsphase' oder 'Qualifikationsphase' eintragen
-Phase = 'Einführungsphase'
+Phase = 'Einführungsphase' # hier bitte 'Einführungsphase' oder 'Qualifikationsphase' eintragen
 Thema = 'Analysis'
 datum_delta = 1  # Wann wird die Klausur (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-
-
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 aufgaben_teil1 = [[brueche_add_subr(1, ['e', 'j'], anzahl=4),
@@ -41,6 +38,10 @@ aufgaben_teil2 = [[wiss_schreibweise(1, anzahl=4),
                    terme_ausklammern(6, ['a', 'd', 'e']),
                    gleichungen(7, ['c', 'f', 'i', 'k'])],
                   [stirb_langsam_2(8, ['a', 'b', 'c', 'd', 'e'])]]
+
+
+
+
 
 
 # --------------------------------ab hier wird aus der Liste der Aufgaben die Klausur erzeugt ----------------------------

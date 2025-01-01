@@ -1,7 +1,6 @@
 import os
 from helpers import root_path
 os.chdir(root_path())
-
 from Aufgaben import *
 from skripte.erstellen import *
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
@@ -21,6 +20,13 @@ aufgaben_teil1 = [[kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ablei
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel(3)]]
+
+
+
+
+
+
+
 
 # --------------------------------ab hier wird aus der Liste der Aufgaben die mdl. Prüfung erzeugt ----------------------------
 
