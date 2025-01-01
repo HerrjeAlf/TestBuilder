@@ -5,6 +5,8 @@ os.chdir(root_path())
 from Aufgaben import *
 from skripte.erstellen import *
 
+# ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
+
 # Angaben für die Klausur im pdf-Dokument
 Kurs = ('Leistungskurs')
 Klasse = 13
@@ -13,13 +15,8 @@ Gesamtzeit = 300 # der Leistungskurs hat 300 min und der Grundkurs 270 min
 Zeithmft = 100 # der Leistungskurs hat 100 min und der Grundkurs 90 min
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-clean_tex = False if clean_tex not in [True, False] else clean_tex
 if Kurs not in ['Grundkurs', 'Leistungskurs']:
     exit("Kurs muss 'Grundkurs' oder 'Leistungskurs' sein.")
-
-# Aufgaben für Teil I
-liste_punkte_teil1 = ['Punkte']
-liste_bez_teil1 = ['Aufgabe']
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], [ ..., aufgabe(10)]] eintragen
 aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2,3]),
@@ -32,6 +29,22 @@ aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2
                    vektoren_koll_ortho(8, BE=[5]),
                    faires_spiel(9, BE=[5]),
                    baumdiagramm(10, ['a', 'b'], stufen=2, art='zoZ', BE=[3,2])]]
+
+# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+ana1 = [[kurvendiskussion_polynom_parameter(1, BE=[2,3,10,3,8,3,3,1,3,4])]]
+ana2 = [[kurvendiskussion_exponentialfkt_parameter(2,  BE=[2,1,6,3,8,2,4,8,3,3])]]
+algebra = [[geraden_aufstellen(3.1),
+            geraden_lagebeziehung(3.2, teilaufg=['a', 'c', 'e'], lagebeziehung='schneiden',
+                                  gerade_k=False, BE=[4,10,5])]]
+stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i'],
+                            art='zoZ', BE=[9,4,7,2,4,2,2])]]
+
+
+# --------------------------------ab hier wird aus der Liste der Aufgaben die Klausur erzeugt ---------------------------
+
+# Aufgaben für Teil I
+liste_punkte_teil1 = ['Punkte']
+liste_bez_teil1 = ['Aufgabe']
 
 # hier werden aus der Liste der Aufgaben dieTest erzeugt
 liste_seiten_teil1 = []
@@ -47,15 +60,6 @@ if Kurs == 'Grundkurs':
     exit('Es müssen 9 Aufgaben für den hilfsmittelfreien Teil ausgewählt werden.') if i != 9 else i
 else:
     exit('Es müssen 10 Aufgaben für den hilfsmittelfreien Teil ausgewählt werden.') if i != 10 else i
-
-# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-ana1 = [[kurvendiskussion_polynom_parameter(1, BE=[2,3,10,3,8,3,3,1,3,4])]]
-ana2 = [[kurvendiskussion_exponentialfkt_parameter(2,  BE=[2,1,6,3,8,2,4,8,3,3])]]
-algebra = [[geraden_aufstellen(3.1),
-            geraden_lagebeziehung(3.2, teilaufg=['a', 'c', 'e'], lagebeziehung='schneiden',
-                                  gerade_k=False, BE=[4,10,5])]]
-stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i'],
-                            art='zoZ', BE=[9,4,7,2,4,2,2])]]
 
 aufgaben_teil2 = (ana1, ana2, algebra, stochastik)
 liste_seiten_teil2 = []
@@ -77,6 +81,7 @@ for aufgaben in aufgaben_teil2:
     liste_bez_teil2.append(liste_bez)
 
 #  Angaben für die Klausur
+clean_tex = False if clean_tex not in [True, False] else clean_tex
 angb_teil1 = [Kurs, datum_delta, liste_bez_teil1, liste_punkte_teil1]
 angb_teil2 = [Kurs, datum_delta, liste_bez_teil2, liste_punkte_teil2]
 
