@@ -44,7 +44,10 @@ aufgaben_teil2 = [[wiss_schreibweise(1, anzahl=4),
 
 
 
-# --------------------------------ab hier wird aus der Liste der Aufgaben die Klausur erzeugt ----------------------------
+
+
+
+# --------------------------------ab hier wird aus den eingegebenen Daten die Klausur erzeugt ----------------------------
 
 # Aufgaben für Teil I
 liste_punkte_teil1 = ['Punkte']

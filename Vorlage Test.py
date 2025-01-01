@@ -34,7 +34,7 @@ Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnis
 
 
 
-# --------------------------------ab hier werden aus der Liste der Aufgaben die Tests erzeugt ----------------------------
+# --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 

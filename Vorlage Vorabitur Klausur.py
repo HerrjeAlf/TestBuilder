@@ -51,7 +51,7 @@ stochastik = [[baumdiagramm(3,teilaufg=['c', 'd', 'e', 'f', 'g', 'h', 'i'],
 
 
 
-# --------------------------------ab hier wird aus der Liste der Aufgaben die Klausur erzeugt ---------------------------
+# --------------------------------ab hier wird aus den eingegebenen Daten die Klausur erzeugt ---------------------------
 
 # Aufgaben für Teil I
 liste_punkte_teil1 = ['Punkte']

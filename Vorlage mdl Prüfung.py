@@ -28,7 +28,7 @@ aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel(3)]]
 
 
 
-# --------------------------------ab hier wird aus der Liste der Aufgaben die mdl. Prüfung erzeugt ----------------------------
+# --------------------------------ab hier wird aus den eingegebenen Daten die mdl. Prüfung erzeugt ----------------------------
 
 # Aufgaben für Teil I
 liste_punkte_teil1 = ['Punkte']

@@ -32,7 +32,7 @@ Aufgabenliste = [[aenderungsrate(1),
 
 
 
-# --------------------------------ab hier werden aus der Liste der Aufgaben die Arbeitsblätter erzeugt ----------------------------
+# --------------------------------ab hier werden aus den eingegebenen Daten die Arbeitsblätter erzeugt ----------------------------
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
