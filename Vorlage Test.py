@@ -4,6 +4,7 @@ os.chdir(root_path())
 
 from Aufgaben import *
 from skripte.erstellen import *
+# ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
 
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
@@ -18,6 +19,7 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
+# Bezeichnung der Punktetabelle
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
@@ -28,7 +30,11 @@ for i in range(anzahl):
                  verhaeltnisgleichgungen(3)],
                  [sachaufgabe_wetterballon(4),
                   sachaufgabe_rampe(5)]]
-    # hier werden aus der Liste der Aufgaben dieTest erzeugt
+
+
+
+# --------------------------------ab hier werden aus der Liste der Aufgaben die Test erzeugt ----------------------------
+
     liste_seiten = []
     for element in Aufgaben:
         for aufgabe in element:
