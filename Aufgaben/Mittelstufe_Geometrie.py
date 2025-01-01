@@ -922,7 +922,8 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
                f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
-               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild', 'Darstellung der Vermessung des Sees']
+               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
+               'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
                + r' cm, ~ c ~=~' + gzahl(seite_c) + r'cm \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
@@ -931,6 +932,48 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
                + r' \cdot ' + gzahl(seite_c) + r' \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~' + gzahl(seite_b)
                + r'  \quad (3BE)']
     grafiken_aufgaben = ['vermessung_see']
+    grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [5]
+        liste_punkte = BE
+    else:
+        liste_punkte = [5]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def sachaufgabe_strassenbau(nr, BE=[]):
+    # Berechnungen der Länge einer neu gebauten Straße mit dem Sinussatz
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_bez = [f'{nr}']
+    i = 0
+    beta = nzahl(30, 60)
+    gamma = nzahl(30, 60)
+    alpha = 180 - gamma - beta
+    # print('alpha ' + str(alpha)), print('beta ' + str(beta)), print('gamma ' + str(gamma))
+    seite_a = nzahl(6, 12)
+    seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
+    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
+               f'Um ein Wohngebiet zu erschließen, wird der Bau einer neuen Straße geplant. Die neue Straße soll in '
+               r'einem Winkel $ \gamma = $ '+ f' {gzahl(gamma)}° an die Eichenallee anschließen und der '
+               f'Straßenabschnitt der Hauptstraße, zwischen der geplanten Straße und der Eichenallee, soll '
+               f'{gzahl(seite_c)}km lang sein. \n Berechnen Sie die Länge der geplanten neuen Straße, '
+               r'wenn der Winkel $ \beta $ ' + f'zwischen der Eichenallee und der Hauptstraße {gzahl(beta)}° beträgt.'),
+               'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
+               r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ c~=~' + gzahl(seite_c)
+               + r' cm, ~ \beta ~=~' + gzahl(beta) + r' ^{ \circ} \quad \mathrm{und} \quad \gamma ~=~' + gzahl(gamma)
+               + r' ^{ \circ} \quad ges \colon  b \quad (1BE)} \\ \quad \mathrm{aus~der~Planskizze~folgt:~} '
+               + r' \hspace{15em} \\ \frac{b}{ sin( \beta )} ~=~ \frac{c}{ sin( \gamma )} '
+               + r' \quad \vert \cdot sin( \beta ) \quad \to \quad b~=~ \frac{ c \cdot sin( \beta ) }{ sin( \gamma )} '
+               + r'\quad (2BE) \\ b ~=~ \frac{' + gzahl(seite_c) + r'km \cdot sin(' + gzahl(beta)
+               + r' ^{ \circ } )}{ sin(' + gzahl(gamma) + r' ^{ \circ } )} ~=~' + gzahl(seite_b) + r'km \quad (2BE) \\']
+    grafiken_aufgaben = ['strassenbau']
     grafiken_loesung = []
 
     if BE != []:
