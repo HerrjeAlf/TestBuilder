@@ -2143,9 +2143,10 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
-                       + vorz_str(g_vx) + 'r' + vorz_str(k_vx) + 's)' + vorz_str(ny_gk) + '(' + gzahl(ay)
-                       + vorz_str(g_vy) + 'r' + vorz_str(k_vy) + 's)' + vorz_str(nz_gk) + '(' + gzahl(az)
-                       + vorz_str(g_vz) + 'r' + vorz_str(k_vz) + 's) ~=~ ' + gzahl(np.dot(punkt_d, n_gk))
+                       + vorz_v_innen(g_vx,'r') + vorz_v_innen(k_vx, 's') + ')' + vorz_str(ny_gk)
+                       + '(' + gzahl(ay) + vorz_v_innen(g_vy,'r') + vorz_v_innen(k_vy, 's') + ')'
+                       + vorz_str(nz_gk) + '(' + gzahl(az) + vorz_v_innen(g_vz, 'r')
+                       + vorz_v_innen(k_vz,'s') + ') ~=~ ' + gzahl(np.dot(punkt_d, n_gk))
                        + r' \quad (1BE) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
                        + vorz_v_innen(nx_gk * k_vx, 's') + vorz_str(ny_gk * ay) + vorz_v_innen(ny_gk * g_vy, 'r')
                        + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
