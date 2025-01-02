@@ -264,6 +264,13 @@ def binom(z1, z2, str1='', str2=''):
     else:
         return vorz_v_aussen(z1,str(str1)) + vorz_v_aussen(z2, str(str2))
 
+def binom_klammer(z1, z2, str1='', str2=''):
+    if z1 != 0 and z2 != 0:
+            return r' \left(' + vorz_v_aussen(z1, str(str1)) + vorz_v_innen(z2, str(str2)) + r' \right) '
+    else:
+        return gzahl_klammer(z1,str(str1)) + gzahl_klammer(z2, str(str2))
+
+
 def binom_aussen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
         zv1, zv2 = random_selection([[z1, str1], [z2, str2]])

@@ -3613,30 +3613,33 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                                                     f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
                            + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(ywert_wp1_fkt_1)
-                           + binom_aussen(1,-1 * N(xwert_wp1,3),str1='x') + vorz_str(ywert_wp1) + '~=~'
+                           + binom_klammer(1,-1 * N(xwert_wp1,3),str1='x') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(ywert_wp1_fkt_1,'x')
                            + vorz_str(N(-1*ywert_wp1_fkt_1*xwert_wp1 + ywert_wp1,3))
                            + r' \quad (3BE) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
-                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_1,'(x')
-                           + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
+                           r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(-1/ywert_wp1_fkt_1)
+                           + binom_klammer(1,-1 * N(xwert_wp1,3),str1='x') + vorz_str(ywert_wp1) + '~=~'
                            + vorz_v_aussen(-1/ywert_wp1_fkt_1,'x')
                            + vorz_str(N(xwert_wp1/ywert_wp1_fkt_1 + ywert_wp1,3))
                            + r' \quad (3BE) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 6
-            ywert_w = N(fkt_3.subs(x, xwert_w), 3)
+            xwert_w = Rational(-1*(lsg[0]*c+2*b),lsg[0]*b)
+            ywert_w = N(fkt.subs(x, xwert_w), 3)
             ywert_w_fkt_1 = N(fkt_1.subs(x, xwert_w),3)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
                                                     f'WP({gzahl(N(xwert_w,3))}|{gzahl(ywert_w)}). \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
-                           + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_w_fkt_1,'(x')
-                           + vorz_v_innen(-1 * N(xwert_w,3),')') + vorz_str(ywert_w) + '~=~'
-                           + vorz_v_aussen(ywert_w_fkt_1,'x') + vorz_str(N(-1*ywert_w_fkt_1*xwert_w + ywert_w,3))
+                           + r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(ywert_w_fkt_1)
+                           + binom_klammer(1, -1 * N(xwert_w,3),str1='x') + vorz_str(ywert_w) + '~=~'
+                           + vorz_v_aussen(ywert_w_fkt_1,'x')
+                           + vorz_str(N(-1*ywert_w_fkt_1*xwert_w + ywert_w,3))
                            + r' \quad (3BE) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
-                           r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(-1/ywert_w_fkt_1) + '(x'
-                           + vorz_str(-1 * N(xwert_w,3)) + ')' + vorz_str(ywert_w) + '~=~'
-                           + vorz_v_aussen(-1/ywert_w_fkt_1,'x') + vorz_str(N(xwert_w/ywert_w_fkt_1 + ywert_w,3))
+                           r'(x - x_{w}) + y_{w} ~=~ ' + gzahl(-1/ywert_w_fkt_1)
+                           + binom_klammer(1,-1 * N(xwert_w,3), 'x') + vorz_str(ywert_w) + '~=~'
+                           + vorz_v_aussen(-1/ywert_w_fkt_1,'x')
+                           + vorz_str(N(xwert_w/ywert_w_fkt_1 + ywert_w,3))
                            + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
 
         liste_punkte.append(punkte_aufg)
