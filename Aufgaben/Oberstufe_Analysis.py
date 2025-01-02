@@ -3607,20 +3607,21 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             xwert_wp1 = N(-2/lsg_b - sqrt(2)/abs(lsg_b), 3)
             ywert_wp1 = N(fkt.subs(x,-2/lsg_b - sqrt(2)/abs(lsg_b)), 3)
             ywert_wp1 = N(fkt.subs(x, xwert_wp1),3)
-            ywert_wp1_fkt_a1 = N(fkt_a1.subs(x, xwert_wp1),3)
+            ywert_wp1_fkt_1 = N(fkt_1.subs(x, xwert_wp1),3)
+            print(ywert_wp1_fkt_1)
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
                                                     f'WP({xwert_wp1}|{ywert_wp1}). \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad t(x)~=~ f^{ \prime }(x_{w}) \cdot '
-                           + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_a1,'(x')
+                           + r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(ywert_wp1_fkt_1,'(x')
                            + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
-                           + vorz_v_aussen(ywert_wp1_fkt_a1,'x')
-                           + vorz_str(N(-1*ywert_wp1_fkt_a1*xwert_wp1 + ywert_wp1,3))
+                           + vorz_v_aussen(ywert_wp1_fkt_1,'x')
+                           + vorz_str(N(-1*ywert_wp1_fkt_1*xwert_wp1 + ywert_wp1,3))
                            + r' \quad (3BE) \\ n(x)~=~ - \frac{1}{f^{ \prime }(x_{w})} \cdot '
-                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'(x')
+                           r'(x - x_{w}) + y_{w} ~=~ ' + vorz_v_aussen(-1/ywert_wp1_fkt_1,'(x')
                            + vorz_v_innen(-1 * N(xwert_wp1,3),')') + vorz_str(ywert_wp1) + '~=~'
-                           + vorz_v_aussen(-1/ywert_wp1_fkt_a1,'x')
-                           + vorz_str(N(xwert_wp1/ywert_wp1_fkt_a1 + ywert_wp1,3))
+                           + vorz_v_aussen(-1/ywert_wp1_fkt_1,'x')
+                           + vorz_str(N(xwert_wp1/ywert_wp1_fkt_1 + ywert_wp1,3))
                            + r' \quad (3BE) \\'
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
