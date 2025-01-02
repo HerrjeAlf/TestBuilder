@@ -2065,19 +2065,20 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)) * g_v
         g_richtung = [g_rx, g_ry, g_rz] = Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)) * g_v + k_v
 
-        lsg = (gzahl(np.dot(punkt_a, n_gk)) + vorz_str(np.dot(n_gk, g_v)) + 'r'
-               + vorz_str(np.dot(n_gk, k_v)) + 's ~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad \vert '
-               + vorz_str(-1 * np.dot(punkt_a, n_gk)) + r' \quad \vert ' + vorz_str(-1 * np.dot(n_gk, k_v))
-               + r's \quad \to \quad ' + gzahl(np.dot(n_gk, g_v)) + 'r ~=~'
-               + gzahl(np.dot(punkt_d - punkt_a, n_gk)) + vorz_str(np.dot(n_gk, k_v))
-               + r's \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2BE) \\ r ~=~'
+        lsg = (gzahl(np.dot(punkt_a, n_gk)) + vorz_v_innen(np.dot(n_gk, g_v),'r')
+               + vorz_v_innen(np.dot(n_gk, k_v),'s') +  '~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad \vert '
+               + vorz_str(-1 * np.dot(punkt_a, n_gk)) + r' \quad \vert '
+               + vorz_v_innen(-1 * np.dot(n_gk, k_v),'s')
+               + r' \quad \to \quad ' + vorz_v_aussen(np.dot(n_gk, g_v),'r') + '~=~'
+               + gzahl(np.dot(punkt_d - punkt_a, n_gk)) + vorz_v_innen(-1*np.dot(n_gk, k_v), 's')
+               + r' \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2BE) \\ r ~=~'
                + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
-               + vorz_str(Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
+               + vorz_str(Rational(-1* np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
                + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2BE) } \\'
                + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
                + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az)
                + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
-               + vorz_str(Rational(np.dot(n_gk, k_v), np.dot(n_gk, g_v))) + r's) \cdot \begin{pmatrix} ' + gzahl(g_vx)
+               + vorz_str(Rational(-1*np.dot(n_gk, k_v), np.dot(n_gk, g_v))) + r's) \cdot \begin{pmatrix} ' + gzahl(g_vx)
                + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
                + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(g_sx) + r' \\' + gzahl(g_sy) + r' \\' + gzahl(g_sz)
@@ -2148,7 +2149,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                        + r' \quad (1BE) \\' + gzahl(nx_gk * ax) + vorz_v_innen(nx_gk * g_vx, 'r')
                        + vorz_v_innen(nx_gk * k_vx, 's') + vorz_str(ny_gk * ay) + vorz_v_innen(ny_gk * g_vy, 'r')
                        + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
-                       + vorz_v_innen(nz_gk * k_vz, 's ~=~ ') + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1BE) \\'
+                       + vorz_v_innen(nz_gk * k_vz, 's') + '~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1BE) \\'
                        + lsg)
         liste_punkte.append(punkte)
         i += 1
