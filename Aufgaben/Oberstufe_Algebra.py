@@ -2074,7 +2074,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                + r' \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2BE) \\ r ~=~'
                + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
                + vorz_str(Rational(-1* np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
-               + r's \quad \mathrm{Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2BE) } \\'
+               + r's \quad \mathrm{Die~Ebene~F~schneidet~die~Ebene~E. \quad (2BE) } \\'
                + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
                + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az)
                + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
@@ -2344,19 +2344,21 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
     if 'c' in teilaufg:
         # Die SuS sollen diejenige Ebene bestimmen, in die parallel zu gegebenen Koordinatenachse ist
-        pkt = 5
+        pkt = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        auswahl = nzahl(0,2)
-        achsen = [['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]]
-        bez = achsen[auswahl][0]
-        vec = achsen[auswahl][1]
-        while (nx * vec[0] + ny * vec[1] + nz * vec[2]) == 0 or (aex * vec[0] + aey * vec[1] + aez * vec[2]) == 0:
-            auswahl = (auswahl+1)%3
-            bez = achsen[auswahl][0]
-            vec = achsen[auswahl][1]
-        erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
-
-
+        achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
+        bez = achse
+        vec = achse
+        if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
+            lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
+                   + '-Achse \quad (3BE)')
+        else:
+            erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
+            lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
+                     + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
+                     + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                     + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+            pkt += 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
@@ -2369,11 +2371,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\'
                        + '0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
                        + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
-                       + vorz_v_innen(aez * vec[2], 'a') + r' \quad \vert '
-                       + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
-                       + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
-                       + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
-                       + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+                       + vorz_v_innen(aez * vec[2], 'a') + lsg)
         liste_punkte.append(pkt)
         i += 1
 

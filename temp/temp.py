@@ -108,12 +108,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
+punkte = 4
+m_e = nzahl(1, 2)
+x_0_e = random.choice([0.25, 0.5, 0.75, 1])
+n_e = -1 * x_0_e * m_e
+xwert = (1 - n_e) / m_e
 
-def test():
-    a = nzahl(1,3)
-    b = nzahl(1,3)
-    return a,b
-print(test())
-a, b = test()
-print(a)
-print(b)
+print(gzahl(m_e))
+print(gzahl(n_e))
+print(gzahl(xwert))
