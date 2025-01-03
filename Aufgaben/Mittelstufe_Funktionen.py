@@ -47,7 +47,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'e'], BE=[]
     p1, p2 = ganze_werte[1], ganze_werte[2]
     abstand = round(sqrt((p2[0]-p1[0])**2 + (p2[1]-p1[1])**2),2)
     zeit = int(abstand*1000 / v_flugzeug)
-    swinkel = round(np.arctan(steigung) * 180 / pi, 1)
+    swinkel = round(np.arctan(wert_steigung/20) * 180 / pi, 1)
 
     # Werte für den Airbus
     steigung_airbus = -1 * nzahl(1, 15) / 5
@@ -195,10 +195,10 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'e'], BE=[]
         aufgabe.append(str(liste_teilaufg[i+1]) + f') Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und '
                        + f'der Boing. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg
-                        + r' \gamma ~=~ \vert \beta - \alpha \vert ~=~ \vert ' + gzahl(swinkel_airbus) + '~-~'
-                       + gzahl_klammer(swinkel) + r' \vert ~=~' + abs(swinkel_airbus - swinkel) + lsg_1)
+                       + r' \gamma ~=~ \vert \beta - \alpha \vert ~=~ \vert ' + gzahl(swinkel_airbus) + '~-~'
+                       + gzahl_klammer(swinkel) + r' \vert ~=~' + gzahl(abs(swinkel_airbus - swinkel)) + lsg_1)
         liste_punkte.append(punkte)
-        i += 2
+        i += 1
 
     if 'e' in teilaufg:
         # Die SuS sollen den Schnittwinkel zweier linearen Funktionen (Flugbahnen) berechnen
@@ -211,10 +211,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'e'], BE=[]
         fkt_e = m_e * x + n_e
         fkt_e_str = vorz_v_aussen(m_e, 'x') + vorz_str(n_e)
 
-        aufgabe.extend((f'Trotzdem das John McClane eine Landebahn mithilfe von brennenden Kerosin für die landenden '
-                        f'Flugzeuge gekennzeichnet hat, schafft es ein Flugzeug nicht mehr rechtzeitig zu landen. '
-                        f'Es muss im Punkt ( {xwert} | 1 ) orthogonal zur bisherigen Flugbahn '
-                        f'h(x) = {gzahl(m_e)}x {vorz_str(n_e)} durchstarten, damit es nicht abstürzt. \n\n',
+        aufgabe.extend((f'Ein Flugzeug schafft es nicht mehr rechtzeitig zu landen. Es muss im Punkt ( {xwert} | 1 ) '
+                        f'orthogonal zur bisherigen Flugbahn h(x) = {gzahl(m_e)}x {vorz_str(n_e)} durchstarten, '
+                        f'damit es nicht abstürzt. \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie die neue Flugbahn, '
                             + f'nachdem es durchgestartet ist. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ')
