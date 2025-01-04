@@ -2045,7 +2045,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
     elif F_in_E == 'schneiden':
-        punkte = 10
+        punkte = 8
         n = [nx, ny, nz] = punkt_vektor(4)
         punkt_a = [ax, ay, az] = punkt_vektor(3)
         while vektor_kollinear(n, n_gk) == True:
