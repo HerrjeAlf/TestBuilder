@@ -210,7 +210,10 @@ def vorz_str(k, null=False):
 def vorz_v_innen(zahl,string, null=False):
     try:
         if zahl == 0:
-            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+            if null == False:
+                return ''
+            else:
+                return '0'
         if zahl == -1:
             if string == '':
                 return '-1'
@@ -233,7 +236,10 @@ def vorz_v_innen(zahl,string, null=False):
 def vorz_v_aussen(zahl,string, null=False):
     try:
         if zahl == 0:
-            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+            if null == False:
+                return ''
+            else:
+                return '0'
         if zahl == -1:
             if string == '':
                 return '-1'
@@ -273,37 +279,35 @@ def binom_klammer(z1, z2, str1='', str2=''):
 
 def binom_aussen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
-        zv1, zv2 = random_selection([[z1, str1], [z2, str2]])
-        if zv1[0] < 0 and zv2[0] < 0:
-            return (r'- \left( ' + vorz_v_aussen(abs(zv1[0]), str(zv1[1]))
-                    + vorz_v_innen(abs(zv2[0]), str(zv2[1])) + r' \right) ' + str(var))
-        elif zv1[0] < 0:
-            return (r' \left( ' + vorz_v_aussen(zv2[0], str(zv2[1]))
-                    + vorz_v_innen(zv1[0], str(zv1[1])) + r' \right) ' + str(var))
-        elif zv2[0] < 0:
-            return (r' \left( ' + vorz_v_aussen(zv1[0], str(zv1[1]))
-                    + vorz_v_innen(zv2[0], str(zv2[1])) + r' \right) ' + str(var))
+        if z1 < 0 and z2 < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(z1), str(str1))
+                    + vorz_v_innen(abs(z2), str(str2)) + r' \right) ' + str(var))
+        elif z1 < 0:
+            return (r' \left( ' + vorz_v_aussen(z2, str(str2))
+                    + vorz_v_innen(z1, str(str1)) + r' \right) ' + str(var))
+        elif z2 < 0:
+            return (r' \left( ' + vorz_v_aussen(z1, str(str1))
+                    + vorz_v_innen(z2, str(str2)) + r' \right) ' + str(var))
         else:
-            return (r' \left( ' + vorz_v_aussen(zv1[0],str(zv1[1]))
-                    + vorz_v_innen(zv2[0],str(zv2[1])) + r' \right) ' + str(var))
+            return (r' \left( ' + vorz_v_aussen(z1,str(str1))
+                    + vorz_v_innen(z2,str(str2)) + r' \right) ' + str(var))
     else:
         return vorz_v_aussen(z1,str(str1 + var)) + vorz_v_aussen(z2, str(str2 + var))
 
 def binom_innen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:
-        zv1, zv2 = random_selection([[z1, str1], [z2, str2]])
-        if zv1[0] < 0 and zv2[0] < 0:
-            return (r'- \left( ' + vorz_v_aussen(abs(zv1[0]), str(zv1[1]))
-                    + vorz_v_innen(abs(zv2[0]), str(zv2[1])) + r' \right) ' + str(var))
-        elif zv1[0] < 0:
-            return (r' + \left( ' + vorz_v_aussen(zv2[0], str(zv2[1]))
-                    + vorz_v_innen(zv1[0], str(zv1[1])) + r' \right) ' + str(var))
-        elif zv2[0] < 0:
-            return (r' + \left( ' + vorz_v_aussen(zv1[0], str(zv1[1]))
-                    + vorz_v_innen(zv2[0], str(zv2[1])) + r' \right) ' + str(var))
+        if z1 < 0 and z2 < 0:
+            return (r'- \left( ' + vorz_v_aussen(abs(z1), str(str1))
+                    + vorz_v_innen(abs(z2), str(str2)) + r' \right) ' + str(var))
+        elif z1 < 0:
+            return (r' + \left( ' + vorz_v_aussen(z2, str(str2))
+                    + vorz_v_innen(z1, str(str1)) + r' \right) ' + str(var))
+        elif z2 < 0:
+            return (r' + \left( ' + vorz_v_aussen(z1, str(str1))
+                    + vorz_v_innen(z2, str(str2)) + r' \right) ' + str(var))
         else:
-            return (r' + \left( ' + vorz_v_aussen(zv1[0],str(zv1[1]))
-                    + vorz_v_innen(zv2[0],str(zv2[1])) + r' \right) ' + str(var))
+            return (r' + \left( ' + vorz_v_aussen(z1,str(str1))
+                    + vorz_v_innen(z2,str(z2)) + r' \right) ' + str(var))
     else:
         return vorz_v_innen(z1,str(str1 + var)) + vorz_v_innen(z2, str(str2 + var))
 
@@ -403,6 +407,7 @@ def vektor_ganzzahl(vec):
     return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
 def vektor_kuerzen(vec, p = 50, qout=False):
+    # print('wird an Vektor kürzen übergeben: ' + str(vec))
     faktor = [x + 1 for x in range(p)]
     list = np.array(vec)
     i = 0
@@ -415,14 +420,17 @@ def vektor_kuerzen(vec, p = 50, qout=False):
                 k += 1
             list = list * faktor[k]
             i += 1
-    # print('erweitert: ' + str(list))
+    # print('Liste mit erweiterten Faktoren: ' + str(list)), print('erweitert: ' + str(list))
     list_pos = [abs(x) for x in list]
-    teiler = [x + 1 for x in range(1,int(max(list_pos)))]
+    # print('Liste mit positiven Elementen:' + str(list_pos))
+    teiler = [x for x in range(1,int(max(list_pos)))]
     teiler.reverse()
+    # print('Liste der möglichen Teiler: ' + str(teiler))
     for zahl in teiler:
         treffer = [1 for x in list if abs(x) % zahl == 0]
         if sum(treffer) == len(vec):
             list = [element / zahl for element in list]
+    # print('Liste nach Division mit möglichen Teilern: ' + str(list))
     if len([element for element in list if element < 0]) == len(list):
         list = [-1 * element for element in list]
     # print('gekürzt: ' + str(list))
