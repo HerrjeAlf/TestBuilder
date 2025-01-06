@@ -2494,7 +2494,6 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
             # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
             pkt = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            lsg =
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \mmquad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
