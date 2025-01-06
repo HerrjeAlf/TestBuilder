@@ -2497,7 +2497,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
             lsg =
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
+            loesung.append(str(liste_teilaufg[i]) + r') \mmquad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
                            + r' \hspace{20em} \\' + erg_str + '~=~'
                            + binom_aussen(nx, aex, str2='a', var=binom_klammer(dx,-1*ny2,str2='r'))
                            + binom_innen(ny, aey, str2='a', var=binom_klammer(dy-lsg_kon*nz2,nx2-lsg_var*nz2, str2='r'))
