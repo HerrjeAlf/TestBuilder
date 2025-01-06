@@ -12,11 +12,11 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 06'
+Art = 'Test 03'
 Titel = 'Stirb Langsam II'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
