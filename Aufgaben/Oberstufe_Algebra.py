@@ -2351,7 +2351,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         vec = achse
         if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
             lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
-                   + '-Achse \quad (3BE)')
+                   + r'-Achse \quad (3BE)')
         else:
             erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
