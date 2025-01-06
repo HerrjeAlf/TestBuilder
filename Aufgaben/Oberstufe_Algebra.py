@@ -2497,11 +2497,18 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad E_a:'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:}'
+                           + r' \hspace{1ßem} \\' + erg_str + '~=~'
                            + binom_aussen(nx, aex, str2='a', var=binom_klammer(dx,-1*ny2,str2='r'))
                            + binom_innen(ny, aey, str2='a', var=binom_klammer(dy-lsg_kon*nz2,nx2-lsg_var*nz2, str2='r'))
                            + binom_innen(nz, aez, str2='a', var=binom_klammer(dz+lsg_kon*ny2,lsg_var*ny2, str2='r'))
-                           + r' \cdot \to \cdot ' + )
+                           + '~=~' + gzahl(nx*dx) + vorz_v_innen(-1*nx*ny2,'r') + vorz_v_innen(aex*dx,'a')
+                           + vorz_v_innen(-1*aex*ny2,'ar') + vorz_str(ny*(dy-lsg_kon * nz2))
+                           + vorz_v_innen(ny*(nx2-lsg_var*nz2),'r') + vorz_v_innen(aey*(dy-lsg_kon*nz2),'a')
+                           + vorz_v_innen(aey*(nx2-lsg_var*nz2),'ar') + vorz_str(nz*(dz+lsg_kon*ny2))
+                           + vorz_v_innen(nz*lsg_var*ny2,'r') + vorz_v_innen(aez*(dz+lsg_kon*ny2),'r')
+                           + vorz_v_innen(aez*(dz+lsg_kon*ny2), 'a') + vorz_v_innen(aez*lsg_var*ny2,'ar')
+                           + )
 
             liste_punkte.append(pkt)
             i += 1
