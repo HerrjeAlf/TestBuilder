@@ -2270,7 +2270,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen die Ebene der Schar bestimmen, die den Punkt T enthält (
+        # Die SuS sollen die Ebene der Schar bestimmen, die den Punkt T enthält
         t_var = zzahl(1,4)
         t_rv = random.choice([[ny + aey * t_var, -1 * (nx + aex * t_var), 0],
                               [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
@@ -2453,7 +2453,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + vorz_v_innen(nz_1,'z') + '~=~' + gzahl(erg_var_1) + lsg_1 + lsg_3
                        + r' \mathrm{und} \quad E_{' + gzahl(var2) + '}:' + vorz_v_aussen(nx_2, 'x')
                        + vorz_v_innen(ny_2, 'y') + vorz_v_innen(nz_2,'z') + '~=~' + gzahl(erg_var_2)
-                       + lsg_2 + r' \quad (1BE) \\' + r' \mathrm{E_{'+ gzahl(var2)
+                       + lsg_2 + r' \quad (1BE) \\' + r' \mathrm{E_{' + gzahl(var2)
                        + r'}~umformen~in~Parameterform:} \quad E_{' + gzahl(var2) + '}: '
                        + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(dx) + r' \\'
                        + gzahl(dy) + r' \\' + gzahl(dz) + r' \\ \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -2489,6 +2489,22 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + r' \\' + gzahl(lsg_var*ny2) + r' \\' + r' \end{pmatrix} \quad (1BE) \\')
         liste_punkte.append(pkt)
         i += 1
+
+        if 'd' in teilaufg:
+            # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
+            pkt = 11
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
+                           + f'Ebenen der Schar liegt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad E_a:'
+                           + binom_aussen(nx, aex, str2='a', var=binom_klammer(dx,-1*ny2,str2='r'))
+                           + binom_innen(ny, aey, str2='a', var=binom_klammer(dy-lsg_kon*nz2,nx2-lsg_var*nz2, str2='r'))
+                           + binom_innen(nz, aez, str2='a', var=binom_klammer(dz+lsg_kon*ny2,lsg_var*ny2, str2='r'))
+                           + r' \cdot \to \cdot ' + )
+
+            liste_punkte.append(pkt)
+            i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
