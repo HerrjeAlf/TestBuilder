@@ -307,7 +307,7 @@ def binom_innen(z1, z2, str1='', str2='', var=''):
                     + vorz_v_innen(z2, str(str2)) + r' \right) ' + str(var))
         else:
             return (r' + \left( ' + vorz_v_aussen(z1,str(str1))
-                    + vorz_v_innen(z2,str(z2)) + r' \right) ' + str(var))
+                    + vorz_v_innen(z2,str(str2)) + r' \right) ' + str(var))
     else:
         return vorz_v_innen(z1,str(str1 + var)) + vorz_v_innen(z2, str(str2 + var))
 

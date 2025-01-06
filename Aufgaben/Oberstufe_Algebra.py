@@ -2226,10 +2226,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
     # Normalenvektorschar der Ebene erzeugen
     punkt_d = [dx, dy, dz] = punkt_vektor(4)
-    nv = [nx, ny, nz] = [zzahl(1,5), zzahl(1,5), zzahl(1,5)]
-    ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+    nv = [nx, ny, nz] = punkt_vektor(4)
+    ave = [aex, aey, aez] = [zzahl(0,3), zzahl(0,3), zzahl(0,3)]
     while vektor_kollinear(nv,ave) == True:
-        ave = [aex, aey, aez] = [zzahl(0,5), zzahl(0,5), zzahl(0,5)]
+        ave = [aex, aey, aez] = [zzahl(0,3), zzahl(0,3), zzahl(0,3)]
     ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
     erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * a
     erg_str = vorz_v_aussen(np.dot(punkt_d, ave),'a') + vorz_str(np.dot(punkt_d, nv))
@@ -2413,31 +2413,19 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         var2 = var1 + nzahl(2,3)
         erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
         erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
-        nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
-        nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
+        nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * var1, ny + aey * var1, nz + aez * var1])
+        nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * var2, ny + aey * var2, nz + aez * var2])
         nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
         nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
-        k = 0
-        while (nz1*ny2 - ny1*nz2) == 0:
-            print('normalenvektor: ' + str(nv))
-            print('wert für nz1*ny2 - ny1*nz2 = ' + str(nz1*ny2 - ny1*nz2))
-            print('n1: ' + str(nx_var1_gk))
-            print('nz1: ' + str(nz1))
-            print('ny1: ' + str(ny1))
-            print('n2: ' + str(nx_var2_gk))
-            print('ny2: ' + str(ny2))
-            print('nz2: ' + str(nz2))
-            var1 = -1 * nzahl(1, 2 + k)
-            var2 = var1 + nzahl(1, 3 + k)
-            erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
-            erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
-            nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
-            nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
-            nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
-            nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
-            k += 1
-            if k > 4:
-                break
+        # while (nz1*ny2 - ny1*nz2) == 0:
+        #    var1 = -1 * nzahl(1, 2)
+        #    var2 = var1 + nzahl(2, 3)
+        #    erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
+        #    erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+        #    nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
+        #    nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
+        #    nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+        #    nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
 
         lsg_kon = Rational(erg_var_1-(nx1*dx+ny1*dy+nz1*dz), nz1*ny2 - ny1*nz2)
         lsg_var = Rational(ny2*nx1-nx2*ny1, nz1*ny2 - ny1*nz2)
