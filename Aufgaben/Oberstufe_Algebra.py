@@ -2494,7 +2494,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
             # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
             pkt = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+            lsg =
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
@@ -2513,7 +2513,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            + gzahl(nx*dx + ny*(dy-lsg_kon * nz2) + nz*(dz+lsg_kon*ny2))
                            + vorz_v_innen(-1*nx*ny2 + ny*(nx2-lsg_var*nz2) + nz*lsg_var*ny2,'r')
                            + vorz_v_innen(aex*dx + aey*(dy-lsg_kon*nz2) + aez*(dz+lsg_kon*ny2), 'a')
-                           + vorz_v_innen(-1*aex*ny2 + aey*(nx2-lsg_var*nz2) + aez*lsg_var*ny2, 'ar'))
+                           + vorz_v_innen(-1*aex*ny2 + aey*(nx2-lsg_var*nz2) + aez*lsg_var*ny2, 'ar')
+                           + r' \mathrm{w.A. \quad \to \quad Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
+                           + r' \quad (2BE)')
 
             liste_punkte.append(pkt)
             i += 1
