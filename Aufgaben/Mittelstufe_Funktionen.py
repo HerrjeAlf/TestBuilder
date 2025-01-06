@@ -96,7 +96,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         liste_punkte.append(punkte)
         i += 1
 
-    if 'c' in teilaufg:
+    if len([element for element in ['c', 'd', 'e', 'f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
         # die SuS sollen die Veränderung des y-Achsenabschnittes durch die Manipulation der Flugbahn erklären
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
