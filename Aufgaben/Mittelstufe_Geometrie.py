@@ -922,7 +922,7 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
                f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
-               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
+               f'bestimmt. Berechne die Länge des Sees.', 'Bild',
                'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
@@ -962,7 +962,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
                f'Um ein Wohngebiet zu erschließen, wird der Bau einer neuen Straße geplant. Die neue Straße soll in '
                r'einem Winkel $ \gamma = $ '+ f' {gzahl(gamma)}° an die Eichenallee anschließen und der '
                f'Straßenabschnitt der Hauptstraße, zwischen der geplanten Straße und der Eichenallee, soll '
-               f'{gzahl(seite_c)}km lang sein. \n Berechnen Sie die Länge der geplanten neuen Straße, '
+               f'{gzahl(seite_c)}km lang sein. \n Berechne die Länge der geplanten neuen Straße, '
                r'wenn der Winkel $ \beta $ ' + f'zwischen der Eichenallee und der Hauptstraße {gzahl(beta)}° beträgt.'),
                'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
