@@ -2217,7 +2217,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
-    # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, einer geg. Geraden und verschiedenen Ebenen der Schar.
+    # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -2507,7 +2507,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            + vorz_v_innen(aex*dx,'a')
                            + vorz_v_innen(-1*aex*ny2,'ar') + vorz_str(ny*(dy-lsg_kon * nz2))
                            + vorz_v_innen(ny*(nx2-lsg_var*nz2),'r') + vorz_v_innen(aey*(dy-lsg_kon*nz2),'a')
-                           + vorz_v_innen(aey*(nx2-lsg_var*nz2),'ar')+ vorz_str(nz*(dz+lsg_kon*ny2))
+                           + vorz_v_innen(aey*(nx2-lsg_var*nz2),'ar') + vorz_str(nz*(dz+lsg_kon*ny2))
                            + vorz_v_innen(nz*lsg_var*ny2,'r') + vorz_v_innen(aez*(dz+lsg_kon*ny2),'a')
                            + vorz_v_innen(aez*lsg_var*ny2,'ar')
                            + r' \quad (1BE) \\' + erg_str + '~=~'

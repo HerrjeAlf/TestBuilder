@@ -923,7 +923,7 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
                f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
                f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
-               'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht']
+               'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
                + r' cm, ~ c ~=~' + gzahl(seite_c) + r'cm \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
@@ -964,7 +964,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
                f'Straßenabschnitt der Hauptstraße, zwischen der geplanten Straße und der Eichenallee, soll '
                f'{gzahl(seite_c)}km lang sein. \n Berechnen Sie die Länge der geplanten neuen Straße, '
                r'wenn der Winkel $ \beta $ ' + f'zwischen der Eichenallee und der Hauptstraße {gzahl(beta)}° beträgt.'),
-               'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht']
+               'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ c~=~' + gzahl(seite_c)
                + r' cm, ~ \beta ~=~' + gzahl(beta) + r' ^{ \circ} \quad \mathrm{und} \quad \gamma ~=~' + gzahl(gamma)
