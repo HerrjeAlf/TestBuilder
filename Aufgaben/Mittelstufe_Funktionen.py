@@ -89,10 +89,10 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
                        + f'Landeanflug. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad d(PQ) ~=~ \sqrt{ \left( ' + gzahl(p2[0])
                        + vorz_str(-1*p1[0]) + r' \right) ^2 + \left( ' + gzahl(p2[1]) + vorz_str(-1*p1[1])
-                       + r' \right) ^2 } ~=~' + gzahl(abstand) + r'km \quad \to \quad v ~=~ \frac{s}{t} '
+                       + r' \right) ^2 } ~=~' + gzahl(abstand) + r'km \quad (2BE) \quad \to \quad v ~=~ \frac{s}{t} '
                        + r'~=~ \frac{' + gzahl(abstand*1000) + 'm}{' + gzahl(zeit) + 's} ~=~'
                        + gzahl(int(abstand*1000/zeit)) + r' \frac{m}{s} ~=~' + gzahl(int(abstand*1000/zeit*3.6))
-                       + r' \frac{km}{h} \quad (4BE)')
+                       + r' \frac{km}{h} \quad (3BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -177,21 +177,20 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             lsg = (r' \mathrm{nach~Teilaufgabe~d~gilt: \quad \alpha ~=~ ' + gzahl(swinkel)
                    +  r' ^{ \circ } \quad und \quad \beta ~=~ tan^{-1}(' + gzahl(steigung_airbus) + ')~=~'
                    + gzahl(swinkel_airbus) + r' \quad (2BE) } \\')
-            pkt = 2
-        else:
-            lsg = (r' \mathrm{nach~Teilaufgabe~d~gilt: \quad \alpha ~=~ tan^{-1}(' + gzahl(steigung) + '~=~'
-                   + gzahl(swinkel) +  r' ^{ \circ } und \quad \beta ~=~ tan^{-1}(' + gzahl(steigung_airbus) + '~=~'
-                   + gzahl(swinkel_airbus) + r' \quad (4BE) } \\')
             pkt = 4
+        else:
+            lsg = (r' \mathrm{ \alpha  ~=~ tan^{-1}(' + gzahl(steigung) + ')~=~' + gzahl(swinkel)
+                   +  r' ^{ \circ } und \quad \beta ~=~ tan^{-1}(' + gzahl(steigung_airbus) + '~=~'
+                   + gzahl(swinkel_airbus) + r' \quad (4BE) } \\')
+            pkt = 6
 
         if abs(swinkel_airbus - swinkel) > 90:
             lsg_1 = (r' ^{ \circ } > 90 ^{ \circ } \quad \to \quad \gamma ~=~ 180 - '
                      + gzahl(abs(swinkel_airbus - swinkel)) + '~=~'
                      + gzahl(180 - abs(swinkel_airbus - swinkel)) + r' \quad (3BE)')
-            pkt += 3
+            pkt += 1
         else:
             lsg_1 = r' ^{ \circ } \quad (2BE)'
-            pkt += 2
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und '
                        + f'der Boing. \n\n')
