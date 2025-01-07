@@ -12,19 +12,20 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 06'
-Titel = 'Lagebeziehungen von Ebenen'
+Art = 'Test 01'
+Titel = 'Lagebeziehungen von Ebenen und Ebenenscharen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[ebene_und_gerade(1, ['b', 'c'], g_in_E='parallel'),
-                 ebene_ebene(2,['b'],F_in_E='schneiden' )]]
+    Aufgaben = [[ebene_und_gerade(1, ['b', 'c']),
+                 ebene_ebene(2,['b']),
+                 ebenenschar_buendel(3)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
