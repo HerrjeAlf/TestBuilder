@@ -2279,6 +2279,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         pkt = 4
         erg_k = skalarprodukt(punkt_d, nv)
         erg_a = skalarprodukt(punkt_d, ave)
+        erg_ebene =     erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * t_var
         if  erg_a != 0:
             zwlsg = r' \quad \vert ' + vorz_v_innen(-1*skalarprodukt(punkt_d, ave),'a')
             pkt += 1
@@ -2304,7 +2305,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
                        + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx+aex*t_var, 'x')
                        + vorz_v_innen(ny+aey*t_var, 'y') + vorz_v_innen(nz+aez*t_var,'z')
-                       + r' \quad (1BE)')
+                       + '~=~' + gzahl(erg_ebene) +  r' \quad (1BE)')
 
         liste_punkte.append(pkt)
         i += 1
@@ -2355,10 +2356,12 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                    + r'-Achse \quad (3BE)')
         else:
             erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
+            erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
-                     + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
-                     + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
-                     + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+                   + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
+                   + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                   + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
+                   + gzahl(erg_ebene) + r' \quad (1BE)')
             pkt += 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
