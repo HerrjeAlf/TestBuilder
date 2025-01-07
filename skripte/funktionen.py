@@ -41,6 +41,42 @@ def ganze_zahl(zahl):
     except ValueError:
         return print('Sie haben keine ganze Zahl angegeben!')
 
+def gzahl(k, exp=False, null=True):
+    if k == 0:
+        if k == 0:
+            if null != True:
+                return ''
+            else:
+                return '0'
+    if type(k) == str:
+        return k
+    if exp == True:
+        if k == 1:
+            return ''
+    if k % 1 == 0:
+        return latex(int(k))
+    else:
+        return latex(k)
+
+def gzahl_klammer(k,str='', null=True):
+    try:
+        if k == 0:
+            if null != True:
+                return ''
+            else:
+                return '0'
+        k = int(k) if k % 1 == 0 else k
+        if k < 0:
+            if str != '' and k == -1:
+                return r' \left( -' + str + r' \right)'
+            return r' \left(' + latex(k) + str + r' \right)'
+        else:
+            if str != '' and k == 1:
+                return str
+            return latex(k) + str
+    except Exception as fehler:
+        print('Fehler:', fehler)
+
 # Funktionen zur Darstellung von Zahlen
 def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
     # schreibt Zahlen in wissenschaftlicher Schreibweise oder als Dezimalbruch
@@ -180,7 +216,10 @@ def vorz(k):
 
 def vorz_aussen(k, null=False):
     if k == 0:
-        return '+0' if null else ''  # Falls auch Nullen angezeigt werden sollen
+        if null != True:
+            return ''
+        else:
+            return '0'
     if k < 0:
         return '-'
     else:
@@ -331,35 +370,6 @@ def exponenten(n,p=1,q=6, wdh=True, ganzz=False):
         liste = [nzahl(p,q) for _ in range(n)]
         liste = [zzahl(p,q) for _ in range(n)] if ganzz == True else liste
     return liste
-
-def gzahl(k, exp=False, null=True):
-    if k == 0:
-        return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-    if type(k) == str:
-        return k
-    if exp == True:
-        if k == 1:
-            return ''
-    if k % 1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
-
-def gzahl_klammer(k,str='', null=True):
-    try:
-        if k == 0:
-            return '0' if null else ''  # Falls auch Nullen angezeigt werden sollen
-        k = int(k) if k % 1 == 0 else k
-        if k < 0:
-            if str != '' and k == -1:
-                return r' \left( -' + str + r' \right)'
-            return r' \left(' + latex(k) + str + r' \right)'
-        else:
-            if str != '' and k == 1:
-                return str
-            return latex(k) + str
-    except Exception as fehler:
-        print('Fehler:', fehler)
 
 def kgv(q, p):
     if q == 0 or p == 0:
