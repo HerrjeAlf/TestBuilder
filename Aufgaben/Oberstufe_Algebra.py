@@ -2486,7 +2486,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + gzahl(dx) + r' \\' + gzahl(dy - lsg_kon * nz2) + r' \\'
                        + gzahl(dz + lsg_kon * ny2) + r' \\' + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
                        + gzahl(-1*ny2) + r' \\' + gzahl(nx2 - lsg_var * nz2)
-                       + r' \\' + gzahl(lsg_var*ny2) + r' \\' + r' \end{pmatrix} \quad (1BE) \\')
+                       + r' \\' + gzahl(lsg_var*ny2) + r' \\' + r' \end{pmatrix} \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
 
@@ -2496,7 +2496,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \mmquad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
                            + r' \hspace{20em} \\' + erg_str + '~=~'
                            + binom_aussen(nx, aex, str2='a', var=binom_klammer(dx,-1*ny2,str2='r'))
                            + binom_innen(ny, aey, str2='a', var=binom_klammer(dy-lsg_kon*nz2,nx2-lsg_var*nz2, str2='r'))
@@ -2513,7 +2513,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            + vorz_v_innen(-1*nx*ny2 + ny*(nx2-lsg_var*nz2) + nz*lsg_var*ny2,'r')
                            + vorz_v_innen(aex*dx + aey*(dy-lsg_kon*nz2) + aez*(dz+lsg_kon*ny2), 'a')
                            + vorz_v_innen(-1*aex*ny2 + aey*(nx2-lsg_var*nz2) + aez*lsg_var*ny2, 'ar')
-                           + r' \mathrm{w.A. \quad \to \quad Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
+                           + r' \quad \mathrm{w.A. \quad \to ~ Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
                            + r' \quad (2BE)')
 
             liste_punkte.append(pkt)
