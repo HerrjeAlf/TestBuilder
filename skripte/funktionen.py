@@ -33,10 +33,10 @@ def packages(doc: Document):
         doc.packages.append(Package(package))
 
 
-def ganze_zahl(gzahl):
+def ganze_zahl(zahl):
     # überprüft ob die gegebene Zahl eine ganze Zahl ist
     try:
-        int(abs(gzahl))  # positive und negative Int-Werte
+        int(abs(zahl))  # positive und negative Int-Werte
         return True
     except ValueError:
         return print('Sie haben keine ganze Zahl angegeben!')

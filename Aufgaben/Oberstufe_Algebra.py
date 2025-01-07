@@ -2348,7 +2348,6 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         pkt = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
-        print(achse)
         bez = achse[0][0]
         vec = achse[0][1]
         if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
@@ -2408,7 +2407,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         i += 1
 
     if 'e' in teilaufg:
-        # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
+        # die SuS sollen die Schnittgerade zweier Ebenen der Schar bestimmen
         pkt = 11
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -2420,15 +2419,15 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * var2, ny + aey * var2, nz + aez * var2])
         nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
         nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
-        # while (nz1*ny2 - ny1*nz2) == 0:
-        #    var1 = -1 * nzahl(1, 2)
-        #    var2 = var1 + nzahl(2, 3)
-        #    erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
-        #    erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
-        #    nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * erg_var_1, ny + aey * erg_var_1, nz + aez * erg_var_1])
-        #    nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * erg_var_2, ny + aey * erg_var_2, nz + aez * erg_var_2])
-        #    nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
-        #    nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+        while (nz1*ny2 - ny1*nz2) == 0:
+            var1 = -1 * nzahl(1, 2)
+            var2 = var1 + nzahl(2, 3)
+            erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
+            erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+            nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * var1, ny + aey * var1, nz + aez * var1])
+            nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * var2, ny + aey * var2, nz + aez * var2])
+            nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+            nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
 
         lsg_kon = Rational(erg_var_1-(nx1*dx+ny1*dy+nz1*dz), nz1*ny2 - ny1*nz2)
         lsg_var = Rational(ny2*nx1-nx2*ny1, nz1*ny2 - ny1*nz2)
@@ -2494,7 +2493,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         i += 1
 
         if 'f' in teilaufg:
-            # die SuS sollen die Schnittebene zweier Ebenen der Schar bestimmen und nachweisen, dass diese in allen Ebenen liegt
+            # die SuS sollen nachweisen, dass die Schnittgerade zweier Ebenen in allen Ebenen liegt
             pkt = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
@@ -2521,6 +2520,40 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
 
             liste_punkte.append(pkt)
             i += 1
+
+    if 'g' in teilaufg:
+        # Die SuS sollen diejenige Ebene bestimmen, in die parallel zu gegebenen Koordinatenachse ist
+        pkt = 3
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
+        bez = achse[0][0]
+        vec = achse[0][1]
+        if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
+            lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
+                   + r'-Achse \quad (3BE)')
+        else:
+            erg = 1
+            erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
+            lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
+                   + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
+                   + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                   + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
+                   + gzahl(erg_ebene) + r' \quad (1BE)')
+            pkt += 2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der Ebenenschar E_a mit der '
+                       + f'{bez}-Achse.  \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~' + bez + '-Achse~in~E_a:} '
+                       + r' \hspace{20em} \\' + erg_str + '~=~'
+                       + binom_aussen(nx, aex, str2='a', var=gzahl_klammer(vec[0],'r'))
+                       + binom_innen(ny, aey, str2='a', var=gzahl_klammer(vec[1],'r'))
+                       + binom_innen(nz, aez, str2='a', var=gzahl_klammer(vec[2],'r'))
+                       + r' \quad (1BE) \\' + erg_str + '~=~' +
+
+                       + r' \quad \mathrm{w.A. \quad \to ~ Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
+                       + r' \quad (2BE)')
+
+        liste_punkte.append(pkt)
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
