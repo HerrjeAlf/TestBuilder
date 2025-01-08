@@ -2217,7 +2217,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
-    # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, einer geg. Geraden und verschiedenen Ebenen der Schar.
+    # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -2232,7 +2232,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         ave = [aex, aey, aez] = [zzahl(0,3), zzahl(0,3), zzahl(0,3)]
     ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
     erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * a
-    erg_str = vorz_v_aussen(np.dot(punkt_d, ave),'a') + vorz_str(np.dot(punkt_d, nv))
+    erg_str = gzahl(np.dot(punkt_d, nv)) + vorz_v_innen(np.dot(punkt_d, ave),'a')
 
     # Gerade g erzeugen
     g_var = zzahl(1, 4)
@@ -2448,7 +2448,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                      + vorz_v_innen(ny2, 'y') + vorz_v_innen(nz2,'z') + '~=~' + gzahl(erg_var2))
             lsg_3 = r' \quad (1BE) \\'
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade s der Ebenen für a = {gzahl(var1)} '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade s der Ebenen a = {gzahl(var1)} '
                        + f'und a = {gzahl(var2)} der Schar. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad E_{' + gzahl(var1) + '}:'
                        + vorz_v_aussen(nx_1, 'x') + vorz_v_innen(ny_1, 'y')
@@ -2507,7 +2507,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            + vorz_v_innen(aex*dx,'a')
                            + vorz_v_innen(-1*aex*ny2,'ar') + vorz_str(ny*(dy-lsg_kon * nz2))
                            + vorz_v_innen(ny*(nx2-lsg_var*nz2),'r') + vorz_v_innen(aey*(dy-lsg_kon*nz2),'a')
-                           + vorz_v_innen(aey*(nx2-lsg_var*nz2),'ar')+ vorz_str(nz*(dz+lsg_kon*ny2))
+                           + vorz_v_innen(aey*(nx2-lsg_var*nz2),'ar') + vorz_str(nz*(dz+lsg_kon*ny2))
                            + vorz_v_innen(nz*lsg_var*ny2,'r') + vorz_v_innen(aez*(dz+lsg_kon*ny2),'a')
                            + vorz_v_innen(aez*lsg_var*ny2,'ar')
                            + r' \quad (1BE) \\' + erg_str + '~=~'
@@ -2517,43 +2517,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            + vorz_v_innen(-1*aex*ny2 + aey*(nx2-lsg_var*nz2) + aez*lsg_var*ny2, 'ar')
                            + r' \quad \mathrm{w.A. \quad \to ~ Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
                            + r' \quad (2BE)')
-
             liste_punkte.append(pkt)
             i += 1
-
-    if 'g' in teilaufg:
-        # Die SuS sollen diejenige Ebene bestimmen, in die parallel zu gegebenen Koordinatenachse ist
-        pkt = 3
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        achse = random_selection([['x',[1,0,0]],['y',[0,1,0]],['z',[0,0,1]]],1)
-        bez = achse[0][0]
-        vec = achse[0][1]
-        if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
-            lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
-                   + r'-Achse \quad (3BE)')
-        else:
-            erg = 1
-            erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
-            lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
-                   + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
-                   + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
-                   + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
-                   + gzahl(erg_ebene) + r' \quad (1BE)')
-            pkt += 2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der Ebenenschar E_a mit der '
-                       + f'{bez}-Achse.  \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~' + bez + '-Achse~in~E_a:} '
-                       + r' \hspace{20em} \\' + erg_str + '~=~'
-                       + binom_aussen(nx, aex, str2='a', var=gzahl_klammer(vec[0],'r'))
-                       + binom_innen(ny, aey, str2='a', var=gzahl_klammer(vec[1],'r'))
-                       + binom_innen(nz, aez, str2='a', var=gzahl_klammer(vec[2],'r'))
-                       + r' \quad (1BE) \\' + erg_str + '~=~' +
-
-                       + r' \quad \mathrm{w.A. \quad \to ~ Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
-                       + r' \quad (2BE)')
-
-        liste_punkte.append(pkt)
-        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):

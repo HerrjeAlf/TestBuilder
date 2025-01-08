@@ -16,7 +16,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 
-def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], BE=[]):
+def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]):
     # In dieser Aufgabe können die SuS ihre Kenntnisse der linearen Funktionen auf verschiedene Situationen, angelehnt auf Szenen im Film "Stirb Langsam" anwenden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -96,7 +96,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         liste_punkte.append(punkte)
         i += 1
 
-    if len([element for element in ['c', 'd', 'e', 'f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
+    if len([element for element in ['c', 'd', 'e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
         # die SuS sollen die Veränderung des y-Achsenabschnittes durch die Manipulation der Flugbahn erklären
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -200,8 +200,8 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         liste_punkte.append(pkt)
         i += 1
 
-    if 'i' in teilaufg and (swinkel >= 3.5 or -1*(n-y_vers)/steigung >= 3):
-        # Die SuS die orthogonale Flugbahn zur manipulierten Flugbahn berechnen. Die Aufgabe wird nur angezeigt, wenn der Anfluwinkel zu groß ist , oder das Flugzeug vor der Landebahn landen würde.
+    if 'h' in teilaufg and (swinkel >= 3.5 or -1*(n-y_vers)/steigung >= 3):
+        # Die SuS die orthogonale Flugbahn zur manipulierten Flugbahn berechnen. Die Aufgabe wird nur angezeigt, wenn der Anflugwinkel zu groß ist, oder das Flugzeug vor der Landebahn landen würde.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         xwert, ywert = ganze_werte[0][0], ganze_werte[0][1] - float(y_vers)

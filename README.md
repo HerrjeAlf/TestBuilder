@@ -5,7 +5,7 @@ Um TestBuilder zu nutzen, benötigen Sie:
 1. [Python](https://www.python.org/downloads/)
 2. [MiKTeX](https://miktex.org/download)
 3. [Perl](https://strawberryperl.com/)
-4. [PyCharm](https://www.jetbrains.com/de-de/pycharm/download)
+4. [PyCharm Community Edition](https://www.jetbrains.com/de-de/pycharm/download) (ist weiter unten auf der Webseite)
 
 **Installieren Sie die Software in der gegebenen Reihenfolge. Dann müssen Sie, wenn Sie PyCharm gestartet haben:**
 1. Oben rechts auf "Get from VCS" gehen
