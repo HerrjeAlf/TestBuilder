@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[sachaufgabe_strassenbau(1)]]
+    Aufgaben = [[lineare_funktionen_ablesen(1)]]
 
     # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []

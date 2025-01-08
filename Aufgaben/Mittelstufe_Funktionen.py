@@ -15,6 +15,45 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
+def lineare_funktionen_ablesen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
+    # In dieser Aufgabe sollen die SuS die Funktionsgleichung einer linearen Funktion aus dem Graphen ablesen und eine Wertetabelle anfertigen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # m und n aus dem Graphen einer einfache Funktionsgleichungen ablesen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        punkte = 2
+        m_f = zzahl(1,5)/2
+        n_f = zzahl(1,5)/2
+        fkt = m_f * x + n_f
+        fkt_str = vorz_v_aussen(m_f, 'x') + vorz_str(n_f)
+        graph_xyfix(fkt, bezn='', name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab. \n\n',
+                        'Grafik', 'Graph der Funktion f(x)'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \quad (2BE) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(
+                f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+
 
 def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]):
     # In dieser Aufgabe können die SuS ihre Kenntnisse der linearen Funktionen auf verschiedene Situationen, angelehnt auf Szenen im Film "Stirb Langsam" anwenden.
@@ -73,11 +112,12 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
                         f'Das Radar des Flughafens ortet die Boing zuerst bei Punkt P({gzahl(p2[0])}|'
                         f'{gzahl(p2[1])}) und nach {gzahl(zeit)}s bei Punkt Q({gzahl(p1[0])}|{gzahl(p1[1])}). \n\n',
                         str(liste_teilaufg[i]) + f') Bestimmen Sie die Funktionsgleichung der Flugbahn. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ \frac{' + gzahl(p2[1]) + vorz_str(-1*p1[1]) + r'}{'
-                       + gzahl(p2[0]) + gzahl(-1*p1[0]) + r'} \left(x' + vorz_str(-1*p2[0]) + r' \right) '
-                       + vorz_str(p2[1]) + '~=~' + gzahl(steigung) + r' \left(x' + vorz_str(-1*p2[0]) + r' \right) '
-                       + vorz_str(p2[1]) + '~=~' + vorz_v_aussen(steigung,'x') + vorz_str(-1 * steigung * p2[0])
-                       + vorz_str(p2[1]) + '~=~' + fkt_str + r' \quad (3BE) \\')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ \frac{y_2 - y_1}{x_2 - x_1} \cdot (x - x_1) + y_1 '
+                       + r' ~=~ \frac{' + gzahl(p2[1]) + vorz_str(-1*p1[1]) + r'}{' + gzahl(p2[0]) + gzahl(-1*p1[0])
+                       + r'} \left(x' + vorz_str(-1*p2[0]) + r' \right) ' + vorz_str(p2[1])
+                       + r' \quad (2BE) \\ f(x) ~=~' + gzahl(steigung) + r' \left(x' + vorz_str(-1*p2[0])
+                       + r' \right) ' + vorz_str(p2[1]) + '~=~' + vorz_v_aussen(steigung,'x')
+                       + vorz_str(-1 * steigung * p2[0]) + vorz_str(p2[1]) + '~=~' + fkt_str + r' \quad (1BE) \\')
         liste_punkte.append(3)
         i += 1
 
