@@ -684,9 +684,9 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     liste_bez = []
     i = 0
     def werte_bel_dreieck():
-        alpha = nzahl(60, 120)
+        alpha = random.choice([nzahl(60, 85), nzahl(95,120)])
         seite_a = nzahl(6, 12)
-        seite_b = seite_a * nzahl(3, 7) / 10
+        seite_b = seite_a * nzahl(4, 8) / 10
         beta = round(math.degrees(math.asin(math.sin(math.radians(alpha)) * seite_b / seite_a)))
         gamma = 180 - alpha - beta
         seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
@@ -786,13 +786,13 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     liste_punkte = []
     liste_bez = []
     i = 0
-    alpha = nzahl(60, 120)
-    seite_a = nzahl(6, 12)
-    seite_b = seite_a * nzahl(3, 7) / 10
-    beta = round(math.degrees(math.asin(math.sin(math.radians(alpha)) * seite_b / seite_a)))
-    gamma = 180 - alpha - beta
-    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
-    seite_h = round(seite_a * math.sin(math.radians(beta)),1)
+    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    seite_c = nzahl(6, 12)
+    seite_a = seite_c * nzahl(6, 9) / 10
+    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
+    beta = 180 - gamma - alpha
+    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
+    seite_h = round(seite_a * math.sin(math.radians(beta)), 1)
     # print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
     gamma_1 = 90 - alpha
     xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,3)
@@ -897,17 +897,17 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     i = 0
-    alpha = nzahl(60, 120)
-    seite_a = nzahl(6, 12)
-    seite_b = seite_a * nzahl(3, 7) / 10
-    beta = round(math.degrees(math.asin(math.sin(math.radians(alpha)) * seite_b / seite_a)))
-    gamma = 180 - alpha - beta
-    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
+    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    seite_c = nzahl(6, 12)
+    seite_a = seite_c * nzahl(6, 9) / 10
+    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
+    beta = 180 - gamma - alpha
+    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
                f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
-               f'bestimmt. Berechne die Länge des Sees.', 'Bild',
+               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
                'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
@@ -935,18 +935,18 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     i = 0
-    alpha = nzahl(60, 120)
-    seite_a = nzahl(6, 12)
-    seite_b = seite_a * nzahl(3, 7) / 10
-    beta = round(math.degrees(math.asin(math.sin(math.radians(alpha)) * seite_b / seite_a)))
-    gamma = 180 - alpha - beta
-    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
+    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    seite_c = nzahl(6, 12)
+    seite_a = seite_c * nzahl(4, 7) / 10
+    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
+    beta = 180 - gamma - alpha
+    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
                f'Um ein Wohngebiet zu erschließen, wird der Bau einer neuen Straße geplant. Die neue Straße soll in '
                r'einem Winkel $ \gamma = $ '+ f' {gzahl(gamma)}° an die Eichenallee anschließen und der '
                f'Straßenabschnitt der Hauptstraße, zwischen der geplanten Straße und der Eichenallee, soll '
-               f'{gzahl(seite_c)}km lang sein. \n Berechne die Länge der geplanten neuen Straße, '
+               f'{gzahl(seite_c)}km lang sein. \n Berechnen Sie die Länge der geplanten neuen Straße, '
                r'wenn der Winkel $ \beta $ ' + f'zwischen der Eichenallee und der Hauptstraße {gzahl(beta)}° beträgt.'),
                'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
