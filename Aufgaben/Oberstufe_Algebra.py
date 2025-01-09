@@ -2313,7 +2313,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
     if 'b' in teilaufg:
         # Die SuS sollen diejenige Ebene bestimmen, in der die Gerade g liegt
         erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * g_var
-        pkt = 6
+        pkt = 7
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
@@ -2332,13 +2332,14 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + vorz_v_innen(aex*g_vx + aey*g_vy + aez*g_vz,'a')
                        + r' \quad \vert ' + vorz_str(-1*(nx*g_vx + ny*g_vy + nz*g_vz)) + r' \quad \vert \div '
                        + gzahl_klammer(aex*g_vx + aey*g_vy + aez*g_vz) + r' \quad \to \quad a~=~' + gzahl(g_var)
-                       + r' \quad (2BE) \\ \mathrm{Stützvektor~von~g~in~E_{' + gzahl(g_var) + r'}~einsetzen:}'
-                       + r' \hspace{20em} \\' + binom_aussen(nx, aex, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(gx) + binom_innen(ny, aey, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(gy) + binom_innen(nz, aez, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(gz) + '~=~'
-                       + vorz_v_aussen(np.dot(punkt_d, ave), r' \cdot ' + gzahl_klammer(g_var))
-                       + vorz_str(np.dot(punkt_d, nv)) + r' \quad (1BE) \\' + gzahl(erg) + '~=~' + gzahl(erg)
+                       + r' \quad (2BE) \\ E_{' + gzahl(g_var) + '}:' + vorz_v_aussen(nx+aex*g_var, 'x')
+                       + vorz_v_innen(ny+aey*g_var, 'y') + vorz_v_innen(nz+aez*g_var,'z')
+                       + '~=~' + gzahl(erg) + r' \quad (1BE) \\'
+                       + r' \mathrm{Stützvektor~von~g~in~E_{' + gzahl(g_var) + r'}~einsetzen:} \hspace{20em} \\'
+                       + gzahl(nx+aex*g_var, null=True) + r'\cdot' + gzahl_klammer(gx, null=True)
+                       + vorz_str(ny+aey*g_var, null=True) + r'\cdot' + gzahl_klammer(gy, null=True)
+                       + vorz_str(nz+aez*g_var, null=True) + r'\cdot' + gzahl_klammer(gz, null=True)
+                       + '~=~' + gzahl(erg) + r' \quad (1BE) \\' + gzahl(erg) + '~=~' + gzahl(erg)
                        + r' \quad \to \quad \mathrm{g~liegt~in~E_{' + gzahl(g_var) + r'} } \quad (2BE)')
         liste_punkte.append(pkt)
         i += 1
@@ -2400,7 +2401,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
                        + r' \quad \vert ' + vorz_str(-1*(nx*h_vx + ny*h_vy + nz*h_vz)) + r' \quad \vert \div '
                        + gzahl_klammer(aex*h_vx + aey*h_vy + aez*h_vz) + r' \quad \to \quad a~=~' + gzahl(h_var)
-                       + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_' + gzahl(h_var)
+                       + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_{' + gzahl(h_var)
                        + r'}:' + vorz_v_aussen(nx+aex*h_var, 'x') + vorz_v_innen(ny+aey*h_var, 'y')
                        + vorz_v_innen(nz+aez*h_var,'z') + '~=~' + gzahl(erg) + r' \quad (1BE)')
         liste_punkte.append(pkt)
