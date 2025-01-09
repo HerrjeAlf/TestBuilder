@@ -256,7 +256,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
                        + r' - \frac{1}{m_f} ~=~ - \frac{1}{' + gzahl(steigung) + '} ~=~' + gzahl(steigung_g)
                        + r' \quad (2BE) \\ g(x) ~=~' + gzahl(steigung_g) + binom_klammer(1, -1 * xwert, 'x')
                        + vorz_str(ywert) + '~=~' + vorz_v_aussen(steigung_g,'x')
-                       + vorz_str(round(-20/wert_steigung*xwert+ywert,3)) + r' \quad (2BE)')
+                       + vorz_str(round(20/wert_steigung*xwert+ywert,3)) + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
