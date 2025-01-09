@@ -2240,7 +2240,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                            [0, nz + aez * g_var, -1 * (ny + aey * g_var)],
                            [nz + aez * g_var, 0, -1 * (nx + aex * g_var)]])
     g_rv = [g_vx, g_vy, g_vz] = vektor_kuerzen(g_rv)
-    punkt_g = [gx, gy, gz] = punkt_d + g_var
+    punkt_g = [gx, gy, gz] = punkt_d + g_rv
 
     # Gerade h erzeugen
     h_var = zzahl(1,4)
@@ -2303,7 +2303,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + gzahl(erg_k - (nx*tx+ny*ty+nz*tz)) + '~=~'
                        + vorz_v_aussen(aex*tx + aey*ty + aez*tz - erg_a,'a') + r' \quad \vert \div '
                        + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
-                       + r' \quad (2BE) \\ E_a:' + vorz_v_aussen(nx+aex*t_var, 'x')
+                       + r' \quad (2BE) \\ E_{' + gzahl(t_var) + '}:' + vorz_v_aussen(nx+aex*t_var, 'x')
                        + vorz_v_innen(ny+aey*t_var, 'y') + vorz_v_innen(nz+aez*t_var,'z')
                        + '~=~' + gzahl(erg_ebene) +  r' \quad (1BE)')
 
@@ -2334,9 +2334,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + gzahl_klammer(aex*g_vx + aey*g_vy + aez*g_vz) + r' \quad \to \quad a~=~' + gzahl(g_var)
                        + r' \quad (2BE) \\ \mathrm{Stützvektor~von~g~in~E_{' + gzahl(g_var) + r'}~einsetzen:}'
                        + r' \hspace{20em} \\' + binom_aussen(nx, aex, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(g_vy) + binom_innen(nz, aez, str2=gzahl_klammer(g_var)) + r' \cdot '
-                       + gzahl_klammer(g_vz) + '~=~'
+                       + gzahl_klammer(gx) + binom_innen(ny, aey, str2=gzahl_klammer(g_var)) + r' \cdot '
+                       + gzahl_klammer(gy) + binom_innen(nz, aez, str2=gzahl_klammer(g_var)) + r' \cdot '
+                       + gzahl_klammer(gz) + '~=~'
                        + vorz_v_aussen(np.dot(punkt_d, ave), r' \cdot ' + gzahl_klammer(g_var))
                        + vorz_str(np.dot(punkt_d, nv)) + r' \quad (1BE) \\' + gzahl(erg) + '~=~' + gzahl(erg)
                        + r' \quad \to \quad \mathrm{g~liegt~in~E_{' + gzahl(g_var) + r'} } \quad (2BE)')
@@ -2358,7 +2358,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
             erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
                    + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
-                   + gzahl(erg) + r' \quad (3BE) \\ E_a:' + vorz_v_aussen(nx+aex*erg, 'x')
+                   + gzahl(erg) + r' \quad (3BE) \\ E_{' + gzahl(erg) + r'}:' + vorz_v_aussen(nx+aex*erg, 'x')
                    + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
                    + gzahl(erg_ebene) + r' \quad (1BE)')
             pkt += 2
@@ -2400,9 +2400,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                        + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
                        + r' \quad \vert ' + vorz_str(-1*(nx*h_vx + ny*h_vy + nz*h_vz)) + r' \quad \vert \div '
                        + gzahl_klammer(aex*h_vx + aey*h_vy + aez*h_vz) + r' \quad \to \quad a~=~' + gzahl(h_var)
-                       + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_a:'
-                       + vorz_v_aussen(nx+aex*erg, 'x') + vorz_v_innen(ny+aey*erg, 'y')
-                       + vorz_v_innen(nz+aez*erg,'z') + r' \quad (1BE)')
+                       + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_' + gzahl(h_var)
+                       + r'}:' + vorz_v_aussen(nx+aex*h_var, 'x') + vorz_v_innen(ny+aey*h_var, 'y')
+                       + vorz_v_innen(nz+aez*h_var,'z') + '~=~' + gzahl(erg) + r' \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
 
