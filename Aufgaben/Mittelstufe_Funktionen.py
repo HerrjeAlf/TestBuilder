@@ -38,8 +38,7 @@ def lineare_funktionen_ablesen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         fkt = m_f * x + n_f
         fkt_str = vorz_v_aussen(m_f, 'x') + vorz_str(n_f)
         graph_xyfix(fkt, bezn='', name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
-        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab. \n\n',
-                        'Grafik', 'Graph der Funktion f(x)'))
+        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab.', 'Grafik'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1

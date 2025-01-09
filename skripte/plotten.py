@@ -247,14 +247,13 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
-    grid.SubplotSpec(gridspec=0,num1=0,num2=0)
     ax.set_aspect(1)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
     ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-24, x=1.02)
-    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.set_xlabel('x', size=10, labelpad=-30, x=0.97)
+    ax.set_ylabel('y', size=10, labelpad=-30, y=0.97, rotation=0)
     ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.3)
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
@@ -266,7 +265,7 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     plt.grid(True)
     plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
-    plt.axis([-6, 6, -6, 6])
+    plt.axis([-5.5, 5.5, -5.5, 5.5])
     plt.plot(xwerte, ywerte)
     for fkt in funktionen:
         ywerte = [fkt[0].subs(x, elements) for elements in xwerte]
@@ -274,14 +273,13 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
         plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.04)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     # lswerte sind für die Werte für die Lösungen
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
-    grid.SubplotSpec(gridspec=0,num1=0,num2=0)
     ax.set_aspect(1)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
@@ -312,8 +310,6 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
-    grid.SubplotSpec(gridspec=0,num1=0,num2=0)
-    ax.set_aspect(1)
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))

@@ -41,7 +41,7 @@ def seite(aufgaben):
                 i += 1
             elif 'Bild' in elements:
                 with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width='300px')
+                    graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width='250px')
                 i += 1
             elif '3dim_Koordinatensystem' in elements:
                 with Aufgabe.create(Figure(position='ht!')) as graph:
