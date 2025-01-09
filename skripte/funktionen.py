@@ -297,7 +297,7 @@ def vorz_v_aussen(zahl,string, null=False):
 
 def binom(z1, z2, str1='', str2=''):
     if z1 != 0 and z2 != 0:
-        if z1 < 0 and z1 < 0:
+        if z1 < 0 and z2 < 0:
             return (r'- \left( ' + vorz_v_aussen(abs(z1), str(str1))
                     + vorz_v_innen(abs(z2), str(str2)) + r' \right) ')
         elif z1 < 0:
