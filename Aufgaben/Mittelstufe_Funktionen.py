@@ -15,7 +15,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen_ablesen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # In dieser Aufgabe sollen die SuS die Funktionsgleichung einer linearen Funktion aus dem Graphen ablesen und eine Wertetabelle anfertigen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -28,17 +28,34 @@ def lineare_funktionen_ablesen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    # Erstellen des vorgegebenen Graphen
+    m_f = zzahl(1, 5) / 2
+    n_f = zzahl(1, 5) / 2
+    fkt = m_f * x + n_f
+    fkt_str = vorz_v_aussen(m_f, 'x') + vorz_str(n_f)
+    grafiken_aufgaben.append(f'Aufgabe_{nr}')
+    graph_xyfix(fkt, bezn='', name=f'Aufgabe_{nr}.png')
+
+    # Erstellen der Funktionsgleichung h(x)
+    m_h = m_f + 5
+
     if 'a' in teilaufg:
-        # m und n aus dem Graphen einer einfache Funktionsgleichungen ablesen
+        # SuS sollen aus dem Graphen eine einfache Funktionsgleichungen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         punkte = 2
-        m_f = zzahl(1,5)/2
-        n_f = zzahl(1,5)/2
-        fkt = m_f * x + n_f
-        fkt_str = vorz_v_aussen(m_f, 'x') + vorz_str(n_f)
-        graph_xyfix(fkt, bezn='', name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
-        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab.', 'Grafik'))
+        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab.',
+                        'Grafik'))
+        aufgabe.append(LargeText(r' \mathrm{n ~=~ \hspace{5em} m~=~ \hspace{5em} f(x) ~=~ }'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \quad (2BE) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion h(x)=')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + fkt_str + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1
@@ -84,16 +101,16 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
     fkt_vers_str = vorz_v_aussen(steigung, '~x~') + vorz_str(n_vers)
     v_flugzeug = 200 + nzahl(1,10)*5
     p1, p2 = ganze_werte[1], ganze_werte[2]
-    abstand = round(sqrt((p2[0]-p1[0])**2 + (p2[1]-p1[1])**2),2)
+    abstand = N(sqrt((p2[0]-p1[0])**2 + (p2[1]-p1[1])**2), 3)
     zeit = int(abstand*1000 / v_flugzeug)
-    swinkel = round(np.arctan(wert_steigung/20) * 180 / pi, 1)
+    swinkel = N(np.arctan(wert_steigung/20) * 180 / pi, 3)
 
     # Werte für den Airbus
     steigung_airbus = -1 * nzahl(1, 15) / 5
     n_airbus = int(ganze_werte[0][1]) - steigung_airbus * int(ganze_werte[0][0])
     xwert_s = Rational(n_airbus - n + y_vers, steigung - steigung_airbus)
-    ywert_s = N(steigung_airbus * xwert_s + n_airbus, 2)
-    swinkel_airbus = round(np.arctan(steigung_airbus) * 180 / pi, 1)
+    ywert_s = N(steigung_airbus * xwert_s + n_airbus, 3)
+    swinkel_airbus = N(np.arctan(steigung_airbus) * 180 / pi, 3)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
@@ -169,49 +186,52 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         lsg = r' > 3 \quad \to \quad \mathrm{Die~Boing~landet~vor~der~Landebahn.}'
-        lsg = r' \leq 3 \to \mathrm{Die~Boing~landet~auf~der~Landebahn.}' if round(-1*(n-y_vers)/steigung,3) <= 3 else lsg
+        lsg = r' \leq 3 \to \mathrm{Die~Boing~landet~auf~der~Landebahn.}' if N(-1*(n-y_vers)/steigung,3) <= 3 else lsg
         aufgabe.extend(('Im Film landet die Boeing, bevor sie zerbricht, trotz der manipulierten Flugbahn '
                         'auf der Landebahn (Nullstelle). Die Landebahn beginnt im Punkt A(3|0) und endet im '
                         'Koordinatenursprung E(0|0). \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie die Landestelle nach der Manipulation '
                         + f'des ILS. Landet die Boing auf der Landebahn? \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad x_0 ~=~ - \frac{n}{m} ~=~ - \frac{ ' + gzahl(round(n-y_vers,3))
-                       + r'}{' + gzahl(round(steigung,3)) + '} ~=~' + gzahl(round(-1*(n-y_vers)/steigung,3)) + lsg
+        loesung.append(str(liste_teilaufg[i]) + r') \quad x_0 ~=~ - \frac{n}{m} ~=~ - \frac{ ' + gzahl(N(n-y_vers,3))
+                       + r'}{' + gzahl(N(steigung,3)) + '} ~=~' + gzahl(N(-1*(n-y_vers)/steigung,3)) + lsg
                        + r' \quad (4BE)')
         liste_punkte.append(punkte)
         i += 1
 
     if len([element for element in ['f', 'g'] if element in teilaufg]) > 0:
-        # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
-
-
+        # Die SuS sollen erläutern, woran man erkennen kann das sich zwei Geraden schneiden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         aufgabe.extend((f'Über dem Flughafen kreisen mehrere Flugzeuge und warten auf Landerlaubnis. Ein Airbus bewegt '
                         f'sich auf der Flugbahn h(x) = {gzahl(steigung_airbus)} x {vorz_str(n_airbus)}, während sich '
                         f'die Boing im Landeanflug befindet. \n\n',
                         str(liste_teilaufg[i]) + f') Erläutern Sie, woran man erkennen kann, dass sich die Flugbahnen '
-                        + f'schneiden. \n\n',
-                        str(liste_teilaufg[i+1]) + f') Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
-                       + f'der Boing. \n\n'))
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{~Da~die~Steigungen~der~beiden~Geraden~verschieden~'
-                        + r'sind.} \quad (1BE)', str(liste_teilaufg[i+1]) + r') \quad \mathrm{Ansatz: \quad f(x)=g(x)} '
+                        + f'schneiden. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{~Da~die~Steigungen~der~beiden~Geraden~verschieden~'
+                       + r'sind.} \quad (1BE)')
+        liste_punkte.append(1)
+        i += 1
+
+    if 'g' in teilaufg:
+        # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i+1]) + f') Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
+                       + f'der Boing. \n\n')
+        loesung.append(str(liste_teilaufg[i+1]) + r') \quad \mathrm{Ansatz: \quad f(x)=g(x)} '
                         + r' \quad \to \quad ' + fkt_vers_str + '~=~' + vorz_v_aussen(steigung_airbus,'x')
                         + vorz_str(n_airbus) + r' \quad \vert ' + vorz_v_innen(-1 * steigung_airbus, 'x')
                         + r' \quad \vert ' + vorz_str(-1*float(n_vers)) + r' \quad (3BE) \\'
                         + vorz_v_aussen(steigung - steigung_airbus, 'x')
                         + '~=~' + gzahl(n_airbus - n_vers) + r' \quad \vert \div' + gzahl(steigung - steigung_airbus)
                         + r' \quad \to \quad x~=~'
-                        + gzahl(round((n_airbus - n + y_vers)/(steigung - steigung_airbus), 3))
+                        + gzahl(N((n_airbus - n + y_vers)/(steigung - steigung_airbus), 3))
                         + r' \quad (3BE) \\ \mathrm{Schnittpunkt \quad S(' + gzahl(N(xwert_s,3)) + r'~ \vert ~'
-                        + gzahl(ywert_s) + r') \quad (2BE)}'))
-        liste_punkte.append(punkte)
-        i += 2
+                        + gzahl(ywert_s) + r') \quad (2BE)}')
+        liste_punkte.append(8)
+        i += 1
 
-    if 'g' in teilaufg:
+    if 'h' in teilaufg:
         # Die SuS sollen den Schnittwinkel zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
         if 'd' in teilaufg:
             lsg = (r' \mathrm{nach~Teilaufgabe~d~gilt: \quad \alpha ~=~ ' + gzahl(swinkel)
                    +  r' ^{ \circ } \quad und \quad \beta ~=~ tan^{-1}(' + gzahl(steigung_airbus) + ')~=~'
@@ -239,13 +259,12 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
         liste_punkte.append(pkt)
         i += 1
 
-    if 'h' in teilaufg and (swinkel >= 3.5 or -1*(n-y_vers)/steigung >= 3):
+    if 'i' in teilaufg and (swinkel >= 3.5 or -1*(n-y_vers)/steigung >= 3):
         # Die SuS die orthogonale Flugbahn zur manipulierten Flugbahn berechnen. Die Aufgabe wird nur angezeigt, wenn der Anflugwinkel zu groß ist, oder das Flugzeug vor der Landebahn landen würde.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         xwert, ywert = ganze_werte[0][0], ganze_werte[0][1] - float(y_vers)
-        steigung_g = round(-20/wert_steigung,3)
-
+        steigung_g = N(-20/wert_steigung,3)
         aufgabe.extend((f'Da die Gefahr für einen Absturz der Boing zu groß ist, muss Sie im Punkt ({gzahl(xwert)}|'
                         f'{gzahl(ywert)}) orthogonal zur bisherigen (manipulierten) Flugbahn durchstarten und nach '
                         f'einer Schleife eine erneute Landung versuchen. \n\n',
@@ -255,7 +274,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], BE=[]
                        + r' - \frac{1}{m_f} ~=~ - \frac{1}{' + gzahl(steigung) + '} ~=~' + gzahl(steigung_g)
                        + r' \quad (2BE) \\ g(x) ~=~' + gzahl(steigung_g) + binom_klammer(1, -1 * xwert, 'x')
                        + vorz_str(ywert) + '~=~' + vorz_v_aussen(steigung_g,'x')
-                       + vorz_str(round(20/wert_steigung*xwert+ywert,3)) + r' \quad (2BE)')
+                       + vorz_str(N(20/wert_steigung*xwert+ywert,3)) + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 

@@ -285,8 +285,8 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
     ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-21, x=1.02)
-    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.set_xlabel('x', size=10, labelpad=-30, x=0.97)
+    ax.set_ylabel('y', size=10, labelpad=-30, y=0.97, rotation=0)
     ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
@@ -304,7 +304,7 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
         elif werte is not None and lswerte[i + 1] is not None:  # Überprüft, ob es den Wert oder den nächsten Wert gibt
             plt.plot(werte, lswerte[i + 1], linewidth=1)
     plt.suptitle(titel, usetex=True)
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.03)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
 
 def Graph(x_min, x_max, *funktionen, name='Graph'):
     fig, ax = plt.subplots()
@@ -314,8 +314,8 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
     ax.spines['left'].set_position(('data', 0))
-    ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
-    ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+    ax.set_xlabel('x', size=10, labelpad=-30, x=0.97)
+    ax.set_ylabel('y', size=10, labelpad=-30, y=0.97, rotation=0)
     ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
@@ -326,7 +326,7 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
         plt.plot(xwerte, ywerte, linewidth=2)
     plt.grid(True)
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
 
 # Wahrscheinlichkeit
 def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):

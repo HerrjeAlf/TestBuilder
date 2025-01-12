@@ -108,5 +108,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-
-print(round(32.34,3))
+p = zzahl(1,5)
+print(p)
+print((p+10)%5)
