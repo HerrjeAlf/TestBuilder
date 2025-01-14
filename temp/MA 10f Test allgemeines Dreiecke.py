@@ -16,7 +16,7 @@ Art = '2. Klassenarbeit'
 Titel = 'Trigonometrie im allgemeinen Dreieck'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']

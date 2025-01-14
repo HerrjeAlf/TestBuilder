@@ -679,6 +679,7 @@ def sachaufgabe_rampe(nr, BE=[]):
 
 def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     # Berechnungen im allgemeinen Dreieck
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -718,7 +719,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         ges_b =  ',~' + seite_3
     if 'c' in teilaufg:
         ges_c = ',~ A'
-    gegeben_und_gesucht = (' \mathrm{geg:~} ' + seite_1 + '~=~' + gzahl(seite_wert_1)
+    gegeben_und_gesucht = (r' \mathrm{geg:~} ' + seite_1 + '~=~' + gzahl(seite_wert_1)
                            + r'cm, \quad ' + seite_2 + '~=~' + gzahl(seite_wert_2) + r'cm, \quad ' + winkel_1
                            + '~=~' + latex(winkel_wert_1) + r'^{ \circ } \quad \mathrm{ges \colon ~}'
                            + ges_a + ges_b + ges_c + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\')
@@ -788,6 +789,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
 
 def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -903,16 +905,16 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
-               f'Ufern mit {gzahl(seite_a)}km und {gzahl(seite_c)}km und der eingeschlossen Winkel von {gzahl(beta)}° '
-               f'bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
+               f'Ufern mit a = {gzahl(seite_a)}km und c = {gzahl(seite_c)}km und der eingeschlossen Winkel von '
+               f'{gzahl(beta)}° bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
                'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
                + r' km, ~ c ~=~' + gzahl(seite_c) + r'km \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
                + r' ^{ \circ} \quad ges \colon  b \quad (1BE)} \\ b ~=~ \sqrt{a^2 + c^2 - 2ac \cdot cos( \beta ) }'
-               + r' ~=~ \sqrt{ (' + gzahl(seite_a) + 'km) ^2 + (' + gzahl(seite_c) + r'km)^2 - 2 ~ \cdot' + gzahl(seite_a)
-               + r'km \cdot ' + gzahl(seite_c) + r'km \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~' + gzahl(seite_b)
-               + r'km  \quad (3BE)']
+               + r' ~=~ \sqrt{ (' + gzahl(seite_a) + 'km) ^2 + (' + gzahl(seite_c) + r'km)^2 - 2 ~ \cdot'
+               + gzahl(seite_a) + r'km \cdot ' + gzahl(seite_c) + r'km \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~'
+               + gzahl(seite_b) + r'km  \quad (3BE)']
     grafiken_aufgaben = ['vermessung_see']
     grafiken_loesung = []
 
@@ -932,7 +934,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     i = 0
-    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    gamma = nzahl(95,120)
     beta = nzahl(15,45)
     seite_c = nzahl(6, 12)
     seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
