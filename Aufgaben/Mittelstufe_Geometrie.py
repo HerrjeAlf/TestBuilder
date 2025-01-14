@@ -712,20 +712,26 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
+        ges_a =  winkel_2 + ',~' + winkel_3
+    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
+        ges_b =  ',~' + seite_3
+    if 'c' in teilaufg:
+        ges_c = ',~ A'
+    gegeben_und_gesucht = (' \mathrm{geg:~} ' + seite_1 + '~=~' + gzahl(seite_wert_1)
+                           + r'cm, \quad ' + seite_2 + '~=~' + gzahl(seite_wert_2) + r'cm, \quad ' + winkel_1
+                           + '~=~' + latex(winkel_wert_1) + r'^{ \circ } \quad \mathrm{ges \colon ~}'
+                           + ges_a + ges_b + ges_c + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\')
 
-
-    if 'a' or 'b' in teilaufg:
+    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
         # Berechnung der Winkel im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 9
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~} ' + seite_1 + '~=~' + gzahl(seite_wert_1)
-                       + r'cm, \quad ' + seite_2 + '~=~' + gzahl(seite_wert_2) + r'cm, \quad ' + winkel_1 + '~=~'
-                       + latex(winkel_wert_1) + r'^{ \circ } \quad \mathrm{ges \colon ~}' + winkel_2
-                       + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\' + r' \frac{' + seite_1
-                       + '}{~sin(' + winkel_1 + ')} ~=~' + r' \frac{' + seite_2 + '}{~sin(' + winkel_2
+        loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i]) + r') \quad \frac{' + seite_1 + '}{~sin('
+                        + winkel_1 + ')} ~=~' + r' \frac{' + seite_2 + '}{~sin(' + winkel_2
                        + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin(' + winkel_1 + r')} ~=~ \frac{'
                        + seite_2 + '}{' + seite_1 + r'} \quad \vert \cdot sin(' + winkel_1 + r') \quad (2BE) \\'
                        + 'sin(' + winkel_2 + r') ~=~ \frac{' + seite_2 + r'}{' + seite_1 + r'} \cdot sin(' + winkel_1
@@ -740,7 +746,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'b' in teilaufg:
+    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
         # Berechnung der fehlenden Seitenlänge im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -786,18 +792,20 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     liste_punkte = []
     liste_bez = []
     i = 0
-    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
-    seite_c = nzahl(6, 12)
-    seite_a = seite_c * nzahl(6, 9) / 10
-    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
-    beta = 180 - gamma - alpha
-    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
-    seite_h = round(seite_a * math.sin(math.radians(beta)), 1)
-    # print('seite a ' + str(seite_a)), print('seite b ' + str(seite_b)), print('seite c ' + str(seite_c)), print('seite h ' + str(seite_h))
-    gamma_1 = 90 - alpha
-    xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,3)
-    ywert_punkt_c = round(math.sin(math.radians(alpha))*seite_b,3)
+    seite_a = nzahl(6, 12)
+    seite_h = seite_a*nzahl(4,8)/10
+    seite_FB = N(sqrt(seite_a**2-seite_h**2))
+    beta = round(math.degrees(math.asin(seite_h / seite_a)))
+    gamma_1 = nzahl(20,60)
+    alpha = 90 - gamma_1
+    seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
+    gamma = 180 - alpha - beta
     flaeche = round(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),2)
+
+    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
+    xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,2)
+    ywert_punkt_c = round(math.sin(math.radians(alpha))*seite_b,2)
+
     # Listen für die Zeichung des Dreiecks
     pkt_list = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c],[xwert_punkt_c,0]]
     pkt_bez = ['A', 'B', 'C', 'F']
@@ -818,28 +826,23 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
 
     if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 5
-        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $'
-                       + r' \\\\'))
+        aufgabe.append(NoEscape(str(liste_teilaufg[i])
+                                + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $' + r' \\\\'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
-                                                 + gzahl(seite_h) + r' \quad ges \colon  \quad \overline{FB} \quad (1BE)} \\'
-                                                 + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
-                                                 r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
-                                                 r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2BE) \\'
-                                                 r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
-                                                 + gzahl(seite_h) + 'cm)^2 } ~=~'
-                                                 + gzahl(N(seite_c - xwert_punkt_c,3)) + r'cm \quad (2BE) \\'
-                                                 + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
-        liste_punkte.append(pkt)
+                       + gzahl(seite_h) + r'cm \quad ges \colon  \quad \overline{FB} \quad (1BE)} \\'
+                       + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
+                       + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
+                       + r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2BE) \\'
+                       + r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
+                       + gzahl(seite_h) + 'cm)^2 } ~=~' + gzahl(seite_FB) + r'cm \quad (2BE) \\'
+                       + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
+        liste_punkte.append(5)
         i += 1
 
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung eines Winkels mit dem Sinus
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 6
         aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel ' + r'$ \alpha $'
                                 + ' und ' + r'$ \beta $' + r'. \\\\'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
@@ -849,15 +852,13 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                                  r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
                                                  r'sin^{-1} \Big( \frac{' + gzahl(seite_h) + '}{' + gzahl(seite_a)
                                                  + r'} \Big) ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (4BE) \\ '
-                                                 + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
-        liste_punkte.append(pkt)
+                                                 + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\'))
+        liste_punkte.append(6)
         i += 1
 
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Berechnung einer Seite mit dem Sinussatz
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
                                                  r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
@@ -865,15 +866,13 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                                  + gzahl(seite_a) + r'cm \cdot sin(' + gzahl(beta) + r'^{ \circ})}'
                                                  r'{sin(' + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
                                                  + r'cm \quad (4BE) \\'
-                                                 + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
-        liste_punkte.append(pkt)
+                                                 + r' \mathrm{insgesamt~' + str(4) + r'~Punkte} \\'))
+        liste_punkte.append(4)
         i += 1
 
     if 'd' in teilaufg:
         # Berechnung der Fläche des Dreiecks
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 5
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
                                                  r'180^{ \circ } - ' + gzahl(alpha) + r'^{ \circ } - ' + gzahl(beta)
@@ -882,8 +881,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                                  r' \frac{1}{2} \cdot ' + gzahl(seite_a) + r'cm \cdot '
                                                  + gzahl(seite_b) + r'cm \cdot sin(' + gzahl(gamma)
                                                  + r'^{ \circ }) ~=~' + gzahl(flaeche) + r'cm^2 \quad (3BE) \\'
-                                                 + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\'))
-        liste_punkte.append(pkt)
+                                                 + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
+        liste_punkte.append(5)
         i += 1
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -897,12 +896,10 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     i = 0
-    gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    beta = nzahl(30,60)
     seite_c = nzahl(6, 12)
     seite_a = seite_c * nzahl(6, 9) / 10
-    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
-    beta = 180 - gamma - alpha
-    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
+    seite_b = N(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
@@ -911,11 +908,11 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
                'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
-               + r' cm, ~ c ~=~' + gzahl(seite_c) + r'cm \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
+               + r' km, ~ c ~=~' + gzahl(seite_c) + r'km \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
                + r' ^{ \circ} \quad ges \colon  b \quad (1BE)} \\ b ~=~ \sqrt{a^2 + c^2 - 2ac \cdot cos( \beta ) }'
-               + r' ~=~ \sqrt{' + gzahl(seite_a) + '^2 + ' + gzahl(seite_c) + r' ^2 - 2 ~ \cdot ' + gzahl(seite_a)
-               + r' \cdot ' + gzahl(seite_c) + r' \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~' + gzahl(seite_b)
-               + r'  \quad (3BE)']
+               + r' ~=~ \sqrt{ (' + gzahl(seite_a) + 'km) ^2 + (' + gzahl(seite_c) + r'km)^2 - 2 ~ \cdot' + gzahl(seite_a)
+               + r'km \cdot ' + gzahl(seite_c) + r'km \cdot cos(' + gzahl(beta) + r'^{ \circ} )} ~=~' + gzahl(seite_b)
+               + r'km  \quad (3BE)']
     grafiken_aufgaben = ['vermessung_see']
     grafiken_loesung = []
 
@@ -936,10 +933,8 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     liste_bez = [f'{nr}']
     i = 0
     gamma = random.choice([nzahl(60, 85), nzahl(95,120)])
+    beta = nzahl(15,45)
     seite_c = nzahl(6, 12)
-    seite_a = seite_c * nzahl(4, 7) / 10
-    alpha = round(math.degrees(math.asin(math.sin(math.radians(gamma)) * seite_a / seite_c)))
-    beta = 180 - gamma - alpha
     seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
@@ -951,7 +946,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
                'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ c~=~' + gzahl(seite_c)
-               + r' cm, ~ \beta ~=~' + gzahl(beta) + r' ^{ \circ} \quad \mathrm{und} \quad \gamma ~=~' + gzahl(gamma)
+               + r' km, ~ \beta ~=~' + gzahl(beta) + r' ^{ \circ} \quad \mathrm{und} \quad \gamma ~=~' + gzahl(gamma)
                + r' ^{ \circ} \quad ges \colon  b \quad (1BE)} \\ \quad \mathrm{aus~der~Planskizze~folgt:~} '
                + r' \hspace{15em} \\ \frac{b}{ sin( \beta )} ~=~ \frac{c}{ sin( \gamma )} '
                + r' \quad \vert \cdot sin( \beta ) \quad \to \quad b~=~ \frac{ c \cdot sin( \beta ) }{ sin( \gamma )} '
