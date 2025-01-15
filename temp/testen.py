@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[lineare_funktionen(1, anz_fkt=3)]]
+    Aufgaben = [[einf_parabeln(1, anz_fkt=3)]]
 
     # hier werden aus der Liste der Aufgaben die Test erzeugt
     liste_seiten = []

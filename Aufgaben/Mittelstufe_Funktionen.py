@@ -16,7 +16,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
-    # In dieser Aufgabe sollen die SuS die Funktionsgleichung einer linearen Funktion aus dem Graphen ablesen und eine Wertetabelle anfertigen.
+    # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_fkt=" kann festgelegt werden, wie viele Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_fkt=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -43,11 +43,17 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
     if 'a' in teilaufg:
         # SuS sollen aus dem Graphen eine einfache Funktionsgleichungen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung von f(x) ab.',
-                        'Grafik'))
-        aufgabe.append(LargeText(r' \mathrm{n ~=~ \hspace{5em} m~=~ \hspace{5em} f(x) ~=~ }'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + + r' \quad (2BE) \\')
+        bez = fkt_bez[0] + '(x)'
+        for k in range(anz_fkt-1):
+            bez = bez + ', ' + fkt_bez[k+1] + '(x)'
+        punkte = 2*anz_fkt
+        if anz_fkt == 1:
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
+                            'Grafik \n\n'))
+        else:
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.',
+                            'Grafik \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ~=~' + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1
 
@@ -57,11 +63,11 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
         # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        fkt_b = fkt_m[anz_fkt] * x + fkt_n(anz_fkt)
+        fkt_b = fkt_m[anz_fkt] * x + fkt_n[anz_fkt]
         fkt_b_str = vorz_v_aussen(fkt_m[anz_fkt], 'x') + vorz_str(fkt_n[anz_fkt])
         punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' + fkt_bez[anz_fkt+1]
-                       + f' ~=~ {vorz_v_aussen(fkt_m[anz_fkt], 'x')}{vorz_str(fkt_n[anz_fkt])}.' )
+                       + f'(x) = {vorz_v_aussen(fkt_m[anz_fkt], 'x')}{vorz_str(fkt_n[anz_fkt])}. \n\n' )
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1
@@ -73,9 +79,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-
-
 
 def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], BE=[]):
     # In dieser Aufgabe können die SuS ihre Kenntnisse der linearen Funktionen auf verschiedene Situationen, angelehnt auf Szenen im Film "Stirb Langsam" anwenden.
@@ -287,6 +290,65 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     if BE != []:
         if len(BE) != len(teilaufg):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
+    # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
+    # Mit dem Parameter "anz_fkt=" kann festgelegt werden, wie viele Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_fkt=1" und es wird ein Graph in Teilaufgabe a erzeugt.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    anz_fkt = 6 if anz_fkt not in [1, 2, 3, 4, 5, 6] else anz_fkt
+    fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
+
+    # Erstellen der vorgegebenen Graphen
+    xwert_s = random_selection(list(range(-4,5)), anz_fkt)
+    ywert_s = random_selection(list(range(-5,5)), anz_fkt)
+    liste_fkt = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_fkt)]
+    grafiken_aufgaben.append(f'Aufgabe_{nr}')
+    graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
+
+
+    if 'a' in teilaufg:
+        # SuS sollen aus dem Graphen eine einfache Funktionsgleichungen ablesen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = anz_fkt*2
+        if anz_fkt == 1:
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
+                            'Grafik \n\n'))
+        else:
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.',
+                            'Grafik \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+
+
+    if 'b' in teilaufg:
+        # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion' )
+        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(
+                f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
