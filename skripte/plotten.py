@@ -242,19 +242,13 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi=300)
 
 # Analysis
-def graph_xyfix(fkt, *funktionen, bezn=False, name='Graph'):
+def graph_xyfix(*funktionen, bezn=False, name='Graph'):
     # fig = plt.Figure()
     # ax = plt.gca()
-    if funktionen:
-        if bezn == False:
-            fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-        else:
-            fkt_bez = [NoEscape('$' + str(bezn) + '_{' + str(i+1) + '} $') for i in range(len(funktionen)+1)]
+    if bezn == False:
+        fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
     else:
-        if bezn == False:
-            fkt_bez = ['f']
-        else:
-            fkt_bez = [bezn]
+        fkt_bez = [NoEscape('$' + str(bezn) + '_{' + str(i+1) + '} $') for i in range(len(funktionen)+1)]
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
@@ -270,17 +264,11 @@ def graph_xyfix(fkt, *funktionen, bezn=False, name='Graph'):
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
     xwerte = np.arange(-6, 6, 0.05)
-    ywerte = [fkt.subs(x, elements) for elements in xwerte]
-    werte = [(element, fkt.subs(x, element)) for element in xwerte]
-    xwert_ymax = [element for element in werte if abs(element[1]) <= 5][1][0]
     plt.grid(True)
     plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-5.5, 5.5, -5.5, 5.5])
-    plt.plot(xwerte, ywerte)
-    plt.annotate(fkt_bez[0],xy=(xwert_ymax, fkt.subs(x, xwert_ymax)), xycoords='data',
-                 xytext=(+5, +5), textcoords='offset points', fontsize=12)
-    i = 1
+    i = 0
     for funkt in funktionen:
         ywerte = [funkt.subs(x, elements) for elements in xwerte]
         werte = [(element, funkt.subs(x, element)) for element in xwerte]

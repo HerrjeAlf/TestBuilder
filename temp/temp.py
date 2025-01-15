@@ -109,4 +109,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-graph_xyfix(3*x+2, 2*x-2)
+
+startwert = nzahl(0,9)
+
+
