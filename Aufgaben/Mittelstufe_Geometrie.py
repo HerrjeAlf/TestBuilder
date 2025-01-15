@@ -821,7 +821,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                 NoEscape('Die folgende Abbildung stellt ein beliebiges Dreieck dar, wobei $ h = '
                          + gzahl(seite_h) + '$cm, $a = ' + gzahl(seite_a) + r'$cm und $ \gamma_1 = '
                          + gzahl(gamma_1) + r'^{ \circ}$ ist.'), 'Figure']
-    loesung = [r' \mathbf{Lösung~AufgSabe~}' + str(nr) + r' \hspace{35em}']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
