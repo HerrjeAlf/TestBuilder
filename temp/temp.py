@@ -4,6 +4,7 @@ import numpy as np
 from sympy import *
 from decimal import *
 from skripte.funktionen import *
+from skripte.plotten import *
 
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
@@ -108,6 +109,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-p = zzahl(1,5)
-print(p)
-print((p+10)%5)
+graph_xyfix(3*x+2, 2*x-2)

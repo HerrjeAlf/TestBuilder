@@ -825,11 +825,11 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
-    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
+    if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
         ges_a =  r' \overline{FB} '
-    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
+    if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         ges_b =  r',~ \alpha ,~ \beta '
-    if 'c' in teilaufg:
+    if len([element for element in [ 'c', 'd'] if element in teilaufg]) > 0:
         ges_c = ',~ b'
     if 'd' in teilaufg:
         ges_d = ',~ A'

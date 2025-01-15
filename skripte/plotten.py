@@ -4,6 +4,7 @@ import matplotlib.gridspec as grid
 from matplotlib.patches import Arc
 from matplotlib.transforms import Bbox, IdentityTransform, TransformedBbox
 from matplotlib.patches import Polygon
+from pylatex import (NoEscape)
 from sympy import *
 
 a, b, c, d, e, f, g, x, y, z = symbols('a b c d e f g x y z')
@@ -241,9 +242,19 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi=300)
 
 # Analysis
-def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
+def graph_xyfix(fkt, *funktionen, bezn=False, name='Graph'):
     # fig = plt.Figure()
     # ax = plt.gca()
+    if funktionen:
+        if bezn == False:
+            fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
+        else:
+            fkt_bez = [NoEscape('$' + str(bezn) + '_{' + str(i+1) + '} $') for i in range(len(funktionen)+1)]
+    else:
+        if bezn == False:
+            fkt_bez = ['f']
+        else:
+            fkt_bez = [bezn]
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
@@ -258,21 +269,26 @@ def graph_xyfix(fkt, *funktionen, bezn='f', stl=-1, name='Graph'):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
-    plt.annotate(bezn, xy=(stl, fkt.subs(x, stl)), xycoords='data',
-                 xytext=(+5, +5), textcoords='offset points', fontsize=12)
-    xwerte = np.arange(-6, 6, 0.01)
+    xwerte = np.arange(-6, 6, 0.05)
     ywerte = [fkt.subs(x, elements) for elements in xwerte]
+    werte = [(element, fkt.subs(x, element)) for element in xwerte]
+    xwert_ymax = [element for element in werte if abs(element[1]) <= 5][1][0]
     plt.grid(True)
     plt.xticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.yticks(np.linspace(-5, 5, 11, endpoint=True))
     plt.axis([-5.5, 5.5, -5.5, 5.5])
     plt.plot(xwerte, ywerte)
-    for fkt in funktionen:
-        ywerte = [fkt[0].subs(x, elements) for elements in xwerte]
+    plt.annotate(fkt_bez[0],xy=(xwert_ymax, fkt.subs(x, xwert_ymax)), xycoords='data',
+                 xytext=(+5, +5), textcoords='offset points', fontsize=12)
+    i = 1
+    for funkt in funktionen:
+        ywerte = [funkt.subs(x, elements) for elements in xwerte]
+        werte = [(element, funkt.subs(x, element)) for element in xwerte]
+        xwert_ymax = [element for element in werte if abs(element[1]) <= 5][1][0]
         plt.plot(xwerte, ywerte)
-        plt.annotate(fkt[1], xy=(fkt[2], fkt[0].subs(x, fkt[2])), xycoords='data',
+        plt.annotate(fkt_bez[i], xy=(xwert_ymax, funkt.subs(x, xwert_ymax)), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
-    # plt.show()
+        i += 1
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):

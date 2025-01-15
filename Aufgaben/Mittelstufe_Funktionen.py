@@ -29,12 +29,14 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], BE=[]):
     grafiken_loesung = []
 
     # Erstellen des vorgegebenen Graphen
+
     m_f = zzahl(1, 5) / 2
     n_f = zzahl(1, 5) / 2
     fkt = m_f * x + n_f
+    fkt_2 = 2*x+3
     fkt_str = vorz_v_aussen(m_f, 'x') + vorz_str(n_f)
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
-    graph_xyfix(fkt, bezn='', name=f'Aufgabe_{nr}.png')
+    graph_xyfix(fkt, fkt_2, bezn='f', name=f'Aufgabe_{nr}.png')
 
     # Erstellen der Funktionsgleichung h(x)
     m_h = m_f + 5
