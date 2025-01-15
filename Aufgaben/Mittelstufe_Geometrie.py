@@ -823,20 +823,30 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
+    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
+        ges_a =  r' \overline{FB} '
+    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
+        ges_b =  r',~ \alpha ,~ \beta '
+    if 'c' in teilaufg:
+        ges_c = ',~ b'
+    if 'd' in teilaufg:
+        ges_d = ',~ A'
+    gegeben_und_gesucht = (r' \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
+                           + gzahl(seite_h) + r'cm \quad ges \colon  \quad ' + ges_a + ges_b + ges_c + ges_d
+                           + r' \quad (1BE)} \\')
+
 
     if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(str(liste_teilaufg[i])
                                 + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $' + r' \\\\'))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
-                       + gzahl(seite_h) + r'cm \quad ges \colon  \quad \overline{FB} \quad (1BE)} \\'
-                       + r'h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
+        loesung.append(str(liste_teilaufg[i]) + r' \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                        + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
                        + r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2BE) \\'
                        + r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
                        + gzahl(seite_h) + 'cm)^2 } ~=~' + gzahl(seite_FB) + r'cm \quad (2BE) \\'
-                       + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
+                       + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\')
         liste_punkte.append(5)
         i += 1
 
