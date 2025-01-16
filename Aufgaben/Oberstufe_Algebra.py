@@ -1415,7 +1415,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
     else:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Gegeben ist die Ebene E mit: ',
-                   r' E: \begin{bmatrix} \overrightarrow{x} ~=~'
+                   r' E: \begin{bmatrix} \overrightarrow{x} ~-~'
                    r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                    r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                    + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
@@ -1691,8 +1691,11 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \right| ~=~'
-                           + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
+                           + r' \end{pmatrix} \right| ~=~ \frac{1}{' + ergebnis_n0 + r'} \cdot '
+                           + r' \left| ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
+                           + vorz_str(ry - ay) + r' \cdot ' + gzahl_klammer(ny_gk) + vorz_str(rz - az) + r' \cdot '
+                           + gzahl_klammer(nz_gk) + r' \right| ~=~ '
+                           + gzahl(abs(N(np.dot((punkt_r - punkt_a), (1 / n_betrag * n_gk)), 3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         else:
             loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
@@ -1701,7 +1704,10 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \right| ~=~'
+                           + r' \end{pmatrix} \right| ~=~ \frac{1}{' + ergebnis_n0 + r'} \cdot '
+                           + r' \left| ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
+                           + vorz_str(ry - ay) + r' \cdot ' + gzahl_klammer(ny_gk) + vorz_str(rz - az) + r' \cdot '
+                           + gzahl_klammer(nz_gk) + r' \right| ~=~ '
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
