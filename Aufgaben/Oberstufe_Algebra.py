@@ -1446,7 +1446,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
 
-    if len([element for element in ['b', 'c', 'f', 'g'] if element in teilaufg]) > 0:
+    if 'b' in teilaufg:
         # gegebene Ebenengleichung von Parameterform in Normalen- und Koordinatenform umformen
         punkte = 7
         liste_punkte.append(punkte)
@@ -1503,7 +1503,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         i += 1
 
     if 'd' in teilaufg:
-        # Die SuS sollen überprüfen, ob der Punkt T im von den Punkten ABC aufgespannte Parallelogramm liegt.
+        # Die SuS sollen überprüfen, ob der Punkt P im von den Punkten ABC aufgespannte Parallelogramm liegt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 9
 
@@ -1574,7 +1574,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         i += 1
 
     if 'e' in teilaufg:
-        # Die SuS sollen überprüfen, ob der Punkt T im Dreieck ABC der Ebene E liegt.
+        # Die SuS sollen überprüfen, ob der Punkt Q im Dreieck ABC der Ebene E liegt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 9
 
@@ -1649,14 +1649,34 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_punkte.append(punkte)
         i += 1
 
-    if lagebeziehung_t_ebene == False:
-        # Aufstellen der hessischen Normalform der Ebenengleichung
-        if 'f' in teilaufg:
-            punkte = 4
-            liste_punkte.append(punkte)
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+    if 'f' in teilaufg:
+        # Die SuS sollen die hessische Normalform der Ebene aufstellen
+        punkte = 4
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                       + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
+                       + ergebnis_n0 + r' \quad \to \quad '
+                       + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                       + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                       + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                       + r' \end{pmatrix} ~=~0 \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        i += 1
+
+    if 'g' in teilaufg:
+        # Berechnung des Abstandes eines Punktes R von der Ebene
+        punkte = 3
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkt_r = [rx, ry, rz] = vektor_ganzzahl(punkt_a + np.array(v) + np.array(w)) + n
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes R( {gzahl(rx)} | '
+                       + f'{gzahl(ry)} | {gzahl(rz)} ) zur Ebene E. \n\n')
+        if 'f' not in teilaufg:
+            punkte += 4
             loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
                            + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                            + ergebnis_n0 + r' \quad \to \quad '
@@ -1664,47 +1684,27 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} ~=~0 \\'
-                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-            i += 1
-
-        if 'g' in teilaufg:
-            # Berechnung des Abstandes eines Punktes von der Ebene
-            punkte = 3
-            liste_punkte.append(punkte)
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes T zur Ebene E. \n\n')
-            if 'd' not in teilaufg:
-                punkte += 4
-                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
-                               + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
-                               + ergebnis_n0 + r' \quad \to \quad '
-                               + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} ~=~0 \quad (4BE) \\'
-                               + r' d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
-                               + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
-                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} \right| ~=~'
-                               + gzahl(abs(round(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
-                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-            else:
-                loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
-                               + gzahl(tx) + r' \\' + gzahl(tx) + r' \\' + gzahl(tz) + r' \\ '
-                               + r' \end{pmatrix} ~-~ \begin{pmatrix} '
-                               + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                               + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
-                               + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                               + r' \end{pmatrix} \right| ~=~'
-                               + gzahl(abs(round(np.dot((punkt_t - punkt_a),(1 / n_betrag * n_gk)),3)))
-                               + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-            i += 1
+                           + r' \end{pmatrix} ~=~0 \quad (4BE) \\'
+                           + r' d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
+                           + gzahl(rx) + r' \\' + gzahl(ry) + r' \\' + gzahl(rz) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~'
+                           + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
+                           + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        else:
+            loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
+                           + gzahl(rx) + r' \\' + gzahl(ry) + r' \\' + gzahl(rz) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
+                           + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~'
+                           + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
+                           + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
