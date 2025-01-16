@@ -302,7 +302,6 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
     liste_bez = []
     i = 0
 
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -319,23 +318,32 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
 
 
     if 'a' in teilaufg:
-        # SuS sollen aus dem Graphen eine einfache Funktionsgleichungen ablesen
+        # SuS sollen aus dem Graphen den Scheitelpunkt ablesen und die Funktionsgleichung in Scheitelpunktsform aufstellen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = anz_fkt*2
+        lsg = (str(liste_teilaufg[i]) + r') \quad S \right( ' + gzahl(xwert_s[0]) + r' \vert ' + gzahl(ywert_s[0])
+               + r' \left) \quad \to \quad ' + fkt_bez[0] + r'(x) ~=~ \left( x' + vorz_str(-1*xwert_s[0])
+               + r' \right) ^2 ' + vorz_str(ywert_s[0]) + r' \quad (2BE)')
+        lsg = lsg + r' \\' if anz_fkt > 1 else lsg
+        for step in range(anz_fkt-1):
+            lsg = (lsg + r' \hspace{5em} \quad S \left( ' + gzahl(xwert_s[step + 1]) + r' \vert '
+                   + gzahl(ywert_s[step + 1]) + r' \right) \quad \to \quad ' + fkt_bez[step + 1] + r'(x) ~=~ \left( x'
+                   + vorz_str(-1*xwert_s[step + 1]) + r' \right) ^2 ' + vorz_str(ywert_s[step + 1]) + r' \quad (2BE)')
+            lsg = lsg + r' \\ ' if step + 1 < anz_fkt else lsg
+
+
         if anz_fkt == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
                             'Grafik \n\n'))
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.',
                             'Grafik \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
+        loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
 
-
-
     if 'b' in teilaufg:
-        # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
+        # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         punkte = 2
