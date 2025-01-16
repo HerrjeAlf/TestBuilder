@@ -1656,7 +1656,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                        + ergebnis_n0 + r' \quad \to \quad '
                        + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -1704,10 +1704,10 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
-                           + r' \end{pmatrix} \right| ~=~ \frac{1}{' + ergebnis_n0 + r'} \cdot '
-                           + r' \left| ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
+                           + r' \end{pmatrix} \right| ~=~ \left| \frac{1}{' + ergebnis_n0 + r'} \cdot '
+                           + r' \left( ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
                            + vorz_str(ry - ay) + r' \cdot ' + gzahl_klammer(ny_gk) + vorz_str(rz - az) + r' \cdot '
-                           + gzahl_klammer(nz_gk) + r' \right| ~=~ '
+                           + gzahl_klammer(nz_gk) + r' \right) \right|  ~=~ '
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         i += 1
