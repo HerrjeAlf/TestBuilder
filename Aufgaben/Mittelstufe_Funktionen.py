@@ -125,7 +125,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
                'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
                'des Instrumentenlandesystem (ILS) eines Flughafen, um General Ramon Esperanza freizupressen. '
                'Dabei lassen die Terroristen zur Abschreckung eine Boeing 747 landen, welche durch die Manipulation '
-               'beim Landeanflug auf der Startbahn zerbricht und ausbrennt. ', 'Bild \n\n']
+               'beim Landeanflug auf der Startbahn zerbricht und ausbrennt. ', 'Bild']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = ['stirb_langsam_2']
     grafiken_loesung = []
