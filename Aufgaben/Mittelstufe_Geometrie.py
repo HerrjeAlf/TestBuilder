@@ -802,7 +802,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     alpha = 90 - gamma_1
     seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
     gamma = 180 - alpha - beta
-    flaeche = round(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),2)
+    flaeche = N(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),3)
 
     seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
     xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,2)
@@ -896,6 +896,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
                                                  + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
         liste_punkte.append(5)
         i += 1
+
     if BE != []:
         if len(BE) != len(teilaufg):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
@@ -911,7 +912,7 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     beta = nzahl(30,60)
     seite_c = nzahl(6, 12)
     seite_a = seite_c * nzahl(6, 9) / 10
-    seite_b = N(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),1)
+    seite_b = round(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),1)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
