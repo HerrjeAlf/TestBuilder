@@ -332,7 +332,6 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
                    + vorz_str(-1*xwert_s[step + 1]) + r' \right) ^2 ' + vorz_str(ywert_s[step + 1]) + r' \quad (3BE)')
             lsg = lsg + r' \\ ' if step + 1 < anz_fkt else lsg
 
-
         if anz_fkt == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt ab '
                             + f'und stelle die Funktionsgleichung auf.', 'Grafik \n\n'))
