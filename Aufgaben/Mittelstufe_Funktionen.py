@@ -123,7 +123,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
-               'des Instrumentenlandesystem (ILS) eines Flughafen, um General Ramon Esperanza freizupressen. '
+               'das Instrumentenlandesystem (ILS) eines Flughafen, um General Ramon Esperanza freizupressen. '
                'Dabei lassen die Terroristen zur Abschreckung eine Boeing 747 landen, welche durch die Manipulation '
                'beim Landeanflug auf der Startbahn zerbricht und ausbrennt. ', 'Bild']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -222,9 +222,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     if 'g' in teilaufg:
         # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i+1]) + f') Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
                        + f'der Boing. \n\n')
-        loesung.append(str(liste_teilaufg[i+1]) + r') \quad \mathrm{Ansatz: \quad f(x)=g(x)} '
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz: \quad f(x)=g(x)} '
                         + r' \quad \to \quad ' + fkt_vers_str + '~=~' + vorz_v_aussen(steigung_airbus,'x')
                         + vorz_str(n_airbus) + r' \quad \vert ' + vorz_v_innen(-1 * steigung_airbus, 'x')
                         + r' \quad \vert ' + vorz_str(-1*float(n_vers)) + r' \quad (3BE) \\'
