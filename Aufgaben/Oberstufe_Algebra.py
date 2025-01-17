@@ -1677,7 +1677,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + f'{gzahl(ry)} | {gzahl(rz)} ) zur Ebene E. \n\n')
         if 'f' not in teilaufg:
             punkte += 4
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{('
                            + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                            + ergebnis_n0 + r' \quad \to \quad '
                            + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
