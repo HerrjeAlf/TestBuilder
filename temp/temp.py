@@ -110,6 +110,13 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # def schreibweise(zahl, darstellung='wiss'):
 
 
-startwert = nzahl(0,9)
-
+beta = nzahl(30,60)
+seite_c = nzahl(6, 12)
+seite_a = seite_c * nzahl(6, 9) / 10
+seite_b = N(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),3)
+print(beta)
+print(seite_c)
+print(seite_a)
+print(math.cos(math.radians(beta)))
+print(seite_b)
 

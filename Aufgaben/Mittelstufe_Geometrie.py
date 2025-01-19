@@ -731,18 +731,19 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         pkt = 9
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i]) + r') \quad \frac{' + seite_1 + '}{~sin('
-                        + winkel_1 + ')} ~=~' + r' \frac{' + seite_2 + '}{~sin(' + winkel_2
-                       + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{sin(' + winkel_1 + r')} ~=~ \frac{'
-                       + seite_2 + '}{' + seite_1 + r'} \quad \vert \cdot sin(' + winkel_1 + r') \quad (2BE) \\'
-                       + 'sin(' + winkel_2 + r') ~=~ \frac{' + seite_2 + r'}{' + seite_1 + r'} \cdot sin(' + winkel_1
-                       + r') \quad \vert ~ sin^{ -1}() \quad \to \quad ' + winkel_2 + r' ~=~ sin^{ -1} \Big( \frac{'
-                       + seite_2  + r'}{' + seite_1 + r'} \cdot sin(' + winkel_1 + r') \Big) \quad (1BE) \\'
-                       + winkel_2 + r' ~=~ sin^{ -1} \Big( \frac{' + gzahl(seite_wert_2) + 'cm}{' + gzahl(seite_wert_1)
-                       + r'cm} \cdot sin(' + gzahl(winkel_wert_1) + r'^{ \circ } ) \Big) ~=~' + gzahl(winkel_wert_2)
-                       + r'^{ \circ } \quad (2BE) \\' + winkel_3 + r'~=~ 180^{ \circ} ~-~' + gzahl(winkel_wert_1)
-                       + r'^{ \circ} ~-~ ' + gzahl(winkel_wert_2) + r'^{ \circ} ~=~ ' + gzahl(winkel_wert_3)
-                       + r'^{ \circ} \quad (2BE) \\'
+        loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i]) + r') \quad \frac{' + seite_2 + '}{~sin('
+                       + winkel_2 + ')} ~=~' + r' \frac{' + seite_1 + '}{~sin(' + winkel_1
+                       + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{ ' + seite_2 + r'} ~=~ \frac{ sin('
+                       + winkel_1 + r') }{' + seite_1 + r'} \quad \vert \cdot ' + seite_2 + r' \quad (2BE) \\'
+                       + 'sin(' + winkel_2 + r') ~=~ \frac{ sin(' + winkel_1 + r')}{' + seite_1
+                       + r'} \cdot ' + seite_2 + r' \quad \vert ~ sin^{ -1}() \quad \to \quad '
+                       + winkel_2 + r' ~=~ sin^{ -1} \left( \frac{ sin(' + winkel_1 + r')}{'
+                       + seite_1 + r'} \cdot ' + seite_2 + r'\right) \quad (1BE) \\'
+                       + winkel_2 + r' ~=~ sin^{ -1} \left( \frac{sin(' + gzahl(winkel_wert_1) + r'^{ \circ } )}{'
+                       + gzahl(seite_wert_1) + r'cm} \cdot ' + gzahl(seite_wert_2) + r'cm \right) ~=~'
+                       + gzahl(winkel_wert_2) + r'^{ \circ } \quad (2BE) \\' + winkel_3 + r'~=~ 180^{ \circ} ~-~'
+                       + gzahl(winkel_wert_1) + r'^{ \circ} ~-~ ' + gzahl(winkel_wert_2) + r'^{ \circ} ~=~ '
+                       + gzahl(winkel_wert_3) + r'^{ \circ} \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\')
         liste_punkte.append(pkt)
         i += 1
@@ -796,7 +797,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     i = 0
     seite_a = nzahl(6, 12)
     seite_h = seite_a*nzahl(4,8)/10
-    seite_FB = N(sqrt(seite_a**2-seite_h**2))
+    seite_FB = N(sqrt(seite_a**2-seite_h**2),2)
     beta = round(math.degrees(math.asin(seite_h / seite_a)))
     gamma_1 = nzahl(20,60)
     alpha = 90 - gamma_1
@@ -835,7 +836,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         ges_d = ',~ A'
     gegeben_und_gesucht = (r' \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
                            + gzahl(seite_h) + r'cm \quad ges \colon  \quad ' + ges_a + ges_b + ges_c + ges_d
-                           + r' \quad (1BE)} \\')
+                           + r' \quad (1BE) \quad aus~der~Skizze~folgt:} \\')
 
 
     if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
@@ -843,7 +844,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(str(liste_teilaufg[i])
                                 + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $' + r' \\\\'))
-        loesung.append(str(liste_teilaufg[i]) + r' \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
+        loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i])
+                       + r') \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                        + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
                        + r' \quad \to \quad \overline{FB}~=~ \sqrt{a^2~-~h^2} \quad (2BE) \\'
                        + r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
@@ -912,7 +914,7 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
     beta = nzahl(30,60)
     seite_c = nzahl(6, 12)
     seite_a = seite_c * nzahl(6, 9) / 10
-    seite_b = round(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),1)
+    seite_b = N(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),3)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
@@ -948,8 +950,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     gamma = nzahl(95,120)
     beta = nzahl(15,45)
     seite_c = nzahl(6, 12)
-    seite_b = round(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 1)
-
+    seite_b = N(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 2)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
                f'Um ein Wohngebiet zu erschließen, wird der Bau einer neuen Straße geplant. Die neue Straße soll in '
                r'einem Winkel $ \gamma = $ '+ f' {gzahl(gamma)}° an die Eichenallee anschließen und der '
@@ -967,14 +968,15 @@ def sachaufgabe_strassenbau(nr, BE=[]):
                + r' ^{ \circ } )}{ sin(' + gzahl(gamma) + r' ^{ \circ } )} ~=~' + gzahl(seite_b) + r'km \quad (2BE) \\']
     grafiken_aufgaben = ['strassenbau']
     grafiken_loesung = []
+    pkt = 6
 
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [5]
+            liste_punkte = [pkt]
         liste_punkte = BE
     else:
-        liste_punkte = [5]
+        liste_punkte = [pkt]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
