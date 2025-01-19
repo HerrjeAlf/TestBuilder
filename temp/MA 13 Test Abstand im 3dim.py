@@ -23,7 +23,8 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[ebene_und_punkt(1,['f', 'g'])]]
+    Aufgaben = [[ebene_und_punkt(1,['f', 'g']),
+                 ebenenschar_buendel(2,['d', 'e'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

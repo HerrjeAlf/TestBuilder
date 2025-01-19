@@ -1651,7 +1651,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
     if 'f' in teilaufg:
         # Die SuS sollen die hessische Normalform der Ebene aufstellen
-        punkte = 4
+        punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -1693,7 +1693,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                            + r' \end{pmatrix} \right| ~=~ \frac{1}{' + ergebnis_n0 + r'} \cdot '
                            + r' \left| ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
-                           + vorz_str(ry - ay) + r' \cdot ' + gzahl_klammer(ny_gk) + vorz_str(rz - az) + r' \cdot '
+                           + vorz_str(ry - ay, null=True) + r' \cdot ' + gzahl_klammer(ny_gk)
+                           + vorz_str(rz - az, null=True) + r' \cdot '
                            + gzahl_klammer(nz_gk) + r' \right| ~=~ '
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a), (1 / n_betrag * n_gk)), 3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -1705,8 +1706,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                            + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                            + r' \end{pmatrix} \right| ~=~ \left| \frac{1}{' + ergebnis_n0 + r'} \cdot '
-                           + r' \left( ' + gzahl_klammer(rx - ax) + r' \cdot ' + gzahl_klammer(nx_gk)
-                           + vorz_str(ry - ay) + r' \cdot ' + gzahl_klammer(ny_gk) + vorz_str(rz - az) + r' \cdot '
+                           + r' \left( ' + gzahl_klammer(rx - ax) + r' \cdot '
+                           + gzahl_klammer(nx_gk) + vorz_str(ry - ay, null=True) + r' \cdot '
+                           + gzahl_klammer(ny_gk) + vorz_str(rz - az, null=True) + r' \cdot '
                            + gzahl_klammer(nz_gk) + r' \right) \right|  ~=~ '
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
@@ -2222,7 +2224,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
+def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[]):
     # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -2254,23 +2256,41 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
                           [0, nz + aez * h_var, -1*(ny + aey * h_var)],
                           [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
     h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
-    punkt_h = [hx, hy, hz] = punkt_d + h_rv + nv
+    punkt_h = [hx, hy, hz] = punkt_d + h_rv + vektor_kuerzen(nv)*zzahl(1,3)
+
+    if 'b' in teilaufg and len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
+        text = r' \quad \mathrm{und~die~Geraden~g~und~h~mit} \\ '
+    elif 'b' in teilaufg:
+        text = r' \quad \mathrm{und~die~Gerade~g~mit} \\ '
+    elif len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
+        text = r' \quad \mathrm{und~die~Gerade~h~mit} \\ '
+    else:
+        text = ''
+
+    if 'b' in teilaufg:
+        gerade_g = (text + r'g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                    + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
+                    + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
+                    + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
+                    + r' \end{pmatrix} ')
+    else:
+        gerade_g = ''
+
+    if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
+        gerade_h = ('\quad \mathrm{und} \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                    + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
+                    + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
+                    + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
+                    + r' \end{pmatrix}')
+    else:
+        gerade_h = ''
 
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Gegeben sei die Ebenenschar ' + '$ E_a $'),
                ' E_a:' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
                + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + r' \quad \mathrm{und~die~Geraden~g~und~h~mit} \\ '
-               + r'g: \overrightarrow{x} ~=~ \begin{pmatrix} '
-               + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
-               + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
-               + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
-               + r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
-               + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
-               + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
-               + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
-               + r' \end{pmatrix}']
+               + erg_str + text + gerade_g + gerade_h]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -2413,7 +2433,24 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         liste_punkte.append(pkt)
         i += 1
 
-    if 'e' in teilaufg:
+        if 'e' in teilaufg:
+            # Abstandsberechnung der Geraden h zur parallelen Ebene aus der vorherigen Teilaufgabe
+            erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * h_var
+            pkt = 4
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur Ebene mit a = '
+                           + f'{gzahl(h_var)}. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkt~in \quad  E_{'
+                           + gzahl(h_var) + r'}:' + vorz_v_aussen(nx + aex * h_var, 'x')
+                           + vorz_v_innen(ny + aey * h_var, 'y')
+                           + vorz_v_innen(nz + aez * h_var, 'z') + '~=~' + gzahl(erg)
+                           + r' \quad ist: \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
+                           + gzahl(dz) + r' \right) \quad (1BE) \\' + 'noch~programmieren')
+            liste_punkte.append(pkt)
+            i += 1
+
+    if 'f' in teilaufg:
         # die SuS sollen die Schnittgerade zweier Ebenen der Schar bestimmen
         pkt = 11
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -2499,7 +2536,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], BE=[]):
         liste_punkte.append(pkt)
         i += 1
 
-        if 'f' in teilaufg:
+        if 'g' in teilaufg:
             # die SuS sollen nachweisen, dass die Schnittgerade zweier Ebenen in allen Ebenen liegt
             pkt = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
