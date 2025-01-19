@@ -15,15 +15,15 @@ Lehrer = 'Herr Herrys'
 Art = 'HAK 01'
 Titel = 'Abstände im dreidimensionalen Raum'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[ebene_und_punkt(1,['f', 'g']),
+    Aufgaben = [[ebene_und_punkt(1,['b', 'f', 'g']),
                  ebenenschar_buendel(2,['d', 'e'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt

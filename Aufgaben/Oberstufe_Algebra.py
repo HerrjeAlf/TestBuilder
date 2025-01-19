@@ -1986,7 +1986,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                                + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \quad (4BE) \\'
                                + r' d: \left| \begin{bmatrix} \begin{pmatrix} '
-                               + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                               + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
@@ -1996,7 +1996,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             else:
                 loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
-                               + gzahl(ex) + r' \\' + gzahl(ex) + r' \\' + gzahl(ez) + r' \\ '
+                               + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                                + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
@@ -2259,11 +2259,11 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
     punkt_h = [hx, hy, hz] = punkt_d + h_rv + vektor_kuerzen(nv)*zzahl(1,3)
 
     if 'b' in teilaufg and len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
-        text = r' \quad \mathrm{und~die~Geraden~g~und~h~mit} \\ '
+        text = r' \mathrm{und~die~Geraden~g~und~h~mit} \quad '
     elif 'b' in teilaufg:
-        text = r' \quad \mathrm{und~die~Gerade~g~mit} \\ '
+        text = r' \mathrm{und~die~Gerade~g~mit} \quad '
     elif len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
-        text = r' \quad \mathrm{und~die~Gerade~h~mit} \\ '
+        text = r' \mathrm{und~die~Gerade~h~mit} \quad '
     else:
         text = ''
 
@@ -2277,7 +2277,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
         gerade_g = ''
 
     if len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
-        gerade_h = ('\quad \mathrm{und} \quad h: \overrightarrow{x} ~=~ \begin{pmatrix} '
+        konjunktion = ''
+        konjunktion = r', \quad ' if 'b' in teilaufg else konjunktion
+        gerade_h = (konjunktion + r' h: \overrightarrow{x} ~=~ \begin{pmatrix} '
                     + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\'
                     + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
                     + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
@@ -2287,10 +2289,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
 
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               NoEscape('Gegeben sei die Ebenenschar ' + '$ E_a $'),
-               ' E_a:' + binom_aussen(nx, aex, str2='a', var='x') + binom_innen(ny, aey, str2='a', var='y')
-               + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + text + gerade_g + gerade_h]
+               r' \mathrm{Gegeben~sei~die~Ebenenschar~E_a:~} '+ binom_aussen(nx, aex, str2='a', var='x')
+               + binom_innen(ny, aey, str2='a', var='y') + binom_innen(nz, aez, str2='a', var='z') + '~=~'
+               + erg_str + r' \\' + text + gerade_g + gerade_h]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -2435,18 +2436,31 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
 
         if 'e' in teilaufg:
             # Abstandsberechnung der Geraden h zur parallelen Ebene aus der vorherigen Teilaufgabe
-            erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * h_var
-            pkt = 4
+            na = [nax, nay, naz] = [nx + aex * h_var, ny + aey * h_var, nz + aez * h_var]
+            laenge_na = N(1/sqrt(nax**2 + nay**2 + naz**2),3)
+            laenge_na_str = r' \sqrt{' + gzahl(nax**2 + nay**2 + naz**2) + r'}'
+            erg = N(laenge_na * np.dot((punkt_d - punkt_h),(na)),3)
+            pkt = 6
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur Ebene mit a = '
                            + f'{gzahl(h_var)}. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkt~in \quad  E_{'
-                           + gzahl(h_var) + r'}:' + vorz_v_aussen(nx + aex * h_var, 'x')
-                           + vorz_v_innen(ny + aey * h_var, 'y')
-                           + vorz_v_innen(nz + aez * h_var, 'z') + '~=~' + gzahl(erg)
-                           + r' \quad ist: \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
-                           + gzahl(dz) + r' \right) \quad (1BE) \\' + 'noch~programmieren')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ ('
+                           + gzahl(nax) + ')^2 + (' + gzahl(nay) + ')^2 + (' + gzahl(naz) + r')^2 } ~=~ '
+                           + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
+                           + gzahl(h_var) + r'} ~ist:} \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
+                           + gzahl(dz) + r' \right) \quad (1BE) \\ '
+                           + r' d(E,h) ~=~ \left| \begin{bmatrix} \begin{pmatrix} '
+                           + gzahl(hx) + r' \\' + gzahl(hy) + r' \\' + gzahl(hz) + r' \\ '
+                           + r' \end{pmatrix} ~-~ \begin{pmatrix} '
+                           + gzahl(dx) + r' \\' + gzahl(dy) + r' \\' + gzahl(dz) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + laenge_na_str + r'} \begin{pmatrix} '
+                           + gzahl(nax) + r' \\' + gzahl(nay) + r' \\' + gzahl(naz) + r' \\'
+                           + r' \end{pmatrix} \right| ~=~ \left| \frac{1}{' + laenge_na_str + r'} \cdot '
+                           + r' \left( ' + gzahl_klammer(hx - dx) + r' \cdot '
+                           + gzahl_klammer(nax) + vorz_str(hy - dy, null=True) + r' \cdot '
+                           + gzahl_klammer(nay) + vorz_str(hz - dz, null=True) + r' \cdot '
+                           + gzahl_klammer(naz) + r' \right) \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
             liste_punkte.append(pkt)
             i += 1
 
