@@ -25,6 +25,7 @@ in Algebra:
   --> er soll aber auch Gleichungen mit lsg_vec = r* vec1, oder lsg_vec = orts_vec + r*vec1 berücksichtigen
   --> die vec dürfen auch nullen enthalten
 - Aufgaben zur Geradenschar anfertigen (siehe LB MA 12 LK S. 127 Nr. 5)
+- Aufgabe zur Abstandberechnung (siehe LB MA 12 LK S. 207 Nr. 23)
 
 in Mittelstufe_Terme_Gleichungen
 - in gleichungen noch teilaufgabe zu ungleichungen lösen ergänzen

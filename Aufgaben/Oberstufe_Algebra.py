@@ -2291,7 +2291,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
                r' \mathrm{Gegeben~sei~die~Ebenenschar~E_a:~} '+ binom_aussen(nx, aex, str2='a', var='x')
                + binom_innen(ny, aey, str2='a', var='y') + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + r' \hspace{10em} \\' + text + gerade_g + gerade_h]
+               + erg_str + text + gerade_g + gerade_h]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -2412,7 +2412,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
         pkt = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f'die parallel zur Geraden h ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
@@ -2443,8 +2443,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
             pkt = 6
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur Ebene mit a = '
-                           + f'{gzahl(h_var)}. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
+                           + f'der Schar. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ ('
                            + gzahl(nax) + ')^2 + (' + gzahl(nay) + ')^2 + (' + gzahl(naz) + r')^2 } ~=~ '
                            + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
