@@ -109,6 +109,10 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-list = list(range(-1))
-
-print(list)
+liste_xwerte_P = random_selection(list(range(-5, 6)), 2)
+liste_ywerte_P = random_selection(list(range(-5, 6)), 2)
+liste_xwerte_Q_unbegr = [wert + nzahl(2, 4) for wert in liste_xwerte_P]
+liste_ywerte_Q_unbegr = [wert + nzahl(2, 4) for wert in liste_ywerte_P]
+liste_xwerte_Q = [wert if wert < 6 else wert - 10 for wert in liste_xwerte_Q_unbegr]
+print(liste_xwerte_Q_unbegr)
+print(liste_xwerte_Q)

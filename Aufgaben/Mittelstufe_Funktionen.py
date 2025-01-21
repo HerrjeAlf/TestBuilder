@@ -15,9 +15,10 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
-    # Mit dem Parameter "anz_fkt=" kann festgelegt werden, wie viele Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_fkt=1" und es wird ein Graph in Teilaufgabe a erzeugt.
+    # Mit dem Parameter "anz_einf=" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
+    # Mit dem Parameter "anz_pkt=" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -29,25 +30,35 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_fkt = 6 if anz_fkt not in [1, 2, 3, 4, 5, 6] else anz_fkt
+    anz_einf = 6 if anz_einf not in [1, 2, 3, 4, 5, 6] else anz_einf
+    anz_pkt = 6 if anz_pkt not in [1, 2, 3, 4, 5, 6] else anz_pkt
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
-    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_fkt+1)
-    fkt_n = random_selection(list(range(-3,4)), anz_fkt+1)
-    liste_fkt = [fkt_m[k] * x + fkt_n[k] for k in range(anz_fkt)]
+    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf)
+    fkt_n = random_selection(list(range(-3,4)), anz_einf)
+    # Punkte der schwierigeren Funktionen
+    xwerte_P = random_selection(list(range(-5,6)), anz_pkt)
+    ywerte_P = random_selection(list(range(-5,6)), anz_pkt)
+    xwerte_Q_unbegr = [wert+random.choice([1,2,4,6]) for wert in xwerte_P]
+    ywerte_Q_unbegr = [wert + random.choice([3,5,7]) for wert in ywerte_P]
+    xwerte_Q = [wert if wert < 6 else wert - 10 for wert in xwerte_Q_unbegr]
+    ywerte_Q = [wert if wert < 6 else wert - 10 for wert in ywerte_Q_unbegr]
+    fkt_m_pkt = [(ywerte_Q[step]-ywerte_P[step])/(xwerte_Q[step]-xwerte_P[step]) for step in range(anz_pkt)]
+    fkt_n_pkt = [-1*fkt_m_pkt[step]*xwerte_P[step]+ywerte_P[step] for step in range(anz_pkt)]
+    liste_fkt = [fkt_m[k] * x + fkt_n[k] for k in range(anz_einf)] + [fkt_m_pkt[k] * x + fkt_n_pkt[k] for k in range(anz_pkt)]
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
 
 
     if 'a' in teilaufg:
-        # SuS sollen aus dem Graphen eine einfache Funktionsgleichungen ablesen
+        # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         bez = fkt_bez[0] + '(x)'
-        for k in range(anz_fkt-1):
+        for k in range(anz_einf-1):
             bez = bez + ', ' + fkt_bez[k+1] + '(x)'
-        punkte = 2*anz_fkt
-        if anz_fkt == 1:
+        punkte = 2*anz_einf
+        if anz_einf == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
                             'Grafik \n\n'))
         else:
@@ -63,11 +74,11 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
         # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        fkt_b = fkt_m[anz_fkt] * x + fkt_n[anz_fkt]
-        fkt_b_str = vorz_v_aussen(fkt_m[anz_fkt], 'x') + vorz_str(fkt_n[anz_fkt])
+        fkt_b = fkt_m[anz_einf] * x + fkt_n[anz_einf]
+        fkt_b_str = vorz_v_aussen(fkt_m[anz_einf], 'x') + vorz_str(fkt_n[anz_einf])
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' + fkt_bez[anz_fkt+1]
-                       + f'(x) = {vorz_v_aussen(fkt_m[anz_fkt], 'x')}{vorz_str(fkt_n[anz_fkt])}. \n\n' )
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' + fkt_bez[anz_einf+1]
+                       + f'(x) = {vorz_v_aussen(fkt_m[anz_einf], 'x')}{vorz_str(fkt_n[anz_einf])}. \n\n' )
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1
