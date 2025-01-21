@@ -25,7 +25,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
     liste_bez = []
     i = 0
 
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -38,19 +37,29 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
     fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf)
     fkt_n = random_selection(list(range(-3,4)), anz_einf)
     # Punkte der schwierigeren Funktionen
-    xwerte_P = random_selection(list(range(-5,6)), anz_pkt)
-    ywerte_P = random_selection(list(range(-5,6)), anz_pkt)
-    xwerte_Q_unbegr = [wert+random.choice([1,2,4,6]) for wert in xwerte_P]
-    ywerte_Q_unbegr = [wert + random.choice([3,5,7]) for wert in ywerte_P]
-    xwerte_Q = [wert if wert < 6 else wert - 10 for wert in xwerte_Q_unbegr]
-    ywerte_Q = [wert if wert < 6 else wert - 10 for wert in ywerte_Q_unbegr]
-    fkt_m_pkt = [Rational((ywerte_Q[step]-ywerte_P[step]),(xwerte_Q[step]-xwerte_P[step])) for step in range(anz_pkt)]
-    fkt_n_pkt = [ywerte_P[step] - fkt_m_pkt[step]*xwerte_P[step] for step in range(anz_pkt)]
+    aufg_c = 1 if 'c' in teilaufg else 0
+    xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_c),
+                          random_selection(list(range(-5,6)), anz_pkt + aufg_c))
+    xwerte_2_unbegr, ywerte_2_unbegr = ([wert+random.choice([1,2,4,6]) for wert in xwerte_1],
+                                        [wert + random.choice([3,5,7]) for wert in ywerte_1])
+    xwerte_2, ywerte_2 = ([wert if wert < 6 else wert - 10 for wert in xwerte_2_unbegr],
+                          [wert if wert < 6 else wert - 10 for wert in ywerte_2_unbegr])
+    if xwerte_1 < xwerte_2:
+        xwerte_P, ywerte_P = xwerte_1, ywerte_1
+        xwerte_Q, ywerte_Q = xwerte_2, ywerte_2
+    else:
+        xwerte_P, ywerte_P = xwerte_2, ywerte_2
+        xwerte_Q, ywerte_Q = xwerte_1, ywerte_1
+
+    fkt_m_pkt = [Rational((ywerte_Q[step]-ywerte_P[step]),(xwerte_Q[step]-xwerte_P[step])) for step in range(anz_pkt + aufg_c)]
+    fkt_n_pkt = [ywerte_P[step] - fkt_m_pkt[step]*xwerte_P[step] for step in range(anz_pkt + aufg_c)]
     # Liste der Funktionsgleichungen und Erzeugen der Darstellung
-    liste_fkt = [fkt_m[k] * x + fkt_n[k] for k in range(anz_einf)] + [fkt_m_pkt[k] * x + fkt_n_pkt[k] for k in range(anz_pkt)]
+    liste_fkt = ([fkt_m[k] * x + fkt_n[k] for k in range(anz_einf)]
+                 + [fkt_m_pkt[k] * x + fkt_n_pkt[k] for k in range(anz_pkt)])
+    liste_fkt_str = ([vorz_v_aussen(fkt_m[k], 'x') + vorz_str(fkt_n[k]) for k in range(anz_einf)]
+                     + [vorz_v_aussen(fkt_m_pkt[k], 'x') + vorz_str(fkt_n_pkt[k]) for k in range(anz_pkt)])
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
-
 
     if 'a' in teilaufg:
         # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
@@ -60,7 +69,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Funktionsgleichung(en):} \hspace{10em} \\')
         for step in range(anz_einf):
             lsg = (lsg + 'n=' + gzahl(fkt_n[step]) + r' \quad \mathrm{und} \quad m=' + gzahl(fkt_m[step])
-                   + r' \quad \to \quad ' +  fkt_bez[step] + r'(x) ~=~' + vorz_v_aussen(fkt_m[step], 'x')
+                   + r' \quad \to \quad ' + fkt_bez[step] + r'(x) ~=~' + vorz_v_aussen(fkt_m[step], 'x')
                    + vorz_str(fkt_n[step]) + r' \quad (3BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
         for step in range(anz_pkt):
@@ -70,9 +79,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
                    + vorz_str(-1*xwerte_P[step]) + '} ~=~ ' + gzahl(fkt_m_pkt[step]) + r' \quad \to \quad '
                    + fkt_bez[anz_einf + step] + r'(x) ~=~ ' + gzahl(fkt_m_pkt[step]) + r' \left( x'
                    + vorz_str(-1*xwerte_P[step]) + r' \right) ' + vorz_str(ywerte_P[step]) + '~=~'
-                   + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step])  + r' \quad (6BE) ')
+                   + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step]) + r' \quad (6BE) ')
             lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
-        if anz_einf == 1:
+        if anz_einf + anz_pkt == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
                             'Grafik \n\n'))
         else:
@@ -82,18 +91,56 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         liste_punkte.append(punkte)
         i += 1
 
-
-
     if 'b' in teilaufg:
-        # zu einer vorgegebenen Funktionsgleichung den Graph zeichnen
+        # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = (anz_einf + anz_pkt)*2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
+                       + f'-2 < x < 2. \n\n')
+
+        # Tabelle mit den Lösungen
+        def tabelle(fkt, fkt_str, bez):
+            table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
+            table1.add_hline(2,7)
+            table1.add_row((MultiRow(2, data=NoEscape(f'Wertetabelle für $' + bez + '(x) =' + fkt_str + '$')),
+                            'x Werte', '-2', '-1', '0', '1', '2',
+                            MultiRow(2, data=' (2BE)')))
+            table1.add_hline(2,7)
+            table1.add_row(('', 'y Werte', gzahl(N(fkt.subs(x, -2), 3)),
+                              gzahl(N(fkt.subs(x, -1), 2)), gzahl(N(fkt.subs(x, 0), 2)),
+                              gzahl(N(fkt.subs(x, 1), 2)), gzahl(N(fkt.subs(x, 2), 2)),''))
+            table1.add_hline(2,7)
+            return table1
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wertetabelle~für~die~aufgestellte(n)~'
+                       + r'Funktionsgleichungen.} \hspace{10em}')
+        for step in range(anz_einf + anz_pkt):
+            loesung.extend((tabelle(liste_fkt[step], liste_fkt_str[step], fkt_bez[step]),' \n\n\n'))
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        # zu gegebenen Punkten einer Funktion den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        fkt_b = fkt_m[anz_einf] * x + fkt_n[anz_einf]
-        fkt_b_str = vorz_v_aussen(fkt_m[anz_einf], 'x') + vorz_str(fkt_n[anz_einf])
+        k = anz_einf + anz_pkt
+        graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' + fkt_bez[anz_einf+1]
-                       + f'(x) = {vorz_v_aussen(fkt_m[anz_einf], 'x')}{vorz_str(fkt_n[anz_einf])}. \n\n' )
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
+        aufgabe.extend((f'Die Funktion {fkt_bez[k]} geht durch die Punkte P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) '
+                        f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
+                        str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
+                        + ' im oberen Koordinatensystem ein.'))
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
+                        'Figure'))
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'd' in teilaufg:
+        # überprüfen ob ein Punkt auf dem Graphen der gegebenen Funktion liegt
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
+                        + ' im oberen Koordinatensystem ein.')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
         liste_punkte.append(punkte)
         i += 1
 

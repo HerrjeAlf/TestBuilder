@@ -60,7 +60,7 @@ def seite(aufgaben):
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px', placement=None)
+                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
                 i += 1
             elif 'Bild' in elements:
                 with Loesung.create(Figure(position='ht!')) as graph:
