@@ -293,9 +293,10 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
-    # Mit dem Parameter "anz_fkt=" kann festgelegt werden, wie viele Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_fkt=1" und es wird ein Graph in Teilaufgabe a erzeugt.
+    # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
+    # Mit dem Parameter "anz_ap=" kann festgelegt werden, wie viele Graphen einer allegemeinen Parabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_ap=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -306,43 +307,80 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_fkt=1, BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_fkt = 6 if anz_fkt not in [1, 2, 3, 4, 5, 6] else anz_fkt
+    anz_np = 6 if anz_np not in list(range(1,7)) else anz_np
+    anz_ap = 6 if anz_ap not in list(range(1,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
-    xwert_s = random_selection(list(range(-4,5)), anz_fkt)
-    ywert_s = random_selection(list(range(-5,5)), anz_fkt)
-    liste_fkt = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_fkt)]
+    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap)
+    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap)
+    fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap)
+    liste_fkt = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
+    liste_fkt_nf = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
+    liste_fkt_ap = [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)]
+    liste_fkt.extend(liste_fkt_ap)
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
 
 
     if 'a' in teilaufg:
-        # SuS sollen aus dem Graphen den Scheitelpunkt ablesen und die Funktionsgleichung in Scheitelpunktsform aufstellen
+        # SuS sollen aus dem Graphen den Scheitelpunkt ablesen und die Funktionsgleichung in Scheitelpunktsform aufstellen, dabei können mit den Parametern anz_np die Anzahl der Normalparabeln und mit anz_ap die Anzahl der allgemeinen Parabeln festgelegt werden bzw.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = anz_fkt*3
+        punkte = anz_np * 3 + anz_ap * 4
 
-        lsg = (str(liste_teilaufg[i]) + r') \quad S \left( ' + gzahl(xwert_s[0]) + r' \vert ' + gzahl(ywert_s[0])
-               + r' \right) \quad \to \quad ' + fkt_bez[0] + r'(x) ~=~ \left( x' + vorz_str(-1*xwert_s[0])
-               + r' \right) ^2 ' + vorz_str(ywert_s[0]) + r' \quad (3BE)')
-        lsg = lsg + r' \\' if anz_fkt > 1 else lsg
-        for step in range(anz_fkt-1):
-            lsg = (lsg + r' \hspace{5em} \quad S \left( ' + gzahl(xwert_s[step + 1]) + r' \vert '
-                   + gzahl(ywert_s[step + 1]) + r' \right) \quad \to \quad ' + fkt_bez[step + 1] + r'(x) ~=~ \left( x'
-                   + vorz_str(-1*xwert_s[step + 1]) + r' \right) ^2 ' + vorz_str(ywert_s[step + 1]) + r' \quad (3BE)')
-            lsg = lsg + r' \\ ' if step + 1 < anz_fkt else lsg
+        # Lösungen für Gleichungen
+        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{abgelesener~Scheitelpunkt,~ggf.~der~Faktor~und~die~'
+               + r'Funktionsgleichung:} \\')
+        for step in range(anz_np):
+            lsg =  (lsg + r' S \left( ' + gzahl(xwert_s[step]) + r' \vert '
+                    + gzahl(ywert_s[step]) + r' \right) \quad \to \quad ' + fkt_bez[step] + r'(x) ~=~ \left( x'
+                    + vorz_str(-1*xwert_s[step]) + r' \right) ^2 ' + vorz_str(ywert_s[step]) + r' \quad (3BE)')
+            lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
+        for step in range(anz_ap):
+            lsg = (lsg +r' S \left( ' + gzahl(xwert_s[anz_np+step]) + r' \vert ' + gzahl(ywert_s[anz_np+step])
+                   + r' \right) \quad \mathrm{und} \quad a ~=~ ' + gzahl(fakt_ap[step]) + r' \quad \to \quad '
+                   + fkt_bez[anz_np+step] + r'(x) ~=~ ' + gzahl(fakt_ap[step]) + r' \cdot \left( x'
+                   + vorz_str(-1 * xwert_s[anz_np+step]) + r' \right) ^2 ' + vorz_str(ywert_s[anz_np+step])
+                   + r' \quad (4BE)')
+            lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
-        if anz_fkt == 1:
+        if anz_np + anz_ap == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt ab '
                             + f'und stelle die Funktionsgleichung auf.', 'Grafik \n\n'))
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte ab '
                             + f'und stelle die Funktionsgleichungen auf.', 'Grafik \n\n'))
+
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
 
-    if 'b' in teilaufg:
+        if 'b' in teilaufg:
+            # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = anz_np*2 + anz_ap*3
+
+            # Lösungen für Gleichungen
+            lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \\')
+            for step in range(anz_np):
+                lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(2 * xwert_s[step],'x')
+                       + vorz_str(xwert_s[step]**2 + ywert_s[step]) + r' \quad (2BE) ')
+                lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
+            for step in range(anz_ap):
+                lsg = (lsg + r' S \left( ' + gzahl(xwert_s[anz_np + step]) + r' \vert ' + gzahl(ywert_s[anz_np + step])
+                       + r' \right) \quad \mathrm{und} \quad a ~=~ ' + gzahl(fakt_ap[step]) + r' \quad \to \quad '
+                       + fkt_bez[anz_np + step] + r'(x) ~=~ ' + gzahl(fakt_ap[step]) + r' \cdot \left( x'
+                       + vorz_str(-1 * xwert_s[anz_np + step]) + r' \right) ^2 ' + vorz_str(ywert_s[anz_np + step])
+                       + r' \quad (4BE)')
+                lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
+                           + f'auch in der Normalform an. \n\n' )
+            loesung.append(lsg)
+            liste_punkte.append(punkte)
+            i += 1
+
+    if 'c' in teilaufg:
         # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
