@@ -44,8 +44,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
     ywerte_Q_unbegr = [wert + random.choice([3,5,7]) for wert in ywerte_P]
     xwerte_Q = [wert if wert < 6 else wert - 10 for wert in xwerte_Q_unbegr]
     ywerte_Q = [wert if wert < 6 else wert - 10 for wert in ywerte_Q_unbegr]
-    fkt_m_pkt = [(ywerte_Q[step]-ywerte_P[step])/(xwerte_Q[step]-xwerte_P[step]) for step in range(anz_pkt)]
-    fkt_n_pkt = [-1*fkt_m_pkt[step]*xwerte_P[step]+ywerte_P[step] for step in range(anz_pkt)]
+    fkt_m_pkt = [Rational((ywerte_Q[step]-ywerte_P[step]),(xwerte_Q[step]-xwerte_P[step])) for step in range(anz_pkt)]
+    fkt_n_pkt = [ywerte_P[step] - fkt_m_pkt[step]*xwerte_P[step] for step in range(anz_pkt)]
+    # Liste der Funktionsgleichungen und Erzeugen der Darstellung
     liste_fkt = [fkt_m[k] * x + fkt_n[k] for k in range(anz_einf)] + [fkt_m_pkt[k] * x + fkt_n_pkt[k] for k in range(anz_pkt)]
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
@@ -54,17 +55,30 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
     if 'a' in teilaufg:
         # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        bez = fkt_bez[0] + '(x)'
-        for k in range(anz_einf-1):
-            bez = bez + ', ' + fkt_bez[k+1] + '(x)'
-        punkte = 2*anz_einf
+        punkte = anz_einf*3 + anz_pkt*6
+        # Lösungen für Gleichungen
+        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Funktionsgleichung(en):} \hspace{10em} \\')
+        for step in range(anz_einf):
+            lsg = (lsg + 'n=' + gzahl(fkt_n[step]) + r' \quad \mathrm{und} \quad m=' + gzahl(fkt_m[step])
+                   + r' \quad \to \quad ' +  fkt_bez[step] + r'(x) ~=~' + vorz_v_aussen(fkt_m[step], 'x')
+                   + vorz_str(fkt_n[step]) + r' \quad (3BE) ')
+            lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
+        for step in range(anz_pkt):
+            lsg = (lsg + 'P(' + gzahl(xwerte_P[step]) + r' \vert ' + gzahl(ywerte_P[step]) + r') ~ \mathrm{und} ~ Q('
+                   + gzahl(xwerte_Q[step]) + r' \vert ' + gzahl(ywerte_Q[step]) + r') \quad \to \quad m ~=~ \frac{'
+                   + gzahl(ywerte_Q[step]) + vorz_str(-1*ywerte_P[step]) + '}{' + gzahl(xwerte_Q[step])
+                   + vorz_str(-1*xwerte_P[step]) + '} ~=~ ' + gzahl(fkt_m_pkt[step]) + r' \quad \to \quad '
+                   + fkt_bez[anz_einf + step] + r'(x) ~=~ ' + gzahl(fkt_m_pkt[step]) + r' \left( x'
+                   + vorz_str(-1*xwerte_P[step]) + r' \right) ' + vorz_str(ywerte_P[step]) + '~=~'
+                   + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step])  + r' \quad (6BE) ')
+            lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
         if anz_einf == 1:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
                             'Grafik \n\n'))
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.',
                             'Grafik \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ~=~' + r' \quad (2BE) \\')
+        loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
 
@@ -326,10 +340,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap)
     ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap)
     fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap)
-    liste_fkt = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
-    liste_fkt_nf = [(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
-    liste_fkt_ap = [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)]
-    liste_fkt.extend(liste_fkt_ap)
+    liste_fkt = ([(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
+                 + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)])
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
 
