@@ -82,11 +82,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
                    + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step]) + r' \quad (6BE) ')
             lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
         if anz_einf + anz_pkt == 1:
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab.',
-                            'Grafik \n\n'))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab. \n\n')
         else:
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.',
-                            'Grafik \n\n'))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.\n\n')
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -95,8 +93,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
-                       + f'-2 < x < 2. \n\n')
+        aufgabe.extend((str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
+                       + f'-2 < x < 2.', 'Grafik \n\n'))
 
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
