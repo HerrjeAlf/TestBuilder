@@ -43,28 +43,17 @@ def ganze_zahl(zahl):
 
 def gzahl(k, exp=False, null=True):
     if k == 0:
-        if k == 0:
-            if null != True:
-                return ''
-            else:
-                return '0'
+        return '0' if null == True else ''
     if type(k) == str:
         return k
-    if exp == True:
-        if k == 1:
-            return ''
-    if k % 1 == 0:
-        return latex(int(k))
-    else:
-        return latex(k)
+    if exp == True and k == 1:
+        return ''
+    return latex(int(k)) if k % 1 == 0 else latex(k)
 
 def gzahl_klammer(k,str='', null=True):
     try:
-        if k == 0:
-            if null != True:
-                return ''
-            else:
-                return '0'
+        if k == 0 and null != True:
+            return ''
         k = int(k) if k % 1 == 0 else k
         if k < 0:
             if str != '' and k == -1:
@@ -209,28 +198,16 @@ def nzahl(p, q):
     return random.randint(p, q)
 
 def vorz(k):
-    if k < 0:
-        return '-'
-    else:
-        return '+'
+    return '-' if k < 0 else '+'
 
 def vorz_aussen(k, null=False):
     if k == 0:
-        if null != True:
-            return ''
-        else:
-            return '0'
-    if k < 0:
-        return '-'
-    else:
-        return ''
+        return '0' if null == True else ''
+    return '-' if k < 0 else ''
 
 # Vorzeichen und Faktoren in Gleichungen oder Vektoren
 def vorz_fakt(k):
-    if k < 0:
-        return -1
-    else:
-        return 1
+    return -1 if k < 0 else 1
 
 def vorz_str(k, null=False):
     try:
@@ -238,10 +215,7 @@ def vorz_str(k, null=False):
             return ''
         if k % 1 == 0:
             k = int(k)
-        if k < 0:
-            return latex(k)
-        else:
-            return f'+{latex(k)}'
+        return latex(k) if k < 0 else f'+{latex(k)}'
     except Exception as fehler:
         print('Fehler:', fehler)
 
@@ -249,46 +223,25 @@ def vorz_str(k, null=False):
 def vorz_v_innen(zahl,string, null=False):
     try:
         if zahl == 0:
-            if null == False:
-                return ''
-            else:
-                return '0'
+            return '0' if null == True else ''
         if zahl == -1:
-            if string == '':
-                return '-1'
-            else:
-                return '-' + string
+            return '-1' if string == '' else '-' + string
         if zahl == 1:
-            if string == '':
-                return '+1'
-            else:
-                return '+' + string
+            return '+1' if string == '' else '+' + string
         if zahl%1 == 0:
             zahl = int(zahl)
-        if zahl < 0:
-            return latex(zahl) + string
-        else:
-            return f'+{latex(zahl)}' + string
+        return latex(zahl) + string if zahl < 0 else f'+{latex(zahl)}' + string
     except Exception as fehler:
         print('Fehler:', fehler)
 
 def vorz_v_aussen(zahl,string, null=False):
     try:
         if zahl == 0:
-            if null == False:
-                return ''
-            else:
-                return '0'
+            return '0' if null == True else ''
         if zahl == -1:
-            if string == '':
-                return '-1'
-            else:
-                return '-' + string
+            return '-1' if string == '' else '-' + string
         if zahl == 1:
-            if string == '':
-                return '1'
-            else:
-                return string
+            return '1' if string == '' else string
         if zahl%1 == 0:
             zahl = int(zahl)
         return latex(zahl) + string
