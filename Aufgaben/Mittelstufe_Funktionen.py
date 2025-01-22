@@ -380,10 +380,10 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     anz_np = 6 if anz_np not in list(range(1,7)) else anz_np
     anz_ap = 6 if anz_ap not in list(range(1,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-
+    anz_b = 1 if 'b' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
-    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap)
-    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap)
+    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap + anz_b)
+    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_b)
     fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap)
     liste_fkt = ([(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
                  + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)])

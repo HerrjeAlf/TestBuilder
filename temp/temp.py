@@ -109,7 +109,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-aufg_c = 1 if random.choice([1,0]) == 0 else 0
-
-print(aufg_c)
+def zahl(p):
+    return '0' if p == 0 else ''
+k = zahl(nzahl(0,1))
+print(k)
 
