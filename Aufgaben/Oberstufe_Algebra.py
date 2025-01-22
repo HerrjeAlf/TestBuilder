@@ -2460,7 +2460,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                            + r' \left( ' + gzahl_klammer(hx - dx) + r' \cdot '
                            + gzahl_klammer(nax) + vorz_str(hy - dy, null=True) + r' \cdot '
                            + gzahl_klammer(nay) + vorz_str(hz - dz, null=True) + r' \cdot '
-                           + gzahl_klammer(naz) + r' \right) \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
+                           + gzahl_klammer(naz) + r' \right) \right|  ~=~ ' + gzahl(abs(erg)) + r' \quad (3BE)')
             liste_punkte.append(pkt)
             i += 1
 
