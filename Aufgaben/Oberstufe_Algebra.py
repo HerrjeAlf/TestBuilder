@@ -2291,7 +2291,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
                r' \mathrm{Gegeben~sei~die~Ebenenschar~E_a:~} '+ binom_aussen(nx, aex, str2='a', var='x')
                + binom_innen(ny, aey, str2='a', var='y') + binom_innen(nz, aez, str2='a', var='z') + '~=~'
-               + erg_str + text + gerade_g + gerade_h]
+               + erg_str + r' \\' + text + gerade_g + gerade_h]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []

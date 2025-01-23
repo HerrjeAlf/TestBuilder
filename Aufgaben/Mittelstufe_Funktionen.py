@@ -380,10 +380,10 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     anz_np = 6 if anz_np not in list(range(1,7)) else anz_np
     anz_ap = 6 if anz_ap not in list(range(1,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-    anz_b = 1 if 'b' in teilaufg else 0
+    anz_c = 1 if 'b' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
-    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap + anz_b)
-    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_b)
+    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap + anz_c)
+    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_c)
     fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap)
     liste_fkt = ([(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
                  + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)])
@@ -424,7 +424,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
         i += 1
 
         if 'b' in teilaufg:
-            # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
+            # die abgelesenen Gleichungen in die Normalform umformen
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = anz_np*2 + anz_ap*3
 
@@ -453,7 +453,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion' )
+        
+        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' )
         loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
         liste_punkte.append(punkte)
         i += 1

@@ -835,7 +835,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     if 'd' in teilaufg:
         ges_d = ',~ A'
     gegeben_und_gesucht = (r' \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
-                           + gzahl(seite_h) + r'cm \quad ges \colon  \quad ' + ges_a + ges_b + ges_c + ges_d
+                           + gzahl(seite_h) + r'cm \quad und  \gamma_1 = ' + gzahl(gamma_1)
+                           + r'^{ \circ} \quad ges \colon  \quad ' + ges_a + ges_b + ges_c + ges_d
                            + r' \quad (1BE) \quad aus~der~Skizze~folgt:} \\')
 
 
