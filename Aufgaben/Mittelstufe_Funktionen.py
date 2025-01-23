@@ -499,7 +499,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             k = anz_np + anz_ap
-            graph_xyfix(*[fkt_c], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            graph_xyfix(*[fkt_c], bezn=bez_fkt_c, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             punkte = 3
             aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen von ' + bez_fkt_c
                            + ' im Koordinatensystem ein und überprüfe deine Ergebnisse aus Teilaufgabe c).')
