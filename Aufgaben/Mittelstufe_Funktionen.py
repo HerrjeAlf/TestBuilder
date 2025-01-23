@@ -363,7 +363,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "anz_ap=" kann festgelegt werden, wie viele Graphen einer allegemeinen Parabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_ap=1" und es wird ein Graph in Teilaufgabe a erzeugt.
@@ -380,13 +380,13 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     anz_np = 6 if anz_np not in list(range(1,7)) else anz_np
     anz_ap = 6 if anz_ap not in list(range(1,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-    anz_c = 1 if 'b' in teilaufg else 0
+    anz_c = 1 if 'c' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
-    xwert_s = random_selection(list(range(-4,5)), anz_np+anz_ap + anz_c)
+    xwert_s = random_selection([-1*zahl for zahl in range(1,5)] + list(range(1,5)), anz_np+anz_ap + anz_c)
     ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_c)
-    fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap)
+    fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap + anz_c)
     liste_fkt = ([(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
-                 + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_np)])
+                 + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_ap)])
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
 
@@ -407,17 +407,17 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
         for step in range(anz_ap):
             lsg = (lsg +r' S \left( ' + gzahl(xwert_s[anz_np+step]) + r' \vert ' + gzahl(ywert_s[anz_np+step])
                    + r' \right) \quad \mathrm{und} \quad a ~=~ ' + gzahl(fakt_ap[step]) + r' \quad \to \quad '
-                   + fkt_bez[anz_np+step] + r'(x) ~=~ ' + gzahl(fakt_ap[step]) + r' \cdot \left( x'
+                   + fkt_bez[anz_np+step] + r'(x) ~=~ ' + vorz_v_aussen(fakt_ap[step],'') + r' \left( x'
                    + vorz_str(-1 * xwert_s[anz_np+step]) + r' \right) ^2 ' + vorz_str(ywert_s[anz_np+step])
                    + r' \quad (4BE)')
             lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
         if anz_np + anz_ap == 1:
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt ab '
-                            + f'und stelle die Funktionsgleichung auf.', 'Grafik \n\n'))
+            aufgabe.extend(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt ab '
+                           + f'und stelle die Funktionsgleichung auf. \n\n')
         else:
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte ab '
-                            + f'und stelle die Funktionsgleichungen auf.', 'Grafik \n\n'))
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte ab '
+                           + f'und stelle die Funktionsgleichungen auf.\n\n')
 
         loesung.append(lsg)
         liste_punkte.append(punkte)
@@ -431,19 +431,26 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
             # Lösungen für Gleichungen
             lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \\')
             for step in range(anz_np):
-                lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(2 * xwert_s[step],'x')
+                lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step],'x +')
+                       + gzahl_klammer(xwert_s[step]) + '^2' + vorz_str(ywert_s[step]) + '~=~ x^2'
+                       + vorz_v_innen(-2 * xwert_s[step],'x')
                        + vorz_str(xwert_s[step]**2 + ywert_s[step]) + r' \quad (2BE) ')
                 lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
             for step in range(anz_ap):
-                lsg = (lsg + r' S \left( ' + gzahl(xwert_s[anz_np + step]) + r' \vert ' + gzahl(ywert_s[anz_np + step])
-                       + r' \right) \quad \mathrm{und} \quad a ~=~ ' + gzahl(fakt_ap[step]) + r' \quad \to \quad '
-                       + fkt_bez[anz_np + step] + r'(x) ~=~ ' + gzahl(fakt_ap[step]) + r' \cdot \left( x'
-                       + vorz_str(-1 * xwert_s[anz_np + step]) + r' \right) ^2 ' + vorz_str(ywert_s[anz_np + step])
-                       + r' \quad (4BE)')
+                lsg = (lsg + fkt_bez[anz_np + step] + r'(x) ~=~ ' + vorz_v_aussen(fakt_ap[step],'')
+                       + r' \left( x^2' + vorz_v_innen(-2 * xwert_s[anz_np + step],'x + ')
+                       + gzahl_klammer(abs(xwert_s[anz_np + step]))
+                       + r'^2 \right) ' + vorz_str(ywert_s[anz_np + step]) + '~=~'
+                       + vorz_v_aussen(fakt_ap[step],'x^2')
+                       + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
+                       + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2) + vorz_str(ywert_s[anz_np + step]) + '~=~'
+                       + vorz_v_aussen(fakt_ap[step],'x^2')
+                       + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
+                       + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2 + ywert_s[anz_np + step]) + r' \quad (4BE)')
                 lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
-                           + f'auch in der Normalform an. \n\n' )
+            aufgabe.extend((str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
+                           + f'auch in der Normalform an.', 'Grafik'))
             loesung.append(lsg)
             liste_punkte.append(punkte)
             i += 1
@@ -451,13 +458,55 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c'], anz_np=1, anz_ap=1, BE=[]):
     if 'c' in teilaufg:
         # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-        punkte = 2
-        
-        aufgabe.append(str(liste_teilaufg[i]) + f') Zeichne den Graphen der Funktion ' )
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~' + r' \quad (2BE) \\')
+        punkte = 5
+        bez_fkt_c = fkt_bez[anz_np + anz_ap]
+        fkt_c = fakt_ap[anz_ap]*(x - xwert_s[anz_np+anz_ap])**2+ywert_s[anz_ap + anz_np]
+        fkt_c_nf_str = (vorz_v_aussen(fakt_ap[anz_ap],'x^2')
+                        + vorz_v_innen(-2 * fakt_ap[anz_ap] * xwert_s[anz_np + anz_ap], 'x')
+                        + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]))
+        fkt_c_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
+                         + vorz_str(-1 * xwert_s[anz_np + anz_ap]) + r' \right) ^2 '
+                         + vorz_str(ywert_s[anz_np + anz_ap]))
+        aufgabe.extend((r' \mathrm{Gegeben~ist~die~Funktion~' + bez_fkt_c + '(x)=' + fkt_c_nf_str + r'}. \hspace{25em}',
+                        str(liste_teilaufg[i]) + f') Forme die Funktion ' + bez_fkt_c + ' in die Scheitelpunktform um, '
+                        + f'nenne den Scheitelpunkt und Streckungsfaktor a. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + bez_fkt_c + '(x) ~=~' + fkt_c_nf_str + '~=~'
+                       + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
+                       + vorz_v_innen(-2 * xwert_s[anz_np + anz_ap], 'x') + r' \right)'
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]) + '~=~'
+                       + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
+                       + vorz(-1*xwert_s[anz_ap + anz_np]) + r' 2 \cdot '
+                       + gzahl(abs(xwert_s[anz_ap + anz_np])) + 'x+'
+                       + gzahl(abs(xwert_s[anz_np + anz_ap])) + '^2'
+                       + '-' + gzahl(abs(xwert_s[anz_np + anz_ap])) + r'^2 \right) '
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap])
+                       + r' \quad (2BE) \\' + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( \left( x'
+                       + vorz_str(-1*xwert_s[anz_np + anz_ap]) + r' \right)^2'
+                       + '-' + gzahl(abs(xwert_s[anz_np + anz_ap])) + r'^2 \right) '
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap])
+                       + '~=~' + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left(x'
+                       + vorz_str(-1*xwert_s[anz_np + anz_ap]) + r' \right)^2'
+                       + vorz_str(-1*fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2)
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]) + '~=~'
+                       + fkt_c_spf_str + r' \quad (2BE) \\ S \left( ' + gzahl(xwert_s[anz_np+anz_ap]) + r' \vert '
+                       + gzahl(ywert_s[anz_np+anz_ap]) + r' \right) \quad \mathrm{und} \quad a ~=~ '
+                       + gzahl(fakt_ap[anz_ap]) + r' \quad (1BE)')
         liste_punkte.append(punkte)
         i += 1
+
+        if 'd' in teilaufg:
+            # zur gegebenen Funktion den Graphen zeichnen
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            k = anz_np + anz_ap
+            graph_xyfix(*[fkt_c], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            punkte = 3
+            aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen von ' + bez_fkt_c
+                           + ' im Koordinatensystem ein und überprüfe deine Ergebnisse aus Teilaufgabe c).')
+            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
+                            + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }', 'Figure'))
+            liste_punkte.append(punkte)
+            i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
