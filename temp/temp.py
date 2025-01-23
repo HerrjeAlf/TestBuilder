@@ -111,6 +111,9 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 def zahl(p):
     return '0' if p == 0 else ''
-k = zahl(nzahl(0,1))
+    return '2'
+k = nzahl(0,1)
+
 print(k)
+print(zahl(k))
 
