@@ -432,7 +432,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
             lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \\')
             for step in range(anz_np):
                 lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step],'x +')
-                       + gzahl_klammer(xwert_s[step]) + '^2' + vorz_str(ywert_s[step]) + '~=~ x^2'
+                       + gzahl(abs(xwert_s[step])) + '^2' + vorz_str(ywert_s[step]) + '~=~ x^2'
                        + vorz_v_innen(-2 * xwert_s[step],'x')
                        + vorz_str(xwert_s[step]**2 + ywert_s[step]) + r' \quad (2BE) ')
                 lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg

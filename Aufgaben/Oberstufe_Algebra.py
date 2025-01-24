@@ -2256,6 +2256,12 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                           [0, nz + aez * h_var, -1*(ny + aey * h_var)],
                           [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
     h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
+    while skalarprodukt(h_rv, [nx + aex*a, ny + aey*a, nz + aez*a]) == 0:
+        h_var = zzahl(1, 4)
+        h_rv = random.choice([[ny + aey * h_var, -1 * (nx + aex * h_var), 0],
+                              [0, nz + aez * h_var, -1 * (ny + aey * h_var)],
+                              [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
+        h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
     punkt_h = [hx, hy, hz] = punkt_d + h_rv + vektor_kuerzen(nv)*zzahl(1,3)
 
     if 'b' in teilaufg and len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
