@@ -109,11 +109,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-def zahl(p):
-    return '0' if p == 0 else ''
-    return '2'
-k = nzahl(0,1)
+if 'a' in ['a']:
+    x = '3'
 
+k = x+'2'
 print(k)
-print(zahl(k))
-

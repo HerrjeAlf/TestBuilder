@@ -918,7 +918,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "gerade_k=" kann festgelegt ('True' oder 'False') werden, ob der Schnittwinkel bei Geraden, die sich schneiden zwischen den gegebenen Geraden g und h oder einer neuen Geraden k berechnet werden soll. Standardmäßig wird dann keine Gerade k erzeugt.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+   # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
     i = 0
@@ -1067,13 +1067,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             fakt_s = zzahl(1, 7) / 2
             punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
             w = [wx, wy, wz]= vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
-            while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
-                fakt_r = zzahl(1, 7) / 2
-                [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
-                punkt_d = [dx, dy, dz + zzahl(1, 3)]
-                fakt_s = zzahl(1, 7) / 2
-                punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
-                w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
+            # while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
+            #     fakt_r = zzahl(1, 7) / 2
+            #     [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+            #     punkt_d = [dx, dy, dz + zzahl(1, 3)]
+            #     fakt_s = zzahl(1, 7) / 2
+            #     punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
+            #     w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
             lsgs = (dx-cx)/wx
             lsgr = fakt_r
             # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
@@ -1249,7 +1249,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 7
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad noch programmieren\\')
+        if lagebeziehung == 'parallel':
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hilfsebene~aufstellen: } \hspace{15em} \\'
+                           + r' H: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
+                           + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                           + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
+                           + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                           + r' \end{pmatrix} ~=~ 0 \quad (2BE) \\'
+                           + r' \mathrm{Schnittpunkt~von~g~mit~H~berechnen:} \hspace{15em} \\')
         liste_punkte.append(punkte_aufg)
         i += 1
 
