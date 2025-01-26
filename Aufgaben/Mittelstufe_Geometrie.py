@@ -797,17 +797,17 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     i = 0
     seite_a = nzahl(6, 12)
     seite_h = seite_a*nzahl(4,8)/10
-    seite_FB = N(sqrt(seite_a**2-seite_h**2),2)
-    beta = round(math.degrees(math.asin(seite_h / seite_a)))
+    seite_FB = N(sqrt(seite_a**2-seite_h**2),3)
+    beta = N(math.degrees(math.asin(seite_h / seite_a)),3)
     gamma_1 = nzahl(20,60)
     alpha = 90 - gamma_1
-    seite_b = round(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 1)
+    seite_b = N(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 3)
     gamma = 180 - alpha - beta
     flaeche = N(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),3)
 
-    seite_c = round(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 1)
-    xwert_punkt_c = round(math.cos(math.radians(alpha))*seite_b,2)
-    ywert_punkt_c = round(math.sin(math.radians(alpha))*seite_b,2)
+    seite_c = N(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 3)
+    xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
+    ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
 
     # Listen für die Zeichung des Dreiecks
     pkt_list = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c],[xwert_punkt_c,0]]
