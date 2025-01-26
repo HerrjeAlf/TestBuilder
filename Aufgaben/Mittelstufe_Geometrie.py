@@ -728,13 +728,13 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], BE=[]):
         # Berechnung der Winkel im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        pkt = 9
+        pkt = 8
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
         loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i]) + r') \quad \frac{' + seite_2 + '}{~sin('
                        + winkel_2 + ')} ~=~' + r' \frac{' + seite_1 + '}{~sin(' + winkel_1
                        + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{ ' + seite_2 + r'} ~=~ \frac{ sin('
-                       + winkel_1 + r') }{' + seite_1 + r'} \quad \vert \cdot ' + seite_2 + r' \quad (2BE) \\'
+                       + winkel_1 + r') }{' + seite_1 + r'} \quad \vert \cdot ' + seite_2 + r' \quad (1BE) \\'
                        + 'sin(' + winkel_2 + r') ~=~ \frac{ sin(' + winkel_1 + r')}{' + seite_1
                        + r'} \cdot ' + seite_2 + r' \quad \vert ~ sin^{ -1}() \quad \to \quad '
                        + winkel_2 + r' ~=~ sin^{ -1} \left( \frac{ sin(' + winkel_1 + r')}{'
