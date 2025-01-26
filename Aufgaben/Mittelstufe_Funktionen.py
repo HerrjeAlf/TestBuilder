@@ -394,7 +394,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
     if 'a' in teilaufg:
         # SuS sollen aus dem Graphen den Scheitelpunkt ablesen und die Funktionsgleichung in Scheitelpunktsform aufstellen, dabei können mit den Parametern anz_np die Anzahl der Normalparabeln und mit anz_ap die Anzahl der allgemeinen Parabeln festgelegt werden bzw.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = anz_np * 3 + anz_ap * 4
+        punkte = anz_np * 2 + anz_ap * 3
 
         # Lösungen für Gleichungen
         lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{abgelesener~Scheitelpunkt,~ggf.~der~Faktor~und~die~'
@@ -413,11 +413,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
             lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
         if anz_np + anz_ap == 1:
-            aufgabe.extend(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt ab '
-                           + f'und stelle die Funktionsgleichung auf. \n\n')
+            aufgabe.extend(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt und ggf. den Faktor a '
+                           + f'ab und nenne die zugeh. Funktionsgleichung. \n\n')
         else:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte ab '
-                           + f'und stelle die Funktionsgleichungen auf.\n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte und ggf. den Faktor a '
+                           + f'ab und nenne die zugeh. Funktionsgleichungen.\n\n')
 
         loesung.append(lsg)
         liste_punkte.append(punkte)
@@ -446,7 +446,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
                        + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2) + vorz_str(ywert_s[anz_np + step]) + '~=~'
                        + vorz_v_aussen(fakt_ap[step],'x^2')
                        + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
-                       + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2 + ywert_s[anz_np + step]) + r' \quad (4BE)')
+                       + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2 + ywert_s[anz_np + step]) + r' \quad (3BE)')
                 lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
             aufgabe.extend((str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
