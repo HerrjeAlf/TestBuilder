@@ -1247,33 +1247,81 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0 and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 7
-        erg_r = Rational(skalarprodukt(punkt_c-punkt_a,v), skalarprodukt(v,v))
+        if 'c' not in teilaufg:
+            if lagebeziehung == 'parallel':
+                punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u)) # Punkt C liegt auf h
+                w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+                while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
+                    punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u))  # Punkt C liegt auf h
+            elif lagebeziehung == 'windschief':
+                fakt_r = zzahl(1, 7) / 2
+                [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+                punkt_d = [dx, dy, dz + zzahl(1, 3)]
+                fakt_s = zzahl(1, 7) / 2
+                punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
+                w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
+            aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
+                            r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                            + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                            + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                            + r' \end{pmatrix} \quad \mathrm{und} \quad h: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                            + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
+                            + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                            + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
+                            + r' \end{pmatrix}\\'))
+
+        fakt_r = Rational(skalarprodukt(punkt_c-punkt_a,v), skalarprodukt(v,v))
+        erg = N(sqrt((cx - ax - fakt_r*vx)**2 + (cy - ay - fakt_r*vy)**2 + (cz - az - fakt_r*vz)**2),3)
+        erg_cross = [crx, cry, crz] = vektor_ganzzahl(np.cross(punkt_c - punkt_a, v))
+        erg_alt_disk = Rational(crx**2+cry**2+crz**2, vx**2+vy**2+vz**2)
+        erg_alt = N(sqrt(erg_alt_disk),3)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
         if lagebeziehung == 'parallel':
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hilfsebene~aufstellen: } \hspace{15em} \\'
+            punkte = 9
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hilfsebene~aufstellen: } \hspace{25em} \\'
                            + r' H: ~\begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                            + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                            + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                            + r' \end{pmatrix} ~=~ 0 \quad \to \quad H: ~ ' + vorz_v_aussen(vx,'x')
                            + vorz_v_innen(vy,'y') + vorz_v_innen(vz,'z') + '~=~'
-                           + gzahl(np.dot(punkt_c, v)) + r' \quad (2BE) \\ \mathrm{g~in~H~einsetzen:} \quad '
+                           + gzahl(np.dot(punkt_c, v)) + r' \quad (2BE) \\\\ \mathrm{g~in~H~einsetzen:} \quad '
                            + gzahl(np.dot(punkt_c, v)) + '~=~' + gzahl(vx) + r' \cdot ' + binom_klammer(ax,vx,str2='r')
                            + vorz_str(vy) + r' \cdot ' + binom_klammer(ay,vy,str2='r') + vorz_str(vz)+ r' \cdot '
-                           + binom_klammer(az,vz,str2='r') + '~=~' + gzahl(vx*ax) + vorz_v_innen(vx**2,'r')
-                           + vorz_str(vy*ay) + vorz_v_innen(vy**2,'r') + vorz_str(vz*az)
-                           + vorz_v_innen(vz**2,'r') + '~=~' + gzahl(skalarprodukt(punkt_a,v))
-                           + vorz_v_innen(skalarprodukt(v,v),'r') + r' \quad \vert '
-                           + vorz_str(-1*skalarprodukt(punkt_a,v)) + r' \quad \vert \div '
-                           + gzahl_klammer(skalarprodukt(v,v)) + r' \quad (3BE) \\'
-                           + r' r~=~ ' + gzahl(erg_r) + r' \quad \to \quad \overrightarrow{OS} ~=~ '
-                           + r' \begin{pmatrix} ' +gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                           + r' \end{pmatrix} ' + vorz_str(erg_r) + r' \cdot \begin{pmatrix} ' + gzahl(vx) + r' \\'
-                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} ~=~ '
-                            # weiter programmieren
-                           + '\quad (3BE)')
-        liste_punkte.append(punkte_aufg)
+                           + binom_klammer(az,vz,str2='r') + r' \\ '+ gzahl(np.dot(punkt_c, v)) + '~=~'
+                           + gzahl(vx*ax) + vorz_v_innen(vx**2,'r') + vorz_str(vy*ay)
+                           + vorz_v_innen(vy**2,'r') + vorz_str(vz*az) + vorz_v_innen(vz**2,'r') + '~=~'
+                           + gzahl(skalarprodukt(punkt_a,v)) + vorz_v_innen(skalarprodukt(v,v),'r')
+                           + r' \quad \vert ' + vorz_str(-1*skalarprodukt(punkt_a,v)) + r' \quad \vert \div '
+                           + gzahl_klammer(skalarprodukt(v,v)) + r' \quad (2BE) \\\\' + r' r~=~ ' + gzahl(fakt_r)
+                           + r' \quad \to \quad \overrightarrow{OS} ~=~ ' + r' \begin{pmatrix} ' +gzahl(ax) + r' \\'
+                           + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ' + vorz_str(fakt_r, null=True)
+                           + r' \cdot \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
+                           + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax+fakt_r*vx) + r' \\'
+                           + gzahl(ay+fakt_r*vy) + r' \\' + gzahl(az+fakt_r*vz) + r' \\'
+                           + r' \end{pmatrix} \quad \to \quad S \left( ' + gzahl(ax+fakt_r*vx) + r' \vert '
+                           + gzahl(ay+fakt_r*vy) + r' \vert ' + gzahl(az+fakt_r*vz) + r' \right) \quad (3BE) \\'
+                           + r' \mathrm{Abstand~zwischen~g~und~h~berechnen:} \hspace{15em} \\ '
+                           + r' d(g,h) ~=~ \sqrt{ ' + binom_klammer(cx, -1 * (ax + fakt_r*vx)) + '^2 +'
+                           + binom_klammer(cy, -1 * (ay + fakt_r*vy)) + '^2 + '
+                           + binom_klammer(cz, -1 * (az + fakt_r*vz)) + '^2} ~=~ ' + gzahl(erg) + r' \quad (2BE) \\\\'
+                           + r' \mathrm{alternative~Berechnung~mit:} \hspace{15em} \\'
+                           + r' d(g,h) ~=~ \frac{ \left| \overrightarrow{P_g Q_h} \times \overrightarrow{v} \right| }'
+                           + r' { \left| \overrightarrow{v} \right| } ~=~ \frac{ \left| \begin{pmatrix} '
+                           + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az) + r' \\' + r' \end{pmatrix}'
+                           + r' \times \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz)
+                           + r' \\' + r' \end{pmatrix} \right| }{ \left| \begin{pmatrix} ' + gzahl(vx) + r' \\'
+                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (2BE) \\\\'
+                           + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
+                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
+                           + gzahl_klammer(vx,'^2', null=False) + '+' + gzahl_klammer(vy,'^2', null=False)
+                           + '+' + gzahl_klammer(vz,'^2', null=False) + r' }} ~=~ \frac{ \sqrt{ '
+                           + gzahl_klammer(crx, '^2', null=False) + '+' + gzahl_klammer(vy, '^2', null=False)
+                           + '+' + gzahl_klammer(vz, '^2', null=False) + r'}}{ \sqrt{ '
+                           + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~ \sqrt{' + gzahl(erg_alt_disk) + '} ~=~ '
+                           + gzahl(erg_alt) + r' \quad (3BE)')
+        liste_punkte.append(punkte)
         i += 1
 
     if 'e' in teilaufg:
