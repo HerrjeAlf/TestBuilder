@@ -1315,10 +1315,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (2BE) \\\\'
                            + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
                            + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
-                           + gzahl_klammer(vx,'^2', null=False) + '+' + gzahl_klammer(vy,'^2', null=False)
-                           + '+' + gzahl_klammer(vz,'^2', null=False) + r' }} ~=~ \frac{ \sqrt{ '
-                           + gzahl_klammer(crx, '^2', null=False) + '+' + gzahl_klammer(vy, '^2', null=False)
-                           + '+' + gzahl_klammer(vz, '^2', null=False) + r'}}{ \sqrt{ '
+                           + gzahl_klammer(vx,'^2 +', null=False, eins=True)
+                           + gzahl_klammer(vy,'^2 +', null=False, eins=True)
+                           + gzahl_klammer(vz,'^2', null=False, eins=True) + r' }} ~=~ \frac{ \sqrt{ '
+                           + gzahl_klammer(crx, '^2 +', null=False, eins=True)
+                           + gzahl_klammer(vy, '^2 +', null=False, eins=True)
+                           + gzahl_klammer(vz, '^2', null=False, eins=True) + r'}}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~ \sqrt{' + gzahl(erg_alt_disk) + '} ~=~ '
                            + gzahl(erg_alt) + r' \quad (3BE)')
         liste_punkte.append(punkte)
