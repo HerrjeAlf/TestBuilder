@@ -109,8 +109,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-if 'a' in ['a']:
-    x = '3'
 
-k = x+'2'
-print(k)
+
+print(vektor_kuerzen([2,0.5,3],qout=True))
