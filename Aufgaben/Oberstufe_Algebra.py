@@ -1253,6 +1253,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
                 while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                     punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u))  # Punkt C liegt auf h
+                fakt_r = Rational(skalarprodukt(punkt_c - punkt_a, v), skalarprodukt(v, v))
+                erg = N(sqrt((cx - ax - fakt_r * vx) ** 2 + (cy - ay - fakt_r * vy) ** 2 + (cz - az - fakt_r * vz) ** 2), 3)
+                erg_cross = [crx, cry, crz] = vektor_ganzzahl(np.cross(punkt_c - punkt_a, v))
+                erg_alt_disk = Rational(crx ** 2 + cry ** 2 + crz ** 2, vx ** 2 + vy ** 2 + vz ** 2)
+                erg_alt = N(sqrt(erg_alt_disk), 3)
             elif lagebeziehung == 'windschief':
                 fakt_r = zzahl(1, 7) / 2
                 [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
@@ -1260,6 +1265,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 fakt_s = zzahl(1, 7) / 2
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
                 w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
+                vec_n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v,wv))
+
             aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
                             r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                             + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -1271,11 +1278,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                             + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                             + r' \end{pmatrix}\\'))
 
-        fakt_r = Rational(skalarprodukt(punkt_c-punkt_a,v), skalarprodukt(v,v))
-        erg = N(sqrt((cx - ax - fakt_r*vx)**2 + (cy - ay - fakt_r*vy)**2 + (cz - az - fakt_r*vz)**2),3)
-        erg_cross = [crx, cry, crz] = vektor_ganzzahl(np.cross(punkt_c - punkt_a, v))
-        erg_alt_disk = Rational(crx**2+cry**2+crz**2, vx**2+vy**2+vz**2)
-        erg_alt = N(sqrt(erg_alt_disk),3)
+
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
         if lagebeziehung == 'parallel':
             punkte = 7
@@ -1323,6 +1326,34 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + gzahl_klammer(vz, '^2', null=False, eins=True) + r'}}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~ \sqrt{' + gzahl(erg_alt_disk) + '} ~=~ '
                            + gzahl(erg_alt) + r' \quad (3BE)')
+        elif lagebeziehung == 'windschief':
+            punkte = 7
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~mithilfe~der~hessischen~Normalform'
+                           + r'~der~Hilfsebene~H, \\ ~deren~Normalenvektor~das~Kreuzprodukt~der~Richtungsvektoren~von'
+                           + r'~g~und~h~ist:} \hspace{15em} \\'
+                           + r' \overrightarrow{n} ~=~ \overrightarrow{v} \times \overrightarrow{u} ~=~ '
+                           + r' d(g,h) ~=~ \left| \overrightarrow{P_g Q_h} \cdot \frac{ \overrightarrow{v} '
+                           + r' \times \overrightarrow{u} }{ \left| \overrightarrow{v} \times \overrightarrow{u} ~=~'
+                           + r' \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz)
+                           + r' \\' + r' \end{pmatrix} \times \begin{pmatrix} ' + gzahl(wx) + r' \\' + gzahl(wy)
+                           + r' \\' + gzahl(wz) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(vx) + r' \\'
+                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \quad '
+                           + r'\right| } \right| ~=~ \left| \begin{pmatrix} '
+                           + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az) + r' \\' + r' \end{pmatrix}'
+                           + r' \cdot \frac{ \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz)
+                           + r' \\' + r' \end{pmatrix} \right| }{ \left| \begin{pmatrix} ' + gzahl(vx) + r' \\'
+                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (4BE) \\'
+                           + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
+                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
+                           + gzahl_klammer(vx,'^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vy,'^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vz,'^2', null=False, eins=True) + r' }} ~=~ \frac{ \sqrt{ '
+                           + gzahl_klammer(crx, '^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vy, '^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vz, '^2', null=False, eins=True) + r'}}{ \sqrt{ '
+                           + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~ \sqrt{' + gzahl(erg_alt_disk) + '} ~=~ '
+                           + gzahl(erg_alt) + r' \quad (3BE)')
+
         liste_punkte.append(punkte)
         i += 1
 
@@ -2347,7 +2378,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
         text = ''
 
     if 'b' in teilaufg:
-        gerade_g = (text + r'g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+        gerade_g = (r' g: \overrightarrow{x} ~=~ \begin{pmatrix} '
                     + gzahl(gx) + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
                     + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
                     + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'

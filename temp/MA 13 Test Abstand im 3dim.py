@@ -24,7 +24,7 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[ebene_und_punkt(1,['b', 'f', 'g']),
                  ebenenschar_buendel(2,['d', 'e']),
-                 geraden_lagebeziehung(1,['d'], lagebeziehung='parallel')]]
+                 geraden_lagebeziehung(3,['d'], lagebeziehung='parallel')]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
