@@ -9,14 +9,14 @@ from skripte.erstellen import *
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
 Klasse = '13'
-Thema = 'Lagebeziehung Dreieck Parallelogramm'
+Thema = 'Abstand zweier paralleler Geraden'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[ebene_und_punkt(1, ['d'], lagebeziehung_t_ebene=None),
-                 ebene_und_punkt(2, ['e'], lagebeziehung_t_ebene=None)]]
+    Aufgaben = [[geraden_lagebeziehung(1,['d'], lagebeziehung='parallel'),
+                 geraden_lagebeziehung(2,['d'], lagebeziehung='parallel')]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

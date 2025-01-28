@@ -50,17 +50,17 @@ def gzahl(k, exp=False, null=True):
         return ''
     return latex(int(k)) if k % 1 == 0 else latex(k)
 
-def gzahl_klammer(k,str='', null=True, eins=True):
+def gzahl_klammer(k,str='', null=True, eins=False):
     try:
         if k == 0 and null != True:
             return ''
         k = int(k) if k % 1 == 0 else k
         if k < 0:
-            if str != '' and k == -1:
+            if str != '' and k == -1 and eins == False:
                 return r' \left( -' + str + r' \right)'
             return r' \left(' + latex(k) + str + r' \right)'
         else:
-            if str != '' and k == 1 or eins == False:
+            if str != '' and k == 1 and eins == False:
                 return str
             return latex(k) + str
     except Exception as fehler:

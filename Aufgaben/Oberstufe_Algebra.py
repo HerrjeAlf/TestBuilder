@@ -1278,7 +1278,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         erg_alt = N(sqrt(erg_alt_disk),3)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
         if lagebeziehung == 'parallel':
-            punkte = 9
+            punkte = 7
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hilfsebene~aufstellen: } \hspace{25em} \\'
                            + r' H: ~\begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                            + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
@@ -1294,14 +1294,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + vorz_v_innen(vy**2,'r') + vorz_str(vz*az) + vorz_v_innen(vz**2,'r') + '~=~'
                            + gzahl(skalarprodukt(punkt_a,v)) + vorz_v_innen(skalarprodukt(v,v),'r')
                            + r' \quad \vert ' + vorz_str(-1*skalarprodukt(punkt_a,v)) + r' \quad \vert \div '
-                           + gzahl_klammer(skalarprodukt(v,v)) + r' \quad (2BE) \\\\' + r' r~=~ ' + gzahl(fakt_r)
+                           + gzahl_klammer(skalarprodukt(v,v)) + r' \quad (1BE) \\\\' + r' r~=~ ' + gzahl(fakt_r)
                            + r' \quad \to \quad \overrightarrow{OS} ~=~ ' + r' \begin{pmatrix} ' +gzahl(ax) + r' \\'
                            + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ' + vorz_str(fakt_r, null=True)
                            + r' \cdot \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                            + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax+fakt_r*vx) + r' \\'
                            + gzahl(ay+fakt_r*vy) + r' \\' + gzahl(az+fakt_r*vz) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad S \left( ' + gzahl(ax+fakt_r*vx) + r' \vert '
-                           + gzahl(ay+fakt_r*vy) + r' \vert ' + gzahl(az+fakt_r*vz) + r' \right) \quad (3BE) \\'
+                           + gzahl(ay+fakt_r*vy) + r' \vert ' + gzahl(az+fakt_r*vz) + r' \right) \quad (2BE) \\'
                            + r' \mathrm{Abstand~zwischen~g~und~h~berechnen:} \hspace{15em} \\ '
                            + r' d(g,h) ~=~ \sqrt{ ' + binom_klammer(cx, -1 * (ax + fakt_r*vx)) + '^2 +'
                            + binom_klammer(cy, -1 * (ay + fakt_r*vy)) + '^2 + '
@@ -1312,14 +1312,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az) + r' \\' + r' \end{pmatrix}'
                            + r' \times \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz)
                            + r' \\' + r' \end{pmatrix} \right| }{ \left| \begin{pmatrix} ' + gzahl(vx) + r' \\'
-                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (2BE) \\\\'
+                           + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (4BE) \\'
                            + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
                            + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
-                           + gzahl_klammer(vx,'^2 +', null=False, eins=True)
-                           + gzahl_klammer(vy,'^2 +', null=False, eins=True)
+                           + gzahl_klammer(vx,'^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vy,'^2', null=False, eins=True) + '+'
                            + gzahl_klammer(vz,'^2', null=False, eins=True) + r' }} ~=~ \frac{ \sqrt{ '
-                           + gzahl_klammer(crx, '^2 +', null=False, eins=True)
-                           + gzahl_klammer(vy, '^2 +', null=False, eins=True)
+                           + gzahl_klammer(crx, '^2', null=False, eins=True) + '+'
+                           + gzahl_klammer(vy, '^2', null=False, eins=True) + '+'
                            + gzahl_klammer(vz, '^2', null=False, eins=True) + r'}}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~ \sqrt{' + gzahl(erg_alt_disk) + '} ~=~ '
                            + gzahl(erg_alt) + r' \quad (3BE)')
