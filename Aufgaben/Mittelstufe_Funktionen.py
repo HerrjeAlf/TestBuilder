@@ -29,8 +29,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_einf = 6 if anz_einf not in [1, 2, 3, 4, 5, 6] else anz_einf
-    anz_pkt = 6 if anz_pkt not in [1, 2, 3, 4, 5, 6] else anz_pkt
+    anz_einf = 6 if anz_einf not in [0, 1, 2, 3, 4, 5, 6] else anz_einf
+    anz_pkt = 6 if anz_pkt not in [0, 1, 2, 3, 4, 5, 6] else anz_pkt
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
@@ -144,7 +144,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         k = anz_einf + anz_pkt
-        graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]],
+                    bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
         aufgabe.extend((f'Die Funktion {fkt_bez[k]} geht durch die Punkte P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) '
                         f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
