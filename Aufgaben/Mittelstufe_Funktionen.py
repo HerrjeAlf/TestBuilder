@@ -15,7 +15,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_pkt=1, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_einf=" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
     # Mit dem Parameter "anz_pkt=" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
@@ -93,6 +93,29 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
+        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Nullstellen~werden~berechnet~mit~'
+               + r'x_0~=~ - \frac{n}{m}} \\')
+        for step in range(anz_einf):
+            lsg = (lsg + r' \mathrm{für~' + fkt_bez[step] + r'(x) ~ gilt:} x_0 ~=~ -\frac{' + gzahl(fkt_n[step]) + '}{'
+                   + gzahl(fkt_m[step]) + r'}~=~' + gzahl(Rational(-1*fkt_n[step], fkt_m[step])) + r' \quad (2BE) ')
+            lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
+        for step in range(anz_pkt):
+
+            lsg = (lsg + r' \mathrm{für~' + fkt_bez[anz_einf + step] + r'(x) ~ gilt:} x_0 ~=~ -\frac{'
+                   + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
+                   + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
+            lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Graphen mithilfe der '
+                       + f'Funktionsgleichungen. \n\n')
+        loesung.append(lsg)
+        liste_punkte.append(punkte)
+        i += 1
+
+
+    if 'c' in teilaufg:
+        # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = (anz_einf + anz_pkt)*2
         aufgabe.extend((str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
                        + f'-2 < x < 2.', 'Grafik \n\n'))
 
@@ -116,7 +139,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         liste_punkte.append(punkte)
         i += 1
 
-    if 'c' in teilaufg:
+    if 'd' in teilaufg:
         # zu gegebenen Punkten einer Funktion den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -126,21 +149,38 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c'], anz_einf=1, anz_pkt=1, BE=[
         aufgabe.extend((f'Die Funktion {fkt_bez[k]} geht durch die Punkte P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) '
                         f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
                         str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
-                        + ' im oberen Koordinatensystem ein.'))
+                        + ' im oberen Koordinatensystem ein. \n\n'))
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' in teilaufg:
-        # überprüfen ob ein Punkt auf dem Graphen der gegebenen Funktion liegt
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
-                        + ' im oberen Koordinatensystem ein.')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
-        liste_punkte.append(punkte)
-        i += 1
+        if 'e' in teilaufg:
+            # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 2
+            xwert_t = zzahl(-4,4)
+            while xwert_t == xwerte_P[anz_pkt]:
+                xwert_t = zzahl(-4, 4)
+            if random.choice([0,1]) == 0:
+                ywert_t = fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt]
+                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
+                             + fkt_bez[k] + r'.} \quad (3BE)')
+            else:
+                ywert_t = fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt] + zzahl(1,2)
+                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
+                             + fkt_bez[k] + r'.} \quad (3BE)')
+
+            lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{10em} \\'
+                   + gzahl(fkt_m_pkt[anz_pkt]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n_pkt[anz_pkt]) + '~=~'
+                   + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt])
+                   + '~=~' + gzahl(ywert_t))
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe ob der Punkt T auf dem Graphen von '
+                           + f'{fkt_bez[k]} liegt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
+            liste_punkte.append(punkte)
+            i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
