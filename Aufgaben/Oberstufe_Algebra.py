@@ -1266,7 +1266,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 fakt_s = zzahl(1, 7) / 2
                 punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
                 w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
-            (vec_n, fakt_n) = ([nx, ny, nz], fakt_n) = vektor_kuerzen(np.cross(v,w), qout=True)
+            vec_n, fakt_n = [nx, ny, nz], fakt_n = vektor_kuerzen(np.cross(v,w), qout=True)
             fakt_n_str = '' if fakt_n == 1 else gzahl(fakt_n) + r' \cdot '
             erg_disk = Rational((((cx-ax)*nx)**2+((cy-ay)*ny)**2+((cz-az)*nz)**2),(nx**2+ny**2+nz**2))
             erg = N(sqrt(erg_disk), 3)
@@ -1328,13 +1328,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + r' \end{pmatrix} \right| }{ \left| \begin{pmatrix} ' + gzahl(vx) + r' \\'
                            + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (4BE) \\'
                            + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
-                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
-                           + gzahl_klammer(vx, eins=True) + '^2 +'
-                           + gzahl_klammer(vy, eins=True) + '^2 +'
-                           + gzahl_klammer(vz, eins=True) + r'^2 }} ~=~ \frac{ \sqrt{ '
-                           + gzahl_klammer(crx, eins=True) + '^2+'
-                           + gzahl_klammer(cry, eins=True) + '^2+'
-                           + gzahl_klammer(crz, eins=True) + r'^2 }}{ \sqrt{ '
+                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{' + summe_exp([vx,vy,vz],2)
+                           + r'}} ~=~ \frac{ \sqrt{ ' + summe_exp([crx, cry, crz],2) + r' }}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
         elif lagebeziehung == 'windschief':
             punkte = 6
@@ -1347,18 +1342,15 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + gzahl(wz) + r' \\' + r' \end{pmatrix} ~=~ ' + fakt_n_str
                            + r' \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{'
-                           + gzahl_klammer(nx, eins=True) + '^2 +' + gzahl_klammer(ny, eins=True) + '^2 +'
-                           + gzahl_klammer(nz, eins=True) + r'^2 } ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
+                           + summe_exp([nx,ny,nz],2)+ r'} ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
                            + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (3BE) \\\\'
                            + r' d(g,h) ~=~ \left| \overrightarrow{P_g Q_h} \cdot \overrightarrow{n_0} \right| ~=~'
                            + r' \left| \begin{pmatrix} ' + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az)
                            + r' \\' + r' \end{pmatrix} \cdot \frac{1}{ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
                            + r'}} \cdot \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz)
                            + r' \\' + r' \end{pmatrix} \right| ~=~ \frac{ \sqrt{'
-                           + gzahl_klammer((cx-ax)*nx, eins=True) + '^2 +'
-                           + gzahl_klammer((cy-ay)*ny, eins=True) + '^2 +'
-                           + gzahl_klammer((cz-az)*nz, eins=True) + r'^2 } }{ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
-                           + r'}}  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
+                           + summe_exp([(cx-ax)*nx,(cy-ay)*ny,(cz-az)*nz],2) + r'} }{ \sqrt{'
+                           + gzahl(nx**2+ny**2+nz**2) + r'}}  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
 
         liste_punkte.append(punkte)
         i += 1

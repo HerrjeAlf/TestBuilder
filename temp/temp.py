@@ -111,4 +111,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 
 
-print(vektor_kuerzen([2,0.5,3],qout=True))
+print(summe_exp([0,2,0.5,3,0,2],[1,2,3,4,5,6], ['x','x','y','z','xy','ab']))

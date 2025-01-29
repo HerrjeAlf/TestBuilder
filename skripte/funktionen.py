@@ -50,7 +50,7 @@ def gzahl(k, exp=False, null=True):
         return ''
     return latex(int(k)) if k % 1 == 0 else latex(k)
 
-def gzahl_klammer(k,str='', null=True, eins=False):
+def gzahl_klammer(k, str='', null=True, eins=False):
     try:
         if k == 0 and null != True:
             return ''
@@ -308,6 +308,31 @@ def fakt_var(k):
         return ''
     else:
         return latex(k)
+
+def summe_exp(list_term, exp, list_var=[]):
+    list_exp = [exp for n in range(len(list_term))] if type(exp) != list else exp
+    if len(list_term) != len(list_exp):
+        exit('Fehler bei der Funktion "summe_potenz" in funktionen.py - die verwendeten Listen sind verschieden lang!')
+    list_exp = ['^' + gzahl(exp) if exp != 1 else '' for exp in list_exp]
+    for n in range(len(list_term)):
+        if list_term[n] != 0:
+            if list_var != []:
+                summe_str = r' \left( ' + gzahl(list_term[n]) + str(list_var[n]) + r' \right) ' + list_exp[n]
+                del list_var[n]
+            else:
+                summe_str = gzahl_klammer(list_term[n]) + list_exp[n]
+            del list_term[n]
+            del list_exp[n]
+
+            break
+    for n in range(len(list_term)):
+        if list_term[n] != 0:
+            if list_var != []:
+                summe_str = (summe_str + r'+ \left( ' + gzahl(list_term[n]) + str(list_var[n])
+                             + r' \right) ' + list_exp[n])
+            else:
+                summe_str = summe_str + '+' + gzahl_klammer(list_term[n]) + list_exp[n]
+    return summe_str
 
 def exponenten(n,p=1,q=6, wdh=True, ganzz=False):
     if wdh != True:
