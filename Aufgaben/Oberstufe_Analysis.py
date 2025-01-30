@@ -1847,7 +1847,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     # print(Aufg_Liste_str)
     table2 = Tabular('c|c|c|c|c|c|c|', row_height=1.2)
     table2.add_hline(2, 7)
-    table2.add_row(Tab_beschr, f'Zeit in {Aufg_Einheit_x}', '0', '1', '2', '3', '4')
+    table2.add_row(Tab_beschr, f'Zeit in {Aufg_Einheit_x}', ' 0', '1', '2', '3', '4')
     table2.add_hline(2, 7)
     table2.add_row('', f'Wert in {Aufg_Einheit_y}', Aufg_Liste[0], Aufg_Liste[1], Aufg_Liste[2],
                    Aufg_Liste[3], Aufg_Liste[4])
@@ -1858,10 +1858,10 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     table3.add_row('Ergebnisse: ', 'Quotient der Werte', NoEscape(r'$ \frac{a1}{a0} $'),
                    NoEscape(r'$ \frac{a2}{a1} $'), NoEscape(r'$ \frac{a3}{a2} $'), NoEscape(r'$\frac{a4}{a3}$'))
     table3.add_hline(2, 6)
-    table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip('0'),
-                   str(N(Aufg_Liste[2] / Aufg_Liste[1], 4)).rstrip('0'),
-                   str(N(Aufg_Liste[3] / Aufg_Liste[2], 4)).rstrip('0'),
-                   str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip('0'))
+    table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip(' 0'),
+                   str(N(Aufg_Liste[2] / Aufg_Liste[1], 4)).rstrip(' 0'),
+                   str(N(Aufg_Liste[3] / Aufg_Liste[2], 4)).rstrip(' 0'),
+                   str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip(' 0'))
     table3.add_hline(2, 6)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
@@ -2959,7 +2959,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        NoEscape('$' + gzahl(fkt_b1*a**2) + '$'), NoEscape('$' + gzahl(fkt_b0*a**3) +'$'))
         table2.add_hline(2, 5)
         table2.add_row('', NoEscape('$' + gzahl(fkt_a3) + '$'),
-                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gzahl(fkt_c1*a**2) + '$'), '0')
+                       NoEscape('$' + gzahl(fkt_c2*a) + '$'), NoEscape('$' + gzahl(fkt_c1*a**2) + '$'), ' 0')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
@@ -2968,7 +2968,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                                                  + r')~ \div ~(x' + nst_2_str_neg + r')~=~ \\' + fkt_partial_str
                                                  + r' \quad (4P)'))
         loesung.append(table2)
-        loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
+        loesung.append(' 0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
                        r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \left(' +
                        r' \frac{' + latex(fkt_p) + r'a}{2} \right)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
@@ -3088,7 +3088,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                                                 ' mithilfe des hinreichenden Kriteriums. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
-                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
+                       r' 0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
                        + gzahl(fkt_1_p) + r' a}{2} \pm \sqrt{ \left( \frac{'
                        + gzahl(fkt_1_p) + r' a}{2} \right)^2 - \left(' + gzahl(fkt_1_q)
                        + r' a^2 \right) } \quad (1BE) \\ =~ ' + gzahl(N(-1*fkt_1_p/2,3)) + r' a \pm \sqrt{'
@@ -3480,7 +3480,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + fkt_1_str + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg_b,'x+2')
                            + r'} \neq 0 \quad \to \quad 0~=~' + vorz_v_aussen(lsg_a*lsg_b,'x^2')
                            + vorz_v_innen(2*lsg_a,'x') + r' \quad (3BE) \\'
-                           + r'0~=~x \cdot \left(' + vorz_v_aussen(lsg_a*lsg_b,'x')
+                           + r' 0~=~x \cdot \left(' + vorz_v_aussen(lsg_a*lsg_b,'x')
                            + vorz_str(2*lsg_a) + r' \right)'
                            + r' \quad \to \quad x_1~=~0 \quad \mathrm{und} \quad 0~=~ '
                            + vorz_v_aussen(lsg_a*lsg_b,'x') + vorz_str(2*lsg_a) + r' \quad \vert \div '
@@ -4083,7 +4083,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         table2.add_row('Partialpolynom mit Horner Schema berechnen: ',' ',
                        latex(collect(fkt_b2,a)), latex(collect(fkt_b1,a)), latex(collect(fkt_b0,a)))
         table2.add_hline(2, 5)
-        table2.add_row('',fkt_a3, latex(collect(fkt_c2,a)), latex(collect(fkt_c1,a)), '0')
+        table2.add_row('',fkt_a3, latex(collect(fkt_c2,a)), latex(collect(fkt_c1,a)), ' 0')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte mit den Achsen der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
@@ -4092,7 +4092,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                                                  + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_1)
                                                  + r')~= \\ =~' + fkt_partial_str + r' \quad (4P)'))
         loesung.append(table2)
-        loesung.append('0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
+        loesung.append(' 0~=~' + fkt_partial_str + r' \quad \vert ~ \div ' + gzahl_klammer(faktor) +
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
                        r' x_{2/3}~=~ - \frac{' + fkt_p_str + r'}{2} \pm \sqrt{ \left(' +
                        r' \frac{' + fkt_p_str + r'}{2} \right)^2-(' + latex(fkt_q) +
@@ -4166,7 +4166,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                        + r' \quad \mathrm{und} \quad f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str
                        + r' \quad (2BE) \\ f^{ \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_1_str + r' \vert ~ \div ' + gzahl_klammer(3 * faktor) + r' \quad (1BE) \\'
-                       r'0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
+                       r' 0~=~ ' + fkt_1_pq_str + r' \quad (1BE) \\' + r' x_{1/2}~=~ - \frac{'
                        + fkt_1_p_str + r'}{2} \pm \sqrt{ \left(' + r' \frac{'
                        + fkt_1_p_str + r'}{2} \right)^2-(' + fkt_1_q2_str + r')} \quad (2BE) \\ =~ '
                        + fkt_1_p3_str + r' \pm \sqrt{' + r' \frac{' + fkt_1_p2_str

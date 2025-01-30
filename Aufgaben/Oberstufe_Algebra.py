@@ -2455,13 +2455,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f'in der die Gerade g liegt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(g_vy)
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(g_vz) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx*g_vx) + vorz_str(ny*g_vy) + vorz_str(nz*g_vz)
+                       + ' 0~=~' + gzahl(nx*g_vx) + vorz_str(ny*g_vy) + vorz_str(nz*g_vz)
                        + vorz_v_innen(aex*g_vx,'a') + vorz_v_innen(aey*g_vy,'a')
                        + vorz_v_innen(aez*g_vz,'a') + r'~=~' + gzahl(nx*g_vx + ny*g_vy + nz*g_vz)
                        + vorz_v_innen(aex*g_vx + aey*g_vy + aez*g_vz,'a')
@@ -2502,13 +2502,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f' die zur {bez} - Achse parallel ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
                        + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
                        + r' \\' + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(vec[0]) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(vec[1])
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
+                       + ' 0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
                        + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
                        + vorz_v_innen(aez * vec[2], 'a') + lsg)
         liste_punkte.append(pkt)
@@ -2524,13 +2524,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f'die parallel zur Geraden h ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(h_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(h_vy)
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(h_vz) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx*h_vx) + vorz_str(ny*h_vy) + vorz_str(nz*h_vz)
+                       + ' 0~=~' + gzahl(nx*h_vx) + vorz_str(ny*h_vy) + vorz_str(nz*h_vz)
                        + vorz_v_innen(aex*h_vx,'a') + vorz_v_innen(aey*h_vy,'a')
                        + vorz_v_innen(aez*h_vz,'a') + r'~=~' + gzahl(nx*h_vx + ny*h_vy + nz*h_vz)
                        + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
