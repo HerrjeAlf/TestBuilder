@@ -15,7 +15,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_pkt=1, BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, anz_pkt=1, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_einf=" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
     # Mit dem Parameter "anz_pkt=" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
@@ -34,10 +34,13 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
+    aufg_f = 1 if 'f' in teilaufg else 0
+    anz_einf = anz_einf + aufg_f
     fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf)
     fkt_n = random_selection(list(range(-3,4)), anz_einf)
     # Punkte der schwierigeren Funktionen
     aufg_c = 1 if 'c' in teilaufg else 0
+    aufg_f = 1 if 'f' in teilaufg else 0
     xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_c),
                           random_selection(list(range(-5,6)), anz_pkt + aufg_c))
     xwerte_2_unbegr, ywerte_2_unbegr = ([wert+random.choice([1,2,4,6]) for wert in xwerte_1],
@@ -182,6 +185,21 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
             liste_punkte.append(punkte)
             i += 1
+
+    if 'f' in teilaufg:
+        # zu gegebenen Punkten einer Funktion den Graphen zeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        k = anz_einf + anz_pkt
+        graph_xyfix(*[fkt_m[anz_einf-1]*x + fkt_n[anz_einf-1]],
+                    bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
+                        + gzahl(fkt_m[anz_einf-1]) + 'x' + vorz_str(fkt_n[anz_einf-1]) +
+                        'im oberen Koordinatensystem ein. \n\n')
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
+                        'Figure'))
+        liste_punkte.append(punkte)
 
     if BE != []:
         if len(BE) != len(teilaufg):
