@@ -1268,8 +1268,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
             vec_n, fakt_n = [nx, ny, nz], fakt_n = vektor_kuerzen(np.cross(v,w), qout=True)
             fakt_n_str = '' if fakt_n == 1 else gzahl(fakt_n) + r' \cdot '
-            erg_disk = Rational((((cx-ax)*nx)**2+((cy-ay)*ny)**2+((cz-az)*nz)**2),(nx**2+ny**2+nz**2))
-            erg = N(sqrt(erg_disk), 3)
+            erg= N(abs(((cx-ax)*nx+(cy-ay)*ny+(cz-az)*nz)/sqrt(nx**2+ny**2+nz**2)),3)
         if 'c' not in teilaufg:
             aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
                             r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -1332,7 +1331,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r'}} ~=~ \frac{ \sqrt{ ' + summe_exp([crx, cry, crz],2) + r' }}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
         elif lagebeziehung == 'windschief':
-            punkte = 6
+            punkte = 7
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~mithilfe~der~hessischen~Normalform'
                            + r'~der~Hilfsebene~H~deren~Normalenvektor}, \\'
                            + r' \mathrm{~das~Kreuzprodukt~der~Richtungsvektoren~von~g~und~h~ist:} \\'
@@ -1343,14 +1342,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{'
                            + summe_exp([nx,ny,nz],2)+ r'} ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
-                           + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (3BE) \\\\'
+                           + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (4BE) \\\\'
                            + r' d(g,h) ~=~ \left| \overrightarrow{P_g Q_h} \cdot \overrightarrow{n_0} \right| ~=~'
                            + r' \left| \begin{pmatrix} ' + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az)
                            + r' \\' + r' \end{pmatrix} \cdot \frac{1}{ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
                            + r'}} \cdot \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz)
-                           + r' \\' + r' \end{pmatrix} \right| ~=~ \frac{ \sqrt{'
-                           + summe_exp([(cx-ax)*nx,(cy-ay)*ny,(cz-az)*nz],2) + r'} }{ \sqrt{'
-                           + gzahl(nx**2+ny**2+nz**2) + r'}}  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
+                           + r' \\' + r' \end{pmatrix} \right| ~=~ \left| \frac{ '
+                           + gzahl((cx-ax)*nx) + vorz_str((cy-ay)*ny) + vorz_str((cz-az)*nz) + r' }{ \sqrt{'
+                           + gzahl(nx**2+ny**2+nz**2) + r'}} \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
 
         liste_punkte.append(punkte)
         i += 1
@@ -2553,8 +2552,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
                            + f'der Schar. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ ('
-                           + gzahl(nax) + ')^2 + (' + gzahl(nay) + ')^2 + (' + gzahl(naz) + r')^2 } ~=~ '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
+                           + summe_exp([nax, nay, naz], 2) + r' } ~=~ '
                            + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
                            + gzahl(h_var) + r'} ~ist:} \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
                            + gzahl(dz) + r' \right) \quad (1BE) \\ '

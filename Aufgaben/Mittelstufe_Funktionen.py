@@ -187,7 +187,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
             i += 1
 
     if 'f' in teilaufg:
-        # zu gegebenen Punkten einer Funktion den Graphen zeichnen
+        # zu gegebener Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         k = anz_einf + anz_pkt
