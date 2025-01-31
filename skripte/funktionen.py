@@ -411,7 +411,7 @@ def vektor_kuerzen(vec, p = 50, qout=False):
     # print('Liste mit erweiterten Faktoren: ' + str(list)), print('erweitert: ' + str(list))
     list_pos = [abs(x) for x in list]
     # print('Liste mit positiven Elementen:' + str(list_pos))
-    teiler = [x for x in range(1,int(max(list_pos)))]
+    teiler = [x+1 for x in range(int(max(list_pos)))]
     teiler.reverse()
     # print('Liste der möglichen Teiler: ' + str(teiler))
     for zahl in teiler:
