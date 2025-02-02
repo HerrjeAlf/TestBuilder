@@ -1600,9 +1600,9 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)
                    + r' \quad (1BE)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
                    + r' \quad \to \quad ' + vorz_v_aussen(xwert_2**2, 'a') + vorz_v_innen(xwert_2, 'b')
-                   + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                   + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ' ) ~=~ } '
                    + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
-                   + vorz_v_innen(xwert_3,'b + c ~=~' + gzahl(ywert_3) + r' \quad (1BE) }'))
+                   + vorz_v_innen(xwert_3,'b + c ~=~' + gzahl(ywert_3) + r' \quad (1BE)'))
     loesung.append(table2)
     loesung.append(r' \mathrm{aus~III~folgt:~' + vorz_v_aussen(c6,'c~=~') + vorz_str(d6) + r' \quad \vert \div '
                    + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1BE) } \\'
