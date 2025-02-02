@@ -3,7 +3,7 @@ import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Package, HugeText, MultiRow, NoEscape)
-from pylatex.utils import bold
+from pylatex.utils import bold, italic
 from skripte.funktionen import *
 from skripte.plotten import *
 
@@ -250,6 +250,454 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
     else:
         erzeugen_test(f'Gr. {alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
+
+# Hier wird eine Vorprüfung für den Abschluss der 10. Klasse erzeugt
+def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex=True):
+    def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
+        in_tagen, liste_bez, liste_punkte = angb_teil1[0], angb_teil1[1], angb_teil1[2]
+        print(f'\033[38;2;100;141;229m\033[1m\033[0m')
+        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+
+        # erstellen der Tabelle zur Punkteübersicht
+        liste_punkte = angb_teil1[-1]
+        liste_bez = angb_teil1[-2]
+        liste_bez.append('')
+        liste_bez.insert(0,'')
+        liste_punkte.append('')
+        liste_punkte.insert(0,MediumText(bold('Basisaufgaben')))
+        liste_ergebnis_z1 = ['','erhaltene']
+        for p in range(len(liste_punkte) - 2):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['','Punkte']
+        for p in range(len(liste_punkte) - 2):
+            liste_ergebnis_z2.append('')
+
+        spalten = ''
+        for element in liste_punkte:
+            spalten += 'c|'
+        table3 = Tabular(spalten, row_height=1.2)
+        table3.add_hline(2)
+        table3.add_row('',(MultiColumn(len(liste_punkte) - 1, align='|c|',
+                                    data='Punkteverteilung aller Aufgaben')))
+        table3.add_hline(2)
+        table3.add_row(liste_bez)
+        table3.add_hline(2)
+        table3.add_row(liste_punkte)
+        table3.add_hline(2)
+        table3.add_row(liste_ergebnis_z1)
+        table3.add_row(liste_ergebnis_z2)
+        table3.add_hline(2)
+
+
+        # der Teil in dem die PDF-Datei erzeugt wird
+        @timer
+        def Teil_1():
+            Aufgabe = Document(geometry_options=geometry_options)
+            packages(Aufgabe)
+
+            # Kopf erste Seite
+            with Aufgabe.create(Figure(position='h')) as kopf:
+                kopf.add_image('../img/kopfzeile.png', width='480px')
+            # erste Seite
+
+
+            table1 = Tabular('l c', row_height=1.2)
+            table1.add_row((MultiColumn(2, align='c',
+                                        data=LargeText(bold(f'Einheitliche Klassenarbeit der Klasse 10'))),))
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='c', data=HugeText(bold('Mathematik'))),))
+            table1.add_empty_row()
+            table1.add_row(MediumText(bold('Allgemeine Arbeitshinweise')), '')
+            table1.add_row(NoEscape(r'Die $ \mathbf{Arbeitszeit} $ beträgt $ \mathbf{90} $ Minuten.'), '')
+            table1.add_row('Jede Aufgabe und alle Teilaufgaben sind mit der entsprechenden Punktzahl versehen. '
+                           'Das soll Ihnen','')
+            table1.add_row('bei der Reihenfolge der Bearbeitung von Teilaufgaben helfen.', '')
+            table1.add_row(NoEscape('Die Schülerinnen und Schüler der ' + r'$ \mathbf{Erweiterungskurse} $'
+                                    + ' müssen alle Aufgaben lösen.'), '')
+            table1.add_row(NoEscape('Die Schülerinnen und Schüler der ' + r'$ \mathbf{Grundkurse} $ lösen nur '
+                                    + r'$ \underline{die~ohne~Symbol~ * } $  (Sternchen)'), '')
+            table1.add_row(' gekennzeichneten Aufgaben. Zusatzpunkte werden nicht vergeben.', '')
+            table1.add_empty_row()
+            table1.add_hline()
+            table1.add_row(italic('Bitte bearbeiten Sie alle Aufgaben auf den vorgegebenen Blättern. '
+                           'Sollte der zur Verfügung stehende'), '')
+            table1.add_row(italic('Platz nicht ausreichen, fügen Sie Ihre Ergänzungen auf einem gesonderten'
+                                  'Blatt ein.'), '')
+            table1.add_row(italic('Alle Lösungswege müssen nachvollziehbar dokumentiert sein.'), '')
+            table1.add_row(italic('Denken Sie an Begründungen und vergessen Sie bei Textaufgaben nicht den '
+                                  'Antwortsatz.'), '')
+            table1.add_hline()
+            table1.add_empty_row()
+            table1.add_row('Falls Sie eine Lösung durch Probieren finden, müssen Sie Ihre Überlegungen ausreichend '
+                           'kommentieren.', '')
+            table1.add_row('Während der Arbeitszeit können Sie den nicht programmierbaren, nicht grafikfähigen '
+                           'Taschenrechner,', '')
+            table1.add_row('die Formelsammlung, das beiliegende Formelblatt (Doppelseite), Kurvenschablonen, '
+                           'Zeichengräte', '')
+            table1.add_row('sowie den Duden als Hilfsmittel benutzen. Viel Erfolg bei der Arbeit', '')
+            table1.add_empty_row()
+            table1.add_hline()
+            table1.add_empty_row()
+            table1.add_row('Vorname, Name:   ____________________', '')
+            table1.add_empty_row()
+            table1.add_row('Klasse, Kurs:   ____________________', '')
+            table1.add_empty_row()
+            table1.add_row('Fachlehrer*in:   ____________________', '')
+            table1.add_empty_row()
+            table1.add_hline()
+
+
+            # Auswertung
+            table3 = Tabular('|c|c| p{1cm} r p{7cm} ', row_height=1.5)
+            table3.add_row((MultiColumn(5, align='c', data='Dieser Teil wird nur von der Lehrkraft ausgefüllt.'),))
+            table3.add_row(MultiColumn(2, align='l', data=MediumText(bold('Punktewertung:'))),'', '', '')
+            table3.add_hline(1, 2)
+            table3.add_row(bold('Aufgabe'),bold('Summe'),'', MediumText('Note'), '____')
+            table3.add_hline(1, 2)
+            table3.add_row('1', '', '', '', '')
+            table3.add_hline(1, 2)
+            table3.add_row('2','','',MediumText('Punktewert'),'____')
+            table3.add_hline(1, 2)
+            table3.add_row('3','','', '', '')
+            table3.add_hline(1, 2)
+            table3.add_row('4','','',MediumText('Datum'),'_______________')
+            table3.add_hline(1, 2)
+            table3.add_row('5','','','','')
+            table3.add_hline(1, 2)
+            table3.add_row('Summe','','',MediumText('Unterschrift'),'_______________')
+            table3.add_hline(1, 2)
+
+            Aufgabe.append(table1)
+            Aufgabe.append(' \n\n')
+            Aufgabe.append(table3)
+
+            Aufgabe.append(' \n\n')
+            Aufgabe.append(NewPage())
+
+            table5 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+            table5.add_row(MediumText(bold(f'Thema:')),MediumText(bold(f'Basisaufgaben')))
+            table5.add_hline(1, 2)
+            table5.add_empty_row()
+
+            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+            for element in liste_seiten_teil1:
+                Aufgabe.append(table5)
+                Aufgabe.append(' \n\n')
+                Aufgabe.extend(element[0])
+                if element != liste_seiten_teil1[-1]:
+                    Aufgabe.append(NewPage())
+
+            Aufgabe.append(' \n\n')
+
+            Aufgabe.generate_pdf(f'pdf/Vorpruefung Klasse 10 - Basisaufgaben', clean_tex=clean_tex)
+
+        # Erwartungshorizont
+        @timer
+        def EWH_Teil_1():
+            Loesung = Document(geometry_options=geometry_options)
+            packages(Loesung)
+
+            Loesung.append(LargeText(bold(f'Lösung Vorpruefung Kl. 10 - Basisaufgaben')))
+
+            # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
+
+            for element in liste_seiten_teil1:
+                Loesung.extend(element[1])
+
+
+            Loesung.generate_pdf(f'pdf/Lsg Vorpruefung Kl. 10 - Basisaufgaben', clean_tex=clean_tex)
+
+        # Druck der Seiten
+        Teil_1()
+        EWH_Teil_1()
+
+    def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
+        in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2]
+        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        print(f'\033[38;2;100;141;229m\033[1m\033[0m')
+        themen = ['Aufgabe zur Trigonometrie', 'Aufgabe zu Funktionen', 'Aufgaben zu Wahrscheinlichkeit',
+                  'Aufgabe zur Flächenberechnung']
+
+        # der Teil in dem die PDF-Datei erzeugt wird
+        @timer
+        def Teil_2():
+            Aufgabe = Document(geometry_options=geometry_options)
+            packages(Aufgabe)
+            i = 0
+            for element in themen:
+                # Tabelle für Kopfzeile
+                table2 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+                table2.add_row(MediumText(bold(f'Thema')),
+                               MediumText(bold(element)))
+                table2.add_hline(1, 2)
+                table2.add_empty_row()
+
+                # erstellen der Tabelle zur Punkteübersicht
+                Punkte = (sum(liste_punkte[i][1:]))
+                liste_bez[i].append('Summe')
+                liste_punkte[i].append(str(Punkte))
+                anzahl_spalten = len(liste_punkte[i])
+                spalten = '|'
+                for p in liste_punkte[i]:
+                    spalten += 'c|'
+                liste_ergebnis_z1 = ['erhaltene']
+                for p in range(anzahl_spalten - 1):
+                    liste_ergebnis_z1.append('')
+                liste_ergebnis_z2 = ['Punkte']
+                for p in range(anzahl_spalten - 1):
+                    liste_ergebnis_z2.append('')
+
+                table3 = Tabular(spalten, row_height=1.2)
+                table3.add_hline()
+                table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                            data='Punkteverteilung der Aufgabe'),))
+                table3.add_hline()
+                table3.add_row(liste_bez[i])
+                table3.add_hline()
+                table3.add_row(liste_punkte[i])
+                table3.add_hline()
+                table3.add_row(liste_ergebnis_z1)
+                table3.add_row(liste_ergebnis_z2)
+                table3.add_hline()
+
+                # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+                for aufgaben in liste_seiten_teil2[i]:
+                    Aufgabe.append(table2)
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.extend(aufgaben[0])
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.append(' \n\n')
+                    Aufgabe.append(table3)
+                    if element != liste_seiten_teil2[i][-1]:
+                        Aufgabe.append(NewPage())
+                i += 1
+
+            Aufgabe.generate_pdf(f'pdf/Vorpruefung Kl. 10 - verschiedene Themen', clean_tex=clean_tex)
+
+        # Erwartungshorizont
+        @timer
+        def EWH_Teil_2():
+            Loesung = Document(geometry_options=geometry_options)
+            packages(Loesung)
+
+            # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
+            i = 0
+            for thema in themen:
+                Loesung.append(LargeText(bold(f'Lösung Vorpruefung Kl. 10 - verschiedene Themen')))
+                for element in liste_seiten_teil2[i]:
+                    Loesung.extend(element[1])
+                Loesung.append(NewPage())
+                i += 1
+
+            Loesung.generate_pdf(f'pdf/Lsg Vorpruefung Kl. 10 - verschiedene Themen', clean_tex=clean_tex)
+
+        # Druck der Seiten
+        Teil_2()
+        EWH_Teil_2()
+
+    erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1)
+    erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
+
+# Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
+def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb, clean_tex=True):
+
+    # Aufgabenblatt
+    def Aufgaben(liste_aufg_lsg_teil1, angb):
+        Aufgabe = Document(geometry_options=geometry_options)
+        packages(Aufgabe)
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 = \
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
+        # Kopf erste Seite
+        with Aufgabe.create(Figure(position='h')) as kopf:
+            kopf.add_image('../img/kopfzeile.png', width='480px')
+
+        # Tabelle erste Seite
+        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=MediumText(bold(f'Mündliche Abiturprüfung im Fach '
+                                                    f'Mathematik des Schuljahres {schuljahr}'))),))
+        table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
+        table1.add_empty_row()
+        table1.add_row(MediumText('Prüfung:'), MediumText(f'Vorschlag {vorschlag}'))
+        table1.add_row(MediumText('Lehrkraft:'), MediumText(str(lehrkraft)))
+        table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
+        table1.add_row(MediumText('Bearbeitungszeit:'), MediumText('30 min'))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_1}'))),))
+        table1.add_hline(1, 2)
+
+        Aufgabe.append(table1)
+        Aufgabe.append(' \n\n\n')
+
+        for element in liste_aufg_lsg_teil1:
+            Aufgabe.extend(element[0])
+
+        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben {vorschlag}', clean_tex=clean_tex)
+
+    # Fragen für das Prüfungsgespräch der mündlichen Prüfung
+    def pruefungsfragen(liste_aufg_lsg_teil2, angb):
+        Aufgabe = Document(geometry_options=geometry_options)
+        packages(Aufgabe)
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
+        # Kopf erste Seite
+        with Aufgabe.create(Figure(position='h')) as kopf:
+            kopf.add_image('../img/kopfzeile.png', width='480px')
+
+        # Tabelle erste Seite
+        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=MediumText(bold(f'Mündliche Abiturprüfung im Fach '
+                                                         f'Mathematik des Schuljahres {schuljahr}'))),))
+        table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='c',
+                                    data=LargeText(bold(f'Fragen zum Prüfungsgespräch - Vorschlag {vorschlag}'))),))
+        table1.add_empty_row()
+        table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_2}'))),))
+        table1.add_hline(1, 2)
+
+        Aufgabe.append(table1)
+        Aufgabe.append(' \n\n')
+        Aufgabe.append(' \n\n')
+
+        for element in liste_aufg_lsg_teil2:
+            Aufgabe.extend(element[0])
+            Aufgabe.append(NewPage())
+
+        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Fragen {vorschlag}', clean_tex=clean_tex)
+
+    def Erwartungshorizont(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
+        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
+            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
+
+        # Erwartungshorizont
+        Loesung = Document(geometry_options=geometry_options)
+        packages(Loesung)
+
+        # Lösung Teil 1
+        table2 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
+        table2.add_row(MediumText(bold(f'Teil I')), MediumText(bold(f'EWH zum Thema {thema_1} - {vorschlag}')))
+        table2.add_hline(1, 2)
+        table2.add_empty_row()
+
+        Loesung.append(table2)
+
+        # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+        for element in liste_aufg_lsg_teil1:
+            Loesung.extend(element[1])
+
+        Loesung.append(NewPage())
+
+        # Lösung Teil 2
+        table3 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
+        table3.add_row(MediumText(bold(f'Teil II')), MediumText(bold(f'EWH zum Thema {thema_2} - {vorschlag}')))
+        table3.add_hline(1, 2)
+        table3.add_empty_row()
+
+        Loesung.append(table3)
+
+        # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
+        for element in liste_aufg_lsg_teil2:
+            Loesung.extend(element[1])
+
+        Loesung.append(NewPage())
+
+        # Lösung Teil 2
+        table4 = Tabular(' p{16.5cm}', row_height=1.5)
+        table4.add_row(MediumText(bold(f'Auswertung der mündlichen Prüfung {vorschlag}')))
+        table4.add_hline()
+        table4.add_empty_row()
+        Loesung.append(table4)
+        Loesung.append(' \n\n')
+        Loesung.append(MediumText('erzielte Leistungen in der Präsentation: \n\n'))
+
+        # Auswertungsseite
+        # erstellen der Tabelle zur Punkteübersicht
+        liste_punkte = angb[-1]
+        liste_bez = angb[-2]
+        Punkte = (sum(liste_punkte[1:]))
+        liste_bez.append('Summe')
+        liste_punkte.append(str(Punkte))
+        anzahl_spalten = len(liste_punkte)
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+
+        spalten = '|'
+        for p in liste_punkte:
+            spalten += 'c|'
+
+        table5 = Tabular(spalten, row_height=1.2)
+        table5.add_hline()
+        table5.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil I'),))
+        table5.add_hline()
+        table5.add_row(liste_bez)
+        table5.add_hline()
+        table5.add_row(liste_punkte)
+        table5.add_hline()
+        table5.add_row(liste_ergebnis_z1)
+        table5.add_row(liste_ergebnis_z2)
+        table5.add_hline()
+
+        Loesung.append(table5)
+        Loesung.append(' \n\n')
+        Loesung.append(' \n\n')
+        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____% der Leistung erreicht \n\n'))
+
+        Loesung.append(' \n\n')
+        Loesung.append(' \n\n')
+        Loesung.append(MediumText('erzielte Leistungen im Prüfungsgespräch: \n\n'))
+
+        # erstellen der Tabelle zur Punkteübersicht
+        liste_punkte = angb[-1]
+        liste_bez = angb[-2]
+        liste_bez.append('')
+        liste_punkte.append('')
+        anzahl_spalten = len(liste_punkte)
+        liste_gewaehlt = ['gewählt']
+        for p in range(anzahl_spalten - 2):
+            liste_gewaehlt.append(NoEscape(r'$  \square $'))
+        liste_gewaehlt.append('Summe')
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z1.append('')
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(anzahl_spalten - 1):
+            liste_ergebnis_z2.append('')
+
+        spalten = '|'
+        for p in liste_punkte:
+            spalten += 'c|'
+
+        table6 = Tabular(spalten, row_height=1.2)
+        table6.add_hline()
+        table6.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                    data='Punkteverteilung aller Aufgaben des Prüfungsgespräches'),))
+        table6.add_hline()
+        table6.add_row(liste_bez)
+        table6.add_row(liste_gewaehlt)
+        table6.add_hline()
+        table6.add_row(liste_punkte)
+        table6.add_hline()
+        table6.add_row(liste_ergebnis_z1)
+        table6.add_row(liste_ergebnis_z2)
+        table6.add_hline()
+
+        Loesung.append(table6)
+        Loesung.append(' \n\n')
+        Loesung.append(' \n\n')
+        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____% der Leistung erreicht \n\n'))
+
+        Loesung.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - EWH {vorschlag}', clean_tex=clean_tex)
+
+
+    Aufgaben(liste_aufg_lsg_teil1, angb)
+    pruefungsfragen(liste_aufg_lsg_teil2, angb)
+    Erwartungshorizont(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb)
 
 # Hier wird eine Klausur erzeugt
 def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex=True):
@@ -818,203 +1266,3 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
     erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1)
     erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
 
-# Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
-def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb, clean_tex=True):
-
-    # Aufgabenblatt
-    def Aufgaben(liste_aufg_lsg_teil1, angb):
-        Aufgabe = Document(geometry_options=geometry_options)
-        packages(Aufgabe)
-        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 = \
-            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
-        # Kopf erste Seite
-        with Aufgabe.create(Figure(position='h')) as kopf:
-            kopf.add_image('../img/kopfzeile.png', width='480px')
-
-        # Tabelle erste Seite
-        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-        table1.add_row((MultiColumn(2, align='c',
-                                    data=MediumText(bold(f'Mündliche Abiturprüfung im Fach '
-                                                    f'Mathematik des Schuljahres {schuljahr}'))),))
-        table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
-        table1.add_empty_row()
-        table1.add_row(MediumText('Prüfung:'), MediumText(f'Vorschlag {vorschlag}'))
-        table1.add_row(MediumText('Lehrkraft:'), MediumText(str(lehrkraft)))
-        table1.add_row(MediumText('Hilfsmittel:'), MediumText('Tafelwerk und Taschenrechner'))
-        table1.add_row(MediumText('Bearbeitungszeit:'), MediumText('30 min'))
-        table1.add_empty_row()
-        table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_1}'))),))
-        table1.add_hline(1, 2)
-
-        Aufgabe.append(table1)
-        Aufgabe.append(' \n\n\n')
-
-        for element in liste_aufg_lsg_teil1:
-            Aufgabe.extend(element[0])
-
-        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Aufgaben {vorschlag}', clean_tex=clean_tex)
-
-    # Fragen für das Prüfungsgespräch der mündlichen Prüfung
-    def pruefungsfragen(liste_aufg_lsg_teil2, angb):
-        Aufgabe = Document(geometry_options=geometry_options)
-        packages(Aufgabe)
-        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
-            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
-        # Kopf erste Seite
-        with Aufgabe.create(Figure(position='h')) as kopf:
-            kopf.add_image('../img/kopfzeile.png', width='480px')
-
-        # Tabelle erste Seite
-        table1 = Tabular(' p{4cm} p{12cm}', row_height=1.5)
-        table1.add_row((MultiColumn(2, align='c',
-                                    data=MediumText(bold(f'Mündliche Abiturprüfung im Fach '
-                                                         f'Mathematik des Schuljahres {schuljahr}'))),))
-        table1.add_row((MultiColumn(2, align='c', data=MediumText(bold(str(pruefungsfach)))),))
-        table1.add_empty_row()
-        table1.add_row((MultiColumn(2, align='c',
-                                    data=LargeText(bold(f'Fragen zum Prüfungsgespräch - Vorschlag {vorschlag}'))),))
-        table1.add_empty_row()
-        table1.add_row((MultiColumn(2, align='l', data=MediumText(bold(f'Thema: {thema_2}'))),))
-        table1.add_hline(1, 2)
-
-        Aufgabe.append(table1)
-        Aufgabe.append(' \n\n')
-        Aufgabe.append(' \n\n')
-
-        for element in liste_aufg_lsg_teil2:
-            Aufgabe.extend(element[0])
-            Aufgabe.append(NewPage())
-
-        Aufgabe.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - Fragen {vorschlag}', clean_tex=clean_tex)
-
-    def Erwartungshorizont(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb):
-        schuljahr, pruefungsfach, lehrkraft, vorschlag, thema_1, thema_2 =\
-            (angb[0], angb[1], angb[2], angb[3], angb[4], angb[5])
-
-        # Erwartungshorizont
-        Loesung = Document(geometry_options=geometry_options)
-        packages(Loesung)
-
-        # Lösung Teil 1
-        table2 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
-        table2.add_row(MediumText(bold(f'Teil I')), MediumText(bold(f'EWH zum Thema {thema_1} - {vorschlag}')))
-        table2.add_hline(1, 2)
-        table2.add_empty_row()
-
-        Loesung.append(table2)
-
-        # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-        for element in liste_aufg_lsg_teil1:
-            Loesung.extend(element[1])
-
-        Loesung.append(NewPage())
-
-        # Lösung Teil 2
-        table3 = Tabular(' p{1.5cm} p{15cm}', row_height=1.5)
-        table3.add_row(MediumText(bold(f'Teil II')), MediumText(bold(f'EWH zum Thema {thema_2} - {vorschlag}')))
-        table3.add_hline(1, 2)
-        table3.add_empty_row()
-
-        Loesung.append(table3)
-
-        # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-        for element in liste_aufg_lsg_teil2:
-            Loesung.extend(element[1])
-
-        Loesung.append(NewPage())
-
-        # Lösung Teil 2
-        table4 = Tabular(' p{16.5cm}', row_height=1.5)
-        table4.add_row(MediumText(bold(f'Auswertung der mündlichen Prüfung {vorschlag}')))
-        table4.add_hline()
-        table4.add_empty_row()
-        Loesung.append(table4)
-        Loesung.append(' \n\n')
-        Loesung.append(MediumText('erzielte Leistungen in der Präsentation: \n\n'))
-
-        # Auswertungsseite
-        # erstellen der Tabelle zur Punkteübersicht
-        liste_punkte = angb[-1]
-        liste_bez = angb[-2]
-        Punkte = (sum(liste_punkte[1:]))
-        liste_bez.append('Summe')
-        liste_punkte.append(str(Punkte))
-        anzahl_spalten = len(liste_punkte)
-        liste_ergebnis_z1 = ['erhaltene']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z1.append('')
-        liste_ergebnis_z2 = ['Punkte']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z2.append('')
-
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
-
-        table5 = Tabular(spalten, row_height=1.2)
-        table5.add_hline()
-        table5.add_row((MultiColumn(anzahl_spalten, align='|c|', data='Punkteverteilung aller Aufgaben in Teil I'),))
-        table5.add_hline()
-        table5.add_row(liste_bez)
-        table5.add_hline()
-        table5.add_row(liste_punkte)
-        table5.add_hline()
-        table5.add_row(liste_ergebnis_z1)
-        table5.add_row(liste_ergebnis_z2)
-        table5.add_hline()
-
-        Loesung.append(table5)
-        Loesung.append(' \n\n')
-        Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsvortrag wurden ____% der Leistung erreicht \n\n'))
-
-        Loesung.append(' \n\n')
-        Loesung.append(' \n\n')
-        Loesung.append(MediumText('erzielte Leistungen im Prüfungsgespräch: \n\n'))
-
-        # erstellen der Tabelle zur Punkteübersicht
-        liste_punkte = angb[-1]
-        liste_bez = angb[-2]
-        liste_bez.append('')
-        liste_punkte.append('')
-        anzahl_spalten = len(liste_punkte)
-        liste_gewaehlt = ['gewählt']
-        for p in range(anzahl_spalten - 2):
-            liste_gewaehlt.append(NoEscape(r'$  \square $'))
-        liste_gewaehlt.append('Summe')
-        liste_ergebnis_z1 = ['erhaltene']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z1.append('')
-        liste_ergebnis_z2 = ['Punkte']
-        for p in range(anzahl_spalten - 1):
-            liste_ergebnis_z2.append('')
-
-        spalten = '|'
-        for p in liste_punkte:
-            spalten += 'c|'
-
-        table6 = Tabular(spalten, row_height=1.2)
-        table6.add_hline()
-        table6.add_row((MultiColumn(anzahl_spalten, align='|c|',
-                                    data='Punkteverteilung aller Aufgaben des Prüfungsgespräches'),))
-        table6.add_hline()
-        table6.add_row(liste_bez)
-        table6.add_row(liste_gewaehlt)
-        table6.add_hline()
-        table6.add_row(liste_punkte)
-        table6.add_hline()
-        table6.add_row(liste_ergebnis_z1)
-        table6.add_row(liste_ergebnis_z2)
-        table6.add_hline()
-
-        Loesung.append(table6)
-        Loesung.append(' \n\n')
-        Loesung.append(' \n\n')
-        Loesung.append(MediumText('Im Prüfungsgespräch wurden ____% der Leistung erreicht \n\n'))
-
-        Loesung.generate_pdf(f'pdf/mündliche Prüfung {schuljahr} - EWH {vorschlag}', clean_tex=clean_tex)
-
-
-    Aufgaben(liste_aufg_lsg_teil1, angb)
-    pruefungsfragen(liste_aufg_lsg_teil2, angb)
-    Erwartungshorizont(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb)
