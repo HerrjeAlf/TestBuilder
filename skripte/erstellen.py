@@ -40,15 +40,14 @@ def seite(aufgaben):
                     graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
                 i += 1
             elif 'Bild' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width='300px')
-                i += 1
-            elif '3dim_Koordinatensystem' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/{elements}.png', width='300px')
-            elif 'kariertes_Papier' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/{elements}.png', width='450px')
+                if isinstance(elements, list) and len(elements) == 2:
+                    with Aufgabe.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width=elements[1])
+                    i += 1
+                elif isinstance(elements, str):
+                    with Aufgabe.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width='300px')
+                    i += 1
             else:
                 Aufgabe.append(elements)
 
@@ -63,15 +62,14 @@ def seite(aufgaben):
                     graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
                 i += 1
             elif 'Bild' in elements:
-                with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/aufgaben/{loesung[3][i]}', width='200px')
-                i += 1
-            elif '3dim_Koordinatensystem' in elements:
-                with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/{elements}.png', width='300px')
-            elif 'kariertes_Papier' in elements:
-                with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/{elements}.png', width='450px')
+                if isinstance(elements, list) and len(elements) == 2:
+                    with Loesung.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width=elements[1])
+                    i += 1
+                elif isinstance(elements, str):
+                    with Loesung.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width='300px')
+                    i += 1
             else:
                 Loesung.append(elements)
 
@@ -319,13 +317,18 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             table1.add_row(' gekennzeichneten Aufgaben. Zusatzpunkte werden nicht vergeben.', '')
             table1.add_empty_row()
             table1.add_hline()
-            table1.add_row(italic('Bitte bearbeiten Sie alle Aufgaben auf den vorgegebenen Blättern. '
-                           'Sollte der zur Verfügung stehende'), '')
-            table1.add_row(italic('Platz nicht ausreichen, fügen Sie Ihre Ergänzungen auf einem gesonderten'
-                                  'Blatt ein.'), '')
-            table1.add_row(italic('Alle Lösungswege müssen nachvollziehbar dokumentiert sein.'), '')
-            table1.add_row(italic('Denken Sie an Begründungen und vergessen Sie bei Textaufgaben nicht den '
-                                  'Antwortsatz.'), '')
+            table1.add_row((MultiColumn(2, align='|l|',
+                                        data=italic('Bitte bearbeiten Sie alle Aufgaben auf den vorgegebenen Blättern. '
+                                                    'Sollte der zur Verfügung stehende')),))
+            table1.add_row((MultiColumn(2, align='|l|',
+                                        data=italic('Platz nicht ausreichen, fügen Sie Ihre Ergänzungen auf einem '
+                                                    'gesonderten Blatt ein.')),))
+            table1.add_row((MultiColumn(2, align='|l|',
+                                        data=italic('Alle Lösungswege müssen nachvollziehbar '
+                                                    'dokumentiert sein.')),))
+            table1.add_row((MultiColumn(2, align='|l|',
+                                        data=italic('Denken Sie an Begründungen und vergessen Sie bei '
+                                                    'Textaufgaben nicht den Antwortsatz.')),))
             table1.add_hline()
             table1.add_empty_row()
             table1.add_row('Falls Sie eine Lösung durch Probieren finden, müssen Sie Ihre Überlegungen ausreichend '

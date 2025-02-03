@@ -63,7 +63,6 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
                      + r'  \end{pmatrix}  \quad (3P) \\')
-
     else:
         vektor_bc = random.choice(vektoren_auswahl)
         while vektor_vergleich(vektor_bc, vektor_ab) == True:
@@ -327,13 +326,15 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_punkte.append(pkt)
         i += 1
 
-        if ks != None:
-            if ks == True:
-                aufgabe.append('3dim_Koordinatensystem')
-                loesung.append('3dim_Koordinatensystem')
-            else:
-                aufgabe.append('kariertes_Papier')
-                loesung.append('kariertes_Papier')
+    if ks != None:
+        if ks == True:
+            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
+            aufgabe.append(['Bild','300px'])
+            loesung.append(['Bild','300px'])
+        else:
+            grafiken_loesung = grafiken_aufgaben = ['kariertes_Papier']
+            aufgabe.append(['Bild','400px'])
+            loesung.append(['Bild','400px'])
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -1900,7 +1901,10 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
-        aufgabe.append('3dim_Koordinatensystem') if koordinatensystem else aufgabe.append(' \n\n')
+        if koordinatensystem:
+            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
+            aufgabe.append(['Bild', '300px'])
+            loesung.append(['Bild', '300px'])
         loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
