@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[ebenen_umformen(1,koordinatensystem=True)]]
+    Aufgaben = [[basisaufgaben(1)]]
 
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
