@@ -16,6 +16,38 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=False, anzahl=False, wdh=False, BE=[]):
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = ['notizen_klein']
+    grafiken_loesung = []
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    elif wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+        exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
+             "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
+
+    if 'a' in teilaufg:
+        # resultierenden Vektor einer Vektoraddition berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.extend((str(teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.',['Bild', '450px']))
+        liste_punkte.append(2)
+        i += 1
+
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
+
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
 def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
