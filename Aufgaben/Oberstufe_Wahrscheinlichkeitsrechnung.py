@@ -212,7 +212,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'a' in teilaufg:
         # Baumdiagramm zeichnen
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         if art == 'zoZ':
@@ -238,7 +237,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'b' in teilaufg:
         # Ergebnismengen angeben
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(6)
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
@@ -246,7 +244,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{3cm} p{7cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='c', data='Die Ergebnismengen'), 'Punkte')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='c',
+                                                                 data='Die Ergebnismengen'), 'Punkte')
         table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
         table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
         table1.add_row(MultiColumn(2, align='r', data=NoEscape(r'$E1 \cup E2: $')),

@@ -114,7 +114,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
             pkt += 2
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
         liste_punkte.append(pkt)
         i += 1
 
@@ -122,8 +122,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
-        loesung.append(str(teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
                                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\'
                                            + gzahl(vektor_ab[2]) + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{('
                                            + gzahl(vektor_ab[0]) + ')^2 ~+~(' + gzahl(vektor_ab[1]) + ')^2 ~+~('
@@ -364,13 +364,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 = punkt_vektor(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
         ergebnis = faktor_1 * np.array(vektor_1) + faktor_2 * np.array(vektor_2)
-        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
         aufgabe.append(gzahl(faktor_1) + r' \cdot \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                        + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \hspace{20em} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
                        + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -1877,9 +1877,9 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                           f'anderen beiden Darstellungsformen um. \n\n ')
-        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                        r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3BE) \\'
                        r' \overrightarrow{u} ~=~ \begin{pmatrix}'
@@ -1899,13 +1899,13 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
         if koordinatensystem:
             grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
             aufgabe.append(['Bild', '300px'])
             loesung.append(['Bild', '300px'])
-        loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
                        + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
@@ -1998,11 +1998,11 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
                                           'mit einer Ebene und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
                        'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
                                 'der Ebene sind senkrecht zueinander und haben keine gemeinsamen Punkte', '2P')
@@ -2234,11 +2234,11 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
                                           'und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. die Normalenvektoren der Ebenen sind parallel und '
                                 'sie haben keine gemeinsamen Punkte', '2P')
         table1.add_row('', '-', 'sind identisch, d.h. die Normalenvektoren der Ebenen sind parallel und '
