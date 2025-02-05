@@ -36,9 +36,14 @@ def seite(aufgaben):
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
             elif 'Grafik' in elements:
-                with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
-                i += 1
+                if isinstance(elements, list) and len(elements) == 2:
+                    with Aufgabe.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/temp/{aufgabe[2][i]}', width=elements[1])
+                    i += 1
+                elif isinstance(elements, str):
+                    with Aufgabe.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px')
+                    i += 1
             elif 'Bild' in elements:
                 if isinstance(elements, list) and len(elements) == 2:
                     with Aufgabe.create(Figure(position='ht!')) as graph:

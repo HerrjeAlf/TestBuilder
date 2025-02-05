@@ -16,13 +16,24 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=False, anzahl=False, wdh=False, BE=[]):
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=True,
+                  anzahl=False, wdh=False, BE=[]):
+    # Hier sollen SuS Terme addieren bzw. subtrahieren
+    # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfache Bruchterme einer Menge berechnen
+    # b) Potenzgesetz kennen
+    #
+    # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
     liste_punkte = []
     liste_bez = []
     i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['notizen_klein']
+    grafiken_aufgaben = []
     grafiken_loesung = []
 
     if anzahl != False:
@@ -34,12 +45,160 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
              "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
 
-    if 'a' in teilaufg:
-        # resultierenden Vektor einer Vektoraddition berechnen
+    for step in range(len([element for element in teilaufg if element == 'a'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        nenner = random.choice([2, 3, 4, 5, 6, 8])
+        anteil = nzahl(2,10)*10
+        wert = anteil * nenner
+        einheit = random.choice(['kg', 't', 'm', 'l', '€'])
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Bestimmen Sie ' + r'$ \frac{1}{'
+                                 + gzahl(nenner) + '} $ von ' + gzahl(wert) + einheit + '.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{1}{ ' + gzahl(nenner) + r'} \cdot ' + gzahl(wert) + einheit
+                       + '~=~' + gzahl(anteil) + einheit + r' \quad (1BE) ')
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'b'])):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.extend((str(teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.',['Bild', '450px']))
-        liste_punkte.append(2)
+        bas = nzahl(2,6)
+        exp = nzahl(3,5)
+        exp_1 = nzahl(1,2)
+        exp_2 = exp - exp_1
+        aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
+                  + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp_2, exp=True) + '}')
+        aufg_2 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + r' \cdot ' + gzahl(exp)
+        aufg_3 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(exp) + '^{' + gzahl(bas, exp=True) + r'}'
+        list_aufg = [r' \square \quad '  + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+        list_lsg = [r' \surd \quad ' + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+        ausw = [0,1,2]
+        random.shuffle(ausw)
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + ') Kreuzen Sie die richtige Aussage an.'),
+                        list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]] + r' \hspace{5em} ' + list_aufg[ausw[2]]))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'c'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        werte = random_selection(list(range(1,11)),4)
+        bruch1_str = r' \frac{' + gzahl(werte[0]) + r'}{' + gzahl(werte[1]) + '}'
+        bruch2_str = r' \frac{' + gzahl(werte[2]) + r'}{' + gzahl(werte[3]) + '}'
+        list_terme = [bruch1_str + r' \cdot ' + bruch2_str, bruch1_str + r' \div ' + bruch2_str,
+                      bruch1_str + '+' + bruch2_str, bruch1_str + '-' + bruch2_str]
+        list_aufg = [r'~ \square \quad '  + element for element in list_terme]
+        list_lsg = list_aufg.copy()
+        list_erg = [Rational(werte[0]*werte[2],werte[1]*werte[3]), Rational(werte[0]*werte[3],werte[1]*werte[2]),
+                    Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
+                    Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
+        # erg_ausw = random.choice([0,1,2,3])
+        erg_ausw = 0
+        erg = list_erg[erg_ausw]
+        list_lsg[erg_ausw] = r' \surd \quad ' + list_terme[erg_ausw] + '~=~' + gzahl(erg)
+        ausw = [0,1,2,3]
+        random.shuffle(ausw)
+
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
+                        list_aufg[ausw[0]] + r' \hspace{4em} ' + list_aufg[ausw[1]] + r' \hspace{4em} '
+                        + list_aufg[ausw[2]] + r' \hspace{4em} ' + list_aufg[ausw[3]]))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
+                       + r' \quad (1BE) ')
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'd'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        erg = nzahl(1,5)
+        abstand = nzahl(8,16)/2
+        min = erg - abstand
+        max = erg + abstand
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie diejenige Zahl an, die auf '
+                                + r'der Zahlengeraden in der Mitte von ' + gzahl(min) + ' und ' + gzahl(max)
+                                + ' liegt.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + gzahl(erg) + r' \quad (1BE) ')
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'i'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        gamma = nzahl(16,22)*5
+        beta = nzahl(6,12)*5
+        alpha = 180 - beta - gamma
+        seite_c = nzahl(6, 12)
+        seite_a = N(seite_c * math.sin(math.radians(alpha)) / math.sin(math.radians(gamma)), 3)
+        seite_b = N(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 3)
+        xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
+        ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
+
+        # Listen für die Zeichung des Dreiecks
+        pkt = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c]]
+        pkt_bez = ['', '', '']
+        st = ['', '', '']
+        st_werte = [seite_a, seite_b, seite_c]
+        wk_werte = [alpha, beta, gamma]
+
+        # Auswahl des gesuchten Winkels
+        winkel = [r' \alpha ', r' \beta ', r' \gamma ']
+        ausw = random.choice([0,1,2])
+        wk = [gzahl(wk_werte[0]) + r' ^{ \circ }', gzahl(wk_werte[1]) + r' ^{ \circ }', gzahl(wk_werte[2])+ r' ^{ \circ }']
+        wk[ausw] = winkel[ausw]
+
+        dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie die Größe des Winkels $ '
+                                 + winkel[ausw] + ' $ an.'),
+                        ['Grafik','170px'], winkel[ausw] + ' ~=~ ....................'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
+                       + r' ^{ \circ } \quad (1BE) ')
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'j'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        # Auswahl des gesuchten Winkels
+        quadrat = ([0, 1], [0, 0]), ([0, 0], [0, 1]), ([1, 1], [0, 1]), ([0, 1], [1, 1])
+        rechteck = ([0,4], [0,0]), ([0,0], [0,1]), ([4,4], [0,1]), ([0,4], [1,1])
+        trapez = ([0,4], [0,0]), ([3,4], [1,0]), ([3,1], [1,1]), ([0,1], [0,1])
+        parallelogramm = ([0,4], [0,0]), ([4,5], [0,1]), ([1,5], [1,1]), ([0,1],[0,1])
+        auswahl = random.choice([0,1,2,3])
+        flaeche = [quadrat, rechteck, trapez, parallelogramm]
+        flaeche_zeichnen(*flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        # Erstellen der zufälligen Auswahl
+        bezeichnung = ['Quadrat', 'Rechteck', 'Trapez', 'Parallelogramm']
+        list_aufg = [r' \square \quad \mathrm{Quadrat} ', r' \square \quad \mathrm{Rechteck} ',
+                     r' \square \quad \mathrm{Trapez} ', r' \square \quad \mathrm{Parallelogramm} ']
+        rf = [0, 1, 2, 3]
+        random.shuffle(rf)
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Wie heißt diese geometrische Figur. '
+                                 + r'Kreuze an.'))
+        if auswahl == 0:
+            aufgabe.append(['Grafik', '50px'])
+        else:
+            aufgabe.append(['Grafik', '150px'])
+        aufgabe.append(NoEscape(r'$ \hspace{5em} ' + list_aufg[rf[0]] + r' \hspace{4em} ' + list_aufg[rf[1]]
+                                + r' \hspace{4em} ' + list_aufg[rf[2]] + r' \hspace{4em} ' + list_aufg[rf[3]] + '$'))
+        list_lsg = list_aufg
+        list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
+        loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} '
+                       + list_lsg[rf[1]] + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]])
+        liste_punkte.append(1)
         i += 1
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte

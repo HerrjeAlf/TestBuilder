@@ -108,12 +108,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #print(lsg)
 
 # def schreibweise(zahl, darstellung='wiss'):
-punkte = i = 0
 
-punkte += 1
 
-print(i)
-print(punkte)
+rf = [0, 1, 2, 3]
+random.shuffle(rf)
+
+print(rf)
 
 
 
