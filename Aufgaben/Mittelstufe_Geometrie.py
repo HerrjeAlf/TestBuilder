@@ -804,10 +804,9 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], BE=[]):
     seite_b = N(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 3)
     gamma = 180 - alpha - beta
     flaeche = N(0.5*seite_a*seite_b*math.sin(math.radians(gamma)),3)
-
     seite_c = N(seite_a * math.sin(math.radians(gamma)) / math.sin(math.radians(alpha)), 3)
-    xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
-    ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
+    xwert_punkt_c = seite_c - seite_FB
+    ywert_punkt_c = seite_h
 
     # Listen für die Zeichung des Dreiecks
     pkt_list = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c],[xwert_punkt_c,0]]
