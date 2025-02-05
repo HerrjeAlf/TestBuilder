@@ -130,7 +130,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         else:
             aufgabe.append(' \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
-                       + gzahl(erg) + r' \quad (1BE) ')
+                       + gzahl(erg) + r' \quad (1BE)  S')
         liste_punkte.append(1)
         i += 1
 
