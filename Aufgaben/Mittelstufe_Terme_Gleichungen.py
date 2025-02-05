@@ -129,7 +129,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + gzahl(erg) + r' \quad (1BE) ')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
+                       + gzahl(erg) + r' \quad (1BE) ')
         liste_punkte.append(1)
         i += 1
 
