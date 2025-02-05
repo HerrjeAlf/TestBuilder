@@ -253,9 +253,6 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
     w_b = w_c - w_a
     # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
     pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
-    # print('Länge Seite a: ' + str(l_a))
-    # print('Länge Seite b: ' + str(l_b))
-    # print('Länge Seite c: ' + str(l_c))
     auswahl_beschriftung = random.randint(0, 6)
     bezeichnungen = [
         {'Punkte': ['A', 'B', 'C'], 'Seiten': ['a', 'b', 'c'], 'Winkel': [r' \alpha ',r' \beta ',r'90^{ \circ }']},
@@ -286,7 +283,8 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, BE=[]):
     if 'a' in teilaufg:
         # Hier sollen die SuS die gegebenen Verhältnisgleichungen für sin, cos und tan vervollständigen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, Kosiuns und Tangens. \n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, '
+                       + 'Kosiuns und Tangens. \n')
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
