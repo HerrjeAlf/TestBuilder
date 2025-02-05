@@ -55,13 +55,16 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', BE=[]):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "stufen=" kann festgelegt werden, wie viele Stufen das Baumdiagramm haben soll. Standardmäßig ist "stufen=None" und es wird zufällig zwischen zwei und drei Stufen ausgewählt. Es kann auch "stufen=2" und "stufen=3" gewählt werden.
+    # Mit dem Parameter "art=" kann festgelegt werden, welche Art von Ziehung beim Baumdiagramm vorliegt. Standardmäßig ist "art=zmz" Ziehen mit Zurücklegen ausgewählt. Es kann auch "art=zoz" (Ziehen ohne Zurücklegen) ausgewählt werden.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     if art not in ['zmZ', 'zoZ']:
         exit("art muss 'zmZ' oder 'zoZ' sein!")
     if stufen == None:
@@ -521,12 +524,13 @@ def faires_spiel(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
+def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0, BE=[]):
     # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
+    # Mit dem Parameter "vierfeldertafel=" kann festgelegt werden, ob eine Vierfeldertafel vorgegeben ist oder nicht. Standardmäßig ist "vierfeldertafel=True" und eine Vierfeldertafel vorgegeben, es kann aber auch "vierfeldertafel=False" gewählt werden.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     A = int(nzahl(10,20) * 100)
     M = int(nzahl(6,8)/10 * A)
@@ -626,12 +630,13 @@ def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sicheres_passwort(nr, teilaufg=['a', 'b'], BE=[]):
+def sicheres_passwort(nr, teilaufg=['a', 'b'], i=0, BE=[]):
     # Berechnung von Permutationen am Beispiel eines sicheren Passwortes
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     laenge = nzahl(6,12)
     liste_zeichen = [['Zahlen', 10], ['Kleinbuchstaben', 26], ['Großbuchstaben', 26], ['Sonderzeichen', 33]]
     wiederholung = random.choice(['nicht', ''])

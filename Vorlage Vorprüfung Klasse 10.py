@@ -11,7 +11,8 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
 
 # Hier die Basisaufgaben in der Form eintragen
-Basisaufgaben = [[]]
+Basisaufgaben = [[basisaufgaben(1,['a', 'b', 'c', 'e', 'i', 'j'])],
+                 [basisaufgaben(1, ['k'] , i=6)]]
 
 # Hier die Aufgaben zu den verschiedenen Themen in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 Trigonometrie = [[]]
