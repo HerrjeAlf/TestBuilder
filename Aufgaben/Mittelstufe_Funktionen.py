@@ -575,7 +575,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=True, i=0, BE=[]):
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
@@ -588,20 +588,81 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=True, i=0, 
     nst1 = -1 * nzahl(1, 3)
     abstand_nst = random.choice([2, 4])
     nst2 = nst1 + abstand_nst
+    while nst1+nst2 ==0 :
+        nst1 = -1 * nzahl(1, 3)
+        abstand_nst = random.choice([2, 4])
+        nst2 = nst1 + abstand_nst
     fkt_p_lf = (x - nst1) * (x - nst2)
     fkt_p_nf = x**2-(nst1+nst2)*x + nst1*nst2
     fkt_p_sf = (x - (nst1 + nst2) / 2) ** 2 + nst1 * nst2 - ((nst1 + nst2) ** 2) / 4
+    print(fkt_p_nf)
 
-
+    # Erstellen der linearen Funktion
+    if abstand_nst == 2:
+        xwert_p = nst1 - 2
+        ywert_p = fkt_p_nf.subs(x, xwert_p)
+        g_m = -1*nzahl(1,5)/2
+        fkt_g = x * g_m - xwert_p * g_m + ywert_p
+    else:
+        xwert_p = nst1 - 2
+        ywert_p = fkt_p_nf.subs(x, xwert_p)
+        g_m = nzahl(1,5)/2
+        fkt_g = x * g_m - xwert_p * g_m + ywert_p
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Im unteren Koordinatensystem ist der Graph der Parabel p(x)']
+               NoEscape('Im unteren Koordinatensystem ist der Graph der Parabel p(x) = $ x^2 '
+                        + vorz_v_innen(nst1+nst2,'x') + vorz_str(nst1 * nst2) + '$ dargestellt. \n\n'),
+               ['Grafik','200px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'Aufgabe_{nr}']
     grafiken_loesung = []
+    graph_xyfix(fkt_p_nf, bezn='p',  name=f'Aufgabe_{nr}.png')
 
-    graph_xyfix(*fkt_p_nf, bezn='p',  name=f'Aufgabe_{nr}.png')
+    if 'a' in teilaufg:
+        # Scheitelpunkt einer Parabel ablesen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Lesen Sie den Scheitelpunkt S'
+                                + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
+                       + gzahl((nst1 + nst2) / 2) + r' \vert ' + gzahl(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4)
+                       + r' \right) \quad (1BE)')
+        liste_punkte.append(punkte)
+        i += 1
 
+    if 'b' in teilaufg:
+        # Parabelgleichung in Scheitelpunktform aufstellen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Stellen Sie die Parabelgleichung in '
+                                + r'Scheitelpunktform auf.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str((nst1 + nst2) / 2)
+                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (1BE)')
+
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        # Nullstellen der Parabel berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen der '
+                                + r'Parabel und vergleichen ihre Ergebnisse mit dem Graphen.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + r' \quad (1BE)')
+
+        liste_punkte.append(punkte)
+        i += 1
 
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
