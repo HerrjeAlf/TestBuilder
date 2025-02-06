@@ -109,11 +109,31 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
+fkt = expand((x-a)*(x-b))
 
-rf = [0, 1, 2, 3]
-random.shuffle(rf)
+fkt_nf = x**2 - (a+b)*x + a*b
 
-print(rf)
+(x -(a+b)/2)**2 - (a+b)/2**2 + a*b
+
+p = - (a+b)/2
+q = a*b - (a+b)**2/4
+
+# Erstellen der Parabelgleichung
+nst1 = -1 * nzahl(1, 3)
+abstand_nst = random.choice([2, 4])
+nst2 = nst1 + abstand_nst
+fkt_p_lf = (x-nst1)*(x-nst2)
+fkt_p_nf = expand((x - nst1) * (x - nst2))
+fkt_p_nf2 = x**2-(nst1+nst2)*x + nst1*nst2
+fkt_p_sf = (x-(nst1+nst2)/2)**2 + nst1*nst2 - ((nst1+nst2)**2)/4
+
+print(nst1)
+print(nst2)
+print(fkt_p_lf)
+print(fkt_p_nf)
+print(fkt_p_nf2)
+print(fkt_p_sf)
+
 
 
 

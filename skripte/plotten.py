@@ -371,10 +371,19 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     plt.suptitle(titel, usetex=True)
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
 
-def Graph(x_min, x_max, *funktionen, name='Graph'):
+def Graph(x_min, x_max,  *funktionen, bezn=False, name='Graph'):
     fig, ax = plt.subplots()
     fig.canvas.draw()
     fig.tight_layout()
+    if bezn == False:
+        fkt_bez = ['' for _ in funktionen]
+    elif bezn == True:
+        fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
+    elif len(bezn) == len(funktionen):
+        fkt_bez = bezn
+    else:
+        fkt_bez = [NoEscape('$' + str(bezn) + '_{' + str(i+1) + '} $') for i in range(len(funktionen)+1)]
+
     ax.spines['top'].set_color('none')
     ax.spines['right'].set_color('none')
     ax.spines['bottom'].set_position(('data', 0))
@@ -385,10 +394,16 @@ def Graph(x_min, x_max, *funktionen, name='Graph'):
     arrow_fmt = dict(markersize=4, color='black', clip_on=False)
     ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
     ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+    xwerte = np.arange(x_min, x_max, 0.01)
+    i = 0
     for fkt in funktionen:
-        xwerte = np.arange(x_min, x_max, 0.01)
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte, linewidth=2)
+        werte = [(element, fkt.subs(x, element)) for element in xwerte]
+        xwert_ymax = [element for element in werte if abs(element[1]) <= 5][5][0]
+        plt.annotate(fkt_bez[i], xy=(xwert_ymax, fkt.subs(x, xwert_ymax)), xycoords='data',
+                     xytext=(+5, +5), textcoords='offset points', fontsize=12)
+        i += 1
     plt.grid(True)
     # plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)

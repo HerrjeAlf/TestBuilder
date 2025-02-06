@@ -574,3 +574,35 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=True, i=0, BE=[]):
+    # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    # Erstellen der Parabelgleichung
+    nst1 = -1 * nzahl(1, 3)
+    abstand_nst = random.choice([2, 4])
+    nst2 = nst1 + abstand_nst
+    fkt_p_lf = (x - nst1) * (x - nst2)
+    fkt_p_nf = x**2-(nst1+nst2)*x + nst1*nst2
+    fkt_p_sf = (x - (nst1 + nst2) / 2) ** 2 + nst1 * nst2 - ((nst1 + nst2) ** 2) / 4
+
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Im unteren Koordinatensystem ist der Graph der Parabel p(x)']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = [f'Aufgabe_{nr}']
+    grafiken_loesung = []
+
+    graph_xyfix(*fkt_p_nf, bezn='p',  name=f'Aufgabe_{nr}.png')
+
+
+
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
