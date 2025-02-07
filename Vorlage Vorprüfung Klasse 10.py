@@ -39,14 +39,12 @@ Flaechenberechnung = [[]]
 liste_punkte_teil1 = ['Punkte']
 liste_bez_teil1 = ['Aufgabe']
 
-# hier werden aus der Liste der Aufgaben dieTest erzeugt
+# hier werden aus der Liste der Aufgaben die Test erzeugt
 liste_seiten_teil1 = []
-i = 0
 for element in Basisaufgaben:
     for aufgabe in element:
-        liste_bez_teil1.append(str(i+1))
-        liste_punkte_teil1.append(sum(aufgabe[-2]))
-        i += 1
+        liste_bez_teil1.extend(aufgabe[5])
+        liste_punkte_teil1.extend(aufgabe[4])
     liste_seiten_teil1.append(seite(element))
 
 

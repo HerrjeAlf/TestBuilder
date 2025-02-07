@@ -2,7 +2,7 @@ import datetime
 import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
-                     MultiColumn, Package, HugeText, MultiRow, NoEscape)
+                     MultiColumn, Package, HugeText, MultiRow, NoEscape, Center)
 from pylatex.utils import bold, italic
 from skripte.funktionen import *
 from skripte.plotten import *
@@ -261,35 +261,18 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
-        # erstellen der Tabelle zur Punkteübersicht
+        # Ergänzen der Listen für table4
+        Punkte = (sum(liste_punkte[1:]))
+        liste_bez.append('Summe')
+        liste_punkte.append(str(Punkte))
         liste_punkte = angb_teil1[-1]
         liste_bez = angb_teil1[-2]
-        liste_bez.append('')
-        liste_bez.insert(0,'')
-        liste_punkte.append('')
-        liste_punkte.insert(0,MediumText(bold('Basisaufgaben')))
-        liste_ergebnis_z1 = ['','erhaltene']
-        for p in range(len(liste_punkte) - 2):
+        liste_ergebnis_z1 = ['erhaltene']
+        for p in range(len(liste_punkte) - 1):
             liste_ergebnis_z1.append('')
-        liste_ergebnis_z2 = ['','Punkte']
-        for p in range(len(liste_punkte) - 2):
+        liste_ergebnis_z2 = ['Punkte']
+        for p in range(len(liste_punkte) - 1):
             liste_ergebnis_z2.append('')
-
-        spalten = ''
-        for element in liste_punkte:
-            spalten += 'c|'
-        table3 = Tabular(spalten, row_height=1.2)
-        table3.add_hline(2)
-        table3.add_row('',(MultiColumn(len(liste_punkte) - 1, align='|c|',
-                                    data='Punkteverteilung aller Aufgaben')))
-        table3.add_hline(2)
-        table3.add_row(liste_bez)
-        table3.add_hline(2)
-        table3.add_row(liste_punkte)
-        table3.add_hline(2)
-        table3.add_row(liste_ergebnis_z1)
-        table3.add_row(liste_ergebnis_z2)
-        table3.add_hline(2)
 
 
         # der Teil in dem die PDF-Datei erzeugt wird
@@ -395,7 +378,25 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 if element != liste_seiten_teil1[-1]:
                     Aufgabe.append(NewPage())
 
-            Aufgabe.append(' \n\n')
+            # erstellen der Tabelle zur Punkteübersicht aller Aufgaben
+            with Aufgabe.create(Center()) as centered:
+                spalten = '|'
+                for element in liste_punkte:
+                    spalten += 'c|'
+                with centered.create(Tabular(spalten, row_height=1.2)) as table4:
+                    table4.add_hline(1)
+                    table4.add_row((MultiColumn(len(liste_punkte), align='|c|',
+                                                data='Punkteverteilung aller Basisaufgaben'),))
+                    table4.add_hline(1)
+                    table4.add_row(liste_bez)
+                    table4.add_hline(1)
+                    table4.add_row(liste_punkte)
+                    table4.add_hline(1)
+                    table4.add_row(liste_ergebnis_z1)
+                    table4.add_row(liste_ergebnis_z2)
+                    table4.add_hline(1)
+
+
 
             Aufgabe.generate_pdf(f'pdf/Vorpruefung Klasse 10 - Basisaufgaben', clean_tex=clean_tex)
 
@@ -1072,7 +1073,6 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             Aufgabe.append(table1)
             Aufgabe.append(' \n\n \n\n')
             Aufgabe.append(table3)
-
             Aufgabe.append(' \n\n')
             Aufgabe.append(NewPage())
 

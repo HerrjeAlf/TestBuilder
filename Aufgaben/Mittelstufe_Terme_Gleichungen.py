@@ -264,12 +264,12 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         {'Punkte': ['U', 'V', 'W'], 'Seiten': ['u', 'v', 'w'], 'Winkel': [r' \upsilon ', r' \phi ', r'90^{ \circ }']},
         {'Punkte': ['X', 'Y', 'Z'], 'Seiten': ['x', 'y', 'z'], 'Winkel': [r' \chi ', r' \psi ', r'90^{ \circ }']}]
 
-        pkt_bez = bezeichnungen[auswahl_beschriftung]['Punkte']
+        pkt_bez = (bezeichnungen[auswahl_beschriftung]['Punkte'])
         st = bezeichnungen[auswahl_beschriftung]['Seiten']
         st_werte = [l_a, l_b, l_c]
         wk = bezeichnungen[auswahl_beschriftung]['Winkel']
         wk_werte = [w_a, w_b, w_c]
-        dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        dreieck_zeichnen(pkt, st=st, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
         list_gl = [st[0] + '^2 + ' + st[1] + '^2 ~=~ ' + st[2] + '^2',
                    st[1] + '^2 + ' + st[2] + '^2 ~=~ ' + st[0] + '^2',
