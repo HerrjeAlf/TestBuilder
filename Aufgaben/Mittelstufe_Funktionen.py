@@ -709,6 +709,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False,
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
+
         loesung.append(str(liste_teilaufg[i]) + r') \quad g(x) ~=~ ' + vorz_v_aussen(g_m, 'x') + vorz_str(g_n)
                        + r' \quad (2BE)')
         liste_punkte.append(punkte)
