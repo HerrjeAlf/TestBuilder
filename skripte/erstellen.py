@@ -66,6 +66,15 @@ def seite(aufgaben):
                 with Loesung.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
                 i += 1
+            elif 'Grafik' in elements:
+                if isinstance(elements, list) and len(elements) == 2:
+                    with Loesung.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/temp/{loesung[3][i]}', width=elements[1])
+                    i += 1
+                elif isinstance(elements, str):
+                    with Loesung.create(Figure(position='ht!')) as graph:
+                        graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
+                    i += 1
             elif 'Bild' in elements:
                 if isinstance(elements, list) and len(elements) == 2:
                     with Loesung.create(Figure(position='ht!')) as graph:

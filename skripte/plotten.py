@@ -307,7 +307,7 @@ def graph_xyfix(*funktionen, bezn=False, name='Graph'):
     if bezn == False:
         fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
     else:
-        if len(funktionen) == 1:
+        if len(funktionen) == len(bezn) or len(funktionen) == 1:
             fkt_bez = bezn
         else:
             fkt_bez = [NoEscape('$' + str(bezn) + '_{' + str(i+1) + '} $') for i in range(len(funktionen)+1)]

@@ -575,7 +575,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0, BE=[]):
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
@@ -599,19 +599,24 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0,
 
     # Erstellen der linearen Funktion
     if abstand_nst == 2:
-        xwert_p = nst1 - 2
+        xwert_p = nst1 - 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
-        g_m = -1*nzahl(1,5)/2
-        fkt_g = x * g_m - xwert_p * g_m + ywert_p
+        g_m = -1 * nzahl(1,5)/2
+        g_n = ywert_p - xwert_p * g_m
+        fkt_g = x * g_m + g_n
     else:
-        xwert_p = nst1 - 2
+        xwert_p = nst1 + 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
         g_m = nzahl(1,5)/2
-        fkt_g = x * g_m - xwert_p * g_m + ywert_p
-    wertetabelle = [[xwert, fkt_g.subs(x,xwert)] for xwert in range(-5,6) if abs(fkt_g.subs(x,xwert)) <= 5]
+        g_n = ywert_p - xwert_p * g_m
+        fkt_g = x * g_m + g_n
+    print(xwert_p)
+    print(ywert_p)
+    print(fkt_g)
+    wertetabelle = [[xwert, fkt_g.subs(x,xwert)] for xwert in range(-5,6) if abs(fkt_g.subs(x,xwert)) <= 5 and abs(fkt_g.subs(x,xwert)) % 1 == 0]
     print(wertetabelle)
     punkt_p = wertetabelle[0]
-    punkt_q = wertetabelle[1]
+    punkt_q = wertetabelle[-1]
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Im unteren Koordinatensystem ist der Graph der Parabel p(x) = $ x^2 '
@@ -653,9 +658,9 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0,
 
     if 'c' in teilaufg:
         # Nullstellen der Parabel berechnen
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        stern = r'$ ^{ \ast } $' if pruef_kl10 else ''
+        liste_bez.append(f'{str(nr)}.{stern + str(liste_teilaufg[i])})')
         punkte = 5
-        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
         aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen der '
                                 + r'Parabel und vergleichen ihre Ergebnisse mit dem Graphen.'))
         if pruef_kl10:
@@ -665,13 +670,13 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0,
             aufgabe.append(' \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ 0 \quad \to \quad 0 ~=~ x^2 '
                        + vorz_v_innen(-1*nst1+nst2,'x') + vorz_str(nst1 * nst2) + r' \quad (1BE) \\'
-                       + r' x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q } ~=~'
+                       + r' x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q } '
                        + r' ~=~ - \frac{ ' + gzahl(-1*nst1+nst2) + r' }{2} \pm \sqrt{ \left( \frac{ '
                        + gzahl(nst1+nst2) + r'}{2} \right) ^2 ' + vorz_str(-1*nst1*nst2) + ' } ~=~'
-                       + '~=~ ' + gzahl(Rational(nst1+nst2,2)) + r' \pm sqrt{ '
+                       + '~=~ ' + gzahl(Rational(nst1+nst2,2)) + r' \pm \sqrt{ '
                        + gzahl(Rational((nst1+nst2)**2 - 4*(nst1*nst2),4)) + r' } \quad (1BE) \\ '
                        + 'x_1 ~=~ ' + gzahl(nst1) + r' \quad \mathrm{und} \quad x_2 ~=~ ' + gzahl(nst2)
-                       + r' \quad \to \quad \mathrm{Sie~stimmen~mit~Graphen~ünerein} \quad (3BE)')
+                       + r' \quad \to \quad \mathrm{Sie~stimmen~mit~Graphen~überein} \quad (3BE)')
 
         liste_punkte.append(punkte)
         i += 1
@@ -679,13 +684,33 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, i=0,
     if 'd' in teilaufg:
         # mithilfe zweier gegebener Punkte den Graphen einer linearen Funktion einzeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
         punkte = 3
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Lesen Sie den Scheitelpunkt S'
-                                + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),' \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
-                       + gzahl((nst1 + nst2) / 2) + r' \vert ' + gzahl(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4)
-                       + r' \right) \quad (1BE)')
+
+        graph_xyfix(*[fkt_p_nf, fkt_g], bezn=['p', 'g'], name=f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
+        aufgabe.extend((NoEscape(r' \noindent Gegeben sind zwei Punkte der linearen Funktion g mit P$ \left( '
+                                 + gzahl(punkt_p[0]) + r' \vert ' +  gzahl(punkt_p[1]) + r' \right) $ und Q$ \left( '
+                                 + gzahl(punkt_q[0]) + r' \vert ' +  gzahl(punkt_q[1]) + r' \right). $'),' \n\n ',
+                        NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + r') Zeichnen Sie den Graphen der linearen Funktion g in das obere '
+                                 + r'Koordinatensystem ein.'),' \n\n'))
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
         liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        # Funktionsgleichung der gezeichneten linearen Funktionen aufstellen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Stellen Sie die Funktionsgleichung '
+                                + r'der eingezeichneten linearen Funktion auf.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad g(x) ~=~ ' + vorz_v_aussen(g_m, 'x') + vorz_str(g_n)
+                       + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
