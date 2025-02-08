@@ -17,7 +17,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=True,
-                  anzahl=False, wdh=False, i=0, BE=[]):
+                  anzahl=False, wdh=False, neue_seite=None, i=0, BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Bruchterme einer Menge berechnen
@@ -35,6 +35,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -69,6 +71,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             aufgabe.append(' \n\n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{1}{ ' + gzahl(nenner) + r'} \cdot ' + gzahl(wert) + einheit
                        + '~=~' + gzahl(anteil) + einheit + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -93,6 +96,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + list_aufg[ausw[2]] + r' \\'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
                        + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -121,6 +125,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
                        + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
                        + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -140,6 +145,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             aufgabe.append(' \n\n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
                        + gzahl(erg) + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -166,6 +172,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
                        + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} ' + list_lsg[ausw[3]]
                        + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -201,6 +208,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
                        + r' ^{ \circ } \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -235,6 +243,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
         loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
                        + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]] + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 
@@ -286,6 +295,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
                        + r' \hspace{2em} ' + list_lsg[ausw[2]] +  r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
 

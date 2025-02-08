@@ -109,9 +109,11 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-bezeichnungen = random_selection([['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'k', 'l'], ['m', 'n', 'p'],
-                                  ['r', 's', 't'], ['u', 'v', 'w'], ['x', 'y', 'z']], 1)[0]
-print(bezeichnungen)
+aufgabe = []
+
+aufgabe.append('NewPage') if random.choice([0,1]) == 1 else ''
+
+print(aufgabe)
 
 
 
