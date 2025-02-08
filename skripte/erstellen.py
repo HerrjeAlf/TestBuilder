@@ -53,6 +53,8 @@ def seite(aufgaben):
                     with Aufgabe.create(Figure(position='ht!')) as graph:
                         graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width='300px')
                     i += 1
+            elif 'NewPage' in elements:
+                Aufgabe.append(NewPage())
             else:
                 Aufgabe.append(elements)
 
@@ -265,7 +267,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
 
 # Hier wird eine Vorprüfung für den Abschluss der 10. Klasse erzeugt
 def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex=True):
-    def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
+    def erzeugen_vorpr_teil_1(liste_seiten_teil1, angb_teil1):
         in_tagen, liste_bez, liste_punkte = angb_teil1[0], angb_teil1[1], angb_teil1[2]
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
@@ -429,7 +431,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         Teil_1()
         EWH_Teil_1()
 
-    def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
+    def erzeugen_vorpr_teil_2(liste_seiten_teil2, angb_teil2):
         in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2]
         Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
@@ -455,9 +457,6 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 liste_bez[i].append('Summe')
                 liste_punkte[i].append(str(Punkte))
                 anzahl_spalten = len(liste_punkte[i])
-                spalten = '|'
-                for p in liste_punkte[i]:
-                    spalten += 'c|'
                 liste_ergebnis_z1 = ['erhaltene']
                 for p in range(anzahl_spalten - 1):
                     liste_ergebnis_z1.append('')
@@ -465,27 +464,30 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 for p in range(anzahl_spalten - 1):
                     liste_ergebnis_z2.append('')
 
-                table3 = Tabular(spalten, row_height=1.2)
-                table3.add_hline()
-                table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
-                                            data='Punkteverteilung der Aufgabe'),))
-                table3.add_hline()
-                table3.add_row(liste_bez[i])
-                table3.add_hline()
-                table3.add_row(liste_punkte[i])
-                table3.add_hline()
-                table3.add_row(liste_ergebnis_z1)
-                table3.add_row(liste_ergebnis_z2)
-                table3.add_hline()
-
                 # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
                 for aufgaben in liste_seiten_teil2[i]:
                     Aufgabe.append(table2)
                     Aufgabe.append(' \n\n')
                     Aufgabe.extend(aufgaben[0])
-                    Aufgabe.append(' \n\n')
-                    Aufgabe.append(' \n\n')
-                    Aufgabe.append(table3)
+
+                    # erstellen der Tabelle zur Punkteübersicht aller Aufgaben
+                    with Aufgabe.create(Center()) as centered:
+                        spalten = '|'
+                        for element in liste_punkte[i]:
+                            spalten += 'c|'
+                        with centered.create(Tabular(spalten, row_height=1.2)) as table3:
+                            table3.add_hline()
+                            table3.add_row((MultiColumn(anzahl_spalten, align='|c|',
+                                                        data='Punkteverteilung der Aufgabe'),))
+                            table3.add_hline()
+                            table3.add_row(liste_bez[i])
+                            table3.add_hline()
+                            table3.add_row(liste_punkte[i])
+                            table3.add_hline()
+                            table3.add_row(liste_ergebnis_z1)
+                            table3.add_row(liste_ergebnis_z2)
+                            table3.add_hline()
+
                     if element != liste_seiten_teil2[i][-1]:
                         Aufgabe.append(NewPage())
                 i += 1
@@ -513,8 +515,8 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         Teil_2()
         EWH_Teil_2()
 
-    erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1)
-    erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2)
+    erzeugen_vorpr_teil_1(liste_seiten_teil1, angb_teil1)
+    erzeugen_vorpr_teil_2(liste_seiten_teil2, angb_teil2)
 
 # Hier werden Aufgabenstellung für die mündliche Prüfung erzeugt
 def muendliche_pruefung(liste_aufg_lsg_teil1, liste_aufg_lsg_teil2, angb, clean_tex=True):
