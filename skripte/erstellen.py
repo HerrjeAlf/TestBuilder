@@ -86,6 +86,8 @@ def seite(aufgaben):
                     with Loesung.create(Figure(position='ht!')) as graph:
                         graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width='300px')
                     i += 1
+            elif 'NewPage' in elements:
+                Aufgabe.append(NewPage())
             else:
                 Loesung.append(elements)
 
