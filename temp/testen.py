@@ -27,10 +27,9 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[geraden_lagebeziehung(1,['d'], lagebeziehung='parallel'),
-                 geraden_lagebeziehung(1,['d'], lagebeziehung='windschief')]]
+    Aufgaben = [[parabel_und_gerade(1, pruef_kl10=True)]]
 
-    # hier werden aus der Liste der Aufgaben die Test erzeugt
+    # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
     for element in Aufgaben:
         for aufgabe in element:
@@ -41,3 +40,5 @@ for ziffer in range(anzahl):
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez,
                liste_punkte]
     test_erzeugen(liste_seiten, angaben, ziffer, probe, clean_tex)
+
+

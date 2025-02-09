@@ -19,14 +19,13 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ks=None, BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ks=None, i=0, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Der Parameter "ks=" legt fest, ob die Aufgabe ein leeres dreidimensionales Koordinatensystem oder kariertes Papier enthält. Der Parameter kann "None", "True" oder "False" sein". Standardmäßig ist "ks=None" und somit gibt kein Koordinatensystem und kein kariertes Papier.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
@@ -63,7 +62,6 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
                      + r'  \end{pmatrix}  \quad (3P) \\')
-
     else:
         vektor_bc = random.choice(vektoren_auswahl)
         while vektor_vergleich(vektor_bc, vektor_ab) == True:
@@ -115,7 +113,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
             pkt += 2
-        loesung.append(str(teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
         liste_punkte.append(pkt)
         i += 1
 
@@ -123,8 +121,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.append(str(teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
-        loesung.append(str(teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
+        aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
                                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\'
                                            + gzahl(vektor_ab[2]) + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{('
                                            + gzahl(vektor_ab[0]) + ')^2 ~+~(' + gzahl(vektor_ab[1]) + ')^2 ~+~('
@@ -327,13 +325,15 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_punkte.append(pkt)
         i += 1
 
-        if ks != None:
-            if ks == True:
-                aufgabe.append('3dim_Koordinatensystem')
-                loesung.append('3dim_Koordinatensystem')
-            else:
-                aufgabe.append('kariertes_Papier')
-                loesung.append('kariertes_Papier')
+    if ks != None:
+        if ks == True:
+            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
+            aufgabe.append(['Bild','300px'])
+            loesung.append(['Bild','300px'])
+        else:
+            grafiken_loesung = grafiken_aufgaben = ['kariertes_Papier']
+            aufgabe.append(['Bild','400px'])
+            loesung.append(['Bild','400px'])
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -343,13 +343,15 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None, BE=[]):
+def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None, i=0, BE=[]):
     # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "linearkombination=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe c) als Linearkombination darstellen lassen. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig.  Er kann auch True oder False sein.
+    # Mit dem Parameter "kollinear=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe e) kollinear sind. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig. Er kann auch True oder False sein.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -363,13 +365,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 = punkt_vektor(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
         ergebnis = faktor_1 * np.array(vektor_1) + faktor_2 * np.array(vektor_2)
-        aufgabe.append(str(teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
         aufgabe.append(gzahl(faktor_1) + r' \cdot \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                        + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \hspace{20em} \\')
-        loesung.append(str(teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
                        + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -760,14 +762,15 @@ def vektoren_koll_ortho(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=None, BE=[]):
+def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=None, i=0, BE=[]):
     # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "spurpunkt=" kann für Teilaufgabe c) festgelegt werden, welcher Spurpunkt berechnet werden soll. Standardmäßig ist "spurpunkt=None" und die Auswahl zufällig. Er kann 'x-y', 'x-z', 'y-z' oder 'all' (für alle) sein.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
     punkt_a = [ax, ay, az] = punkt_vektor(3)
     v = [vx, vy, vz] = punkt_vektor(4)
     punkt_b = [bx, by, bz] = punkt_a + v
@@ -913,15 +916,16 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, gerade_k=False, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, gerade_k=False, i=0, BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "gerade_k=" kann festgelegt ('True' oder 'False') werden, ob der Schnittwinkel bei Geraden, die sich schneiden zwischen den gegebenen Geraden g und h oder einer neuen Geraden k berechnet werden soll. Standardmäßig wird dann keine Gerade k erzeugt.
-   # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
         sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
     if lagebeziehung == None:
@@ -1268,8 +1272,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
             vec_n, fakt_n = [nx, ny, nz], fakt_n = vektor_kuerzen(np.cross(v,w), qout=True)
             fakt_n_str = '' if fakt_n == 1 else gzahl(fakt_n) + r' \cdot '
-            erg_disk = Rational((((cx-ax)*nx)**2+((cy-ay)*ny)**2+((cz-az)*nz)**2),(nx**2+ny**2+nz**2))
-            erg = N(sqrt(erg_disk), 3)
+            erg= N(abs(((cx-ax)*nx+(cy-ay)*ny+(cz-az)*nz)/sqrt(nx**2+ny**2+nz**2)),3)
         if 'c' not in teilaufg:
             aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
                             r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -1332,7 +1335,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r'}} ~=~ \frac{ \sqrt{ ' + summe_exp([crx, cry, crz],2) + r' }}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
         elif lagebeziehung == 'windschief':
-            punkte = 6
+            punkte = 7
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~mithilfe~der~hessischen~Normalform'
                            + r'~der~Hilfsebene~H~deren~Normalenvektor}, \\'
                            + r' \mathrm{~das~Kreuzprodukt~der~Richtungsvektoren~von~g~und~h~ist:} \\'
@@ -1343,14 +1346,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{'
                            + summe_exp([nx,ny,nz],2)+ r'} ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
-                           + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (3BE) \\\\'
+                           + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (4BE) \\\\'
                            + r' d(g,h) ~=~ \left| \overrightarrow{P_g Q_h} \cdot \overrightarrow{n_0} \right| ~=~'
                            + r' \left| \begin{pmatrix} ' + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az)
                            + r' \\' + r' \end{pmatrix} \cdot \frac{1}{ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
                            + r'}} \cdot \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz)
-                           + r' \\' + r' \end{pmatrix} \right| ~=~ \frac{ \sqrt{'
-                           + summe_exp([(cx-ax)*nx,(cy-ay)*ny,(cz-az)*nz],2) + r'} }{ \sqrt{'
-                           + gzahl(nx**2+ny**2+nz**2) + r'}}  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
+                           + r' \\' + r' \end{pmatrix} \right| ~=~ \left| \frac{ '
+                           + gzahl((cx-ax)*nx) + vorz_str((cy-ay)*ny) + vorz_str((cz-az)*nz) + r' }{ \sqrt{'
+                           + gzahl(nx**2+ny**2+nz**2) + r'}} \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
 
         liste_punkte.append(punkte)
         i += 1
@@ -1429,15 +1432,16 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=None, BE=[]):
+def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=None, i=0, BE=[]):
     # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene=True" liegt oder auch nicht "lagebeziehung_t_ebene=False". Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     if lagebeziehung_t_ebene == None:
         lagebeziehung_t_ebene = random.choice([True, False])
     n_gk = np.array([100,100,100])
@@ -1824,15 +1828,15 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False, BE=[]):
+def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False, i=0, BE=[]):
     # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "form=" kann die Form der Ebenengleichung festgelegt werden. Sie kann "form="normalenform" oder "form=koordinatenform" sein. Standardmäßig wird die Form zufällig ausgewählt.
     # Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
     teiler = zzahl(1,3)
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
     fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
@@ -1877,9 +1881,9 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                           f'anderen beiden Darstellungsformen um. \n\n ')
-        loesung.append(str(teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                        r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3BE) \\'
                        r' \overrightarrow{u} ~=~ \begin{pmatrix}'
@@ -1899,10 +1903,13 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
+        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
-        aufgabe.append('3dim_Koordinatensystem') if koordinatensystem else aufgabe.append(' \n\n')
-        loesung.extend((str(teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
+        if koordinatensystem:
+            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
+            aufgabe.append(['Bild', '300px'])
+            loesung.append(['Bild', '300px'])
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
                        + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
@@ -1916,14 +1923,15 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[]):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, BE=[]):
     # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung.# Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "g_in_E=" kann die Lagebeziehung der Geraden g zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
     punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
     v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
@@ -1995,11 +2003,11 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
                                           'mit einer Ebene und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
                        'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
                                 'der Ebene sind senkrecht zueinander und haben keine gemeinsamen Punkte', '2P')
@@ -2116,14 +2124,15 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, BE=[])
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
+def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "F_in_E=" kann die Lagebeziehung der Ebene F zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
+
     n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(4)
     n_betrag = np.linalg.norm(n_gk)
     if n_betrag % 1 == 0:
@@ -2231,11 +2240,11 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
+        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
                                           'und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. die Normalenvektoren der Ebenen sind parallel und '
                                 'sie haben keine gemeinsamen Punkte', '2P')
         table1.add_row('', '-', 'sind identisch, d.h. die Normalenvektoren der Ebenen sind parallel und '
@@ -2326,13 +2335,13 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[]):
+def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, BE=[]):
     # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     # Normalenvektorschar der Ebene erzeugen
     punkt_d = [dx, dy, dz] = punkt_vektor(4)
@@ -2455,13 +2464,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f'in der die Gerade g liegt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(g_vy)
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(g_vz) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx*g_vx) + vorz_str(ny*g_vy) + vorz_str(nz*g_vz)
+                       + ' 0~=~' + gzahl(nx*g_vx) + vorz_str(ny*g_vy) + vorz_str(nz*g_vz)
                        + vorz_v_innen(aex*g_vx,'a') + vorz_v_innen(aey*g_vy,'a')
                        + vorz_v_innen(aez*g_vz,'a') + r'~=~' + gzahl(nx*g_vx + ny*g_vy + nz*g_vz)
                        + vorz_v_innen(aex*g_vx + aey*g_vy + aez*g_vz,'a')
@@ -2502,13 +2511,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f' die zur {bez} - Achse parallel ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
                        + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
                        + r' \\' + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(vec[0]) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(vec[1])
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
+                       + ' 0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
                        + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
                        + vorz_v_innen(aez * vec[2], 'a') + lsg)
         liste_punkte.append(pkt)
@@ -2524,13 +2533,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
                        + f'die parallel zur Geraden h ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r'0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
+                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
                        + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(h_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(h_vy)
                        + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(h_vz) + r' \quad (1BE) \\'
-                       + '0~=~' + gzahl(nx*h_vx) + vorz_str(ny*h_vy) + vorz_str(nz*h_vz)
+                       + ' 0~=~' + gzahl(nx*h_vx) + vorz_str(ny*h_vy) + vorz_str(nz*h_vz)
                        + vorz_v_innen(aex*h_vx,'a') + vorz_v_innen(aey*h_vy,'a')
                        + vorz_v_innen(aez*h_vz,'a') + r'~=~' + gzahl(nx*h_vx + ny*h_vy + nz*h_vz)
                        + vorz_v_innen(aex*h_vx + aey*h_vy + aez*h_vz,'a')
@@ -2553,8 +2562,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], BE=[])
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
                            + f'der Schar. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ ('
-                           + gzahl(nax) + ')^2 + (' + gzahl(nay) + ')^2 + (' + gzahl(naz) + r')^2 } ~=~ '
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
+                           + summe_exp([nax, nay, naz], 2) + r' } ~=~ '
                            + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
                            + gzahl(h_var) + r'} ~ist:} \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
                            + gzahl(dz) + r' \right) \quad (1BE) \\ '

@@ -15,15 +15,15 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_pkt=1, BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, anz_pkt=1, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_einf=" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
     # Mit dem Parameter "anz_pkt=" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -34,10 +34,13 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
+    aufg_f = 1 if 'f' in teilaufg else 0
+    anz_einf = anz_einf + aufg_f
     fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf)
     fkt_n = random_selection(list(range(-3,4)), anz_einf)
     # Punkte der schwierigeren Funktionen
     aufg_c = 1 if 'c' in teilaufg else 0
+    aufg_f = 1 if 'f' in teilaufg else 0
     xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_c),
                           random_selection(list(range(-5,6)), anz_pkt + aufg_c))
     xwerte_2_unbegr, ywerte_2_unbegr = ([wert+random.choice([1,2,4,6]) for wert in xwerte_1],
@@ -183,6 +186,21 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
             liste_punkte.append(punkte)
             i += 1
 
+    if 'f' in teilaufg:
+        # zu gegebener Funktionsgleichung den Graphen zeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+        k = anz_einf + anz_pkt
+        graph_xyfix(*[fkt_m[anz_einf-1]*x + fkt_n[anz_einf-1]],
+                    bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
+                        + gzahl(fkt_m[anz_einf-1]) + 'x' + vorz_str(fkt_n[anz_einf-1]) +
+                        'im oberen Koordinatensystem ein. \n\n')
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
+                        'Figure'))
+        liste_punkte.append(punkte)
+
     if BE != []:
         if len(BE) != len(teilaufg):
             print(
@@ -191,13 +209,13 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_einf=1, anz_p
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], BE=[]):
+def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], i=0, BE=[]):
     # In dieser Aufgabe können die SuS ihre Kenntnisse der linearen Funktionen auf verschiedene Situationen, angelehnt auf Szenen im Film "Stirb Langsam" anwenden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
     wert_steigung = nzahl(1, 8)
     steigung = wert_steigung/20
     x_0 = random.choice([3, 2.5, 2])
@@ -404,15 +422,15 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "anz_ap=" kann festgelegt werden, wie viele Graphen einer allegemeinen Parabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_ap=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -555,4 +573,193 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, BE=[]):
                 f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+    # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
+    # Mit dem Parameter "neue_seite_nach_teilaufg=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    # Erstellen der Parabelgleichung
+    nst1 = -1 * nzahl(1, 3)
+    abstand_nst = random.choice([2, 4])
+    nst2 = nst1 + abstand_nst
+    while nst1+nst2 ==0 :
+        nst1 = -1 * nzahl(1, 3)
+        abstand_nst = random.choice([2, 4])
+        nst2 = nst1 + abstand_nst
+    fkt_p_lf = (x - nst1) * (x - nst2)
+    fkt_p_nf = x**2-(nst1+nst2)*x + nst1*nst2
+    fkt_p_sf = (x - (nst1 + nst2) / 2) ** 2 + nst1 * nst2 - ((nst1 + nst2) ** 2) / 4
+    # print(fkt_p_nf)
+
+    # Erstellen der linearen Funktion
+    if abstand_nst == 2:
+        xwert_p = nst1 - 1
+        ywert_p = fkt_p_nf.subs(x, xwert_p)
+        g_m = -1 * nzahl(1,5)/2
+        text = gzahl(g_m) + ' LE nach unten'
+        g_n = ywert_p - xwert_p * g_m
+        fkt_g = x * g_m + g_n
+    else:
+        xwert_p = nst1 + 1
+        ywert_p = fkt_p_nf.subs(x, xwert_p)
+        g_m = nzahl(1,5)/2
+        text = gzahl(g_m) + 'LE nach oben'
+        g_n = ywert_p - xwert_p * g_m
+        fkt_g = x * g_m + g_n
+    wertetabelle = [[xwert, fkt_g.subs(x,xwert)] for xwert in range(-5,6) if abs(fkt_g.subs(x,xwert)) <= 5 and abs(fkt_g.subs(x,xwert)) % 1 == 0]
+    punkt_p = wertetabelle[0]
+    punkt_q = wertetabelle[-1]
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = [f'Aufgabe_{nr}']
+    grafiken_loesung = []
+    graph_xyfix(fkt_p_nf, bezn='p',  name=f'Aufgabe_{nr}.png')
+
+    if 'a' in teilaufg:
+        # Scheitelpunkt einer Parabel ablesen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 1
+        aufgabe.extend((NoEscape('Im unteren Koordinatensystem ist der Graph der Parabel p(x) = $ x^2 '
+                        + vorz_v_innen(-1*nst1+nst2,'x') + vorz_str(nst1 * nst2) + '$ dargestellt. \n\n'),
+                        ['Grafik','200px'], NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                                     + r') Lesen Sie den Scheitelpunkt S'
+                                                     + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),
+                        ' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
+                       + gzahl((nst1 + nst2) / 2) + r' \vert ' + gzahl(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4)
+                       + r' \right) \quad (1BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Parabelgleichung in Scheitelpunktform aufstellen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Stellen Sie die Parabelgleichung in '
+                                + r'Scheitelpunktform auf.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str((nst1 + nst2) / 2)
+                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (1BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        # Nullstellen der Parabel berechnen
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+        punkte = 5
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen der '
+                                + r'Parabel und vergleichen ihre Ergebnisse mit dem Graphen.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ 0 \quad \to \quad 0 ~=~ x^2 '
+                       + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad (1BE) \hspace{10em} \\'
+                       + r' x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q } '
+                       + r' ~=~ - \frac{ ' + gzahl(-1*(nst1+nst2)) + r' }{2} \pm \sqrt{ \left( \frac{ '
+                       + gzahl( -1 * (nst1+nst2)) + r'}{2} \right) ^2 ' + vorz_str(-1*nst1*nst2) + '} '
+                       + '~=~ ' + gzahl(Rational(nst1+nst2,2)) + r' \pm \sqrt{ '
+                       + gzahl(Rational((nst1+nst2)**2 - 4*(nst1*nst2),4)) + r' } \quad (1BE) \\ '
+                       + 'x_1 ~=~ ' + gzahl(nst1) + r' \quad \mathrm{und} \quad x_2 ~=~ ' + gzahl(nst2)
+                       + r' \quad \to \quad \mathrm{Sie~stimmen~mit~Graphen~überein} \quad (3BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'd' in teilaufg:
+        # mithilfe zweier gegebener Punkte den Graphen einer linearen Funktion einzeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
+        punkte = 3
+
+        graph_xyfix(*[fkt_p_nf, fkt_g], bezn=['p', 'g'], name=f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
+        aufgabe.extend((NoEscape(r' \noindent Gegeben sind zwei Punkte der linearen Funktion g mit P$ \left( '
+                                 + gzahl(punkt_p[0]) + r' \vert ' +  gzahl(punkt_p[1]) + r' \right) $ und Q$ \left( '
+                                 + gzahl(punkt_q[0]) + r' \vert ' +  gzahl(punkt_q[1]) + r' \right). $'),' \n\n ',
+                        NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + r') Zeichnen Sie den Graphen der linearen Funktion g in das obere '
+                                 + r'Koordinatensystem ein.'),' \n\n'))
+        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        # Funktionsgleichung der gezeichneten linearen Funktionen aufstellen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie mithilfe ihres '
+                                + r'eingezeichneten Graphen die Funktionsgleichung von g(x) = $ '
+                                + vorz_v_aussen(g_m, 'x') + vorz_str(g_n) + r'$ '))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+
+        # Tabelle mit dem Text
+        table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
+        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l',
+                        data='Erläuterung der Funktionsgleichung'), 'Punkte')
+        table1.add_row('', '-', 'die Zahl hinter dem x ist der y-Achsenabschnitt n und entspricht '
+                       + 'dem Schnittpunkt des Graphen mit dem y-Achse', '2BE')
+        table1.add_row('', '-', 'die Zahl vorm x entspricht der Steigung m und kann mithilfe des '
+                                'Steigungsdreiecks bestimmt werden.', '1BE')
+        table1.add_row('', '-', f'dafür geht man vom Punkt ( 0 | {gzahl(g_n)} ) eins nach recht und dann '
+                       + text + ', was der Steigung entspricht', '1BE')
+        table1.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
+        loesung.append(table1)
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'f' in teilaufg:
+        # Nullstellen der Parabel berechnen
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+        p = -1* (g_m + nst1 + nst2)
+        q = nst1 * nst2 - g_n
+        xwert_s1 = N(-p/2 + sqrt((p/2)**2-q),3)
+        xwert_s2 = N(-p/2 - sqrt((p/2)**2-q),3)
+        punkte = 5
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Schnittpunkte '
+                                + 'der linearen Funktion mit dem Graphen der Parabel.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad g(x) ~=~ p(x) \quad \to \quad  '
+                       + vorz_v_aussen(g_m, 'x') + vorz_str(g_n) + '~=~ x^2 '
+                       + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad \vert '
+                       + vorz_str(-1*g_n) + r' \quad \vert ' + vorz_v_innen(-1*g_m,'x')
+                       + r' \quad \to \quad 0 ~=~ x^2 ' + vorz_v_innen(p,'x') + vorz_str(q)
+                       + r' \quad (2BE) \\ x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q} '
+                       + r' ~=~ - \frac{ ' + gzahl(p) + r' }{2} \pm \sqrt{ \left( \frac{ '
+                       + gzahl(p) + r'}{2} \right) ^2 ' + vorz_str(-1*q) + ' } ~=~'
+                       + '~=~ ' + gzahl(Rational(-1*p,2)) + r' \pm \sqrt{ '
+                       + gzahl(Rational((p)**2 - 4*(q),4)) + r' } \quad (1BE) \\ '
+                       + 'x_1 ~=~ ' + gzahl(xwert_s1) + r' \quad \mathrm{und} \quad x_2 ~=~ ' + gzahl(xwert_s2)
+                       + r' \quad (2BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

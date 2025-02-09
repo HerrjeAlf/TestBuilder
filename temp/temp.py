@@ -109,6 +109,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
+aufgabe = []
+
+aufgabe.append('NewPage') if random.choice([0,1]) == 1 else ''
+
+print(aufgabe)
 
 
-print(summe_exp([0,2,0.5,3,0,2],[1,2,3,4,5,6], ['x','x','y','z','xy','ab']))
+
+

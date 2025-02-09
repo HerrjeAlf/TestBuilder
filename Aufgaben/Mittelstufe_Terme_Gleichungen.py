@@ -16,7 +16,295 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, BE=[]):
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=True,
+                  anzahl=False, wdh=False, neue_seite=None, i=0, BE=[]):
+    # Hier sollen SuS Terme addieren bzw. subtrahieren
+    # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) einfache Bruchterme einer Menge berechnen
+    # b) Potenzgesetz an einem Beispiel erkennen
+    # c) Rechenregeln der Bruchrechnung kennen bzw. Taschenrechner bedienen können
+    # d) Mittelwert zweier Zahlen ausrechnen
+    # e) Scheitelpunktform einer Parabel ricntig erkennen
+    # f)
+    # g)
+    # h)
+    # i) unbekannten Winkel mit Innenwinkelsumme berechnen
+    # j) richtige Bezeichnung für ein gegebenes Viereck benennen
+    # k) den richtigen Satz des Pythagoras zum gegebenen Dreieck auswählen
+    #
+    # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if anzahl != False:
+        if type(anzahl) != int or anzahl > 26:
+            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    elif wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+        exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
+             "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
+
+    for step in range(len([element for element in teilaufg if element == 'a'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        nenner = random.choice([2, 3, 4, 5, 6, 8])
+        anteil = nzahl(2,10)*10
+        wert = anteil * nenner
+        einheit = random.choice(['kg', 't', 'm', 'l', '€'])
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Bestimmen Sie ' + r'$ \frac{1}{'
+                                 + gzahl(nenner) + '} $ von ' + gzahl(wert) + einheit + '.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{1}{ ' + gzahl(nenner) + r'} \cdot ' + gzahl(wert) + einheit
+                       + '~=~' + gzahl(anteil) + einheit + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'b'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        bas = nzahl(2,6)
+        exp = nzahl(3,5)
+        exp_1 = nzahl(1,2)
+        exp_2 = exp - exp_1
+        aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
+                  + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp_2, exp=True) + '}')
+        aufg_2 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + r' \cdot ' + gzahl(exp)
+        aufg_3 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(exp) + '^{' + gzahl(bas, exp=True) + r'}'
+        list_aufg = [r' \square \quad '  + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+        list_lsg = [r' \surd \quad ' + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+        ausw = [0,1,2]
+        random.shuffle(ausw)
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + ') Kreuzen Sie die richtige Aussage an.'),
+                        list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]] + r' \hspace{5em} '
+                        + list_aufg[ausw[2]] + r' \\'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'c'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        werte = random_selection(list(range(1,11)),4)
+        bruch1_str = r' \frac{' + gzahl(werte[0]) + r'}{' + gzahl(werte[1]) + '}'
+        bruch2_str = r' \frac{' + gzahl(werte[2]) + r'}{' + gzahl(werte[3]) + '}'
+        list_terme = [bruch1_str + r' \cdot ' + bruch2_str, bruch1_str + r' \div ' + bruch2_str,
+                      bruch1_str + '+' + bruch2_str, bruch1_str + '-' + bruch2_str]
+        list_aufg = [r'~ \square \quad '  + element for element in list_terme]
+        list_lsg = list_aufg.copy()
+        list_erg = [Rational(werte[0]*werte[2],werte[1]*werte[3]), Rational(werte[0]*werte[3],werte[1]*werte[2]),
+                    Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
+                    Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
+        erg_ausw = random.choice([0,1,2,3])
+        # erg_ausw = 0
+        erg = list_erg[erg_ausw]
+        list_lsg[erg_ausw] = r' \surd \quad ' + list_terme[erg_ausw] + '~=~' + gzahl(erg)
+        ausw = [0,1,2,3]
+        random.shuffle(ausw)
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
+                        list_aufg[ausw[0]] + r' \hspace{4em} ' + list_aufg[ausw[1]] + r' \hspace{4em} '
+                        + list_aufg[ausw[2]] + r' \hspace{4em} ' + list_aufg[ausw[3]] + r' \\'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
+                       + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'd'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        erg = nzahl(1,5)
+        abstand = nzahl(8,16)/2
+        min = erg - abstand
+        max = erg + abstand
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie diejenige Zahl an, die auf '
+                                + r'der Zahlengeraden in der Mitte von ' + gzahl(min) + ' und ' + gzahl(max)
+                                + ' liegt.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
+                       + gzahl(erg) + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'e'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        xwert = zzahl(1,5)
+        ywert = zzahl(1,5)
+        list_fkt = [r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
+                    r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
+                    r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}',
+                    r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}']
+        list_aufg = [r'~ \square \quad ' + element for element in list_fkt]
+        list_lsg = list_aufg.copy()
+        list_lsg[0] = r' \surd \quad ' + list_fkt[0]
+        ausw = [0,1,2,3]
+        random.shuffle(ausw)
+
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Eine Normalparabel hat den Scheitelpunkt '
+                                 + f'S({gzahl(xwert)}|{gzahl(ywert)}). Kreuzen Sie an, welche Gleichung die Parabel '
+                                   f'hat.'),
+                        list_aufg[ausw[0]] + r' \hspace{2em} ' + list_aufg[ausw[1]] + r' \hspace{2em} '
+                        + list_aufg[ausw[2]] + r' \hspace{2em} ' + list_aufg[ausw[3]] + r' \\'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} ' + list_lsg[ausw[3]]
+                       + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'i'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        gamma = nzahl(16,22)*5
+        beta = nzahl(6,12)*5
+        alpha = 180 - beta - gamma
+        seite_c = nzahl(6, 12)
+        seite_a = N(seite_c * math.sin(math.radians(alpha)) / math.sin(math.radians(gamma)), 3)
+        seite_b = N(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 3)
+        xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
+        ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
+
+        # Listen für die Zeichung des Dreiecks
+        pkt = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c]]
+        pkt_bez = ['', '', '']
+        st = ['', '', '']
+        st_werte = [seite_a, seite_b, seite_c]
+        wk_werte = [alpha, beta, gamma]
+
+        # Auswahl des gesuchten Winkels
+        winkel = [r' \alpha ', r' \beta ', r' \gamma ']
+        ausw = random.choice([0,1,2])
+        wk = [gzahl(wk_werte[0]) + r' ^{ \circ }', gzahl(wk_werte[1]) + r' ^{ \circ }', gzahl(wk_werte[2])+ r' ^{ \circ }']
+        wk[ausw] = winkel[ausw]
+
+        dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie die Größe des Winkels $ '
+                                 + winkel[ausw] + ' $ an.'),
+                        ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
+                       + r' ^{ \circ } \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'j'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        # Auswahl des gesuchten Winkels
+        quadrat = ([0, 1], [0, 0]), ([0, 0], [0, 1]), ([1, 1], [0, 1]), ([0, 1], [1, 1])
+        rechteck = ([0,4], [0,0]), ([0,0], [0,1]), ([4,4], [0,1]), ([0,4], [1,1])
+        trapez = ([0,4], [0,0]), ([3,4], [1,0]), ([3,1], [1,1]), ([0,1], [0,1])
+        parallelogramm = ([0,4], [0,0]), ([4,5], [0,1]), ([1,5], [1,1]), ([0,1],[0,1])
+        auswahl = random.choice([0,1,2,3])
+        flaeche = [quadrat, rechteck, trapez, parallelogramm]
+        flaeche_zeichnen(*flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        # Erstellen der zufälligen Auswahl
+        bezeichnung = ['Quadrat', 'Rechteck', 'Trapez', 'Parallelogramm']
+        list_aufg = [r' \square \quad \mathrm{Quadrat} ', r' \square \quad \mathrm{Rechteck} ',
+                     r' \square \quad \mathrm{Trapez} ', r' \square \quad \mathrm{Parallelogramm} ']
+        rf = [0, 1, 2, 3]
+        random.shuffle(rf)
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Wie heißt diese geometrische Figur. '
+                                 + r'Kreuzen Sie an.'))
+        if auswahl == 0:
+            aufgabe.append(['Grafik', '50px'])
+        else:
+            aufgabe.append(['Grafik', '150px'])
+        aufgabe.extend((NoEscape(r'$ \hspace{5em} ' + list_aufg[rf[0]] + r' \hspace{4em} ' + list_aufg[rf[1]]
+                                + r' \hspace{4em} ' + list_aufg[rf[2]] + r' \hspace{4em} ' + list_aufg[rf[3]]
+                                + '$'),' \n\n'))
+        list_lsg = list_aufg
+        list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
+        loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
+                       + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]] + r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    for step in range(len([element for element in teilaufg if element == 'k'])):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        n = random.randint(1, 5)
+        m = n + random.randint(1, 5)
+        # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+        l_a = (m ** 2 - n ** 2) / 10
+        l_b = 2 * m * n / 10
+        l_c = (m ** 2 + n ** 2) / 10
+        # hier werden die Winkel berechnet
+        w_c = 90
+        w_a = round(math.degrees(math.asin(l_a / l_c)))
+        w_b = w_c - w_a
+        # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
+        pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+        auswahl_beschriftung = random.randint(0, 6)
+        bezeichnungen = [
+        {'Punkte': ['A', 'B', 'C'], 'Seiten': ['a', 'b', 'c'], 'Winkel': [r' \alpha ', r' \beta ', r'90^{ \circ }']},
+        {'Punkte': ['D', 'E', 'F'], 'Seiten': ['d', 'e', 'f'], 'Winkel': [r' \delta ', r' \epsilon ', r'90^{ \circ }']},
+        {'Punkte': ['G', 'K', 'L'], 'Seiten': ['g', 'k', 'l'], 'Winkel': [r' \zeta ', r' \eta ', r'90^{ \circ }']},
+        {'Punkte': ['M', 'N', 'P'], 'Seiten': ['m', 'n', 'p'], 'Winkel': [r' \mu ', r' \nu ', r'90^{ \circ }']},
+        {'Punkte': ['R', 'S', 'T'], 'Seiten': ['r', 's', 't'], 'Winkel': [r' \rho ', r' \sigma ', r'90^{ \circ }']},
+        {'Punkte': ['U', 'V', 'W'], 'Seiten': ['u', 'v', 'w'], 'Winkel': [r' \upsilon ', r' \phi ', r'90^{ \circ }']},
+        {'Punkte': ['X', 'Y', 'Z'], 'Seiten': ['x', 'y', 'z'], 'Winkel': [r' \chi ', r' \psi ', r'90^{ \circ }']}]
+
+        pkt_bez = (bezeichnungen[auswahl_beschriftung]['Punkte'])
+        st = bezeichnungen[auswahl_beschriftung]['Seiten']
+        st_werte = [l_a, l_b, l_c]
+        wk = bezeichnungen[auswahl_beschriftung]['Winkel']
+        wk_werte = [w_a, w_b, w_c]
+        dreieck_zeichnen(pkt, st=st, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+        list_gl = [st[0] + '^2 + ' + st[1] + '^2 ~=~ ' + st[2] + '^2',
+                   st[1] + '^2 + ' + st[2] + '^2 ~=~ ' + st[0] + '^2',
+                   st[0] + '^2 + ' + st[2] + '^2 ~=~ ' + st[1] + '^2']
+        list_aufg = [r'~ \square \quad ' + element for element in list_gl]
+        list_lsg = list_aufg.copy()
+        list_lsg[0] = r' \surd \quad ' + list_gl[0]
+        ausw = [0, 1, 2]
+        random.shuffle(ausw)
+
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche Gleichung zur '
+                                 + f'Berechnung der Seite {st[2]} geeignet ist. '),['Grafik','170px'],
+                        r' \hspace{5em} ' + list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]]
+                        + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
+                       + r' \hspace{2em} ' + list_lsg[ausw[2]] +  r' \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
+
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, i = 0, BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Terme mit einer Basis und ganzzahligen Faktoren (zwei Summanden)
@@ -35,10 +323,10 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-    i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Fasse die Terme zusammen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -200,7 +488,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, BE=[]):
+def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS das Produkt mehrerer Terme bilden multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Produkt aus zwei Termen mit einer Variablen und natürlichen Koeffizienten
@@ -210,12 +498,12 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
     # e) Produkt aus drei Termen und zwei Potenzen von Variablen mit ganzzahligen Koeffizienten
     # f) Produkt aus drei Termen und zwei Potenzen von Variablen und beliebig ausgewählten Koeffizienten
     #
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-    i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -309,7 +597,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, BE=[]):
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden
@@ -323,12 +611,12 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     # i) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
     # j) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
     #
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-    i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Löse die Klammern auf und fasse ggf. zusammen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -476,7 +764,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], anzahl=False, wdh=False, BE=[]):
+def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) eine natürliche Zahl aus zwei Summanden ausklammern, z.b. 8x+8y = 8(x+y)
@@ -489,12 +777,12 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-    i = 0
     if len([element for element in ['f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                    'Klammere alle möglichen gemeinsamen Faktoren aus und kürze gegebenenfalls.']
@@ -628,7 +916,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, BE=[]):
+def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung der Form a * x = b mit ganzen Zahlen
@@ -646,12 +934,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     # m) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit ganzen Zahlen
     # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit rationalen Zahlen
     #
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-    i = 0
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Lösen Sie die folgenden Gleichungen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
