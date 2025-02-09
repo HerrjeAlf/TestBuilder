@@ -14,9 +14,9 @@ clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex
 Basisaufgaben = [[basisaufgaben(1,['a', 'b', 'c', 'e', 'i', 'j', 'k'], neue_seite=5)]]
 
 # Hier die Aufgaben zu den verschiedenen Themen in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-Trigonometrie = [[]]
+Trigonometrie = [[pruefung_kl10_allg_dr_01(2, pruef_kl10=True, neue_seite=1)]]
 Funktionen = [[parabel_und_gerade(3, pruef_kl10=True, neue_seite=2)]]
-Wahrscheinlichkeit = [[]]
+Wahrscheinlichkeit = [[baumdiagramm(4, ['a', 'b', 'c'], stufen=2, art='zmZ', pruef_kl10=True, neue_seite=1)]]
 Flaechenberechnung = [[]]
 
 

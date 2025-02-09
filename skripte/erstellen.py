@@ -411,7 +411,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
 
 
-            Aufgabe.generate_pdf(f'pdf/Vorpruefung Klasse 10 - Basisaufgaben', clean_tex=clean_tex)
+            Aufgabe.generate_pdf(f'pdf/Vorpruefung Kl. 10 - Basisaufgaben', clean_tex=clean_tex)
 
         # Erwartungshorizont
         @timer
@@ -427,7 +427,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 Loesung.extend(element[1])
 
 
-            Loesung.generate_pdf(f'pdf/Lsg Vorpruefung Kl. 10 - Basisaufgaben', clean_tex=clean_tex)
+            Loesung.generate_pdf(f'pdf/Vorpruefung Kl. 10 - Basisaufgaben Lsg', clean_tex=clean_tex)
 
         # Druck der Seiten
         Teil_1()
@@ -511,7 +511,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                 Loesung.append(NewPage())
                 i += 1
 
-            Loesung.generate_pdf(f'pdf/Lsg Vorpruefung Kl. 10 - verschiedene Themen', clean_tex=clean_tex)
+            Loesung.generate_pdf(f'pdf/Vorpruefung Kl. 10 - verschiedene Themen Lsg', clean_tex=clean_tex)
 
         # Druck der Seiten
         Teil_2()

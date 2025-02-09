@@ -55,11 +55,13 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', i=0, BE=[]):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "stufen=" kann festgelegt werden, wie viele Stufen das Baumdiagramm haben soll. Standardmäßig ist "stufen=None" und es wird zufällig zwischen zwei und drei Stufen ausgewählt. Es kann auch "stufen=2" und "stufen=3" gewählt werden.
     # Mit dem Parameter "art=" kann festgelegt werden, welche Art von Ziehung beim Baumdiagramm vorliegt. Standardmäßig ist "art=zmz" Ziehen mit Zurücklegen ausgewählt. Es kann auch "art=zoz" (Ziehen ohne Zurücklegen) ausgewählt werden.
+    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig idst "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "neue_seite_nach_teilaufg=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -225,7 +227,12 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             Baumdiagramm_zmZ(stufen, Rational(anzahl_1,(anzahl_1+anzahl_2)),
                              f'Loesung_{nr}{liste_teilaufg[i]}',
                              bz=farben_kuerzel_1, bz2=farben_kuerzel_2)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch.')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
         if anzahl_ziehen[0] == 2:
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P', 'Figure'))
@@ -234,7 +241,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             loesung.extend((str(liste_teilaufg[i]) + ') Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P', 'Figure'))
             punkte = 6
-
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -243,7 +250,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(6)
         aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
-                        r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2 + r', \quad '
+                        r' E_1: ' + ereignis_1 + r' \\ E_2: ' + ereignis_2 + r' \\ '
                         + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{3cm} p{7cm} p{2cm}')
@@ -257,21 +264,30 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                        str(lsg_schnittmenge), '1P')
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
-        loesung.append(' \n\n\n')
+
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        loesung.append(' \n\n')
         i += 1
 
     if 'c' in teilaufg:
         # Wahrscheinlichkeit von Ereignissen berechnen
-
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
 
         if 'b' not in teilaufg:
-            aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
-                            + f'die folgenden Ereignisse.', r' E_1: ' + ereignis_1 + r', \quad E_2: '
-                            + ereignis_2 + r',~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
+            aufgabe.extend((NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                    +  f')  Berechnen Sie die Wahrscheinlichkeit für die folgenden Ereignisse.'),
+                            r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2
+                            + r',~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
         else:
-            aufgabe.extend((str(liste_teilaufg[i]) + f')  Berechnen Sie die Wahrscheinlichkeit für '
-                            + f'die folgenden Ereignisse.', r' E_1,~E_2,~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
+            aufgabe.extend((NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                     + f')  Berechnen Sie die Wahrscheinlichkeit für '
+                                     + f'die folgenden Ereignisse.'),
+                            r' E_1,~E_2,~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
 
         loesung.extend((str(liste_teilaufg[i]) + ') Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
                         r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'BE) \qquad P(E_2) ~=~'
@@ -279,7 +295,11 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         + r' \quad (' + gzahl(pkt5) + r'BE) \qquad P( E1 \cup E2 ) ~=~' + wkt4_str
                         + r' \quad (' + gzahl(pkt4) + r'BE)'))
         punkte = pkt1 + pkt2 + pkt4 + pkt5
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
 
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -294,14 +314,23 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3BE) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2. \n\n')
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2.')))
         else:
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
-                           + f'Unabhängigkeit von E1 und E2, mit: ', r' E_1: ' + ereignis_1 + r', \quad E_2: '
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
+                           + f'Unabhängigkeit von E1 und E2, mit: '), r' E_1: ' + ereignis_1 + r', \quad E_2: '
                            + ereignis_2))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
-                       + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
-                       + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg)
+        loesung.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
+                                 + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
+                                 + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(4)
         i += 1
 
@@ -312,9 +341,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         grafiken_loesung.append(f'Loesung_{nr} {liste_teilaufg[i]}')
         pkt = 0
         farbwahl, kuerzelwahl = auswahl()
-        aufgabe.extend((f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der Farbe {farbwahl}. \n\n',
+        aufgabe.extend((NoEscape(r' \noindent ' + f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der '
+                                 + f'Farbe {farbwahl}. \n\n'),
                         str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
-                                                 f' zeichnen Sie das zugehörige Histogramm. \n\n'))
+                                                 f' zeichnen Sie das zugehörige Histogramm.'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
         spalten = 'c|c|'
         for p in range(stufen+1):
@@ -354,6 +384,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         histogramm(x_werte, y_werte,f'Loesung_{nr} {liste_teilaufg[i]}.png','Histogramm')
         loesung.extend(('Figure', r' \mathrm{Koordinatensystem~1BE,~Balken~' + str(pkt) + r'BE} \\'
                         + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -368,9 +405,17 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             else:
                 ew_wert_str = ew_wert_str + vorz_str(x) + r' \cdot ' + gzahl(y)
         ew_wert = sum([x*y for x, y in zip(x_werte, y_werte)])
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der Zufallsgröße X. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i]) + ') Berechnen Sie den Erwartungswert der '
+                                 + 'Zufallsgröße X.'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
                        + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -388,13 +433,20 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 var_wert_str = (var_wert_str + r'~+~ (' + gzahl(x) + '-' + gzahl(N(ew_wert, 3))
                                 + r')^2 \cdot ' + gzahl(y))
             var_wert = var_wert + (x - ew_wert)**2*y
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Varianz und die Standardabweichung '
-                       + 'der Zufallsgröße X. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
+                                + ') Berechnen Sie die Varianz und die Standardabweichung der Zufallsgröße X.'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
                        + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{E(X)}} \\'
                        + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2BE) \\'
                        + r' \sigma (X) ~=~ \sqrt{' + gzahl((N(var_wert,3))) + '} ~=~ ' + gzahl(N(sqrt(var_wert),3))
                        + r' \quad (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -408,11 +460,19 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
+                                + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
+                                + f' genau {gzahl(anzahl_k)} mal gezogen wird.'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)
         i += 1
 
@@ -420,8 +480,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
-                        + f' genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
+                                + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
+                                + f' genau {gzahl(anzahl_k)} mal gezogen wird.'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
                        + r'e)} ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl_2) + r' \\'
@@ -434,7 +495,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                                  * binomial(anzahl_2,anzahl_n-anzahl_k)
                                  / binomial(20,anzahl_n),3) * 100)
                        + r' \% \quad (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
 
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)
         i += 1
 
@@ -443,15 +510,22 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
-                       + f'genau {gzahl(anzahl_k)} mal gezogen wird. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
+                                + f'genau {gzahl(anzahl_k)} mal gezogen wird. '))
         loesung.append(str(liste_teilaufg[i]) + r') \quad P(X=' + gzahl(anzahl_k) + ') ~=~'
                        + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
                        + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k) * wkt**anzahl_k*(1-wkt)**(anzahl_n-anzahl_k),3)*100)
                        + r' \% \quad (4BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
 
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(4)
         i += 1
 

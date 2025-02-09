@@ -786,9 +786,11 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
+def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -819,7 +821,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                 NoEscape('Die folgende Abbildung stellt ein beliebiges Dreieck dar, wobei $ h = '
                          + gzahl(seite_h) + '$cm, $a = ' + gzahl(seite_a) + r'$cm und $ \gamma_1 = '
-                         + gzahl(gamma_1) + r'^{ \circ}$ ist.'), 'Figure']
+                         + gzahl(gamma_1) + r'^{ \circ}$ ist.'), ['Grafik', '250px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
@@ -841,8 +843,8 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
     if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(str(liste_teilaufg[i])
-                                + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $' + r' \\\\'))
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $'))
         loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i])
                        + r') \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                        + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
@@ -850,14 +852,20 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                        + r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
                        + gzahl(seite_h) + 'cm)^2 } ~=~' + gzahl(seite_FB) + r'cm \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(5)
         i += 1
 
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung eines Winkels mit dem Sinus
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel ' + r'$ \alpha $'
-                                + ' und ' + r'$ \beta $' + r'. \\\\'))
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel '
+                                + r'$ \alpha $' + ' und ' + r'$ \beta $'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
                                                  r' ~=~180^{ \circ } - 90^{ \circ } -' + gzahl(gamma_1)
                                                  + r'^{ \circ} ~=~' + gzahl(alpha) + r'^{ \circ} \quad (2BE) \\'
@@ -866,13 +874,19 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                                                  r'sin^{-1} \Big( \frac{' + gzahl(seite_h) + '}{' + gzahl(seite_a)
                                                  + r'} \Big) ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (4BE) \\ '
                                                  + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(6)
         i += 1
 
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Berechnung einer Seite mit dem Sinussatz
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
                                                  r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
                                                  r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
@@ -880,13 +894,21 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                                                  r'{sin(' + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
                                                  + r'cm \quad (4BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(4) + r'~Punkte} \\'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(4)
         i += 1
 
     if 'd' in teilaufg:
         # Berechnung der Fläche des Dreiecks
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche vom Dreieck ABC. \n\n')
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                + ') Berechne die Fläche vom Dreieck ABC.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
                                                  r'180^{ \circ } - ' + gzahl(alpha) + r'^{ \circ } - ' + gzahl(beta)
                                                  + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
@@ -895,6 +917,12 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                                                  + gzahl(seite_b) + r'cm \cdot sin(' + gzahl(gamma)
                                                  + r'^{ \circ }) ~=~' + gzahl(flaeche) + r'cm^2 \quad (3BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(5)
         i += 1
 
