@@ -13,17 +13,18 @@ Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
 Art = 'HAK 09'
-Titel = 'Parabelgleichungen ablesen'
+Titel = 'Parabel und Gerade'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[einf_parabeln(1, anz_np=2, anz_ap=1)]]
+    Aufgaben = [[parabel_und_gerade(1),
+                 einf_parabeln(2, anz_np=0, anz_ap=1)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
