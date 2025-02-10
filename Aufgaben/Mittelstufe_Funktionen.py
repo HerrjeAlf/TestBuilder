@@ -436,8 +436,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_np = 6 if anz_np not in list(range(1,7)) else anz_np
-    anz_ap = 6 if anz_ap not in list(range(1,7)) else anz_ap
+    anz_np = 6 if anz_np not in list(range(0,7)) else anz_np
+    anz_ap = 6 if anz_ap not in list(range(0,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
     anz_c = 1 if 'c' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
