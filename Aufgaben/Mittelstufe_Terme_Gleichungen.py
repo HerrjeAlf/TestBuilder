@@ -75,233 +75,253 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         liste_punkte.append(1)
         i += 1
 
-    for step in range(len([element for element in teilaufg if element == 'b'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+    for element in teilaufg:
+        if element == 'a':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        bas = nzahl(2,6)
-        exp = nzahl(3,5)
-        exp_1 = nzahl(1,2)
-        exp_2 = exp - exp_1
-        aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
-                  + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp_2, exp=True) + '}')
-        aufg_2 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + r' \cdot ' + gzahl(exp)
-        aufg_3 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(exp) + '^{' + gzahl(bas, exp=True) + r'}'
-        list_aufg = [r' \square \quad '  + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
-        list_lsg = [r' \surd \quad ' + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
-        ausw = [0,1,2]
-        random.shuffle(ausw)
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                 + ') Kreuzen Sie die richtige Aussage an.'),
-                        list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]] + r' \hspace{5em} '
-                        + list_aufg[ausw[2]] + r' \\'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
-                       + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            bas = nzahl(2,6)
+            exp = nzahl(3,5)
+            exp_1 = nzahl(1,2)
+            exp_2 = exp - exp_1
+            aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
+                      + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp_2, exp=True) + '}')
+            aufg_2 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + r' \cdot ' + gzahl(exp)
+            aufg_3 = gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(exp) + '^{' + gzahl(bas, exp=True) + r'}'
+            list_aufg = [r' \square \quad '  + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+            list_lsg = [r' \surd \quad ' + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
+            ausw = [0,1,2]
+            random.shuffle(ausw)
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + ') Kreuzen Sie die richtige Aussage an.'),
+                            list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]] + r' \hspace{5em} '
+                            + list_aufg[ausw[2]] + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
+                           + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-    for step in range(len([element for element in teilaufg if element == 'c'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if element == 'b':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        werte = random_selection(list(range(1,11)),4)
-        bruch1_str = r' \frac{' + gzahl(werte[0]) + r'}{' + gzahl(werte[1]) + '}'
-        bruch2_str = r' \frac{' + gzahl(werte[2]) + r'}{' + gzahl(werte[3]) + '}'
-        list_terme = [bruch1_str + r' \cdot ' + bruch2_str, bruch1_str + r' \div ' + bruch2_str,
-                      bruch1_str + '+' + bruch2_str, bruch1_str + '-' + bruch2_str]
-        list_aufg = [r'~ \square \quad '  + element for element in list_terme]
-        list_lsg = list_aufg.copy()
-        list_erg = [Rational(werte[0]*werte[2],werte[1]*werte[3]), Rational(werte[0]*werte[3],werte[1]*werte[2]),
-                    Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
-                    Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
-        erg_ausw = random.choice([0,1,2,3])
-        # erg_ausw = 0
-        erg = list_erg[erg_ausw]
-        list_lsg[erg_ausw] = r' \surd \quad ' + list_terme[erg_ausw] + '~=~' + gzahl(erg)
-        ausw = [0,1,2,3]
-        random.shuffle(ausw)
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
-                        list_aufg[ausw[0]] + r' \hspace{4em} ' + list_aufg[ausw[1]] + r' \hspace{4em} '
-                        + list_aufg[ausw[2]] + r' \hspace{4em} ' + list_aufg[ausw[3]] + r' \\'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
-                       + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
-                       + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            werte = random_selection(list(range(1,11)),4)
+            bruch1_str = r' \frac{' + gzahl(werte[0]) + r'}{' + gzahl(werte[1]) + '}'
+            bruch2_str = r' \frac{' + gzahl(werte[2]) + r'}{' + gzahl(werte[3]) + '}'
+            list_terme = [bruch1_str + r' \cdot ' + bruch2_str, bruch1_str + r' \div ' + bruch2_str,
+                          bruch1_str + '+' + bruch2_str, bruch1_str + '-' + bruch2_str]
+            list_aufg = [r'~ \square \quad '  + element for element in list_terme]
+            list_lsg = list_aufg.copy()
+            list_erg = [Rational(werte[0]*werte[2],werte[1]*werte[3]), Rational(werte[0]*werte[3],werte[1]*werte[2]),
+                        Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
+                        Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
+            erg_ausw = random.choice([0,1,2,3])
+            # erg_ausw = 0
+            erg = list_erg[erg_ausw]
+            list_lsg[erg_ausw] = r' \surd \quad ' + list_terme[erg_ausw] + '~=~' + gzahl(erg)
+            ausw = [0,1,2,3]
+            random.shuffle(ausw)
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
+                            list_aufg[ausw[0]] + r' \hspace{4em} ' + list_aufg[ausw[1]] + r' \hspace{4em} '
+                            + list_aufg[ausw[2]] + r' \hspace{4em} ' + list_aufg[ausw[3]] + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
+                           + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
+                           + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-    for step in range(len([element for element in teilaufg if element == 'd'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        erg = nzahl(1,5)
-        abstand = nzahl(8,16)/2
-        min = erg - abstand
-        max = erg + abstand
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie diejenige Zahl an, die auf '
-                                + r'der Zahlengeraden in der Mitte von ' + gzahl(min) + ' und ' + gzahl(max)
-                                + ' liegt.'))
-        if pruef_kl10:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_klein')
-        else:
-            aufgabe.append(' \n\n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
-                       + gzahl(erg) + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+        if element == 'c':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            erg = nzahl(1,5)
+            abstand = nzahl(8,16)/2
+            min = erg - abstand
+            max = erg + abstand
+            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie diejenige Zahl an, die auf '
+                                    + r'der Zahlengeraden in der Mitte von ' + gzahl(min) + ' und ' + gzahl(max)
+                                    + ' liegt.'))
+            if pruef_kl10:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
+            else:
+                aufgabe.append(' \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
+                           + gzahl(erg) + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-    for step in range(len([element for element in teilaufg if element == 'e'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if element == 'd':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        xwert = zzahl(1,5)
-        ywert = zzahl(1,5)
-        list_fkt = [r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
-                    r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
-                    r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}',
-                    r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}']
-        list_aufg = [r'~ \square \quad ' + element for element in list_fkt]
-        list_lsg = list_aufg.copy()
-        list_lsg[0] = r' \surd \quad ' + list_fkt[0]
-        ausw = [0,1,2,3]
-        random.shuffle(ausw)
+            xwert = zzahl(1,5)
+            ywert = zzahl(1,5)
+            list_fkt = [r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
+                        r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
+                        r' \mathrm{ y~=~ \left( x' + vorz_str(xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}',
+                        r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(-1*ywert) + '}']
+            list_aufg = [r'~ \square \quad ' + element for element in list_fkt]
+            list_lsg = list_aufg.copy()
+            list_lsg[0] = r' \surd \quad ' + list_fkt[0]
+            ausw = [0,1,2,3]
+            random.shuffle(ausw)
 
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Eine Normalparabel hat den Scheitelpunkt '
-                                 + f'S({gzahl(xwert)}|{gzahl(ywert)}). Kreuzen Sie an, welche Gleichung die Parabel '
-                                   f'hat.'),
-                        list_aufg[ausw[0]] + r' \hspace{2em} ' + list_aufg[ausw[1]] + r' \hspace{2em} '
-                        + list_aufg[ausw[2]] + r' \hspace{2em} ' + list_aufg[ausw[3]] + r' \\'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
-                       + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} ' + list_lsg[ausw[3]]
-                       + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Eine Normalparabel hat den Scheitelpunkt '
+                                     + f'S({gzahl(xwert)}|{gzahl(ywert)}). Kreuzen Sie an, welche Gleichung die Parabel '
+                                       f'hat.'),
+                            list_aufg[ausw[0]] + r' \hspace{2em} ' + list_aufg[ausw[1]] + r' \hspace{2em} '
+                            + list_aufg[ausw[2]] + r' \hspace{2em} ' + list_aufg[ausw[3]] + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
+                           + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} ' + list_lsg[ausw[3]]
+                           + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-    for step in range(len([element for element in teilaufg if element == 'i'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-        gamma = nzahl(16,22)*5
-        beta = nzahl(6,12)*5
-        alpha = 180 - beta - gamma
-        seite_c = nzahl(6, 12)
-        seite_a = N(seite_c * math.sin(math.radians(alpha)) / math.sin(math.radians(gamma)), 3)
-        seite_b = N(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 3)
-        xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
-        ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
+        if element == 'e':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            preis = nzahl(10,20) * 50
+            rabatt = nzahl(1,5) * 5
+            erg = preis*(Rational(100-rabatt,100))
+            artikel = random_selection(['ein Fahrrad', 'einen Computer',  'ein Handy', 'eine Spielekonsole',
+                                        'eine Gitarre', 'ein Paar Sneaker'], 1)[0]
+            aufgabe.append((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + f') Berechnen Sie den Preis, wenn Max {artikel} für {preis}€ '
+                                       f'kauft und {rabatt}' + r'\% Rabatt erhält. ')))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \cdot \frac{'
+                           + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \quad (1BE) ')
+            if pruef_kl10:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
+            else:
+                aufgabe.append(' \n\n')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-        # Listen für die Zeichung des Dreiecks
-        pkt = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c]]
-        pkt_bez = ['', '', '']
-        st = ['', '', '']
-        st_werte = [seite_a, seite_b, seite_c]
-        wk_werte = [alpha, beta, gamma]
+        if element == 'i':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            gamma = nzahl(16,22)*5
+            beta = nzahl(6,12)*5
+            alpha = 180 - beta - gamma
+            seite_c = nzahl(6, 12)
+            seite_a = N(seite_c * math.sin(math.radians(alpha)) / math.sin(math.radians(gamma)), 3)
+            seite_b = N(seite_c * math.sin(math.radians(beta)) / math.sin(math.radians(gamma)), 3)
+            xwert_punkt_c = N(math.cos(math.radians(alpha))*seite_b,3)
+            ywert_punkt_c = N(math.sin(math.radians(alpha))*seite_b,3)
 
-        # Auswahl des gesuchten Winkels
-        winkel = [r' \alpha ', r' \beta ', r' \gamma ']
-        ausw = random.choice([0,1,2])
-        wk = [gzahl(wk_werte[0]) + r' ^{ \circ }', gzahl(wk_werte[1]) + r' ^{ \circ }', gzahl(wk_werte[2])+ r' ^{ \circ }']
-        wk[ausw] = winkel[ausw]
+            # Listen für die Zeichung des Dreiecks
+            pkt = [[0, 0], [seite_c, 0], [xwert_punkt_c, ywert_punkt_c]]
+            pkt_bez = ['', '', '']
+            st = ['', '', '']
+            st_werte = [seite_a, seite_b, seite_c]
+            wk_werte = [alpha, beta, gamma]
 
-        dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            # Auswahl des gesuchten Winkels
+            winkel = [r' \alpha ', r' \beta ', r' \gamma ']
+            ausw = random.choice([0,1,2])
+            wk = [gzahl(wk_werte[0]) + r' ^{ \circ }', gzahl(wk_werte[1]) + r' ^{ \circ }', gzahl(wk_werte[2])+ r' ^{ \circ }']
+            wk[ausw] = winkel[ausw]
 
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie die Größe des Winkels $ '
-                                 + winkel[ausw] + ' $ an.'),
-                        ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
-                       + r' ^{ \circ } \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-    for step in range(len([element for element in teilaufg if element == 'j'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie die Größe des Winkels $ '
+                                     + winkel[ausw] + ' $ an.'),
+                            ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
+                           + r' ^{ \circ } \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-        # Auswahl des gesuchten Winkels
-        quadrat = ([0, 1], [0, 0]), ([0, 0], [0, 1]), ([1, 1], [0, 1]), ([0, 1], [1, 1])
-        rechteck = ([0,4], [0,0]), ([0,0], [0,1]), ([4,4], [0,1]), ([0,4], [1,1])
-        trapez = ([0,4], [0,0]), ([3,4], [1,0]), ([3,1], [1,1]), ([0,1], [0,1])
-        parallelogramm = ([0,4], [0,0]), ([4,5], [0,1]), ([1,5], [1,1]), ([0,1],[0,1])
-        auswahl = random.choice([0,1,2,3])
-        flaeche = [quadrat, rechteck, trapez, parallelogramm]
-        flaeche_zeichnen(*flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-        # Erstellen der zufälligen Auswahl
-        bezeichnung = ['Quadrat', 'Rechteck', 'Trapez', 'Parallelogramm']
-        list_aufg = [r' \square \quad \mathrm{Quadrat} ', r' \square \quad \mathrm{Rechteck} ',
-                     r' \square \quad \mathrm{Trapez} ', r' \square \quad \mathrm{Parallelogramm} ']
-        rf = [0, 1, 2, 3]
-        random.shuffle(rf)
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Wie heißt diese geometrische Figur. '
-                                 + r'Kreuzen Sie an.'))
-        if auswahl == 0:
-            aufgabe.append(['Grafik', '50px'])
-        else:
-            aufgabe.append(['Grafik', '150px'])
-        aufgabe.extend((NoEscape(r'$ \hspace{5em} ' + list_aufg[rf[0]] + r' \hspace{4em} ' + list_aufg[rf[1]]
-                                + r' \hspace{4em} ' + list_aufg[rf[2]] + r' \hspace{4em} ' + list_aufg[rf[3]]
-                                + '$'),' \n\n'))
-        list_lsg = list_aufg
-        list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
-        loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
-                       + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]] + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+        if element == 'j':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-    for step in range(len([element for element in teilaufg if element == 'k'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            # Auswahl des gesuchten Winkels
+            quadrat = ([0, 1], [0, 0]), ([0, 0], [0, 1]), ([1, 1], [0, 1]), ([0, 1], [1, 1])
+            rechteck = ([0,4], [0,0]), ([0,0], [0,1]), ([4,4], [0,1]), ([0,4], [1,1])
+            trapez = ([0,4], [0,0]), ([3,4], [1,0]), ([3,1], [1,1]), ([0,1], [0,1])
+            parallelogramm = ([0,4], [0,0]), ([4,5], [0,1]), ([1,5], [1,1]), ([0,1],[0,1])
+            auswahl = random.choice([0,1,2,3])
+            flaeche = [quadrat, rechteck, trapez, parallelogramm]
+            flaeche_zeichnen(*flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            # Erstellen der zufälligen Auswahl
+            bezeichnung = ['Quadrat', 'Rechteck', 'Trapez', 'Parallelogramm']
+            list_aufg = [r' \square \quad \mathrm{Quadrat} ', r' \square \quad \mathrm{Rechteck} ',
+                         r' \square \quad \mathrm{Trapez} ', r' \square \quad \mathrm{Parallelogramm} ']
+            rf = [0, 1, 2, 3]
+            random.shuffle(rf)
+            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Wie heißt diese geometrische Figur. '
+                                     + r'Kreuzen Sie an.'))
+            if auswahl == 0:
+                aufgabe.append(['Grafik', '50px'])
+            else:
+                aufgabe.append(['Grafik', '150px'])
+            aufgabe.extend((NoEscape(r'$ \hspace{5em} ' + list_aufg[rf[0]] + r' \hspace{4em} ' + list_aufg[rf[1]]
+                                    + r' \hspace{4em} ' + list_aufg[rf[2]] + r' \hspace{4em} ' + list_aufg[rf[3]]
+                                    + '$'),' \n\n'))
+            list_lsg = list_aufg
+            list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
+            loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
+                           + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]] + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
-        n = random.randint(1, 5)
-        m = n + random.randint(1, 5)
-        # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
-        l_a = (m ** 2 - n ** 2) / 10
-        l_b = 2 * m * n / 10
-        l_c = (m ** 2 + n ** 2) / 10
-        # hier werden die Winkel berechnet
-        w_c = 90
-        w_a = round(math.degrees(math.asin(l_a / l_c)))
-        w_b = w_c - w_a
-        # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
-        pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
-        auswahl_beschriftung = random.randint(0, 6)
-        bezeichnungen = [
-        {'Punkte': ['A', 'B', 'C'], 'Seiten': ['a', 'b', 'c'], 'Winkel': [r' \alpha ', r' \beta ', r'90^{ \circ }']},
-        {'Punkte': ['D', 'E', 'F'], 'Seiten': ['d', 'e', 'f'], 'Winkel': [r' \delta ', r' \epsilon ', r'90^{ \circ }']},
-        {'Punkte': ['G', 'K', 'L'], 'Seiten': ['g', 'k', 'l'], 'Winkel': [r' \zeta ', r' \eta ', r'90^{ \circ }']},
-        {'Punkte': ['M', 'N', 'P'], 'Seiten': ['m', 'n', 'p'], 'Winkel': [r' \mu ', r' \nu ', r'90^{ \circ }']},
-        {'Punkte': ['R', 'S', 'T'], 'Seiten': ['r', 's', 't'], 'Winkel': [r' \rho ', r' \sigma ', r'90^{ \circ }']},
-        {'Punkte': ['U', 'V', 'W'], 'Seiten': ['u', 'v', 'w'], 'Winkel': [r' \upsilon ', r' \phi ', r'90^{ \circ }']},
-        {'Punkte': ['X', 'Y', 'Z'], 'Seiten': ['x', 'y', 'z'], 'Winkel': [r' \chi ', r' \psi ', r'90^{ \circ }']}]
+        if element == 'k':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-        pkt_bez = (bezeichnungen[auswahl_beschriftung]['Punkte'])
-        st = bezeichnungen[auswahl_beschriftung]['Seiten']
-        st_werte = [l_a, l_b, l_c]
-        wk = bezeichnungen[auswahl_beschriftung]['Winkel']
-        wk_werte = [w_a, w_b, w_c]
-        dreieck_zeichnen(pkt, st=st, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            n = random.randint(1, 5)
+            m = n + random.randint(1, 5)
+            # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
+            l_a = (m ** 2 - n ** 2) / 10
+            l_b = 2 * m * n / 10
+            l_c = (m ** 2 + n ** 2) / 10
+            # hier werden die Winkel berechnet
+            w_c = 90
+            w_a = round(math.degrees(math.asin(l_a / l_c)))
+            w_b = w_c - w_a
+            # mithilfe der Seitenlänge werden die Punkte A, B und C im Koordinatensystem berechnet
+            pkt = [[0, 0], [l_c, 0], [(l_b ** 2) / l_c, l_a * l_b / l_c]]
+            auswahl_beschriftung = random.randint(0, 6)
+            bezeichnungen = [
+            {'Punkte': ['A', 'B', 'C'], 'Seiten': ['a', 'b', 'c'], 'Winkel': [r' \alpha ', r' \beta ', r'90^{ \circ }']},
+            {'Punkte': ['D', 'E', 'F'], 'Seiten': ['d', 'e', 'f'], 'Winkel': [r' \delta ', r' \epsilon ', r'90^{ \circ }']},
+            {'Punkte': ['G', 'K', 'L'], 'Seiten': ['g', 'k', 'l'], 'Winkel': [r' \zeta ', r' \eta ', r'90^{ \circ }']},
+            {'Punkte': ['M', 'N', 'P'], 'Seiten': ['m', 'n', 'p'], 'Winkel': [r' \mu ', r' \nu ', r'90^{ \circ }']},
+            {'Punkte': ['R', 'S', 'T'], 'Seiten': ['r', 's', 't'], 'Winkel': [r' \rho ', r' \sigma ', r'90^{ \circ }']},
+            {'Punkte': ['U', 'V', 'W'], 'Seiten': ['u', 'v', 'w'], 'Winkel': [r' \upsilon ', r' \phi ', r'90^{ \circ }']},
+            {'Punkte': ['X', 'Y', 'Z'], 'Seiten': ['x', 'y', 'z'], 'Winkel': [r' \chi ', r' \psi ', r'90^{ \circ }']}]
 
-        list_gl = [st[0] + '^2 + ' + st[1] + '^2 ~=~ ' + st[2] + '^2',
-                   st[1] + '^2 + ' + st[2] + '^2 ~=~ ' + st[0] + '^2',
-                   st[0] + '^2 + ' + st[2] + '^2 ~=~ ' + st[1] + '^2']
-        list_aufg = [r'~ \square \quad ' + element for element in list_gl]
-        list_lsg = list_aufg.copy()
-        list_lsg[0] = r' \surd \quad ' + list_gl[0]
-        ausw = [0, 1, 2]
-        random.shuffle(ausw)
+            pkt_bez = (bezeichnungen[auswahl_beschriftung]['Punkte'])
+            st = bezeichnungen[auswahl_beschriftung]['Seiten']
+            st_werte = [l_a, l_b, l_c]
+            wk = bezeichnungen[auswahl_beschriftung]['Winkel']
+            wk_werte = [w_a, w_b, w_c]
+            dreieck_zeichnen(pkt, st=st, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche Gleichung zur '
-                                 + f'Berechnung der Seite {st[2]} geeignet ist. '),['Grafik','170px'],
-                        r' \hspace{5em} ' + list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]]
-                        + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
-                       + r' \hspace{2em} ' + list_lsg[ausw[2]] +  r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            list_gl = [st[0] + '^2 + ' + st[1] + '^2 ~=~ ' + st[2] + '^2',
+                       st[1] + '^2 + ' + st[2] + '^2 ~=~ ' + st[0] + '^2',
+                       st[0] + '^2 + ' + st[2] + '^2 ~=~ ' + st[1] + '^2']
+            list_aufg = [r'~ \square \quad ' + element for element in list_gl]
+            list_lsg = list_aufg.copy()
+            list_lsg[0] = r' \surd \quad ' + list_gl[0]
+            ausw = [0, 1, 2]
+            random.shuffle(ausw)
+
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche Gleichung zur '
+                                     + f'Berechnung der Seite {st[2]} geeignet ist. '),['Grafik','170px'],
+                            r' \hspace{5em} ' + list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]]
+                            + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
+                           + r' \hspace{2em} ' + list_lsg[ausw[2]] +  r' \quad (1BE) ')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
-
-
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, i = 0, BE=[]):
