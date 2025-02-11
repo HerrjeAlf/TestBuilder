@@ -249,18 +249,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         # Ergebnismengen angeben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if pruef_kl10 == True:
-            grafiken_aufgaben.append('notizen_mittel')
-            aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge des folgenden Ereignisses an.',
-                            r' E_1: ' + ereignis_1, ['Bild', '430px']))
-            punkte = 4
-            # Tabelle mit dem Text
-            table1 = Tabular('p{0.2cm} p{3cm} p{7cm} p{2cm}')
-            table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='c',
-                                                                     data='Die Ergebnismenge'), 'Punkte')
-            table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
-            table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' P')
-            loesung.append(table1)
-
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f')  Markieren Sie im Baumdiagramm alle '
+                                     + f'Pfade vom Ereignis:'),'E_1: ' + ereignis_1))
+            loesung.append(str(liste_teilaufg[i]) + r') ~ \quad ' + str(lsg_1) + r' \quad (2BE) ')
+            punkte = 2
         else:
             aufgabe.extend((str(liste_teilaufg[i]) + f')  Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                             r' E_1: ' + ereignis_1 + r' \\ E_2: ' + ereignis_2 + r' \\ '
@@ -289,16 +281,16 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
         if pruef_kl10:
             if 'b' not in teilaufg:
-                aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                        + f') Berechnen Sie die Wahrscheinlichkeit für das Ereignis '
-                                        + r'$ E_1: ' + ereignis_1 + r'$'))
+                aufgabe.extend((NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                        + f') Berechnen Sie die Wahrscheinlichkeit für das Ereignis '),
+                                        r' E_1: ' + ereignis_1))
             else:
                 aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
                                          + f') Berechnen Sie die Wahrscheinlichkeit für das Ereignis $ E_1 $ '))
             aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_gross')
-            loesung.append(stern + str(liste_teilaufg[i]) + r') \quad \mathrm{ Berechnung~der~Wahrscheinlichkeit } '
-                           + r' \quad P(E_1) ~=~' + wkt1_str)
+            grafiken_aufgaben.append('notizen_mittel')
+            loesung.append(r' ^{ \star } ' + str(liste_teilaufg[i])
+                           + r') \quad \mathrm{Berechnung~der~Wahrscheinlichkeit} ' + r' \quad P(E_1) ~=~' + wkt1_str)
             punkte = pkt1
         else:
             if 'b' not in teilaufg:
