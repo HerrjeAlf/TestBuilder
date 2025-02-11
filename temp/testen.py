@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[pruefung_kl10_allg_dr_01(1, pruef_kl10=True)]]
+    Aufgaben = [[baumdiagramm(1, ['a', 'c'], pruef_kl10=True)]]
 
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []

@@ -11,12 +11,12 @@ datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
 
 # Hier die Basisaufgaben in der Form eintragen
-Basisaufgaben = [[basisaufgaben(1,['a', 'b', 'c', 'e', 'i', 'j', 'k'], neue_seite=5)]]
+Basisaufgaben = [[basisaufgaben(1,['a', 'b', 'c', 'd', 'e', 'i', 'j', 'k'], neue_seite=6)]]
 
 # Hier die Aufgaben zu den verschiedenen Themen in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 Trigonometrie = [[pruefung_kl10_allg_dr_01(2, pruef_kl10=True, neue_seite=1)]]
 Funktionen = [[parabel_und_gerade(3, pruef_kl10=True, neue_seite=2)]]
-Wahrscheinlichkeit = [[baumdiagramm(4, ['a', 'b', 'c'], stufen=2, art='zmZ', pruef_kl10=True, neue_seite=1)]]
+Wahrscheinlichkeit = [[baumdiagramm(4, ['a', 'c'], stufen=2, art='zmZ', pruef_kl10=True, neue_seite=1)]]
 Flaechenberechnung = [[]]
 
 
