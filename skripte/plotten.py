@@ -298,6 +298,7 @@ def flaeche_zeichnen(*wertetabelle, name='flaeche'):
     # print(wertetabelle)
     for element in wertetabelle:
         plt.plot(element[0], element[1], 'k')
+    plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
 # Analysis

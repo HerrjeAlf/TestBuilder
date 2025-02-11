@@ -1007,3 +1007,37 @@ def sachaufgabe_strassenbau(nr, BE=[]):
         liste_punkte = [pkt]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def station(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+    # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    anz_bahnen = 6
+    radius = 5
+    laenge = 20
+    bahnen = []
+    for step in range(0,7):
+        theta_1 = np.linspace(np.pi/2, 3*np.pi/2, 100)
+        theta_2 = np.linspace(np.pi/2, - np.pi/2, 100)
+        kurve_l = (radius * (1 + step*0.2) * np.cos(theta_1), radius * (1 + step*0.2) * np.sin(theta_1))
+        bahn_u = ([0, laenge], [-radius * (1+ step*0.2), -radius * (1+ step*0.2)])
+        bahn_o = ([0, laenge], [radius * (1+ step*0.2), radius * (1+ step*0.2)])
+        kurve_r = (radius * (1 + step * 0.2) * np.cos(theta_2) + laenge, radius * (1 + step * 0.2) * np.sin(theta_2))
+        bahnen.extend((kurve_l, bahn_u, bahn_o, kurve_r))
+
+    flaeche_zeichnen(*bahnen, name='test')
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = ['station']
+    grafiken_loesung = []
+
+
+
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+

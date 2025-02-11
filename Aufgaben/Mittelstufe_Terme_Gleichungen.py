@@ -239,13 +239,13 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
             # Auswahl des gesuchten Winkels
-            quadrat = ([0, 1], [0, 0]), ([0, 0], [0, 1]), ([1, 1], [0, 1]), ([0, 1], [1, 1])
-            rechteck = ([0,4], [0,0]), ([0,0], [0,1]), ([4,4], [0,1]), ([0,4], [1,1])
-            trapez = ([0,4], [0,0]), ([3,4], [1,0]), ([3,1], [1,1]), ([0,1], [0,1])
-            parallelogramm = ([0,4], [0,0]), ([4,5], [0,1]), ([1,5], [1,1]), ([0,1],[0,1])
-            auswahl = random.choice([0,1,2,3])
+            quadrat = ([0, 1, 1, 0, 0], [0, 0, 1, 1, 0])
+            rechteck = ([0, 4, 4, 0, 0], [0, 0, 1, 1, 0])
+            trapez = ([0, 4, 3, 1, 0], [0, 0, 1 , 1, 0])
+            parallelogramm = ([0, 4, 5, 1, 0], [0, 0, 1, 1, 0])
+            auswahl = random.choice([0, 1, 2, 3])
             flaeche = [quadrat, rechteck, trapez, parallelogramm]
-            flaeche_zeichnen(*flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            flaeche_zeichnen(flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             # Erstellen der zufälligen Auswahl
             bezeichnung = ['Quadrat', 'Rechteck', 'Trapez', 'Parallelogramm']
             list_aufg = [r' \square \quad \mathrm{Quadrat} ', r' \square \quad \mathrm{Rechteck} ',

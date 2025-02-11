@@ -109,12 +109,14 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-aufgabe = []
+anz_bahnen = 6
+radius = 5
+laenge = 20
+fkt_bahnen = []
+for step in range(0, anz_bahnen):
+    fkt_bahnen.extend((([N(5*(1 + step*2*np.pi/1000) * np.cos(step*np.pi/100),2) for step in range(-50,50)],
+                       [N(5*(1 + step*2*np.pi/1000) * np.sin(step*np.pi/100),2) for step in range(-50,50)]),
 
-aufgabe.append('NewPage') if random.choice([0,1]) == 1 else ''
 
-print(aufgabe)
-
-
-
+print(fkt_bahnen)
 

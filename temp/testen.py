@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[baumdiagramm(1, ['a', 'b', 'c'], pruef_kl10=True)]]
+    Aufgaben = [[station(1)]]
 
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
@@ -42,3 +42,31 @@ for ziffer in range(anzahl):
     test_erzeugen(liste_seiten, angaben, ziffer, probe, clean_tex)
 
 
+# def stationbahn(radius, width, height):
+#     fig, ax = plt.subplots()
+#
+#     # Halbrechkreis links
+#     theta = np.linspace(-np.pi/2, np.pi/2, 100)
+#     x1 = radius * np.cos(theta)
+#     y1 = radius * np.sin(theta)
+#     ax.plot(x1, y1, 'b')
+#
+#     # Rechteck
+#     x2 = [radius, radius + width, radius + width, radius]
+#     y2 = [-radius, -radius, radius, radius]
+#     ax.plot(x2, y2, 'b')
+#
+#     # Halbrechkreis rechts
+#     theta = np.linspace(np.pi/2, -np.pi/2, 100)
+#     x3 = radius * np.cos(theta) + radius + width
+#     y3 = radius * np.sin(theta)
+#     ax.plot(x3, y3, 'b')
+#
+#     ax.set_aspect('equal')
+#     plt.xlabel('Länge')
+#     plt.ylabel('Breite')
+#     plt.title('Stationbahn')
+#     plt.grid(False)
+#     plt.show()
+#
+# stationbahn(2, 5, 3)
