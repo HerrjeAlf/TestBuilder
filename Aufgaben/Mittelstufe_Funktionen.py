@@ -472,11 +472,13 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
             lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
         if anz_np + anz_ap == 1:
-            aufgabe.extend(str(liste_teilaufg[i]) + f') Lies aus dem Graphen den Scheitelpunkt und ggf. den Faktor a '
-                           + f'ab und nenne die zugeh. Funktionsgleichung. \n\n')
+            aufgabe.extend(('Im unteren Koordinatensystem ist der Graph einer quadratischen Funktion (Parabel) '
+                            'dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies den Scheitelpunkt und ggf. den '
+                            + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. \n\n'))
         else:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die Scheitelpunkte und ggf. den Faktor a '
-                           + f'ab und nenne die zugeh. Funktionsgleichungen.\n\n')
+            aufgabe.extend(('Im unteren Koordinatensystem sind die Graphen verschiedener quadratischen Funktionen '
+                            '(Parabeln) dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies die Scheitelpunkte und '
+                            + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen.\n\n'))
 
         loesung.append(lsg)
         liste_punkte.append(punkte)
@@ -508,8 +510,13 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
                        + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2 + ywert_s[anz_np + step]) + r' \quad (3BE)')
                 lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
-            aufgabe.extend((str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
-                           + f'auch in der Normalform an.', 'Grafik'))
+            if anz_np + anz_ap == 1:
+                aufgabe.extend((str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung aus Teilaufgabe a) '
+                                + f'auch in der Normalform an.', 'Grafik'))
+
+            else:
+                aufgabe.extend((str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
+                                + f'auch in der Normalform an.', 'Grafik'))
             loesung.append(lsg)
             liste_punkte.append(punkte)
             i += 1
@@ -526,9 +533,9 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
         fkt_c_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
                          + vorz_str(-1 * xwert_s[anz_np + anz_ap]) + r' \right) ^2 '
                          + vorz_str(ywert_s[anz_np + anz_ap]))
-        aufgabe.extend((r' \mathrm{Gegeben~ist~die~Funktion~' + bez_fkt_c + '(x)=' + fkt_c_nf_str + r'}. \hspace{25em}',
-                        str(liste_teilaufg[i]) + f') Forme die Funktion ' + bez_fkt_c + ' in die Scheitelpunktform um, '
-                        + f'nenne den Scheitelpunkt und Streckungsfaktor a. \n\n'))
+        aufgabe.extend((r' \mathrm{Gegeben~ist~die~Funktion~' + bez_fkt_c + '(x)=' + fkt_c_nf_str
+                        + r'}. \hspace{25em}', str(liste_teilaufg[i]) + f') Forme die Funktion ' + bez_fkt_c
+                        + ' in die Scheitelpunktform um, nenne den Scheitelpunkt und Streckungsfaktor a. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + bez_fkt_c + '(x) ~=~' + fkt_c_nf_str + '~=~'
                        + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
                        + vorz_v_innen(-2 * xwert_s[anz_np + anz_ap], 'x') + r' \right)'
