@@ -610,14 +610,14 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         xwert_p = nst1 - 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
         g_m = -1 * nzahl(1,5)/2
-        text = gzahl(g_m) + ' LE nach unten'
+        text = gzahl(abs(g_m)) + ' LE nach unten'
         g_n = ywert_p - xwert_p * g_m
         fkt_g = x * g_m + g_n
     else:
         xwert_p = nst1 + 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
         g_m = nzahl(1,5)/2
-        text = gzahl(g_m) + 'LE nach oben'
+        text = gzahl(abs(g_m)) + 'LE nach oben'
         g_n = ywert_p - xwert_p * g_m
         fkt_g = x * g_m + g_n
     wertetabelle = [[xwert, fkt_g.subs(x,xwert)] for xwert in range(-5,6) if abs(fkt_g.subs(x,xwert)) <= 5 and abs(fkt_g.subs(x,xwert)) % 1 == 0]
@@ -635,7 +635,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 1
         aufgabe.extend((NoEscape('Im unteren Koordinatensystem ist der Graph der Parabel p(x) = $ x^2 '
-                        + vorz_v_innen(-1*nst1+nst2,'x') + vorz_str(nst1 * nst2) + '$ dargestellt. \n\n'),
+                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + '$ dargestellt. \n\n'),
                         ['Grafik','200px'], NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                                      + r') Lesen Sie den Scheitelpunkt S'
                                                      + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),
@@ -658,7 +658,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str((nst1 + nst2) / 2)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
                        + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (1BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
