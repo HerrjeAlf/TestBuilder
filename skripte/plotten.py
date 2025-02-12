@@ -285,7 +285,7 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     # plt.show()
     return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi=300)
 
-def flaeche_zeichnen(*wertetabelle, name='flaeche'):
+def flaeche_zeichnen(*wertetabelle, text=False, name='flaeche'):
     fig, ax = plt.subplots()
     fig.canvas.draw()  # Need to draw the figure to define renderer
     ax.spines['top'].set_visible(False)
@@ -295,10 +295,14 @@ def flaeche_zeichnen(*wertetabelle, name='flaeche'):
     ax.axis('off')
     ax.set_aspect(1)
     fig.tight_layout()
+    # Textfeld hinzufügen und Position ändern
+    if text:
+        for element in text: # das Element muss die Form haben [x, y, 'text', fontdict=fontdict, **kwargs]
+            plt.text(*element)
     # print(wertetabelle)
     for element in wertetabelle:
         plt.plot(element[0], element[1], 'k')
-    plt.show()
+    # plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
 # Analysis

@@ -109,14 +109,42 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-anz_bahnen = 6
-radius = 5
-laenge = 20
-fkt_bahnen = []
-for step in range(0, anz_bahnen):
-    fkt_bahnen.extend((([N(5*(1 + step*2*np.pi/1000) * np.cos(step*np.pi/100),2) for step in range(-50,50)],
-                       [N(5*(1 + step*2*np.pi/1000) * np.sin(step*np.pi/100),2) for step in range(-50,50)]),
 
+# Erstellen einer neuen Figur
+fig, ax = plt.subplots()
+fig.canvas.draw()
+fig.tight_layout()
+ax.set_aspect(1)
 
-print(fkt_bahnen)
+laenge = nzahl(2, 5) * 5
+radius = laenge * nzahl(3, 6) / 10
+anz_bahnen = 1
+bahnen = []
+for step in range(0, anz_bahnen + 1):
+    theta_1 = np.linspace(np.pi / 2, 3 * np.pi / 2, 100)
+    theta_2 = np.linspace(np.pi / 2, - np.pi / 2, 100)
+    kurve_l = (radius * (1 + step * 0.2) * np.cos(theta_1), radius * (1 + step * 0.2) * np.sin(theta_1))
+    bahn_u = ([0, laenge], [-radius * (1 + step * 0.2), -radius * (1 + step * 0.2)])
+    bahn_o = ([0, laenge], [radius * (1 + step * 0.2), radius * (1 + step * 0.2)])
+    kurve_r = (radius * (1 + step * 0.2) * np.cos(theta_2) + laenge, radius * (1 + step * 0.2) * np.sin(theta_2))
+    bahnen.extend((kurve_l, bahn_u, bahn_o, kurve_r))
+
+for element in bahnen:
+    plt.plot(element[0], element[1], 'k')
+
+# Doppelseitige Pfeile für Länge und Breite
+plt.annotate('', xy=(-radius, 0), xytext=(laenge+radius,0),
+             arrowprops=dict(arrowstyle='<->', lw=1.5))
+plt.annotate('Länge', xy=(0.5, 0.3), xytext=(0.5, 0.3),
+             ha='center', va='bottom')
+plt.annotate('', xy=(laenge, -radius), xytext=(laenge, radius),
+             arrowprops=dict(arrowstyle='<->', lw=1.5))
+plt.annotate('Breite', xy=(laenge-1, radius/2), xytext=(laenge-1,radius/2),
+             ha='left', va='center', rotation=90)
+plt.text(*element)
+
+# Achsen ausschalten
+ax.axis('off')
+
+plt.savefig('img/temp/' + 'pool', dpi=200, bbox_inches='tight', pad_inches=0)
 

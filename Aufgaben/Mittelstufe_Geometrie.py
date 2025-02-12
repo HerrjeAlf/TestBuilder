@@ -10,6 +10,7 @@ from sympy import *
 from sympy.plotting import plot
 from skripte.funktionen import *
 from skripte.plotten import *
+import matplotlib.pyplot as plt
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -1008,8 +1009,8 @@ def sachaufgabe_strassenbau(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def station(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
-    # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
+def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+    # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
@@ -1017,25 +1018,92 @@ def station(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    anz_bahnen = 6
-    radius = 5
-    laenge = 20
-    bahnen = []
-    for step in range(0,7):
-        theta_1 = np.linspace(np.pi/2, 3*np.pi/2, 100)
-        theta_2 = np.linspace(np.pi/2, - np.pi/2, 100)
-        kurve_l = (radius * (1 + step*0.2) * np.cos(theta_1), radius * (1 + step*0.2) * np.sin(theta_1))
-        bahn_u = ([0, laenge], [-radius * (1+ step*0.2), -radius * (1+ step*0.2)])
-        bahn_o = ([0, laenge], [radius * (1+ step*0.2), radius * (1+ step*0.2)])
-        kurve_r = (radius * (1 + step * 0.2) * np.cos(theta_2) + laenge, radius * (1 + step * 0.2) * np.sin(theta_2))
-        bahnen.extend((kurve_l, bahn_u, bahn_o, kurve_r))
+    laenge = nzahl(2,5) * 5
+    radius = laenge * nzahl(3,6)/10
+    anz_bahnen = 1
 
-    flaeche_zeichnen(*bahnen, name='test')
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Familie Geiss plant auf ihrem Anwesen an der '
+               + f'Côte d’Azur den Bau eines Swimmingpools. \n Dieser soll eine Länge von {gzahl(laenge+2*radius)}m und eine '
+               + f'Breite von {gzahl(2*radius)}m haben.',
+               ['Grafik','300px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = ['station']
+
+    def pool_zeichnen(anz_bahnen, laenge, radius, bez_laenge='', bez_radius=''):
+        fig, ax = plt.subplots()
+        fig.canvas.draw()
+        fig.tight_layout()
+        ax.set_aspect(1)
+
+        laenge = nzahl(2, 5) * 5
+        radius = laenge * nzahl(3, 6) / 10
+        anz_bahnen = 1
+        bahnen = []
+        for step in range(0, anz_bahnen + 1):
+            theta_1 = np.linspace(np.pi / 2, 3 * np.pi / 2, 100)
+            theta_2 = np.linspace(np.pi / 2, - np.pi / 2, 100)
+            kurve_l = (radius * (1 + step * 0.2) * np.cos(theta_1), radius * (1 + step * 0.2) * np.sin(theta_1))
+            bahn_u = ([0, laenge], [-radius * (1 + step * 0.2), -radius * (1 + step * 0.2)])
+            bahn_o = ([0, laenge], [radius * (1 + step * 0.2), radius * (1 + step * 0.2)])
+            kurve_r = (
+                radius * (1 + step * 0.2) * np.cos(theta_2) + laenge, radius * (1 + step * 0.2) * np.sin(theta_2))
+            bahnen.extend((kurve_l, bahn_u, bahn_o, kurve_r))
+
+        for element in bahnen:
+            plt.plot(element[0], element[1], 'k')
+
+        # Doppelseitige Pfeile für Länge und Breite
+        plt.annotate('', xy=(-radius, 0), xytext=(laenge + radius, 0),
+                     arrowprops=dict(arrowstyle='<->', lw=1.5))
+        plt.annotate('Länge: ' + bez_laenge + 'm', xy=(radius,0.2), xytext=(radius, 0.2),
+                     ha='center', va='bottom')
+        plt.annotate('', xy=(laenge, -radius), xytext=(laenge, radius),
+                     arrowprops=dict(arrowstyle='<->', lw=1.5))
+        plt.annotate('Breite: ' + bez_radius + 'm', xy=(laenge*0.95, radius / 2), xytext=(laenge*0.95, radius / 2),
+                     ha='left', va='center', rotation=90)
+        plt.text(radius,radius+0.2,'Abflussrinne', )
+
+        # Achsen ausschalten
+        ax.axis('off')
+
+        return plt.savefig('img/temp/pool', dpi=200, bbox_inches='tight', pad_inches=0)
+
+    pool_zeichnen(anz_bahnen, laenge, radius, gzahl(laenge+2*radius), gzahl(2*radius) )
+
+    grafiken_aufgaben = ['pool']
     grafiken_loesung = []
 
+    if 'a' in teilaufg:
+        # Hier sollen die SuS die geoemtrischen Formen erkennen, aus denen sich das Spielfeld eines Sportplatzes zusammensetzt.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        pkt = 2
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Geben Sie an, aus welchen Teilflächen '
+                                + 'sich die Grundfläche des Pools zusammensetzt.'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Aus~zwei~Halbkreisen~links~und~rechts~und~einem~'
+                       + r'Rechteck~in~der~Mitte.} \quad (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(pkt)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Hier sollen die SuS die Abmasse des Spielfeldes berechnen
+        liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
+        pkt = 2
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Berechnen Sie die Größe der Grundfläche '
+                                 + 'des Pools.'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(pkt)
+        i += 1
 
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
