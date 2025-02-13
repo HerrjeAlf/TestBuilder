@@ -55,7 +55,7 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], stufen=None, art='zmZ', pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], stufen=None, art='zmZ', pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "stufen=" kann festgelegt werden, wie viele Stufen das Baumdiagramm haben soll. Standardmäßig ist "stufen=None" und es wird zufällig zwischen zwei und drei Stufen ausgewählt. Es kann auch "stufen=2" und "stufen=3" gewählt werden.
@@ -316,7 +316,6 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
 
     if 'd' in teilaufg:
         # bedingte Wahrscheinlichkeit berechnen und überprüfen
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if wkt5/wkt2 == wkt1:
             lsg = (' ~=~ P(E_1) ~=~' + gzahl(N(wkt1,3) * 100) + r' \% \quad (3BE) \\'
@@ -326,15 +325,15 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                     + f') Überprüfen Sie die stochastische Unabhängigkeit von E1 und E2.')))
+                                     + f') Überprüfen Sie die stochastische Unabhängigkeit von $ E_1 $ und $ E_2 $.')))
         else:
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
-                           + f'Unabhängigkeit von E1 und E2, mit: '), r' E_1: ' + ereignis_1 + r', \quad E_2: '
+                           + f'Unabhängigkeit von $ E_1 $ und $ E_2 $, mit: '), ' E_1: ' + ereignis_1 + r', \quad E_2: '
                            + ereignis_2))
-        loesung.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                 + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
-                                 + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
-                                 + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg))
+        loesung.append(NoEscape(str(liste_teilaufg[i])
+                                + r') \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
+                                + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
+                                + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
