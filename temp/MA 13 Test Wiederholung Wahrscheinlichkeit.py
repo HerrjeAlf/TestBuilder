@@ -8,12 +8,12 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = ('EK und GK')
+Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
-Klasse = '10c'
+Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 07'
-Titel = 'Wiederholung lineare Funktionen'
+Art = 'Test 03 (2HJ)'
+Titel = 'Wiederholung Wahrscheinlichkeit'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
@@ -23,7 +23,8 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[lineare_funktionen(1, ['a', 'c', 'd'], anz_einf=2, anz_pkt=0)]]
+    Aufgaben = [[baumdiagramm(1)],
+                 [vierfeldertafel(2)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
