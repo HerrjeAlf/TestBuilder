@@ -17,7 +17,7 @@ Basisaufgaben = [[basisaufgaben(1,['a', 'b', 'c', 'd', 'e', 'i', 'j', 'k'], neue
 Trigonometrie = [[pruefung_kl10_allg_dr_01(2, pruef_kl10=True, neue_seite=1)]]
 Funktionen = [[parabel_und_gerade(3, pruef_kl10=True, neue_seite=2)]]
 Wahrscheinlichkeit = [[baumdiagramm(4, ['a', 'b', 'c'], stufen=2, art='zmZ', pruef_kl10=True)]]
-Flaechenberechnung = [[]]
+Flaechenberechnung = [[pool(5, pruef_kl10=True, neue_seite=2)]]
 
 
 

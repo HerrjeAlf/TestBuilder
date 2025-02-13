@@ -1009,7 +1009,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
@@ -1019,7 +1019,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i
     liste_punkte = []
     liste_bez = []
     laenge = nzahl(2,5) * 5
-    radius = laenge * nzahl(3,6)/10
+    radius = laenge * nzahl(3,4)/10
     anz_bahnen = 1
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Familie Geiss plant auf ihrem Anwesen an der '
@@ -1033,10 +1033,6 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i
         fig.canvas.draw()
         fig.tight_layout()
         ax.set_aspect(1)
-
-        laenge = nzahl(2, 5) * 5
-        radius = laenge * nzahl(3, 6) / 10
-        anz_bahnen = 1
         bahnen = []
         for step in range(0, anz_bahnen + 1):
             theta_1 = np.linspace(np.pi / 2, 3 * np.pi / 2, 100)
@@ -1073,7 +1069,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Hier sollen die SuS die geoemtrischen Formen erkennen, aus denen sich das Spielfeld eines Sportplatzes zusammensetzt.
+        # Hier sollen die SuS die geoemtrischen Formen erkennen, aus denen sich der Pool zusammensetzt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 2
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Geben Sie an, aus welchen Teilflächen '
@@ -1090,21 +1086,81 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i
         i += 1
 
     if 'b' in teilaufg:
-        # Hier sollen die SuS die Abmasse des Spielfeldes berechnen
+        # Hier sollen die SuS den Umfang des Pools berechnen
         liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
-        pkt = 2
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Berechnen Sie die Größe der Grundfläche '
-                                 + 'des Pools.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ (2BE)')
+        pkt = 5
+        aufgabe.extend((NoEscape(r' \noindent Am Rand vom Pools soll das beim Baden übergelaufene Wasser in eine '
+                                + r'Abflussrinne laufen. Die Gitter für die Abdeckung der Rinne sind 50cm lang.'),
+                                ' \n' + str(liste_teilaufg[i]) + ')  Berechnen Sie, wie viele Gitter für den Pool '
+                                + 'benötigt werden.'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad U_{ges} ~=~ U_{Kreis} + 2* (Länge-Radius) ~=~ (2BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_klein')
+            grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
+    if 'c' in teilaufg:
+        # Hier sollen die SuS die Grundfläche des Pools berechnen
+        liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
+        pkt = 5
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Berechnen Sie die Größe der Grundfläche '
+                                 + 'des Pools.'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ (2BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(pkt)
+        i += 1
+
+
+        if 'd' in teilaufg:
+            # Hier sollen die SuS das Wasservolumen des Pools berechnen
+            stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+            hoehe_pool = nzahl(10, 15) / 10
+            pkt = 5
+            liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+            aufgabe.extend((NoEscape(r' \noindent Damit Carmen im Pool stehen kann, soll dieser eine Höhe von '
+                                     + f'{gzahl(hoehe_pool)}m haben. \n\n'),
+                            NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                     + ') Berechnen Sie die Wassermenge des Pools in $ m^3 $.')))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad Punkte} \\')
+            if pruef_kl10:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
+            else:
+                aufgabe.append(' \n\n')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(pkt)
+            i += 1
+
+
+            if 'e' in teilaufg:
+                # Berechnung die Zeit zum Befüllen des Pools mit einem Gartenschlauch
+                menge_schlauch = nzahl(6,13) * 100
+                stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+                pkt = 3
+                liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+                aufgabe.extend((NoEscape(r' \noindent Robert ist ungeduldig und möchte für die Befüllung des Pool '
+                                         + f'einen Gartenschlauch nutzen. Mit diesem kann er den Pool mit '
+                                         + f'{gzahl(menge_schlauch)}l Wasser pro Stunde befüllen. \n\n'),
+                                NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                         + ') Berechne Sie, wie lange es dauert den Pool so zu befüllen .')))
+                loesung.append(str(liste_teilaufg[i]) + r') \quad Punkte} \\')
+                if pruef_kl10:
+                    aufgabe.append(['Bild', '430px'])
+                    grafiken_aufgaben.append('notizen_mittel')
+                else:
+                    aufgabe.append(' \n\n')
+                aufgabe.append('NewPage') if neue_seite == i else ''
+                liste_punkte.append(pkt)
+                i += 1
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
