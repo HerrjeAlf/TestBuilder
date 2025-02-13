@@ -93,7 +93,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         i += 1
 
     if 'b' in teilaufg:
-        # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
+        # zu einer vorgegebenen Funktionsgleichung die Nullstellen berechnen anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
         lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Nullstellen~werden~berechnet~mit~'
