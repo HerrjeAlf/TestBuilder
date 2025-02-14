@@ -324,8 +324,8 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3BE) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                     + f') Überprüfen Sie die stochastische Unabhängigkeit von $ E_1 $ und $ E_2 $.')))
+            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                    + ') Überprüfen Sie die stochastische Unabhängigkeit von $ E_1 $ und $ E_2 $.'))
         else:
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Überprüfen Sie die stochastische '
                            + f'Unabhängigkeit von $ E_1 $ und $ E_2 $, mit: '), ' E_1: ' + ereignis_1 + r', \quad E_2: '
@@ -352,7 +352,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         pkt = 0
         farbwahl, kuerzelwahl = auswahl()
         aufgabe.extend((NoEscape(r' \noindent ' + f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der '
-                                 + f'Farbe {farbwahl}. \n\n'),
+                                 + f'Farbe {farbwahl}.'),' \n\n',
                         str(liste_teilaufg[i]) + f') Geben Sie die Wahrscheinlichkeitsverteilung von X an und'
                                                  f' zeichnen Sie das zugehörige Histogramm.'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
