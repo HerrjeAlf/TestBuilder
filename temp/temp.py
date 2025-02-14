@@ -110,41 +110,55 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # def schreibweise(zahl, darstellung='wiss'):
 
 
-# Erstellen einer neuen Figur
-fig, ax = plt.subplots()
-fig.canvas.draw()
-fig.tight_layout()
-ax.set_aspect(1)
+import matplotlib.pyplot as plt
+import numpy as np
 
-laenge = nzahl(2, 5) * 5
-radius = laenge * nzahl(3, 6) / 10
-anz_bahnen = 1
-bahnen = []
-for step in range(0, anz_bahnen + 1):
-    theta_1 = np.linspace(np.pi / 2, 3 * np.pi / 2, 100)
-    theta_2 = np.linspace(np.pi / 2, - np.pi / 2, 100)
-    kurve_l = (radius * (1 + step * 0.2) * np.cos(theta_1), radius * (1 + step * 0.2) * np.sin(theta_1))
-    bahn_u = ([0, laenge], [-radius * (1 + step * 0.2), -radius * (1 + step * 0.2)])
-    bahn_o = ([0, laenge], [radius * (1 + step * 0.2), radius * (1 + step * 0.2)])
-    kurve_r = (radius * (1 + step * 0.2) * np.cos(theta_2) + laenge, radius * (1 + step * 0.2) * np.sin(theta_2))
-    bahnen.extend((kurve_l, bahn_u, bahn_o, kurve_r))
+# Angaben der eingefärbten Zellen
+rows = 4 # Zeilen
+cols = 5 # Spalten
 
-for element in bahnen:
-    plt.plot(element[0], element[1], 'k')
+anz = nzahl(1,rows*cols)
+x_max, y_max_unk = divmod(anz, cols)
+y_max = y_max_unk/rows
 
-# Doppelseitige Pfeile für Länge und Breite
-plt.annotate('', xy=(-radius, 0), xytext=(laenge+radius,0),
-             arrowprops=dict(arrowstyle='<->', lw=1.5))
-plt.annotate('Länge', xy=(0.5, 0.3), xytext=(0.5, 0.3),
-             ha='center', va='bottom')
-plt.annotate('', xy=(laenge, -radius), xytext=(laenge, radius),
-             arrowprops=dict(arrowstyle='<->', lw=1.5))
-plt.annotate('Breite', xy=(laenge-1, radius/2), xytext=(laenge-1,radius/2),
-             ha='left', va='center', rotation=90)
-plt.text(*element)
+print(anz)
+print(x_max)
+print(y_max)
+def create_rectangle(rows, cols, x_max, y_max):
+    fig, ax = plt.subplots()
 
-# Achsen ausschalten
-ax.axis('off')
+    # Setze die Gitterlinien
+    ax.set_xticks(np.arange(0, cols + 1))
+    ax.set_yticks(np.arange(0, rows + 1))
+    ax.grid(color="black", linestyle='-', linewidth=1)
 
-plt.savefig('img/temp/' + 'pool', dpi=200, bbox_inches='tight', pad_inches=0)
+    # Wertebereich des Koordinatensystems festlegen
+    ax.set_xlim(0, cols)
+    ax.set_ylim(0, rows)
+
+    # Entferne die Achsenbeschriftungen
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+
+    # Hinzufügen von horizontalen Linien
+    for row in range(1, rows):
+        ax.axhline(y=row, color='black', linewidth=1)
+
+    # Hinzufügen von vertikalen Linien
+    for col in range(1, cols):
+        ax.axvline(x=col, color='black', linewidth=1)
+
+    # Ticks nach innen zeigen lassen
+    ax.tick_params(axis='both', which='both', direction='in')
+
+    # Vertikalen Bereich grau färben
+    ax.axvspan(0, x_max, ymin=0, ymax=1, color='gray', alpha=0.5)
+    ax.axvspan(x_max, x_max+1, ymin=0, ymax=y_max, color='gray', alpha=0.5)
+    plt.show()
+
+# Beispiel: Rechteck mit 4 Zeilen und 5 Spalten, graue Zellen an Positionen (1, 2) und (3, 4)
+create_rectangle(4, 5, x_max, y_max)
+
+
+
 
