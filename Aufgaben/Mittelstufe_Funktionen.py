@@ -593,10 +593,10 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
     liste_bez = []
 
     # Erstellen der Parabelgleichung
-    nst1 = -1 * nzahl(1, 3)
+    nst1 = random.choice([-4, -3, -2, -1, 0, 1])
     abstand_nst = random.choice([2, 4])
     nst2 = nst1 + abstand_nst
-    while nst1+nst2 ==0 :
+    while nst1+nst2 == 0:
         nst1 = -1 * nzahl(1, 3)
         abstand_nst = random.choice([2, 4])
         nst2 = nst1 + abstand_nst
@@ -745,7 +745,9 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         q = nst1 * nst2 - g_n
         xwert_s1 = N(-p/2 + sqrt((p/2)**2-q),3)
         xwert_s2 = N(-p/2 - sqrt((p/2)**2-q),3)
-        punkte = 5
+        ywert_s1 = N(fkt_g.subs(x, xwert_s1),3)
+        ywert_s2= N(fkt_g.subs(x, xwert_s2),3)
+        punkte = 7
         aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Schnittpunkte '
                                 + 'der linearen Funktion mit dem Graphen der Parabel.'))
         if pruef_kl10:
@@ -764,7 +766,9 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
                        + '~=~ ' + gzahl(Rational(-1*p,2)) + r' \pm \sqrt{ '
                        + gzahl(Rational((p)**2 - 4*(q),4)) + r' } \quad (1BE) \\ '
                        + 'x_1 ~=~ ' + gzahl(xwert_s1) + r' \quad \mathrm{und} \quad x_2 ~=~ ' + gzahl(xwert_s2)
-                       + r' \quad (2BE)')
+                       + r' \quad (2BE) \\ S_1 \left( ' + gzahl(xwert_s1) + r' \vert ' + gzahl(ywert_s1)
+                       + r' \right) \quad \mathrm{und} \quad S_2 \left( ' + gzahl(xwert_s2) + r' \vert '
+                       + gzahl(ywert_s2) + r' \right) \quad (2BE) ')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
