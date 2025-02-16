@@ -29,20 +29,18 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_einf = 6 if anz_einf not in [0, 1, 2, 3, 4, 5, 6] else anz_einf
-    anz_pkt = 6 if anz_pkt not in [0, 1, 2, 3, 4, 5, 6] else anz_pkt
+    anz_einf = 6 if anz_einf not in list(range(0,7)) else anz_einf
+    anz_pkt = 6 if anz_pkt not in list(range(0,7)) else anz_pkt
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
     aufg_f = 1 if 'f' in teilaufg else 0
-    anz_einf = anz_einf + aufg_f
-    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf)
-    fkt_n = random_selection(list(range(-3,4)), anz_einf)
+    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf + aufg_f)
+    fkt_n = random_selection(list(range(-3,4)), anz_einf + aufg_f)
     # Punkte der schwierigeren Funktionen
-    aufg_c = 1 if 'c' in teilaufg else 0
-    aufg_f = 1 if 'f' in teilaufg else 0
-    xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_c),
-                          random_selection(list(range(-5,6)), anz_pkt + aufg_c))
+    aufg_d = 1 if 'd' in teilaufg else 0
+    xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_d),
+                          random_selection(list(range(-5,6)), anz_pkt + aufg_d))
     xwerte_2_unbegr, ywerte_2_unbegr = ([wert+random.choice([1,2,4,6]) for wert in xwerte_1],
                                         [wert + random.choice([3,5,7]) for wert in ywerte_1])
     xwerte_2, ywerte_2 = ([wert if wert < 6 else wert - 10 for wert in xwerte_2_unbegr],
@@ -54,8 +52,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         xwerte_P, ywerte_P = xwerte_2, ywerte_2
         xwerte_Q, ywerte_Q = xwerte_1, ywerte_1
 
-    fkt_m_pkt = [Rational((ywerte_Q[step]-ywerte_P[step]),(xwerte_Q[step]-xwerte_P[step])) for step in range(anz_pkt + aufg_c)]
-    fkt_n_pkt = [ywerte_P[step] - fkt_m_pkt[step]*xwerte_P[step] for step in range(anz_pkt + aufg_c)]
+    fkt_m_pkt = [Rational((ywerte_Q[step]-ywerte_P[step]),(xwerte_Q[step]-xwerte_P[step])) for step in range(anz_pkt + aufg_d)]
+    fkt_n_pkt = [ywerte_P[step] - fkt_m_pkt[step]*xwerte_P[step] for step in range(anz_pkt + aufg_d)]
     # Liste der Funktionsgleichungen und Erzeugen der Darstellung
     liste_fkt = ([fkt_m[k] * x + fkt_n[k] for k in range(anz_einf)]
                  + [fkt_m_pkt[k] * x + fkt_n_pkt[k] for k in range(anz_pkt)])
@@ -67,7 +65,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
     if 'a' in teilaufg:
         # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = anz_einf*3 + anz_pkt*6
+        punkte = (anz_einf)*3 + anz_pkt*6
         # Lösungen für Gleichungen
         lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Funktionsgleichung(en):} \hspace{10em} \\')
         for step in range(anz_einf):
@@ -103,7 +101,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                    + gzahl(fkt_m[step]) + r'}~=~' + gzahl(Rational(-1*fkt_n[step], fkt_m[step])) + r' \quad (2BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
         for step in range(anz_pkt):
-
             lsg = (lsg + r' \mathrm{für~' + fkt_bez[anz_einf + step] + r'(x) ~ gilt:} x_0 ~=~ -\frac{'
                    + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
                    + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
@@ -121,7 +118,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         punkte = (anz_einf + anz_pkt)*2
         aufgabe.extend((str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
                        + f'-2 < x < 2.', 'Grafik \n\n'))
-
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
@@ -191,12 +187,12 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         k = anz_einf + anz_pkt
-        graph_xyfix(*[fkt_m[anz_einf-1]*x + fkt_n[anz_einf-1]],
+        graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
                     bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
-                        + gzahl(fkt_m[anz_einf-1]) + 'x' + vorz_str(fkt_n[anz_einf-1]) +
-                        'im oberen Koordinatensystem ein. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k] + '(x) = '
+                       + vorz_v_aussen(fkt_m[anz_einf],'x') + vorz_str(fkt_n[anz_einf])
+                       + ' im oberen Koordinatensystem ein. \n\n')
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
