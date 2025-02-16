@@ -184,9 +184,9 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             erg = preis*(Rational(100-rabatt,100))
             artikel = random_selection(['ein Fahrrad', 'einen Computer',  'ein Handy', 'eine Spielekonsole',
                                         'eine Gitarre', 'ein Paar Sneaker'], 1)[0]
-            aufgabe.append((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                     + f') Berechnen Sie den Preis, wenn Max {artikel} für {preis}€ '
-                                       f'kauft und {rabatt}' + r'\% Rabatt erhält. ')))
+            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                    + f') Berechnen Sie den Preis, wenn Max {artikel} für {preis}€ '
+                                    + f'kauft und {rabatt}' + r'\% Rabatt erhält. '))
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \cdot \frac{'
                            + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \quad (1BE) ')
             if pruef_kl10:
@@ -194,6 +194,61 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 grafiken_aufgaben.append('notizen_klein')
             else:
                 aufgabe.append(' \n\n')
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(1)
+            i += 1
+
+        if element == 'f':
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            rows = 4  # Zeilen
+            cols = 5  # Spalten
+
+            anz = nzahl(1, rows * cols)
+            x_max, y_max_unk = divmod(anz, cols)
+            y_max = y_max_unk / rows
+            def create_rectangle(rows, cols, x_max=cols, y_max=1, name='Menge'):
+                fig, (ax, text_ax) = plt.subplots(1, 2, figsize=(8, 3))
+                fig.patch.set_visible(False)
+                fig.tight_layout()
+                # Hinzufügen eines Textfeldes
+                text_ax.text(0.5, 0.5, 'p = ..............  %', va='center', ha='center', fontsize=24)
+                text_ax.axis('off')
+
+                # Setze die Gitterlinien
+                ax.set_xticks(np.arange(0, cols + 1))
+                ax.set_yticks(np.arange(0, rows + 1))
+                ax.grid(color="black", linestyle='-', linewidth=1)
+
+                # Wertebereich des Koordinatensystems festlegen
+                ax.set_xlim(0, cols)
+                ax.set_ylim(0, rows)
+
+                # Entferne die Achsenbeschriftungen
+                ax.set_xticklabels([])
+                ax.set_yticklabels([])
+
+                # Hinzufügen von horizontalen Linien
+                for row in range(1, rows):
+                    ax.axhline(y=row, color='black', linewidth=1)
+
+                # Hinzufügen von vertikalen Linien
+                for col in range(1, cols):
+                    ax.axvline(x=col, color='black', linewidth=1)
+
+                # Ticks nach innen zeigen lassen
+                ax.tick_params(axis='both', which='both', direction='in')
+
+                # Vertikalen Bereich grau färben
+                ax.axvspan(0, x_max, ymin=0, ymax=1, color='gray', alpha=0.5)
+                ax.axvspan(x_max, x_max + 1, ymin=0, ymax=y_max, color='gray', alpha=0.5)
+                # plt.show()
+                return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+            create_rectangle(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + f') Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
+                            ['Grafik','200px']))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(anz/(rows*cols)*100) + r'~ \% \quad (1BE) ')
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(1)
             i += 1
@@ -229,7 +284,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                                      + winkel[ausw] + ' $ an.'),
                             ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
-                           + r' ^{ \circ } \quad (1BE) ')
+                           + r' ^{ \circ } \quad (1BE) \\')
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(1)
             i += 1
@@ -264,7 +319,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             list_lsg = list_aufg
             list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
             loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
-                           + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]] + r' \quad (1BE) ')
+                           + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]]
+                           + r' \quad (1BE)')
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(1)
             i += 1
@@ -316,10 +372,11 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                             r' \hspace{5em} ' + list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]]
                             + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
-                           + r' \hspace{2em} ' + list_lsg[ausw[2]] +  r' \quad (1BE) ')
+                           + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \quad (1BE)')
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(1)
             i += 1
+
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

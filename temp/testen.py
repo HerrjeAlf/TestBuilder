@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[pool(1)]]
+    Aufgaben = [[basisaufgaben(1, neue_seite=5)]]
 
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
