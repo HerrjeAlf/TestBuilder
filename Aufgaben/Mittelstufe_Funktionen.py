@@ -457,14 +457,14 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
         for step in range(anz_np):
             lsg =  (lsg + r' S \left( ' + gzahl(xwert_s[step]) + r' \vert '
                     + gzahl(ywert_s[step]) + r' \right) \quad \to \quad ' + fkt_bez[step] + r'(x) ~=~ \left( x'
-                    + vorz_str(-1*xwert_s[step]) + r' \right) ^2 ' + vorz_str(ywert_s[step]) + r' \quad (3BE)')
+                    + vorz_str(-1*xwert_s[step]) + r' \right) ^2 ' + vorz_str(ywert_s[step]) + r' \quad (2BE)')
             lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
         for step in range(anz_ap):
             lsg = (lsg +r' S \left( ' + gzahl(xwert_s[anz_np+step]) + r' \vert ' + gzahl(ywert_s[anz_np+step])
                    + r' \right) \quad \mathrm{und} \quad a ~=~ ' + gzahl(fakt_ap[step]) + r' \quad \to \quad '
                    + fkt_bez[anz_np+step] + r'(x) ~=~ ' + vorz_v_aussen(fakt_ap[step],'') + r' \left( x'
                    + vorz_str(-1 * xwert_s[anz_np+step]) + r' \right) ^2 ' + vorz_str(ywert_s[anz_np+step])
-                   + r' \quad (4BE)')
+                   + r' \quad (3BE)')
             lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
 
         if anz_np + anz_ap == 1:
@@ -655,7 +655,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         else:
             aufgabe.append(' \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
-                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (1BE)')
+                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (2BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
