@@ -165,9 +165,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             ausw = [0,1,2,3]
             random.shuffle(ausw)
 
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Eine Normalparabel hat den Scheitelpunkt '
-                                     + f'S({gzahl(xwert)}|{gzahl(ywert)}). Kreuzen Sie an, welche Gleichung die Parabel '
-                                       f'hat.'),
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche  Parabel '
+                                     + f'den Scheitelpunkt bei S({gzahl(xwert)}|{gzahl(ywert)}) hat.'),
                             list_aufg[ausw[0]] + r' \hspace{2em} ' + list_aufg[ausw[1]] + r' \hspace{2em} '
                             + list_aufg[ausw[2]] + r' \hspace{2em} ' + list_aufg[ausw[3]] + r' \\'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
@@ -184,9 +183,9 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             erg = preis*(Rational(100-rabatt,100))
             artikel = random_selection(['ein Fahrrad', 'einen Computer',  'ein Handy', 'eine Spielekonsole',
                                         'eine Gitarre', 'ein Paar Sneaker'], 1)[0]
-            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                    + f') Berechnen Sie den Preis, wenn Max {artikel} für {preis}€ '
-                                    + f'kauft und {rabatt}' + r'\% Rabatt erhält. '))
+            aufgabe.extend((NoEscape(r' \noindent' + f' Max möchte {artikel} für {preis}€ kaufen und erhält beim Kauf '
+                            + f'{rabatt} ' + r' \% Rabatt. '),' \n\n',
+                           str(liste_teilaufg[i]) + r') Berechne den Kaufpreis, den Max zahlen muss. '))
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \cdot \frac{'
                            + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \quad (1BE) ')
             if pruef_kl10:

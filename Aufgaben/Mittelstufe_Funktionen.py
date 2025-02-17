@@ -176,8 +176,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                    + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt])
                    + '~=~' + gzahl(ywert_t))
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe ob der Punkt T auf dem Graphen von '
-                           + f'{fkt_bez[k]} liegt. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
+                           + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k]} liegt. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
             liste_punkte.append(punkte)
             i += 1
@@ -190,9 +190,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
                     bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k] + '(x) = '
+        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion $' + fkt_bez[k+1] + '(x) = '
                        + vorz_v_aussen(fkt_m[anz_einf],'x') + vorz_str(fkt_n[anz_einf])
-                       + ' im oberen Koordinatensystem ein. \n\n')
+                       + '$ im oberen Koordinatensystem ein.'), ' \n\n'))
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
@@ -708,9 +708,9 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         # Funktionsgleichung der gezeichneten linearen Funktionen aufstellen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie mithilfe ihres '
-                                + r'eingezeichneten Graphen die Funktionsgleichung von g(x) = $ '
-                                + vorz_v_aussen(g_m, 'x') + vorz_str(g_n) + r'$ '))
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie anhand des Graphen die '
+                                + r'Funktionsgleichung von $ g(x) =  ' + vorz_v_aussen(g_m, 'x')
+                                + vorz_str(g_n) + r'$ '))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')

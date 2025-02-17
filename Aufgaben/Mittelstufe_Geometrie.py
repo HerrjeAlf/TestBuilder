@@ -820,9 +820,9 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-                NoEscape('Die folgende Abbildung stellt ein beliebiges Dreieck dar, wobei $ h = '
+                NoEscape('Im abgebildeten allgemeinen Dreieck ist $ h = '
                          + gzahl(seite_h) + '$cm, $a = ' + gzahl(seite_a) + r'$cm und $ \gamma_1 = '
-                         + gzahl(gamma_1) + r'^{ \circ}$ ist.'), ['Grafik', '250px']]
+                         + gzahl(gamma_1) + r'^{ \circ}$.'), ['Grafik', '250px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
@@ -845,7 +845,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                + ') Berechne die Länge der Strecke ' + r'$ \overline{FB} $'))
+                                + ') Berechnen Sie die Länge der Strecke ' + r'$ \overline{FB} $'))
         loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i])
                        + r') \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                        + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
@@ -865,7 +865,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung eines Winkels mit dem Sinus
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechne die Größe der Winkel '
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechnen Sie die Größe der Winkel '
                                 + r'$ \alpha $' + ' und ' + r'$ \beta $'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
                                                  r' ~=~180^{ \circ } - 90^{ \circ } -' + gzahl(gamma_1)
@@ -887,7 +887,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Berechnung einer Seite mit dem Sinussatz
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechne die Länge der Seite b.'))
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechnen Sie die Länge der Seite b.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
                                                  r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
                                                  r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
@@ -909,7 +909,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
         stern = r'$ ^{ \star } $' if pruef_kl10 else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                + ') Berechne die Fläche vom Dreieck ABC.'))
+                                + ') Berechnen Sie die Fläche vom Dreieck ABC.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
                                                  r'180^{ \circ } - ' + gzahl(alpha) + r'^{ \circ } - ' + gzahl(beta)
                                                  + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
@@ -1091,12 +1091,17 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         pkt = 5
         aufgabe.extend((NoEscape(r' \noindent Am Rand vom Pools soll das beim Baden übergelaufene Wasser in eine '
                                 + r'Abflussrinne laufen. Die Gitter für die Abdeckung der Rinne sind 50cm lang.'),
-                                ' \n' + str(liste_teilaufg[i]) + ')  Berechnen Sie, wie viele Gitter für den Pool '
+                                ' \n\n', str(liste_teilaufg[i]) + ')  Berechnen Sie, wie viele Gitter für den Pool '
                                 + 'benötigt werden.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad U_{ges} ~=~ U_{Kreis} + 2* (Länge-Radius) ~=~ (2BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad U_{ges} ~=~ U_{Kreis} + 2 \cdot (Länge - Breite) ~=~ '
+                       + r' \pi \cdot Breite + 2 \left( ' + vorz_v_aussen(laenge + 2 * radius, 'm ')
+                       + vorz_v_innen(2*radius, 'm') + r' \right) ~=~ \pi \cdot ' + gzahl(2*radius)
+                       + r' m + 2 \cdot ' + gzahl(laenge) + r'm ~=~' + gzahl(N(2*pi*radius + 2*laenge,3))
+                       + r'm \quad (4BE) \\ \mathrm{Es~sind~' + gzahl(int(4*(pi*radius + laenge)) + 1)
+                       + r'~Gitter~für~die~Abdeckung~notwendig.} \quad (1BE) ')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_mittel')
+            grafiken_aufgaben.append('notizen_gross')
         else:
             aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1106,10 +1111,15 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
     if 'c' in teilaufg:
         # Hier sollen die SuS die Grundfläche des Pools berechnen
         liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
-        pkt = 5
+        pkt = 3
+        flaeche = N(laenge*2*radius + pi*radius**2,2)
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Berechnen Sie die Größe der Grundfläche '
                                  + 'des Pools.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ (2BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ '
+                       + r' ( Länge - Breite ) \cdot Breite + \pi \cdot r^2 \quad (1BE) \\ \hspace{15em} \left( '
+                       + vorz_v_aussen(laenge + 2*radius, 'm') + vorz_v_innen(-2*radius, 'm')
+                       + r' \right) \cdot ' + gzahl(2*radius) + r' + \pi \cdot \left( ' + gzahl(radius)
+                       + r'm \right) ^2  ~=~ ' + gzahl(flaeche) + r'm^2 \quad (2BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
@@ -1123,17 +1133,19 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         if 'd' in teilaufg:
             # Hier sollen die SuS das Wasservolumen des Pools berechnen
             stern = r'$ ^{ \star } $' if pruef_kl10 else ''
-            hoehe_pool = nzahl(10, 15) / 10
-            pkt = 5
+            hoehe_pool = nzahl(22, 30) / 10
+            volumen = N((laenge * 2 * radius + pi * radius ** 2) * hoehe_pool, 2)
+            pkt = 3
             liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
-            aufgabe.extend((NoEscape(r' \noindent Damit Carmen im Pool stehen kann, soll dieser eine Höhe von '
-                                     + f'{gzahl(hoehe_pool)}m haben. \n\n'),
+            aufgabe.extend((NoEscape(r' \noindent Damit Herr Geiss einen Kopfsprung in den Pool machen kann, '
+                                     f'soll dieser {gzahl(hoehe_pool)}m tief sein.'),' \n\n',
                             NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
                                      + ') Berechnen Sie die Wassermenge des Pools in $ m^3 $.')))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad Punkte} \\')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A \cdot h ~=~ ' + gzahl(flaeche) + r'm^2 \cdot '
+                           + gzahl(hoehe_pool) + 'm ~=~' + gzahl(volumen) +  r'm^3 \\')
             if pruef_kl10:
                 aufgabe.append(['Bild', '430px'])
-                grafiken_aufgaben.append('notizen_mittel')
+                grafiken_aufgaben.append('notizen_klein')
             else:
                 aufgabe.append(' \n\n')
             aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1144,18 +1156,20 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
             if 'e' in teilaufg:
                 # Berechnung die Zeit zum Befüllen des Pools mit einem Gartenschlauch
                 menge_schlauch = nzahl(6,13) * 100
+                zeit = volumen/(menge_schlauch/1000)
                 stern = r'$ ^{ \star } $' if pruef_kl10 else ''
                 pkt = 3
                 liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
-                aufgabe.extend((NoEscape(r' \noindent Robert ist ungeduldig und möchte für die Befüllung des Pool '
+                aufgabe.extend((NoEscape(r' \noindent Herr Geiss ist ungeduldig und möchte für die Befüllung des Pool '
                                          + f'einen Gartenschlauch nutzen. Mit diesem kann er den Pool mit '
-                                         + f'{gzahl(menge_schlauch)}l Wasser pro Stunde befüllen. \n\n'),
+                                         + f'{gzahl(menge_schlauch)}l Wasser pro Stunde befüllen.'),' \n\n',
                                 NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
                                          + ') Berechne Sie, wie lange es dauert den Pool so zu befüllen .')))
-                loesung.append(str(liste_teilaufg[i]) + r') \quad Punkte} \\')
+                loesung.append(str(liste_teilaufg[i]) + r') t ~=~ \frac{' + gzahl(volumen) + 'm^3 }{'
+                               + gzahl(menge_schlauch/1000) + r' \frac{m^3}{h} } ~=~ ' + gzahl(zeit) + r'h \quad (3BE) ')
                 if pruef_kl10:
                     aufgabe.append(['Bild', '430px'])
-                    grafiken_aufgaben.append('notizen_mittel')
+                    grafiken_aufgaben.append('notizen_klein')
                 else:
                     aufgabe.append(' \n\n')
                 aufgabe.append('NewPage') if neue_seite == i else ''
