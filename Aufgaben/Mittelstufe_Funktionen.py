@@ -418,7 +418,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "anz_ap=" kann festgelegt werden, wie viele Graphen einer allegemeinen Parabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_ap=1" und es wird ein Graph in Teilaufgabe a erzeugt.
@@ -435,7 +435,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
     anz_np = 6 if anz_np not in list(range(0,7)) else anz_np
     anz_ap = 6 if anz_ap not in list(range(0,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-    anz_c = 1 if 'c' in teilaufg else 0
+    anz_c = 1 if 'd' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
     xwert_s = random_selection([-1*zahl for zahl in range(1,5)] + list(range(1,5)), anz_np+anz_ap + anz_c)
     ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_c)
@@ -517,7 +517,61 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
             liste_punkte.append(punkte)
             i += 1
 
-    if 'c' in teilaufg:
+            if 'c' in teilaufg:
+                # die Nullstellen der eingezeichneten Funktionsgleichungen berechnen
+                liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+                punkte = 0
+                # Lösungen für Gleichungen
+                lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{Nullstellen~mit~p~q~Formel~berechnen:} \\')
+                for step in range(anz_np):
+                    lsg = (lsg + '0 ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step], 'x')
+                           + vorz_str(xwert_s[step] ** 2 + ywert_s[step])
+                           + r' \quad \to \quad x_{1/2} ~=~ - \frac{ ' + gzahl(xwert_s[step])
+                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(xwert_s[step]) + r' }{2} \right) ^2 - \left( '
+                           + gzahl(xwert_s[step] ** 2 + ywert_s[step]) + r' \right) } ~=~ '
+                           + gzahl(Rational(-1 * xwert_s[step],2)) + r' \pm \sqrt{'
+                           + gzahl(Rational(xwert_s[step] ** 2,4) - xwert_s[step] ** 2 + ywert_s[step])
+                           + r'} \quad (2BE) \\ x_1 ~=~ ' + gzahl(Rational(-1 * xwert_s[step],2))
+                           + vorz_str(N(sqrt(Rational(xwert_s[step] ** 2,4)
+                                             - xwert_s[step] ** 2 + ywert_s[step]),3))
+                           + r' \quad \mathrm{und} \quad x_2 ~=~' + gzahl(Rational(-1 * xwert_s[step], 2))
+                           + vorz_str(N(-1*sqrt(Rational(xwert_s[step] ** 2, 4)
+                                                - xwert_s[step] ** 2 + ywert_s[step]), 3)) + r' \quad (2BE)')
+                    lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
+                    punkte += 4
+                for step in range(anz_ap):
+                    lsg = (lsg + '0 ~=~' + vorz_v_aussen(fakt_ap[step], 'x^2')
+                           + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
+                           + vorz_str(fakt_ap[step] * xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step])
+                           + r'~ \vert \div ' + gzahl_klammer(fakt_ap[step]) + r' \quad \to x^2 '
+                           + vorz_v_innen(-2 * xwert_s[anz_np + step], 'x')
+                           + vorz_str(xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step]) + r' \quad (2BE) \\'
+                           + r' x_{1/2} ~=~ - \frac{ ' + gzahl(xwert_s[anz_np + step])
+                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(xwert_s[anz_np + step])
+                           + r' }{2} \right) ^2 - \left( ' + gzahl(xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step])
+                           + r' \right) } ~=~ ' + gzahl(Rational(-1 * xwert_s[anz_np + step],2)) + r' \pm \sqrt{'
+                           + gzahl(Rational(xwert_s[anz_np+step]**2,4) - xwert_s[anz_np+step] ** 2 + ywert_s[step])
+                           + r'} \quad (1BE) \\ x_1 ~=~ ' + gzahl(Rational(-1 * xwert_s[anz_np + step],2))
+                           + vorz_str(N(sqrt(Rational(xwert_s[anz_np + step]**2,4)
+                                             - xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step]),3))
+                           + r' \quad \mathrm{und} \quad x_2 ~=~' + gzahl(Rational(-1 * xwert_s[anz_np + step], 2))
+                           + vorz_str(N(-1*sqrt(Rational(xwert_s[anz_np + step]**2, 4)
+                                                - xwert_s[anz_np + step]**2+ywert_s[anz_np + step]), 3))
+                           + r' \quad (2BE)')
+                    lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
+                    punkte += 5
+                if anz_np + anz_ap == 1:
+                    aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen des Graphen mithilfe '
+                                   + f'der Normalform aus Teilaufgabe b.')
+
+                else:
+                    aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Graphen mithilfe '
+                                   + f'der Normalform aus Teilaufgabe b.')
+                loesung.append(lsg)
+                liste_punkte.append(punkte)
+                i += 1
+
+    if 'd' in teilaufg:
         # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
@@ -556,7 +610,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd'], anz_np=1, anz_ap=1, i=0, BE
         liste_punkte.append(punkte)
         i += 1
 
-        if 'd' in teilaufg:
+        if 'e' in teilaufg:
             # zur gegebenen Funktion den Graphen zeichnen
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
