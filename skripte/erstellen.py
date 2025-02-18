@@ -21,7 +21,7 @@ except FileExistsError:
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 
 def seite(aufgaben):
-    Aufgabe = Document(font_size='large', geometry_options=geometry_options)
+    Aufgabe = Document(geometry_options=geometry_options)
     Loesung = Document(geometry_options=geometry_options)
 
     for aufgabe in aufgaben:
@@ -291,7 +291,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
         def Teil_1():
-            Aufgabe = Document(font_size='large', geometry_options=geometry_options)
+            Aufgabe = Document(geometry_options=geometry_options)
             packages(Aufgabe)
 
             # Kopf erste Seite
@@ -302,12 +302,15 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
             table1 = Tabular('l c', row_height=1.2)
             table1.add_row((MultiColumn(2, align='c',
-                                        data=LargeText(bold(f'Einheitliche Klassenarbeit in Mathematik der Klasse 10'))),))
+                                        data=LargeText(bold(f'Einheitliche Klassenarbeit der Klasse 10'))),))
+            table1.add_empty_row()
+            table1.add_row((MultiColumn(2, align='c', data=HugeText(bold('Mathematik'))),))
             table1.add_empty_row()
             table1.add_row(MediumText(bold('Allgemeine Arbeitshinweise')), '')
             table1.add_row(NoEscape(r'Die $ \mathbf{Arbeitszeit} $ beträgt $ \mathbf{90} $ Minuten.'), '')
-            table1.add_row('Jede Aufgabe und alle Teilaufgaben sind mit der entsprechenden Punktzahl versehen.','')
-            table1.add_row('Das soll Ihnen bei der Reihenfolge der Bearbeitung von Teilaufgaben helfen.', '')
+            table1.add_row('Jede Aufgabe und alle Teilaufgaben sind mit der entsprechenden Punktzahl versehen. '
+                           'Das soll Ihnen','')
+            table1.add_row('bei der Reihenfolge der Bearbeitung von Teilaufgaben helfen.', '')
             table1.add_row(NoEscape('Die Schülerinnen und Schüler der ' + r'$ \mathbf{Erweiterungskurse} $'
                                     + ' müssen alle Aufgaben lösen.'), '')
             table1.add_row(NoEscape('Die Schülerinnen und Schüler der ' + r'$ \mathbf{Grundkurse} $ lösen nur '
@@ -317,10 +320,10 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
             table1.add_hline()
             table1.add_row((MultiColumn(2, align='|l|',
                                         data=italic('Bitte bearbeiten Sie alle Aufgaben auf den vorgegebenen Blättern. '
-                                                    'Sollte der Platz nicht ')),))
+                                                    'Sollte der zur Verfügung stehende')),))
             table1.add_row((MultiColumn(2, align='|l|',
-                                        data=italic('ausreichen, fügen Sie Ihre Ergänzungen auf einem '
-                                                    'gesonderten ')),))
+                                        data=italic('Platz nicht ausreichen, fügen Sie Ihre Ergänzungen auf einem '
+                                                    'gesonderten Blatt ein.')),))
             table1.add_row((MultiColumn(2, align='|l|',
                                         data=italic('Alle Lösungswege müssen nachvollziehbar '
                                                     'dokumentiert sein.')),))
@@ -329,10 +332,14 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
                                                     'Textaufgaben nicht den Antwortsatz.')),))
             table1.add_hline()
             table1.add_empty_row()
-            table1.add_row('Falls Sie eine Lösung durch Probieren finden, müssen Sie Ihre Überlegungen ausreichend ', '')
-            table1.add_row('kommentieren. Während der Arbeitszeit können Sie den nicht programmierbaren, ', '')
-            table1.add_row('nicht grafikfähigen Taschenrechner, die Formelsammlung, das beiliegende Formelblatt ', '')
-            table1.add_row('(Doppelseite), Kurvenschablonen, Zeichengräte sowie den Duden als Hilfsmittel benutzen.', '')
+            table1.add_row('Falls Sie eine Lösung durch Probieren finden, müssen Sie Ihre Überlegungen ausreichend '
+                           'kommentieren.', '')
+            table1.add_row('Während der Arbeitszeit können Sie den nicht programmierbaren, nicht grafikfähigen '
+                           'Taschenrechner,', '')
+            table1.add_row('die Formelsammlung, das beiliegende Formelblatt (Doppelseite), Kurvenschablonen, '
+                           'Zeichengräte', '')
+            table1.add_row('sowie den Duden als Hilfsmittel benutzen. Viel Erfolg bei der Arbeit', '')
+            table1.add_empty_row()
             table1.add_hline()
             table1.add_empty_row()
             table1.add_row('Vorname, Name:   ____________________', '')
