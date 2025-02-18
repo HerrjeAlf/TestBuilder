@@ -2024,9 +2024,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         # Geradengleichung aus zwei gegebenen Punkten aufstellen
         punkte = 2
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        aufgabe.extend(('Gegeben ist  die Gerade g durch die Punkte: '
-                        'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
+        text = 'Gegeben ist die Gerade g durch die Punkte: ' if 'a' in teilaufg else 'und die Gerade g durch die Punkte: '
+        aufgabe.extend((text + 'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                         'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
                         str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
