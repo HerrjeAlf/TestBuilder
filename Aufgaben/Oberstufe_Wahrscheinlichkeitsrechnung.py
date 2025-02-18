@@ -468,20 +468,14 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
     if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
-
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
                                 + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
                                 + f' genau {gzahl(anzahl_k)} mal gezogen wird.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~   \begin{pmatrix} ' + r' n  \\' + r' k \\ '
+                       + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2BE)')
-        if pruef_kl10:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_mittel')
-        else:
-            aufgabe.append(' \n\n')
-
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)
         i += 1
@@ -653,7 +647,7 @@ def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0, BE=
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if vierfeldertafel == True:
             punkte = 3
-            aufgabe.extend((Tabelle(A=A, P=P, P_nH=P_nH, H=H),' \n\n\n',
+            aufgabe.extend((Tabelle(A=A, P=P, P_H=P_H, H=H),' \n\n\n',
                             str(liste_teilaufg[i]) + f')  Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
             loesung.extend((str(liste_teilaufg[i]) + f') Tabelle wie unten ergibt {punkte} P. \n\n',
                             Tabelle(A=A, M=M, P=P, M_H=M_H, P_H=P_H, H=H, M_nH=M_nH, P_nH=P_nH, nH=nH), ' \n\n'))
