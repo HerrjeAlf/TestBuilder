@@ -418,7 +418,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=0, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=1, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
     # Mit dem Parameter "anz_ap=" kann festgelegt werden, wie viele Graphen einer allegemeinen Parabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_ap=1" und es wird ein Graph in Teilaufgabe a erzeugt.
@@ -435,11 +435,12 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=
     anz_np = 6 if anz_np not in list(range(0,7)) else anz_np
     anz_ap = 6 if anz_ap not in list(range(0,7)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
-    anz_c = 1 if 'd' in teilaufg else 0
+    anz_d = 1 if 'c' in teilaufg else 0
+    anz_e = 1 if 'e' in teilaufg else 0
     # Erstellen der vorgegebenen Graphen
-    xwert_s = random_selection([-1*zahl for zahl in range(1,5)] + list(range(1,5)), anz_np+anz_ap + anz_c)
-    ywert_s = random_selection(list(range(-3,3)), anz_np+anz_ap + anz_c)
-    fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap + anz_c)
+    xwert_s = random_selection([-1*zahl for zahl in range(1,5)] + list(range(1,5)), anz_np + anz_ap + anz_d + anz_e)
+    ywert_s = random_selection(list(range(-3,3)), anz_np + anz_ap + anz_d + anz_e)
+    fakt_ap = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1.5,2,2.5], anz_ap + anz_e)
     liste_fkt = ([(x - xwert_s[k])**2+ywert_s[k] for k in range(anz_np)]
                  + [fakt_ap[k]*(x - xwert_s[k+anz_np])**2+ywert_s[k+anz_np] for k in range(anz_ap)])
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
@@ -486,7 +487,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=
             punkte = anz_np*2 + anz_ap*3
 
             # Lösungen für Gleichungen
-            lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \\')
+            lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \hspace{15em}  \\')
             for step in range(anz_np):
                 lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step],'x +')
                        + gzahl(abs(xwert_s[step])) + '^2' + vorz_str(ywert_s[step]) + '~=~ x^2'
@@ -504,7 +505,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=
                        + vorz_v_aussen(fakt_ap[step],'x^2')
                        + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
                        + vorz_str(fakt_ap[step]*xwert_s[anz_np + step]**2 + ywert_s[anz_np + step]) + r' \quad (3BE)')
-                lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
+                lsg = lsg + r' \\ ' if (step + 1) < anz_ap else lsg
 
             if anz_np + anz_ap == 1:
                 aufgabe.extend((str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung aus Teilaufgabe a) '
@@ -522,103 +523,148 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anz_np=1, anz_ap=1, i=
                 liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
                 punkte = 0
                 # Lösungen für Gleichungen
-                lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{Nullstellen~mit~p~q~Formel~berechnen:} \\')
+                lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{Nullstellen~mit~p~q~Formel~berechnen:} \hspace{15em} \\')
                 for step in range(anz_np):
                     lsg = (lsg + '0 ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step], 'x')
                            + vorz_str(xwert_s[step] ** 2 + ywert_s[step])
-                           + r' \quad \to \quad x_{1/2} ~=~ - \frac{ ' + gzahl(xwert_s[step])
-                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(xwert_s[step]) + r' }{2} \right) ^2 - \left( '
-                           + gzahl(xwert_s[step] ** 2 + ywert_s[step]) + r' \right) } ~=~ '
-                           + gzahl(Rational(-1 * xwert_s[step],2)) + r' \pm \sqrt{'
-                           + gzahl(Rational(xwert_s[step] ** 2,4) - xwert_s[step] ** 2 + ywert_s[step])
-                           + r'} \quad (2BE) \\ x_1 ~=~ ' + gzahl(Rational(-1 * xwert_s[step],2))
-                           + vorz_str(N(sqrt(Rational(xwert_s[step] ** 2,4)
-                                             - xwert_s[step] ** 2 + ywert_s[step]),3))
-                           + r' \quad \mathrm{und} \quad x_2 ~=~' + gzahl(Rational(-1 * xwert_s[step], 2))
-                           + vorz_str(N(-1*sqrt(Rational(xwert_s[step] ** 2, 4)
-                                                - xwert_s[step] ** 2 + ywert_s[step]), 3)) + r' \quad (2BE)')
+                           + r' \quad \to \quad x_{1/2} ~=~ - \frac{ ' + gzahl(-2 * xwert_s[step])
+                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(-2 * xwert_s[step]) + r' }{2} \right) ^2 - '
+                           + gzahl_klammer(xwert_s[step] ** 2 + ywert_s[step]) + r'} ~=~ ' + gzahl(xwert_s[step])
+                           + r' \pm \sqrt{' + gzahl(-1 * ywert_s[step]) + r'} \quad (2BE) \\')
+                    punkte += 2
+                    if ywert_s[step] > 0:
+                        lsg = (lsg + r' \mathrm{negative~Wurzel~nicht~lösbar \quad \to \quad keine~Nullstellen '
+                               + r' \quad (1BE) }')
+                        punkte += 1
+                    elif ywert_s[step] == 0:
+                        lsg = (lsg + r' \mathrm{nur~eine~Nullstelle~bei} \quad x_1 ~=~ '
+                               + gzahl(xwert_s[step]) + r' \quad (1BE) ')
+                        punkte += 1
+                    else:
+                        lsg = (lsg +r' x_1 ~=~ ' + gzahl(N(xwert_s[step] - sqrt(-1*ywert_s[step]),3))
+                               + r' \quad \mathrm{und} \quad x_2 ~=~' + gzahl(N(xwert_s[step]  + sqrt(-1*ywert_s[step]),3)) + r' \quad (2BE)')
+                        punkte += 2
                     lsg = lsg + r' \\ ' if step + 1 < anz_np + anz_ap else lsg
-                    punkte += 4
+
                 for step in range(anz_ap):
                     lsg = (lsg + '0 ~=~' + vorz_v_aussen(fakt_ap[step], 'x^2')
                            + vorz_v_innen(-2 * fakt_ap[step] * xwert_s[anz_np + step], 'x')
                            + vorz_str(fakt_ap[step] * xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step])
-                           + r'~ \vert \div ' + gzahl_klammer(fakt_ap[step]) + r' \quad \to x^2 '
+                           + r'~ \vert \div ' + gzahl_klammer(fakt_ap[step]) + r' \quad \to \quad 0 ~=~ x^2 '
                            + vorz_v_innen(-2 * xwert_s[anz_np + step], 'x')
-                           + vorz_str(xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step]) + r' \quad (2BE) \\'
-                           + r' x_{1/2} ~=~ - \frac{ ' + gzahl(xwert_s[anz_np + step])
-                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(xwert_s[anz_np + step])
-                           + r' }{2} \right) ^2 - \left( ' + gzahl(xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step])
-                           + r' \right) } ~=~ ' + gzahl(Rational(-1 * xwert_s[anz_np + step],2)) + r' \pm \sqrt{'
-                           + gzahl(Rational(xwert_s[anz_np+step]**2,4) - xwert_s[anz_np+step] ** 2 + ywert_s[step])
-                           + r'} \quad (1BE) \\ x_1 ~=~ ' + gzahl(Rational(-1 * xwert_s[anz_np + step],2))
-                           + vorz_str(N(sqrt(Rational(xwert_s[anz_np + step]**2,4)
-                                             - xwert_s[anz_np + step] ** 2 + ywert_s[anz_np + step]),3))
-                           + r' \quad \mathrm{und} \quad x_2 ~=~' + gzahl(Rational(-1 * xwert_s[anz_np + step], 2))
-                           + vorz_str(N(-1*sqrt(Rational(xwert_s[anz_np + step]**2, 4)
-                                                - xwert_s[anz_np + step]**2+ywert_s[anz_np + step]), 3))
-                           + r' \quad (2BE)')
+                           + vorz_str(xwert_s[anz_np + step] ** 2 + Rational(ywert_s[anz_np + step],fakt_ap[step]))
+                           + r' \quad (2BE) \\ x_{1/2} ~=~ - \frac{ ' + gzahl(-2*xwert_s[anz_np + step])
+                           + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(-2* xwert_s[anz_np + step])
+                           + r' }{2} \right) ^2 - '
+                           + gzahl_klammer(xwert_s[anz_np + step] ** 2 + Rational(ywert_s[anz_np + step],fakt_ap[step]))
+                           + r' } ~=~ ' + gzahl(xwert_s[anz_np + step]) + r' \pm \sqrt{'
+                           + gzahl(-1*Rational(ywert_s[anz_np + step]), fakt_ap[step]) + r'} \quad (1BE) \\ ')
+                    punkte += 3
+                    if fakt_ap[step] * ywert_s[anz_np + step] > 0:
+                        lsg = (lsg + r' \mathrm{negative~Wurzel~nicht~lösbar \quad \to \quad keine~Nullstellen '
+                               + r' \quad (1BE) }')
+                        punkte += 1
+                    elif fakt_ap[step] * ywert_s[anz_np + step] == 0:
+                        lsg = (lsg + r' \mathrm{nur~eine~Nullstelle~bei} \quad x_1 ~=~ '
+                               + gzahl(xwert_s[anz_np + step]) + r' \quad (1BE) ')
+                        punkte += 1
+                    else:
+                        lsg = (lsg + ' x_1 ~=~ '
+                               + gzahl(N(xwert_s[anz_np + step] - sqrt(-1*Rational(ywert_s[anz_np + step], fakt_ap[step])),3))
+                               + r' \quad \mathrm{und} \quad x_2 ~=~'
+                               + gzahl(N(xwert_s[anz_np + step] + sqrt(-1*Rational(ywert_s[anz_np + step], fakt_ap[step])),3))
+                               + r' \quad (2BE)')
+                        punkte += 2
                     lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
                     punkte += 5
                 if anz_np + anz_ap == 1:
-                    aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen des Graphen mithilfe '
-                                   + f'der Normalform aus Teilaufgabe b.')
+                    aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                            + f') Berechne die Nullstellen des Graphen mithilfe '
+                                            + f'der Normalform aus Teilaufgabe b.'), '\n\n'))
 
                 else:
-                    aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Graphen mithilfe '
-                                   + f'der Normalform aus Teilaufgabe b.')
+                    aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                             + f') Berechne die Nullstellen der Graphen mithilfe '
+                                             + f'der Normalform aus Teilaufgabe b.'), '\n\n'))
                 loesung.append(lsg)
                 liste_punkte.append(punkte)
                 i += 1
-
     if 'd' in teilaufg:
-        # zu einer vorgegebenen Funktionsgleichung den Graphen zeichnen
+        # zu einer gegebenen Funktionsgleichung in Scheitelpunktsform den Graphen zeichnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        k = anz_np + anz_ap
+        bez_fkt_d = fkt_bez[k]
+        fkt_d = (x - xwert_s[k])**2+ywert_s[k]
+        fkt_d_spf_str = (r' \left( x' + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
+                         + vorz_str(ywert_s[k]))
+        punkte = 3
+        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Zeichne den Graphen von $' + bez_fkt_d + '$(x) = $'
+                       + fkt_d_spf_str + '$ im Koordinatensystem ein.'), ' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
+                        + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }')
+        if 'f' not in teilaufg:
+            loesung.append('Figure')
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            graph_xyfix(*[fkt_d], bezn=bez_fkt_d, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        else:
+            loesung.append(r' \\ \mathrm{Graph~siehe~Lösung~Teilaufgabe~f.} ')
+        anz_np += 1
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'e' in teilaufg:
+        # eine in Normalform gegebene Funktionsgleichung in Scheitelpunktsform umwandeln und den Scheitelpunkt, sowie den Faktor a daraus bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        bez_fkt_c = fkt_bez[anz_np + anz_ap]
-        fkt_c = fakt_ap[anz_ap]*(x - xwert_s[anz_np+anz_ap])**2+ywert_s[anz_ap + anz_np]
-        fkt_c_nf_str = (vorz_v_aussen(fakt_ap[anz_ap],'x^2')
-                        + vorz_v_innen(-2 * fakt_ap[anz_ap] * xwert_s[anz_np + anz_ap], 'x')
-                        + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]))
-        fkt_c_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
-                         + vorz_str(-1 * xwert_s[anz_np + anz_ap]) + r' \right) ^2 '
-                         + vorz_str(ywert_s[anz_np + anz_ap]))
-        aufgabe.extend((r' \mathrm{Gegeben~ist~die~Funktion~' + bez_fkt_c + '(x)=' + fkt_c_nf_str
-                        + r'}. \hspace{25em}', str(liste_teilaufg[i]) + f') Forme die Funktion ' + bez_fkt_c
-                        + ' in die Scheitelpunktform um, nenne den Scheitelpunkt und Streckungsfaktor a. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + bez_fkt_c + '(x) ~=~' + fkt_c_nf_str + '~=~'
+        k = anz_np + anz_ap
+        bez_fkt_e = fkt_bez[k]
+        fkt_e = fakt_ap[anz_ap]*(x - xwert_s[anz_np+anz_ap])**2+ywert_s[anz_ap + anz_np]
+        fkt_e_nf_str = (vorz_v_aussen(fakt_ap[anz_ap],'x^2')
+                        + vorz_v_innen(-2 * fakt_ap[anz_ap] * xwert_s[k], 'x')
+                        + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k]))
+        fkt_e_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
+                         + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
+                         + vorz_str(ywert_s[k]))
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Forme die Funktion $' + bez_fkt_e
+                        + '$(x) = $' + fkt_e_nf_str + '$ in die Scheitelpunktform um, nenne Scheitelpunkt und a.'),
+                        ' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + bez_fkt_e + '(x) ~=~' + fkt_e_nf_str + '~=~'
                        + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
-                       + vorz_v_innen(-2 * xwert_s[anz_np + anz_ap], 'x') + r' \right)'
-                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]) + '~=~'
+                       + vorz_v_innen(-2 * xwert_s[k], 'x') + r' \right)'
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k]) + '~=~'
                        + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
                        + vorz(-1*xwert_s[anz_ap + anz_np]) + r' 2 \cdot '
                        + gzahl(abs(xwert_s[anz_ap + anz_np])) + 'x+'
-                       + gzahl(abs(xwert_s[anz_np + anz_ap])) + '^2'
-                       + '-' + gzahl(abs(xwert_s[anz_np + anz_ap])) + r'^2 \right) '
-                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap])
+                       + gzahl(abs(xwert_s[k])) + '^2'
+                       + '-' + gzahl(abs(xwert_s[k])) + r'^2 \right) '
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k])
                        + r' \quad (2BE) \\' + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( \left( x'
-                       + vorz_str(-1*xwert_s[anz_np + anz_ap]) + r' \right)^2'
-                       + '-' + gzahl(abs(xwert_s[anz_np + anz_ap])) + r'^2 \right) '
-                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap])
+                       + vorz_str(-1*xwert_s[k]) + r' \right)^2'
+                       + '-' + gzahl(abs(xwert_s[k])) + r'^2 \right) '
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k])
                        + '~=~' + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left(x'
-                       + vorz_str(-1*xwert_s[anz_np + anz_ap]) + r' \right)^2'
-                       + vorz_str(-1*fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2)
-                       + vorz_str(fakt_ap[anz_ap]*xwert_s[anz_np + anz_ap]**2 + ywert_s[anz_np + anz_ap]) + '~=~'
-                       + fkt_c_spf_str + r' \quad (2BE) \\ S \left( ' + gzahl(xwert_s[anz_np+anz_ap]) + r' \vert '
+                       + vorz_str(-1*xwert_s[k]) + r' \right)^2'
+                       + vorz_str(-1*fakt_ap[anz_ap]*xwert_s[k]**2)
+                       + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k]) + '~=~'
+                       + fkt_e_spf_str + r' \quad (2BE) \\ S \left( ' + gzahl(xwert_s[anz_np+anz_ap]) + r' \vert '
                        + gzahl(ywert_s[anz_np+anz_ap]) + r' \right) \quad \mathrm{und} \quad a ~=~ '
                        + gzahl(fakt_ap[anz_ap]) + r' \quad (1BE)')
         liste_punkte.append(punkte)
         i += 1
 
-        if 'e' in teilaufg:
+        if 'f' in teilaufg:
             # zur gegebenen Funktion den Graphen zeichnen
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
-            k = anz_np + anz_ap
-            graph_xyfix(*[fkt_c], bezn=bez_fkt_c, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            if 'd' in teilaufg:
+                graph_xyfix(fkt_e, (x - xwert_s[k-1])**2+ywert_s[k-1],
+                            bezn=[bez_fkt_e, fkt_bez[k-1]], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            else:
+                graph_xyfix(*[fkt_e], bezn=bez_fkt_e, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             punkte = 3
-            aufgabe.append(str(liste_teilaufg[i]) + r') Zeichne den Graphen von ' + bez_fkt_c
-                           + ' im Koordinatensystem ein und überprüfe deine Ergebnisse aus Teilaufgabe c).')
+            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Zeichne den Graphen von '
+                                    + bez_fkt_e + ' im Koordinatensystem ein und überprüfe deine Ergebnisse aus '
+                                    + 'Teilaufgabe e).'))
             loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
                             + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }', 'Figure'))
             liste_punkte.append(punkte)
