@@ -34,9 +34,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
-    aufg_f = 1 if 'f' in teilaufg else 0
-    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf + aufg_f)
-    fkt_n = random_selection(list(range(-3,4)), anz_einf + aufg_f)
+    aufg_e = 1 if 'e' in teilaufg else 0
+    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf + aufg_e)
+    fkt_n = random_selection(list(range(-3,4)), anz_einf + aufg_e)
     # Punkte der schwierigeren Funktionen
     aufg_d = 1 if 'd' in teilaufg else 0
     xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_d),
@@ -141,54 +141,35 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
     if 'd' in teilaufg:
         # zu gegebenen Punkten einer Funktion den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         k = anz_einf + anz_pkt
-        graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]],
-                    bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
         aufgabe.extend((f'Die Funktion {fkt_bez[k]} geht durch die Punkte P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) '
                         f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
                         str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
                         + ' im oberen Koordinatensystem ein. \n\n'))
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
-                        'Figure'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
+        if 'f' not in teilaufg:
+            grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
+            graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]],
+                        bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+            loesung.append('Figure')
+        else:
+            loesung.append(r' \mathrm{Der~Graph~ist~im~Koordinatensystem~von~Teilaufgabe~f~enthalten.} ')
+
         liste_punkte.append(punkte)
         i += 1
 
-        if 'e' in teilaufg:
-            # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            punkte = 2
-            xwert_t = zzahl(-4,4)
-            while xwert_t == xwerte_P[anz_pkt]:
-                xwert_t = zzahl(-4, 4)
-            if random.choice([0,1]) == 0:
-                ywert_t = fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt]
-                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
-                             + fkt_bez[k] + r'.} \quad (3BE)')
-            else:
-                ywert_t = fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt] + zzahl(1,2)
-                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
-                             + fkt_bez[k] + r'.} \quad (3BE)')
-
-            lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{10em} \\'
-                   + gzahl(fkt_m_pkt[anz_pkt]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n_pkt[anz_pkt]) + '~=~'
-                   + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m_pkt[anz_pkt] * xwert_t + fkt_n_pkt[anz_pkt])
-                   + '~=~' + gzahl(ywert_t))
-
-            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
-                           + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k]} liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
-            liste_punkte.append(punkte)
-            i += 1
-
-    if 'f' in teilaufg:
+    if 'e' in teilaufg:
         # zu gegebener Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
         k = anz_einf + anz_pkt
-        graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
-                    bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        if 'd' in teilaufg:
+            graph_xyfix(fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt], fkt_m[anz_einf]*x + fkt_n[anz_einf],
+                        bezn=[fkt_bez[k], fkt_bez[k+1]], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
+        else:
+            graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
+                        bezn=fkt_bez[k+1], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
         aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion $' + fkt_bez[k+1] + '(x) = '
                        + vorz_v_aussen(fkt_m[anz_einf],'x') + vorz_str(fkt_n[anz_einf])
@@ -196,6 +177,36 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
+
+        if 'f' in teilaufg:
+            # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 2
+            wertetabelle = [[xwert, fkt_m[anz_einf] * xwert + fkt_n[anz_einf]] for xwert in range(-5,5) if abs(fkt_m[anz_einf] * xwert + fkt_n[anz_einf]) < 5]
+            xwert_t = wertetabelle[0][0]
+            ywert_t = wertetabelle[0][1]
+            if random.choice([0,1]) == 0:
+                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
+                             + fkt_bez[k+1] + r'.} \quad (1BE) \\'
+                             + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
+                             + r'die~Lage~überprüfen} \quad (2BE) \hspace{10em}')
+            else:
+                ywert_t = ywert_t + zzahl(1,2)
+                lsg_vergl = (r' \quad \mathrm{f.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
+                             + fkt_bez[k+1] + r'.} \quad (1BE) \\'
+                             + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
+                             + r'die~Lage~überprüfen} \quad (2BE) \hspace{10em}')
+
+            lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{15em} \\'
+                   + gzahl(fkt_m[anz_einf]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n[anz_einf]) + '~=~'
+                   + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m[anz_einf] * xwert_t + fkt_n[anz_einf])
+                   + '~=~' + gzahl(ywert_t))
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
+                           + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
+            liste_punkte.append(punkte)
+            i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
