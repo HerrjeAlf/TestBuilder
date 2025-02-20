@@ -177,6 +177,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
+        i += 1
 
         if 'f' in teilaufg:
             # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
