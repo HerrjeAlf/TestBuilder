@@ -469,9 +469,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
+        aufgabe.extend((NoEscape(r' \noindent ' +str(liste_teilaufg[i])
                                 + f') Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
-                                + f' genau {gzahl(anzahl_k)} mal gezogen wird.'))
+                                + f' genau {gzahl(anzahl_k)} mal gezogen wird. '), '\n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad N ~=~   \begin{pmatrix} ' + r' n  \\' + r' k \\ '
                        + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
