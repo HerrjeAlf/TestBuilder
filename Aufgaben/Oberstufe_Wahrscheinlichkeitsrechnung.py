@@ -207,8 +207,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'In einer Urne befinden sich {anzahl_1} Kugeln der Farbe {farbe_1} und {anzahl_2}'
                f' Kugeln der Farbe {farbe_2}. ']
-    bez_ziehung = 'ohne'
-    bez_ziehung = 'mit' if art=='zmZ' else bez_ziehung
+    bez_ziehung = 'mit' if art=='zmZ' else 'ohne'
     if len([element for element in teilaufg if element in liste_teilaufg[0:6]]) > 0:
         aufgabe.append(f'Aus dieser Urne wird {bez_ziehung} Zurücklegen {anzahl_ziehen[1]} eine Kugel gezogen. \n\n')
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
