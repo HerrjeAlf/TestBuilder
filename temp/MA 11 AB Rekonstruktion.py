@@ -18,9 +18,9 @@ for i in range(anzahl):
     Aufgaben = [[rekonstruktion(1),
                  rekonstruktion(2),
                  rekonstruktion(3),
-                 rekonstruktion(4),
-                 rekonstruktion(5),
-                 rekonstruktion(6)]]
+                 rekonstruktion_und_extremalproblem(4, ['a'])],
+                 [rekonstruktion_und_extremalproblem(5, ['a']),
+                 rekonstruktion_und_extremalproblem(6, ['a'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
