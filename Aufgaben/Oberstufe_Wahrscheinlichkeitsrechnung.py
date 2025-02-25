@@ -601,7 +601,7 @@ def faires_spiel(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def vierfeldertafel(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0, BE=[]):
+def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0, BE=[]):
     # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel einer med. Studie
     # Mit dem Parameter "vierfeldertafel=" kann festgelegt werden, ob eine Vierfeldertafel vorgegeben ist oder nicht. Standardmäßig ist "vierfeldertafel=True" und eine Vierfeldertafel vorgegeben, es kann aber auch "vierfeldertafel=False" gewählt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
