@@ -21,7 +21,7 @@ if Kurs not in ['Grundkurs', 'Leistungskurs']:
 aufgaben_teil1 = [[aenderungsrate(1, teilaufg=[ 'c', 'd'], ableitung=True, BE=[2,3]),
                    rekonstruktion(2, BE=[5]),
                    rechnen_mit_vektoren(3,['c'], BE=[5])],
-                  [vierfeldertafel(4, ['a', 'b'], BE=[1,4]),
+                  [vierfeldertafel_studie(4, ['a', 'b'], BE=[1, 4]),
                    grafisches_ableiten(5, ['a', 'b'], BE=[2,3]),
                    bestimmtes_integral(6, grad=2, BE=[2,3])],
                   [rechnen_mit_vektoren(7, ['f'], BE=[5]),

@@ -19,7 +19,7 @@ clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex
 aufgaben_teil1 = [[kurvendiskussion_polynome(1, ['a', 'd', 'e', 'f', 'g'], ableitungen=True, wendenormale=False)]]
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel(3)]]
+aufgaben_teil2 = [[baumdiagramm(2, ['a', 'c', 'd']), vierfeldertafel_studie(3)]]
 
 
 
