@@ -2603,8 +2603,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
             nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
 
-        lsg_kon = Rational(erg_var_1-(nx1*dx+ny1*dy+nz1*dz), nz1*ny2 - ny1*nz2)
-        lsg_var = Rational(ny2*nx1-nx2*ny1, nz1*ny2 - ny1*nz2)
+        lsg_kon = Rational(erg_var1 - (nx1 * dx + ny1 * dy + nz1 * dz), nz1 * ny2 - ny1 * nz2)
+        lsg_var = Rational(ny2 * nx1 - nx2 * ny1, nz1 * ny2 - ny1 * nz2)
 
         if nx_1 == nx1 and ny_1 == ny1 and nz_1 == nz1:
             lsg_1 = r' \quad (1BE) \quad '
@@ -2650,14 +2650,12 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + vorz_str(-1*(nx1*dx+ny1*dy+nz1*dz)) + r' \quad \vert '
                        + vorz_v_innen(ny2*nx1-nx2*ny1,' r ') + r' \quad \vert \div '
                        + gzahl_klammer(nz1*ny2 - ny1*nz2) + r' \quad \to \quad s~=~'
-                       + gzahl(Rational(erg_var1-(nx1*dx+ny1*dy+nz1*dz),nz1*ny2 - ny1*nz2))
-                       + vorz_v_innen(Rational(ny2*nx1-nx2*ny1,nz1*ny2 - ny1*nz2),' r ') + r' \quad (2BE) \\'
+                       + binom_klammer(lsg_kon, lsg_var, '', 'r') + r' \quad (2BE) \\'
                        + r' \mathrm{s~einsetzen~in~E_{' + gzahl(var2) + r'~}} \quad s: '
                        + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(dx) + r' \\'
                        + gzahl(dy) + r' \\' + gzahl(dz) + r' \\' + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                        + gzahl(-1*ny2) + r' \\' + gzahl(nx2) + r' \\' + gzahl(0) + r' \\'
-                       + r' \end{pmatrix} ~+~ \left( ' + gzahl(lsg_kon) + vorz_v_innen(lsg_var,'r')
-                       + r' \right) \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\' + gzahl(ny2)
+                       + r' \end{pmatrix} ~+~ ' + binom_klammer(lsg_kon, lsg_var, '', 'r') + r' \cdot \begin{pmatrix}' + gzahl(0) + r' \\' + gzahl(-1*nz2) + r' \\' + gzahl(ny2)
                        + r' \\' + r' \end{pmatrix} \quad (1BE) \\ s: \overrightarrow{x} ~=~ \begin{pmatrix} '
                        + gzahl(dx) + r' \\' + gzahl(dy - lsg_kon * nz2) + r' \\'
                        + gzahl(dz + lsg_kon * ny2) + r' \\' + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
