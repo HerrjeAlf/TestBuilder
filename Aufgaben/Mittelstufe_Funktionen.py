@@ -817,7 +817,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         i += 1
 
     if 'e' in teilaufg:
-        # Funktionsgleichung der gezeichneten linearen Funktionen aufstellen
+        # Funktionsgleichung der gezeichneten linearen Funktionen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie anhand des Graphen die '
@@ -846,7 +846,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         i += 1
 
     if 'f' in teilaufg:
-        # Nullstellen der Parabel berechnen
+        # Schnittpunkte der linearen Funktion mit der Parabel berechnen
         stern = r'$ ^{ \star } $' if pruef_kl10 else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         p = -1* (g_m + nst1 + nst2)
