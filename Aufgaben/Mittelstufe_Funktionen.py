@@ -718,15 +718,22 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         xwert_p = nst1 - 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
         g_m = -1 * nzahl(1,5)/2
-        text = gzahl(abs(g_m)) + ' LE nach unten'
         g_n = ywert_p - xwert_p * g_m
+        while abs(g_n) > 5:
+            g_m = nzahl(1, 5) / 2
+            g_n = ywert_p - xwert_p * g_m
+        text = gzahl(abs(g_m)) + ' LE nach unten'
         fkt_g = x * g_m + g_n
     else:
         xwert_p = nst1 + 1
         ywert_p = fkt_p_nf.subs(x, xwert_p)
         g_m = nzahl(1,5)/2
-        text = gzahl(abs(g_m)) + 'LE nach oben'
         g_n = ywert_p - xwert_p * g_m
+        while abs(g_n) > 5:
+            g_m = nzahl(1, 5) / 2
+            g_n = ywert_p - xwert_p * g_m
+
+        text = gzahl(abs(g_m)) + 'LE nach oben'
         fkt_g = x * g_m + g_n
     wertetabelle = [[xwert, fkt_g.subs(x,xwert)] for xwert in range(-5,6) if abs(fkt_g.subs(x,xwert)) <= 5 and abs(fkt_g.subs(x,xwert)) % 1 == 0]
     punkt_p = wertetabelle[0]
