@@ -483,11 +483,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         if anz_np + anz_ap == 1:
             aufgabe.extend(('Im unteren Koordinatensystem ist der Graph einer quadratischen Funktion (Parabel) '
                             'dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies den Scheitelpunkt und ggf. den '
-                            + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. \n\n'))
+                            + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. ', 'Grafik'))
         else:
             aufgabe.extend(('Im unteren Koordinatensystem sind die Graphen verschiedener quadratischen Funktionen '
                             '(Parabeln) dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies die Scheitelpunkte und '
-                            + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen.\n\n'))
+                            + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen. ', 'Grafik'))
 
         loesung.append(lsg)
         liste_punkte.append(punkte)
@@ -520,12 +520,12 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
                 lsg = lsg + r' \\ ' if (step + 1) < anz_ap else lsg
 
             if anz_np + anz_ap == 1:
-                aufgabe.extend((str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung aus Teilaufgabe a) '
-                                + f'auch in der Normalform an.', 'Grafik'))
+                aufgabe.extend((NoEscape(r' noindent ' + str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung '
+                                        + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
 
             else:
-                aufgabe.extend((str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen aus Teilaufgabe a) '
-                                + f'auch in der Normalform an.', 'Grafik'))
+                aufgabe.extend((NoEscape(r' noindent ' + str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen '
+                                        + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
             loesung.append(lsg)
             liste_punkte.append(punkte)
             i += 1
@@ -610,8 +610,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         fkt_d_spf_str = (r' \left( x' + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
                          + vorz_str(ywert_s[k]))
         punkte = 3
-        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Zeichne den Graphen von $' + bez_fkt_d + '$(x) = $'
-                       + fkt_d_spf_str + '$ im Koordinatensystem ein.'), ' \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Zeichne den Graphen von $'
+                                 + bez_fkt_d + '$(x) = $' + fkt_d_spf_str + '$ im Koordinatensystem ein.'), ' \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
                         + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }')
         if 'f' not in teilaufg:
