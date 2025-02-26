@@ -30,7 +30,7 @@ aufgaben_teil1 = [[geraden_lagebeziehung(1, [random.choice(['a', 'b']), 'c'],
 aufgaben_teil2 = [[ebene_ebene(1, F_in_E='parallel'),
                    ebenenschar_buendel(2)],
                   [baumdiagramm(3, ['e', 'f', 'g'], stufen=3, art='zoZ'),
-                   baumdiagramm(4, ['h', 'j'], stufen=3, art='zmZ')]]
+                   baumdiagramm(4, ['h', 'j', 'k'], stufen=3, art='zmZ')]]
 
 
 
