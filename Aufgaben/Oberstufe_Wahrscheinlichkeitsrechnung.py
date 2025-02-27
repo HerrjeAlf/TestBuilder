@@ -534,8 +534,28 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
     if 'k' in teilaufg and art == 'zmZ':
         # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
-        pass
-        # hier noch eine Aufgabe zur kummulierten Binomialverteilung einfügen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
+                                + f'bis zu {gzahl(anzahl_k)} mal gezogen wird. '))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X \leq ' + gzahl(anzahl_k) + ') ~=~'
+                       + r' \sum_{i=0}^{' + gzahl(anzahl_k) + r'} \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + 'i'
+                       + r' \\' + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{ i }\cdot \left( '
+                       + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n) + ' - i } ~=~ '
+                       + gzahl(N(sum([binomial(anzahl_n,step) * wkt**step*(1-wkt)**(anzahl_n-step)
+                                    for step in range(0,anzahl_k)]),3)*100)
+                       + r' \% \quad (4BE)')
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(4)
+        i += 1
+
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -695,6 +715,130 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{H}(P) = \frac{' + gzahl(P_H) + '}{'
                        + gzahl(H) + '} ~=~ ' + gzahl(Rational(P_H,H)) + '~=~' + gzahl(N(P_H*100/H,2))
                        + r' \% \quad } \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0, BE=[]):
+    # bedingte Wahrscheinlichkeit in einer Vierfeldertafel am Beispiel eines medizinischen Tests
+    # Mit dem Parameter "vierfeldertafel=" kann festgelegt werden, ob eine Vierfeldertafel vorgegeben ist oder nicht. Standardmäßig ist "vierfeldertafel=True" und eine Vierfeldertafel vorgegeben, es kann aber auch "vierfeldertafel=False" gewählt werden.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    A = int(nzahl(10,20) * 100) # alle Personen, die getestet wurden
+    K = int(nzahl(4,7)/10 * A) # Krank - Personen die erkrankt sind
+    G = int(A-K) # Gesund - Personen die gesund sind
+    K_p = int(nzahl(7,9)/10 * K) # Personen die erkrankt sind und bei denen der medizinsche Test postiv ist
+    G_p = int(nzahl(1,3)/10 * G) # Personen die gesund sind und bei denen der medizinische Test positiv ist
+    p = int(K_p + G_p) # positiv - Personen bei denen der medizinische Test positiv ausfällt
+    K_n = int(K - K_p) # Personen die Krank sind und deren Test negativ ist
+    G_n = int(G - G_p) # Personen die Gesund sind und deren Test negativ ist
+    n = int(K_n + G_n) # negativ - Personen bei denen der medizinischge Test negativ ist
+
+    def Tabelle(A='', K='', G='', K_p='', G_p='', p='', K_n='', G_n='', n=''):
+        table1 = Tabular('p{0.3cm} | p{2cm} | p{2cm} | p{0.7cm} p{1cm} p{3cm}')
+        table1.add_row('', 'K', 'G', '', '', 'K: Krank')
+        table1.add_hline(1, 4)
+        table1.add_row('p', K_p, G_p, p, '', 'G: Gesund')
+        table1.add_hline(1, 4)
+        table1.add_row('n', K_n, G_n, n, '', 'p: positiv')
+        table1.add_hline(1, 4)
+        table1.add_row('', K, G, A, '', 'n: negativ')
+        return table1
+    auswahl = nzahl(1,2)
+    if auswahl == 1:
+        text1 = gzahl(p) + ' Personen positiv'
+        text2 = 'aber ' + gzahl(K_p) + ' gesund'
+    else:
+        text1 = gzahl(n) + (' Personen negativ')
+        text2 = 'aber ' + gzahl(K_n) + ' krank'
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'In einer Studie wird die Zuverlässigkeit eines neuen medizinischen Tests auf eine Krankheit '
+               f'untersucht. An dieser Studie nahmen insgesamt {gzahl(A)} Personen teil. Davon sind {gzahl(G)} '
+               f'Personen Teil einer Vergleichsgruppe, welche gesund sind und nicht an dieser Krankheit leiden. \n'
+               f'Insgesamt wurden ' + text1 + ' getestet, von denen ' + text2 + ' waren . \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Vierfeldertafel vervollständigen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if vierfeldertafel == True:
+            punkte = 3
+            if auswahl == 1:
+                aufgabe.extend((Tabelle(A=A, p=p, K_p=K_p, G=G),' \n\n\n',
+                            str(liste_teilaufg[i]) + f')  Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
+            else:
+                aufgabe.extend((Tabelle(A=A, n=n, K_n=K_n, G=G), ' \n\n\n',
+                                str(liste_teilaufg[i]) + f')  Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + f') Tabelle wie unten ergibt {punkte} P. \n\n',
+                            Tabelle(A=A, p=p, n=n, K_p=K_p, G_p=G_p, K=K, K_n=K_n, G_n=G_n, G=G), ' \n\n'))
+            liste_punkte.append(punkte)
+        else:
+            punkte = 6
+            aufgabe.extend((Tabelle(),' \n\n\n', str(liste_teilaufg[i]) + f')  Stellen Sie den oberen Sachverhalt '
+                            + f'mithilfe der Vierfeldertafel dar. \n\n'))
+            loesung.extend((str(liste_teilaufg[i]) + f') Tabelle wie unten ergibt {punkte} P. \n\n',
+                            Tabelle(A=A, p=p, n=n, K_p=K_p, G_p=G_p, K=K, K_n=K_n, G_n=G_n, G=G), ' \n\n'))
+            liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        # bedingte Wahrscheinlichkeiten aus gegebenen Größen berechnen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 6
+        aufgabe.extend(('Um die Zuverlässigkeit des Tests zu bewerten, ist es erforderlich, am Ende der Studie die '
+                        'Wahrscheinlichkeit zu bestimmen, mit welcher eine erkrankte Person positiv (Sensitivität) und '
+                        'eine gesunde Person negativ (Spezifität) getestet wird. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie die Sensitivität und Spezifität des Tests und '
+                                                 'beurteilen Sie dessen Zuverlässigkeit. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{K}(p) ~=~ \frac{ \vert K \cap p \vert }'
+                       + r'{ \vert K \vert } ~=~ \frac{' + gzahl(K_p) + '}{' + gzahl(K) + '} ~=~ '
+                       + gzahl(Rational(K_p,K)) + '~=~' + gzahl(N(K_p*100/K,3))
+                       + r' \%  \quad (2BE)  \quad und \quad P_{G}(n) = \frac{ \vert G \cap n \vert }'
+                       + r'{ \vert G \vert } ~=~ \frac{' + gzahl(G_n) + '}{' + gzahl(n) + '} ~=~ '
+                       + gzahl(Rational(G_n,n)) + '~=~' + gzahl(N(G_n*100/G,3))
+                       + r' \% \quad (2BE) }')
+        loesung.append(f'Die Zuverlässigkeit des Tests ist nicht besonders groß. Bei dieser geringen Sensitivität '
+                       f'werden von 100 Personen mit einer Krankheit {gzahl(round(K_n/K*100))} nicht erkannt.'
+                       f'Das ist besonders bei ansteckenden Krankheiten ein Problem, da sich die Krankheit dann '
+                       f'schnell verbreiten kann. (2BE)')
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        # bedingte Wahrscheinlichkeit aus vervollst. Vierfeldertafel berechnen
+
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+        if auswahl == 1: # krank unter der Bed. negativer Test
+            aufgabe.extend(('Eine Person hat ein negatives Testergebnis und befürchtet aber krank zu sein. \n\n',
+                            str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
+                            + 'eine Person krank ist, obwohl der Test negativ war. \n\n'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ P_{n}(K) = \frac{' + gzahl(K_n) + '}{'
+                           + gzahl(n) + '} }~=~ ' + gzahl(Rational(K_n,n)) + '~=~' + gzahl(N(K_n*100/n,3))
+                           + r' \quad (3BE) ')
+        else: # gesund unter der Bed. postiver Test
+            aufgabe.extend(('Eine Person hat ein positives Testergebnis und hofft aber trotzdem gesund zu sein. \n\n',
+                            str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
+                            + 'eine Person gesund ist, obwohl der Test positiv war. \n\n'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{p}(G) = \frac{' + gzahl(G_p) + '}{'
+                           + gzahl(p) + '}} ~=~ ' + gzahl(Rational(G_p,p)) + '~=~' + gzahl(N(G_p*100/p,3))
+                           + r' \quad (3BE) ')
         liste_punkte.append(punkte)
         i += 1
 
