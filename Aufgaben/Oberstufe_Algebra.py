@@ -2419,22 +2419,25 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                               [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
                               [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
         punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
-        while punkt_t == punkt_d:
-            t_var = zzahl(1, 4)
-            t_rv = random.choice([[ny + aey * t_var, -1 * (nx + aex * t_var), 0],
-                                  [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
-                                  [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
-            punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
         pkt = 4
         erg_k = skalarprodukt(punkt_d, nv)
         erg_a = skalarprodukt(punkt_d, ave)
         erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * t_var
-        if  erg_a != 0:
-            zwlsg = r' \quad \vert ' + vorz_v_innen(-1*skalarprodukt(punkt_d, ave),'a')
-            pkt += 1
-
+        if punkt_t == punkt_d:
+            lsg = r' \quad \to \quad \mathrm{w.A.~T~liegt~in~allen~Ebenen~von~E_a} \quad (2BE)'
         else:
-            zwlsg = ''
+            if  erg_a != 0:
+                lsg = r' \quad \vert ' + vorz_v_innen(-1*skalarprodukt(punkt_d, ave),'a')
+            else:
+                lsg = ''
+            lsg = (lsg + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \to \quad '
+                   + gzahl(erg_k - (nx*tx+ny*ty+nz*tz)) + '~=~'
+                   + vorz_v_aussen(aex*tx + aey*ty + aez*tz - erg_a,'a') + r' \quad \vert \div '
+                   + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
+                   + r' \quad (2BE) \\ E_{' + gzahl(t_var) + '}:' + vorz_v_aussen(nx+aex*t_var, 'x')
+                   + vorz_v_innen(ny+aey*t_var, 'y') + vorz_v_innen(nz+aez*t_var,'z')
+                   + '~=~' + gzahl(erg_ebene) +  r' \quad (1BE)')
+            pkt += 1
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
@@ -2448,13 +2451,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + gzahl(nx*tx) + vorz_str(ny*ty) + vorz_str(nz*tz) + vorz_v_innen(aex*tx,'a') 
                        + vorz_v_innen(aey*ty,'a') + vorz_v_innen(aez*tz,'a') + r' \quad (2BE) \\'
                        + erg_str + '~=~' + gzahl(nx*tx+ny*ty+nz*tz) + vorz_v_innen(aex*tx+aey*ty+aez*tz,'a')
-                       + zwlsg + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \to \quad '
-                       + gzahl(erg_k - (nx*tx+ny*ty+nz*tz)) + '~=~'
-                       + vorz_v_aussen(aex*tx + aey*ty + aez*tz - erg_a,'a') + r' \quad \vert \div '
-                       + gzahl_klammer(aex*tx+aey*ty+aez*tz - erg_a) + r' \quad \to \quad a~=~' + gzahl(t_var)
-                       + r' \quad (2BE) \\ E_{' + gzahl(t_var) + '}:' + vorz_v_aussen(nx+aex*t_var, 'x')
-                       + vorz_v_innen(ny+aey*t_var, 'y') + vorz_v_innen(nz+aez*t_var,'z')
-                       + '~=~' + gzahl(erg_ebene) +  r' \quad (1BE)')
+                       + lsg)
 
         liste_punkte.append(pkt)
         i += 1
