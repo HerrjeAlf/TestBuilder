@@ -948,7 +948,6 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         # lagebeziehungen zweier Geraden und die dafür nötigen Eigenschaften erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
-        liste_punkte.append(punkte)
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
@@ -969,13 +968,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
         if 'b' in teilaufg:
             loesung.append(' \n\n')
+        liste_punkte.append(punkte)
         i += 1
 
     if 'b' in teilaufg:
         # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
-        liste_punkte.append(punkte)
         aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
                                           'Geraden mathematisch überprüfen kann. \n\n')
         # Tabelle mit dem Text
@@ -993,13 +992,12 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + 'erhält man keine Lösung, sind die Geraden windschief. ', '2BE')
         table2.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table2)
-
+        liste_punkte.append(punkte)
         i += 1
 
     if 'c' in teilaufg:
         # Lagebeziehung zweier gegebener Geraden bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
         if lagebeziehung == 'identisch':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
@@ -1244,11 +1242,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                        r' \end{pmatrix}\\'))
         aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~' + lagebeziehung + r'} \hspace{25em} \\'
-                       + loesung_1)
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~'
+                       + lagebeziehung + r'} \hspace{25em} \\' + loesung_1)
         i += 1
 
-    if len([element for element in ['c', 'd'] if element in teilaufg]) > 0 and lagebeziehung in ['parallel', 'windschief']:
+    if 'd' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == 'parallel':
@@ -1284,14 +1282,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                             + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                             + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                             + r' \end{pmatrix}\\'))
-            if lagebeziehung == 'parallel':
-                    aufgabe.append(str(liste_teilaufg[i])
-                                   + ') Berechnen Sie den Abstand der parallelen Geraden g und h. \n\n')
-            elif lagebeziehung == 'windschief':
-                    aufgabe.append(str(liste_teilaufg[i])
-                                   + ') Berechnen Sie den Abstand der windschiefen Geraden g und h. \n\n')
-        else:
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der parallelen Geraden g und h. \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
 
 
         if lagebeziehung == 'parallel':
@@ -1429,6 +1420,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                   f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
+
+
+    print('liste Punkte: ' + str(liste_punkte))
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
@@ -2500,15 +2494,15 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
         vec = achse[0][1]
         if aex * vec[0] + aey * vec[1] + aez * vec[2] == 0:
             lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
-                   + r'-Achse \quad (3BE)')
+                   + r'-Achse} \quad (3BE)')
         else:
             erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
             erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
-                   + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2])+ r' \quad \to \quad a~=~'
+                   + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
                    + gzahl(erg) + r' \quad (3BE) \\ E_{' + gzahl(erg) + r'}:' + vorz_v_aussen(nx+aex*erg, 'x')
                    + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
-                   + gzahl(erg_ebene) + r' \quad (1BE)')
+                   + gzahl(erg_ebene) + r' \quad (1BE) ')
             pkt += 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
@@ -2519,7 +2513,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
                        + r' \\' + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(vec[0]) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(vec[1])
-                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\'
+                       + binom_innen(nz, aez, str2='a') + r' \cdot ' + gzahl_klammer(vec[2]) + r' \quad (1BE) \\ '
                        + ' 0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
                        + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
                        + vorz_v_innen(aez * vec[2], 'a') + lsg)
