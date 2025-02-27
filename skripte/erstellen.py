@@ -8,15 +8,18 @@ from skripte.funktionen import *
 from skripte.plotten import *
 
 # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
-# try:
-#     os.mkdir('img/temp')
-# except FileExistsError:
-#     pass
+dirs = ['img/temp', 'pdf']
+for directory in dirs:
+    try:
+        os.mkdir(directory)
+    except FileExistsError:
+        pass
 
-try:
-    os.mkdir('pdf')
-except FileExistsError:
-    pass
+behalten = ['Übersicht der Aufgaben.pdf']
+directory = 'pdf'
+for filename in os.listdir('pdf'):
+    if filename not in behalten:
+        os.remove(f'pdf/{filename}')
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 
