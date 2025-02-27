@@ -536,15 +536,16 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
+        anz = anzahl_k - nzahl(2,5) if anzahl_k > 5 else anzahl_k - 1
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                 + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
-                                + f'bis zu {gzahl(anzahl_k)} mal gezogen wird. '))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X \leq ' + gzahl(anzahl_k) + ') ~=~'
-                       + r' \sum_{i=0}^{' + gzahl(anzahl_k) + r'} \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + 'i'
+                                + f'bis zu {gzahl(anz)} mal gezogen wird. '))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X \leq ' + gzahl(anz) + ') ~=~'
+                       + r' \sum_{i=0}^{' + gzahl(anz) + r'} \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + 'i'
                        + r' \\' + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{ i }\cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n) + ' - i } ~=~ '
                        + gzahl(N(sum([binomial(anzahl_n,step) * wkt**step*(1-wkt)**(anzahl_n-step)
-                                    for step in range(0,anzahl_k)]),3)*100)
+                                    for step in range(0,anz)]),3)*100)
                        + r' \% \quad (4BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
@@ -814,7 +815,7 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
                        + gzahl(Rational(G_n,n)) + '~=~' + gzahl(N(G_n*100/G,3))
                        + r' \% \quad (2BE) }')
         loesung.append(f'Die Zuverlässigkeit des Tests ist nicht besonders groß. Bei dieser geringen Sensitivität '
-                       f'werden von 100 Personen mit einer Krankheit {gzahl(round(K_n/K*100))} nicht erkannt.'
+                       f'werden von 100 Personen mit einer Krankheit {gzahl(round(K_n/K*100))} nicht erkannt. '
                        f'Das ist besonders bei ansteckenden Krankheiten ein Problem, da sich die Krankheit dann '
                        f'schnell verbreiten kann. (2BE)')
         liste_punkte.append(punkte)
@@ -831,14 +832,14 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
                             + 'eine Person krank ist, obwohl der Test negativ war. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ P_{n}(K) = \frac{' + gzahl(K_n) + '}{'
                            + gzahl(n) + '} }~=~ ' + gzahl(Rational(K_n,n)) + '~=~' + gzahl(N(K_n*100/n,3))
-                           + r' \quad (3BE) ')
+                           + r' \% \quad (3BE) ')
         else: # gesund unter der Bed. postiver Test
             aufgabe.extend(('Eine Person hat ein positives Testergebnis und hofft aber trotzdem gesund zu sein. \n\n',
                             str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
                             + 'eine Person gesund ist, obwohl der Test positiv war. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{p}(G) = \frac{' + gzahl(G_p) + '}{'
                            + gzahl(p) + '}} ~=~ ' + gzahl(Rational(G_p,p)) + '~=~' + gzahl(N(G_p*100/p,3))
-                           + r' \quad (3BE) ')
+                           + r' \% \quad (3BE) ')
         liste_punkte.append(punkte)
         i += 1
 
