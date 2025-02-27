@@ -9,11 +9,11 @@ from skripte.plotten import *
 
 # # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
 dirs = ['img/temp', 'pdf']
-for directory in dirs:
-    try:
-        os.mkdir(directory)
-    except FileExistsError:
-        pass
+# for directory in dirs:
+#     try:
+#         os.mkdir(directory)
+#     except FileExistsError:
+#         pass
 
 # Löscht alle PDFs in pdf außer die in pdf_behalten
 pdf_behalten = ['Übersicht der Aufgaben.pdf']
