@@ -520,11 +520,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
                 lsg = lsg + r' \\ ' if (step + 1) < anz_ap else lsg
 
             if anz_np + anz_ap == 1:
-                aufgabe.extend((NoEscape(r' noindent ' + str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung '
+                aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung '
                                         + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
 
             else:
-                aufgabe.extend((NoEscape(r' noindent ' + str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen '
+                aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen '
                                         + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
             loesung.append(lsg)
             liste_punkte.append(punkte)
