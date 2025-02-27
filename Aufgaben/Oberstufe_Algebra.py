@@ -2423,7 +2423,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
         erg_k = skalarprodukt(punkt_d, nv)
         erg_a = skalarprodukt(punkt_d, ave)
         erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * t_var
-        if punkt_t.all() == punkt_d.all():
+        if punkt_t == punkt_d:
             lsg = r' \quad \to \quad \mathrm{w.A.~T~liegt~in~allen~Ebenen~von~E_a} \quad (2BE)'
         else:
             if  erg_a != 0:
