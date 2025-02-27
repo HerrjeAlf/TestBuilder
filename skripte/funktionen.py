@@ -266,7 +266,7 @@ def binom_klammer(z1, z2, str1='', str2=''):
     if z1 != 0 and z2 != 0:
             return r' \left(' + vorz_v_aussen(z1, str(str1)) + vorz_v_innen(z2, str(str2)) + r' \right) '
     else:
-        return gzahl_klammer(z1,str(str1)) + gzahl_klammer(z2, str(str2))
+        return gzahl_klammer(z1,str(str1), null=False) + gzahl_klammer(z2, str(str2), null=False)
 
 
 def binom_aussen(z1, z2, str1='', str2='', var=''):

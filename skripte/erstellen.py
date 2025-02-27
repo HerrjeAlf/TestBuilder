@@ -16,10 +16,10 @@ dirs = ['img/temp', 'pdf']
 #         pass
 
 # Löscht alle PDFs in pdf außer die in pdf_behalten
-pdf_behalten = ['Übersicht der Aufgaben.pdf']
-for name in os.listdir('pdf'):
-   if name not in pdf_behalten:
-        os.remove(f'pdf/{name}')
+# pdf_behalten = ['Übersicht der Aufgaben.pdf']
+# for name in os.listdir('pdf'):
+#    if name not in pdf_behalten:
+#         os.remove(f'pdf/{name}')
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 

@@ -21,16 +21,16 @@ clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 aufgaben_teil1 = [[geraden_lagebeziehung(1, [random.choice(['a', 'b']), 'c'],
-                                         lagebeziehung=random.choice(['parallel','windschief'])),
-                   geraden_aufstellen(2)],
-                  [baumdiagramm(3, ['a', 'b', 'c', 'd'], stufen=2, art='zmZ'),
-                   vierfeldertafel_test(4)]]
+                                         lagebeziehung=random.choice(['parallel','windschief']), BE=[4,7]),
+                   geraden_aufstellen(2,BE=[1,2,2]),
+                   baumdiagramm(3, ['a', 'b', 'c', 'd'], stufen=2, art='zmZ', BE=[3, 3, 4, 2])],
+                   [vierfeldertafel_test(4, BE=[1,4,2])]]
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
 aufgaben_teil2 = [[ebene_ebene(1, F_in_E='parallel'),
                    ebenenschar_buendel(2)],
                   [baumdiagramm(3, ['e', 'f', 'g'], stufen=3, art='zoZ'),
-                   baumdiagramm(4, ['h', 'j', 'k'], stufen=3, art='zmZ')]]
+                   baumdiagramm(4, [ 'j', 'k'], stufen=3, art='zmZ')]]
 
 
 

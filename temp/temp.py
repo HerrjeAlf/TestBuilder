@@ -109,56 +109,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Angaben der eingefärbten Zellen
-rows = 4 # Zeilen
-cols = 5 # Spalten
-
-anz = nzahl(1,rows*cols)
-x_max, y_max_unk = divmod(anz, cols)
-y_max = y_max_unk/rows
-
-print(anz)
-print(x_max)
-print(y_max)
-def create_rectangle(rows, cols, x_max, y_max):
-    fig, ax = plt.subplots()
-
-    # Setze die Gitterlinien
-    ax.set_xticks(np.arange(0, cols + 1))
-    ax.set_yticks(np.arange(0, rows + 1))
-    ax.grid(color="black", linestyle='-', linewidth=1)
-
-    # Wertebereich des Koordinatensystems festlegen
-    ax.set_xlim(0, cols)
-    ax.set_ylim(0, rows)
-
-    # Entferne die Achsenbeschriftungen
-    ax.set_xticklabels([])
-    ax.set_yticklabels([])
-
-    # Hinzufügen von horizontalen Linien
-    for row in range(1, rows):
-        ax.axhline(y=row, color='black', linewidth=1)
-
-    # Hinzufügen von vertikalen Linien
-    for col in range(1, cols):
-        ax.axvline(x=col, color='black', linewidth=1)
-
-    # Ticks nach innen zeigen lassen
-    ax.tick_params(axis='both', which='both', direction='in')
-
-    # Vertikalen Bereich grau färben
-    ax.axvspan(0, x_max, ymin=0, ymax=1, color='gray', alpha=0.5)
-    ax.axvspan(x_max, x_max+1, ymin=0, ymax=y_max, color='gray', alpha=0.5)
-    plt.show()
-
-# Beispiel: Rechteck mit 4 Zeilen und 5 Spalten, graue Zellen an Positionen (1, 2) und (3, 4)
-create_rectangle(4, 5, x_max, y_max)
-
+while [1,2,2] == [1,2,2]:
+    print('test')
 
 
 
