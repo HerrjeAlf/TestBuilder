@@ -1607,7 +1607,7 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
                    + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
                    + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1BE) } \\'
-                   + r' \mathrm{aus~I~folgt:~m' + vorz_v_aussen(a1,'a') + vorz_str(b1) + r' \cdot '
+                   + r' \mathrm{aus~I~folgt:~ ' + vorz_v_aussen(a1,'a') + vorz_str(b1) + r' \cdot '
                    + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
                    + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
                    + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
