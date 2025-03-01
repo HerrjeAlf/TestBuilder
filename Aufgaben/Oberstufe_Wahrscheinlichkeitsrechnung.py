@@ -445,7 +445,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         aufgabe.append(NoEscape(r' \noindent ' +str(liste_teilaufg[i])
                                 + ') Berechnen Sie die Varianz und die Standardabweichung der Zufallsgröße X.'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
-                       + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{E(X)}} \\'
+                       + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{V(X)}} \\'
                        + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2BE) \\'
                        + r' \sigma (X) ~=~ \sqrt{' + gzahl((N(var_wert,3))) + '} ~=~ ' + gzahl(N(sqrt(var_wert),3))
                        + r' \quad (2BE)')
@@ -811,8 +811,8 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
                        + r'{ \vert K \vert } ~=~ \frac{' + gzahl(K_p) + '}{' + gzahl(K) + '} ~=~ '
                        + gzahl(Rational(K_p,K)) + '~=~' + gzahl(N(K_p*100/K,3))
                        + r' \%  \quad (2BE)  \quad und \quad P_{G}(n) = \frac{ \vert G \cap n \vert }'
-                       + r'{ \vert G \vert } ~=~ \frac{' + gzahl(G_n) + '}{' + gzahl(n) + '} ~=~ '
-                       + gzahl(Rational(G_n,n)) + '~=~' + gzahl(N(G_n*100/G,3))
+                       + r'{ \vert G \vert } ~=~ \frac{' + gzahl(G_n) + '}{' + gzahl(G) + '} ~=~ '
+                       + gzahl(Rational(G_n,G)) + '~=~' + gzahl(N(G_n*100/G,3))
                        + r' \% \quad (2BE) }')
         loesung.append(f'Die Zuverlässigkeit des Tests ist nicht besonders groß. Bei dieser geringen Sensitivität '
                        f'werden von 100 Personen mit einer Krankheit {gzahl(round(K_n/K*100))} nicht erkannt. '

@@ -1,4 +1,4 @@
-import datetime
+from datetime import *
 import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -6,20 +6,24 @@ from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabula
 from pylatex.utils import bold, italic
 from skripte.funktionen import *
 from skripte.plotten import *
+from helpers import root_path
+os.chdir(root_path())
 
 # # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
 dirs = ['img/temp', 'pdf']
-# for directory in dirs:
-#     try:
-#         os.mkdir(directory)
-#     except FileExistsError:
-#         pass
+for directory in dirs:
+    try:
+        os.mkdir(directory)
+    except FileExistsError:
+        pass
 
-# Löscht alle PDFs in pdf außer die in pdf_behalten
-# pdf_behalten = ['Übersicht der Aufgaben.pdf']
-# for name in os.listdir('pdf'):
-#    if name not in pdf_behalten:
-#         os.remove(f'pdf/{name}')
+# Löscht alle älteren PDFs in pdf, außer die in pdf_behalten
+gestern = datetime.now() - timedelta(days=1)
+pdf_behalten = ['Übersicht der Aufgaben.pdf']
+for name in os.listdir('pdf'):
+    datei_zeit = datetime.fromtimestamp(os.path.getmtime(f'pdf/{name}'))
+    if name not in pdf_behalten and datei_zeit < gestern:
+        os.remove(f'pdf/{name}')
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 
@@ -101,7 +105,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
     def arbeitsblatt(Teil, liste_seiten, ang):
         schule, schulart, Klasse, Thema, in_tagen= ang[0], ang[1], ang[2], ang[3], ang[4]
         print(f'\033[38;2;100;141;229m\033[1m Gr. {Teil}\033[0m')
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
@@ -160,7 +164,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
         in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # erstellen der Tabelle zur Punkteübersicht
         Punkte = (sum(liste_punkte[1:]))
@@ -275,7 +279,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
     def erzeugen_vorpr_teil_1(liste_seiten_teil1, angb_teil1):
         in_tagen, liste_bez, liste_punkte = angb_teil1[0], angb_teil1[1], angb_teil1[2]
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
         # Ergänzen der Listen für table4
         Punkte = (sum(liste_punkte[1:]))
@@ -438,7 +442,7 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
     def erzeugen_vorpr_teil_2(liste_seiten_teil2, angb_teil2):
         in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2]
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
         themen = ['Aufgabe zur Trigonometrie', 'Aufgabe zu Funktionen', 'Aufgaben zu Wahrscheinlichkeit',
                   'Aufgabe zur Flächenberechnung']
@@ -732,7 +736,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clea
              angb_teil1[6], angb_teil1[7], angb_teil1[8])
         in_tagen, liste_bez, liste_punkte = angb_teil1[9], angb_teil1[10], angb_teil1[11]
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
         # erstellen der Tabelle zur Punkteübersicht
         Punkte = (sum(liste_punkte[1:]))
@@ -872,7 +876,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clea
             (angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3],
              angb_teil2[4], angb_teil2[5], angb_teil2[6], angb_teil2[7], angb_teil2[8])
         in_tagen, liste_bez, liste_punkte = angb_teil2[9], angb_teil2[10], angb_teil2[11]
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
 
         # erstellen der Tabelle zur Punkteübersicht
@@ -961,7 +965,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
     def erzeugen_kl_teil_1(liste_seiten_teil1, angb_teil1):
         Kurs, in_tagen, liste_bez, liste_punkte = angb_teil1[0], angb_teil1[1], angb_teil1[2], angb_teil1[3]
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
 
         # erstellen der Tabelle zur Punkteübersicht
         liste_punkte = angb_teil1[-1]
@@ -1132,7 +1136,7 @@ def vorabiturklausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
 
     def erzeugen_kl_teil_2(liste_seiten_teil2, angb_teil2):
         Kurs, in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3]
-        Datum = (datetime.date.today() + datetime.timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
         themen = ['1. Wahlaufgabe zur Analysis', '2. Wahlaufgabe zur Analysis', 'Aufgaben zur analytischen Geometrie',
                   'Aufgaben zur Stochastik']
