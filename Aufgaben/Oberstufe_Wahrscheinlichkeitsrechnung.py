@@ -529,7 +529,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             aufgabe.append(' \n\n')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(4)
+        liste_punkte.append(2)
         i += 1
 
     if 'k' in teilaufg and art == 'zmZ':
@@ -554,7 +554,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             aufgabe.append(' \n\n')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(4)
+        liste_punkte.append(2)
         i += 1
 
 

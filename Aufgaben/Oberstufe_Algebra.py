@@ -2251,7 +2251,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     if 'b' in teilaufg:
         # Lagebeziehung bestimmen und ggf. Schnittegrade berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+        punkte = 8 if F_in_E == 'schneiden' else 4
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
@@ -2500,10 +2500,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
                    + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
-                   + gzahl(erg) + r' \quad (3BE) \\ E_{' + gzahl(erg) + r'}:' + vorz_v_aussen(nx+aex*erg, 'x')
+                   + gzahl(erg) + r' \quad (2BE) \\ E_{' + gzahl(erg) + r'}:' + vorz_v_aussen(nx+aex*erg, 'x')
                    + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
                    + gzahl(erg_ebene) + r' \quad (1BE) ')
-            pkt += 2
+            pkt += 1
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
