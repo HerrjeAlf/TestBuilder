@@ -545,7 +545,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
                        + r' \\' + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{ i }\cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n) + ' - i } ~=~ '
                        + gzahl(N(sum([binomial(anzahl_n,step) * wkt**step*(1-wkt)**(anzahl_n-step)
-                                    for step in range(0,anz)]),3)*100)
+                                    for step in range(0,anz+1)]),3)*100)
                        + r' \% \quad (4BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
