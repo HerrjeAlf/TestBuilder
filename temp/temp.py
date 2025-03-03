@@ -109,25 +109,15 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 # def schreibweise(zahl, darstellung='wiss'):
 
-def lsg1():
+def lsg1(wert_a):
     g1 = N(1-19*a,3)
     g2 = N(-1*(4+3*a),3)*x + N(2-2*a,3)*y+N(3-2*a,3)*z
     print('a:')
-    wert_a = input()
     wert_a = 0 if wert_a == '' else wert_a
-    print(latex(g1.subs(a, wert_a)) + ' = ' + latex(g2.subs(a, wert_a)))
+    print(latex(g2.subs(a, wert_a)) + ' = ' + latex(g1.subs(a, wert_a)))
 
-def lsg2():
+def lsg2(ywerte):
     xwerte = [0,1,2,3]
-    print('notieren die wkt p0:')
-    a = float(input())
-    print('notieren die wkt p1:')
-    b = float(input())
-    print('notieren die wkt p2:')
-    c = float(input())
-    print('notieren die wkt p3:')
-    d = float(input())
-    ywerte = [a, b, c, d]
     E_wert = N(sum([xwert*ywert for xwert, ywert in zip(xwerte, ywerte)]),3)
     V_wert = N(sum([(xwert - E_wert)**2*ywert for xwert, ywert in zip(xwerte, ywerte)]),3)
     sigma = N(sqrt(V_wert),3)
@@ -135,7 +125,8 @@ def lsg2():
     print('V(X) = ' + str(V_wert))
     print('sigma(X) = ' + str(sigma))
 
-lsg1()
+lsg1(0.53)
+lsg2([0.105,0.263,0.263,0.105])
 
 
 
