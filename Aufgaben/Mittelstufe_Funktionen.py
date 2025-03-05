@@ -848,6 +848,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
                        + text + ', was der Steigung entspricht', '1BE')
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table1)
+        loesung.append(' \n\n')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
