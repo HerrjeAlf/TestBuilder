@@ -15,15 +15,15 @@ Lehrer = 'Herr Herrys'
 Art = 'HAK 10'
 Titel = 'Parabelgleichungen ablesen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[einf_parabeln(1, ['a'], anz_np=3, anz_ap=0)]]
+    Aufgaben = [[parabel_und_gerade(1, ['a', 'b', 'c', 'd', 'e'])]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
