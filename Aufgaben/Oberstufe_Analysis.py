@@ -1492,6 +1492,77 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def extremalproblem_einfach(nr, i=0, BE=[]):
+    # Den SuS ist eine lineare Funktion gegeben, um damit ein Extremalproblem zu lösen.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_bez = [f'{str(nr)}']
+    # hier wird die Funktion erstellt.
+    m = nzahl(-5,-1)/2
+    xmax = nzahl(6,10)
+    n = -1*xmax*m
+    fkt = m * x + n
+    fkt_str = vorz_v_aussen(m,'x') + vorz_str(n)
+    fkt_a = fkt*x
+    fkt_a_str = vorz_v_aussen(m,'x^2') + vorz_v_innen(n,'x')
+    fkt_a_str_1 = gzahl(m) + r' \cdot ' + binom_klammer(1,Rational(n,m), 'x^2', 'x')
+    fkt_a_str_2 = (gzahl(m) + r' \cdot \left( x^2 '+ vorz(Rational(n,m)) + r' 2 \cdot ' + gzahl(abs(Rational(n,2*m)))
+                   + r' \cdot x + \left( ' + gzahl(abs(Rational(n,2*m))) + r' \right) ^2 - \left( '
+                   + gzahl(abs(Rational(n,2*m))) + r' \right) ^2 \right) ')
+    fkt_a_str_3 = (gzahl(m) + r' \cdot \left( \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
+                   + gzahl(Rational(n**2, 4*m**2)) + r' \right) ')
+    fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
+                   + gzahl(abs(Rational(n**2, 4*m))))
+    xwert = -1 * Rational(n, 2*m)
+    ywert = Rational(n,2)
+    wert_A = Rational(n**2, -4*m)
+
+    xwert_2 = int(xmax/2) + zzahl(1,2)
+    ywert_2 = fkt.subs(x, xwert_2)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
+               f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen '
+               'Rechtecks auf dem Graphen von $ f(x) = ' + vorz_v_aussen(m,'x') + vorz_str(n) +  '$.'), 'Grafik',
+               NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                        + r') Berechnen Sie die Koordinaten von P, sodass die Rechtecksfläche maximal wird.')]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{es~gilt: \quad HB.: \quad A ~=~ x \cdot y \quad und \quad NB.: \quad f(x) ~=~ '
+               + fkt_str + r'} \quad (2BE) \\ A(x)~=~x \cdot (' + fkt_str
+               + r')~=~ ' + fkt_a_str + r' \quad (1BE) \\  A(x) ~=~ ' + fkt_a_str_1 + '~=~' + fkt_a_str_2 + '~=~'
+               + r' \quad (2BE) \\ A(x) ~=~ ' + fkt_a_str_3 + '~=~' + fkt_a_str_4 + r' \quad (3BE) \\ S('
+               + gzahl(xwert) + r' \vert ' + gzahl(wert_A) +') ' + r' \quad \to \quad f(' + gzahl(xwert) + ') ~=~ '
+               + gzahl(m) + r' \cdot ' + gzahl_klammer(xwert) + vorz_str(n) + '~=~' + gzahl(ywert)
+               + r' \quad (2BE) \\ \mathrm{Für~x~=~ ' + gzahl(xwert) + '~und~y~=~' + gzahl(ywert)
+               + r'~besitzt~das~Rechteck~die~maximale~Fläche. \quad (1BE) }']
+    grafiken_aufgaben = [f'Aufgabe_{nr}']
+    grafiken_loesung = []
+    def Darstellung(fkt, xmax, xwert_p, ywert_p, name):
+        fig, ax = plt.subplots()
+        fig.canvas.draw()
+        fig.tight_layout()
+        ax.set_aspect(-1/(2*m), adjustable='box')
+        ax.spines['top'].set_color('none')
+        ax.spines['right'].set_color('none')
+        ax.spines['bottom'].set_position(('data', 0))
+        ax.spines['left'].set_position(('data', 0))
+        ax.set_xlabel('x', size=10, labelpad=-30, x=0.97)
+        ax.set_ylabel('y', size=10, labelpad=-30, y=0.97, rotation=0)
+        ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+        arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+        ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+        ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+        plt.annotate(r'$ P( x \vert y ) $', xy=(xwert_p, ywert_p),
+                     xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
+        xwerte = np.arange(0, xmax, 0.01)
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
+        plt.plot([0, xwert_p], [ywert_p, ywert_p])
+        plt.plot([xwert_p, xwert_p], [ywert_p, 0])
+        plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
+        return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+    Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
+    liste_punkte = [10] if BE == [] else BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     # In dieser Aufgabe sollen die SuS eine einfache quadratische Funktion rekonstruieren. Die Aufgaben besitzt keine Teilaufgaben.
     # Mit dem Parameter 'xwerte=' können die x-Werte von drei Punkten der Funktion in der Form [x1, x2, x3] vorgegeben werden. Standardmäßig ist die Liste leer und die x-Werte werden zufällig zwischen -3 und 3 gebildet.
