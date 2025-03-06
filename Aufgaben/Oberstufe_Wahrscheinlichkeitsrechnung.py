@@ -1060,7 +1060,7 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
                            + ' \quad \mathrm{und} \quad obere Grenze: n' + vorz_v_innen(ausw_sigm, r' \sigma ')
                            + '~=~' + gzahl(n) + vorz_str(ausw_sigm * sigma) + '~=~' + gzahl(obere_grenze)
                            + r' \quad (4BE) \\ P(' + gzahl(untere_grenze_ger) + r' \leq X \leq '
-                           + gzahl(obere_grenze_ger) + ') ~=~ ' + )
+                           + gzahl(obere_grenze_ger) + ') ~=~ ')
 
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
