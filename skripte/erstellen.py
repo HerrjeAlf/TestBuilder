@@ -108,6 +108,9 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
         Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # der Teil in dem die PDF-Datei erzeugt wird
+        aufgabe_pfad = f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}'
+        loesung_pfad = f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}'
+
         @timer
         def Aufgaben():
             Aufgabe = Document(geometry_options=geometry_options)
@@ -131,7 +134,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
                 Aufgabe.extend(element[0])
                 Aufgabe.append(NewPage())
 
-            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}', clean_tex=clean_tex)
+            Aufgabe.generate_pdf(aufgabe_pfad, clean_tex=clean_tex)
 
         # Erwartungshorizont
         @timer
@@ -146,16 +149,22 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
             for element in liste_seiten:
                 Loesung.extend(element[1])
 
-            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} - Lsg Gr. {Teil}', clean_tex=clean_tex)
+            Loesung.generate_pdf(loesung_pfad, clean_tex=clean_tex)
 
         # Druck der Seiten
         Aufgaben()
         Erwartungshorizont()
 
+        return [aufgabe_pfad, loesung_pfad]
+
 
     alphabet = string.ascii_uppercase
-    arbeitsblatt(f'{alphabet[anzahl]}', liste_seiten, angaben)
+    pfade = arbeitsblatt(f'{alphabet[anzahl]}', liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
+
+    # [Pfad Aufgabe, Pfad Erwartungshorizont]
+    return pfade
+
 
 # hier wird ein Test erzeugt
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
@@ -195,6 +204,9 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
         table2.add_hline()
 
         # der Teil in dem die PDF-Datei erzeugt wird
+        aufgabe_pfad = f'pdf/Kl. {Klasse} - {Art} {Teil}'
+        loesung_pfad = f'pdf/Kl. {Klasse} - {Art} {Teil} - Lsg'
+
         @timer
         def Aufgaben():
             Aufgabe = Document(geometry_options=geometry_options)
@@ -242,7 +254,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             Aufgabe.append('\n\n')
             Aufgabe.append(table2)
 
-            Aufgabe.generate_pdf(f'pdf/Kl. {Klasse} - {Art} {Teil}', clean_tex=clean_tex)
+            Aufgabe.generate_pdf(aufgabe_pfad, clean_tex=clean_tex)
 
         # Erwartungshorizont
         @timer
@@ -259,7 +271,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
-            Loesung.generate_pdf(f'pdf/Kl. {Klasse} - {Art} {Teil} - Lsg', clean_tex=clean_tex)
+            Loesung.generate_pdf(loesung_pfad, clean_tex=clean_tex)
 
         # Druck der Seiten
         Aufgaben()
@@ -267,12 +279,16 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
         del liste_bez[1:]
         del liste_punkte[1:]
 
+        return [aufgabe_pfad, loesung_pfad]
+
     alphabet = string.ascii_uppercase
-    if probe:
-        erzeugen_test(f'Probe {anzahl + 1:02d}', liste_seiten, angaben)
-    else:
-        erzeugen_test(f'Gr. {alphabet[anzahl]}', liste_seiten, angaben)
+    teil = f'Probe {anzahl + 1:02d}' if probe else f'Gr. {alphabet[anzahl]}'
+    pfade = erzeugen_test(teil, liste_seiten, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
+
+    # [Pfad Aufgabe, Pfad Erwartungshorizont]
+    return pfade
+
 
 # Hier wird eine Vorprüfung für den Abschluss der 10. Klasse erzeugt
 def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex=True):
