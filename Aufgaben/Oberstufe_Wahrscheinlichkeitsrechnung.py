@@ -1,3 +1,5 @@
+import random
+
 import sympy, sys
 import string
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
@@ -977,5 +979,98 @@ def lotto_modell(nr, BE=[]):
         liste_punkte = BE
     else:
         liste_punkte = [3]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=None, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen verschiedene Berechnungen zu einer binomialverteilten Zufallsgröße X durchführen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite_nach_teilaufg=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    Dp = nzahl(2,8)
+    p = Dp/10
+    n = N(nzahl(10,100)*100/(Dp*(10-Dp)),2) if laplace else int(nzahl(1,9)*100/(Dp*(10-Dp)))
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Die Zufallsgröße X sei mit den Parametern p = {gzahl(p)} und n = {gzahl(n)} binomialverteilt. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Hier sollen die SuS den Erwartungswert und die Standardabweichung der Binomialverteilung ausrechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        mu = n*p
+        sigma = N(sqrt(n*p*(1-p)),3)
+        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Berechnen Sie den Erwartungswert $ \mu $ und '
+                                + r'die Standardabweichung $ \sigma $ von X.'),' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mu ~=~ n \cdot p ~=~' + gzahl(n) + r' \cdot ' + gzahl(p)
+                       + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } '
+                       + r' ~=~ \sqrt{' + gzahl(n) + r' \cdot ' + gzahl(p) + r' \cdot (1- '+ gzahl(p) + ')} ~=~ '
+                       + gzahl(sigma) + r' \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+        if 'b' in teilaufg:
+            # die SuS sollen beurteilen, ob die Binomialverteilung die Laplace-Bedingung erfüllt´(diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 4
+            mu = n * p
+            sigma = N(sqrt(n * p * (1 - p)), 3)
+            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + r') Geben Sie an, ob die Laplace-Bedingung erfüllt ist.'), ' \n\n'))
+            text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
+                    + r' > 3, \quad ist~die~Laplace-Bedingung~erfüllt.} \quad (1BE)') \
+                if sigma > 3 else (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
+                                   + r' \leq 3, \quad ist~die~Laplace-Bedingung~nicht~erfüllt.} \quad (1BE)')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(punkte)
+            i += 1
+
+        if 'c' in teilaufg and laplace:
+            # die SuS sollen die Intervallgrenzen für die gegebene Intervallwahrscheinlichkeit berechnen (diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 6
+            ausw = random_selection([[1,0.683],[1.64,0,9], [1.96,0.95], [2,0.954], [2.58,0.99], [3,0.997]], anzahl=1)
+            ausw_wkt = ausw[1]
+            ausw_sigm = ausw[0]
+            untere_grenze = n - ausw_sigm * sigma
+            obere_grenze = n + ausw_sigm * sigma
+            untere_grenze_ger = int(untere_grenze+0.5) if untere_grenze%1 != 0 else untere_grenze
+            obere_grenze_ger = int(obere_grenze) if obere_grenze%2 != 0 else obere_grenze
+
+            aufgabe.extend((NoEscape(r' \noindent Gesucht ist ein symmetrisch zum Erwartungswert $ \mu $'
+                                     r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
+                                     + r'$ \sigma $ Intervall.'), ' \n\n',
+                            NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                     + r') Berechnen Sie die Grenzen und die Wahrscheinlichkeit des Intervalls.'),
+                            ' \n\n'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad untere Grenze: n'
+                           + vorz_v_innen(-1*ausw_sigm,r' \sigma ') + '~=~' + gzahl(n)
+                           + vorz_str(-1*ausw_sigm*sigma) + '~=~' + gzahl(untere_grenze)
+                           + ' \quad \mathrm{und} \quad obere Grenze: n' + vorz_v_innen(ausw_sigm, r' \sigma ')
+                           + '~=~' + gzahl(n) + vorz_str(ausw_sigm * sigma) + '~=~' + gzahl(obere_grenze)
+                           + r' \quad (4BE) \\ P(' + gzahl(untere_grenze_ger) + r' \leq X \leq '
+                           + gzahl(obere_grenze_ger) + ') ~=~ ' + )
+
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(punkte)
+            i += 1
+
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

@@ -1,5 +1,6 @@
 allgemein:
 - alte Skripte in neue Form anpassen
+- bei allen Aufgaben die Teilaufgabenummerierung so ändern, dass bei nur einer Teilaufgabe, keine Teilaufgabe a) angezeigt wird
 
 Berechnungen:
  - eine Funktion zum Lösen von linearen Gleichungssystemen mit Gaußalgorithmus
