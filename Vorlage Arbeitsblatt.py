@@ -38,7 +38,7 @@ Aufgabenliste = [[aenderungsrate(1),
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
-test = PdfMerger()
+arbeitsblatt = PdfMerger()
 erwartungshorizont = PdfMerger()
 pdfs = ['pdf/name']
 
@@ -56,15 +56,15 @@ for i in range(anzahl):
     # Erstellt die Arbeitsblätter und nimmt die Pfade, welche zurückgegeben werden
     pdfs = arbeitsblatt_erzeugen(liste_seiten, angaben, i, clean_tex)
 
-    test.append(f'{pdfs[0]}.pdf')
+    arbeitsblatt.append(f'{pdfs[0]}.pdf')
     erwartungshorizont.append(f'{pdfs[1]}.pdf')
 
 if anzahl > 1:
     pfad = ' '.join(pdfs[0].split(' ')[:-2])
 
-    test.write(f'{pfad}.pdf')
+    arbeitsblatt.write(f'{pfad}.pdf')
     print(f'\033[38;2;100;141;229m\033[1mAufgaben PDF zusammengeführt\033[0m')
-    test.close()
+    arbeitsblatt.close()
 
     erwartungshorizont.write(f'{pfad} - Lsg.pdf')
     print(f'\033[38;2;100;141;229m\033[1mErwartungshorizont PDF zusammengeführt\033[0m')
