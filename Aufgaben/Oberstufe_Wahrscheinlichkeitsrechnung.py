@@ -1,7 +1,7 @@
 import random
-
 import sympy, sys
 import string
+from sympy.stats import Binomial, P
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -761,7 +761,7 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
     auswahl = nzahl(1,2)
     if auswahl == 1:
         text1 = gzahl(p) + ' Personen positiv'
-        text2 = 'aber ' + gzahl(K_p) + ' gesund'
+        text2 = 'aber ' + gzahl(G_p) + ' gesund'
     else:
         text1 = gzahl(n) + (' Personen negativ')
         text2 = 'aber ' + gzahl(K_n) + ' krank'
@@ -782,7 +782,7 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
         if vierfeldertafel == True:
             punkte = 3
             if auswahl == 1:
-                aufgabe.extend((Tabelle(A=A, p=p, K_p=K_p, G=G),' \n\n\n',
+                aufgabe.extend((Tabelle(A=A, p=p, G_p=G_p, G=G),' \n\n\n',
                             str(liste_teilaufg[i]) + f')  Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
             else:
                 aufgabe.extend((Tabelle(A=A, n=n, K_n=K_n, G=G), ' \n\n\n',
@@ -992,8 +992,7 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
     liste_bez = []
     Dp = nzahl(2,8)
     p = Dp/10
-    n = N(nzahl(10,100)*100/(Dp*(10-Dp)),2) if laplace else int(nzahl(1,9)*100/(Dp*(10-Dp)))
-
+    n = int(nzahl(10,100)*100/(Dp*(10-Dp))) if laplace else int(nzahl(1,9)*100/(Dp*(10-Dp)))
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Die Zufallsgröße X sei mit den Parametern p = {gzahl(p)} und n = {gzahl(n)} binomialverteilt. \n\n']
@@ -1022,15 +1021,13 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             # die SuS sollen beurteilen, ob die Binomialverteilung die Laplace-Bedingung erfüllt´(diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 4
-            mu = n * p
-            sigma = N(sqrt(n * p * (1 - p)), 3)
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                      + r') Geben Sie an, ob die Laplace-Bedingung erfüllt ist.'), ' \n\n'))
             text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                     + r' > 3, \quad ist~die~Laplace-Bedingung~erfüllt.} \quad (1BE)') \
                 if sigma > 3 else (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                                    + r' \leq 3, \quad ist~die~Laplace-Bedingung~nicht~erfüllt.} \quad (1BE)')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text)
 
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
@@ -1039,28 +1036,34 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
         if 'c' in teilaufg and laplace:
             # die SuS sollen die Intervallgrenzen für die gegebene Intervallwahrscheinlichkeit berechnen (diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            punkte = 6
-            ausw = random_selection([[1,0.683],[1.64,0,9], [1.96,0.95], [2,0.954], [2.58,0.99], [3,0.997]], anzahl=1)
-            ausw_wkt = ausw[1]
-            ausw_sigm = ausw[0]
-            untere_grenze = n - ausw_sigm * sigma
-            obere_grenze = n + ausw_sigm * sigma
+            punkte = 7
+            ausw_sigm = nzahl(2,6)/2
+            untere_grenze = round(mu - ausw_sigm * sigma,1)
+            obere_grenze = round(mu + ausw_sigm * sigma,1)
             untere_grenze_ger = int(untere_grenze+0.5) if untere_grenze%1 != 0 else untere_grenze
-            obere_grenze_ger = int(obere_grenze) if obere_grenze%2 != 0 else obere_grenze
-
+            obere_grenze_ger = int(obere_grenze) if obere_grenze%1 != 0 else obere_grenze
+            Verteilung = Binomial('X', n, p)
+            F_obere_grenze = N(P(Verteilung <= obere_grenze_ger).evalf(),3)
+            F_untere_grenze = N(P(Verteilung <= int(untere_grenze)).evalf(),3)
+            wkt_intervall = F_obere_grenze - F_untere_grenze
             aufgabe.extend((NoEscape(r' \noindent Gesucht ist ein symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
                                      + r'$ \sigma $ Intervall.'), ' \n\n',
                             NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                      + r') Berechnen Sie die Grenzen und die Wahrscheinlichkeit des Intervalls.'),
                             ' \n\n'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad untere Grenze: n'
-                           + vorz_v_innen(-1*ausw_sigm,r' \sigma ') + '~=~' + gzahl(n)
-                           + vorz_str(-1*ausw_sigm*sigma) + '~=~' + gzahl(untere_grenze)
-                           + ' \quad \mathrm{und} \quad obere Grenze: n' + vorz_v_innen(ausw_sigm, r' \sigma ')
-                           + '~=~' + gzahl(n) + vorz_str(ausw_sigm * sigma) + '~=~' + gzahl(obere_grenze)
-                           + r' \quad (4BE) \\ P(' + gzahl(untere_grenze_ger) + r' \leq X \leq '
-                           + gzahl(obere_grenze_ger) + ') ~=~ ')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{untere~Grenze: ~~ \mu }'
+                           + vorz_v_innen(-1*ausw_sigm,r' \sigma ') + '~=~' + gzahl(mu)
+                           + vorz_str(N(-1*ausw_sigm*sigma,3)) + '~=~' + gzahl(untere_grenze)
+                           + r' \quad \to \quad ' + gzahl(untere_grenze_ger) + r' \quad (2BE) \\'
+                           + r' \mathrm{obere~Grenze: ~~ \mu }' + vorz_v_innen(ausw_sigm, r' \sigma ')
+                           + '~=~' + gzahl(mu) + vorz_str(N(ausw_sigm * sigma,3)) + '~=~' + gzahl(obere_grenze)
+                           + r' \quad \to \quad ' + gzahl(obere_grenze_ger) + r' \quad (2BE) \\ P('
+                           + gzahl(int(untere_grenze_ger)) + r' \leq X \leq ' + gzahl(obere_grenze_ger)
+                           + r') ~=~ P(X \leq ' + gzahl(obere_grenze_ger) + r') - P(X \leq '
+                           + gzahl(int(untere_grenze)) + ') ~=~' + gzahl(F_obere_grenze)
+                           + vorz_str(-1 * F_untere_grenze) + '~=~' + gzahl(wkt_intervall)  + r'~=~'
+                           + gzahl(wkt_intervall*100) + r' \% \quad (3BE) ')
 
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
