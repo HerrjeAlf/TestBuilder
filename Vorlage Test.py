@@ -41,7 +41,7 @@ Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnis
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
-aufgaben = PdfMerger()
+test = PdfMerger()
 erwartungshorizont = PdfMerger()
 pdfs = ['pdf/name']
 
@@ -65,15 +65,15 @@ for i in range(anzahl):
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
     pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
 
-    aufgaben.append(f'{pdfs[0]}.pdf')
+    test.append(f'{pdfs[0]}.pdf')
     erwartungshorizont.append(f'{pdfs[1]}.pdf')
 
 if anzahl > 1:
     pfad = ' '.join(pdfs[0].split(' ')[:-2])
 
-    aufgaben.write(f'{pfad}.pdf')
+    test.write(f'{pfad}.pdf')
     print(f'\033[38;2;100;141;229m\033[1mAufgaben PDF zusammengeführt\033[0m')
-    aufgaben.close()
+    test.close()
 
     erwartungshorizont.write(f'{pfad} - Lsg.pdf')
     print(f'\033[38;2;100;141;229m\033[1mErwartungshorizont PDF zusammengeführt\033[0m')
