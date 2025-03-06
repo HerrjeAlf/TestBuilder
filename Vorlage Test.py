@@ -1,8 +1,11 @@
 import os
 from helpers import root_path
-os.chdir(root_path())
+from PyPDF2 import PdfMerger
 from Aufgaben import *
 from skripte.erstellen import *
+
+os.chdir(root_path())
+
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
 
 # Angaben für den Test im pdf-Dokument
@@ -38,6 +41,10 @@ Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnis
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
+aufgaben = PdfMerger()
+erwartungshorizont = PdfMerger()
+pdfs = ['pdf/name']
+
 for i in range(anzahl):
     Aufgaben = Aufgabenliste
 
@@ -54,5 +61,20 @@ for i in range(anzahl):
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
-    test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
 
+    # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
+    pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
+
+    aufgaben.append(f'{pdfs[0]}.pdf')
+    erwartungshorizont.append(f'{pdfs[1]}.pdf')
+
+if anzahl > 1:
+    pfad = ' '.join(pdfs[0].split(' ')[:-2])
+
+    aufgaben.write(f'{pfad}.pdf')
+    print(f'\033[38;2;100;141;229m\033[1mAufgaben PDF zusammengeführt\033[0m')
+    aufgaben.close()
+
+    erwartungshorizont.write(f'{pfad} - Lsg.pdf')
+    print(f'\033[38;2;100;141;229m\033[1mErwartungshorizont PDF zusammengeführt\033[0m')
+    erwartungshorizont.close()

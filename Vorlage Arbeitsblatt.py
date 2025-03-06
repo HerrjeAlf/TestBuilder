@@ -1,8 +1,10 @@
 import os
 from helpers import root_path
-os.chdir(root_path())
+from PyPDF2 import PdfMerger
 from Aufgaben import *
 from skripte.erstellen import *
+
+os.chdir(root_path())
 
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
 
@@ -36,6 +38,10 @@ Aufgabenliste = [[aenderungsrate(1),
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
+aufgaben = PdfMerger()
+erwartungshorizont = PdfMerger()
+pdfs = ['pdf/name']
+
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = Aufgabenliste
@@ -46,5 +52,20 @@ for i in range(anzahl):
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Klasse, Thema, datum_delta]
-    arbeitsblatt_erzeugen(liste_seiten, angaben, i, clean_tex)
 
+    # Erstellt die Arbeitsblätter und nimmt die Pfade, welche zurückgegeben werden
+    pdfs = arbeitsblatt_erzeugen(liste_seiten, angaben, i, clean_tex)
+
+    aufgaben.append(f'{pdfs[0]}.pdf')
+    erwartungshorizont.append(f'{pdfs[1]}.pdf')
+
+if anzahl > 1:
+    pfad = ' '.join(pdfs[0].split(' ')[:-2])
+
+    aufgaben.write(f'{pfad}.pdf')
+    print(f'\033[38;2;100;141;229m\033[1mAufgaben PDF zusammengeführt\033[0m')
+    aufgaben.close()
+
+    erwartungshorizont.write(f'{pfad} - Lsg.pdf')
+    print(f'\033[38;2;100;141;229m\033[1mErwartungshorizont PDF zusammengeführt\033[0m')
+    erwartungshorizont.close()
