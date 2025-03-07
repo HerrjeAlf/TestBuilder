@@ -11,7 +11,7 @@ os.chdir(root_path())
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = ('E-Kurs')
+Kurs = 'E-Kurs'
 Fach = 'Mathematik'
 Klasse = '10'
 Lehrer = 'Herr Herrys'
