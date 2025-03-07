@@ -1038,8 +1038,8 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 7
             ausw_sigm = nzahl(2,6)/2
-            untere_grenze = round(mu - ausw_sigm * sigma,1)
-            obere_grenze = round(mu + ausw_sigm * sigma,1)
+            untere_grenze = n - ausw_sigm * sigma
+            obere_grenze = n + ausw_sigm * sigma
             untere_grenze_ger = int(untere_grenze+0.5) if untere_grenze%1 != 0 else untere_grenze
             obere_grenze_ger = int(obere_grenze) if obere_grenze%1 != 0 else obere_grenze
             Verteilung = Binomial('X', n, p)
@@ -1075,5 +1075,40 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def prognoseintervall(nr, BE=[]):
+    # Berechnung des Prognoseintervalls am Beispiel der Keimfähigkeit von Pflanzensamen
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_bez = [f'{str(nr)}']
+    auswahl = random_selection([['Rosen','Samen'], [ 'Tulpen', 'Zwiebeln'], ['Orchideen', 'Samen'],
+                                ['Lilien', 'Zwiebeln'], ['Dahlien', 'Samen']], anzahl=1)
+    sorte = auswahl[0][0]
+    samen = auswahl[0][1]
+    anzahl = nzahl(5, 10) * 100
+    keimen = int(nzahl(2, 5) * 10)
+    auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
+    wkt_intv = auswahl[0][1]*100
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Ein Pflanzenhändler vertreibt wertvolle {sorte}. Die von ihm verkauften {samen} haben eine '
+               f'Keimfähigkeit von {gzahl(keimen)}%. Bei einer Lieferung von {gzahl(anzahl)} {samen}, muss er '
+               f' Zusagen, wie viele {samen} mit einer Wahrscheinlichkeit von mind. {wkt_intv}% keimen werden. \n',
+               'Berechnen Sie das Prognoseintervall, dass der Pflanzenhändler angeben sollte.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r'  \quad (3BE)']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [3]
+        liste_punkte = BE
+    else:
+        liste_punkte = [3]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
