@@ -1090,15 +1090,25 @@ def prognoseintervall(nr, BE=[]):
     keimen = int(nzahl(2, 5) * 10)
     auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
     wkt_intv = auswahl[0][1]*100
-
+    sigm = auswahl[0][0]
+    mu = anzahl*keimen
+    sigma = N(sqrt(anzahl*keimen*(1-keimen)),3)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Pflanzenhändler vertreibt wertvolle {sorte}. Die von ihm verkauften {samen} haben eine '
-               f'Keimfähigkeit von {gzahl(keimen)}%. Bei einer Lieferung von {gzahl(anzahl)} {samen}, muss er '
-               f' Zusagen, wie viele {samen} mit einer Wahrscheinlichkeit von mind. {wkt_intv}% keimen werden. \n',
-               'Berechnen Sie das Prognoseintervall, dass der Pflanzenhändler angeben sollte.']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
-               r'  \quad (3BE)']
+               f'Keimfähigkeit von {gzahl(keimen)}%. Bei einer Lieferung von {gzahl(anzahl)} {samen} an eine Gärtnerei,'
+               f'muss er Zusagen, wie viele {samen} mit einer Sicherheit von {wkt_intv}% keimen '
+               f'werden. \n', 'Berechnen Sie das Prognoseintervall, dass der Pflanzenhändler angeben sollte.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',r' \mu ~=~ n \cdot p ~=~' + gzahl(anzahl)
+               + r' \cdot ' + gzahl(keimen) + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad '
+               + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{' + gzahl(anzahl) + r' \cdot ' + gzahl(keimen)
+               + r' \cdot (1- '+ gzahl(anzahl) + ')} ~=~ ' + gzahl(sigma) + r' \quad (2BE) '
+               + r' \mathrm{untere~Grenze: ~~ \mu }' + vorz_v_innen(-1*sigm,r' \sigma ') + '~=~' + gzahl(mu)
+               + vorz_str(N(-1*sigm*sigma,3)) + '~=~' + gzahl(N(mu-sigm*sigma,3))
+               + r' \quad (2BE) \\ \mathrm{obere~Grenze: ~~ \mu }' + vorz_v_innen(sigm, r' \sigma ') + '~=~'
+               + gzahl(mu) + vorz_str(N(sigm * sigma,3)) + '~=~' + gzahl(mu+sigm*sigma) + r' \quad (2BE) \\'
+               + r' Intervall \left[ ' + gzahl(int(mu-sigm*sigma)) + r' \vert ' + gzahl(int(mu+sigm*sigma+0.5))
+               + r' \right] \quad (1BE)']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
@@ -1106,9 +1116,9 @@ def prognoseintervall(nr, BE=[]):
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [3]
+            liste_punkte = [7]
         liste_punkte = BE
     else:
-        liste_punkte = [3]
+        liste_punkte = [7]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
