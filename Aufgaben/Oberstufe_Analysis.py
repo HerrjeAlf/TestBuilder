@@ -1522,8 +1522,8 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),NoEscape(
                f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen '
                'Rechtecks auf dem Graphen von $ f(x) = ' + vorz_v_aussen(m,'x') + vorz_str(n) +  '$.'), 'Grafik',
-               NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                        + r') Berechnen Sie die Koordinaten von P, sodass die Rechtecksfläche maximal wird.')]
+               NoEscape(r' \noindent Berechnen Sie die Koordinaten von P, sodass die Rechtecksfläche maximal wird.'),
+               ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{es~gilt: \quad HB.: \quad A ~=~ x \cdot y \quad und \quad NB.: \quad f(x) ~=~ '
                + fkt_str + r'} \quad (2BE) \\ A(x)~=~x \cdot (' + fkt_str
