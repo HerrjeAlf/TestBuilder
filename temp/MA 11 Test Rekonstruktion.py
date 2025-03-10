@@ -16,7 +16,7 @@ Art = 'Test'
 Titel = 'Rekonstruktion und Extremalproblem'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
@@ -30,7 +30,7 @@ for i in range(anzahl):
     for element in Aufgaben:
         for aufgabe in element:
             liste_bez.extend(aufgabe[5])
-            liste_punkte.extend(aufgabe[4])
+            liste_punkte.extenwd(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
