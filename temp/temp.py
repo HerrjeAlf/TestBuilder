@@ -130,7 +130,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 
 Verteilung = Binomial('X', 200,0.5)
 print(Verteilung)
-F = P(Verteilung <= 50).evalf()
+F = P(Verteilung <= 100).evalf()
 
 print(F)
 
