@@ -1511,8 +1511,8 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
                    + gzahl(abs(Rational(n,2*m))) + r' \right) ^2 \right) ')
     fkt_a_str_3 = (gzahl(m) + r' \cdot \left( \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
                    + gzahl(Rational(n**2, 4*m**2)) + r' \right) ')
-    fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
-                   + gzahl(abs(Rational(n**2, 4*m))))
+    fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 '
+                   + vorz_str(Rational(n**2, 4*m)))
     xwert = -1 * Rational(n, 2*m)
     ywert = Rational(n,2)
     wert_A = Rational(n**2, -4*m)
