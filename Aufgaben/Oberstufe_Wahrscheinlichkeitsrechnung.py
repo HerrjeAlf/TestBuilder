@@ -1046,9 +1046,9 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             F_obere_grenze = N(P(Verteilung <= obere_grenze_ger).evalf(),4)
             F_untere_grenze = round(P(Verteilung <= (untere_grenze_ger - 1)).evalf(),3)
             wkt_intervall = F_obere_grenze - F_untere_grenze
-            aufgabe.extend((NoEscape(r' \noindent Gesucht ist ein symmetrisch zum Erwartungswert $ \mu $'
+            aufgabe.extend((NoEscape(r' \noindent Berechnen Sie das symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
-                                     + r'$ \sigma $ Intervall.'), ' \n\n',
+                                     + r'$ \sigma $ Intervall I.'), ' \n\n',
                             NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                      + r') Berechnen Sie die Grenzen und die Wahrscheinlichkeit des Intervalls.'),
                             ' \n\n'))
@@ -1078,8 +1078,8 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def prognoseintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
-    # Berechnung des Prognoseintervalls am Beispiel der Keimfähigkeit von Pflanzensamen
+def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
+    # Berechnung des absoluten und relativen Prognoseintervalls am Beispiel der Keimfähigkeit von Pflanzensamen
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1094,13 +1094,9 @@ def prognoseintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
     keimen = int(nzahl(4, 8) * 10)
     auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
     wkt_intv = int(auswahl[0][1]*100) if auswahl[0][1]*100%1 == 0 else N(auswahl[0][1]*100,3)
-    sigm = auswahl[0][0]
+    c = auswahl[0][0]
     mu = int(anzahl*keimen/100)
-    sigma = N(sqrt(anzahl*keimen*(100-keimen))/100,3)
-    print(wkt_intv)
-    print(sigm)
-    print(mu)
-    print(sigma)
+    sigma = round(sqrt(anzahl*keimen*(100-keimen))/100,2)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Pflanzenhändler vertreibt wertvolle {sorte}. Die von ihm verkauften {samen} haben eine '
@@ -1111,27 +1107,116 @@ def prognoseintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-
-    if 'a' in teilaufg:
-        # Hier sollen die SuS den Erwartungswert und die Standardabweichung der Binomialverteilung ausrechnen
+    if 'a' in teilaufg and sigma > 3:
+        # Hier sollen die SuS das Prognoseintervall der keimenden Samen in der absoluten Häufigkeit (Anzahl) angeben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
-        aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie das Prognoseintervall, '
-                                                r'dass der Pflanzenhändler angeben sollte.')
+        punkte = 9
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie das Prognoseintervall, '
+                       + 'dass der Pflanzenhändler angeben sollte. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mu ~=~ n \cdot p ~=~' + gzahl(anzahl)
                        + r' \cdot ' + gzahl(keimen/100) + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad '
-                       + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{' + gzahl(anzahl) + r' \cdot ' + gzahl(keimen/100)
-                       + r' \cdot (1- '+ gzahl(keimen/100) + ') } ~=~ ' + gzahl(sigma) + r' \quad (2BE) \\'
-                       + r' \mathrm{untere~Grenze: ~~ \mu }' + vorz_v_innen(-1*sigm,r' \sigma ') + '~=~' + gzahl(mu)
-                       + vorz_str(N(-1*sigm*sigma,3)) + '~=~' + gzahl(round(mu-sigm*sigma,1))
-                       + r' \quad (2BE) \\ \mathrm{obere~Grenze: ~~ \mu }' + vorz_v_innen(sigm, r' \sigma ') + '~=~'
-                       + gzahl(mu) + vorz_str(N(sigm * sigma,3)) + '~=~' + gzahl(round(mu+sigm*sigma,1)) + r' \quad (2BE) \\'
-                       + r' \mathrm{Intervall ~~ I} \left[ ~' + gzahl(int(mu-sigm*sigma)) + r'~ \vert ~'
-                       + gzahl(int(mu+sigm*sigma+0.5)) + r'~ \right] \quad (1BE)')
+                       + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
+                       + gzahl(anzahl) + r' \cdot ' + gzahl(keimen/100) + r' \cdot (1- '+ gzahl(keimen/100)
+                       + ') } ~=~ ' + gzahl(sigma) + r' \quad (4BE) \\' + r' \mathrm{untere~Grenze: ~~ \mu }'
+                       + vorz_v_innen(-1*c,r' \sigma ') + '~=~' + gzahl(mu)
+                       + vorz_str(round(-1*c*sigma,1)) + '~=~' + gzahl(round(mu-c*sigma,1))
+                       + r' \quad (2BE) \\ \mathrm{obere~Grenze: ~~ \mu }' + vorz_v_innen(c, r' \sigma ')
+                       + '~=~' + gzahl(mu) + vorz_str(round(c * sigma,1)) + '~=~' + gzahl(round(mu+c*sigma,1))
+                       + r' \quad (2BE) \\' + r' \mathrm{Intervall ~~ I} \left[ ~' + gzahl(int(mu-c*sigma))
+                       + r'~ \vert ~' + gzahl(round(mu+c*sigma+0.5)) + r'~ \right] \quad (1BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
+
+
+    if 'b' in teilaufg:
+        # Hier sollen die SuS überprüfen, ob die Laplace-Bedingung erfüllt ist und überhaupt eine Zusage möglich ist
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob die Anzahl der gelieferten {samen} überhaupt '
+                                                f'eine Zusage über die Keimfähigkeit zulässt. \n\n')
+        text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
+                + r' > 3, \quad ist~die~Laplace-Bedingung~erfüllt~und~eine~Zusage~möglich.} \quad (1BE)') \
+            if sigma > 3 else (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
+                               + r' \leq 3, \quad ist~die~Laplace-Bedingung~nicht~erfüllt~und~keine~Zusage~möglich.} '
+                               + r' \quad (1BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text)
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'c' in teilaufg:
+        # Hier sollen die SuS den Erwartungswert und die Standardabweichung der Binomialverteilung ausrechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 5
+        grenze = int(10 / ((keimen * (100 - keimen)) / 100**2))
+        anzahl = nzahl(grenze, grenze + 10)*10
+        auswahl = random_selection([[1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]],  anzahl=1)
+        wkt_intv = int(auswahl[0][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[0][1] * 100, 3)
+        c = auswahl[0][0]
+        mu = int(anzahl * keimen / 100)
+        sigma = N(sqrt(anzahl * keimen * (100 - keimen)) / 100, 3)
+        aufgabe.extend((f'Bei einer anderen Lieferung von {gzahl(anzahl)} {samen} soll der Pflanzenhändler mit einer '
+                        f'Sicherheit von {gzahl(wkt_intv)}% zusichern wie viel Prozent der {sorte} keimen. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie das Prognoseintervall in Prozent, '
+                       + 'dass der Pflanzenhändler angeben sollte. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
+                       + gzahl(anzahl) + r' \cdot ' + gzahl(keimen / 100) + r' \cdot (1- ' + gzahl(keimen / 100)
+                       + ') } ~=~ ' + gzahl(sigma) + r' \quad (2BE) \\'
+                       + r' \mathrm{Intervall ~~ I} \left[ p - c \cdot \frac{ \sigma }{n} \left\vert '
+                       + r' p + c \cdot \frac{ \sigma }{n} \right. \right] ~=~ \left[ ' + gzahl(keimen / 100)
+                       + vorz_str(-1*c) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl) + r'} ~ \left\vert ~'
+                       + gzahl(keimen / 100) + vorz_str(c) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl)
+                       + r'} ~ \right. \right] ~=~ \left[ ' + gzahl(N(keimen/100 - c * sigma / anzahl, 3))
+                       + r' \left\vert ' + gzahl(N(keimen/100 + c * sigma / anzahl, 3))
+                       + r' \right. \right] \quad (3BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(
+                f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+    # Berechnung des Prognoseintervalls am Beispiel der Keimfähigkeit von Pflanzensamen
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_bez = []
+    liste_punkte = []
+    auswahl = random_selection(['Deutschen Fußball Bundes DFB', 'Deutschen Ruder Verbandes DRV',
+                                'Deutschen Schwimmverbandes DSV'], anzahl=1)
+    verband = auswahl[0][0]
+    anz_mitgl = auswahl[0][1]
+    anzahl = nzahl(5, 10) * 100
+    zusage = int(nzahl(4, 8) / 10) * anzahl
+    auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
+    wkt_intv = int(auswahl[0][1]*100) if auswahl[0][1]*100%1 == 0 else N(auswahl[0][1]*100,3)
+    c = auswahl[0][0]
+    mu = int(anzahl*zusage/100)
+    sigma = 1
+    print(wkt_intv)
+    print(c)
+    print(mu)
+    print(sigma)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Der Präsident des {verband} möchte wissen, ob er bei der nächsten Wahl des Verbandes '
+               f'wiedergewählt werden wird. Dazu läßt er insgesamt {gzahl(anzahl)} Mitglieder aus verschiedenen'
+               f'Vereinen befragen. Dabei haben {gzahl(zusage)} Mitglieder angegeben, das Sie ihn wiederwählen '
+               f'würden. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
 
     if BE != []:
         if len(BE) != len(teilaufg):
