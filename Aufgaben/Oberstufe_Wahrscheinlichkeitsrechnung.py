@@ -1092,7 +1092,7 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
     samen = auswahl[0][1]
     anzahl = nzahl(5, 10) * 100
     keimen = int(nzahl(4, 8) * 10)
-    auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
+    auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=2)
     wkt_intv = int(auswahl[0][1]*100) if auswahl[0][1]*100%1 == 0 else N(auswahl[0][1]*100,3)
     c = auswahl[0][0]
     mu = int(anzahl*keimen/100)
@@ -1153,9 +1153,8 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         punkte = 5
         grenze = int(10 / ((keimen * (100 - keimen)) / 100**2))
         anzahl = nzahl(grenze, grenze + 10)*10
-        auswahl = random_selection([[1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]],  anzahl=1)
-        wkt_intv = int(auswahl[0][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[0][1] * 100, 3)
-        c = auswahl[0][0]
+        wkt_intv = int(auswahl[1][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
+        c = auswahl[1][0]
         mu = int(anzahl * keimen / 100)
         sigma = N(sqrt(anzahl * keimen * (100 - keimen)) / 100, 3)
         aufgabe.extend((f'Bei einer anderen Lieferung von {gzahl(anzahl)} {samen} soll der Pflanzenhändler mit einer '
