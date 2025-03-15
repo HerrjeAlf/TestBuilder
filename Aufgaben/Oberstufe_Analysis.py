@@ -1528,11 +1528,11 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
                r' \mathrm{es~gilt: \quad HB.: \quad A ~=~ x \cdot y \quad und \quad NB.: \quad f(x) ~=~ '
                + fkt_str + r'} \quad (2BE) \\ A(x)~=~x \cdot (' + fkt_str
                + r')~=~ ' + fkt_a_str + r' \quad (1BE) \\  A(x) ~=~ ' + fkt_a_str_1 + '~=~' + fkt_a_str_2 + '~=~'
-               + r' \quad (2BE) \\ A(x) ~=~ ' + fkt_a_str_3 + '~=~' + fkt_a_str_4 + r' \quad (3BE) \\ S('
+               + r' \quad (2BE) \\ A(x) ~=~ ' + fkt_a_str_3 + '~=~' + fkt_a_str_4 + r' \quad (2BE) \\ S('
                + gzahl(xwert) + r' \vert ' + gzahl(wert_A) +') ' + r' \quad \to \quad f(' + gzahl(xwert) + ') ~=~ '
                + gzahl(m) + r' \cdot ' + gzahl_klammer(xwert) + vorz_str(n) + '~=~' + gzahl(ywert)
                + r' \quad (2BE) \\ \mathrm{Für~x~=~ ' + gzahl(xwert) + '~und~y~=~' + gzahl(ywert)
-               + r'~besitzt~das~Rechteck~die~maximale~Fläche. \quad (1BE) }']
+               + r'~besitzt~das~Rechteck~die~maximale~Fläche.}']
     grafiken_aufgaben = [f'Aufgabe_{nr}']
     grafiken_loesung = []
     def Darstellung(fkt, xmax, xwert_p, ywert_p, name):
@@ -1560,7 +1560,7 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
         plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
         return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
-    liste_punkte = [10] if BE == [] else BE
+    liste_punkte = [9] if BE == [] else BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
