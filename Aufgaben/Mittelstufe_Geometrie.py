@@ -845,7 +845,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                + ') Berechnen Sie die Länge der Strecke ' + r'$ \overline{FB} $'))
+                                + ') Berechnen Sie die Länge der Strecke ' + r'$ \overline{FB} $.'))
         loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i])
                        + r') \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
                        + r' \quad \to \quad \overline{FB}^2~=~a^2~-~h^2 \quad \vert \sqrt{}'
@@ -866,7 +866,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
         # Berechnung eines Winkels mit dem Sinus
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechnen Sie die Größe der Winkel '
-                                + r'$ \alpha $' + ' und ' + r'$ \beta $'))
+                                + r'$ \alpha $' + ' und ' + r'$ \beta $.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
                                                  r' ~=~180^{ \circ } - 90^{ \circ } -' + gzahl(gamma_1)
                                                  + r'^{ \circ} ~=~' + gzahl(alpha) + r'^{ \circ} \quad (2BE) \\'
@@ -886,13 +886,16 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
 
     if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
         # Berechnung einer Seite mit dem Sinussatz
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechnen Sie die Länge der Seite b.'))
+        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+                                + ') Berechnen Sie die Länge der Seite b.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
                                                  r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
                                                  r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
                                                  + gzahl(seite_a) + r'cm \cdot sin(' + gzahl(beta) + r'^{ \circ})}'
-                                                 r'{sin(' + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
+                                                 r'{sin('
+                                                 + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
                                                  + r'cm \quad (4BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(4) + r'~Punkte} \\'))
         if pruef_kl10:
@@ -906,10 +909,9 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
 
     if 'd' in teilaufg:
         # Berechnung der Fläche des Dreiecks
-        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
-        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
-        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                + ') Berechnen Sie die Fläche vom Dreieck ABC.'))
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + ') Berechnen Sie die Fläche des Dreiecks ABC.'))
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
                                                  r'180^{ \circ } - ' + gzahl(alpha) + r'^{ \circ } - ' + gzahl(beta)
                                                  + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
@@ -1089,7 +1091,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         # Hier sollen die SuS den Umfang des Pools berechnen
         liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
         pkt = 5
-        aufgabe.extend((NoEscape(r' \noindent Am Rand vom Pools soll das beim Baden übergelaufene Wasser in eine '
+        aufgabe.extend((NoEscape(r' \noindent Am Rand des Pools soll das beim Baden übergelaufene Wasser in eine '
                                 + r'Abflussrinne laufen. Die Gitter für die Abdeckung der Rinne sind 50cm lang.'),
                                 ' \n\n', str(liste_teilaufg[i]) + ')  Berechnen Sie, wie viele Gitter für den Pool '
                                 + 'benötigt werden.'))

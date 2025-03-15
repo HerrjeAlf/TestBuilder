@@ -81,7 +81,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     else:
         exit("anzahl_ziehen muss None, 2 oder 3 sein")
 
-    farben = ['Weiss', 'Schwarz', 'Blau', 'Rot', 'Gelb']
+    farben = ['Weiß', 'Schwarz', 'Blau', 'Rot', 'Gelb']
     farben_kuerzel = [str(farben[i])[0] for i in range(len(farben))]
     auswahl_farbe = np.random.choice([0, 1, 2, 3, 4], 2, False)
     farbe_1 = farben[auswahl_farbe[0]]
@@ -117,9 +117,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         p = 1
         p = random.choice([1,2]) if anzahl_ziehen[0] == 3 else p
         if p == 1:
-            text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen}'
+            text = r' \mathrm{' + latex(farbe_1) + '~wird~einmal~gezogen.}'
         elif p == 2:
-            text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen}'
+            text = r' \mathrm{' + latex(farbe_1) + '~wird~zweimal~gezogen.}'
         lsg_menge = []
         for element in ergebnisraum:
             i = 0
@@ -137,7 +137,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         farbwahl, kuerzelwahl = auswahl()
         auswahl_kugel = random.choice(['erste', 'zweite'])
         # auswahl_kugel = 'erste'
-        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(farbwahl) + '}'
+        text = r' \mathrm{Die~' + auswahl_kugel + '~Kugel~ist~' + latex(farbwahl) + '.}'
         lsg_menge = []
         if auswahl_kugel == 'erste':
             for element in ergebnisraum:
@@ -287,7 +287,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
                                         r' E_1: ' + ereignis_1))
             else:
                 aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                         + f') Berechnen Sie die Wahrscheinlichkeit für das Ereignis $ E_1 $ '))
+                                         + f') Berechnen Sie die Wahrscheinlichkeit für das Ereignis $ E_1 $.'))
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
             loesung.append(r' ^{ \star } ' + str(liste_teilaufg[i])

@@ -784,8 +784,8 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         stern = r'$ ^{ \star } $' if pruef_kl10 else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         punkte = 5
-        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen der '
-                                + r'Parabel und vergleichen ihre Ergebnisse mit dem Graphen.'))
+        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen '
+                                + 'und vergleichen Sie ihre Ergebnisse mit dem Graphen.'))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
@@ -829,7 +829,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         punkte = 4
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie anhand des Graphen die '
                                 + r'Funktionsgleichung von $ g(x) =  ' + vorz_v_aussen(g_m, 'x')
-                                + vorz_str(g_n) + r'$ '))
+                                + vorz_str(g_n) + r'$. '))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
