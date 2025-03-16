@@ -79,8 +79,9 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
         if element == 'a':
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-            bas = nzahl(2,6)
-            exp = nzahl(3,5)
+            zahlen = random_selection(list(range(3,9)), anzahl=2)
+            bas = zahlen[0]
+            exp = zahlen[1]
             exp_1 = nzahl(1,2)
             exp_2 = exp - exp_1
             aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
@@ -355,7 +356,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             st_werte = [l_a, l_b, l_c]
             wk = bezeichnungen[auswahl_beschriftung]['Winkel']
             wk_werte = [w_a, w_b, w_c]
-            dreieck_zeichnen(pkt, st=st, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            dreieck_zeichnen(pkt,st=st,  wk=wk, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
             list_gl = [st[0] + '^2 + ' + st[1] + '^2 ~=~ ' + st[2] + '^2',
                        st[1] + '^2 + ' + st[2] + '^2 ~=~ ' + st[0] + '^2',
