@@ -128,9 +128,9 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # lsg1(0.53)
 # lsg2([0.105,0.263,0.263,0.105])
 
-Verteilung = Binomial('X', 200,0.5)
+Verteilung = Binomial('X', 700,0.8)
 print(Verteilung)
-F = P(Verteilung <= 100).evalf()
+F = P(Verteilung <= 422).evalf()
 
 print(F)
 

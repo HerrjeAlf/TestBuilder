@@ -1020,7 +1020,7 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
         if 'b' in teilaufg:
             # die SuS sollen beurteilen, ob die Binomialverteilung die Laplace-Bedingung erfüllt´(diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            punkte = 4
+            punkte = 1
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                      + r') Geben Sie an, ob die Laplace-Bedingung erfüllt ist.'), ' \n\n'))
             text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
