@@ -1190,30 +1190,35 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_bez = []
-    liste_punkte = []
+    liste_bez = [f'{nr}']
+    liste_punkte = [7]
     auswahl = random_selection(['Deutschen Fußball Bundes DFB', 'Deutschen Ruder Verbandes DRV',
                                 'Deutschen Schwimmverbandes DSV'], anzahl=1)
-    verband = auswahl[0][0]
-    anz_mitgl = auswahl[0][1]
-    anzahl = nzahl(5, 10) * 100
-    zusage = int(nzahl(4, 8) / 10) * anzahl
+    verband = auswahl[0]
+    anz_mitgl = nzahl(5, 10) * 10
+    zusage = int(nzahl(4, 8) / 10 * anz_mitgl)
     auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
     wkt_intv = int(auswahl[0][1]*100) if auswahl[0][1]*100%1 == 0 else N(auswahl[0][1]*100,3)
     c = auswahl[0][0]
-    mu = int(anzahl*zusage/100)
-    sigma = 1
-    print(wkt_intv)
-    print(c)
-    print(mu)
-    print(sigma)
-
+    h_rel = Rational(zusage,anz_mitgl)
+    p_1 = N(h_rel - c*sqrt(h_rel*(1-h_rel)/anz_mitgl),3)
+    p_2 = N(h_rel + c*sqrt(h_rel*(1-h_rel)/anz_mitgl),3)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Der Präsident des {verband} möchte wissen, ob er bei der nächsten Wahl des Verbandes '
-               f'wiedergewählt werden wird. Dazu läßt er insgesamt {gzahl(anzahl)} Mitglieder aus verschiedenen'
+               f'wiedergewählt werden wird. Dazu läßt er insgesamt {gzahl(anz_mitgl)} Mitglieder aus verschiedenen '
                f'Vereinen befragen. Dabei haben {gzahl(zusage)} Mitglieder angegeben, das Sie ihn wiederwählen '
-               f'würden. \n\n']
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+               f'würden. \n Bestimmen Sie mit einem Konfidenzintervall und einer Sicherheitswahrscheinlichkeit von '
+               f'{gzahl(wkt_intv)}%, wie hoch der prozentuale Zustimmungswert des Präsidenten in der Gesamtheit der '
+               f'Vereine geschätzt werden kann.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
+               r' \mathrm{Berechnung~der~relativen~Häufigkeit: \quad h_n } ~=~ \frac{ X }{ n } ~=~ \frac{' + gzahl(zusage)
+               + '}{' + gzahl(anz_mitgl) + '} ~=~ ' + gzahl(h_rel) + r' \quad (2BE) \\ p_{1,2} ~=~ '
+               + r' h_n \pm c \cdot \sqrt{ \frac{ h_n \cdot \left( 1 - h_n \right) }{n} } ~=~ ' + gzahl(h_rel)
+               + r' \pm ' + gzahl(c) +  r' \cdot \sqrt{ \frac{ ' + gzahl(h_rel) + r' \cdot \left( 1 '
+               + vorz_str(-1*h_rel) + r' \right) }{' + gzahl(anz_mitgl) + r'}} \quad \to \quad p_1 ~=~'
+               + gzahl(p_1) + r' \quad \mathrm{und} \quad p_2 ~=~ ' + gzahl(p_2) + r' \quad (4BE) \\'
+               + r' \mathrm{mit~einer~Sicherheit~von~' + gzahl(wkt_intv) + 'Prozent,~liegt~die~Zustimmung~bei~ '
+               + gzahl(p_1) + '~bis~ ' + gzahl(p_2) + '~Prozent.}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
