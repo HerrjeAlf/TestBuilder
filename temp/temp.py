@@ -127,10 +127,12 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 # lsg2([0.105,0.263,0.263,0.105])
+rows = 4  # Zeilen
+cols = 5  # Spalten
 
-Verteilung = Binomial('X', 700,0.8)
-print(Verteilung)
-F = P(Verteilung <= 422).evalf()
+anz = nzahl(1, rows * cols)
+print(anz)
+x_max, y_max_unk = divmod(anz, cols)
+y_max = y_max_unk / rows
 
-print(F)
-
+print(anz/(rows*cols)*100)

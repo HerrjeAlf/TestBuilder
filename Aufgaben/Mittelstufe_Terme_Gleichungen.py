@@ -204,8 +204,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             rows = 4  # Zeilen
             cols = 5  # Spalten
 
-            anz = nzahl(1, rows * cols)
-            x_max, y_max_unk = divmod(anz, cols)
+            anz = nzahl(2, rows * cols)
+            x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             def create_rectangle(rows, cols, x_max=cols, y_max=1, name='Menge'):
                 fig, (ax, text_ax) = plt.subplots(1, 2, figsize=(8, 3))
