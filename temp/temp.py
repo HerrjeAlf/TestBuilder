@@ -127,12 +127,52 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 # lsg2([0.105,0.263,0.263,0.105])
-rows = 4  # Zeilen
-cols = 5  # Spalten
 
-anz = nzahl(1, rows * cols)
-print(anz)
-x_max, y_max_unk = divmod(anz, cols)
-y_max = y_max_unk / rows
 
-print(anz/(rows*cols)*100)
+def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
+    """
+    Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
+
+    :param koeffizienten: Liste der Koeffizienten (Matrix A).
+    :param ergebnisse: Liste der Ergebnisse (Vektor b).
+    :return: Liste der Lösungen oder eine Beschreibung der Schritte.
+    """
+    beschrift = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VII', 'IX', 'X']
+    n = len(koeffizienten)
+    # Augmentiere die Matrix mit dem Ergebnisvektor
+    for i in range(n):
+        koeffizienten[i].append(ergebnisse[i])
+
+    zw_rgn = []
+    # hier werden die Gleichungen neu sortiert
+    for i in range(n):
+        # Pivotisierung: Tausche Zeilen, wenn nötig
+        max_row = max(range(i, n), key=lambda k: abs(koeffizienten[k][i]))
+        if i != max_row:
+            koeffizienten[i], koeffizienten[max_row] = koeffizienten[max_row], koeffizienten[i]
+
+        print(koeffizienten)
+
+        for k in range(i+1,n):
+            if koeffizienten[k][i] != 0:
+                text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1*koeffizienten[k][i])
+                        + r' \cdot ' + beschrift[k])
+                zw_rgn.append([text] + [koeffizienten[i][i]*koeffizienten[k][step]-
+                                        koeffizienten[k][i]*koeffizienten[i][step] for step in range(0,len(koeffizienten[0]))])
+
+
+
+
+
+    return koeffizienten, zw_rgn
+
+
+
+# Beispiel
+koeffizienten = [[1, 0, 3], [1, 1, 0], [0, 4, 0]]
+ergebnisse = [5, 6, 7]
+
+matrix, zw_erg = gauss_elimination(koeffizienten, ergebnisse)
+print(matrix)
+print(zw_erg)
+

@@ -681,4 +681,56 @@ def stelle(liste, vec):
     return print('Element nicht in Liste')
 
 
+def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
+    """
+    Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
+
+    :param koeffizienten: Liste der Koeffizienten (Matrix A).
+    :param ergebnisse: Liste der Ergebnisse (Vektor b).
+    :return: Liste der Lösungen oder eine Beschreibung der Schritte.
+    """
+    n = len(koeffizienten)
+    # Augmentiere die Matrix mit dem Ergebnisvektor
+    for i in range(n):
+        koeffizienten[i].append(ergebnisse[i])
+
+    # Vorwärtssubstitution
+    for i in range(n):
+        # Pivotisierung: Tausche Zeilen, wenn nötig
+        max_row = max(range(i, n), key=lambda k: abs(koeffizienten[k][i]))
+        if i != max_row:
+            koeffizienten[i], koeffizienten[max_row] = koeffizienten[max_row], koeffizienten[i]
+
+        # Normiere die Pivotzeile
+        pivot = koeffizienten[i][i]
+        for j in range(i, n + 1):
+            koeffizienten[i][j] /= pivot
+
+        # Eliminiere die Elemente darunter
+        for k in range(i + 1, n):
+            faktor = koeffizienten[k][i]
+            for j in range(i, n + 1):
+                koeffizienten[k][j] -= faktor * koeffizienten[i][j]
+
+    # Rückwärtssubstitution
+    loesungen = [0] * n
+    for i in range(n - 1, -1, -1):
+        loesungen[i] = koeffizienten[i][n]
+        for j in range(i + 1, n):
+            loesungen[i] -= koeffizienten[i][j] * loesungen[j]
+
+    return loesungen
+
+
+# Beispiel
+koeffizienten = [[2, -1, 3], [1, 1, 1], [3, 4, -2]]
+ergebnisse = [5, 6, 7]
+
+loesung = gauss_elimination(koeffizienten, ergebnisse)
+print(loesung)
+
+
+
+
+
 
