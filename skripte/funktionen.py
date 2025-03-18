@@ -680,8 +680,7 @@ def stelle(liste, vec):
             k+=1
     return print('Element nicht in Liste')
 
-
-def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
+def gaussalgorithmus(koeffizienten, ergebnisse, variablen=[]):
     """
     Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
 
@@ -689,46 +688,33 @@ def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
     :param ergebnisse: Liste der Ergebnisse (Vektor b).
     :return: Liste der Lösungen oder eine Beschreibung der Schritte.
     """
+    beschrift = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VII', 'IX', 'X']
     n = len(koeffizienten)
     # Augmentiere die Matrix mit dem Ergebnisvektor
     for i in range(n):
         koeffizienten[i].append(ergebnisse[i])
 
-    # Vorwärtssubstitution
+
     for i in range(n):
-        # Pivotisierung: Tausche Zeilen, wenn nötig
-        max_row = max(range(i, n), key=lambda k: abs(koeffizienten[k][i]))
-        if i != max_row:
-            koeffizienten[i], koeffizienten[max_row] = koeffizienten[max_row], koeffizienten[i]
+        for k in range(i,len(koeffizienten)):
+            if koeffizienten[k][i] == 0:
+                koeffizienten.append(koeffizienten[k])
+                del koeffizienten[k]
+    print(koeffizienten)
+    loesung = [[''] + koeffizienten[k] for k in range(n)]
+    print(koeffizienten)
+    print(loesung)
+    for i in range(n):
+        for k in range(i+1, n):
+            if koeffizienten[k][i] != 0:
+                text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1*koeffizienten[k][i])
+                        + r' \cdot ' + beschrift[k])
+                neue_zeile = [koeffizienten[i][i]*koeffizienten[k][step] - koeffizienten[k][i]*koeffizienten[i][step]
+                              for step in range(0,len(koeffizienten[0]))]
+                koeffizienten[k] = neue_zeile
+                loesung.append([text] + neue_zeile)
 
-        # Normiere die Pivotzeile
-        pivot = koeffizienten[i][i]
-        for j in range(i, n + 1):
-            koeffizienten[i][j] /= pivot
-
-        # Eliminiere die Elemente darunter
-        for k in range(i + 1, n):
-            faktor = koeffizienten[k][i]
-            for j in range(i, n + 1):
-                koeffizienten[k][j] -= faktor * koeffizienten[i][j]
-
-    # Rückwärtssubstitution
-    loesungen = [0] * n
-    for i in range(n - 1, -1, -1):
-        loesungen[i] = koeffizienten[i][n]
-        for j in range(i + 1, n):
-            loesungen[i] -= koeffizienten[i][j] * loesungen[j]
-
-    return loesungen
-
-
-# Beispiel
-koeffizienten = [[2, -1, 3], [1, 1, 1], [3, 4, -2]]
-ergebnisse = [5, 6, 7]
-
-loesung = gauss_elimination(koeffizienten, ergebnisse)
-print(loesung)
-
+    return koeffizienten, loesung
 
 
 

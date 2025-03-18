@@ -143,33 +143,38 @@ def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
     for i in range(n):
         koeffizienten[i].append(ergebnisse[i])
 
-    zw_rgn = []
-    # hier werden die Gleichungen neu sortiert
+    print(koeffizienten)
     for i in range(n):
-        # Pivotisierung: Tausche Zeilen, wenn nötig
-        max_row = max(range(i, n), key=lambda k: abs(koeffizienten[k][i]))
-        if i != max_row:
-            koeffizienten[i], koeffizienten[max_row] = koeffizienten[max_row], koeffizienten[i]
-
-        print(koeffizienten)
-
-        for k in range(i+1,n):
+        zw_lsg = []
+        for k in range(i,n):
+            if koeffizienten[k][i] != 0:
+               zw_lsg.insert(0, koeffizienten[k])
+            else:
+                print(k)
+                print(i)
+                print(koeffizienten[k])
+                zw_lsg.append(koeffizienten[k])
+        print(zw_lsg)
+        koeffizienten[i:] = zw_lsg
+    loesung = [[''] + koeffizienten[k] for k in range(n)]
+    print(koeffizienten)
+    print(loesung)
+    for i in range(n):
+        for k in range(i+1, n):
             if koeffizienten[k][i] != 0:
                 text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1*koeffizienten[k][i])
                         + r' \cdot ' + beschrift[k])
-                zw_rgn.append([text] + [koeffizienten[i][i]*koeffizienten[k][step]-
-                                        koeffizienten[k][i]*koeffizienten[i][step] for step in range(0,len(koeffizienten[0]))])
+                neue_zeile = [koeffizienten[i][i]*koeffizienten[k][step] - koeffizienten[k][i]*koeffizienten[i][step]
+                              for step in range(0,len(koeffizienten[0]))]
+                koeffizienten[k] = neue_zeile
+                loesung.append([text] + neue_zeile)
 
-
-
-
-
-    return koeffizienten, zw_rgn
+    return koeffizienten, loesung
 
 
 
 # Beispiel
-koeffizienten = [[1, 0, 3], [1, 1, 0], [0, 4, 0]]
+koeffizienten = [[1, 0, 3], [0, 1, 0], [1, 0, 1]]
 ergebnisse = [5, 6, 7]
 
 matrix, zw_erg = gauss_elimination(koeffizienten, ergebnisse)
