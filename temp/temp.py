@@ -129,55 +129,46 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # lsg2([0.105,0.263,0.263,0.105])
 
 
-def gauss_elimination(koeffizienten, ergebnisse, variablen=[]):
+def gauss_elimination(gleichungen, variablen=[]):
     """
     Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
 
-    :param koeffizienten: Liste der Koeffizienten (Matrix A).
+    :param gleichungen: Liste der Koeffizienten (Matrix A).
     :param ergebnisse: Liste der Ergebnisse (Vektor b).
     :return: Liste der Lösungen oder eine Beschreibung der Schritte.
     """
     beschrift = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VII', 'IX', 'X']
-    n = len(koeffizienten)
+    n = len(gleichungen)
     # Augmentiere die Matrix mit dem Ergebnisvektor
-    for i in range(n):
-        koeffizienten[i].append(ergebnisse[i])
 
-    print(koeffizienten)
+    print(gleichungen)
+    zw_lsg = gleichungen.copy()
+    gleichungen = []
     for i in range(n):
-        zw_lsg = []
-        for k in range(i,n):
-            if koeffizienten[k][i] != 0:
-               zw_lsg.insert(0, koeffizienten[k])
-            else:
-                print(k)
-                print(i)
-                print(koeffizienten[k])
-                zw_lsg.append(koeffizienten[k])
-        print(zw_lsg)
-        koeffizienten[i:] = zw_lsg
-    loesung = [[''] + koeffizienten[k] for k in range(n)]
-    print(koeffizienten)
+        for element in zw_lsg:
+            if element[i] != 0:
+                gleichungen.append(element)
+                zw_lsg.remove(element)
+
+    loesung = [[beschrift[k], ''] + gleichungen[k] for k in range(n)]
+    print(gleichungen)
     print(loesung)
     for i in range(n):
         for k in range(i+1, n):
-            if koeffizienten[k][i] != 0:
-                text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1*koeffizienten[k][i])
+            if gleichungen[k][i] != 0:
+                text = (gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1 * gleichungen[k][i])
                         + r' \cdot ' + beschrift[k])
-                neue_zeile = [koeffizienten[i][i]*koeffizienten[k][step] - koeffizienten[k][i]*koeffizienten[i][step]
-                              for step in range(0,len(koeffizienten[0]))]
-                koeffizienten[k] = neue_zeile
-                loesung.append([text] + neue_zeile)
+                neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
+                              for step in range(0, len(gleichungen[0]))]
+                gleichungen[k] = neue_zeile
+                loesung.append([beschrift[k], text] + neue_zeile)
 
-    return koeffizienten, loesung
+    return loesung
 
 
 
 # Beispiel
-koeffizienten = [[1, 0, 3], [0, 1, 0], [1, 0, 1]]
-ergebnisse = [5, 6, 7]
 
-matrix, zw_erg = gauss_elimination(koeffizienten, ergebnisse)
-print(matrix)
-print(zw_erg)
+gleichungen = [[-4,1,1,-15], [1,-3,-4,25], [-1, 2, 3, -18]]
+print(gauss_elimination(gleichungen))
 
