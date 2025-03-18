@@ -694,23 +694,30 @@ def gaussalgorithmus(koeffizienten, ergebnisse, variablen=[]):
     for i in range(n):
         koeffizienten[i].append(ergebnisse[i])
 
-
-    for i in range(n):
-        for k in range(i,len(koeffizienten)):
-            if koeffizienten[k][i] == 0:
-                koeffizienten.append(koeffizienten[k])
-                del koeffizienten[k]
     print(koeffizienten)
+    for i in range(n):
+        zw_lsg = []
+        for k in range(i, n):
+            if koeffizienten[k][i] != 0:
+                zw_lsg.insert(0, koeffizienten[k])
+            else:
+                print(k)
+                print(i)
+                print(koeffizienten[k])
+                zw_lsg.append(koeffizienten[k])
+        print(zw_lsg)
+        koeffizienten[i:] = zw_lsg
     loesung = [[''] + koeffizienten[k] for k in range(n)]
     print(koeffizienten)
     print(loesung)
     for i in range(n):
-        for k in range(i+1, n):
+        for k in range(i + 1, n):
             if koeffizienten[k][i] != 0:
-                text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1*koeffizienten[k][i])
+                text = (gzahl(koeffizienten[i][i]) + r' \cdot ' + beschrift[i] + vorz_str(-1 * koeffizienten[k][i])
                         + r' \cdot ' + beschrift[k])
-                neue_zeile = [koeffizienten[i][i]*koeffizienten[k][step] - koeffizienten[k][i]*koeffizienten[i][step]
-                              for step in range(0,len(koeffizienten[0]))]
+                neue_zeile = [
+                    koeffizienten[i][i] * koeffizienten[k][step] - koeffizienten[k][i] * koeffizienten[i][step]
+                    for step in range(0, len(koeffizienten[0]))]
                 koeffizienten[k] = neue_zeile
                 loesung.append([text] + neue_zeile)
 
