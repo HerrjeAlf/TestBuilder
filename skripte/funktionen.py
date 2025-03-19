@@ -705,8 +705,8 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     for i in range(n):
         for k in range(i+1, n):
             if gleichungen[k][i] != 0:
-                text = (NoEscape('$' + gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß') + vorz_str(-1 * gleichungen[k][i])
-                        + r' \cdot ' + beschrift.get(k+1, 'zu groß' + ' $')))
+                text = (gzahl(gleichungen[k][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß')
+                        + vorz_str(-1 * gleichungen[i][i]) + r' \cdot ' + beschrift.get(k+1, 'zu groß'))
                 neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
                               for step in range(0, len(gleichungen[0]))]
                 gleichungen[k] = neue_zeile
@@ -727,16 +727,16 @@ def gaussalgorithmus(gleichungen, variablen=[]):
 
 
     # noch eine Funktion, die loesung als Tabelle darstellt
-    anz_sp = len(loesung[0]) + 1
-    spalten = '|'
+    anz_sp = len(loesung[0])
+    spalten = 'c|'
     for step in range(anz_sp):
         spalten += 'c|'
     table1 = Tabular(spalten, row_height=1.2)
     table1.add_hline(2)
-    table1.add_row(['Berechnung mit dem Gauß-Algorithmus',' Nr','Berechnung'] + variablen + ['lsg'])
+    table1.add_row(['Berechnung mit dem Gauß-Algorithmus',' Nr','Berechnung'] + variablen + ['Lsg'])
     table1.add_hline(2)
     for zeile in loesung:
-        liste = [''] + [str(element) for element in zeile]
+        liste = [''] + [NoEscape('$' + str(element) + '$')  for element in zeile]
         table1.add_row(liste)
         table1.add_hline(2)
     print(table1)
