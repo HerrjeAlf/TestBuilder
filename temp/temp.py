@@ -137,10 +137,9 @@ def gauss_elimination(gleichungen, variablen=[]):
     :param ergebnisse: Liste der Ergebnisse (Vektor b).
     :return: Liste der Lösungen oder eine Beschreibung der Schritte.
     """
-    beschrift = {1:'I',2: 'II',3: 'III',4: 'IV',5: 'V',6: 'VI',7: 'VII',8: 'VIII',9: 'IX',10: 'X'}
+    beschrift = {1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X'}
     beschrift_reverse = {value: key for key, value in beschrift.items()}
     n = len(gleichungen)
-    # Augmentiere die Matrix mit dem Ergebnisvektor
 
     print(gleichungen)
     zw_lsg = gleichungen.copy()
@@ -151,32 +150,46 @@ def gauss_elimination(gleichungen, variablen=[]):
                 gleichungen.append(element)
                 zw_lsg.remove(element)
 
-    loesung = [[beschrift.get(k+1, 'zu groß'), ''] + gleichungen[k] for k in range(n)]
+    loesung = [[beschrift.get(k + 1, 'zu groß'), ''] + gleichungen[k] for k in range(n)]
     print(gleichungen)
     print(loesung)
 
     for i in range(n):
-        for k in range(i+1, n):
+        for k in range(i + 1, n):
             if gleichungen[k][i] != 0:
-                text = (gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß') + vorz_str(-1 * gleichungen[k][i])
-                        + r' \cdot ' + beschrift.get(k+1, 'zu groß'))
+                text = (gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift.get(i + 1, 'zu groß') + vorz_str(
+                    -1 * gleichungen[k][i])
+                        + r' \cdot ' + beschrift.get(k + 1, 'zu groß'))
                 neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
                               for step in range(0, len(gleichungen[0]))]
                 gleichungen[k] = neue_zeile
-                loesung.append([beschrift.get(k+1, 'zu groß'), text] + neue_zeile)
+                loesung.append([beschrift.get(k + 1, 'zu groß'), text] + neue_zeile)
 
     print(loesung)
     k = beschrift_reverse[loesung[-1][0]]
     gleich_lsg = []
     for anz in reversed(list(range(k))):
         for eintrag in reversed(loesung):  # Liste von hinten durchgehen
-            if eintrag[0] == beschrift[anz+1]:
-                gleich_lsg.append(eintrag) # Letztes Element zurückgeben
+            if eintrag[0] == beschrift[anz + 1]:
+                gleich_lsg.append(eintrag)  # Letztes Element zurückgeben
                 break
 
     print(gleich_lsg)
 
     # noch eine Funktion, die loesung als Tabelle darstellt
+    anz_sp = len(loesung[0])
+    spalten = '|'
+    for step in range(anz_sp):
+        spalten += 'c|'
+    table1 = Tabular(spalten, row_height=1.2)
+    table1.add_hline()
+    table1.add_row((MultiColumn(anz_sp, align='|c|', data='Berechung mit Gaußalgorithmus'),))
+    table1.add_hline()
+    for zeile in loesung:
+        liste = [str(element) for element in zeile]
+        table1.add_row(liste)
+        table1.add_hline()
+    print(table1)
 
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
 

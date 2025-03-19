@@ -4,7 +4,7 @@ import time
 import numpy as np
 import string
 from sympy import *
-from pylatex import Document, Package
+from pylatex import Document, Package,  Tabular, MultiColumn
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -691,7 +691,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     beschrift = {1:'I',2: 'II',3: 'III',4: 'IV',5: 'V',6: 'VI',7: 'VII',8: 'VIII',9: 'IX',10: 'X'}
     beschrift_reverse = {value: key for key, value in beschrift.items()}
     n = len(gleichungen)
-    # Augmentiere die Matrix mit dem Ergebnisvektor
 
     print(gleichungen)
     zw_lsg = gleichungen.copy()
@@ -728,8 +727,21 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     print(gleich_lsg)
 
     # noch eine Funktion, die loesung als Tabelle darstellt
+    anz_sp = len(loesung[0])
+    spalten = '|'
+    for step in range(anz_sp):
+        spalten += 'c|'
+    table1 = Tabular(spalten, row_height=1.2)
+    table1.add_hline()
+    table1.add_row((MultiColumn(anz_sp, align='|c|', data='Punkteverteilung aller Aufgaben'),))
+    table1.add_hline()
+    for zeile in loesung:
+        liste = [str(element) for element in zeile]
+        table1.add_row(liste)
+        table1.add_hline()
+    print(table1)
 
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
 
     print(loesung)
-    return loesung, gleich_lsg
+    return loesung, table1
