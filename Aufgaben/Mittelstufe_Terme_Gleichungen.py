@@ -25,8 +25,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     # c) Rechenregeln der Bruchrechnung kennen bzw. Taschenrechner bedienen können
     # d) Mittelwert zweier Zahlen ausrechnen
     # e) Scheitelpunktform einer Parabel ricntig erkennen
-    # f)
-    # g)
+    # f) EInkauspreis mit Rabatt berechnen
+    # g) Wahrscheinlichkeit für grau markierte Fläche angeben
     # h)
     # i) unbekannten Winkel mit Innenwinkelsumme berechnen
     # j) richtige Bezeichnung für ein gegebenes Viereck benennen
@@ -181,14 +181,14 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             preis = nzahl(10,20) * 50
             rabatt = nzahl(1,5) * 5
-            erg = preis*(Rational(100-rabatt,100))
+            erg = preis*(100-rabatt)/100
             artikel = random_selection(['ein Fahrrad', 'einen Computer',  'ein Handy', 'eine Spielekonsole',
                                         'eine Gitarre', 'ein Paar Sneaker'], 1)[0]
             aufgabe.extend((NoEscape(r' \noindent' + f' Max möchte {artikel} für {preis}€ kaufen und erhält beim Kauf '
                             + f'{rabatt} ' + r' \% Rabatt. '),' \n\n',
                            str(liste_teilaufg[i]) + r') Berechne den Kaufpreis, den Max zahlen muss. '))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \cdot \frac{'
-                           + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \quad (1BE) ')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \texteuro \cdot \frac{'
+                           + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \texteuro \quad (1BE) ')
             if pruef_kl10:
                 aufgabe.append(['Bild', '430px'])
                 grafiken_aufgaben.append('notizen_klein')
