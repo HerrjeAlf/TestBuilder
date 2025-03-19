@@ -4,7 +4,7 @@ import time
 import numpy as np
 import string
 from sympy import *
-from pylatex import Document, Package,  Tabular, MultiColumn
+from pylatex import Document, Package,  Tabular, NoEscape
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -31,7 +31,6 @@ def packages(doc: Document):
 
     for package in packages_lst:
         doc.packages.append(Package(package))
-
 
 def ganze_zahl(zahl):
     # überprüft ob die gegebene Zahl eine ganze Zahl ist
@@ -206,8 +205,6 @@ def vorz_aussen(k, null=False):
     return '-' if k < 0 else ''
 
 # Vorzeichen und Faktoren in Gleichungen oder Vektoren
-def vorz_fakt(k):
-    return -1 if k < 0 else 1
 
 def vorz_str(k, null=False):
     try:
@@ -691,7 +688,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     beschrift = {1:'I',2: 'II',3: 'III',4: 'IV',5: 'V',6: 'VI',7: 'VII',8: 'VIII',9: 'IX',10: 'X'}
     beschrift_reverse = {value: key for key, value in beschrift.items()}
     n = len(gleichungen)
-
+    variablen = [liste_teilaufg[step] for step in range(len(gleichungen[0]) - 1)] if variablen == [] else variablen
     print(gleichungen)
     zw_lsg = gleichungen.copy()
     gleichungen = []
@@ -708,8 +705,8 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     for i in range(n):
         for k in range(i+1, n):
             if gleichungen[k][i] != 0:
-                text = (gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß') + vorz_str(-1 * gleichungen[k][i])
-                        + r' \cdot ' + beschrift.get(k+1, 'zu groß'))
+                text = (NoEscape('$' + gzahl(gleichungen[i][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß') + vorz_str(-1 * gleichungen[k][i])
+                        + r' \cdot ' + beschrift.get(k+1, 'zu groß' + ' $')))
                 neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
                               for step in range(0, len(gleichungen[0]))]
                 gleichungen[k] = neue_zeile
@@ -726,22 +723,24 @@ def gaussalgorithmus(gleichungen, variablen=[]):
 
     print(gleich_lsg)
 
+    # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
+
+
     # noch eine Funktion, die loesung als Tabelle darstellt
-    anz_sp = len(loesung[0])
+    anz_sp = len(loesung[0]) + 1
     spalten = '|'
     for step in range(anz_sp):
         spalten += 'c|'
     table1 = Tabular(spalten, row_height=1.2)
-    table1.add_hline()
-    table1.add_row((MultiColumn(anz_sp, align='|c|', data='Punkteverteilung aller Aufgaben'),))
-    table1.add_hline()
+    table1.add_hline(2)
+    table1.add_row(['Berechnung mit dem Gauß-Algorithmus',' Nr','Berechnung'] + variablen + ['lsg'])
+    table1.add_hline(2)
     for zeile in loesung:
-        liste = [str(element) for element in zeile]
+        liste = [''] + [str(element) for element in zeile]
         table1.add_row(liste)
-        table1.add_hline()
+        table1.add_hline(2)
     print(table1)
 
-    # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
 
     print(loesung)
     return loesung, table1
