@@ -460,8 +460,8 @@ def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_te
         in_tagen, liste_bez, liste_punkte = angb_teil2[0], angb_teil2[1], angb_teil2[2]
         Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
-        themen = ['Aufgabe zur Trigonometrie', 'Aufgabe zu Funktionen', 'Aufgaben zu Wahrscheinlichkeit',
-                  'Aufgabe zur Flächenberechnung']
+        themen = ['Aufgabe zur Trigonometrie', 'Aufgabe zu Funktionen', 'Aufgabe zur Flächenberechnung',
+                  'Aufgaben zu Wahrscheinlichkeit']
 
         # der Teil in dem die PDF-Datei erzeugt wird
         @timer
