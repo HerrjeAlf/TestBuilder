@@ -6,6 +6,10 @@ from skripte.erstellen import *
 
 os.chdir(root_path())
 
+arbeitsblatt = PdfMerger()
+erwartungshorizont = PdfMerger()
+pdfs = ['pdf/name']
+
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
 
 # Angaben für den Test im pdf-Dokument
@@ -16,8 +20,11 @@ Thema = 'Kurvendiskussion'
 datum_delta = 1  # Wann bekommen die SuS das Arbeitsblatt (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
-Aufgabenliste = [[aenderungsrate(1),
+for i in range(anzahl):
+    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+    Aufgaben = [[aenderungsrate(1),
                   kurvendiskussion_polynome(2, ['c']),
                   kurvendiskussion_polynome(3, ['c'], grad=4)],
                  [grafisches_ableiten(4)]]
@@ -29,22 +36,7 @@ Aufgabenliste = [[aenderungsrate(1),
 
 
 
-
-
-
-
-
 # --------------------------------ab hier werden aus den eingegebenen Daten die Arbeitsblätter erzeugt ----------------------------
-
-clean_tex = True if clean_tex not in [True, False] else clean_tex
-
-arbeitsblatt = PdfMerger()
-erwartungshorizont = PdfMerger()
-pdfs = ['pdf/name']
-
-for i in range(anzahl):
-    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = Aufgabenliste
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []

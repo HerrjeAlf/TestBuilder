@@ -6,6 +6,10 @@ from skripte.erstellen import *
 
 os.chdir(root_path())
 
+test = PdfMerger()
+erwartungshorizont = PdfMerger()
+pdfs = ['pdf/name']
+
 # ----------------------------------ab hier ist der Bereich zur Dateneingabe -----------------------------------------
 
 # Angaben für den Test im pdf-Dokument
@@ -21,9 +25,10 @@ datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = False # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = True if clean_tex not in [True, False] else clean_tex
 
-# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],
+for i in range(anzahl):
+    Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],
                  [sachaufgabe_wetterballon(4), sachaufgabe_rampe(5)]]
 
 
@@ -36,17 +41,7 @@ Aufgabenliste = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnis
 
 
 
-
 # --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
-
-clean_tex = True if clean_tex not in [True, False] else clean_tex
-
-test = PdfMerger()
-erwartungshorizont = PdfMerger()
-pdfs = ['pdf/name']
-
-for i in range(anzahl):
-    Aufgaben = Aufgabenliste
 
     # Bezeichnung der Punktetabelle
     liste_punkte = ['Punkte']
