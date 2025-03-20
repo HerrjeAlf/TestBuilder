@@ -21,7 +21,6 @@ probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
-for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[baumdiagramm(1)],
                 [vierfeldertafel_studie(2)]]

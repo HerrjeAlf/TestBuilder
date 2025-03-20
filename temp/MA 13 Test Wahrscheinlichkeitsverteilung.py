@@ -15,28 +15,12 @@ Kurs = 'Leistungskurs'
 Fach = 'Mathematik'
 Klasse = '13'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 04'
+Art = 'HAK 05'
 Titel = 'Binomialverteilung'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-
-# Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-Aufgabenliste = [[binomialverteilung(1), prognoseintervall(2)]]
-
-
-
-
-
-
-
-
-
-
-
-
-# --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
@@ -45,8 +29,10 @@ erwartungshorizont = PdfMerger()
 pdfs = ['pdf/name']
 
 for i in range(anzahl):
-    Aufgaben = Aufgabenliste
+    # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
+    Aufgaben =  [[binomialverteilung(1), prognoseintervall(2), konfidenzintervall(3)]]
 
+# --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
     # Bezeichnung der Punktetabelle
     liste_punkte = ['Punkte']
     liste_bez = ['Aufgabe']
