@@ -4697,3 +4697,185 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]):
+    # Den SuS ist ein Grah einer quadratischen Funktion gegeben, dessen Funktionsgleichung Sie rekonstruieren müssen, um damit ein Extremalproblem zu lösen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter 'gleichung=' kann festgelegt, ob den SuS die Funktionsgleichung aus Teilaufgabe a) bei b) gegeben ist. Wurde Teilaufgabe a) nicht ausgewählt, ist die Funktionsgleichung automatisch gegeben.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    # hier wird die Funktion erstellt.
+    loesung_vektor = [1/3,1/5,1/7]
+    while vektor_rational(loesung_vektor,10) != True:
+        xwert_1 = -1 * nzahl(1,3)
+        ywert_1 = nzahl(3,8)
+        xwert_2 = nzahl(1,3)
+        ywert_2 = ywert_1 + nzahl(2,6)
+        xwert_3 = xwert_2 + nzahl(1,3)
+        ywert_3 = nzahl (2,8)
+
+        A = np.array([[xwert_1 ** 2, xwert_1, 1],
+                         [xwert_2 ** 2, xwert_2, 1],
+                         [xwert_3 ** 2, xwert_3, 1]])
+
+        b = np.array([ywert_1, ywert_2, ywert_3])
+        loesung_vektor = slv(A, b)
+    [x_1, x_2, x_3] = loesung_vektor
+    fkt = x_1 * x**2 + x_2 * x + x_3
+    fkt_str = vorz_v_aussen(x_1,'x') + '^2' + vorz_v_innen(x_2,'x') + vorz_str(x_3)
+    fkt_a = fkt*x
+    fkt_a_str = vorz_v_aussen(x_1,'x') + '^3' + vorz_v_innen(x_2,'x') + '^2' + vorz_v_innen(x_3,'x')
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Wie in der Abbildung zu sehen, liegt der Eckpunkt P des abgebildeten achsenparallelen '
+               'Rechtecks auf dem Graphen von f.', 'Figure']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = [f'Aufgabe_{nr}']
+    grafiken_loesung = []
+    # grafische Darstellung des Sachverhaltes
+    xmax = solve(fkt, x)[1]
+    def Darstellung(fkt, xmax, xwert_p, ywert_p, name):
+        fig, ax = plt.subplots()
+        fig.canvas.draw()
+        fig.tight_layout()
+        plt.grid()
+        ax.spines['top'].set_color('none')
+        ax.spines['right'].set_color('none')
+        ax.spines['bottom'].set_position(('data', 0))
+        ax.spines['left'].set_position(('data', 0))
+        ax.set_xlabel('x', size=10, labelpad=-24, x=1.03)
+        ax.set_ylabel('y', size=10, labelpad=-21, y=1.02, rotation=0)
+        ax.grid(which='both', color='grey', linewidth=1, linestyle='-', alpha=0.2)
+        arrow_fmt = dict(markersize=4, color='black', clip_on=False)
+        ax.plot((1), (0), marker='>', transform=ax.get_yaxis_transform(), **arrow_fmt)
+        ax.plot((0), (1), marker='^', transform=ax.get_xaxis_transform(), **arrow_fmt)
+        plt.annotate(r'$ P( x \vert y ) $', xy=(xwert_p, ywert_p),
+                     xycoords='data', xytext=(+10, +10), textcoords='offset points', fontsize=16)
+        xwerte = np.arange(0, xmax, 0.01)
+        ywerte = [fkt.subs(x, elements) for elements in xwerte]
+        plt.plot(xwerte, ywerte)
+        plt.plot([0, xwert_p], [ywert_p, ywert_p])
+        plt.plot([xwert_p, xwert_p], [ywert_p, 0])
+        plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
+        return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+
+    Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
+
+    if 'a' in teilaufg:
+        # Den SuS sollen mithilfe drei gegebener Punkte eine quadratischen Funktion rekonstruieren. Da nicht der Scheitelpunkt gegeben ist, müssen die SuS das Gaußverfahren nutzen.
+        punkte = 16
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # Rekonstruktion der Funktion
+        # Zeilen 1 bis 3 vom LGS:
+
+        a1 = xwert_1 ** 2
+        b1 = xwert_1
+        c1 = 1
+        d1 = ywert_1
+
+
+        a2 = xwert_2 ** 2
+        b2 = xwert_2
+        c2 = 1
+        d2 = ywert_2
+
+        a3 = xwert_3 ** 2
+        b3 = xwert_3
+        c3 = 1
+        d3 = ywert_3
+
+        liste, table1 = gaussalgorithmus([[a1,b1,c1,d1], [a2,b2,c2,d2], [a3,b3,c3,d3]])
+
+        # Aufgaben und Lösungen
+        aufgabe.append('Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S( ' + gzahl(xwert_1) + ' | '
+                       + gzahl(ywert_1) + ' ),  P( ' + gzahl(xwert_2) +  r' | '
+                       + gzahl(ywert_2) + ' ) und Q( ' + gzahl(xwert_3)
+                       + ' | ' + gzahl(ywert_3) + ' ) \n\n')
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Funktionsgleichung von f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~allgemeine~Funktionsgleichung~lautet:'
+                       + r'~f(x)~=~ax^2~+~bx~+~c \quad (1BE) } \\'
+                       + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
+                       + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
+                       + gzahl(xwert_1**2) + 'a' + vorz_str(xwert_1) + 'b + c ~=~' + gzahl(ywert_1)
+                       + r' \quad (2BE)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
+                       + r' \quad \to \quad ' + gzahl(xwert_2**2) + 'a' + vorz_str(xwert_2) + 'b + c ~=~'
+                       + gzahl(ywert_2) + r' \quad (2BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ')~=~'
+                       + gzahl(ywert_3) + r' \quad \to \quad ' + gzahl(xwert_3**2) + 'a' + vorz_str(xwert_3)
+                       + 'b + c ~=~' + gzahl(ywert_3) + r' \quad (2BE) }')
+        loesung.append(table1)
+        liste_punkte.append(punkte)
+        i += 1
+
+    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
+        # Hier sollen die SuS einen Punkt auf dem Graphen berechnen, der ein Eckpunkt eines Rechtecks mit maximalen Flächeninhalt ist.
+
+        punkte = 15
+        liste_punkte.append(punkte)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # zwischenrechnungen
+        fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
+        fkt_1_a_str = vorz_v_aussen(3 * x_1,'x^2') + vorz_v_innen(2 * x_2,'x') + vorz_str(x_3)
+        fkt_1_a_p = Rational(2*x_2,3*x_1)
+        fkt_1_a_p2 = Rational(x_2,3*x_1)
+        fkt_1_a_q = Rational(x_3,3*x_1)
+        fkt_1_a_pq = 'x^2' + vorz_v_innen(fkt_1_a_p,'x') + vorz_str(fkt_1_a_q)
+        fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
+        fkt_1_a_lsg = solve(fkt_1_a, x)
+        fkt_2_a = 6 * x_1 * x + 2 * x_2
+        fkt_2_a_xo = N(fkt_2_a.subs(x,re(fkt_1_a_lsg[1])),3)
+        fkt_2_a_str = vorz_v_aussen(6 * x_1, 'x') + vorz_str(2*x_2)
+        flaeche = N(fkt_a.subs(x,re(fkt_1_a_lsg[1])),3)
+
+        # Aufgaben und Lösungen
+        if ('a' not in teilaufg) or (gleichung == True):
+            aufgabe.append(str(liste_teilaufg[i]) + r') Berechnen Sie den x-Wert von Punkt P für den maximalen '
+                                                    r'Flächeninhalt, wenn')
+            aufgabe.append(r' \mathrm{f(x)~=~' + fkt_str + r' \quad ist.} ')
+        else:
+            aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechnen Sie den x-Wert von Punkt P, für den '
+                                                             'maximalen Flächeninhalt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)=~' + fkt_str
+                       + r' \quad ges: x~für~A_{max} \quad (1BE) } \\'
+                       + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
+                       + fkt_str + r' \quad (2BE)}  \\'
+                       + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
+                       + r' \quad (1BE) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
+                       + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2BE) } \\'
+                       + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
+                       + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2BE) }\\'
+                       + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \left( \frac{'
+                       + gzahl(fkt_1_a_p) + r'}{2} \right) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
+                       + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2BE) } \\'
+                       + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
+                       + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2BE) } \\ \mathrm{A^{ \prime \prime }('
+                       + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
+                       + gzahl_klammer(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
+                       + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3BE) } \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        i += 1
+
+    if 'c' in teilaufg:
+        # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe den maximalen Flächeninhalt berechnen. Wird diese Teilaufgabe ausgewählt, ist automatisch auch die vorherige Teilaufgabe in 'teilaufg' enthalten.
+        punkte_aufg = 2
+        liste_punkte.append(punkte_aufg)
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        # Aufgaben und Lösungen
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den maximalen Flächeninhalt des Rechteckes. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad A(' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~'
+                       + gzahl(x_1) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^3'
+                       + vorz_str(x_2) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3)) + ')^2'
+                       + vorz_str(x_3) + r' \cdot (' + gzahl(N(re(fkt_1_a_lsg[1]),3))
+                       + ') ~=~' + gzahl(flaeche) + r' \quad (2BE)')
+        i += 1
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
