@@ -55,9 +55,9 @@ if anzahl > 1:
     pfad = ' '.join(pdfs[0].split(' ')[:-2])
 
     arbeitsblatt.write(f'{pfad}.pdf')
-    print(f'\033[38;2;100;141;229m\033[1mAufgaben PDF zusammengeführt\033[0m')
+    print(f'\033[38;2;100;141;229m\033[1mArbeitsblätter zusammengefügt\033[0m')
     arbeitsblatt.close()
 
     erwartungshorizont.write(f'{pfad} - Lsg.pdf')
-    print(f'\033[38;2;100;141;229m\033[1mErwartungshorizont PDF zusammengeführt\033[0m')
+    print(f'\033[38;2;100;141;229m\033[1mErwartungshorizonte zusammengefügt\033[0m')
     erwartungshorizont.close()
