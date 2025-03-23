@@ -1497,6 +1497,7 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{str(nr)}']
+
     # hier wird die Funktion erstellt.
     m = nzahl(-5,-1)/2
     xmax = nzahl(6,10)
