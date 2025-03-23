@@ -17,7 +17,7 @@ for titel in liste_Aufgaben:
     for element in liste_file:
         if '# in Entwicklung' in element:
             del liste_file[i:]
-        if ('def' and '(nr' in element) and ('#' in liste_file[i+1]):
+        if ('def' in element) and ('(nr' in element) and ('#' in liste_file[i+1]):
             Aufgabenstellung.append(MediumText(bold(' \n' + element[4:] + ' \n')))
             if '#' in liste_file[i+1]:
                 Aufgabenstellung.append('Erläuterungen: \n')
