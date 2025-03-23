@@ -1158,7 +1158,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
             if 'e' in teilaufg:
                 # Berechnung die Zeit zum Befüllen des Pools mit einem Gartenschlauch
                 menge_schlauch = nzahl(6,13) * 100
-                zeit = volumen/(menge_schlauch/1000)
+                zeit = N(volumen/(menge_schlauch/1000),3)
                 stern = r'$ ^{ \star } $' if pruef_kl10 else ''
                 pkt = 3
                 liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))

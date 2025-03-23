@@ -1153,12 +1153,12 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         punkte = 5
         grenze = int(10 / ((keimen * (100 - keimen)) / 100**2))
         anzahl = nzahl(grenze, grenze + 10)*10
-        wkt_intv = int(auswahl[1][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
-        c = auswahl[1][0]
+        wkt_intv_2 = int(auswahl[1][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
+        c_2 = auswahl[1][0]
         mu = int(anzahl * keimen / 100)
         sigma = N(sqrt(anzahl * keimen * (100 - keimen)) / 100, 3)
         aufgabe.extend((f'Bei einer anderen Lieferung von {gzahl(anzahl)} {samen} soll der Pflanzenhändler mit einer '
-                        f'Sicherheit von {gzahl(wkt_intv)}% zusichern wie viel Prozent der {sorte} keimen. \n\n',
+                        f'Sicherheit von {gzahl(wkt_intv_2)}% zusichern wie viel Prozent der {sorte} keimen. \n\n',
                         str(liste_teilaufg[i]) + ') Berechnen Sie das Prognoseintervall in Prozent, '
                        + 'dass der Pflanzenhändler angeben sollte. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
@@ -1166,11 +1166,13 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
                        + ') } ~=~ ' + gzahl(sigma) + r' \quad (2BE) \\'
                        + r' \mathrm{Intervall ~~ I} \left[ p - c \cdot \frac{ \sigma }{n} \left\vert '
                        + r' p + c \cdot \frac{ \sigma }{n} \right. \right] ~=~ \left[ ' + gzahl(keimen / 100)
-                       + vorz_str(-1*c) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl) + r'} ~ \left\vert ~'
-                       + gzahl(keimen / 100) + vorz_str(c) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl)
-                       + r'} ~ \right. \right] ~=~ \left[ ' + gzahl(N(keimen/100 - c * sigma / anzahl, 3))
-                       + r' \left\vert ' + gzahl(N(keimen/100 + c * sigma / anzahl, 3))
-                       + r' \right. \right] \quad (3BE)')
+                       + vorz_str(-1*c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl) + r'} ~ \left\vert ~'
+                       + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl)
+                       + r'} ~ \right. \right] ~=~ \left[ ' + gzahl(N(keimen/100 - c_2 * sigma / anzahl, 3))
+                       + r' \left\vert ' + gzahl(N(keimen/100 + c_2 * sigma / anzahl, 3))
+                       + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen - c_2 * sigma / anzahl*100, 3))
+                       + r' \% \left\vert ' + gzahl(N(keimen + c_2 * sigma / anzahl*100, 3))
+                       + r' \% \right. \right] \quad (3BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -1217,8 +1219,8 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
                + r' \pm ' + gzahl(c) +  r' \cdot \sqrt{ \frac{ ' + gzahl(h_rel) + r' \cdot \left( 1 '
                + vorz_str(-1*h_rel) + r' \right) }{' + gzahl(anz_mitgl) + r'}} \quad \to \quad p_1 ~=~'
                + gzahl(p_1) + r' \quad \mathrm{und} \quad p_2 ~=~ ' + gzahl(p_2) + r' \quad (4BE) \\'
-               + r' \mathrm{mit~einer~Sicherheit~von~' + gzahl(wkt_intv) + 'Prozent,~liegt~die~Zustimmung~bei~ '
-               + gzahl(p_1) + '~bis~ ' + gzahl(p_2) + '~Prozent.}']
+               + r' \mathrm{mit~einer~Sicherheit~von~' + gzahl(wkt_intv) + r' \%,~liegt~die~Zustimmung~bei~ '
+               + gzahl(N(p_1*100,3)) + '~bis~ ' + gzahl(N(p_2*100,3)) + '~Prozent.}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
