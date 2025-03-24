@@ -342,8 +342,7 @@ def exponenten(n,p=1,q=6, wdh=True, ganzz=False):
             random.shuffle(liste)
             liste = liste[0:n]
     else:
-        liste = [nzahl(p,q) for _ in range(n)]
-        liste = [zzahl(p,q) for _ in range(n)] if ganzz == True else liste
+        liste = [zzahl(p,q) for _ in range(n)] if ganzz == True else [nzahl(p,q) for _ in range(n)]
     return liste
 
 def kgv(q, p):
