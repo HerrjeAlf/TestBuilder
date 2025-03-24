@@ -41,12 +41,15 @@ def ganze_zahl(zahl):
         return print('Sie haben keine ganze Zahl angegeben!')
 
 def gzahl(k, exp=False, null=True):
-    if k == 0:
+    if k == 0 and exp==False:
         return '0' if null == True else ''
     if type(k) == str:
         return k
-    if exp == True and k == 1:
-        return ''
+    if exp == True:
+        if k == 1:
+            return ''
+        else:
+            return '^' + latex(k)
     return latex(int(k)) if k % 1 == 0 else latex(k)
 
 def gzahl_klammer(k, str='', null=True, eins=False):
@@ -244,6 +247,14 @@ def vorz_v_aussen(zahl,string, null=False):
         return latex(zahl) + string
     except Exception as fehler:
         print('Fehler:', fehler)
+
+def potenz(fakt, exp, bas='x', vorz=False):
+    if exp == 1:
+        return gzahl(fakt) + str(bas)
+    elif exp == 0:
+        return vorz_str(fakt) if vorz else gzahl(fakt)
+    else:
+        return vorz_str(fakt) + str(bas) + '^' + gzahl(exp) if vorz else gzahl(fakt) + str(bas) + '^' + gzahl(exp)
 
 def binom(z1, z2, str1='', str2=''):
     if z1 != 0 and z2 != 0:
