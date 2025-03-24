@@ -2329,6 +2329,36 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def polynome_kennenlernen(nr, teilaufg=['a', 'b', 'c'],  grad=3, i=0, BE=[]):
+    # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter 'grad=' wird die Art der Nullstellen der Funktion festgelegt.
+    # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+
+    exp = exponenten(3, 2, 8,wdh=False,ganzz=False)
+    exp = exponenten(3,2,12,ganzz=True)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
+               r' f(x)~=~' + fkt_str]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
