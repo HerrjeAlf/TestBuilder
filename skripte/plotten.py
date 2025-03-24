@@ -344,6 +344,7 @@ def graph_xyfix(*funktionen, bezn=False, name='Graph'):
         plt.annotate(fkt_bez[i], xy=(xwert_ymax, fkt.subs(x, xwert_ymax)), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
         i += 1
+    # plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
