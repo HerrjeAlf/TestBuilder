@@ -2329,10 +2329,78 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def polynome_kennenlernen(nr, teilaufg=['a', 'b', 'c'],  grad=3, i=0, BE=[]):
-    # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
+def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
+    # In dieser Aufgabe sollen die SuS den Grad, die Koeffizienten und die Symmetrie von Polynomen untersuchen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter 'grad=' wird die Art der Nullstellen der Funktion festgelegt.
+    # Mit dem Parameter 'anz_terme=' wird die Anzahl der Summanden der Funktion festgelegt.
+    # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+    i = 0
+
+    exp = random.choice([random_selection([2*k for k in range(5)], anzahl=anz_terme),
+                         random_selection([k+1 for k in range(5)], anzahl=anz_terme),
+                         random_selection([k for k in range(9)], anzahl=anz_terme)])
+    exp.sort()
+    exp.reverse()
+    fakt = exponenten(anz_terme,1,12, ganzz=True)
+    fkt = fakt[0]*x**exp[0]
+    fkt_str = potenz(fakt[0], exp[0])
+    koef = 'a_{' + gzahl(anz_terme) + '} ~=~ ' + gzahl(fakt[0]) + ', ~ '
+    for i in range(anz_terme-1):
+        fkt = fkt + fakt[i+1]*x**exp[i+1]
+        fkt_str = fkt_str + potenz(fakt[i+1], exp[i+1], vorz=True)
+        koef = koef + 'a_{' + gzahl(anz_terme - (i+1)) + '} ~=~ ' + gzahl(fakt[i+1]) + '~ ~'
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(str(liste_teilaufg[i]) + f') Geben Sie den Grad und die Koeffizienten der Funktion f an. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Grad: ~ ' + gzahl(exp[0])
+                       + r'} \quad \mathrm{und} \quad ' + koef)
+        liste_punkte.append(anz_terme + 1)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        fkt_sym = fkt.subs(x, -x)
+        if fkt_sym == fkt:
+            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
+                   + r'~=~f(x) \quad \to \quad \mathrm{Achsensymmetrie} \quad (3BE)')
+        elif fkt_sym == -1 * fkt:
+            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym)
+                   + r'~=~-f(x) \quad \to \quad \mathrm{Punktsymmetrie} \quad (3BE)')
+        else:
+            lsg = (r') \quad f(-x)~=~' + latex(fkt_sym) + r' \neq  f(x)  \neq -f(x) \quad \to \quad '
+                                                          r' \mathrm{nicht~symmetrisch} \quad (3BE)')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie die Symmetrie der Funktion f. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + lsg)
+        liste_punkte.append(3)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
+    # In dieser Aufgabe sollen die SuS den Grad, die Koeffizienten und die Symmetrie von Polynomen untersuchen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter 'grad=' wird der Grad der Funktion festgelegt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -2340,15 +2408,62 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b', 'c'],  grad=3, i=0, BE=[]):
     liste_punkte = []
     liste_bez = []
 
-    exp = exponenten(3, 2, 8,wdh=False,ganzz=False)
-    exp = exponenten(3,2,12,ganzz=True)
+    if grad == 2:
+        xwert1 = -1 * nzahl(2, 5)
+        abst = list(range(2, 6))
+        abst.remove(abs(xwert1))
+        wert_abst = random.choice(abst)
+        xwert2 = xwert1 + wert_abst
+        xwerts = 0.5 * (xwert2 + xwert1)
+        a_max = int(abs(20 / wert_abst ** 2))
+        faktor = -1 * nzahl(1, abs(a_max) * 2) / 2 if xwert1 * xwert2 < 0 else nzahl(1, a_max) / 2
+        fkt = collect(expand(faktor * (x - xwert1) * (x - xwert2)), x)
+        fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 - xwert2), 'x')
+                   + vorz_str(faktor * xwert1 * xwert2))
+        p_fkt = -1 * (xwert1 + xwert2)
+        q_fkt = xwert1 * xwert2
+        fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Funktion:',
-               r' f(x)~=~' + fkt_str]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
+    if 'a' in teilaufg:
+        # Die SuS sollen den Graphen der Funktion zeichnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
+
+        if grad == 2:
+            # plot(fkt, fkt_n, (x,xmin,xmax))
+
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen der Funktion f. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(1BE)'
+                                                    r' \quad Graph~(1BE)}')
+            graph_xyfix(fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
+            loesung.append('Figure')
+            punkte = 4
+        elif grad == 3:
+            pass
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Die SuS sollen den Graphen der Funktion zeichnen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        if grad == 2:
+            mono1 = 'steigend' if faktor < 0 else 'fallend'
+            mono2 = 'fallend' if faktor < 0 else 'steigend'
+            aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie die Funktion f auf Monotonie. \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
+                           + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
+                           + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
+        elif grad == 3:
+            pass
+        liste_punkte.append(5)
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -2358,13 +2473,12 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b', 'c'],  grad=3, i=0, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 
-
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
-    # Mit dem Parameter 'ngrad=' wird die Art der Nullstellen der Funktion festgelegt. Bei Funktionen dritten Grades gibt es immer eine ganzzahlige Nullstelle. Bei 'grad=4' handelt es sich um eine biquadratische Funktion. Standardmäßig ist 'grad=3' eingestellt.
+    # Mit dem Parameter 'grad=' wird die Art der Nullstellen der Funktion festgelegt. Bei Funktionen dritten Grades gibt es immer eine ganzzahlige Nullstelle. Bei 'grad=4' handelt es sich um eine biquadratische Funktion. Standardmäßig ist 'grad=3' eingestellt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -2441,6 +2555,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                        + fkt_str + '~=~' + gzahl(grenzwert_min) + r' \quad (2BE)')
         liste_punkte.append(2)
         i += 1
+
     if 'b' in teilaufg:
         # Die SuS sollen die Funktion auf Symmetrie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
