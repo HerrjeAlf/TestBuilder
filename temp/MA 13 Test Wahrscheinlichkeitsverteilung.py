@@ -18,8 +18,8 @@ Lehrer = 'Herr Herrys'
 Art = 'HAK 05'
 Titel = 'Binomialverteilung'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+probe = True # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
 
 clean_tex = True if clean_tex not in [True, False] else clean_tex
@@ -30,7 +30,10 @@ pdfs = ['pdf/name']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben =  [[binomialverteilung(1), prognoseintervall(2), konfidenzintervall(3)]]
+    Aufgaben =  [[binomialverteilung(1),
+                  prognoseintervall(2),
+                  konfidenzintervall(3),
+                  normalverteilung(4)]]
 
 # --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
     # Bezeichnung der Punktetabelle
