@@ -2472,7 +2472,6 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
 def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
