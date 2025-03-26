@@ -1186,12 +1186,10 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+def konfidenzintervall(nr, teilaufg=['a', 'b'], BE=[]):
     # Berechnung des Konfidenzintervall am Beispiel der Wiederwahl eines Verbandspräsidenten
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     liste_punkte = [7]
     auswahl = random_selection(['Deutschen Fußball Bundes DFB', 'Deutschen Ruder Verbandes DRV',
@@ -1232,7 +1230,7 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+def normalverteilung(nr, teilaufg=['a', 'b'], i=0, BE=[]):
     # Berechnung der
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
@@ -1314,3 +1312,88 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen verschiedene Berechnungen zu einer binomialverteilten Zufallsgröße X durchführen.
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges Qualitätsmerkmal '
+               f'ist das Gewicht der Kekse, das normalerweise verteilt ist. Die Qualitätskontrolleure ziehen täglich '
+               f'Stichproben, um sicherzustellen, dass die Maschinen korrekt kalibriert sind. \n'
+               f' \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Hier sollen die SuS das Gewicht (Zufallsgröße X) berechnen, die mindestens 75% der Kekse haben
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (2BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+        if 'b' in teilaufg:
+            # die SuS sollen den Erwartungswert 
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 4
+            aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(punkte)
+            i += 1
+
+        if 'c' in teilaufg:
+            # die SuS sollen die Intervallgrenzen für die gegebene Intervallwahrscheinlichkeit berechnen (diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
+            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            punkte = 4
+            aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
+            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+            aufgabe.append('NewPage') if neue_seite == i else ''
+            liste_punkte.append(punkte)
+            i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+'''
+Aufgabe: Qualitätskontrolle in einer Keksfabrik
+
+Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges Qualitätsmerkmal 
+ist das Gewicht der Kekse, das normalerweise verteilt ist. Die Qualitätskontrolleure ziehen täglich Stichproben, 
+um sicherzustellen, dass die Maschinen korrekt kalibriert sind.
+
+Ein Qualitätsprüfer hat an einem Tag eine Stichprobe von 50 Keksen entnommen. Dabei wurden folgende Werte ermittelt:
+- Durchschnittliches Gewicht der Stichprobe: **X̄ = 10,2 g**
+- Standardabweichung der Stichprobe: **s = 0,4 g**
+- Annahme: Das Gewicht der Kekse folgt einer Normalverteilung.
+
+1. **Teilaufgabe a: Berechne den wahren Mittelwert \(X\), den die Maschine einstellen sollte, wenn bekannt ist, 
+dass der Bereich von 9,8 g bis 10,6 g 95 % der produzierten Kekse umfasst (bei z = ±1,96).
+
+2. **Teilaufgabe b: Angenommen, der wahre Mittelwert \(μ\) der Produktionslinie hat sich aufgrund einer Kalibrierung 
+geändert. Er berechnet sich jetzt so, dass 99 % der Kekse ein Gewicht zwischen 9,5 g und 10,9 g haben (bei z = ±2,33). 
+Bestimme den neuen Mittelwert \(μ\).
+
+3. **Teilaufgabe c: Die Qualitätskontrolle fordert eine präzisere Produktion. Die Maschine soll so eingestellt werden, 
+dass 95 % der Kekse ein Gewicht zwischen 10 g und 10,4 g haben. Welche Standardabweichung \(σ\) muss die Maschine 
+erreichen, um diese Anforderungen zu erfüllen?
+
+'''
