@@ -2349,11 +2349,11 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
     fakt = exponenten(anz_terme,1,12, ganzz=True)
     fkt = fakt[0]*x**exp[0]
     fkt_str = potenz(fakt[0], exp[0])
-    koef = 'a_{' + gzahl(anz_terme) + '} ~=~ ' + gzahl(fakt[0]) + ', ~ '
+    koef = 'a_{' + gzahl(exp[0]) + '} ~=~ ' + gzahl(fakt[0]) + ', ~ '
     for i in range(anz_terme-1):
         fkt = fkt + fakt[i+1]*x**exp[i+1]
         fkt_str = fkt_str + potenz(fakt[i+1], exp[i+1], vorz=True)
-        koef = koef + 'a_{' + gzahl(anz_terme - (i+1)) + '} ~=~ ' + gzahl(fakt[i+1]) + '~ ~'
+        koef = koef + 'a_{' + gzahl(exp[i+1]) + '} ~=~ ' + gzahl(fakt[i+1]) + '~ ~'
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
@@ -2362,7 +2362,7 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen die Funktion auf Symmetrie untersuchen.
+        # Die SuS sollen den Grad und die Koeffizienten der Funktion nennen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Geben Sie den Grad und die Koeffizienten der Funktion f an. \n\n')
@@ -2398,7 +2398,7 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
-    # In dieser Aufgabe sollen die SuS den Grad, die Koeffizienten und die Symmetrie von Polynomen untersuchen.
+    # In dieser Aufgabe sollen die SuS den Graphen einer Funktion 2. oder 3. Grades untersuchen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'grad=' wird der Grad der Funktion festgelegt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
@@ -2450,7 +2450,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         i += 1
 
     if 'b' in teilaufg:
-        # Die SuS sollen den Graphen der Funktion zeichnen.
+        # Die SuS sollen die Funktion auf Monotonie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         if grad == 2:

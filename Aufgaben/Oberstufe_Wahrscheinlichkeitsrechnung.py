@@ -1,7 +1,7 @@
 import random
 import sympy, sys
 import string
-from sympy.stats import Binomial, P
+from sympy.stats import Binomial, P, Normal, cdf
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -1211,7 +1211,7 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
                f'Vereinen befragen. Dabei haben {gzahl(zusage)} Mitglieder angegeben, das Sie ihn wiederwählen '
                f'würden. \n Bestimmen Sie mit einem Konfidenzintervall und einer Sicherheitswahrscheinlichkeit von '
                f'{gzahl(wkt_intv)}%, wie hoch der prozentuale Zustimmungswert des Präsidenten in der Gesamtheit der '
-               f'Vereine geschätzt werden kann.']
+               f'Vereine geschätzt werden kann. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Berechnung~der~relativen~Häufigkeit: \quad h_n } ~=~ \frac{ X }{ n } ~=~ \frac{' + gzahl(zusage)
                + '}{' + gzahl(anz_mitgl) + '} ~=~ ' + gzahl(h_rel) + r' \quad (2BE) \\ p_{1,2} ~=~ '
@@ -1223,6 +1223,89 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
                + gzahl(N(p_1*100,3)) + '~bis~ ' + gzahl(N(p_2*100,3)) + '~Prozent.}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+    # Berechnung der
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_bez = []
+    liste_punkte = []
+    # Berechnungen für die Aufgabe
+    mu = nzahl(115,125) # Erwartungswert
+    sigma = nzahl(8,12) # Standardabweichung
+    X = Normal('X', mu, sigma) # Normalverteilung
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Der systolische Blutdruck in einer Bevölkerung '
+               + f'folgt näherungsweise einer Normalverteilung mit einem Mittelwert (Erwartungswert) von {gzahl(mu)} '
+               + f'mmHg und einer Standardabweichung von {gzahl(sigma)} mmHg. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # Hier sollen die SuS den Prozentsatz der Bevölkerung angeben, die in einem bestimmten Bereich des Blutdrucks liegen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+
+        abst = nzahl(5,15)
+        untere_gr = mu - abst
+        obere_gr = mu + abst
+
+        # Berechne den Prozentsatz zwischen den Grenzen
+        prozentsatz = cdf(X)(obere_gr) - cdf(X)(untere_gr)
+
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie, welcher Prozentsatz der Bevölkerung einen '
+                       + f' Blutdruck zwischen {gzahl(untere_gr)} und {gzahl(obere_gr)} mmHg hat. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(' + gzahl(untere_gr) + r' \leq X \leq ' + gzahl(obere_gr)
+                       + ') ~=~ ' + gzahl(N(prozentsatz,3)) + r' ~=~ ' + gzahl(N(prozentsatz*100,3))
+                       + r' \% \quad (2BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+
+    if 'b' in teilaufg:
+        # Hier sollen die SuS das Prognoseintervall der keimenden Samen in der absoluten Häufigkeit (Anzahl) angeben
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 3
+
+        einstufung = random_selection([['leichte', 140,
+                                        'kann langfristig das Risiko für Herz-Kreislauf-Erkrankungen erhöhen'],
+                                       ['mittelschwere', 160,
+                                        'erfordert in der Regel eine medikamentöse Behandlung.'],
+                                       ['schwere', 180, 'erfordert eine sofortige medizinische Intervention']],
+                                      anzahl=1)
+        grad = einstufung[0][0]
+        wert = einstufung[0][1]
+        folgen = einstufung[0][2]
+
+        # Berechne den Prozentsatz zwischen den Grenzen
+        prozentsatz = 1 - cdf(X)(wert)
+
+        aufgabe.extend(('Nach den Leitlinien der Europäischen Gesellschaft für Kardiologie (ESC) und der Deutschen'
+                        f'Hochdruckliga gilt ein Blutdruck von mehr als {gzahl(wert)} als {grad} Hypertonie und '
+                        f'{folgen}. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie, wie viel Prozent der Bevölkerung einen '
+                        + f'Blutdruck von {gzahl(wert)} mmHg oder höher haben. \n\n'))
+
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P( X \geq ' + gzahl(wert) + r' ) ~=~ 1 - P( X \leq '
+                       + gzahl(wert) + r' ) ~=~ ' + gzahl(N(prozentsatz,3))
+                       + r' ~=~ ' + gzahl(N(prozentsatz*100,3)) + r' \% \quad (3BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+
 
     if BE != []:
         if len(BE) != len(teilaufg):
