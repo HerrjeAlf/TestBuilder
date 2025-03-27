@@ -1,7 +1,8 @@
 import random
 import sympy, sys
 import string
-from sympy.stats import Binomial, P, Normal, cdf, inverse_cdf
+from sympy.stats import Binomial, P
+from scipy.stats import norm
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -1241,7 +1242,6 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
     # Berechnungen für die Aufgabe
     mu = nzahl(115,125) # Erwartungswert
     sigma = nzahl(8,12) # Standardabweichung
-    X = Normal('X', mu, sigma) # Normalverteilung
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Der systolische Blutdruck in einer Bevölkerung '
                + f'folgt näherungsweise einer Normalverteilung mit einem Mittelwert (Erwartungswert) von {gzahl(mu)} '
@@ -1260,7 +1260,7 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
         obere_gr = mu + abst
 
         # Berechne den Prozentsatz zwischen den Grenzen
-        prozentsatz = cdf(X)(obere_gr) - cdf(X)(untere_gr)
+        prozentsatz = norm.cdf(obere_gr, loc=mu, scale=sigma) - norm.cdf(untere_gr, loc=mu, scale=sigma)
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie, welcher Prozentsatz der Bevölkerung einen '
                        + f' Blutdruck zwischen {gzahl(untere_gr)} und {gzahl(obere_gr)} mmHg hat. \n\n')
@@ -1288,7 +1288,7 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
         folgen = einstufung[0][2]
 
         # Berechne den Prozentsatz zwischen den Grenzen
-        prozentsatz = 1 - cdf(X)(wert)
+        prozentsatz = 1 - norm.cdf(wert,loc=mu,scale=sigma)
 
         aufgabe.extend(('Nach den Leitlinien der Europäischen Gesellschaft für Kardiologie (ESC) und der Deutschen'
                         f'Hochdruckliga gilt ein Blutdruck von mehr als {gzahl(wert)} als {grad} Hypertonie und '
@@ -1321,17 +1321,17 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-
+    stichprobe = nzahl(10,20)*10
     mu = nzahl(10,15)
-    sigma = nzahl(3,8)/10
+    sigma = nzahl(5,10)/10
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape(f'Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges '
                         f'Qualitätsmerkmal ist das normalverteilte Gewicht der Kekse. Die Qualitätsprüfer'
-                        f' ziehen täglich Stichproben, um sicherzustellen, dass die Maschinen korrekt kalibriert sind. '
-                        f' \n Ein Qualitätsprüfer hat eine Stichprobe von 50 Keksen entnommen. Dabei wurde '
-                        f'das durchschnittliches Gewicht der Stichprobe mit ' + r'$ \mu $ ' + f' = {gzahl(mu)}g und die'
-                        + ' Standardabweichung ' + r'mit $ \sigma $' + f' = {sigma}g bestimmt.'), ' \n\n']
+                        f' ziehen täglich Stichproben, um sicherzustellen, dass die Maschinen korrekt kalibriert sind.'
+                        f' \n Ein Qualitätsprüfer hat eine Stichprobe von {gzahl(stichprobe)} Keksen entnommen. Dabei'
+                        f' wurde das durchschnittliches Gewicht der Stichprobe mit ' + r'$ \mu $ ' + f' = {gzahl(mu)}g'
+                        + f' und die' + ' Standardabweichung ' + r'mit $ \sigma $' + f' = {sigma}g bestimmt.'), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -1340,12 +1340,7 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         # Hier sollen die SuS das Gewicht (Hilfsvariable z) berechnen, das ein gegebener Prozentsatz der Kekse mindestens haben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pwert = nzahl(15,19)*5
-
-        # Erstelle eine Normalverteilung mit einem Mittelwert von 0 und einer Standardabweichung von 1
-        X = Normal("X", mu, sigma)
-
-        # Berechne die Inverse der kumulativen Verteilungsfunktion (CDF) für die gegebene Wahrscheinlichkeit
-        inverse_wert = inverse_cdf(X)(pwert/100)
+        inverse_wert = round(norm.ppf(pwert/100, loc=mu, scale=sigma),0)
 
         punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie das Gewicht das mindestens {gzahl(pwert)} % der '
@@ -1360,26 +1355,58 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
     if 'b' in teilaufg:
         # die SuS sollen den Erwartungswert
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        p_satz = nzahl(90,99)
+        pwert = nzahl(85,95)
         mu = mu + zzahl(5,10)/10
-
-
+        inverse_wert = round(norm.ppf(pwert/100, loc=0, scale=1), 0)
+        r = inverse_wert * sigma + mu
+        lsg = round(norm.ppf(pwert/100, loc=mu, scale=sigma), 1)
+        print(r)
+        print(lsg)
 
         punkte = 4
-        aufgabe.extend(('Die Maschine wurd neu kalibriert. Jetzt haben ',
-                        str(liste_teilaufg[i]) + ') \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+        aufgabe.extend((f'Die Maschine wurde neu kalibriert. Jetzt liegt das Gewicht von {gzahl(pwert)}% der Kekse '
+                        f'unter {gzahl(r)}g. Da sich die Präzision nicht geändert hat, ist von der '
+                        f'bisherigen Standardabweichung bei der Produktion auszugehen. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie das durchschnittliche Gewicht der Kekse,'
+                        + ' nach der Kalibrierung. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \Phi (z) ~=~ ' + gzahl(pwert/100)
+                       + r' \quad \to \quad z \approx ' + gzahl(inverse_wert)
+                       + r' ~=~ \frac{r - \mu }{ \sigma }~=~ \frac{ ' + gzahl(r)
+                       + r' - \mu }{ ' + gzahl(sigma) + r' } \quad \vert \cdot ' + gzahl(sigma)
+                       + r' \quad \vert + \mu \quad \vert ' + vorz_str(-1*inverse_wert*sigma)
+                       + r' \quad \to \quad r ~=~ ' + gzahl(r - inverse_wert*sigma) + r'g \quad (4BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
-            i += 1
-
+        i += 1
+        
         if 'c' in teilaufg:
-            # die SuS sollen die Intervallgrenzen für die gegebene Intervallwahrscheinlichkeit berechnen (diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
+            # die SuS sollen den Erwartungswert
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            sigma = sigma - nzahl(1,4)/10
+            pwert = nzahl(90,99)
+            grenzwert = round(norm.ppf(pwert/100, loc=mu, scale=sigma), 1)
+            inverse_wert = round(norm.ppf(pwert / 100, loc=0, scale=1), 1)
+            lsg = (grenzwert - mu)/inverse_wert
+            print(sigma)
+            print(lsg)
+
             punkte = 4
-            aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+            aufgabe.extend((NoEscape(f'Die Qualitätskontrolle fordert eine präzisere Produktion. Die Maschine soll so '
+                                     f'eingestellt werden, dass sie beim bisherigen durchschnittliches Gewicht der '
+                                     f'Kekse mit ' + r'$ \mu $ = ' + f'{gzahl(mu)}g nur {gzahl(100 - pwert)} '
+                                     + r' \% ' + f' der Kekse mehr als ' + f'{gzahl(grenzwert)}g wiegen.'), ' \n\n',
+                                     str(liste_teilaufg[i]) + ') Welche Standardabweichung muss die Maschine '
+                                     + 'erreichen, um diese Anforderungen zu erfüllen. \n\n'))
+            loesung.append(str(liste_teilaufg[i]) + r') \quad P(X \geq ' + gzahl(grenzwert) + ') ~=~ '
+                           + gzahl(1 - pwert/100) + r' \quad \to \quad 1 - P( X \leq ' + gzahl(grenzwert)
+                           + r') ~=~ ' + gzahl(1 - pwert/100) + r' \quad \to \quad P( X \leq ' + gzahl(grenzwert)
+                           + ') ~=~' + gzahl(pwert / 100) + r' \\ \Phi (z) ~=~ ' + gzahl(pwert / 100)
+                           + r' \quad \to \quad z \approx ' + gzahl(inverse_wert)
+                           + r' ~=~ \frac{ r - \mu }{ \sigma }~=~ \frac{ ' + gzahl(grenzwert)
+                           + vorz_str(-1*mu) + r' }{ \sigma } \quad \vert \cdot \sigma \quad \vert \div '
+                           + gzahl_klammer(inverse_wert) + r' \quad \to \quad \sigma ~=~ '
+                           + gzahl(round(lsg, 2)) + r'g \quad (4BE)')
 
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
@@ -1392,28 +1419,3 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-'''
-Aufgabe: Qualitätskontrolle in einer Keksfabrik
-
-Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges Qualitätsmerkmal 
-ist das Gewicht der Kekse, das normalerweise verteilt ist. Die Qualitätskontrolleure ziehen täglich Stichproben, 
-um sicherzustellen, dass die Maschinen korrekt kalibriert sind.
-
-Ein Qualitätsprüfer hat an einem Tag eine Stichprobe von 50 Keksen entnommen. Dabei wurden folgende Werte ermittelt:
-- Durchschnittliches Gewicht der Stichprobe: **X̄ = 10,2 g**
-- Standardabweichung der Stichprobe: **s = 0,4 g**
-- Annahme: Das Gewicht der Kekse folgt einer Normalverteilung.
-
-1. **Teilaufgabe a: Berechne den wahren Mittelwert \(X\), den die Maschine einstellen sollte, wenn bekannt ist, 
-dass der Bereich von 9,8 g bis 10,6 g 95 % der produzierten Kekse umfasst (bei z = ±1,96).
-
-2. **Teilaufgabe b: Angenommen, der wahre Mittelwert \(μ\) der Produktionslinie hat sich aufgrund einer Kalibrierung 
-geändert. Er berechnet sich jetzt so, dass 99 % der Kekse ein Gewicht zwischen 9,5 g und 10,9 g haben (bei z = ±2,33). 
-Bestimme den neuen Mittelwert \(μ\).
-
-3. **Teilaufgabe c: Die Qualitätskontrolle fordert eine präzisere Produktion. Die Maschine soll so eingestellt werden, 
-dass 95 % der Kekse ein Gewicht zwischen 10 g und 10,4 g haben. Welche Standardabweichung \(σ\) muss die Maschine 
-erreichen, um diese Anforderungen zu erfüllen?
-
-'''
