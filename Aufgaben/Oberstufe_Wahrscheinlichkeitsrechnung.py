@@ -1,7 +1,7 @@
 import random
 import sympy, sys
 import string
-from sympy.stats import Binomial, P, Normal, cdf
+from sympy.stats import Binomial, P, Normal, cdf, inverse_cdf
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -1230,8 +1230,8 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def normalverteilung(nr, teilaufg=['a', 'b'], i=0, BE=[]):
-    # Berechnung der
+def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+    # Berechnung der kumulierten Wahrscheinlichkeit der normalverteilten Blutdruckwerte der Bevölkerung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1314,7 +1314,7 @@ def normalverteilung(nr, teilaufg=['a', 'b'], i=0, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
-    # Hier sollen die Schüler und Schülerinnen verschiedene Berechnungen zu einer binomialverteilten Zufallsgröße X durchführen.
+    # Hier sollen die Schüler und Schülerinnen die Zufallsgröße X, den Erwartungswert und die Standardabweichung mithilfe der Invertierung einer Normalverteilung berechnen
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1322,36 +1322,56 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
     liste_punkte = []
     liste_bez = []
 
+    mu = nzahl(10,15)
+    sigma = nzahl(3,8)/10
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges Qualitätsmerkmal '
-               f'ist das Gewicht der Kekse, das normalerweise verteilt ist. Die Qualitätskontrolleure ziehen täglich '
-               f'Stichproben, um sicherzustellen, dass die Maschinen korrekt kalibriert sind. \n'
-               f' \n\n']
+               NoEscape(f'Die Keksfabrik „Knuspertraum“ produziert täglich Tausende von Keksen. Ein wichtiges '
+                        f'Qualitätsmerkmal ist das normalverteilte Gewicht der Kekse. Die Qualitätsprüfer'
+                        f' ziehen täglich Stichproben, um sicherzustellen, dass die Maschinen korrekt kalibriert sind. '
+                        f' \n Ein Qualitätsprüfer hat eine Stichprobe von 50 Keksen entnommen. Dabei wurde '
+                        f'das durchschnittliches Gewicht der Stichprobe mit ' + r'$ \mu $ ' + f' = {gzahl(mu)}g und die'
+                        + ' Standardabweichung ' + r'mit $ \sigma $' + f' = {sigma}g bestimmt.'), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Hier sollen die SuS das Gewicht (Zufallsgröße X) berechnen, die mindestens 75% der Kekse haben
+        # Hier sollen die SuS das Gewicht (Hilfsvariable z) berechnen, das ein gegebener Prozentsatz der Kekse mindestens haben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        pwert = nzahl(15,19)*5
+
+        # Erstelle eine Normalverteilung mit einem Mittelwert von 0 und einer Standardabweichung von 1
+        X = Normal("X", mu, sigma)
+
+        # Berechne die Inverse der kumulativen Verteilungsfunktion (CDF) für die gegebene Wahrscheinlichkeit
+        inverse_wert = inverse_cdf(X)(pwert/100)
+
         punkte = 2
-        aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (2BE)')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie das Gewicht das mindestens {gzahl(pwert)} % der '
+                       + f'Kekse haben. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \Phi (z) ~=~ ' + gzahl(pwert/100)
+                       + r' \quad \to \quad z \approx ' + gzahl(N(inverse_wert,3)) + r'g \quad (2BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
-        if 'b' in teilaufg:
-            # die SuS sollen den Erwartungswert 
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            punkte = 4
-            aufgabe.append(str(liste_teilaufg[i]) + ') \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+    if 'b' in teilaufg:
+        # die SuS sollen den Erwartungswert
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        p_satz = nzahl(90,99)
+        mu = mu + zzahl(5,10)/10
 
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(punkte)
+
+
+        punkte = 4
+        aufgabe.extend(('Die Maschine wurd neu kalibriert. Jetzt haben ',
+                        str(liste_teilaufg[i]) + ') \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
             i += 1
 
         if 'c' in teilaufg:
