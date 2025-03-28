@@ -1356,10 +1356,10 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         # die SuS sollen den Erwartungswert
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pwert = nzahl(85,95)
-        mu = mu + zzahl(5,10)/10
+        mu2 = mu + zzahl(5,10)/10
         inverse_wert = round(norm.ppf(pwert/100, loc=0, scale=1), 0)
-        r = inverse_wert * sigma + mu
-        lsg = round(norm.ppf(pwert/100, loc=mu, scale=sigma), 1)
+        r = inverse_wert * sigma + mu2
+        lsg = round(norm.ppf(pwert/100, loc=mu2, scale=sigma), 1)
         print(r)
         print(lsg)
 
@@ -1374,7 +1374,7 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
                        + r' ~=~ \frac{r - \mu }{ \sigma }~=~ \frac{ ' + gzahl(r)
                        + r' - \mu }{ ' + gzahl(sigma) + r' } \quad \vert \cdot ' + gzahl(sigma)
                        + r' \quad \vert + \mu \quad \vert ' + vorz_str(-1*inverse_wert*sigma)
-                       + r' \quad \to \quad r ~=~ ' + gzahl(r - inverse_wert*sigma) + r'g \quad (4BE)')
+                       + r' \quad \to \quad \mu ~=~ ' + gzahl(r - inverse_wert*sigma) + r'g \quad (4BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
