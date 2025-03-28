@@ -1154,7 +1154,7 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         punkte = 5
         grenze = int(10 / ((keimen * (100 - keimen)) / 100**2))
         anzahl = nzahl(grenze, grenze + 10)*10
-        wkt_intv_2 = int(auswahl[1][1] * 100) if auswahl[0][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
+        wkt_intv_2 = int(auswahl[1][1] * 100) if auswahl[1][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
         c_2 = auswahl[1][0]
         mu = int(anzahl * keimen / 100)
         sigma = N(sqrt(anzahl * keimen * (100 - keimen)) / 100, 3)
