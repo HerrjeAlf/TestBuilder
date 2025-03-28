@@ -105,7 +105,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
     def arbeitsblatt(Teil, liste_seiten, ang):
         schule, schulart, Klasse, Thema, in_tagen= ang[0], ang[1], ang[2], ang[3], ang[4]
         print(f'\033[38;2;100;141;229m\033[1m Gr. {Teil}\033[0m')
-        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+        Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # der Teil in dem die PDF-Datei erzeugt wird
         aufgabe_pfad = f'pdf/Kl. {Klasse} - Arbeitsblatt {Thema} Gr. {Teil}'
@@ -173,7 +173,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
         in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
-        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d.%m.%Y')
+        Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
         # erstellen der Tabelle zur Punkteübersicht
         Punkte = (sum(liste_punkte[1:]))
@@ -288,7 +288,6 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
 
     # [Pfad Aufgabe, Pfad Erwartungshorizont]
     return pfade
-
 
 # Hier wird eine Vorprüfung für den Abschluss der 10. Klasse erzeugt
 def vorpruefung_kl10(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clean_tex=True):

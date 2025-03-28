@@ -971,7 +971,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], i=0, BE=[])
 
         y_wert_s = fkt.subs(x, x_wert_s)
 
-    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (x_wert_x1 - x_wert_x2), 'x')
+    fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (x_wert_x1 + x_wert_x2), 'x')
                + vorz_str(faktor * x_wert_x1 * x_wert_x2))
     p_fkt = -1 * (x_wert_x1 + x_wert_x2)
     q_fkt = x_wert_x1 * x_wert_x2
@@ -2416,10 +2416,21 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         xwert2 = xwert1 + wert_abst
         xwerts = 0.5 * (xwert2 + xwert1)
         a_max = int(abs(20 / wert_abst ** 2))
+        while a_max <= 1:
+            xwert1 = -1 * nzahl(2, 5)
+            abst = list(range(2, 6))
+            abst.remove(abs(xwert1))
+            wert_abst = random.choice(abst)
+            xwert2 = xwert1 + wert_abst
+            xwerts = 0.5 * (xwert2 + xwert1)
+            a_max = int(abs(20 / wert_abst ** 2))
+        print(a_max)
         faktor = -1 * nzahl(1, abs(a_max) * 2) / 2 if xwert1 * xwert2 < 0 else nzahl(1, a_max) / 2
         fkt = collect(expand(faktor * (x - xwert1) * (x - xwert2)), x)
-        fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 - xwert2), 'x')
+        fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 + xwert2), 'x')
                    + vorz_str(faktor * xwert1 * xwert2))
+        print(fkt)
+        print(fkt_str)
         p_fkt = -1 * (xwert1 + xwert2)
         q_fkt = xwert1 * xwert2
         fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
