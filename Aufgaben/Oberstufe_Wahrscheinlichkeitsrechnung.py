@@ -1419,3 +1419,5 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+

@@ -2471,9 +2471,10 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
                            + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
                            + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
+            punkte = 3
         elif grad == 3:
             pass
-        liste_punkte.append(5)
+        liste_punkte.append(punkte)
         i += 1
 
     if BE != []:
