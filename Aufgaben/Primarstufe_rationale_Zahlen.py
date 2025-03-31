@@ -1,8 +1,6 @@
 import string
 import numpy as np
 import random, math
-from Rationals import Rational
-
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
 from pylatex.utils import bold

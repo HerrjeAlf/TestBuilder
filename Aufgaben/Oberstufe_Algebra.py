@@ -2,7 +2,6 @@ from pylatex.utils import bold
 import string, sys
 import numpy as np
 import random, math
-from Rationals import Rational
 from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure, MultiColumn
 from pylatex.utils import bold

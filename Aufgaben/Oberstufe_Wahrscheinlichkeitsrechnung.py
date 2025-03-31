@@ -1,7 +1,6 @@
 import random
 import sympy, sys
 import string
-from Rationals import Rational
 from sympy.stats import Binomial, P
 from scipy.stats import norm
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
