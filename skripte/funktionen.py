@@ -4,7 +4,7 @@ import time
 import numpy as np
 import string
 from sympy import *
-from pylatex import Document, Package,  Tabular, NoEscape
+from pylatex import Document, Package,  Tabular, NoEscape, math
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -754,3 +754,67 @@ def gaussalgorithmus(gleichungen, variablen=[]):
 
     print(loesung)
     return loesung, table1
+
+def quadr_gl(koeff):
+    punkte = 0
+    if all(x == 0 for x in koeff):
+        text = r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~x~aus~dem~Definitionsbereich} '
+        lsg = [r' \mathbb{R} ']
+        punkte += 1
+    elif koeff[0] == 0:
+        if koeff[1] == 0:
+            text = r'0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
+            lsg = [r' \emptyset ']
+            punkte += 1
+        elif koeff[2] == 0:
+            text = r' 0 ~=~ ' + vorz_v_aussen(koeff[1], 'x') + r' \quad \to \quad x ~=~ 0'
+            lsg = [0]
+            punkte += 2
+        else:
+            lsg1 = Rational(-1 * koeff[2], koeff[1])
+            text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[1], 'x') + vorz_str(koeff[2]) + r' \quad \vert '
+                    + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
+                    + r' \quad \to \quad x ~=~' + gzahl(lsg1) + r' \\')
+            lsg = [lsg1]
+            punkte += 2
+    elif koeff[1] == 0 and koeff[2] == 0:
+        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') +  r' \quad \to \quad x ~=~ 0'
+        lsg = [0]
+        punkte += 2
+    elif koeff[2] == 0:
+        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_v_innen(koeff[1],'x')
+                + r' ~=~ x \cdot \left( ' + vorz_v_aussen(koeff[0], 'x') + vorz_str(koeff[1]) + r' \right) '
+                + r' \quad \to \quad x_1 = 0 \\ 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x') + vorz_str(koeff[1])
+                + r' \quad \vert ' + vorz_str(-1*koeff[1]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0])
+                + r' \quad \to \quad x_2 ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~'
+                + gzahl(N(-1*koeff[1]/ koeff[0],3)))
+        lsg = [0, Rational(-1*koeff[1], koeff[0])]
+        lsg.sort()
+        punkte += 4
+    elif koeff[1]==0:
+        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_str(koeff[2]) + r' \quad \vert '
+                + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad x^2 ~=~'
+                + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
+        punkte += 2
+        if Rational(-1*koeff[2],koeff[0]) < 0:
+            text = (text + r' x ~=~ \pm \sqrt{ ' + gzahl(Rational(-1*koeff[2],koeff[0]))
+                    + r' } \quad \mathrm{ n.d. }')
+            lsg = []
+            punkte += 2
+        else:
+            lsg_br = Rational(-1 * koeff[2], koeff[0])
+            lsg_de = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
+            text = (text + r' x_{1/2} ~=~ \pm \sqrt{ ' + gzahl(lsg_br)
+                    + r' } \quad \to \quad x_1 = \sqrt{ ' + gzahl(lsg_br)
+                    + '~=~' + gzahl(lsg_de) + r' } \quad \mathrm{und} \quad x_2 = \sqrt{ ' + gzahl(lsg_br)
+                    + r' } + ~=~' + gzahl(lsg_de))
+            lsg = []
+            punkte += 1
+    else:
+        text = ''
+        lsg = []
+        punkte = 0
+
+
+
+    return text, lsg, punkte

@@ -1151,7 +1151,7 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
     if 'c' in teilaufg:
         # Hier sollen die SuS den Erwartungswert und die Standardabweichung der Binomialverteilung ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 5
+        punkte = 3
         grenze = int(10 / ((keimen * (100 - keimen)) / 100**2))
         anzahl = nzahl(grenze, grenze + 10)*10
         wkt_intv_2 = int(auswahl[1][1] * 100) if auswahl[1][1] * 100 % 1 == 0 else N(auswahl[1][1] * 100, 3)
@@ -1162,18 +1162,30 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
                         f'Sicherheit von {gzahl(wkt_intv_2)}% zusichern wie viel Prozent der {sorte} keimen. \n\n',
                         str(liste_teilaufg[i]) + ') Berechnen Sie das Prognoseintervall in Prozent, '
                        + 'dass der Pflanzenhändler angeben sollte. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
-                       + gzahl(anzahl) + r' \cdot ' + gzahl(keimen / 100) + r' \cdot (1- ' + gzahl(keimen / 100)
-                       + ') } ~=~ ' + gzahl(sigma) + r' \quad (2BE) \\'
-                       + r' \mathrm{Intervall ~~ I} \left[ p - c \cdot \frac{ \sigma }{n} \left\vert '
-                       + r' p + c \cdot \frac{ \sigma }{n} \right. \right] ~=~ \left[ ' + gzahl(keimen / 100)
-                       + vorz_str(-1*c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl) + r'} ~ \left\vert ~'
-                       + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl)
-                       + r'} ~ \right. \right] ~=~ \left[ ' + gzahl(N(keimen/100 - c_2 * sigma / anzahl, 3))
-                       + r' \left\vert ' + gzahl(N(keimen/100 + c_2 * sigma / anzahl, 3))
-                       + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen - c_2 * sigma / anzahl*100, 3))
-                       + r' \% \left\vert ' + gzahl(N(keimen + c_2 * sigma / anzahl*100, 3))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad I ~ \left[ p - c \cdot sqrt{ \frac{p \cdot (1-p)}{n} } '
+                       + r' \left\vert p + c \cdot sqrt{ \frac{p \cdot (1-p)}{n}} \right. \right]  ~=~ '
+                       + r' \left[ ' + gzahl(keimen/100) + vorz_str(-1*c_2) + r' \cdot sqrt{ \frac{ '
+                       + gzahl(keimen/100) + r' \left(' + gzahl(1-keimen/100) + ' }{ ' + gzahl(anzahl) +  ' } } '
+                       + r' \left\vert ' + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot sqrt{ \frac{ '
+                       + gzahl(keimen / 100) + r' \left( ' + gzahl(1 - keimen / 100) + ' }{ ' + gzahl(anzahl)
+                       + r' } } \right. \right]  ~=~ \left[ '
+                       + gzahl(N(keimen/100-c_2*sqrt(keimen*(100-keimen)/(anzahl*10000)),3)) + r' \left\vert '
+                       + gzahl(N(keimen/100+c_2*sqrt(keimen*(100-keimen)/(anzahl*10000)),3))
+                       + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen-c_2*sqrt(keimen*(100-keimen)/(anzahl)),3))
+                       + r' \% \left\vert ' + gzahl(N(keimen+c_2*sqrt(keimen*(100-keimen)/(anzahl)),3))
                        + r' \% \right. \right] \quad (3BE)')
+        # loesung.append(str(liste_teilaufg[i]) + r') \quad \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
+        #               + gzahl(anzahl) + r' \cdot ' + gzahl(keimen / 100) + r' \cdot (1- ' + gzahl(keimen / 100)
+        #                + ') } ~=~ ' + gzahl(sigma)
+        #                + r' \\ \mathrm{Intervall ~~ I} \left[ p - c \cdot \frac{ \sigma }{n} \left\vert '
+        #                + r' p + c \cdot \frac{ \sigma }{n} \right. \right] ~=~ \left[ ' + gzahl(keimen / 100)
+        #                + vorz_str(-1*c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl) + r'} ~ \left\vert ~'
+        #                + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot \frac{ ' + gzahl(sigma) + '}{' + gzahl(anzahl)
+        #                + r'} ~ \right. \right] ~=~ \left[ ' + gzahl(N(keimen/100 - c_2 * sigma / anzahl, 3))
+        #                + r' \left\vert ' + gzahl(N(keimen/100 + c_2 * sigma / anzahl, 3))
+        #                + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen - c_2 * sigma / anzahl*100, 3))
+        #                + r' \% \left\vert ' + gzahl(N(keimen + c_2 * sigma / anzahl*100, 3))
+        #                + r' \% \right. \right] \quad (3BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -1340,13 +1352,13 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         # Hier sollen die SuS das Gewicht (Hilfsvariable z) berechnen, das ein gegebener Prozentsatz der Kekse mindestens haben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pwert = nzahl(15,19)*5
-        inverse_wert = round(norm.ppf(pwert/100, loc=mu, scale=sigma),0)
+        inverse_wert = round(norm.ppf(pwert/100, loc=mu, scale=sigma),2)
 
         punkte = 2
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie das Gewicht das mindestens {gzahl(pwert)} % der '
                        + f'Kekse haben. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \Phi (z) ~=~ ' + gzahl(pwert/100)
-                       + r' \quad \to \quad z \approx ' + gzahl(N(inverse_wert,3)) + r'g \quad (2BE)')
+                       + r' \quad \to \quad z \approx ' + gzahl(inverse_wert) + r'g \quad (2BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -1357,9 +1369,9 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pwert = nzahl(85,95)
         mu2 = mu + zzahl(5,10)/10
-        inverse_wert = round(norm.ppf(pwert/100, loc=0, scale=1), 0)
+        inverse_wert = round(norm.ppf(pwert/100, loc=0, scale=1), 2)
         r = inverse_wert * sigma + mu2
-        lsg = round(norm.ppf(pwert/100, loc=mu2, scale=sigma), 1)
+        lsg = round(norm.ppf(pwert/100, loc=mu2, scale=sigma), 2)
         print(r)
         print(lsg)
 
@@ -1385,8 +1397,8 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             sigma = sigma - nzahl(1,4)/10
             pwert = nzahl(90,99)
-            grenzwert = round(norm.ppf(pwert/100, loc=mu, scale=sigma), 1)
-            inverse_wert = round(norm.ppf(pwert / 100, loc=0, scale=1), 1)
+            grenzwert = round(norm.ppf(pwert/100, loc=mu, scale=sigma), 2)
+            inverse_wert = round(norm.ppf(pwert / 100, loc=0, scale=1), 2)
             lsg = (grenzwert - mu)/inverse_wert
             print(sigma)
             print(lsg)

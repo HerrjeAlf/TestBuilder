@@ -4977,6 +4977,11 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
         # zwischenrechnungen
         fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
         fkt_1_a_str = vorz_v_aussen(3 * x_1,'x^2') + vorz_v_innen(2 * x_2,'x') + vorz_str(x_3)
+        text, lsg, pkt = quadr_gl([3*x_1, 2*x_2, x_3])
+        print(text)
+        print(lsg)
+        print(pkt)
+        koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,1,0],[1,1,1])
         fkt_1_a_p = Rational(2*x_2,3*x_1)
         fkt_1_a_p2 = Rational(x_2,3*x_1)
         fkt_1_a_q = Rational(x_3,3*x_1)
@@ -4996,24 +5001,24 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
         else:
             aufgabe.append(NoEscape(str(liste_teilaufg[i]) + ') Berechnen Sie den x-Wert von Punkt P, für den '
                                                              'maximalen Flächeninhalt. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg: \quad f(x)=~' + fkt_str
-                       + r' \quad ges: x~für~A_{max} \quad (1BE) } \\'
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg \colon \quad f(x)=~' + fkt_str
+                       + r' \quad ges \colon x~für~A_{max} \quad (1BE) } \\'
                        + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
-                       + fkt_str + r' \quad (2BE)}  \\'
+                       + fkt_str + r' \quad (2BE) }  \\'
                        + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
                        + r' \quad (1BE) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
                        + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2BE) } \\'
-                       + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to \quad 0~=~' + fkt_1_a_str + r' \quad \vert \div '
-                       + gzahl_klammer(3*x_1) + r' \quad \to \quad 0~=~' + fkt_1_a_pq + r' \quad (2BE) }\\'
-                       + r' \mathrm{ x_{1/2} ~=~ - \frac{' + gzahl(fkt_1_a_p) + r'}{2} \pm \sqrt{ \left( \frac{'
-                       + gzahl(fkt_1_a_p) + r'}{2} \right) ^2 -' + gzahl_klammer(fkt_1_a_q) + '} ~=~'
-                       + gzahl(-1*fkt_1_a_p2) + r' \pm ' + gzahl(fkt_1_a_sqrt_disk) + r' \quad (2BE) } \\'
-                       + r' \mathrm{x_1 ~=~' + gzahl(N(re(fkt_1_a_lsg[0]),3)) + r' \quad und \quad x_2 ~=~'
-                       + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r' \quad (2BE) } \\ \mathrm{A^{ \prime \prime }('
+                       + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to ' + text + r'} \\ \mathrm{A^{ \prime \prime }('
                        + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
                        + gzahl_klammer(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
                        + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3BE) } \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        for element in koeff:
+            text, lsg, pkt = quadr_gl(element)
+            loesung.append(text)
+
+
+
         i += 1
 
     if 'c' in teilaufg:
