@@ -4981,7 +4981,7 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
         print(text)
         print(lsg)
         print(pkt)
-        koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,1,0],[1,1,1])
+        koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,0,-1], [1,1,0], [1,1,1], [1,2,1], [1,3,1])
         fkt_1_a_p = Rational(2*x_2,3*x_1)
         fkt_1_a_p2 = Rational(x_2,3*x_1)
         fkt_1_a_q = Rational(x_3,3*x_1)
@@ -5006,9 +5006,9 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
                        + r' \mathrm{es~gilt: \quad HB.: \quad A~=~x \cdot y \quad und \quad NB.: \quad f(x)~=~'
                        + fkt_str + r' \quad (2BE) }  \\'
                        + r' \to \quad \mathrm{HB.: \quad A(x)~=~x \cdot (' + fkt_str + r')~=~ ' + fkt_a_str
-                       + r' \quad (1BE) } \\ \mathrm{A^{ \prime }(x)~=~' + fkt_1_a_str
+                       + r' \quad (1BE) } \\ \mathrm{ A^{ \prime }(x)~=~' + fkt_1_a_str
                        + r' \quad und \quad A^{ \prime \prime } (x) ~=~' + fkt_2_a_str + r' \quad (2BE) } \\'
-                       + r' \mathrm{A^{ \prime }(x) ~=~0 \quad \to ' + text + r'} \\ \mathrm{A^{ \prime \prime }('
+                       + r' \mathrm{ A^{ \prime }(x) ~=~0 \quad \to } ' + text + r' \\ \mathrm{A^{ \prime \prime }('
                        + gzahl(N(re(fkt_1_a_lsg[1]),3)) + r')~=~' + gzahl(6*x_1) + r' \cdot '
                        + gzahl_klammer(N(re(fkt_1_a_lsg[1]),3)) + vorz_str(2*x_2) + r'~=~'
                        + gzahl(fkt_2_a_xo) + r'~<0 \quad \to HP \quad (3BE) } \\'
