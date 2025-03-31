@@ -800,16 +800,16 @@ def quadr_gl(koeff, i=1):
                 + gzahl(Fraction(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
         punkte += 2
         if Fraction(-1*koeff[2],koeff[0]) < 0:
-            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + ' } ~=~ \pm \sqrt{ '
+            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ \pm \sqrt{ '
                     + gzahl(Fraction(-1*koeff[2],koeff[0])) + r' } \quad \mathrm{ n.d. }')
             lsg = []
             punkte += 2
         else:
             disk = Fraction(-1 * koeff[2], koeff[0])
             lsg_de = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
-            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + ' } ~=~ \pm \sqrt{ ' + gzahl(disk)
-                    + r' } \quad \to \quad x_{ ' + gzahl(n1) + '} = \sqrt{ ' + gzahl(disk) + '~=~' + gzahl(lsg_de)
-                    + r' } \quad \mathrm{und} \quad x_{ ' + gzahl(n2) + ' }= - \sqrt{ ' + gzahl(disk)
+            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ \pm \sqrt{ ' + gzahl(disk)
+                    + r' } \quad \to \quad x_{ ' + gzahl(n1) + r'} = \sqrt{ ' + gzahl(disk) + '~=~' + gzahl(lsg_de)
+                    + r' } \quad \mathrm{und} \quad x_{ ' + gzahl(n2) + r' }= - \sqrt{ ' + gzahl(disk)
                     + r' } + ~=~' + gzahl(-1*lsg_de))
             lsg = [-1*lsg_de, lsg_de]
             punkte += 1
@@ -821,7 +821,7 @@ def quadr_gl(koeff, i=1):
                 + r' 0 ~=~ x^2 ' + vorz_v_innen(Fraction(koeff[1], koeff[0]), 'x')
                 + vorz_str(Fraction(koeff[2], koeff[0])) + r' \\'
                 + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '
-                + r' \frac{' + gzahl(p) + '}{2} \left) ^2 ' + vorz_str(-1*q) + '} ~=~ '
+                + r' \frac{' + gzahl(p) + r'}{2} \left) ^2 ' + vorz_str(-1*q) + '} ~=~ '
                 + gzahl(Fraction(-1*koeff[1],2*koeff[0])) + r' \pm \sqrt{ '
                 + gzahl(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \\')
         punkte += 3
@@ -834,8 +834,16 @@ def quadr_gl(koeff, i=1):
             lsg = [Fraction(-1*koeff[1],2*koeff[0])]
             punkte += 2
         else:
-            pass
-
+            lsg1 = Fraction(-1*koeff[1],2*koeff[0]) - sqrt(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2))
+            lsg2 = Fraction(-1*koeff[1],2*koeff[0]) + sqrt(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2))
+            text = (text + r' x_{' + gzahl(n1) + '} ~=~ ' + gzahl(Fraction(-1*koeff[1],2*koeff[0]))
+                    + vorz_str(-1*N(sqrt(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)),3))
+                    + '~=~' + gzahl(N(lsg1,3)) + r' \quad \mathrm{und} \quad x_{' + gzahl(n2) + '} ~=~ '
+                    + gzahl(Fraction(-1*koeff[1],2*koeff[0]))
+                    + vorz_str(N(sqrt(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)),3))
+                    + '~=~' + gzahl(N(lsg2,3)))
+            lsg = [lsg1, lsg2]
+            punkte += 4
 
         punkte += 4
 

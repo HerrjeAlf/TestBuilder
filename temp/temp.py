@@ -127,3 +127,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 # lsg2([0.105,0.263,0.263,0.105])
+
+print(latex(Rational(2,3)))
+print(latex(Fraction(2,3)))
