@@ -1,6 +1,7 @@
 import string
 import numpy as np
 import random, math
+from fractions import Fraction
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow, Math)

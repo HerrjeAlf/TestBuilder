@@ -1,6 +1,8 @@
 import string
 import numpy as np
 import random, math
+from fractions import Fraction
+
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
 from pylatex.utils import bold
@@ -427,7 +429,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     def einf_pp_gleichn_bruchterm():
         zaehler_2, zaehler_1 = np.random.choice([1, 2, 3, 4, 5, 6], 2, False)
         nenner = zaehler_1 + zaehler_2 + nzahl(2,4)
-        loesung = Rational(zaehler_1 + zaehler_2, nenner)
+        loesung = Fraction(zaehler_1 + zaehler_2, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
@@ -437,7 +439,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
 
     def pp_gleichn_bruchterm():
         zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
-        loesung = Rational(zaehler_1 + zaehler_2, nenner)
+        loesung = Fraction(zaehler_1 + zaehler_2, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner) + r'} ~+~ \frac{' + gzahl(zaehler_2)
@@ -447,7 +449,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
 
     def pn_gleichn_bruchterm():
         zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
-        loesung = Rational(zaehler_1 - zaehler_2, nenner)
+        loesung = Fraction(zaehler_1 - zaehler_2, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
@@ -457,7 +459,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
 
     def nn_gleichn_bruchterm():
         zaehler_2, zaehler_1, nenner = np.random.choice(range(2,12), 3, False)
-        loesung = Rational(-1*(zaehler_1 + zaehler_2), nenner)
+        loesung = Fraction(-1*(zaehler_1 + zaehler_2), nenner)
         aufg = (r' - \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner) + r'}')
         lsg = (r' - \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~-~ \frac{' + gzahl(zaehler_2)
@@ -468,7 +470,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     def bel_gleichn_bruchterm():
         zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
-        loesung = Rational(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
+        loesung = Fraction(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
         aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~' + vorz(vorz2) + r'~ \frac{'
                 + gzahl(zaehler_2) + '}{' + gzahl(nenner) + r'}')
         lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner) + r'} ~' + vorz(vorz2)
@@ -481,7 +483,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        loesung = Fraction(zaehler_1_erw + zaehler_2_erw, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner_2) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
@@ -494,7 +496,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        loesung = Fraction(zaehler_1_erw + zaehler_2_erw, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner_2) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~+~ \frac{' + gzahl(zaehler_2)
@@ -507,7 +509,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        loesung = Rational(zaehler_1_erw - zaehler_2_erw, nenner)
+        loesung = Fraction(zaehler_1_erw - zaehler_2_erw, nenner)
         aufg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner_2) + r'}')
         lsg = (r' \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
@@ -520,7 +522,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        loesung = Rational(-1*(zaehler_1_erw + zaehler_2_erw), nenner)
+        loesung = Fraction(-1*(zaehler_1_erw + zaehler_2_erw), nenner)
         aufg = (r' - \frac{' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
                 + '}{' + gzahl(nenner_2) + r'}')
         lsg = (r' - \frac{ ' + gzahl(zaehler_1) +'}{' + gzahl(nenner_1) + r'} ~-~ \frac{' + gzahl(zaehler_2)
@@ -534,7 +536,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
         zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
-        loesung = Rational(zaehler_1_erw + zaehler_2_erw, nenner)
+        loesung = Fraction(zaehler_1_erw + zaehler_2_erw, nenner)
         aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner_1) + r'} ~' + vorz(vorz2)
                 + r'~ \frac{' + gzahl(zaehler_2) + '}{' + gzahl(nenner_2) + r'}')
         lsg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(zaehler_1) + '}{' + gzahl(nenner_1) + r'} ~' + vorz(vorz2)
@@ -608,9 +610,9 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
         zahlen = np.random.choice(range(1,10), 4, False)
         zahlen.sort()
         zaehler1, zaehler2, nenner1, nenner2 = zahlen
-        bruch1 = Rational(zaehler1, nenner1)
-        bruch2 = Rational(zaehler2, nenner2)
-        ergebnis = Rational(zaehler1 * zaehler2, nenner1 * nenner2)
+        bruch1 = Fraction(zaehler1, nenner1)
+        bruch2 = Fraction(zaehler2, nenner2)
+        ergebnis = Fraction(zaehler1 * zaehler2, nenner1 * nenner2)
         aufg = gzahl(bruch1) + r'~ \cdot ~' + gzahl(bruch2)
         lsg = gzahl(bruch1) + r'~ \cdot ~' + gzahl(bruch2) + '~=~' + gzahl(ergebnis)
         return aufg, lsg
@@ -620,9 +622,9 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
         zahlen.sort()
         zaehler1, zaehler2, nenner1, nenner2 = zahlen
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
-        bruch1 = Rational(vorz1 * zaehler1, nenner1)
-        bruch2 = Rational(vorz2 * zaehler2, nenner2)
-        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        bruch1 = Fraction(vorz1 * zaehler1, nenner1)
+        bruch2 = Fraction(vorz2 * zaehler2, nenner2)
+        ergebnis = Fraction(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
         aufg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2)
         lsg = gzahl(bruch1) + r'~ \cdot ~' + gzahl_klammer(bruch2) + '~=~' + gzahl(ergebnis)
         return aufg, lsg
@@ -637,7 +639,7 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
             zaehler1, zaehler2, nenner1, nenner2 = zahlen
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         fakt1, fakt2 = np.random.choice(range(2,12), 2, False)
-        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
+        ergebnis = Fraction(vorz1 * vorz2 * zaehler1 * zaehler2, nenner1 * nenner2)
         if vorz2 < 0:
             aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2*zaehler1) + '}{' + gzahl(fakt1*nenner1)
                     + r'}~ \cdot ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt1 * zaehler2) + '}{'
@@ -661,10 +663,10 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
         zahlen = np.random.choice(range(1, 10), 4, False)
         zahlen.sort()
         zaehler1, zaehler2, nenner1, nenner2 = zahlen
-        bruch1 = Rational(zaehler1, nenner1)
-        bruch2 = Rational(zaehler2, nenner2)
-        bruch2_kw = Rational(nenner2, zaehler2)
-        ergebnis = Rational(zaehler1 * nenner2, nenner1 * zaehler2)
+        bruch1 = Fraction(zaehler1, nenner1)
+        bruch2 = Fraction(zaehler2, nenner2)
+        bruch2_kw = Fraction(nenner2, zaehler2)
+        ergebnis = Fraction(zaehler1 * nenner2, nenner1 * zaehler2)
         aufg = gzahl(bruch1) + r'~ \div ~' + gzahl(bruch2)
         lsg = (gzahl(bruch1) + r' \div ' + gzahl(bruch2) + '~=~' + gzahl(bruch1) + r' \cdot '
                + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
@@ -675,10 +677,10 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
         zahlen.sort()
         zaehler1, zaehler2, nenner1, nenner2 = zahlen
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
-        bruch1 = Rational(zaehler1, nenner1)
-        bruch2 = Rational(zaehler2, nenner2)
-        bruch2_kw = Rational(nenner2, zaehler2)
-        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        bruch1 = Fraction(zaehler1, nenner1)
+        bruch2 = Fraction(zaehler2, nenner2)
+        bruch2_kw = Fraction(nenner2, zaehler2)
+        ergebnis = Fraction(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
         aufg = gzahl(vorz1 * bruch1) + r'~ \div ~' + gzahl_klammer(vorz2 * bruch2)
         lsg = (gzahl(vorz1 * bruch1) + r' \div ' + gzahl_klammer(vorz2*bruch2) + '~=~' + vorz_aussen(vorz1*vorz2)
                + gzahl(bruch1) + r' \cdot ' + gzahl(bruch2_kw) + '~=~' + gzahl(ergebnis))
@@ -694,7 +696,7 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
             zaehler1, zaehler2, nenner1, nenner2 = zahlen
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         fakt1, fakt2 = np.random.choice(range(2, 12), 2, False)
-        ergebnis = Rational(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
+        ergebnis = Fraction(vorz1 * vorz2 * zaehler1 * nenner2, nenner1 * zaehler2)
         if vorz2 < 0:
             aufg = (vorz_aussen(vorz1) + r' \frac{' + gzahl(fakt2 * zaehler1) + '}{' + gzahl(fakt1 * nenner1)
                     + r'} ~ \div ~ \left(' + vorz_aussen(vorz2) + r' \frac{' + gzahl(fakt2 * zaehler2) + '}{'
@@ -1075,15 +1077,15 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         exp1, exp2 = exponenten(2,2,7, ganzz=True)
         if exp1 - exp2 == 0:
-            w_erg = '~=~ ' + gzahl(Rational(fakt1,fakt2))
+            w_erg = '~=~ ' + gzahl(Fraction(fakt1,fakt2))
         else:
             w_erg = ''
         aufg = (r' \frac{' + gzahl(fakt1) + '~' + bas + '^{' + gzahl(exp1) + r'}}{'
                 + gzahl(fakt2) + '~' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(fakt1) + bas + '^{' + gzahl(exp1) + r'}}{' + gzahl(fakt2) + '~' + bas + '^{'
-               + gzahl(exp2) + '}} ~=~ ' + gzahl(Rational(fakt1,fakt2)) + r' \cdot ' + bas + '^{' + gzahl(exp1)
+               + gzahl(exp2) + '}} ~=~ ' + gzahl(Fraction(fakt1,fakt2)) + r' \cdot ' + bas + '^{' + gzahl(exp1)
                + vorz_str(-1*exp2) + '} ~=~ '
-               + vorz_v_aussen(Rational(fakt1,fakt2), bas + '^{' + gzahl(exp1-exp2, exp=True) + '}') + w_erg)
+               + vorz_v_aussen(Fraction(fakt1,fakt2), bas + '^{' + gzahl(exp1-exp2, exp=True) + '}') + w_erg)
         return aufg, lsg
 
     def einf_var_bas_fakt():
@@ -1095,7 +1097,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         bas1, bas2 = bas
         exp1, exp2, exp3, exp4 = exponenten(4,2,12, wdh=True, ganzz=True)
         if exp1 - exp3 == 0 or exp2 - exp4 == 0:
-            w_erg = ' ~=~ ' + gzahl(Rational(fakt1, fakt2))
+            w_erg = ' ~=~ ' + gzahl(Fraction(fakt1, fakt2))
             if exp1 - exp3 != 0:
                 w_erg = w_erg + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
             if exp2 - exp4 != 0:
@@ -1107,7 +1109,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         lsg = (r' \frac{' + gzahl(fakt1) + '~' + bas1 + '^{' + gzahl(exp1) + r'}' + bas2 + '^{' + gzahl(exp2) + r'}}{'
                 + gzahl(fakt2) + '~' + bas1 + '^{' + gzahl(exp3) + '}' + bas2 + '^{' + gzahl(exp4) + r'}} ~=~ \frac{'
                + gzahl(fakt1) + '}{' + gzahl(fakt2) + r'} \cdot ' + bas1 + '^{' + gzahl(exp1) + vorz_str(-1 * exp3)
-               + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Rational(fakt1, fakt2))
+               + '}' + bas2 + '^{' + gzahl(exp2) + vorz_str(-1 * exp4) + '} ~=~ ' + gzahl(Fraction(fakt1, fakt2))
                + '~' + bas1 + '^{' + gzahl(exp1 - exp3, exp=True) + '}' + bas2 + '^{' + gzahl(exp2 - exp4, exp=True) + '}' + w_erg)
         return aufg, lsg
 
@@ -1124,14 +1126,14 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
         exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
         if 0 in list_exp_diff:
-            w_erg = gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2))
+            w_erg = gzahl(Fraction(zaehler1*zaehler2, nenner1*nenner2))
             n = 0
             for element in list_exp_diff:
                 if element != 0:
                     w_erg = w_erg + bas[n] + '^{' + gzahl(element) + '}'
                 n += 1
         else:
-            w_erg = (gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
+            w_erg = (gzahl(Fraction(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
                      + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + bas3 + '^{' + gzahl(exp5 - exp7) + '}' + bas4 + '^{'
                      + gzahl(exp6 - exp8) + '}')
 
@@ -1164,14 +1166,14 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
         list_exp_diff = [exp1 - exp3, exp2 - exp4, exp5 - exp7, exp6 - exp8]
         exp_diff1, exp_diff2, exp_diff3, exp_diff4 = list_exp_diff
         if 0 in list_exp_diff:
-            w_erg = gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2))
+            w_erg = gzahl(Fraction(zaehler1*zaehler2, nenner1*nenner2))
             n = 0
             for element in list_exp_diff:
                 if element != 0:
                     w_erg = w_erg + bas[n] + '^{' + gzahl(element) + '}'
                 n += 1
         else:
-            w_erg = (gzahl(Rational(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
+            w_erg = (gzahl(Fraction(zaehler1*zaehler2, nenner1*nenner2)) + '~' + bas1 + '^{' + gzahl(exp1 - exp3) + '}'
                      + bas2 + '^{' + gzahl(exp2 - exp4) + '}' + bas3 + '^{' + gzahl(exp5 - exp7) + '}' + bas4 + '^{'
                      + gzahl(exp6 - exp8) + '}')
 
@@ -1243,18 +1245,18 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
-    # Hier sollen die SuS zwei Potenzen multiplizieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
+    # Hier sollen die SuS zwei Potenzen multiplizieren, deren Exponenten aus Fractionen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
-    # b) Potenzen mit nat. Zahlen und gleichnamigen rationalen Exponenten
-    # c) Potenzen mit Variablen und gleichnamigen positiven rationalen Exponenten
-    # d) Potenzen mit Variablen und gleichnamigen rationalen Exponenten
-    # e) Potenzen mit nat. Zahlen und ungleichnamigen positiven rationalen Exponenten
-    # f) Potenzen mit nat. Zahlen und ungleichnamigen rationalen Exponenten
-    # g) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
-    # h) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten
-    # i) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten, dargestellt als Wurzel
-    # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quostient und Wurzel
+    # a) Potenzen mit nat. Zahlen und gleichnamigen positiven Fractionen Exponenten
+    # b) Potenzen mit nat. Zahlen und gleichnamigen Fractionen Exponenten
+    # c) Potenzen mit Variablen und gleichnamigen positiven Fractionen Exponenten
+    # d) Potenzen mit Variablen und gleichnamigen Fractionen Exponenten
+    # e) Potenzen mit nat. Zahlen und ungleichnamigen positiven Fractionen Exponenten
+    # f) Potenzen mit nat. Zahlen und ungleichnamigen Fractionen Exponenten
+    # g) Potenzen mit Variablen und ungleichnamigen positiven Fractionen Exponenten
+    # h) Potenzen mit Variablen und ungleichnamigen Fractionen Exponenten
+    # i) Potenzen mit Variablen und ungleichnamigen positiven Fractionen Exponenten, dargestellt als Wurzel
+    # j) Potenzen mit Variablen und ungleichnamigen Fractionen Exponenten, dargestellt als Quostient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1272,7 +1274,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(zaehler_1+zaehler_2,nenner)
+        erg = Fraction(zaehler_1+zaehler_2,nenner)
         bas = nzahl(2,8)
         aufg = (gzahl(bas) + '^{' + exp1 + r'} \cdot ' + gzahl(bas) + '^{' + exp2 + '} ~')
         lsg = (gzahl(bas) + '^{' + exp1 + r'} \cdot ' + gzahl(bas) + '^{' + exp2 + '} ~=~ ' + gzahl(bas)
@@ -1284,7 +1286,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
+        erg = Fraction(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
         bas = nzahl(2,8)
         if erg == 0:
             w_erg = '~=~ 1'
@@ -1301,7 +1303,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(zaehler_1+zaehler_2,nenner)
+        erg = Fraction(zaehler_1+zaehler_2,nenner)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~')
         lsg = (bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ ' + bas + '^{' + exp1 + '+' + exp2
@@ -1313,7 +1315,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
+        erg = Fraction(vorz1*zaehler_1 + vorz2*zaehler_2, nenner)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         if erg == 0:
             w_erg = '~=~ 1'
@@ -1333,7 +1335,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = (nenner / nenner_1) * zaehler_1
         zaehler_2_erw = (nenner / nenner_2) * zaehler_2
         bas = nzahl(2, 8)
-        exp1, exp2 = Rational(zaehler_1, nenner_1), Rational(zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(zaehler_1, nenner_1), Fraction(zaehler_2, nenner_2)
         aufg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~')
         lsg = (gzahl(bas) + '^{' + gzahl(exp1) + r'} \cdot ' + gzahl(bas) + '^{' + gzahl(exp2) + '} ~=~ ' + gzahl(bas)
                + '^{' + gzahl(exp1) + vorz_str(exp2) + '} ~=~' + gzahl(bas) + r'^{ \frac{' + gzahl(zaehler_1_erw)
@@ -1350,7 +1352,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
         zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
         bas = nzahl(2, 6)
-        exp1, exp2 = Rational(vorz1 * zaehler_1, nenner_1), Rational(vorz2 * zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(vorz1 * zaehler_1, nenner_1), Fraction(vorz2 * zaehler_2, nenner_2)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1369,7 +1371,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        exp1, exp2 = Rational(zaehler_1, nenner_1), Rational(zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(zaehler_1, nenner_1), Fraction(zaehler_2, nenner_2)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~')
         lsg = (bas + '^{' + gzahl(exp1) + r'} \cdot ' + bas + '^{' + gzahl(exp2) + '} ~=~ ' + bas
@@ -1386,8 +1388,8 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
         zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = Rational(vorz1 * zaehler_1, nenner_1), Rational(vorz2 * zaehler_2, nenner_2)
-        exp1_erw, exp2_erw = Rational(vorz1 * zaehler_1_erw, nenner), Rational(vorz2 * zaehler_2_erw, nenner)
+        exp1, exp2 = Fraction(vorz1 * zaehler_1, nenner_1), Fraction(vorz2 * zaehler_2, nenner_2)
+        exp1_erw, exp2_erw = Fraction(vorz1 * zaehler_1_erw, nenner), Fraction(vorz2 * zaehler_2_erw, nenner)
         if exp1 + exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1412,8 +1414,8 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         pot1 = r' \sqrt[' + gzahl(nenner_1) + ']{' + bas + '^{' + gzahl(zaehler_1) + '}}'
         pot2 = r' \sqrt[' + gzahl(nenner_2) + ']{' + bas + '^{' + gzahl(zaehler_2) + '}}'
 
-        erg = Rational(zaehler_1 * nenner_2 + zaehler_2 * nenner_1, nenner_1 * nenner_2)
-        exp1_erw, exp2_erw = Rational(zaehler_1_erw, nenner), Rational(zaehler_2_erw, nenner)
+        erg = Fraction(zaehler_1 * nenner_2 + zaehler_2 * nenner_1, nenner_1 * nenner_2)
+        exp1_erw, exp2_erw = Fraction(zaehler_1_erw, nenner), Fraction(zaehler_2_erw, nenner)
         aufg = pot1 + r'~ \cdot ~' + pot2
         lsg = (pot1 + r'~ \cdot ~' + pot2 + '~=~' + bas + '^{' + exp1 + r'} \cdot ' + bas + '^{' + exp2 + '} ~=~ '
                + bas + '^{' + exp1 + '+' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
@@ -1440,7 +1442,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         else:
             pot2 = r' \sqrt[' + gzahl(nenner_2) + ']{' + bas + '^{' + gzahl(zaehler_2) + '}}'
 
-        erg = Rational(vorz1*zaehler_1*nenner_2 + vorz2*zaehler_2*nenner_1,nenner_1*nenner_2)
+        erg = Fraction(vorz1*zaehler_1*nenner_2 + vorz2*zaehler_2*nenner_1,nenner_1*nenner_2)
         if zaehler_1/nenner_1 + zaehler_2/nenner_2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1500,10 +1502,10 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
     # b) sechs Faktoren aus zwei Basen und ganzzahligen Exponenten
     # c) sechs Faktoren aus drei Basen und ganzzahligen Exponenten
-    # d) vier Faktoren aus zwei Basen und rationalen Exponenten
-    # e) sechs Faktoren aus drei Basen und rationalen Exponenten
-    # f) vier Faktoren aus zwei Basen und rationalen Exponenten (als Dezimalbruch)
-    # g) sechs Faktoren aus drei Basen und rationalen Exponenten (als Dezimalbruch)
+    # d) vier Faktoren aus zwei Basen und Fractionen Exponenten
+    # e) sechs Faktoren aus drei Basen und Fractionen Exponenten
+    # f) vier Faktoren aus zwei Basen und Fractionen Exponenten (als Dezimalbruch)
+    # g) sechs Faktoren aus drei Basen und Fractionen Exponenten (als Dezimalbruch)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1576,8 +1578,8 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     aufgaben = {'a': [aufg_lsg, [zzahl(2,9) for zahl in range(4)], 2],
                 'b': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 2],
                 'c': [aufg_lsg, [zzahl(2,9) for zahl in range(6)], 3],
-                'd': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2],
-                'e': [aufg_lsg, [Rational(nzahl(1,9), nzahl(2,9)) for zahl in range(6)], 3],
+                'd': [aufg_lsg, [Fraction(nzahl(1,9), nzahl(2,9)) for zahl in range(4)], 2],
+                'e': [aufg_lsg, [Fraction(nzahl(1,9), nzahl(2,9)) for zahl in range(6)], 3],
                 'f': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(4)], 2],
                 'g': [aufg_lsg, [zzahl(2,9)/10 for zahl in range(6)], 3]}
 
@@ -1609,18 +1611,18 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
-    # Hier sollen die SuS zwei Potenzen dividieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
+    # Hier sollen die SuS zwei Potenzen dividieren, deren Exponenten aus Fractionen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
-    # b) Potenzen mit nat. Zahlen und gleichnamigen rationalen Exponenten
-    # c) Potenzen mit Variablen und gleichnamigen positiven rationalen Exponenten
-    # d) Potenzen mit Variablen und gleichnamigen rationalen Exponenten
-    # e) Potenzen mit nat. Zahlen und ungleichnamigen positiven rationalen Exponenten
-    # f) Potenzen mit nat. Zahlen und ungleichnamigen rationalen Exponenten
-    # g) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten
-    # h) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten
-    # i) Potenzen mit Variablen und ungleichnamigen positiven rationalen Exponenten, dargestellt als Wurzel
-    # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quotient und Wurzel
+    # a) Potenzen mit nat. Zahlen und gleichnamigen positiven Fractionen Exponenten
+    # b) Potenzen mit nat. Zahlen und gleichnamigen Fractionen Exponenten
+    # c) Potenzen mit Variablen und gleichnamigen positiven Fractionen Exponenten
+    # d) Potenzen mit Variablen und gleichnamigen Fractionen Exponenten
+    # e) Potenzen mit nat. Zahlen und ungleichnamigen positiven Fractionen Exponenten
+    # f) Potenzen mit nat. Zahlen und ungleichnamigen Fractionen Exponenten
+    # g) Potenzen mit Variablen und ungleichnamigen positiven Fractionen Exponenten
+    # h) Potenzen mit Variablen und ungleichnamigen Fractionen Exponenten
+    # i) Potenzen mit Variablen und ungleichnamigen positiven Fractionen Exponenten, dargestellt als Wurzel
+    # j) Potenzen mit Variablen und ungleichnamigen Fractionen Exponenten, dargestellt als Quotient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1638,7 +1640,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(zaehler_1-zaehler_2,nenner)
+        erg = Fraction(zaehler_1-zaehler_2,nenner)
         bas = nzahl(2,8)
         aufg = r' \frac{' + (gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + exp1 + r'}}{' + gzahl(bas) + '^{' + exp2 + '}} ~=~ ' + gzahl(bas)
@@ -1650,7 +1652,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(vorz1*zaehler_1 - vorz2*zaehler_2, nenner)
+        erg = Fraction(vorz1*zaehler_1 - vorz2*zaehler_2, nenner)
         bas = nzahl(2,8)
         if erg == 0:
             w_erg = '~=~ 1'
@@ -1667,7 +1669,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1, zaehler_2, nenner = np.random.choice(range(2,12), 3, False)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(zaehler_1-zaehler_2,nenner)
+        erg = Fraction(zaehler_1-zaehler_2,nenner)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (r' \frac{' + bas + '^{' + exp1 + '}}{' + bas + '^{' + exp2 + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + exp1 + r'}}{' + bas + '^{' + exp2 + '}} ~=~ ' + bas + '^{' + exp1 + '-' + exp2
@@ -1679,7 +1681,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         vorz1, vorz2 = np.random.choice([1, -1], 2, True)
         exp1 = r' \frac{' + str(zaehler_1) + '}{' + str(nenner) + '}'
         exp2 = r' \frac{' + str(zaehler_2) + '}{' + str(nenner) + '}'
-        erg = Rational(vorz1*zaehler_1 - vorz2*zaehler_2,nenner)
+        erg = Fraction(vorz1*zaehler_1 - vorz2*zaehler_2,nenner)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         if erg == 0:
             w_erg = '~=~ 1'
@@ -1700,7 +1702,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = (nenner / nenner_1) * zaehler_1
         zaehler_2_erw = (nenner / nenner_2) * zaehler_2
         bas = nzahl(2, 8)
-        exp1, exp2 = Rational(zaehler_1, nenner_1), Rational(zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(zaehler_1, nenner_1), Fraction(zaehler_2, nenner_2)
         aufg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}}{' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + gzahl(bas) + '^{' + gzahl(exp1) + r'}}{' + gzahl(bas) + '^{' + gzahl(exp2) + '}} ~=~ '
                + gzahl(bas) + '^{' + gzahl(exp1) + vorz_str(-1*exp2) + '} ~=~' + gzahl(bas) + r'^{ \frac{'
@@ -1717,7 +1719,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
         zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
         bas = nzahl(2, 6)
-        exp1, exp2 = Rational(vorz1 * zaehler_1, nenner_1), Rational(vorz2 * zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(vorz1 * zaehler_1, nenner_1), Fraction(vorz2 * zaehler_2, nenner_2)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1736,7 +1738,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         nenner = kgv(nenner_1, nenner_2)
         zaehler_1_erw = nenner / nenner_1 * zaehler_1
         zaehler_2_erw = nenner / nenner_2 * zaehler_2
-        exp1, exp2 = Rational(zaehler_1, nenner_1), Rational(zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(zaehler_1, nenner_1), Fraction(zaehler_2, nenner_2)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{' + bas + '^{' + gzahl(exp2) + '}} ~')
         lsg = (r' \frac{' + bas + '^{' + gzahl(exp1) + r'}}{' + bas + '^{' + gzahl(exp2) + '}} ~=~ ' + bas + '^{'
@@ -1754,7 +1756,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         zaehler_1_erw = vorz1 * nenner / nenner_1 * zaehler_1
         zaehler_2_erw = vorz2 * nenner / nenner_2 * zaehler_2
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
-        exp1, exp2 = Rational(vorz1 * zaehler_1, nenner_1), Rational(vorz2 * zaehler_2, nenner_2)
+        exp1, exp2 = Fraction(vorz1 * zaehler_1, nenner_1), Fraction(vorz2 * zaehler_2, nenner_2)
         if exp1 - exp2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1780,7 +1782,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         pot1 = r' \sqrt[' + gzahl(nenner_1) + ']{' + bas + '^{' + gzahl(zaehler_1) + '}}'
         pot2 = r' \sqrt[' + gzahl(nenner_2) + ']{' + bas + '^{' + gzahl(zaehler_2) + '}}'
 
-        erg = Rational(zaehler_1 * nenner_2 - zaehler_2 * nenner_1, nenner_1 * nenner_2)
+        erg = Fraction(zaehler_1 * nenner_2 - zaehler_2 * nenner_1, nenner_1 * nenner_2)
         aufg = r' \frac{~' + pot1 + r'~}{~' + pot2 + '~}'
         lsg = (r' \frac{' + pot1 + r'~ }{ ~' + pot2 + r'} ~=~ \frac{' + bas + '^{' + exp1 + r'}}{' + bas + '^{' + exp2
                + '}} ~=~ ' + bas + '^{' + exp1 + '-' + exp2 + '} ~=~' + bas + r'^{ \frac{' + gzahl(zaehler_1_erw)
@@ -1808,7 +1810,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
         else:
             pot2 = r' \sqrt[' + gzahl(nenner_2) + ']{' + bas + '^{' + gzahl(zaehler_2) + '}}'
 
-        erg = Rational(vorz1*zaehler_1*nenner_2 - vorz2*zaehler_2*nenner_1,nenner_1*nenner_2)
+        erg = Fraction(vorz1*zaehler_1*nenner_2 - vorz2*zaehler_2*nenner_1,nenner_1*nenner_2)
         if zaehler_1/nenner_1 -zaehler_2/nenner_2 == 0:
             w_erg = '~=~ 1'
         else:
@@ -1867,10 +1869,10 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
     # Hier sollen die SuS das Produkt und die Potenz mehrerer Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenz einer Potenz mit ganzzahligen Exponenten
-    # b) Potenz einer Potenz mit positiven rationalen Exponenten
-    # c) Potenz einer Potenz mit rationalen Exponenten
+    # b) Potenz einer Potenz mit positiven Fractionen Exponenten
+    # c) Potenz einer Potenz mit Fractionen Exponenten
     # d) Produkt zweier Potenzen mit gleichem ganzzahligem Exponenten
-    # e) Produkt zweier Potenzen mit gleichem rationalen Exponenten
+    # e) Produkt zweier Potenzen mit gleichem Fractionen Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1898,7 +1900,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         fakt1, fakt2 = random_selection(list(range(1, 8)), 2, False)
         exp1 = r' \frac{' + str(fakt1*zaehler_1) + '}{' + str(fakt2*nenner_1) + '}'
         exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
-        erg = gzahl(Rational(zaehler_1*zaehler_2,nenner_1*nenner_2))
+        erg = gzahl(Fraction(zaehler_1*zaehler_2,nenner_1*nenner_2))
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = r' \left( ~' + bas + r'^{' + exp1 + r'}~ \right) ^{' + exp2 + '}'
         lsg = (r' \left(' + bas + r'^{' + exp1 + r'} \right) ^{' + exp2 + '} ~=~' + bas + r'^{' + exp1
@@ -1912,7 +1914,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
         fakt1, fakt2 = random_selection(list(range(1, 8)), 2, False)
         exp1 = r' \frac{' + str(fakt1*zaehler_1) + '}{' + str(fakt2*nenner_1) + '}'
         exp2 = r' \frac{' + str(fakt2*zaehler_2) + '}{' + str(fakt1*nenner_2) + '}'
-        erg = gzahl(Rational(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2), exp=True)
+        erg = gzahl(Fraction(vorz1*zaehler_1*vorz2*zaehler_2,nenner_1*nenner_2), exp=True)
         bas = random.choice(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = (r' \left( ~' + bas + r'^{' + vorz_aussen(vorz1) + exp1 + r'} \right) ~ ^{' + vorz_aussen(vorz2) + exp2
                 + '}')
@@ -1936,7 +1938,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
                 + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}}')
         lsg = (bas1 + r'^{ \frac{' + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} \cdot ' + bas2 + r'^{ \frac{'
                + gzahl(zaehler) + '}{' + gzahl(nenner) + r'}} ~=~ \left(' + bas1 + bas2 + r' \right)^{'
-               + gzahl(Rational(zaehler, nenner), exp=True) + r'}')
+               + gzahl(Fraction(zaehler, nenner), exp=True) + r'}')
         return aufg, lsg
 
     if anzahl != False:

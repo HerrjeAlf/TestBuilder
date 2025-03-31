@@ -2,6 +2,7 @@ from pylatex.utils import bold
 import string, sys
 import numpy as np
 import random, math
+from fractions import Fraction
 from numpy.linalg import solve as slv
 from pylatex import Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure, MultiColumn
 from pylatex.utils import bold
@@ -290,7 +291,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         kprod_gek = vektor_kuerzen(kprod)
         punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
-        erg = Rational(abs(skalarprodukt(kprod, vektor_as)),6)
+        erg = Fraction(abs(skalarprodukt(kprod, vektor_as)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
                             + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
@@ -440,36 +441,36 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
         loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + vorz_v_aussen(x_2,r' \cdot r')
                      + vorz_v_innen(x_3,'s') + r' \cdot \quad \to \quad r~=~'
-                     + gzahl(Rational(x_1,x_2)) + vorz_str(Rational(-1*x_3,x_2))
+                     + gzahl(Fraction(x_1,x_2)) + vorz_str(Fraction(-1*x_3,x_2))
                      + r' \cdot s \quad (2P) \\')
 
         if y_3 != 0:
             lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
             lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
-                         + gzahl(y_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
+                         + gzahl(y_2) + r' \cdot \left(' + gzahl(Fraction(x_1,x_2))
+                         + vorz_str(Fraction(-1*x_3,x_2)) + r' \cdot s \right)'
                          + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
-                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \left('
-                         + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
+                         + gzahl(y_1) + vorz_str(Fraction(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \left('
+                         + gzahl(Fraction(-1*x_3*y_2,x_2)) + vorz_str(y_3)
                          + r' \right) \quad (1P) \quad \to \quad '
                          + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
                          + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
                          + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
                          + r' ~=~ ' + gzahl(N(z_2*lsg_r+z_3*lsg_s,3)) + r'} \quad (1P)')
         elif z_3 != 0:
-            lsg_r = N(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)),3)
+            lsg_r = N(Fraction((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)),3)
             lsg_s = N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3)
             print(lsg_r)
             print(lsg_s)
             loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
-                         + gzahl(z_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
+                         + gzahl(z_2) + r' \cdot \left(' + gzahl(Fraction(x_1,x_2))
+                         + vorz_str(Fraction(-1*x_3,x_2)) + r' \cdot s \right)'
                          + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
-                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \left('
-                         + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
+                         + gzahl(z_1) + vorz_str(Fraction(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \left('
+                         + gzahl(Fraction(-1*x_3*z_2,x_2)) + vorz_str(z_3)
                          + r' \cdot s \right) \quad (2P) \quad \to \quad '
-                         + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
+                         + r' s ~=~ ' + gzahl(Fraction((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
                          + r' \quad (1P) \quad  r~=~ '
                          + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
                          + r' \quad (1P) \\ \mathrm{Einsetzen~in~II: ' + gzahl(y_1) + '~=~' + gzahl(lsg_r)
@@ -535,18 +536,18 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         else:
             lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \vert \div '
-                     + gzahl_klammer(a1) + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1))
-                     + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \quad 2P) \\')
+                     + gzahl_klammer(a1) + r' \quad \to \quad r~=~' + gzahl(Fraction(c1,a1))
+                     + vorz_v_innen(Fraction(-1*b1,a1),'s') + r' \quad 2P) \\')
             punkte += 2
             lsg_2 = (r' \mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( '
-                     + gzahl(Rational(c1,a1)) + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \right) '
+                     + gzahl(Fraction(c1,a1)) + vorz_v_innen(Fraction(-1*b1,a1),'s') + r' \right) '
                      + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2)
-                     + r' \quad \to \quad ' + gzahl(Rational(a2*c1,a1)) + vorz_v_innen(Rational(-1*a2*b1,a1), 's')
-                     + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(Rational(a2*c1,a1))
-                     + vorz_v_innen(Rational(-1*a2*b1,a1)+b2, 's') + '~=~' + gzahl(c2) + r' \quad \to \vert'
-                     + vorz_str(Rational(-1*a2*c1,a1)) + r' \quad \vert \div '
-                     + gzahl_klammer(Rational(-1*a2*b1,a1)+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
-                     + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1)) + vorz_str(Rational(-1*b1,a1)) + r' \cdot '
+                     + r' \quad \to \quad ' + gzahl(Fraction(a2*c1,a1)) + vorz_v_innen(Fraction(-1*a2*b1,a1), 's')
+                     + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(Fraction(a2*c1,a1))
+                     + vorz_v_innen(Fraction(-1*a2*b1,a1)+b2, 's') + '~=~' + gzahl(c2) + r' \quad \to \vert'
+                     + vorz_str(Fraction(-1*a2*c1,a1)) + r' \quad \vert \div '
+                     + gzahl_klammer(Fraction(-1*a2*b1,a1)+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
+                     + r' \quad \to \quad r~=~' + gzahl(Fraction(c1,a1)) + vorz_str(Fraction(-1*b1,a1)) + r' \cdot '
                      + gzahl_klammer(faktor_2) + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
             punkte += 4
         lsg_3 = (r' \mathrm{r ~=~ ' + gzahl(faktor_1) + r' \quad und \quad s~=~' + gzahl(faktor_2) + r' \quad in ~ '
@@ -672,7 +673,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                             + gzahl(N(sqrt(sum(a*a for a in vektor_at)),3)))
         laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_tb),3))))
-        faktor_r = Rational(a1,(10-a1))
+        faktor_r = Fraction(a1,(10-a1))
         aufgabe.append(str(liste_teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~), \quad T(~' + gzahl(vektor_t[0]) + r'~ \vert ~' + gzahl(vektor_t[1])
@@ -682,7 +683,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0],3))+ r' \\' + gzahl(N(vektor_at[1],3)) + r' \\'
                        + gzahl(N(vektor_at[2],3)) + r' \\ \end{pmatrix} \cdot \left( ~1~+~ '
-                       + gzahl(Rational(10-a1,a1)) + r' \right) \\ ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
+                       + gzahl(Fraction(10-a1,a1)) + r' \right) \\ ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0]*(1+(10-a1)/a1),3)) + r' \\'
                        + gzahl(N(vektor_at[1]*(1+(10-a1)/a1),3)) + r' \\'
@@ -864,7 +865,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
                            + r'mit~der~' + spurpunkt + r'-Achsenebene.} \hspace{10em}')
 
         if spurpunkt == 'x-y' or spurpunkt == 'all':
-            lsg_xy = Rational(-az,vz)
+            lsg_xy = Fraction(-az,vz)
             punkt_s1 = [s1x, s1y, s1z] = punkt_a + lsg_xy * v
             loesung.append(r' z=0 \quad \to \quad 0~=~' + gzahl(az) + vorz_str(vz) + r'r \quad \vert '
                            + vorz_str(-1*az) + r' \quad \vert \div ' + gzahl_klammer(vz) + r' \quad \to \quad r~=~'
@@ -878,7 +879,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
             punkte += 4
 
         if spurpunkt == 'x-z' or spurpunkt == 'all':
-            lsg_xz = Rational(-ay,vy)
+            lsg_xz = Fraction(-ay,vy)
             punkt_s2 = [s2x, s2y, s2z] = punkt_a + lsg_xz * v
             loesung.append(r' y=0 \quad \to \quad 0~=~' + gzahl(ay) + vorz_str(vy) + r'r \quad \vert '
                            + vorz_str(-1*ay) + r' \quad \vert \div ' + gzahl_klammer(vy) + r' \quad \to \quad r~=~'
@@ -892,7 +893,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
             punkte += 4
 
         if spurpunkt == 'y-z' or spurpunkt == 'all':
-            lsg_yz = Rational(-ax,vx)
+            lsg_yz = Fraction(-ax,vx)
             punkt_s3 = [s3x, s3y, s3z] = punkt_a + lsg_yz * v
             loesung.append(r' x=0 \quad \to \quad 0~=~' + gzahl(ax) + vorz_str(vx) + r'r \quad \vert '
                            + vorz_str(-1*ax) + r' \quad \vert \div ' + gzahl_klammer(vx) + r' \quad \to \quad r~=~'
@@ -1255,10 +1256,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
                 while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                     punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u))  # Punkt C liegt auf h
-            fakt_r = Rational(skalarprodukt(punkt_c - punkt_a, v), skalarprodukt(v, v))
+            fakt_r = Fraction(skalarprodukt(punkt_c - punkt_a, v), skalarprodukt(v, v))
             erg = N(sqrt((cx - ax - fakt_r * vx) ** 2 + (cy - ay - fakt_r * vy) ** 2 + (cz - az - fakt_r * vz) ** 2), 3)
             erg_cross = [crx, cry, crz] = vektor_ganzzahl(np.cross(punkt_c - punkt_a, v))
-            erg_alt_disk = Rational(crx ** 2 + cry ** 2 + crz ** 2, vx ** 2 + vy ** 2 + vz ** 2)
+            erg_alt_disk = Fraction(crx ** 2 + cry ** 2 + crz ** 2, vx ** 2 + vy ** 2 + vz ** 2)
             erg_alt = N(sqrt(erg_alt_disk), 3)
         elif lagebeziehung == 'windschief':
             if 'c' not in teilaufg:
@@ -1551,9 +1552,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        fakt_n = Rational(nx, nx_gk)
-        fakt_n = Rational(ny, ny_gk) if nx_gk == 0 else fakt_n
-        fakt_n = Rational(nz, nz_gk) if nx_gk == 0 and ny_gk == 0 else fakt_n
+        fakt_n = Fraction(nx, nx_gk)
+        fakt_n = Fraction(ny, ny_gk) if nx_gk == 0 else fakt_n
+        fakt_n = Fraction(nz, nz_gk) if nx_gk == 0 and ny_gk == 0 else fakt_n
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Formen Sie die Gleichung für Ebene E in '
                        + 'Normalen- und Koordinatenform um. \n\n')
@@ -1855,11 +1856,11 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     elif form == 'koordinatenform' or 'a' not in teilaufg:
         ebenengleichung = koordinatenform
         andere_darstellungsform = (r'E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
-                                   + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+                                   + latex(Fraction(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
                                    + r' \\' + gzahl(0) + r' \\  \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
                                    + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                                    r' \end{pmatrix} ~=~ 0')
-        lsg = (r' \begin{pmatrix} ' + latex(Rational(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
+        lsg = (r' \begin{pmatrix} ' + latex(Fraction(np.dot(punkt_a,n),nx)) + r' \\' + gzahl(0)
                + r' \\' + gzahl(0) + r' \\ \end{pmatrix}')
     else:
         exit("form kann nur None, 'normalenform' oder 'koordinatenform' sein ")
@@ -2174,8 +2175,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         # print('Vektor k_v: ' + str(k_v))
         # print(-1 * np.dot(n_gk, k_v))
         # print(np.dot(n_gk, g_v))
-        g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)) * g_v
-        g_richtung = [g_rx, g_ry, g_rz] = Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)) * g_v + k_v
+        g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Fraction(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)) * g_v
+        g_richtung = [g_rx, g_ry, g_rz] = Fraction(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)) * g_v + k_v
 
         lsg = (gzahl(np.dot(punkt_a, n_gk)) + vorz_v_innen(np.dot(n_gk, g_v),'r')
                + vorz_v_innen(np.dot(n_gk, k_v),'s') +  '~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad \vert '
@@ -2184,13 +2185,13 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                + r' \quad \to \quad ' + vorz_v_aussen(np.dot(n_gk, g_v),'r') + '~=~'
                + gzahl(np.dot(punkt_d - punkt_a, n_gk)) + vorz_v_innen(-1*np.dot(n_gk, k_v), 's')
                + r' \quad \vert \div' + gzahl_klammer(np.dot(n_gk, g_v)) + r' \quad (2BE) \\ r ~=~'
-               + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
-               + vorz_str(Rational(-1* np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
+               + gzahl(Fraction(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
+               + vorz_str(Fraction(-1* np.dot(n_gk, k_v), np.dot(n_gk, g_v)))
                + r's \quad \mathrm{Die~Ebene~F~schneidet~die~Ebene~E. \quad (2BE) } \\'
                + r' \quad \mathrm{Schnittgerade~bestimmen,~indem~man~r~in~F~einsetzt} \\'
                + r' \overrightarrow{x} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az)
-               + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
-               + vorz_str(Rational(-1*np.dot(n_gk, k_v), np.dot(n_gk, g_v))) + r's) \cdot \begin{pmatrix} ' + gzahl(g_vx)
+               + r' \\' + r' \end{pmatrix} ~+~ (' + gzahl(Fraction(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)))
+               + vorz_str(Fraction(-1*np.dot(n_gk, k_v), np.dot(n_gk, g_v))) + r's) \cdot \begin{pmatrix} ' + gzahl(g_vx)
                + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                + gzahl(k_vx) + r' \\' + gzahl(k_vy) + r' \\' + gzahl(k_vz) + r' \\'
                + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(g_sx) + r' \\' + gzahl(g_sy) + r' \\' + gzahl(g_sz)
@@ -2272,7 +2273,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         punkte = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
-        punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
+        punkt_aE = [ax_E, ay_E, az_E] = np.array([Fraction(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
@@ -2496,7 +2497,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             lsg = (r' \quad \to \quad \mathrm{Widerspruch \quad \to \quad es~gibt~keine~parallele~Ebene~zur~' + bez
                    + r'-Achse} \quad (2BE)')
         else:
-            erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
+            erg = Fraction(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
             erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
                    + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
@@ -2601,8 +2602,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
             nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
 
-        lsg_kon = Rational(erg_var1 - (nx1 * dx + ny1 * dy + nz1 * dz), nz1 * ny2 - ny1 * nz2)
-        lsg_var = Rational(ny2 * nx1 - nx2 * ny1, nz1 * ny2 - ny1 * nz2)
+        lsg_kon = Fraction(erg_var1 - (nx1 * dx + ny1 * dy + nz1 * dz), nz1 * ny2 - ny1 * nz2)
+        lsg_var = Fraction(ny2 * nx1 - nx2 * ny1, nz1 * ny2 - ny1 * nz2)
 
         if nx_1 == nx1 and ny_1 == ny1 and nz_1 == nz1:
             lsg_1 = r' \quad (1BE) \quad '

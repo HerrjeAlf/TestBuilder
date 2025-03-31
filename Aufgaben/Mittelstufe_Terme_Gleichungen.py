@@ -2,6 +2,7 @@ import string
 
 import numpy as np
 import random, math
+from fractions import Fraction
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
@@ -112,9 +113,9 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                           bruch1_str + '+' + bruch2_str, bruch1_str + '-' + bruch2_str]
             list_aufg = [r'~ \square \quad '  + element for element in list_terme]
             list_lsg = list_aufg.copy()
-            list_erg = [Rational(werte[0]*werte[2],werte[1]*werte[3]), Rational(werte[0]*werte[3],werte[1]*werte[2]),
-                        Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
-                        Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
+            list_erg = [Fraction(werte[0]*werte[2],werte[1]*werte[3]), Fraction(werte[0]*werte[3],werte[1]*werte[2]),
+                        Fraction(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
+                        Fraction(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
             erg_ausw = random.choice([0,1,2,3])
             # erg_ausw = 0
             erg = list_erg[erg_ausw]
@@ -386,8 +387,8 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Terme mit einer Basis und ganzzahligen Faktoren (zwei Summanden)
     # b) Terme mit einer Basis und ganzzahligen Faktoren (drei Summanden)
-    # c) Terme mit einer Basis und rationalen Faktoren (zwei Summanden)
-    # d) Terme mit einer Basis und rationalen Faktoren (drei Summanden)
+    # c) Terme mit einer Basis und Fractionen Faktoren (zwei Summanden)
+    # d) Terme mit einer Basis und Fractionen Faktoren (drei Summanden)
     # e) Bruchterme mit einer Basis (zwei Summanden)
     # f) Bruchterme mit einer Basis (drei Summanden)
     # g) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (3 Summanden)
@@ -429,7 +430,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         return aufg, lsg
 
     def einf_bruch_terme(anz_sum):
-        fakt = [random.choice([-1,1])* Rational(nzahl(1,12), random.choice([2, 3, 5, 7, 11])) for _ in range(anz_sum)]
+        fakt = [random.choice([-1,1])* Fraction(nzahl(1,12), random.choice([2, 3, 5, 7, 11])) for _ in range(anz_sum)]
         bas = random_selection(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x', 'y', 'z'])
         aufg = '~' + vorz_v_aussen(fakt[0], bas[0])
         for k in range(len(fakt) - 1):
@@ -501,7 +502,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
         # print(liste_glw_terme)
         liste_terme = []
         for step in range(anz_sum):
-            liste_terme.append([Rational(zzahl(1, 12), zzahl(1, 12)), liste_glw_terme[step % anz_glw]])
+            liste_terme.append([Fraction(zzahl(1, 12), zzahl(1, 12)), liste_glw_terme[step % anz_glw]])
         random.shuffle(liste_terme)
         # print(liste_terme)
         summe = 0
@@ -604,7 +605,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
             elif koef == 'ganz':
                 liste_koef = [nzahl(p, q) for _ in range(anz_fakt)]
             elif koef == 'rat':
-                liste_koef = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz_fakt)]
+                liste_koef = [Fraction(zzahl(p, q), nzahl(p, q)) for _ in range(anz_fakt)]
             else:
                 liste_koef = [zzahl(p, 10 * q) / 10 for _ in range(anz_fakt)]
         # print(liste_bas)
@@ -682,11 +683,11 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     # c) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden
     # d) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden mit Variablen
     # e) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden mit Variablen und einem weiteren Summanden
-    # f) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei rationalen Summanden mit einer Variablen
+    # f) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei Fractionen Summanden mit einer Variablen
     # g) Klammer mit ganzzahligen Koeffizienten sowie einer Potenz einer Variable und drei Dezimalbrüchen als Summanden mit Potenzen von Variablen
-    # h) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei rationalen Summanden mit Potenz einer Variablen und einem weiteren Summanden
-    # i) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
-    # j) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
+    # h) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei Fractionen Summanden mit Potenz einer Variablen und einem weiteren Summanden
+    # i) Klammer mit Fractionen Koeffizienten sowie einer Potenz einer Variable und drei Fractionen Summanden mit Potenzen von Variablen
+    # j) Klammer mit Fractionen Koeffizienten sowie einer Potenz einer Variable und drei Fractionen Summanden mit Potenzen von Variablen und einem weiteren Summanden
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
@@ -712,7 +713,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
             elif fakt == 'ganz':
                 liste_fakt = [nzahl(p, q) for _ in range(anz)]
             elif fakt == 'rat':
-                liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz)]
+                liste_fakt = [Fraction(zzahl(p, q), nzahl(p, q)) for _ in range(anz)]
             else:
                 liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz)]
 
@@ -728,7 +729,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
         art_fakt = ['vorz', 'nat', 'ganz', 'rat', 'dez']
         fakt_aus = random.choice(art_fakt) if (fakt_aus not in art_fakt) else fakt_aus
         faktoren = {'vorz': random.choice([-1, 1]), 'nat': nzahl(1, 9), 'ganz': zzahl(1, 9),
-                    'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
+                    'rat': Fraction(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
         if var_aus == True:
             var_aus = random.choice([a, b, c, d, e, f, g, h, x, y, z])
@@ -851,8 +852,8 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     # e) eine ganze Zahl und die Potenz einer Variablen aus drei Summanden ausklammern
     # f) eine ganze Zahl und eine Variable im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
     # g) eine ganze Zahl und die Potenz einer Variablen im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
-    # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
-    # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
+    # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus Fractionen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
+    # i) eine Fractione Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus Fractionen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
@@ -883,7 +884,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
             elif fakt == 'ganz':
                 liste_fakt = [nzahl(p, q) for _ in range(anz)]
             elif fakt == 'rat':
-                liste_fakt = [Rational(zzahl(p, q), nzahl(p, q)) for _ in range(anz)]
+                liste_fakt = [Fraction(zzahl(p, q), nzahl(p, q)) for _ in range(anz)]
             else:
                 liste_fakt = [zzahl(p, 10 * q) / 10 for _ in range(anz)]
 
@@ -896,7 +897,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
         art_fakt = ['nat', 'ganz', 'rat', 'dez']
         fakt_aus = random.choice(art_fakt) if (fakt_aus not in art_fakt) else fakt_aus
         faktoren = {'nat': nzahl(2, 9), 'ganz': zzahl(2, 9),
-                    'rat': Rational(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
+                    'rat': Fraction(zzahl(p, q), nzahl(p, q)), 'dez': zzahl(1, 100) / 10}
         fakt = faktoren[fakt_aus]
         if var_aus == True:
             var_aus = random.choice([a, b, c, d, e, f, g, h, x, y, z])
@@ -997,19 +998,19 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung der Form a * x = b mit ganzen Zahlen
-    # b) Gleichung der Form a * x = b mit rationalen Zahlen
+    # b) Gleichung der Form a * x = b mit Fractionen Zahlen
     # c) Gleichung der Form a * x + b = c mit ganzen Zahlen
-    # d) Gleichung der Form a * x + b = c mit rationalen Zahlen
+    # d) Gleichung der Form a * x + b = c mit Fractionen Zahlen
     # e) Gleichung der Form a * x + b = c * x + d mit ganzen Zahlen
-    # f) Gleichung der Form a * x + b = c * x + d mit rationalen Zahlen
+    # f) Gleichung der Form a * x + b = c * x + d mit Fractionen Zahlen
     # g) Gleichung der Form a * (b * x + c) = d mit ganzen Zahlen
-    # h) Gleichung der Form a * (b * x + c) = d mit rationalen Zahlen
+    # h) Gleichung der Form a * (b * x + c) = d mit Fractionen Zahlen
     # i) Gleichung der Form a * (b * x + c) = d * x + e mit ganzen Zahlen
-    # j) Gleichung der Form a * (b * x + c) = d * x + e mit rationalen Zahlen
+    # j) Gleichung der Form a * (b * x + c) = d * x + e mit Fractionen Zahlen
     # k) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit ganzen Zahlen
-    # l) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit rationalen Zahlen
+    # l) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit Fractionen Zahlen
     # m) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit ganzen Zahlen
-    # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit rationalen Zahlen
+    # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit Fractionen Zahlen
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
@@ -1024,12 +1025,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
 
     def gl_fakt(rat=False):
         fakt = zzahl(1,6)
-        fakt = Rational(fakt, random.choice([2,4,5,10])) if rat else fakt
+        fakt = Fraction(fakt, random.choice([2,4,5,10])) if rat else fakt
         xwert = zzahl(1,9)
         erg = xwert * fakt
         aufg = latex(fakt*x) + '~=~' + gzahl(erg)
         if abs(fakt) < 1:
-            lsg = (aufg + r' \quad \vert \cdot ' + gzahl_klammer(Rational(1,fakt)) + r' \quad \to \quad x ~=~'
+            lsg = (aufg + r' \quad \vert \cdot ' + gzahl_klammer(Fraction(1,fakt)) + r' \quad \to \quad x ~=~'
                    + gzahl(xwert))
         else:
             lsg = (aufg + r' \quad \vert \div ' + gzahl_klammer(fakt) + r' \quad \to \quad x ~=~'
@@ -1038,14 +1039,14 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
 
     def gl_sum(rat=False):
         fakt = zzahl(1,6)
-        fakt = Rational(fakt, random.choice([2,4,5,10])) if rat else fakt
+        fakt = Fraction(fakt, random.choice([2,4,5,10])) if rat else fakt
         sum = zzahl(1,5)
         xwert = zzahl(1, 9)
         erg = xwert * fakt + sum
         aufg = latex(fakt*x) + vorz_str(sum) + '~=~' + gzahl(erg)
         if abs(fakt) < 1:
             lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \cdot '
-                   + gzahl_klammer(Rational(1,fakt)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+                   + gzahl_klammer(Fraction(1,fakt)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
         else:
             lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \div ' + gzahl_klammer(fakt)
                    + r' \quad \to \quad x ~=~' + gzahl(xwert))
@@ -1053,7 +1054,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
 
     def gl_sum_beids(rat=False):
         fakt1 = zzahl(1,6)
-        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
+        fakt1 = Fraction(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = fakt1 + zzahl(1,5)
         while fakt2 == 0:
             fakt2 = fakt1 + zzahl(1, 5)
@@ -1066,7 +1067,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
                        + latex((fakt1 - fakt2)*x) + vorz_str(sum) + r' ~=~' + gzahl(erg)
                        + r' \quad \vert ' + vorz_str(-1 * sum) + r' \quad \vert \cdot '
-                       + gzahl_klammer(Rational(1,(fakt1 - fakt2))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+                       + gzahl_klammer(Fraction(1,(fakt1 - fakt2))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
             else:
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt2) + r'x \quad \to \quad '
                        + latex((fakt1-fakt2)*x) + vorz_str(sum) + r' ~=~' + gzahl(erg)
@@ -1076,7 +1077,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
             if abs(fakt2-fakt1) < 1:
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
                        + latex((fakt2 - fakt1)*x) + vorz_str(erg) + r' \quad \vert ' + vorz_str(-1 * erg)
-                       + r' \quad \vert \cdot ' + gzahl_klammer(Rational(1,(fakt2 - fakt1)))
+                       + r' \quad \vert \cdot ' + gzahl_klammer(Fraction(1,(fakt2 - fakt1)))
                        + r' \quad \to \quad x ~=~' + gzahl(xwert))
             else:
                 lsg = (aufg + r' \quad \vert ' + vorz_str(-1 * fakt1) + r'x \quad \to \quad ' + gzahl(sum) + r' ~=~'
@@ -1088,10 +1089,10 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     def gl_term(rat=False):
         fakt1 = zzahl(1, 5)
         fakt2 = zzahl(1,6)
-        fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
+        fakt2 = Fraction(fakt2, random.choice([2,4,5,10])) if rat else fakt2
         while fakt2 == 0:
             fakt2 = zzahl(1, 6)
-            fakt2 = Rational(fakt2, random.choice([2,4,5,10])) if rat else fakt2
+            fakt2 = Fraction(fakt2, random.choice([2,4,5,10])) if rat else fakt2
         sum = zzahl(1, 9)
         xwert = zzahl(1,9)
         erg = fakt2 * (fakt1 * xwert + sum)
@@ -1100,7 +1101,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         if abs(fakt2 * fakt1) < 1:
             lsg = (aufg + r' \quad \to \quad ' + latex(fakt2 * fakt1 * x) + vorz_str(fakt2 * sum) + '~=~'
                    + gzahl(erg) + r' \quad \vert ' + vorz_str(-1 * fakt2 * sum) + r' \quad \vert \cdot '
-                   + gzahl_klammer(Rational(1,(fakt2 * fakt1))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+                   + gzahl_klammer(Fraction(1,(fakt2 * fakt1))) + r' \quad \to \quad x ~=~' + gzahl(xwert))
         else:
             lsg = (aufg + r' \quad \to \quad ' + latex(fakt2 * fakt1 * x) + vorz_str(fakt2 * sum) + '~=~'
                    + gzahl(erg) + r' \quad \vert ' + vorz_str(-1*fakt2*sum) + r' \quad \vert \div '
@@ -1113,7 +1114,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         while fakt2 == 0:
             fakt2 = fakt1 + zzahl(1,5)
         fakt3 = zzahl(1,6)
-        fakt3 = Rational(fakt3, random.choice([2,4,5,10])) if rat else fakt3
+        fakt3 = Fraction(fakt3, random.choice([2,4,5,10])) if rat else fakt3
         sum = zzahl(1, 9)
         xwert = zzahl(1,9)
         erg = (fakt3 * fakt1 - fakt2) * xwert + fakt3*sum
@@ -1124,7 +1125,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
                 lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
                        + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt2) + latex(abs(fakt2) * x)
                        + r' \quad \vert ' + vorz_str(-1 * fakt3 * sum) + r' \quad \vert \cdot '
-                       + gzahl_klammer(Rational(1,fakt3*fakt1-fakt2)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+                       + gzahl_klammer(Fraction(1,fakt3*fakt1-fakt2)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
             else:
                 lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
                        + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt2) + latex(abs(fakt2) * x)
@@ -1135,7 +1136,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
                 lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
                        + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert ' + vorz(-1*fakt3*fakt1)
                        + latex(abs(fakt3*fakt1) * x)  + r' \quad \vert ' + vorz_str(-1 * erg) + r' \quad \vert \cdot '
-                       + gzahl_klammer(Rational(1,fakt2 - fakt3*fakt1)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
+                       + gzahl_klammer(Fraction(1,fakt2 - fakt3*fakt1)) + r' \quad \to \quad x ~=~' + gzahl(xwert))
             else:
                 lsg = (aufg + r' \quad \to \quad ' + latex((fakt3 * fakt1) * x) + vorz_str(fakt3 * sum) + '~=~'
                        + latex(fakt2 * x) + vorz_str(erg) + r' \quad \vert '+ vorz(-1*fakt3*fakt1)
@@ -1146,12 +1147,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
 
     def gl_rat(rat=False):
         fakt1 = zzahl(1, 5)
-        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
+        fakt1 = Fraction(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = zzahl(1, 6)
-        fakt2 = Rational(fakt2, random.choice([2, 4, 5, 10]))
+        fakt2 = Fraction(fakt2, random.choice([2, 4, 5, 10]))
         while fakt2 == 0:
             fakt2 = zzahl(1, 6)
-            fakt2 = Rational(fakt2, random.choice([2,4,5,10]))
+            fakt2 = Fraction(fakt2, random.choice([2,4,5,10]))
         sum = zzahl(1, 9)
         xwert = zzahl(1, 9)
         erg = fakt1 * xwert + sum
@@ -1166,12 +1167,12 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
 
     def gl_rat_beids(rat=False):
         fakt1 = zzahl(1, 5)
-        fakt1 = Rational(fakt1, random.choice([2,4,5,10])) if rat else fakt1
+        fakt1 = Fraction(fakt1, random.choice([2,4,5,10])) if rat else fakt1
         fakt2 = fakt1 + zzahl(1,5)
         while fakt2 == 0:
             fakt2 = fakt1 + zzahl(1, 5)
         fakt3 = zzahl(1, 6)
-        fakt3 = Rational(fakt3, random.choice([2,4,5,10])) if rat else fakt3
+        fakt3 = Fraction(fakt3, random.choice([2,4,5,10])) if rat else fakt3
         sum = zzahl(1, 9)
         xwert = zzahl(1, 9)
         erg = xwert * (fakt1 - fakt2) + sum

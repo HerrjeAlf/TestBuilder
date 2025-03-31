@@ -3,6 +3,7 @@ import random
 import time
 import numpy as np
 import string
+from fractions import Fraction
 from sympy import *
 from pylatex import Document, Package,  Tabular, NoEscape, math
 
@@ -687,6 +688,7 @@ def stelle(liste, vec):
             k+=1
     return print('Element nicht in Liste')
 
+# in Entwicklung:
 def gaussalgorithmus(gleichungen, variablen=[]):
     """
     Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
@@ -755,7 +757,8 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     print(loesung)
     return loesung, table1
 
-def quadr_gl(koeff):
+def quadr_gl(koeff, i=1):
+    n1, n2, n3 = list(range(i,i+3))
     punkte = 0
     if all(x == 0 for x in koeff):
         text = r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~x~aus~dem~Definitionsbereich} '
@@ -764,56 +767,77 @@ def quadr_gl(koeff):
     elif koeff[0] == 0:
         if koeff[1] == 0:
             text = r'0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
-            lsg = [r' \emptyset ']
+            lsg = []
             punkte += 1
         elif koeff[2] == 0:
-            text = r' 0 ~=~ ' + vorz_v_aussen(koeff[1], 'x') + r' \quad \to \quad x ~=~ 0'
+            text = r' 0 ~=~ ' + vorz_v_aussen(koeff[1], 'x') + r' \quad \to \quad x_{' + gzahl(n1) + '} ~=~ 0'
             lsg = [0]
             punkte += 2
         else:
-            lsg1 = Rational(-1 * koeff[2], koeff[1])
+            lsg1 = Fraction(-1 * koeff[2], koeff[1])
             text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[1], 'x') + vorz_str(koeff[2]) + r' \quad \vert '
                     + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
                     + r' \quad \to \quad x ~=~' + gzahl(lsg1) + r' \\')
             lsg = [lsg1]
             punkte += 2
     elif koeff[1] == 0 and koeff[2] == 0:
-        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') +  r' \quad \to \quad x ~=~ 0'
+        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') +  r' \quad \to \quad x_{' + gzahl(n1) + '} ~=~ 0'
         lsg = [0]
         punkte += 2
     elif koeff[2] == 0:
         text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_v_innen(koeff[1],'x')
                 + r' ~=~ x \cdot \left( ' + vorz_v_aussen(koeff[0], 'x') + vorz_str(koeff[1]) + r' \right) '
-                + r' \quad \to \quad x_1 = 0 \\ 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x') + vorz_str(koeff[1])
-                + r' \quad \vert ' + vorz_str(-1*koeff[1]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0])
-                + r' \quad \to \quad x_2 ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~'
-                + gzahl(N(-1*koeff[1]/ koeff[0],3)))
-        lsg = [0, Rational(-1*koeff[1], koeff[0])]
+                + r' \quad \to \quad x_{' + gzahl(n1) + r'} = 0 \\ 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x')
+                + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1]) + r' \quad \vert \div '
+                + gzahl_klammer(koeff[0]) + r' \quad \to \quad x_{' + gzahl(n2) + '} ~=~ '
+                + gzahl(Fraction(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
+        lsg = [0, Fraction(-1*koeff[1], koeff[0])]
         lsg.sort()
         punkte += 4
     elif koeff[1]==0:
         text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_str(koeff[2]) + r' \quad \vert '
                 + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad x^2 ~=~'
-                + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
+                + gzahl(Fraction(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
         punkte += 2
-        if Rational(-1*koeff[2],koeff[0]) < 0:
-            text = (text + r' x ~=~ \pm \sqrt{ ' + gzahl(Rational(-1*koeff[2],koeff[0]))
-                    + r' } \quad \mathrm{ n.d. }')
+        if Fraction(-1*koeff[2],koeff[0]) < 0:
+            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + ' } ~=~ \pm \sqrt{ '
+                    + gzahl(Fraction(-1*koeff[2],koeff[0])) + r' } \quad \mathrm{ n.d. }')
             lsg = []
             punkte += 2
         else:
-            lsg_br = Rational(-1 * koeff[2], koeff[0])
+            disk = Fraction(-1 * koeff[2], koeff[0])
             lsg_de = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
-            text = (text + r' x_{1/2} ~=~ \pm \sqrt{ ' + gzahl(lsg_br)
-                    + r' } \quad \to \quad x_1 = \sqrt{ ' + gzahl(lsg_br)
-                    + '~=~' + gzahl(lsg_de) + r' } \quad \mathrm{und} \quad x_2 = \sqrt{ ' + gzahl(lsg_br)
-                    + r' } + ~=~' + gzahl(lsg_de))
-            lsg = []
+            text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + ' } ~=~ \pm \sqrt{ ' + gzahl(disk)
+                    + r' } \quad \to \quad x_{ ' + gzahl(n1) + '} = \sqrt{ ' + gzahl(disk) + '~=~' + gzahl(lsg_de)
+                    + r' } \quad \mathrm{und} \quad x_{ ' + gzahl(n2) + ' }= - \sqrt{ ' + gzahl(disk)
+                    + r' } + ~=~' + gzahl(-1*lsg_de))
+            lsg = [-1*lsg_de, lsg_de]
             punkte += 1
     else:
-        text = ''
-        lsg = []
-        punkte = 0
+        p = Fraction(koeff[1], koeff[0])
+        q = Fraction(koeff[2], koeff[0])
+        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_v_innen(koeff[1],'x')
+                + vorz_str(koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
+                + r' 0 ~=~ x^2 ' + vorz_v_innen(Fraction(koeff[1], koeff[0]), 'x')
+                + vorz_str(Fraction(koeff[2], koeff[0])) + r' \\'
+                + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '
+                + r' \frac{' + gzahl(p) + '}{2} \left) ^2 ' + vorz_str(-1*q) + '} ~=~ '
+                + gzahl(Fraction(-1*koeff[1],2*koeff[0])) + r' \pm \sqrt{ '
+                + gzahl(Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \\')
+        punkte += 3
+        if Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) < 0:
+            text = text + r' \mathrm{ n.d. }'
+            lsg = []
+            punkte += 1
+        elif Fraction(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) == 0:
+            text = text + r' x_{' + gzahl(n1) + '} ~=~ ' + gzahl(Fraction(-1*koeff[1],2*koeff[0]))
+            lsg = [Fraction(-1*koeff[1],2*koeff[0])]
+            punkte += 2
+        else:
+            pass
+
+
+        punkte += 4
 
 
 

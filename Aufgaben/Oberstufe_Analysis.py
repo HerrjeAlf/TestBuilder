@@ -1,7 +1,7 @@
 import string
 import numpy as np
 import random, math
-
+from fractions import Fraction
 import sympy
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -140,7 +140,7 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, i=0, BE=[]):
     basis = zzahl(2, 10)
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
-        geom_folge_q = Rational(1, p)
+        geom_folge_q = Fraction(1, p)
     else:
         geom_folge_q = random.choice([2, 3, 4, 5])
     bel_vorschrift = [start_arithm_folge + basis ** x,
@@ -208,8 +208,8 @@ def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, i=0, BE=[]):
             table_b.add_hline(2, 5)
             table_b.add_row('Liste der Quotienten aus den Folgengliedern ', 'Werte', 'a1/a0', 'a2/a1', 'a3/a2')
             table_b.add_hline(2, 5)
-            table_b.add_row('', 'Ergebnis', Rational(data[1], data[0]), Rational(data[2] / data[1]),
-                            Rational(data[3] / data[2]))
+            table_b.add_row('', 'Ergebnis', Fraction(data[1], data[0]), Fraction(data[2] / data[1]),
+                            Fraction(data[3] / data[2]))
             table_b.add_hline(2, 5)
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wie~man~in~der~Tabelle~erkennen~kann,'
                            + r'~ist~es~eine~geometrische~Folge~mit~q~=~' + gzahl(geom_folge_q) + r'.} \quad (3BE)')
@@ -284,7 +284,7 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
     basis = zzahl(2, 10)
     if nzahl(1, 2) == 1:
         p = random.choice([2, 4, 5, 8, 10])
-        geom_folge_q = Rational(1, p)
+        geom_folge_q = Fraction(1, p)
     else:
         geom_folge_q = random.choice([2, 3, 4, 5])
     bel_vorschrift = [start_arithm_folge + basis ** x,
@@ -329,7 +329,7 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grenzwerte_funktionen(nr, BE=[]):
-    # In dieser Aufgabe sollen die SuS den Grenzwert einer rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
+    # In dieser Aufgabe sollen die SuS den Grenzwert einer Fractionen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     faktor = zzahl(1, 10)
@@ -462,7 +462,7 @@ def aenderungsrate(nr, teilaufg=['a', 'b', 'c', 'd'], ableitung=False, i=0, BE=[
                        + ') - f(' + gzahl(x_wert_1) + ')}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1)
                        + r'} ~=~ \frac{' + gzahl(N(y_wert_2, 3)) + vorz_str(-1 * N(y_wert_1, 3))
                        + '}{' + gzahl(x_wert_2) + vorz_str(-1 * x_wert_1) + r'} ~=~\bm{'
-                       + gzahl(N(Rational(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
+                       + gzahl(N(Fraction(y_wert_2 - y_wert_1, x_wert_2 - x_wert_1), 3))
                        + r'} \quad \to \quad \mathrm{'r'Zeichnung~stimmt~mit~berechneter~Steigung~überein} \quad (4P)')
         liste_punkte.append(4)
         i += 1
@@ -757,8 +757,8 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b'], i=0, BE=[]):
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) ganzrationales Polynom
-    # b) rationales Polynom
+    # a) ganzFractiones Polynom
+    # b) Fractiones Polynom
     # c) Wurzelfunktion
     # d) Polynom mit Wurzelfunktion
     # e) Exponentialfunktion
@@ -794,7 +794,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         fkt_2 = collect(expand(diff(fkt, x, 2)), x)
         return latex(fkt), fkt_uf, latex(fkt_abl), pkt
 
-    def polynom_rational():
+    def polynom_Fraction():
         a1 = zzahl(3, 15)
         e1 = nzahl(2, 6)
         fkt = r' \frac{' + gzahl(a1) + '}{x^{' + gzahl(e1) + '}}'
@@ -808,8 +808,8 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         e1, e2 = exponenten(2)
         fkt = gzahl(a1) + r' \sqrt[' + gzahl(e1) + ']{x^{' + gzahl(e2) + '}}'
         fkt_uf = '~=~' + gzahl(a1) + r' \cdot x^{ \frac{' + gzahl(e2) + '}{' + gzahl(e1) + '}}'
-        fkt_abl = (gzahl(Rational(a1 * e2, e1)) + r' \cdot x^{'
-                       + gzahl(Rational(e2, e1) - 1) + '}')
+        fkt_abl = (gzahl(Fraction(a1 * e2, e1)) + r' \cdot x^{'
+                       + gzahl(Fraction(e2, e1) - 1) + '}')
         pkt = 1
         return fkt, fkt_uf, fkt_abl, pkt
 
@@ -819,10 +819,10 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         fkt = (vorz_aussen(a1 / a2) + r' \frac{' + gzahl(abs(a1)) + '}{' + gzahl(abs(a2)) + r'x^{'
                    + gzahl(e1) + '}}' + vorz(a3) + r' \frac{' + gzahl(abs(a3)) + r'}{ \sqrt[' + gzahl(e2) + r']{'
                    + r'x^{' + gzahl(e3) + '}}}')
-        fkt_uf = ('~=~' + vorz_v_aussen(Rational(a1, a2), 'x^{' + gzahl(-1 * e1) + '}')
-                      + vorz_v_innen(a3, 'x^{' + gzahl(Rational(-1 * e3, e2)) + '}'))
-        fkt_abl = (vorz_v_aussen(Rational(-1 * a1 * e1, a2), 'x^{' + gzahl(-1 * e1 - 1) + '}')
-                       + vorz_v_innen(Rational(-1 * a3 * e3, e2), 'x^{' + gzahl(Rational(-1 * (e3 + e2), e2)) + '}'))
+        fkt_uf = ('~=~' + vorz_v_aussen(Fraction(a1, a2), 'x^{' + gzahl(-1 * e1) + '}')
+                      + vorz_v_innen(a3, 'x^{' + gzahl(Fraction(-1 * e3, e2)) + '}'))
+        fkt_abl = (vorz_v_aussen(Fraction(-1 * a1 * e1, a2), 'x^{' + gzahl(-1 * e1 - 1) + '}')
+                       + vorz_v_innen(Fraction(-1 * a3 * e3, e2), 'x^{' + gzahl(Fraction(-1 * (e3 + e2), e2)) + '}'))
         pkt = 2
         return fkt, fkt_uf, fkt_abl, pkt
 
@@ -856,13 +856,13 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         while abs(faktor_exp) == faktor_sqrt:
             faktor_sqrt = nzahl(2, 8)
         fkt = r' \sqrt[' + gzahl(faktor_sqrt) + ']{x^{' + gzahl(faktor_exp) + r'}} \cdot e^{x}'
-        fkt_uf = (r'~=~x^{' + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x}')
-        fkt_abl = (gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
-                   + gzahl(Rational(faktor_exp, faktor_sqrt) - 1) + r'} \cdot e^{x} ~+~' + 'x^{'
-                   + gzahl(Rational(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} ~=~ e^{x} \cdot ('
-                   + gzahl(Rational(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
-                   + gzahl(Rational(faktor_exp, faktor_sqrt) - 1) + r'} ~+~ x^{'
-                   + gzahl(Rational(faktor_exp, faktor_sqrt)) + '})')
+        fkt_uf = (r'~=~x^{' + gzahl(Fraction(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x}')
+        fkt_abl = (gzahl(Fraction(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
+                   + gzahl(Fraction(faktor_exp, faktor_sqrt) - 1) + r'} \cdot e^{x} ~+~' + 'x^{'
+                   + gzahl(Fraction(faktor_exp, faktor_sqrt)) + r'} \cdot e^{x} ~=~ e^{x} \cdot ('
+                   + gzahl(Fraction(faktor_exp, faktor_sqrt)) + r' \cdot x^{'
+                   + gzahl(Fraction(faktor_exp, faktor_sqrt) - 1) + r'} ~+~ x^{'
+                   + gzahl(Fraction(faktor_exp, faktor_sqrt)) + '})')
         return fkt, fkt_uf, fkt_abl, pkt
 
     def verkettet_exp():
@@ -903,11 +903,11 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         fkt = (r' \sqrt[' + gzahl(wurzel) + ']{' + vorz_v_aussen(faktor, 'x^{' + gzahl(exponent) + '}')
                + vorz_str(summand) + '}')
         fkt_uf = ('~=~(' + vorz_v_aussen(faktor, 'x') + '^{' + gzahl(exponent) + r'} '
-                  + vorz_str(summand) + r')^{' + gzahl(Rational(1, wurzel)) + '}')
-        fkt_abl = (r' \left(' + vorz_v_aussen(Rational(faktor * exponent, wurzel), 'x')
+                  + vorz_str(summand) + r')^{' + gzahl(Fraction(1, wurzel)) + '}')
+        fkt_abl = (r' \left(' + vorz_v_aussen(Fraction(faktor * exponent, wurzel), 'x')
                    + '^{' + gzahl(exponent - 1) + r'} \right) \cdot (' + vorz_v_aussen(faktor, 'x')
                    + '^{' + gzahl(exponent) + r'} ' + vorz_str(summand) + r')^{'
-                   + gzahl(Rational(1 - wurzel, wurzel)) + r'}')
+                   + gzahl(Fraction(1 - wurzel, wurzel)) + r'}')
         return fkt, fkt_uf, fkt_abl, pkt
 
     if anzahl != False:
@@ -917,7 +917,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         teilaufg = repeat(teilaufg, wdh)
         exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
              "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
-    aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
+    aufgaben = {'a': polynom, 'b': polynom_Fraction, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}
 
@@ -978,7 +978,7 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], i=0, BE=[])
     fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
     fkt_abl = diff(fkt, x, 1)
     fkt_abl_str = str(2 * faktor) + 'x~' + vorz_str(-1 * faktor * (x_wert_x1 + x_wert_x2))
-    m_tangente_str = Rational(y_wert_s,(x_wert_s - 1))
+    m_tangente_str = Fraction(y_wert_s,(x_wert_s - 1))
     m_tangente = y_wert_s/(x_wert_s - 1)
     fkt_tangente = N(m_tangente,3) * x - N(m_tangente,3)
     #print(fkt_tangente)
@@ -1169,7 +1169,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], i=0, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen den x-Wert berechnen, an dem eine (rationale) Funktion die gegebene Steigung besitzt.
+        # Die SuS sollen den x-Wert berechnen, an dem eine (Fractione) Funktion die gegebene Steigung besitzt.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         steigung = 0
@@ -1182,7 +1182,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], i=0, BE=[]):
                                      [a1/(x**e1),r' \frac{' + str(a1) + '}{x^{' + str(e1) + '}}',
                                       str(-1 * a1 * e1) + r' \cdot x^{' + str(-1 * e1 - 1) + '}'],
                                      [a1 * x ** (e1 / e2), str(a1) + r' \sqrt[' + str(e1) + ']{x^{' + str(e2) + '}}',
-                                      latex(Rational(a1 * e2, e1)) + r' \cdot x^{' + latex(Rational(e2,e1) - 1) + '}']])
+                                      latex(Fraction(a1 * e2, e1)) + r' \cdot x^{' + latex(Fraction(e2,e1) - 1) + '}']])
 
                 Aufgabe = random.randint(0, 2)
                 # Aufgabe = 1
@@ -1199,12 +1199,12 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], i=0, BE=[]):
                          + gzahl_klammer(a2) + r'~ \vert \div ' + gzahl_klammer(2 * a1) + r' \quad \to \quad x~=~\mathbf{'
                          + latex(N((steigung-a2)/(2*a1),3)) + r'} \quad (3BE)',
                          r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                         + gzahl_klammer(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Rational(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
-                         + latex(Rational(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Rational(1,-1*e1-1)) + r'} ~=~\mathbf{'
+                         + gzahl_klammer(-1*a1*e1) + r'~ \vert ~(~)^{' + str(Fraction(1,-1*e1-1)) + r'} \quad \to \quad x~=~ \big('
+                         + latex(Fraction(steigung,-1*a1*e1)) + r' \big) ^{' + latex(Fraction(1,-1*e1-1)) + r'} ~=~\mathbf{'
                          + latex(N(((steigung/(-1*a1*e1))**(1/(-1*e1-1))), 3)) + r'} \quad (3BE)',
                          r' \quad f ^ { \prime} (x) ~ = ~' + str(fkt_abl_str) + '~ = ~' + str(steigung) + r'~ \vert \div'
-                         + gzahl_klammer(Rational(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
-                         + r'} \quad \to \quad x~=~ \left(' + latex(Rational(steigung*e1, a1 * e2))
+                         + gzahl_klammer(Fraction(a1 * e2, e1)) + r'~ \vert ~(~)^{' + latex(N(1/((e2-e1)/e1), 3))
+                         + r'} \quad \to \quad x~=~ \left(' + latex(Fraction(steigung*e1, a1 * e2))
                          + r' \right) ^{ ' + latex(N(1/((e2-e1)/e1), 3)) + r'} ~=~ \mathbf{'
                          + latex(N(((steigung*e1)/(a1 * e2))**(1/((e2-e1)/e1)), 3)) + r'} \quad (3BE)']
 
@@ -1228,11 +1228,11 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], i=0, BE=[]):
                        + r' \hspace{15em}')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f ^{ \prime} (x) ~ = ~ g ^{ \prime } (x) \quad \to \quad '
                          + fkt_abl_str_parabel + '~ = ~' + fkt_abl_str_gerade + r' \quad \to \quad \vert \div '
-                         + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Rational(a2,(2*a1)))
-                         + r' \quad (3BE) \\' + r' \quad f(' + latex(Rational(a2,(2*a1)))
-                         + r') ~ = ~ g(' + latex(Rational(a2,(2*a1))) + r') \quad \to \quad '
-                         + str(a1) + r' \cdot \left(' + latex(Rational(a2,(2*a1))) + r' \right) ^2 + a ~=~'
-                         + str(a2) + r' \cdot \left( ' + latex(Rational(a2,(2*a1))) + r' \right)' + vorz_str(a3)
+                         + gzahl_klammer(2*a1) + r' \quad \to \quad x~=~' + latex(Fraction(a2,(2*a1)))
+                         + r' \quad (3BE) \\' + r' \quad f(' + latex(Fraction(a2,(2*a1)))
+                         + r') ~ = ~ g(' + latex(Fraction(a2,(2*a1))) + r') \quad \to \quad '
+                         + str(a1) + r' \cdot \left(' + latex(Fraction(a2,(2*a1))) + r' \right) ^2 + a ~=~'
+                         + str(a2) + r' \cdot \left( ' + latex(Fraction(a2,(2*a1))) + r' \right)' + vorz_str(a3)
                          + r' \quad \vert ' + vorz_str(N(-1 * (a2**2)/(4*a1),3))
                          + r' \quad \to \quad a~=~ \mathbf{' + latex(N((a2**2/(2*a1)) + a3 - (a2**2)/(4*a1),3))
                          + r'} \quad (3BE)')
@@ -1256,7 +1256,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
 
     # hier wird die Funktion erstellt.
     loesung_vektor = [1/3,1/5,1/7]
-    while vektor_rational(loesung_vektor,10) != True:
+    while vektor_Fraction(loesung_vektor,10) != True:
         xwert_1 = -1 * nzahl(1,3)
         ywert_1 = nzahl(3,8)
         xwert_2 = nzahl(1,3)
@@ -1432,9 +1432,9 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
         # zwischenrechnungen
         fkt_1_a = 3 * x_1 * (x ** 2) + 2 * x_2 * x + x_3
         fkt_1_a_str = vorz_v_aussen(3 * x_1,'x^2') + vorz_v_innen(2 * x_2,'x') + vorz_str(x_3)
-        fkt_1_a_p = Rational(2*x_2,3*x_1)
-        fkt_1_a_p2 = Rational(x_2,3*x_1)
-        fkt_1_a_q = Rational(x_3,3*x_1)
+        fkt_1_a_p = Fraction(2*x_2,3*x_1)
+        fkt_1_a_p2 = Fraction(x_2,3*x_1)
+        fkt_1_a_q = Fraction(x_3,3*x_1)
         fkt_1_a_pq = 'x^2' + vorz_v_innen(fkt_1_a_p,'x') + vorz_str(fkt_1_a_q)
         fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
         fkt_1_a_lsg = solve(fkt_1_a, x)
@@ -1506,17 +1506,17 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
     fkt_str = vorz_v_aussen(m,'x') + vorz_str(n)
     fkt_a = fkt*x
     fkt_a_str = vorz_v_aussen(m,'x^2') + vorz_v_innen(n,'x')
-    fkt_a_str_1 = gzahl(m) + r' \cdot ' + binom_klammer(1,Rational(n,m), 'x^2', 'x')
-    fkt_a_str_2 = (gzahl(m) + r' \cdot \left( x^2 '+ vorz(Rational(n,m)) + r' 2 \cdot ' + gzahl(abs(Rational(n,2*m)))
-                   + r' \cdot x + \left( ' + gzahl(abs(Rational(n,2*m))) + r' \right) ^2 - \left( '
-                   + gzahl(abs(Rational(n,2*m))) + r' \right) ^2 \right) ')
-    fkt_a_str_3 = (gzahl(m) + r' \cdot \left( \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
-                   + gzahl(Rational(n**2, 4*m**2)) + r' \right) ')
-    fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 '
-                   + vorz_str(Rational(n**2, 4*m)))
-    xwert = -1 * Rational(n, 2*m)
-    ywert = Rational(n,2)
-    wert_A = Rational(n**2, -4*m)
+    fkt_a_str_1 = gzahl(m) + r' \cdot ' + binom_klammer(1,Fraction(n,m), 'x^2', 'x')
+    fkt_a_str_2 = (gzahl(m) + r' \cdot \left( x^2 '+ vorz(Fraction(n,m)) + r' 2 \cdot ' + gzahl(abs(Fraction(n,2*m)))
+                   + r' \cdot x + \left( ' + gzahl(abs(Fraction(n,2*m))) + r' \right) ^2 - \left( '
+                   + gzahl(abs(Fraction(n,2*m))) + r' \right) ^2 \right) ')
+    fkt_a_str_3 = (gzahl(m) + r' \cdot \left( \left( x ' + vorz_str(Fraction(n,2*m)) + r' \right) ^2 - '
+                   + gzahl(Fraction(n**2, 4*m**2)) + r' \right) ')
+    fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Fraction(n,2*m)) + r' \right) ^2 '
+                   + vorz_str(Fraction(n**2, 4*m)))
+    xwert = -1 * Fraction(n, 2*m)
+    ywert = Fraction(n,2)
+    wert_A = Fraction(n**2, -4*m)
 
     xwert_2 = int(xmax/2) + zzahl(1,2)
     ywert_2 = fkt.subs(x, xwert_2)
@@ -1784,13 +1784,13 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         lsg = (gzahl(faktor_1/10) + 'e^{' + vorz_v_aussen(faktor_exp_1, 'x') + '} ~=~'
                + gzahl(faktor_2/10) + 'e^{' + vorz_v_aussen(faktor_exp_2, 'x') + '}'
                + r' \quad \vert \div ' + gzahl_klammer(faktor_1/10) + r' \quad \to \quad '
-               + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Rational(faktor_2,faktor_1))
+               + 'e^{' + vorz_v_aussen(faktor_exp_1,'x') + r'} ~=~' + gzahl(Fraction(faktor_2,faktor_1))
                + r' \cdot e^{' + vorz_v_aussen(faktor_exp_2,'x') + r'} \quad \vert \div e^{'
                + gzahl(faktor_exp_2) + r'x} \quad (1BE) \\'
                + 'e^{' + gzahl(faktor_exp_1 - faktor_exp_2) + 'x} ~=~ '
-               + gzahl(Rational(faktor_2,faktor_1)) + r' \quad \vert \ln () \quad \to \quad '
+               + gzahl(Fraction(faktor_2,faktor_1)) + r' \quad \vert \ln () \quad \to \quad '
                + vorz_v_aussen(faktor_exp_1 - faktor_exp_2,'x') + r' ~=~ \ln \left('
-               + gzahl(Rational(faktor_2,faktor_1)) + r' \right) \quad \vert \div '
+               + gzahl(Fraction(faktor_2,faktor_1)) + r' \right) \quad \vert \div '
                + gzahl_klammer(faktor_exp_1 - faktor_exp_2) + r' \quad \to \quad x ~=~'
                + gzahl(N(log(faktor_2/faktor_1)/(faktor_exp_1 - faktor_exp_2),3))
                + r' \quad (3BE)')
@@ -1982,10 +1982,10 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                                           ' erreicht werden. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad \quad ' + str(Aufg_wert_y) + r'~=~'+ str(Aufg_c0)
                                            + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
-                                           + r' \quad \to \quad ' + latex(Rational(Aufg_wert_y,Aufg_c0))
+                                           + r' \quad \to \quad ' + latex(Fraction(Aufg_wert_y,Aufg_c0))
                                            + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
                                            + r'} \quad \to \quad x~=~'
-                                           + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
+                                           + str(N(math.log(Fraction(Aufg_wert_y,Aufg_c0),Aufg_a),5))
                                            + r' \quad (3BE) \\'
                                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}'))
         i += 1
@@ -2059,8 +2059,8 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
         fkt = (vorz_v_aussen(a2, 'x^{' + gzahl(e2_ii) + '}') + vorz_v_innen(a1, 'x^{' + gzahl(e1_ii) + '}')
                       + vorz_str(konst_ii))
         fkt_uf = ''
-        Fkt = (vorz_v_aussen(Rational(a2, e2_ii + 1), 'x^{' + gzahl(e2_ii + 1) + '}')
-                      + vorz_v_innen(Rational(a1, e1_ii + 1), 'x^{' + gzahl(e1_ii + 1) + '}')
+        Fkt = (vorz_v_aussen(Fraction(a2, e2_ii + 1), 'x^{' + gzahl(e2_ii + 1) + '}')
+                      + vorz_v_innen(Fraction(a1, e1_ii + 1), 'x^{' + gzahl(e1_ii + 1) + '}')
                       + vorz_v_innen(konst_ii, 'x + C'))
         pkt = 2
         return fkt, fkt_uf, Fkt, pkt
@@ -2091,7 +2091,7 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
         fkt = (vorz_aussen(a1) + r' \frac{' + gzahl(abs(a1)) + '}{x^{' + gzahl(e1) + '}}'
                + vorz(a2) + r' \frac{' + str(abs(a2)) + '}{x}')
         fkt_uf = r'~=~ \int ' + gzahl(a1) + r' x^{' + gzahl(-1 * e1) + '}' + vorz_str(a2) + r'x^{-1} \,dx'
-        Fkt = (gzahl(Rational(a1, -1 * e1 + 1)) + 'x^{' + gzahl(-1 * e1 + 1) + '}' + vorz_str(a2)
+        Fkt = (gzahl(Fraction(a1, -1 * e1 + 1)) + 'x^{' + gzahl(-1 * e1 + 1) + '}' + vorz_str(a2)
                + r' \cdot \ln (x) + C')
         pkt = 3
         return fkt, fkt_uf, Fkt, pkt
@@ -2103,15 +2103,15 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
         e1 = nzahl(2, 9)
         innere = vorz_v_aussen(i1, 'x') + vorz_str(k1)
         auswahl = random.choice([[gzahl(a1) + r' \cdot (' + innere + ')^{' + latex(e1) + '}',
-                                  gzahl(Rational(a1, i1 * (e1 + 1))) + r' \cdot (' + innere + ')^{' + latex(e1 + 1)
+                                  gzahl(Fraction(a1, i1 * (e1 + 1))) + r' \cdot (' + innere + ')^{' + latex(e1 + 1)
                                   + '} + C'],
                                  [gzahl(a1) + r' \cdot e^{' + innere + '}',
-                                  gzahl(Rational(a1, i1)) + r' \cdot e^{' + innere + '} + C'],
+                                  gzahl(Fraction(a1, i1)) + r' \cdot e^{' + innere + '} + C'],
                                  [gzahl(a1) + r' \cdot \sin(' + innere + ')' + vorz_str(k1),
-                                  gzahl(Rational(-1 * a1, i1)) + r' \cdot \cos(' + innere + ')'
+                                  gzahl(Fraction(-1 * a1, i1)) + r' \cdot \cos(' + innere + ')'
                                   + vorz_v_innen(k1,'x + C')],
                                  [gzahl(a1) + r' \cdot \cos(' + innere + ')' + vorz_str(k1),
-                                  gzahl(Rational(a1, i1)) + r' \cdot \sin(' + innere + ')'
+                                  gzahl(Fraction(a1, i1)) + r' \cdot \sin(' + innere + ')'
                                   + vorz_v_innen(k1,'x + C')]])
 
         fkt, fkt_uf, Fkt, pkt = auswahl[0], '', auswahl[1], 2
@@ -2121,8 +2121,8 @@ def unbestimmtes_integral(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anza
         a1 = nzahl(2, 6)
         e1 = a1 + nzahl(2, 4)
         fkt = r' \sqrt[' + gzahl(a1) + ']{x^{' + gzahl(e1) + '}}'
-        fkt_uf = r' ~=~ \int x^{' + gzahl(Rational(e1, a1)) + r'} \,dx '
-        Fkt = (gzahl(Rational(a1, a1 + e1)) + 'x^{' + gzahl(Rational(a1 + e1, a1)) + '} + C')
+        fkt_uf = r' ~=~ \int x^{' + gzahl(Fraction(e1, a1)) + r'} \,dx '
+        Fkt = (gzahl(Fraction(a1, a1 + e1)) + 'x^{' + gzahl(Fraction(a1 + e1, a1)) + '} + C')
         pkt = 2
         return fkt, fkt_uf, Fkt, pkt
 
@@ -2198,8 +2198,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, i=0, BE=[]):
         fkt_partial_q = (nst_2 * nst_3)
 
         Fkt = collect(integrate(fkt,x),x)
-        Fkt_str = (vorz_v_aussen(Rational(fkt_a1,4), 'x^4') + vorz_v_innen(Rational(fkt_a2,3), 'x^3')
-                   + vorz_v_innen(Rational(fkt_a3,2), 'x^2') + vorz_v_innen(fkt_a4,'x'))
+        Fkt_str = (vorz_v_aussen(Fraction(fkt_a1,4), 'x^4') + vorz_v_innen(Fraction(fkt_a2,3), 'x^3')
+                   + vorz_v_innen(Fraction(fkt_a3,2), 'x^2') + vorz_v_innen(fkt_a4,'x'))
 
         fkt_b2 = nst_1 * fkt_a1
         fkt_c2 = fkt_a2 + fkt_b2
@@ -2282,8 +2282,8 @@ def bestimmtes_integral(nr, teilaufg=['a', 'b'], grad=3, i=0, BE=[]):
         fkt_p = -1*(nst_1+nst_2)
         fkt_q = nst_1*nst_2
         Fkt = integrate(fkt,x)
-        Fkt_str = (vorz_v_aussen(Rational(faktor,3),'x^3')
-                   + vorz_v_innen(Rational(-1*faktor*(nst_1+nst_2),2),'x^2')
+        Fkt_str = (vorz_v_aussen(Fraction(faktor,3),'x^3')
+                   + vorz_v_innen(Fraction(-1*faktor*(nst_1+nst_2),2),'x^2')
                    + vorz_v_innen(faktor*nst_1*nst_2,'x'))
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n', 'Gegeben ist die Funktion:',
                    'f(x)~=~' + fkt_str + r' \hspace{20em}']
@@ -2599,7 +2599,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + r') \quad \to \quad x_1 = 0 \quad (3BE) \\ 0~=~' + fkt_x_ausgekl_str
                                + r' \quad \vert ' + vorz_str(-1 * fkt_a3) + r' \quad \vert \div'
                                + gzahl_klammer(fkt_a1) + r' \quad \to \quad x_{2,3}~=~ \pm \sqrt{'
-                               + latex(Rational(-1 * fkt_a3, fkt_a1)) + r'} ~=~ \pm ' + gzahl(N(nst_3,3))
+                               + latex(Fraction(-1 * fkt_a3, fkt_a1)) + r'} ~=~ \pm ' + gzahl(N(nst_3,3))
                                + r' \quad (3BE) \\ \mathrm{ S_{x_2}(' + gzahl(N(nst_1, 3))
                                + r' \vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}(' + gzahl(N(nst_3, 3))
                                + r' \vert 0) \quad (2BE)} \\'
@@ -2607,9 +2607,9 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             elif fkt_a4 == 0:
                 punkte = 11
                 fkt_x_ausgekl_str = vorz_v_aussen(fkt_a1, 'x^2') + vorz_v_innen(fkt_a2,'x') + vorz_str(fkt_a3)
-                fkt_pq_str = 'x^2' + vorz_v_innen(Rational(fkt_a2,fkt_a1),'x') + vorz_str(Rational(fkt_a3,fkt_a1))
-                fkt_p = Rational(fkt_a2,fkt_a1)
-                fkt_q = Rational(fkt_a3,fkt_a1)
+                fkt_pq_str = 'x^2' + vorz_v_innen(Fraction(fkt_a2,fkt_a1),'x') + vorz_str(Fraction(fkt_a3,fkt_a1))
+                fkt_p = Fraction(fkt_a2,fkt_a1)
+                fkt_q = Fraction(fkt_a3,fkt_a1)
                 fkt_diskr = sqrt((fkt_p/2)**2 - fkt_q)
                 loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)}~=~0 \quad \to \quad 0~=~'
                                + fkt_str + r' ~=~ x \cdot ' + fkt_x_ausgekl_str
@@ -2617,7 +2617,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + r' \quad \vert \div' + gzahl_klammer(fkt_a1) + r' \quad \to \quad 0~=~' + fkt_pq_str
                                + r' \quad (2BE)  \\ x_{2,3}~=~ - \frac{' + gzahl(fkt_p)
                                + r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(fkt_p) + r'}{2} \right) ^2'
-                               + vorz_str(-1 * fkt_q) + r'} ~=~ ' + gzahl(Rational(-1*fkt_a2,2*fkt_a1)) + r' \pm '
+                               + vorz_str(-1 * fkt_q) + r'} ~=~ ' + gzahl(Fraction(-1*fkt_a2,2*fkt_a1)) + r' \pm '
                                + gzahl(N(fkt_diskr,3)) + r' \quad \to \quad x_2 ~=~' + gzahl(N(nst_1,3))
                                + r' \quad und \quad x_3 ~=~' + gzahl(N(nst_3,3)) + r' \quad (4BE) \\ \mathrm{ S_{x_2}('
                                + gzahl(round(nst_1, 3)) + r' \vert 0) \quad S_y ~=~ S_{x_1}(0 \vert 0) \quad S_{x_3}('
@@ -2746,10 +2746,10 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             x_12_fkt_1 = solve(fkt_1, x)
             x_1_fkt_1 = round(x_12_fkt_1[0], 3)
             x_2_fkt_1 = round(x_12_fkt_1[1], 3)
-            fkt_1_pq_str = ('x^2' + vorz_v_innen(Rational(2*fkt_a2,3*fkt_a1),'x')
-                            + vorz_str(Rational(fkt_a3,3*fkt_a1)))
-            p_fkt_1_pq = Rational(2*fkt_a2,3*fkt_a1)
-            q_fkt_1_pq = Rational(fkt_a3,3*fkt_a1)
+            fkt_1_pq_str = ('x^2' + vorz_v_innen(Fraction(2*fkt_a2,3*fkt_a1),'x')
+                            + vorz_str(Fraction(fkt_a3,3*fkt_a1)))
+            p_fkt_1_pq = Fraction(2*fkt_a2,3*fkt_a1)
+            q_fkt_1_pq = Fraction(fkt_a3,3*fkt_a1)
 
             if fkt_2.subs(x, x_1_fkt_1) < 0:
                 loesung_f_monotonie_1 = (r'~<~0~ \to HP(~' + gzahl(x_1_fkt_1) + r'~ \vert ~'
@@ -2832,7 +2832,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
             table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
             if 'c' in teilaufg:
-                table1.add_row('', 'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
+                table1.add_row('', 'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzFractionen '
                                     'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.', '3P')
                 punkte = 3
             if 'e' in teilaufg and 'c' not in teilaufg:
@@ -2846,7 +2846,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
             table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
             if 'c' in teilaufg:
-                table1.add_row('', 'Da die Funktion vier Nullstellen besitzt und ein Polynom mit ganzrationalen '
+                table1.add_row('', 'Da die Funktion vier Nullstellen besitzt und ein Polynom mit ganzFractionen '
                                    'Exponenten ist, hat sie drei Extrema und damit zwei Wendepunkte.', '3P')
                 punkte = 3
             if 'e' in teilaufg and 'c' not in teilaufg:
@@ -2862,7 +2862,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         if grad == 3:
             punkte = 5
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            xwert_wp1 = N(Rational(-2*fkt_a2, 6 * fkt_a1), 3)
+            xwert_wp1 = N(Fraction(-2*fkt_a2, 6 * fkt_a1), 3)
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ' + vorz_str(-1*2*fkt_a2)
@@ -2874,14 +2874,14 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         if grad == 4:
             punkte = 8
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            xwert_wp1 = N(-1*sqrt(Rational((nst_12 + nst_34),6)),3)
-            xwert_wp2 = N(sqrt(Rational((nst_12 + nst_34), 6)),3)
+            xwert_wp1 = N(-1*sqrt(Fraction((nst_12 + nst_34),6)),3)
+            xwert_wp2 = N(sqrt(Fraction((nst_12 + nst_34), 6)),3)
             # fkt_2_str = vorz_v_aussen(12 * faktor, 'x^2') + vorz_str(-2 * faktor * (nst_12 + nst_34))
             aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Wendepunkte der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                            + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_12 + nst_34))
                            + r' \quad \vert \div ' + gzahl_klammer(12 * faktor) + r' \quad (2BE) \\ x^2~=~ \pm'
-                           + gzahl(Rational((nst_12 + nst_34), 6)) + r' \quad \vert \sqrt{} \quad \to \quad '
+                           + gzahl(Fraction((nst_12 + nst_34), 6)) + r' \quad \vert \sqrt{} \quad \to \quad '
                            + r' x_{W_{1,2}} ~=~ \pm ' + gzahl(xwert_wp2) + r'(2BE) \\ f^{ \prime \prime \prime }('
                            + gzahl(xwert_wp1) + ')~=~' + gzahl(N(fkt_3.subs(x, xwert_wp1),3))
                            + r' \quad \neq 0 \quad \to \quad WP(' + gzahl(xwert_wp1) + r' \vert '
@@ -2936,8 +2936,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                                + vorz_str(N(-1 * ywert_wp1_fkt_1 * xwert_wp1 + ywert_wp1, 3))
                                + r' \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if grad == 4:
-            ywert_wp2 = N(fkt.subs(x, Rational((nst_12 + nst_34), 6)), 3)
-            ywert_wp2_fkt_1 = N(fkt_1.subs(x, Rational((nst_12 + nst_34), 6)), 3)
+            ywert_wp2 = N(fkt.subs(x, Fraction((nst_12 + nst_34), 6)), 3)
+            ywert_wp2_fkt_1 = N(fkt_1.subs(x, Fraction((nst_12 + nst_34), 6)), 3)
             fkt_t = ywert_wp2_fkt_1 * (x - xwert_wp2) + ywert_wp2
             fkt_n = (-1 / ywert_wp2_fkt_1) * (x - xwert_wp2) + ywert_wp2
 
@@ -3011,8 +3011,8 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if grad == 3:
             Fkt = integrate(fkt, x)
-            Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 4), 'x^4') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
-                       + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
+            Fkt_str = (vorz_v_aussen(Fraction(fkt_a1, 4), 'x^4') + vorz_v_innen(Fraction(fkt_a2, 3), 'x^3')
+                       + vorz_v_innen(Fraction(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
             def erste_positive_nst(vec):
                 vec.sort()
                 for element in vec:
@@ -3035,7 +3035,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            + r'} \right| ~=~' + latex(abs(N(loesung_integral, 3))) + r' \quad (4BE) \\')
         if grad == 4:
             Fkt = integrate(fkt, x)
-            Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 5), 'x^5') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
+            Fkt_str = (vorz_v_aussen(Fraction(fkt_a1, 5), 'x^5') + vorz_v_innen(Fraction(fkt_a2, 3), 'x^3')
                        + vorz_v_innen(fkt_a3, 'x'))
             untere_grenze = sqrt(nst_12)
             obere_grenze = sqrt(nst_34)
@@ -3177,7 +3177,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_p = -1 * (faktor_1 + faktor_3)
         fkt_q = faktor_1 * faktor_3
         fkt_pq_str = 'x^2' + vorz_str(fkt_p) + r' a \cdot x' + vorz_str(fkt_q) + r' a^2'
-        fkt_disk = Rational((faktor_1 - faktor_3)**2,4)
+        fkt_disk = Fraction((faktor_1 - faktor_3)**2,4)
 
         table2 = Tabular('c c|c|c|c', row_height=1.2)
         table2.add_row('', gzahl(fkt_a3), NoEscape('$' + gzahl(fkt_a2*a) + '$'),
@@ -3200,10 +3200,10 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        r' \quad \to \quad 0~=~' + fkt_pq_str + r' \quad (2BE) \\'
                        r' x_{1/3}~=~ - \frac{' + latex(fkt_p) + r'a}{2} \pm \sqrt{ \left(' +
                        r' \frac{' + latex(fkt_p) + r'a}{2} \right)^2-(' + latex(fkt_q) +  # p war grundlos ins Minus gestzt
-                       r'a^2)} ~=~ ' + gzahl(Rational((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
+                       r'a^2)} ~=~ ' + gzahl(Fraction((faktor_1 + faktor_3),2)) + r'a \pm \sqrt{'
                        + latex(fkt_disk) + r' a^2} \quad (2BE) \\ x_{1/3}~=~'
-                       + gzahl(Rational(faktor_1 + faktor_3,2)) + r' a \pm \left('
-                       + gzahl(Rational(abs(faktor_1 - faktor_3),2)) + r' \right) a \quad \to \quad x_1~=~'
+                       + gzahl(Fraction(faktor_1 + faktor_3,2)) + r' a \pm \left('
+                       + gzahl(Fraction(abs(faktor_1 - faktor_3),2)) + r' \right) a \quad \to \quad x_1~=~'
                        + vorz_v_aussen(faktor_1,'a', null=True) + r' \quad \mathrm{und} \quad x_3~=~'
                        + vorz_v_aussen(faktor_3, 'a', null=True) + r' \quad (3BE) \\ \bm{S_{x_1}(' + nst_1_str + r' \vert 0) \quad S_{x_2}('
                        + nst_2_str + r' \vert 0) \quad S_{x_3}(' + nst_3_str + r' \vert 0) \quad }\mathrm{sowie}'
@@ -3218,8 +3218,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_1_a2 = 3*faktor
         fkt_1_a1 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
         fkt_1_a0 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
-        fkt_1_p = Rational(-2 * (faktor_1 + faktor_2 + faktor_3),3)
-        fkt_1_q = Rational((faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3),3)
+        fkt_1_p = Fraction(-2 * (faktor_1 + faktor_2 + faktor_3),3)
+        fkt_1_q = Fraction((faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3),3)
         fkt_1_disk = (faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9
         fkt_1_sqrt = sqrt((faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9)
 
@@ -3301,8 +3301,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_1_a2 = 3*faktor
         fkt_1_a1 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
         fkt_1_a0 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
-        fkt_1_p = Rational(-2 * (faktor_1 + faktor_2 + faktor_3),3)
-        fkt_1_q = Rational((faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3),3)
+        fkt_1_p = Fraction(-2 * (faktor_1 + faktor_2 + faktor_3),3)
+        fkt_1_q = Fraction((faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3),3)
         fkt_1_disk = (faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9
         fkt_1_sqrt = sqrt((faktor_1**2 + faktor_2**2 + faktor_3**2 - (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3))/9)
 
@@ -3343,7 +3343,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         liste_punkte.append(punkte)
         fkt_2_a0 = -2*faktor*(faktor_1 + faktor_2 + faktor_3)
         fkt_2_str = gzahl(6*faktor) + 'x' + vorz_str(fkt_2_a0) + 'a'
-        xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3),3)
+        xwert_wp_bruch = Fraction((faktor_1 + faktor_2 + faktor_3),3)
         xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3)/3,3)
         ywert_wp_dezimal = N(fkt.subs(x,xwert_wp_bruch*a),3)
         fkt_3_str = gzahl(6*faktor)
@@ -3365,20 +3365,20 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
         liste_punkte.append(punkte)
-        xwert_wp_bruch = Rational((faktor_1 + faktor_2 + faktor_3), 3)
+        xwert_wp_bruch = Fraction((faktor_1 + faktor_2 + faktor_3), 3)
         xwert_wp_dezimal = N((faktor_1 + faktor_2 + faktor_3) / 3)
         ywert_wp_dezimal = N(fkt.subs(x, xwert_wp_bruch*a), 3)
-        if Rational(3,(faktor_1 + faktor_2 + faktor_3)) > 0:
+        if Fraction(3,(faktor_1 + faktor_2 + faktor_3)) > 0:
             abhängigkeit = r' \mathrm{mit~x \in \mathbb{R} ~und~ x > 0}'
         else:
             abhängigkeit = r' \mathrm{mit~x \in \mathbb{R} ~und~ x < 0}'
 
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie die Ortskurve der Wendepunkte. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad x ~=~' + (gzahl(xwert_wp_bruch)) + r'a \quad \vert \div'
-                       + gzahl_klammer(Rational((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
-                       + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
+                       + gzahl_klammer(Fraction((faktor_1 + faktor_2 + faktor_3),3)) + r' \quad \to \quad a~=~'
+                       + gzahl(Fraction(3,(faktor_1 + faktor_2 + faktor_3))) + r'x \quad ' + abhängigkeit
                        + r' \quad (2BE) \\ \mathrm{einsetzen~in~y} ~=~' + gzahl(ywert_wp_dezimal) + '~=~'
-                       + gzahl(ywert_wp_dezimal/a**3) + r' \left(' + gzahl(Rational(3,(faktor_1 + faktor_2 + faktor_3)))
+                       + gzahl(ywert_wp_dezimal/a**3) + r' \left(' + gzahl(Fraction(3,(faktor_1 + faktor_2 + faktor_3)))
                        + r'x \right)^3 ~=~\bm{' + gzahl(N((ywert_wp_dezimal/a**3)*(3/(faktor_1 + faktor_2 + faktor_3))**3,4))
                        + r'x^3} \quad (3BE) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
@@ -3460,16 +3460,16 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         fkt_a2 = -1 * faktor * (faktor_1 + faktor_2 + faktor_3)
         fkt_a1 = faktor * (faktor_1 * faktor_2 + faktor_2 * faktor_3 + faktor_1 * faktor_3)
         fkt_a0 = -1 * faktor * faktor_1 * faktor_2 * faktor_3
-        Fkt_a3_a = Rational(fkt_a3,4)
-        Fkt_a2_a = Rational(fkt_a2*a_fest,3)
-        Fkt_a1_a = Rational(fkt_a1*a_fest**2,2)
+        Fkt_a3_a = Fraction(fkt_a3,4)
+        Fkt_a2_a = Fraction(fkt_a2*a_fest,3)
+        Fkt_a1_a = Fraction(fkt_a1*a_fest**2,2)
         Fkt_a0_a = fkt_a0 * a_fest**3
 
         fkt_str = (vorz_v_aussen(fkt_a3, r'x^3') + vorz_v_innen(fkt_a2, r'a \cdot x^2')
                    + vorz_v_innen(fkt_a1, r'a^2 \cdot x') + vorz_v_innen(fkt_a0, r'a^3'))
-        Fkt_str = (vorz_v_aussen(Rational(fkt_a3,4), r'x^4')
-                   + vorz_v_innen(Rational(fkt_a2,3), r'a \cdot x^3')
-                   + vorz_v_innen(Rational(fkt_a1,2), r'a^2 \cdot x^2')
+        Fkt_str = (vorz_v_aussen(Fraction(fkt_a3,4), r'x^4')
+                   + vorz_v_innen(Fraction(fkt_a2,3), r'a \cdot x^3')
+                   + vorz_v_innen(Fraction(fkt_a1,2), r'a^2 \cdot x^2')
                    + vorz_v_innen(fkt_a0, r'a^3 \cdot x'))
         aufgabe.extend(('Der Graph schließt oberhalb der x-Achse eine Fläche mit der x-Achse ein. \n\n',
                         str(liste_teilaufg[i]) + f') Berechnen Sie den Wert für a, wenn '
@@ -3645,8 +3645,8 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(lsg[0], 'x') + r'} ~immer~ \neq 0 }'
                            + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(b, 'x') + vorz_str(c)
                            + r' \quad \vert ' + vorz_str(-1*c) + r' \quad \vert \div ' + gzahl_klammer(b)
-                           + r' \quad \to \quad ' + r' x ~=~' + gzahl(Rational(-1*c,b)) + r' \quad \to \quad S_x ( '
-                           + gzahl(Rational(-1*c,b)) + r' \vert 0) \quad (4BE) \\ '
+                           + r' \quad \to \quad ' + r' x ~=~' + gzahl(Fraction(-1*c,b)) + r' \quad \to \quad S_x ( '
+                           + gzahl(Fraction(-1*c,b)) + r' \vert 0) \quad (4BE) \\ '
                            + r' \mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                            + r' f(0) = e^0 \cdot (0' + vorz_str(c) + r') \quad \to \quad S_y( 0 \vert '
                            + gzahl(c) + r') \quad (1BE) \\'
@@ -3720,7 +3720,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         elif expfkt == 2:
             punkte_aufg = 7
-            xwert_extr = Rational(-1*(lsg[0]*c+b), lsg[0]*b)
+            xwert_extr = Fraction(-1*(lsg[0]*c+b), lsg[0]*b)
             if fkt_2.subs(x, xwert_extr) < 0:
                 lsg_extrema = (r'~<~0~ \to HP(~' + gzahl(N(xwert_extr, 3)) + r'~ \vert ~'
                                + gzahl(N(fkt.subs(x, xwert_extr), 3)))
@@ -3810,7 +3810,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 7
-            xwert_w = Rational(-1*(lsg[0]*c+2*b),lsg[0]*b)
+            xwert_w = Fraction(-1*(lsg[0]*c+2*b),lsg[0]*b)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad 0 ~=~ f^{ \prime \prime }(x) ~=~' + fkt_2_str
                            + r' \quad \mathrm{da} ~ e^{' + vorz_v_aussen(lsg[0],'x')
@@ -3853,7 +3853,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
                            + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
         if expfkt == 2:
             punkte_aufg = 6
-            xwert_w = Rational(-1*(lsg[0]*c+2*b),lsg[0]*b)
+            xwert_w = Fraction(-1*(lsg[0]*c+2*b),lsg[0]*b)
             ywert_w = N(fkt.subs(x, xwert_w), 3)
             ywert_w_fkt_1 = N(fkt_1.subs(x, xwert_w),3)
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Tangente und Normale am Wendepunkt '
@@ -3918,22 +3918,22 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
     liste_punkte = []
     liste_bez = []
 
-    c = random.choice([Rational(zzahl(1, 10), 5), Rational(zzahl(1, 8), 4)])
-    n1 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
+    c = random.choice([Fraction(zzahl(1, 10), 5), Fraction(zzahl(1, 8), 4)])
+    n1 = Fraction(random.choice([2, 4, 5, 6, 8, 10]), 2)
     a = n1 * c
-    n2 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
-    n3 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
+    n2 = Fraction(random.choice([2, 4, 5, 6, 8, 10]), 2)
+    n3 = Fraction(random.choice([2, 4, 5, 6, 8, 10]), 2)
     b_h = -1 * a * n2
     b_ij = -1 * a * n3
     xe = -1 / c - b / a
     ywert_xe_bij = -a/c*exp(-b_ij*c/a-1)
 
     while (100/a) % 1 != 0 and (100/c) % 1 != 0 and (10*xe)%1 != 0 and abs(ywert_xe_bij) < 1:
-        c = random.choice([Rational(zzahl(1, 10), 5), Rational(zzahl(1,8),4)])
-        n1 = Rational(random.choice([2, 4, 5, 6, 8, 10]),2)
+        c = random.choice([Fraction(zzahl(1, 10), 5), Fraction(zzahl(1,8),4)])
+        n1 = Fraction(random.choice([2, 4, 5, 6, 8, 10]),2)
         a = n1 * c
-        n2 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
-        n3 = Rational(random.choice([2, 4, 5, 6, 8, 10]), 2)
+        n2 = Fraction(random.choice([2, 4, 5, 6, 8, 10]), 2)
+        n3 = Fraction(random.choice([2, 4, 5, 6, 8, 10]), 2)
         b_h = -1 * a * n2
         b_ij = -1 * a * n3
         xe = -1 / c - b / a
@@ -4016,8 +4016,8 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + r' \quad (1BE) \\ \mathrm{ da~e^{' + vorz_v_aussen(c, 'x') + r'} ~immer~ \neq 0 }'
                        + r' \quad \to \quad 0 ~=~' + vorz_v_aussen(a, 'x + b') + r' \quad \vert ~ -b'
                        + r' \quad \vert \div ' + gzahl_klammer(a) + r' \quad \to \quad x ~=~ '
-                       + vorz_v_innen(Rational(-1,a),'b') + r' \quad \to \quad S_x ( '
-                       + vorz_v_innen(Rational(-1,a),'b') + r' \vert 0) \quad (4BE) \\ '
+                       + vorz_v_innen(Fraction(-1,a),'b') + r' \quad \to \quad S_x ( '
+                       + vorz_v_innen(Fraction(-1,a),'b') + r' \vert 0) \quad (4BE) \\ '
                        + r' \mathrm{Schnittpunkt~mit~der~y-Achse:} \hspace{5em} '
                        + r' f(0) = e^0 \cdot (0 + b) \quad \to \quad S_y( 0 \vert b) \quad (1BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
@@ -4365,18 +4365,18 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
                          + vorz_v_innen(-1 * faktor * nst_1 * nst_3, ')'))
 
         # p und q in der pq-Formel
-        fkt_1_p_str = r'-( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')'
-        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Rational(-1 * (nst_1 + nst_3), 3), r' a')
-                       + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3),')'))
-        fkt_1_q2_str = (vorz_v_aussen(Rational((nst_1 + nst_3), 3), r' a')
-                        + vorz_str(Rational((nst_1 * nst_3), 3)))
+        fkt_1_p_str = r'-( \frac{2}{3} a' + vorz_str(Fraction(2 * (nst_1 + nst_3), 3)) + ')'
+        fkt_1_q_str = (vorz(nst_1+nst_3) + '(' + vorz_v_aussen(Fraction(-1 * (nst_1 + nst_3), 3), r' a')
+                       + vorz_v_innen(Fraction(-1 * (nst_1 * nst_3), 3),')'))
+        fkt_1_q2_str = (vorz_v_aussen(Fraction((nst_1 + nst_3), 3), r' a')
+                        + vorz_str(Fraction((nst_1 * nst_3), 3)))
 
         # p und q in umgeformter pq-Formel
-        fkt_1_p2_str = r'( \frac{2}{3} a' + vorz_str(Rational(2 * (nst_1 + nst_3), 3)) + ')^2'
-        fkt_1_p3_str = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        fkt_1_p2_str = r'( \frac{2}{3} a' + vorz_str(Fraction(2 * (nst_1 + nst_3), 3)) + ')^2'
+        fkt_1_p3_str = r' \frac{1}{3} a' + vorz_str(Fraction((nst_1 + nst_3), 3))
         fkt_1_q3_str = (vorz(-1*(nst_1 + nst_3)) + r' \frac{4 \cdot ('
-                        + vorz_v_aussen(Rational(abs(nst_1 + nst_3), 3), r' a')
-                        + vorz_v_innen(Rational(-1 * (nst_1 * nst_3), 3), ') }{4}'))
+                        + vorz_v_aussen(Fraction(abs(nst_1 + nst_3), 3), r' a')
+                        + vorz_v_innen(Fraction(-1 * (nst_1 * nst_3), 3), ') }{4}'))
 
         # Diskriminante der Wurzel
         fkt_1_disk_str = (r' \frac{1}{9} \cdot ((a' + vorz_str(-1*(nst_1+nst_3)) + r')^2'
@@ -4425,7 +4425,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         fkt_1_a1_str_neg = (vorz(-1*faktor) + '(' + vorz_v_aussen(-2 * faktor, r' a')
                             + vorz_v_innen(-2 * faktor * (nst_1 + nst_3), ')'))
 
-        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1+nst_3),3))
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Fraction((nst_1+nst_3),3))
         fkt_2_str = gzahl(6*faktor) + 'x' + fkt_1_a1_str
         fkt_3_str = gzahl(6*faktor)
 
@@ -4434,7 +4434,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ~' + fkt_1_a1_str_neg + r' \quad \vert \div '
                        + gzahl_klammer(6 * faktor) + r' \quad (1BE) \\ x_1~=~ \frac{1}{3} a'
-                       + vorz_str(Rational((nst_1+nst_3),3))
+                       + vorz_str(Fraction((nst_1+nst_3),3))
                        + r' \quad (1BE) \quad \to \quad f^{ \prime \prime \prime }(' + xwert_wendepunkt
                        + r') ~=~ ' + gzahl(6*faktor) + r' \quad \neq 0 \quad \to \quad Wendepunkt \quad (3BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
@@ -4447,12 +4447,12 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
         punkte = 3
         liste_punkte.append(punkte)
         wert_a_wp = nzahl(1,5)
-        xwert_wp = Rational((wert_a_wp + nst_1 + nst_3),3)
-        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Rational((nst_1 + nst_3), 3))
+        xwert_wp = Fraction((wert_a_wp + nst_1 + nst_3),3)
+        xwert_wendepunkt = r' \frac{1}{3} a' + vorz_str(Fraction((nst_1 + nst_3), 3))
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Wert von a,'
                                                 f' bei dem der Wendepunkt an der Stelle x = {xwert_wp} ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + gzahl(xwert_wp) + '~=~' + xwert_wendepunkt
-                                                 + r' \quad \vert ~' + gzahl(Rational(-1 * (nst_1 + nst_3), 3))
+                                                 + r' \quad \vert ~' + gzahl(Fraction(-1 * (nst_1 + nst_3), 3))
                                                  + r' \quad \vert \cdot 3 \quad \to \quad a~=~'
                                                  + str(wert_a_wp) + r' \quad (3BE) \\'
                                                  + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\'))
@@ -4468,7 +4468,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms dritten Grades durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
-    # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen rational bzw. irrational sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
+    # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen Fraction bzw. irFraction sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -4477,8 +4477,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
     liste_bez = []
 
     if nullstellen == None:
-        nullstellen = random.choice(['rational', 'irrational'])
-    if nullstellen == 'rational':
+        nullstellen = random.choice(['Fraction', 'irFraction'])
+    if nullstellen == 'Fraction':
         nst_1 = zzahl(1, 3)
         nst_2 = nst_1 + nzahl(1, 3)
         while nst_2 < 1:
@@ -4503,13 +4503,13 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         fkt_1 = collect(expand(diff(fkt, x, 1)), x)
         fkt_1_str = (vorz_v_aussen(3*fkt_a1, 'x^2') + vorz_v_innen(2*fkt_a2, 'x') + vorz_str(fkt_a3))
         fkt_2_str = (vorz_v_aussen(6*fkt_a1, 'x') + vorz_str(2*fkt_a2))
-        fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * (nst_1 + nst_2 + nst_3), 3), 'x')
-                    + vorz_str(Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)))
-        p_fkt_1_pq = Rational(-2 * (nst_1 + nst_2 + nst_3), 3)
-        q_fkt_1_pq = Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)
+        fkt_1_pq = ('x^2' + vorz_v_innen(Fraction(-2 * (nst_1 + nst_2 + nst_3), 3), 'x')
+                    + vorz_str(Fraction((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)))
+        p_fkt_1_pq = Fraction(-2 * (nst_1 + nst_2 + nst_3), 3)
+        q_fkt_1_pq = Fraction((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)
         s_fkt = -1 * faktor * nst_1 * nst_2 * nst_3
 
-    if nullstellen == 'irrational':
+    if nullstellen == 'irFraction':
         nst_1 = zzahl(1, 3)
         quadr_nst_23 = nzahl(2, 25)
         nst_2 = math.sqrt(quadr_nst_23)
@@ -4533,14 +4533,14 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         fkt_1 = collect(expand(diff(fkt, x, 1)), x)
         fkt_1_str = (vorz_v_aussen(3*fkt_a1, 'x^2') + vorz_v_innen(2* fkt_a2, 'x') + vorz_str(fkt_a3))
         fkt_2_str = (vorz_v_aussen(6*fkt_a1, 'x') + vorz_str(2* fkt_a2))
-        fkt_1_pq = ('x^2' + vorz_v_innen(Rational(-2 * nst_1, 3), 'x') +
-                    vorz_str(Rational(quadr_nst_23, -3)))
-        p_fkt_1_pq = Rational((-2 * nst_1), 3)
-        q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
+        fkt_1_pq = ('x^2' + vorz_v_innen(Fraction(-2 * nst_1, 3), 'x') +
+                    vorz_str(Fraction(quadr_nst_23, -3)))
+        p_fkt_1_pq = Fraction((-2 * nst_1), 3)
+        q_fkt_1_pq = Fraction(-1 * quadr_nst_23, 3)
         s_fkt = faktor * nst_1 * quadr_nst_23
 
-    if nullstellen not in (['rational', 'irrational', None]):
-        exit("nullstellen müssen None, 'rational' oder 'irrational' sein")
+    if nullstellen not in (['Fraction', 'irFraction', None]):
+        exit("nullstellen müssen None, 'Fraction' oder 'irFraction' sein")
 
     fkt_b2 = nst_1 * fkt_a1
     fkt_c2 = fkt_a2 + fkt_b2
@@ -4708,13 +4708,13 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         # Die SuS sollen mithilfe der Ergebnisse der vorherigen Teilaufgabe die Existenz eines Wendepunktes begründen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
+        xwert_Wendepunkt = N(Fraction(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         aufgabe.append(str(liste_teilaufg[i]) + ') Begründen Sie mithilfe der vorherigen Ergebnisse, '
                                                 'dass diese Funktion einen Wendepunkt besitzt. \n\n')
         table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
         table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
         if 'c' in teilaufg:
-            table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
+            table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzFractionen '
                            f'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.' , '3P')
             punkte = 3
         if 'e' in teilaufg and 'c' not in teilaufg:
@@ -4731,7 +4731,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        xwert_Wendepunkt = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
+        xwert_Wendepunkt = N(Fraction(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Wendepunkt der Funktion f. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad f^{ \prime \prime }(x) ~=~0 \quad \to \quad 0~=~'
                        + fkt_2_str + r' \quad \vert ' + vorz_str(2 * faktor * (nst_1 + nst_2 + nst_3))
@@ -4746,7 +4746,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
     if 'h' in teilaufg:
         # Die SuS sollen die Wendetangente bzw. die Wendenormale, abhängig vom gewählten Parameter 'wendenormale', berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        xwert_wp1 = N(Rational(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
+        xwert_wp1 = N(Fraction(2 * faktor * (nst_1 + nst_2 + nst_3), 6 * faktor), 3)
         ywert_wp1 = N(fkt.subs(x, xwert_wp1), 3)
         ywert_wp1_fkt_1 = N(fkt_1.subs(x, xwert_wp1), 3)
         fkt_t = ywert_wp1_fkt_1 * (x - xwert_wp1) + ywert_wp1
@@ -4820,8 +4820,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         Fkt = integrate(fkt, x)
-        Fkt_str = (vorz_v_aussen(Rational(fkt_a1, 4), 'x^4') + vorz_v_innen(Rational(fkt_a2, 3), 'x^3')
-                   + vorz_v_innen(Rational(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
+        Fkt_str = (vorz_v_aussen(Fraction(fkt_a1, 4), 'x^4') + vorz_v_innen(Fraction(fkt_a2, 3), 'x^3')
+                   + vorz_v_innen(Fraction(fkt_a3, 2), 'x^2') + vorz_v_innen(fkt_a4, 'x'))
 
         def erste_positive_nst(vec):
             # print(vec)
@@ -4866,7 +4866,7 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
 
     # hier wird die Funktion erstellt.
     loesung_vektor = [1/3,1/5,1/7]
-    while vektor_rational(loesung_vektor,10) != True:
+    while vektor_Fraction(loesung_vektor,10) != True:
         xwert_1 = -1 * nzahl(1,3)
         ywert_1 = nzahl(3,8)
         xwert_2 = nzahl(1,3)
@@ -4982,9 +4982,9 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
         print(lsg)
         print(pkt)
         koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,1,0],[1,1,1])
-        fkt_1_a_p = Rational(2*x_2,3*x_1)
-        fkt_1_a_p2 = Rational(x_2,3*x_1)
-        fkt_1_a_q = Rational(x_3,3*x_1)
+        fkt_1_a_p = Fraction(2*x_2,3*x_1)
+        fkt_1_a_p2 = Fraction(x_2,3*x_1)
+        fkt_1_a_q = Fraction(x_3,3*x_1)
         fkt_1_a_pq = 'x^2' + vorz_v_innen(fkt_1_a_p,'x') + vorz_str(fkt_1_a_q)
         fkt_1_a_sqrt_disk = N(sqrt(fkt_1_a_p2 ** 2 - fkt_1_a_q), 3)
         fkt_1_a_lsg = solve(fkt_1_a, x)

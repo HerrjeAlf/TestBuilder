@@ -1,6 +1,7 @@
 import random
 import sympy, sys
 import string
+from fractions import Fraction
 from sympy.stats import Binomial, P
 from scipy.stats import norm
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
@@ -226,7 +227,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
                              bz1=farben_kuerzel_1, bz2=farben_kuerzel_2)
         else:
             # print(farben_kuerzel_1)
-            Baumdiagramm_zmZ(stufen, Rational(anzahl_1,(anzahl_1+anzahl_2)),
+            Baumdiagramm_zmZ(stufen, Fraction(anzahl_1,(anzahl_1+anzahl_2)),
                              f'Loesung_{nr}{liste_teilaufg[i]}',
                              bz=farben_kuerzel_1, bz2=farben_kuerzel_2)
         aufgabe.append(str(liste_teilaufg[i]) + ') Zeichnen Sie das Baumdiagramm für diesen Versuch.')
@@ -515,7 +516,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         # Berechnung der Wahrscheinlichkeit mit Bernoulli beim Ziehen mit Zurücklegen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
+        wkt = Fraction(anzahl_1,anzahl_1 + anzahl_2)
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                 + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
                                 + f'genau {gzahl(anzahl_k)} mal gezogen wird. '))
@@ -538,7 +539,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     if 'k' in teilaufg and art == 'zmZ':
         # mit kumulierter Bernoullikette Wahrscheinlichkeit berechnen beim Ziehen mit Zurücklegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
+        wkt = Fraction(anzahl_1,anzahl_1 + anzahl_2)
         anz = anzahl_k - nzahl(2,5) if anzahl_k > 5 else anzahl_k - 1
         aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                 + f') Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
@@ -696,10 +697,10 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
                         + 'und vergleichen Sie diese. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cap H \vert }'
                        + r'{ \vert M \vert } ~=~ \frac{' + gzahl(M_H) + '}{' + gzahl(M) + '} ~=~ '
-                       + gzahl(Rational(M_H,M)) + '~=~' + gzahl(Rational(M_H*100,M))
+                       + gzahl(Fraction(M_H,M)) + '~=~' + gzahl(Fraction(M_H*100,M))
                        + r' \%  \quad (2BE)  \quad und \quad P_{P}(H) = \frac{ \vert P \cap H \vert }'
                        + r'{ \vert P \vert } ~=~ \frac{' + gzahl(P_H) + '}{' + gzahl(P) + '} ~=~ '
-                       + gzahl(Rational(P_H,P)) + '~=~' + gzahl(Rational(P_H*100,P))
+                       + gzahl(Fraction(P_H,P)) + '~=~' + gzahl(Fraction(P_H*100,P))
                        + r' \% \quad (2BE) } \\ \mathrm{Die~Gruppe,~welche~die~Medikamente~erhalten~hat,~'
                        + r'hat~eine~höhere~Heilungschance. \quad (1BE)} \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
@@ -717,7 +718,7 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
                         str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
                         + 'dieser Patient ein Placebo erhalten hat. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{H}(P) = \frac{' + gzahl(P_H) + '}{'
-                       + gzahl(H) + '} ~=~ ' + gzahl(Rational(P_H,H)) + '~=~' + gzahl(N(P_H*100/H,2))
+                       + gzahl(H) + '} ~=~ ' + gzahl(Fraction(P_H,H)) + '~=~' + gzahl(N(P_H*100/H,2))
                        + r' \% \quad } \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
         i += 1
@@ -812,10 +813,10 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
                                                  'beurteilen Sie dessen Zuverlässigkeit. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{K}(p) ~=~ \frac{ \vert K \cap p \vert }'
                        + r'{ \vert K \vert } ~=~ \frac{' + gzahl(K_p) + '}{' + gzahl(K) + '} ~=~ '
-                       + gzahl(Rational(K_p,K)) + '~=~' + gzahl(N(K_p*100/K,3))
+                       + gzahl(Fraction(K_p,K)) + '~=~' + gzahl(N(K_p*100/K,3))
                        + r' \%  \quad (2BE)  \quad und \quad P_{G}(n) = \frac{ \vert G \cap n \vert }'
                        + r'{ \vert G \vert } ~=~ \frac{' + gzahl(G_n) + '}{' + gzahl(G) + '} ~=~ '
-                       + gzahl(Rational(G_n,G)) + '~=~' + gzahl(N(G_n*100/G,3))
+                       + gzahl(Fraction(G_n,G)) + '~=~' + gzahl(N(G_n*100/G,3))
                        + r' \% \quad (2BE) }')
         loesung.append(f'Die Zuverlässigkeit des Tests ist nicht besonders groß. Bei dieser geringen Sensitivität '
                        f'werden von 100 Personen mit einer Krankheit {gzahl(round(K_n/K*100))} nicht erkannt. '
@@ -834,14 +835,14 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
                             str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
                             + 'eine Person krank ist, obwohl der Test negativ war. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ P_{n}(K) = \frac{' + gzahl(K_n) + '}{'
-                           + gzahl(n) + '} }~=~ ' + gzahl(Rational(K_n,n)) + '~=~' + gzahl(N(K_n*100/n,3))
+                           + gzahl(n) + '} }~=~ ' + gzahl(Fraction(K_n,n)) + '~=~' + gzahl(N(K_n*100/n,3))
                            + r' \% \quad (3BE) ')
         else: # gesund unter der Bed. postiver Test
             aufgabe.extend(('Eine Person hat ein positives Testergebnis und hofft aber trotzdem gesund zu sein. \n\n',
                             str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit, dass '
                             + 'eine Person gesund ist, obwohl der Test positiv war. \n\n'))
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{P_{p}(G) = \frac{' + gzahl(G_p) + '}{'
-                           + gzahl(p) + '}} ~=~ ' + gzahl(Rational(G_p,p)) + '~=~' + gzahl(N(G_p*100/p,3))
+                           + gzahl(p) + '}} ~=~ ' + gzahl(Fraction(G_p,p)) + '~=~' + gzahl(N(G_p*100/p,3))
                            + r' \% \quad (3BE) ')
         liste_punkte.append(punkte)
         i += 1
@@ -1213,7 +1214,7 @@ def konfidenzintervall(nr, teilaufg=['a', 'b'], BE=[]):
     auswahl = random_selection([[1, 0.683], [1.64, 0.9], [1.96, 0.95], [2, 0.954], [2.58, 0.99], [3, 0.997]], anzahl=1)
     wkt_intv = int(auswahl[0][1]*100) if auswahl[0][1]*100%1 == 0 else N(auswahl[0][1]*100,3)
     c = auswahl[0][0]
-    h_rel = Rational(zusage,anz_mitgl)
+    h_rel = Fraction(zusage,anz_mitgl)
     p_1 = N(h_rel - c*sqrt(h_rel*(1-h_rel)/anz_mitgl),3)
     p_2 = N(h_rel + c*sqrt(h_rel*(1-h_rel)/anz_mitgl),3)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
