@@ -386,8 +386,8 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Terme mit einer Basis und ganzzahligen Faktoren (zwei Summanden)
     # b) Terme mit einer Basis und ganzzahligen Faktoren (drei Summanden)
-    # c) Terme mit einer Basis und Rationalen Faktoren (zwei Summanden)
-    # d) Terme mit einer Basis und Rationalen Faktoren (drei Summanden)
+    # c) Terme mit einer Basis und rationalen Faktoren (zwei Summanden)
+    # d) Terme mit einer Basis und rationalen Faktoren (drei Summanden)
     # e) Bruchterme mit einer Basis (zwei Summanden)
     # f) Bruchterme mit einer Basis (drei Summanden)
     # g) gemischte Terme mit einer Basis und ganzzahligen Faktoren und Zahlen (3 Summanden)
@@ -682,11 +682,11 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     # c) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden
     # d) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden mit Variablen
     # e) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden mit Variablen und einem weiteren Summanden
-    # f) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei Rationalen Summanden mit einer Variablen
+    # f) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei rationalen Summanden mit einer Variablen
     # g) Klammer mit ganzzahligen Koeffizienten sowie einer Potenz einer Variable und drei Dezimalbrüchen als Summanden mit Potenzen von Variablen
-    # h) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei Rationalen Summanden mit Potenz einer Variablen und einem weiteren Summanden
-    # i) Klammer mit Rationalen Koeffizienten sowie einer Potenz einer Variable und drei Rationalen Summanden mit Potenzen von Variablen
-    # j) Klammer mit Rationalen Koeffizienten sowie einer Potenz einer Variable und drei Rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
+    # h) Klammer mit ganzzahligen Koeffizienten sowie einer Variable und drei rationalen Summanden mit Potenz einer Variablen und einem weiteren Summanden
+    # i) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
+    # j) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
@@ -851,8 +851,8 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     # e) eine ganze Zahl und die Potenz einer Variablen aus drei Summanden ausklammern
     # f) eine ganze Zahl und eine Variable im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
     # g) eine ganze Zahl und die Potenz einer Variablen im Zähler eines Bruchs ausklammern und dann mit dem Nenner kürzen
-    # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus Rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
-    # i) eine Rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus Rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
+    # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
+    # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
@@ -997,19 +997,19 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung der Form a * x = b mit ganzen Zahlen
-    # b) Gleichung der Form a * x = b mit Rationalen Zahlen
+    # b) Gleichung der Form a * x = b mit rationalen Zahlen
     # c) Gleichung der Form a * x + b = c mit ganzen Zahlen
-    # d) Gleichung der Form a * x + b = c mit Rationalen Zahlen
+    # d) Gleichung der Form a * x + b = c mit rationalen Zahlen
     # e) Gleichung der Form a * x + b = c * x + d mit ganzen Zahlen
-    # f) Gleichung der Form a * x + b = c * x + d mit Rationalen Zahlen
+    # f) Gleichung der Form a * x + b = c * x + d mit rationalen Zahlen
     # g) Gleichung der Form a * (b * x + c) = d mit ganzen Zahlen
-    # h) Gleichung der Form a * (b * x + c) = d mit Rationalen Zahlen
+    # h) Gleichung der Form a * (b * x + c) = d mit rationalen Zahlen
     # i) Gleichung der Form a * (b * x + c) = d * x + e mit ganzen Zahlen
-    # j) Gleichung der Form a * (b * x + c) = d * x + e mit Rationalen Zahlen
+    # j) Gleichung der Form a * (b * x + c) = d * x + e mit rationalen Zahlen
     # k) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit ganzen Zahlen
-    # l) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit Rationalen Zahlen
+    # l) Gleichung der Form (a * x^2 + b * x)/(c * x) = d mit rationalen Zahlen
     # m) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit ganzen Zahlen
-    # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit Rationalen Zahlen
+    # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit rationalen Zahlen
     #
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.

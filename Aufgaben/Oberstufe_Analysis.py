@@ -1,6 +1,7 @@
 import string
 import numpy as np
 import random, math
+from fractions import Fraction
 import sympy
 from numpy.linalg import solve as slv
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
@@ -328,7 +329,7 @@ def grenzwerte_folge(nr, ausw_folgenart=None, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def grenzwerte_funktionen(nr, BE=[]):
-    # In dieser Aufgabe sollen die SuS den Grenzwert einer Rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
+    # In dieser Aufgabe sollen die SuS den Grenzwert einer rationalen Funktion berechnen. Die Aufgabe besitzt keine Teilaufgaben.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_bez = [f'{nr}']
     faktor = zzahl(1, 10)
@@ -756,8 +757,8 @@ def grafisches_ableiten(nr, teilaufg=['a', 'b'], i=0, BE=[]):
 def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Die SuS sollen mithilfe der Ableitungsregeln die Ableitungen verschiedener Funktionen bestimmen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) ganzRationales Polynom
-    # b) Rationales Polynom
+    # a) ganzrationales Polynom
+    # b) rationales Polynom
     # c) Wurzelfunktion
     # d) Polynom mit Wurzelfunktion
     # e) Exponentialfunktion
@@ -793,7 +794,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         fkt_2 = collect(expand(diff(fkt, x, 2)), x)
         return latex(fkt), fkt_uf, latex(fkt_abl), pkt
 
-    def polynom_Rational():
+    def polynom_rational():
         a1 = zzahl(3, 15)
         e1 = nzahl(2, 6)
         fkt = r' \frac{' + gzahl(a1) + '}{x^{' + gzahl(e1) + '}}'
@@ -916,7 +917,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         teilaufg = repeat(teilaufg, wdh)
         exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
              "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
-    aufgaben = {'a': polynom, 'b': polynom_Rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
+    aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}
 
@@ -1168,7 +1169,7 @@ def anwendung_abl_steig(nr, teilaufg=['a', 'b'], i=0, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen den x-Wert berechnen, an dem eine (Rationale) Funktion die gegebene Steigung besitzt.
+        # Die SuS sollen den x-Wert berechnen, an dem eine (rationale) Funktion die gegebene Steigung besitzt.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         steigung = 0
@@ -1255,7 +1256,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
 
     # hier wird die Funktion erstellt.
     loesung_vektor = [1/3,1/5,1/7]
-    while vektor_Rational(loesung_vektor,10) != True:
+    while vektor_rational(loesung_vektor,10) != True:
         xwert_1 = -1 * nzahl(1,3)
         ywert_1 = nzahl(3,8)
         xwert_2 = nzahl(1,3)
@@ -2831,7 +2832,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
             table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
             if 'c' in teilaufg:
-                table1.add_row('', 'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzRationalen '
+                table1.add_row('', 'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
                                     'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.', '3P')
                 punkte = 3
             if 'e' in teilaufg and 'c' not in teilaufg:
@@ -2845,7 +2846,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
             table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
             if 'c' in teilaufg:
-                table1.add_row('', 'Da die Funktion vier Nullstellen besitzt und ein Polynom mit ganzRationalen '
+                table1.add_row('', 'Da die Funktion vier Nullstellen besitzt und ein Polynom mit ganzrationalen '
                                    'Exponenten ist, hat sie drei Extrema und damit zwei Wendepunkte.', '3P')
                 punkte = 3
             if 'e' in teilaufg and 'c' not in teilaufg:
@@ -4467,7 +4468,7 @@ def kurvendiskussion_polynom_parameter_1(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 
 def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, nullstellen=None, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms dritten Grades durchführen.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
-    # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen Rational bzw. irRational sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
+    # Mit dem Parameter 'nullstellen=' wird die Art der Nullstellen der Funktion festgelegt. Es gibt eine ganzzahlige Nullstelle und dann können die anderen beiden Nullstellen rational bzw. irrational sein. Standardmäßig ist 'nullstellen=None' und die Art der Nullstellen wird zufällig ausgewählt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden (z.B. liste_punkte=[1,2,3]). Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -4476,8 +4477,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
     liste_bez = []
 
     if nullstellen == None:
-        nullstellen = random.choice(['Rational', 'irRational'])
-    if nullstellen == 'Rational':
+        nullstellen = random.choice(['rational', 'irrational'])
+    if nullstellen == 'rational':
         nst_1 = zzahl(1, 3)
         nst_2 = nst_1 + nzahl(1, 3)
         while nst_2 < 1:
@@ -4508,7 +4509,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         q_fkt_1_pq = Rational((nst_1 * (nst_2 + nst_3)) + (nst_2 * nst_3), 3)
         s_fkt = -1 * faktor * nst_1 * nst_2 * nst_3
 
-    if nullstellen == 'irRational':
+    if nullstellen == 'irrational':
         nst_1 = zzahl(1, 3)
         quadr_nst_23 = nzahl(2, 25)
         nst_2 = math.sqrt(quadr_nst_23)
@@ -4538,8 +4539,8 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         q_fkt_1_pq = Rational(-1 * quadr_nst_23, 3)
         s_fkt = faktor * nst_1 * quadr_nst_23
 
-    if nullstellen not in (['Rational', 'irRational', None]):
-        exit("nullstellen müssen None, 'Rational' oder 'irRational' sein")
+    if nullstellen not in (['rational', 'irrational', None]):
+        exit("nullstellen müssen None, 'rational' oder 'irrational' sein")
 
     fkt_b2 = nst_1 * fkt_a1
     fkt_c2 = fkt_a2 + fkt_b2
@@ -4713,7 +4714,7 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
         table1 = Tabular('p{0.2cm}p{13cm} p{2cm}')
         table1.add_row(str(liste_teilaufg[i]) + ')', 'mögliche Begründung', 'Punkte')
         if 'c' in teilaufg:
-            table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzRationalen '
+            table1.add_row('', f'Da die Funktion drei Nullstellen besitzt und ein Polynom mit ganzrationalen '
                            f'Exponenten ist, hat sie zwei Extrema und damit einen Wendepunkt.' , '3P')
             punkte = 3
         if 'e' in teilaufg and 'c' not in teilaufg:
@@ -4865,7 +4866,7 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
 
     # hier wird die Funktion erstellt.
     loesung_vektor = [1/3,1/5,1/7]
-    while vektor_Rational(loesung_vektor,10) != True:
+    while vektor_rational(loesung_vektor,10) != True:
         xwert_1 = -1 * nzahl(1,3)
         ywert_1 = nzahl(3,8)
         xwert_2 = nzahl(1,3)
@@ -4980,7 +4981,7 @@ def rekonstruktion_test(nr, teilaufg=['a', 'b', 'c'], gleichung=True, i=0, BE=[]
         print(text)
         print(lsg)
         print(pkt)
-        koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,0,-1], [1,1,0], [1,1,1], [1,2,1], [1,4,1])
+        koeff = ([0,0,0], [0,0,1], [0,1,0], [0,1,1], [1,0,0], [1,0,1], [1,1,0],[1,1,1])
         fkt_1_a_p = Rational(2*x_2,3*x_1)
         fkt_1_a_p2 = Rational(x_2,3*x_1)
         fkt_1_a_q = Rational(x_3,3*x_1)
