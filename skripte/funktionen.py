@@ -755,7 +755,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     return loesung, table1
 
 def quadr_gl(koeff, i=1):
-    n1, n2, n3 = list(range(i,i+3))
+    n1, n2 = list(0 + i, 1 + i)
     punkte = 0
     if all(x == 0 for x in koeff):
         text = r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~x~aus~dem~Definitionsbereich} '

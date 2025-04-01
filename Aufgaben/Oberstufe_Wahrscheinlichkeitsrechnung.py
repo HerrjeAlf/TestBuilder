@@ -1432,4 +1432,79 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen einen Hypothesentest durchführen und entscheiden, welche Auswahlkriterien zum geringsten Fehler führt
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Solar \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if 'a' in teilaufg:
+        # die SuS sollen den Erwartungswert
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        punkte = 4
+        aufgabe.extend((NoEscape(f' . '), ' \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(
+                f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+
+'''
+Hier ist eine Aufgabenstellung zum Hypothesentest im Kontext einer Firma, die Photovoltaikanlagen baut:
+
+**Aufgabe: Entscheidung über die Herkunft und Qualität von Solarpanelen**
+
+Eine Firma, die Photovoltaikanlagen installiert, bezieht ihre Solarpanels von zwei verschiedenen Anbietern: Anbieter A 
+und Anbieter B. Leider wurden die Panels vermischt, sodass die Firma nicht weiß, welche Panels von welchem Anbieter 
+stammen. Die Firma möchte nun mithilfe statistischer Methoden herausfinden, welches Panel zu welchem Anbieter gehört, 
+und gleichzeitig sicherstellen, dass die Auswahl der qualitativ besseren Panels möglichst wenig Fehler enthält.
+
+### **Teilaufgabe a: Identifikation der Herkunft der Solarpanels**
+Die Firma führt eine Stichprobe von Solarpanels durch und misst deren Effizienz (% der Sonnenenergie, die in Strom 
+umgewandelt wird). Aufgrund historischer Daten weiß die Firma, dass Anbieter A durchschnittlich eine Effizienz von 
+18% liefert, während Anbieter B eine durchschnittliche Effizienz von 20% hat. Die Standardabweichungen betragen jeweils 
+1,5%. 
+
+Führen Sie einen geeigneten Hypothesentest durch, um zu entscheiden, ob ein zufällig gewähltes Panel wahrscheinlicher 
+von Anbieter A oder Anbieter B stammt. Verwenden Sie dazu ein Signifikanzniveau von 5%.
+
+1. Formulieren Sie die Null- und Alternativhypothese.
+2. Bestimmen Sie die Teststatistik.
+3. Entscheiden Sie basierend auf dem Testergebnis, ob das Panel eher von Anbieter A oder B stammt.
+
+### **Teilaufgabe b: Minimierung des Fehlers bei der Auswahl der besseren Panels**
+Die Firma möchte vorrangig die Panels mit der besten Effizienz für ihre Anlagen nutzen. Gleichzeitig will sie 
+sicherstellen, dass der Entscheidungsprozess nicht zu häufig falsche Panels auswählt. 
+
+1. Berechnen Sie die Wahrscheinlichkeit eines Fehlers 1. Art (fälschlicherweise ein Panel von Anbieter A als 
+eines von Anbieter B zu identifizieren).
+2. Berechnen Sie die Wahrscheinlichkeit eines Fehlers 2. Art (ein Panel von Anbieter B fälschlicherweise als 
+eines von Anbieter A zu identifizieren).
+3. Diskutieren Sie, welche Maßnahmen ergriffen werden könnten, um den Entscheidungsprozess zu optimieren und die 
+Fehlerwahrscheinlichkeiten zu reduzieren.
+
+Diese Aufgabe bietet eine praxisnahe Anwendung von Hypothesentests und statistischer Entscheidungsfindung im Bereich 
+erneuerbarer Energien. Lassen Sie mich wissen, ob Sie eine Anpassung oder eine ausführlichere Erklärung benötigen! 😊
+
+'''
 
