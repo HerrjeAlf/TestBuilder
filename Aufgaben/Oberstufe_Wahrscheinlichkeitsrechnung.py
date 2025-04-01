@@ -1433,7 +1433,7 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
-    # Hier sollen die Schüler und Schülerinnen einen Hypothesentest durchführen und entscheiden, welche Auswahlkriterien zum geringsten Fehler führt
+    # Hier sollen die Schüler und Schülerinnen die möglichen Fehler eines Hypothesentests berechnen, neue Entscheidungsregel aufstellen und diskutieren
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -1441,23 +1441,78 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
     liste_punkte = []
     liste_bez = []
 
+    wkt_solco = nzahl(14,19)*5
+    wkt_wg = nzahl()
+    wkt_helion = nzahl(8,12)*5
+    k = random.choice([element / 20 for element in range(wkt_helion + 5, wkt_solco - 5, 5)])
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Solar \n\n']
+               f'Ein Solartechnik-Unternehmen bezieht seine Solarmodule bei den Herstellern Solco und '
+               f'Helion. Im Lager des Unternehmens sind mehrere ungekennzeichnete Paletten von Solarmodulen, '
+               f'die keinem der beiden Hersteller zugeordnet werden können. \n '
+               f'Es ist aber bekannt, dass der Hersteller Solco für {gzahl(wkt_solco)}% seiner Solarmodule zusichert, '
+               f'dass sie einen Wirkungsgrad von über {gzahl(wkt_wg)}% besitzen. Firma Helion sichert das nur für '
+               f'{gzahl(wkt_helion)}% seiner Module zu. \n '
+               f'Um die ungekennzeichneten Paletten einem Hersteller zuzuordnen, werden immer 20 Module aus einer '
+               f'Palette auf ihren Wirkungsrad getestet. Haben mehr als {gzahl(k)} Module einen Wirkungsgrad von'
+               f'über {gzahl(wkt_wg)}%, wird die Palette dem Hersteller Solco zugeordnet, andernfalls dem Hersteller '
+               f'Helion. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
-        # die SuS sollen den Erwartungswert
+    if len([element for element in teilaufg if element in ['a', 'b', 'c', 'd']]) > 0:
+        # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
         punkte = 4
-        aufgabe.extend((NoEscape(f' . '), ' \n\n'))
+        aufgabe.append(str(liste_teilaufg[i]) + ') Nennen und erläutern Sie die möglichen Fehler, die bei der '
+                       + 'Zuordnung auftreten können. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
+
+    if len([element for element in teilaufg if element in ['b', 'c', 'd']]) > 0:
+        # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen die Wahrscheinlichkeiten für diese Fehler. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if len([element for element in teilaufg if element in ['c', 'd']]) > 0:
+        # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        wkt_alpha = nzahl(3,7)
+        punkte = 4
+        aufgabe.extend((r'Der Fehler bei der Zuordnung der Module zum Herstellers Solco soll unter '
+                        f'{gzahl(wkt_alpha)}% liegen. \n\n',
+                        str(liste_teilaufg[i]) + ') Geben Sie eine Entscheidungsregel an, '
+                        + 'die diese Bedingung erfüllt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'd' in teilaufg:
+        # die SuS sollen für die neue Entscheidungsregel aus der vorherigen Teilaufgabe auch den Beta-Fehler berechnen und mit dem Ergebnis die Entscheidungsregel diskutieren
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        wkt_alpha = nzahl(3,7)
+        punkte = 4
+        aufgabe.extend((f'Die neue Entscheidungsregel aus der vorherigen Teilaufgabe hat auch Einfluss auf die'
+                        f'fehlerhafte Zuordnung der Module zum Hersteller Helion. \n\n',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie diesen Fehler und diskutieren Sie die neue '
+                        + 'Entscheidungsregel. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -1468,7 +1523,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-
+# mögliche Aufgabe für einen Hypthesentest mit einer Normalverteilung
 '''
 Hier ist eine Aufgabenstellung zum Hypothesentest im Kontext einer Firma, die Photovoltaikanlagen baut:
 
