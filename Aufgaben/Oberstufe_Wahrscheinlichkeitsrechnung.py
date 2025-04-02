@@ -1,8 +1,7 @@
 import random
 import sympy, sys
 import string
-from sympy.stats import Binomial, P
-from scipy.stats import norm
+from scipy.stats import norm, binom
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -1043,9 +1042,8 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             obere_grenze = N(mu + ausw_sigm * sigma,4)
             untere_grenze_ger = int(untere_grenze) if untere_grenze%1 != 0 else untere_grenze
             obere_grenze_ger = round(obere_grenze+0.5)
-            Verteilung = Binomial('X', n, p)
-            F_obere_grenze = N(P(Verteilung <= obere_grenze_ger).evalf(),4)
-            F_untere_grenze = round(P(Verteilung <= (untere_grenze_ger - 1)).evalf(),3)
+            F_obere_grenze = round(binom.cdf(obere_grenze_ger, n, p), 3)
+            F_untere_grenze = round(binom.cdf(untere_grenze_ger, n, p), 3)
             wkt_intervall = F_obere_grenze - F_untere_grenze
             aufgabe.extend((NoEscape(r' \noindent Berechnen Sie das symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
@@ -1432,7 +1430,7 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
+def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen die möglichen Fehler eines Hypothesentests berechnen, neue Entscheidungsregel aufstellen und diskutieren
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
@@ -1441,10 +1439,18 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
     liste_punkte = []
     liste_bez = []
 
-    wkt_solco = nzahl(14,19)*5
-    wkt_wg = nzahl()
-    wkt_helion = nzahl(8,12)*5
-    k = random.choice([element / 20 for element in range(wkt_helion + 5, wkt_solco - 5, 5)])
+
+    wkt_wg = nzahl(20,25) # Wirkungsgrad
+    wkt_solco = nzahl(14,18)*5 # Wahrscheinlichkeit für Module von Solco den Wirkungsgrad zu schaffen
+    wkt_helion = wkt_solco - nzahl(3,5)*5 # Wahrscheinlichkeit für Module von Helion den Wirkungsgrad zu schaffen
+    k = random.choice([element/5 for element in range(wkt_helion + 5, wkt_solco, 5)]) # Auswahl der Entscheidungsregel k (Anzahl der Module)
+    wkt_alpha = N(binom.cdf(k, 20, wkt_solco / 100),3) # kumulierte Wkt bei k für Module von Solco
+    wkt_beta = N(binom.cdf(k, 20, wkt_helion / 100), 3) # kumulierte Wkt bei k für Module von Solco
+    kc = k - nzahl(1,2)
+    wkt_alpha_neu = N(binom.cdf(kc, 20, wkt_solco / 100), 1) # gerundete Wkt für kumulierte Wkt für Module von Solco bei neuer Entscheidungsregel k
+    kn = kc - 1 if wkt_alpha_neu < binom.cdf(k-1, 20, wkt_solco / 100) else kc # korrekte Lösung für neue Entscheidungsregel
+    wkt_kn = N(binom.cdf(kn, 20, wkt_solco/100), 3)
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Solartechnik-Unternehmen bezieht seine Solarmodule bei den Herstellern Solco und '
                f'Helion. Im Lager des Unternehmens sind mehrere ungekennzeichnete Paletten von Solarmodulen, '
@@ -1453,7 +1459,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
                f'dass sie einen Wirkungsgrad von über {gzahl(wkt_wg)}% besitzen. Firma Helion sichert das nur für '
                f'{gzahl(wkt_helion)}% seiner Module zu. \n '
                f'Um die ungekennzeichneten Paletten einem Hersteller zuzuordnen, werden immer 20 Module aus einer '
-               f'Palette auf ihren Wirkungsrad getestet. Haben mehr als {gzahl(k)} Module einen Wirkungsgrad von'
+               f'Palette auf ihren Wirkungsrad getestet. Haben mehr als {gzahl(k)} Module einen Wirkungsgrad von '
                f'über {gzahl(wkt_wg)}%, wird die Palette dem Hersteller Solco zugeordnet, andernfalls dem Hersteller '
                f'Helion. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -1466,8 +1472,21 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
         punkte = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Nennen und erläutern Sie die möglichen Fehler, die bei der '
                        + 'Zuordnung auftreten können. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
-
+        loesung.append(str(liste_teilaufg[i]) + f') Es können zwei Arten von Fehlern auftreten. \n\n'
+                       + f'Fehlertyp 1 (Alpha-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Helio '
+                       + f'zugeordnet, obwohl sie tatsächlich von Solco stammt. Dieser Fehler tritt auf, wenn zufällig '
+                       + f'{gzahl(k)} Module oder weniger mit einem Wirkungsgrad von über {gzahl(wkt_wg)}% in der '
+                       + f'Stichprobe von 20 Modulen gefunden werden, obwohl die tatsächliche Wahrscheinlichkeit '
+                       + f'für Solco-Module {gzahl(wkt_solco)}% beträgt. Das kann durch zufällige Schwankungen '
+                       + f'in der Stichprobe passieren. \n\n'
+                       + f'Fehlertyp 2 (Beta-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Solco '
+                       + f'zugeordnet, obwohl sie tatsächlich von Helion stammt. Das passiert, wenn in der Stichprobe '
+                       + f'von 20 Modulen mehr als {gzahl(k)}  Module einen Wirkungsgrad über {gzahl(wkt_wg)}% haben, '
+                       + f'obwohl die tatsächliche Wahrscheinlichkeit für Helio-Module bei {gzahl(wkt_helion)}% liegt. '
+                       + f'Auch hier sind zufällige Schwankungen in der Stichprobe die Ursache. \n'
+                       + f'Beide Fehler entstehen durch die statistische Unsicherheit bei der Stichprobenauswahl. Die '
+                         f'Wahrscheinlichkeit für solche Fehler hängt von der Stichprobengröße und den festgelegten '
+                         f'Entscheidungsgrenzen ab.')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -1477,7 +1496,14 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
         aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen die Wahrscheinlichkeiten für diese Fehler. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{ Berechnung~des~ \alpha ~und~ \beta-Fehlers:}'
+                       + r' \hspace{15em} (4BE) \\' + r' \alpha - Fehler: ~ P(X \leq ' + gzahl(k)
+                       + r') ~=~ F( 20 \vert ' + gzahl(wkt_solco/100) + r' \vert ' + gzahl(k) + ') ~=~ '
+                       + gzahl(wkt_alpha) + '~=~' + gzahl(wkt_alpha*100) + r' \% \quad (2BE) \\ '
+                       + r' \beta - Fehler : ~ P(X > ' + gzahl(k) + r') ~=~ 1 - P(x \leq ' + gzahl(k)
+                       + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100) + r' \vert ' + gzahl(k) + ') ~=~ '
+                       + gzahl(1 - wkt_beta) + '~=~' + gzahl(N((1 - wkt_beta),3)*100)
+                       + r' \% \quad (2BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -1486,13 +1512,15 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
     if len([element for element in teilaufg if element in ['c', 'd']]) > 0:
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        wkt_alpha = nzahl(3,7)
         punkte = 4
         aufgabe.extend((r'Der Fehler bei der Zuordnung der Module zum Herstellers Solco soll unter '
-                        f'{gzahl(wkt_alpha)}% liegen. \n\n',
+                        f'{gzahl(wkt_alpha_neu*100)}% liegen. \n\n',
                         str(liste_teilaufg[i]) + ') Geben Sie eine Entscheidungsregel an, '
                         + 'die diese Bedingung erfüllt. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{durch~probieren~ k ~=~ }'
+                       + gzahl(kn) + r' \quad \mathrm{da, ~} \alpha - Fehler: ~ P(X \leq ' + gzahl(kn)
+                       + r') ~=~ F( 20 \vert ' + gzahl(wkt_solco/100) + r' \vert ' + gzahl(kn) + ') ~=~ '
+                       + gzahl(wkt_kn) + '~=~' + gzahl(wkt_kn*100) + r' \% \quad (2BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -1501,13 +1529,24 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[]):
     if 'd' in teilaufg:
         # die SuS sollen für die neue Entscheidungsregel aus der vorherigen Teilaufgabe auch den Beta-Fehler berechnen und mit dem Ergebnis die Entscheidungsregel diskutieren
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        wkt_alpha = nzahl(3,7)
+        wkt_beta_kn = N(binom.cdf(kn,20,wkt_helion/100),3)
         punkte = 4
-        aufgabe.extend((f'Die neue Entscheidungsregel aus der vorherigen Teilaufgabe hat auch Einfluss auf die'
+        if (wkt_alpha + 1 - wkt_beta) < (wkt_kn + 1 - wkt_beta_kn):
+            text = ('Und betrachtet man die Summe beider Fehlerwahrscheinlichkeiten, ist die neue Entscheidungsregel '
+                    'abzulehnen, da diese größer geworden ist.')
+        else:
+            text = ('Allerdings ist die Summe beider Fehlerwahrscheinlichkeiten gesunken, womit die Änderung der '
+                    'Entscheidungsregel anzunehmen ist.')
+        aufgabe.extend((f'Die neue Entscheidungsregel aus der vorherigen Teilaufgabe hat auch Einfluss auf die '
                         f'fehlerhafte Zuordnung der Module zum Hersteller Helion. \n\n',
                         str(liste_teilaufg[i]) + ') Berechnen Sie diesen Fehler und diskutieren Sie die neue '
                         + 'Entscheidungsregel. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad (4BE)')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \beta - Fehler : ~ P(X > ' + gzahl(kn)
+                       + r') ~=~ 1 - P(x \leq ' + gzahl(kn) + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100)
+                       + r' \vert ' + gzahl(kn) + ') ~=~ ' + gzahl(1 - wkt_beta_kn) + '~=~'
+                       + gzahl(N((1 - wkt_beta_kn),3)*100) + r' \% \quad (2BE)')
+        loesung.append('Wie am Ergebnis zu erkennen ist, führt die neue Entscheidungsregel zwar zu einer Verringerung '
+                       'des Alpha-Fehlers, aber auch zu einer Vergrößerung des Beta-Fehlers. ' + text + ' \n\n')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)

@@ -255,7 +255,7 @@ def potenz(fakt, exp, bas='x', vorz=False):
     else:
         return vorz_str(fakt) + str(bas) + '^' + gzahl(exp) if vorz else gzahl(fakt) + str(bas) + '^' + gzahl(exp)
 
-def binom(z1, z2, str1='', str2=''):
+def binom_str(z1, z2, str1='', str2=''):
     if z1 != 0 and z2 != 0:
         if z1 < 0 and z2 < 0:
             return (r'- \left( ' + vorz_v_aussen(abs(z1), str(str1))
@@ -274,7 +274,6 @@ def binom_klammer(z1, z2, str1='', str2=''):
             return r' \left(' + vorz_v_aussen(z1, str(str1)) + vorz_v_innen(z2, str(str2)) + r' \right) '
     else:
         return gzahl_klammer(z1,str(str1), null=False) + gzahl_klammer(z2, str(str2), null=False)
-
 
 def binom_aussen(z1, z2, str1='', str2='', var=''):
     if z1 != 0 and z2 != 0:

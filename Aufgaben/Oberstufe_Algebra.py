@@ -2461,8 +2461,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + f'in der die Gerade g liegt. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
-                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
+                       + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(g_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(g_vy)
@@ -2508,8 +2508,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + f' die zur {bez} - Achse parallel ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
                        + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
-                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
+                       + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
                        + r' \\' + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(vec[0]) + binom_innen(ny, aey, str2='a', ) + r' \cdot ' + gzahl_klammer(vec[1])
@@ -2530,8 +2530,8 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + f'die parallel zur Geraden h ist. \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
-                       + r' 0~=~ \begin{pmatrix} ' + binom(nx, aex, str2='a') + r' \\'
-                       + binom(ny, aey, str2='a') + r' \\' + binom(nz, aez, str2='a') + r' \\ \end{pmatrix} '
+                       + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
+                       + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(h_vx) + r' \\' + gzahl(h_vy) + r' \\' + gzahl(h_vz) + r' \\'
                        + r' \end{pmatrix} ~=~' + binom_aussen(nx, aex, str2='a') + r' \cdot '
                        + gzahl_klammer(h_vx) + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(h_vy)
