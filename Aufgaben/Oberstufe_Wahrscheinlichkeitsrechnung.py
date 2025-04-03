@@ -1459,7 +1459,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
                f'dass sie einen Wirkungsgrad von über {gzahl(wkt_wg)}% besitzen. Firma Helion sichert das nur für '
                f'{gzahl(wkt_helion)}% seiner Module zu. \n '
                f'Um die ungekennzeichneten Paletten einem Hersteller zuzuordnen, werden immer 20 Module aus einer '
-               f'Palette auf ihren Wirkungsrad getestet. Haben mehr als {gzahl(k)} Module einen Wirkungsgrad von '
+               f'Palette auf ihren Wirkungsgrad getestet. Haben mehr als {gzahl(k)} Module einen Wirkungsgrad von '
                f'über {gzahl(wkt_wg)}%, wird die Palette dem Hersteller Solco zugeordnet, andernfalls dem Hersteller '
                f'Helion. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -1473,7 +1473,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
         aufgabe.append(str(liste_teilaufg[i]) + ') Nennen und erläutern Sie die möglichen Fehler, die bei der '
                        + 'Zuordnung auftreten können. \n\n')
         loesung.append(str(liste_teilaufg[i]) + f') Es können zwei Arten von Fehlern auftreten. \n\n'
-                       + f'Fehlertyp 1 (Alpha-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Helio '
+                       + f'Fehlertyp 1 (Alpha-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Helion '
                        + f'zugeordnet, obwohl sie tatsächlich von Solco stammt. Dieser Fehler tritt auf, wenn zufällig '
                        + f'{gzahl(k)} Module oder weniger mit einem Wirkungsgrad von über {gzahl(wkt_wg)}% in der '
                        + f'Stichprobe von 20 Modulen gefunden werden, obwohl die tatsächliche Wahrscheinlichkeit '
@@ -1482,7 +1482,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
                        + f'Fehlertyp 2 (Beta-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Solco '
                        + f'zugeordnet, obwohl sie tatsächlich von Helion stammt. Das passiert, wenn in der Stichprobe '
                        + f'von 20 Modulen mehr als {gzahl(k)}  Module einen Wirkungsgrad über {gzahl(wkt_wg)}% haben, '
-                       + f'obwohl die tatsächliche Wahrscheinlichkeit für Helio-Module bei {gzahl(wkt_helion)}% liegt. '
+                       + f'obwohl die tatsächliche Wahrscheinlichkeit für Helion-Module bei {gzahl(wkt_helion)}% liegt. '
                        + f'Auch hier sind zufällige Schwankungen in der Stichprobe die Ursache. \n'
                        + f'Beide Fehler entstehen durch die statistische Unsicherheit bei der Stichprobenauswahl. Die '
                          f'Wahrscheinlichkeit für solche Fehler hängt von der Stichprobengröße und den festgelegten '
@@ -1500,7 +1500,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
                        + r' \hspace{15em} (4BE) \\' + r' \alpha - Fehler: ~ P(X \leq ' + gzahl(k)
                        + r') ~=~ F( 20 \vert ' + gzahl(wkt_solco/100) + r' \vert ' + gzahl(k) + ') ~=~ '
                        + gzahl(wkt_alpha) + '~=~' + gzahl(wkt_alpha*100) + r' \% \quad (2BE) \\ '
-                       + r' \beta - Fehler : ~ P(X > ' + gzahl(k) + r') ~=~ 1 - P(x \leq ' + gzahl(k)
+                       + r' \beta - Fehler : ~ P(X > ' + gzahl(k) + r') ~=~ 1 - P(X \leq ' + gzahl(k)
                        + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100) + r' \vert ' + gzahl(k) + ') ~=~ '
                        + gzahl(1 - wkt_beta) + '~=~' + gzahl(N((1 - wkt_beta),3)*100)
                        + r' \% \quad (2BE)')
@@ -1542,7 +1542,7 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
                         str(liste_teilaufg[i]) + ') Berechnen Sie diesen Fehler und diskutieren Sie die neue '
                         + 'Entscheidungsregel. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad \beta - Fehler : ~ P(X > ' + gzahl(kn)
-                       + r') ~=~ 1 - P(x \leq ' + gzahl(kn) + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100)
+                       + r') ~=~ 1 - P(X \leq ' + gzahl(kn) + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100)
                        + r' \vert ' + gzahl(kn) + ') ~=~ ' + gzahl(1 - wkt_beta_kn) + '~=~'
                        + gzahl(N((1 - wkt_beta_kn),3)*100) + r' \% \quad (2BE)')
         loesung.append('Wie am Ergebnis zu erkennen ist, führt die neue Entscheidungsregel zwar zu einer Verringerung '
