@@ -2447,23 +2447,24 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         lsg = solve_linear_system(glsystem, a, b, c, d)
         lsg_gzahl = vektor_kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
         faktor = zzahl(3, 7) / 2
-        fkt_a1, fkt_a2, fkt_a3, fkt_a4 = [faktor*element for element in lsg_gzahl]
-        # print(fkt_a1)
-        fkt = fkt_a1 * x ** 3 + fkt_a2 * x ** 2 + fkt_a3 * x + fkt_a4
-        fkt_str = (vorz_v_aussen(fkt_a1,'x^3') + vorz_v_innen(fkt_a2,'x^2')
-                   + vorz_v_innen(fkt_a3,'x') + vorz_str(fkt_a4))
+        koeff = k1, k2, k3, k4 = [faktor*element for element in lsg_gzahl]
+        fkt = k1 * x ** 3 + k2 * x ** 2 + k3 * x + k4
+        fkt_str = (vorz_v_aussen(k1,'x^3') + vorz_v_innen(k2,'x^2')
+                   + vorz_v_innen(k3,'x') + vorz_str(k4))
         lsg_nst = solve(fkt, x)
         lsg_nst.sort()
-        nst_1, nst_2, nst_3 = lsg_nst
-        fkt_1 = 3*fkt_a1 * x**2 + 2*fkt_a2 * x + fkt_a3
-        fkt_1_str = vorz_v_aussen(3*fkt_a1,'x^2') + vorz_v_innen(2*fkt_a2, 'x') + vorz_str(fkt_a3)
-        fkt_2 = 6*fkt_a1 * x + 2*fkt_a2
-        fkt_2_str = vorz_v_aussen(6*fkt_a1, 'x') + vorz_str(2*fkt_a2)
-        fkt_3 = 6*fkt_a1
-        fkt_3_str = gzahl(6*fkt_a1)
+        nst1, nst2, nst3 = lsg_nst
+        fkt_1 = 3*k1 * x**2 + 2*k2 * x + k3
+        fkt_1_str = vorz_v_aussen(3*k1,'x^2') + vorz_v_innen(2*k2, 'x') + vorz_str(k3)
+        fkt_2 = 6*k1 * x + 2*k2
+        fkt_2_str = vorz_v_aussen(6*k1, 'x') + vorz_str(2*k2)
+        fkt_3 = 6*k1
+        fkt_3_str = gzahl(6*k1)
         # print('x_{E_1} =~= ' + str(xwert_extrema1)), print('x_{E_2} =~= ' + str(xwert_extrema2))
         # print('x_W =~= ' + str(xwert_wendepkt)), print('Nst:' + str(lsg_nst))
         # print(fkt_str)
+    else:
+        exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2 oder 3 sein.')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
@@ -2498,8 +2499,8 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             loesung.append('Figure')
             punkte = 4
         elif grad == 3:
-            xmin = int(round(nst_1 - 0.4, 0))
-            xmax = int(round(nst_3 + 0.4, 0))
+            xmin = int(round(nst1 - 0.4, 0))
+            xmax = int(round(nst3 + 0.4, 0))
             # plot(fkt, fkt_n, (x,xmin,xmax))
 
             aufgabe.append(str(liste_teilaufg[i])
