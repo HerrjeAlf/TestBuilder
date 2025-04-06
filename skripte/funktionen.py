@@ -753,9 +753,10 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     print(loesung)
     return loesung, table1
 
-def quadr_gl(koeff, i=1):
-    n1, n2 = list(0 + i, 1 + i)
+def quadr_gl(koeff, i=1, schnittpkt=False):
+    n1, n2 = (0 + i, 1 + i)
     punkte = 0
+    fkt = koeff[0]*x**2 + koeff[1]*x + koeff[2]
     if all(x == 0 for x in koeff):
         text = r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~x~aus~dem~Definitionsbereich} '
         lsg = []
@@ -777,20 +778,20 @@ def quadr_gl(koeff, i=1):
             lsg = [lsg1]
             punkte += 2
     elif koeff[1] == 0 and koeff[2] == 0:
-        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') +  r' \quad \to \quad x_{' + gzahl(n1) + '} ~=~ 0'
+        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + r' \quad \to \quad x_{' + gzahl(n1) + '} ~=~ 0'
         lsg = [0]
         punkte += 2
     elif koeff[2] == 0:
         text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_v_innen(koeff[1],'x')
                 + r' ~=~ x \cdot \left( ' + vorz_v_aussen(koeff[0], 'x') + vorz_str(koeff[1]) + r' \right) '
-                + r' \quad \to \quad x_{' + gzahl(n1) + r'} = 0 \\ 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x')
+                + r' \quad \to \quad x_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x')
                 + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1]) + r' \quad \vert \div '
-                + gzahl_klammer(koeff[0]) + r' \quad \to \quad x_{' + gzahl(n2) + '} ~=~ '
+                + gzahl_klammer(koeff[0]) + r' \quad \to \quad x_{ ' + gzahl(n2) + ' } ~=~ '
                 + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
         lsg = [0, Rational(-1*koeff[1], koeff[0])]
         lsg.sort()
         punkte += 4
-    elif koeff[1]==0:
+    elif koeff[1] == 0:
         text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], 'x^2') + vorz_str(koeff[2]) + r' \quad \vert '
                 + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad x^2 ~=~'
                 + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
@@ -802,12 +803,12 @@ def quadr_gl(koeff, i=1):
             punkte += 2
         else:
             disk = Rational(-1 * koeff[2], koeff[0])
-            lsg_de = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
+            lsg_sq = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
             text = (text + r' x_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ \pm \sqrt{ ' + gzahl(disk)
-                    + r' } \quad \to \quad x_{ ' + gzahl(n1) + r'} = \sqrt{ ' + gzahl(disk) + '~=~' + gzahl(lsg_de)
+                    + r' } \quad \to \quad x_{ ' + gzahl(n1) + r'} = \sqrt{ ' + gzahl(disk) + '~=~' + gzahl(lsg_sq)
                     + r' } \quad \mathrm{und} \quad x_{ ' + gzahl(n2) + r' }= - \sqrt{ ' + gzahl(disk)
-                    + r' } ~=~' + gzahl(-1*lsg_de))
-            lsg = [-1*lsg_de, lsg_de]
+                    + r' } ~=~' + gzahl(-1*lsg_sq))
+            lsg = [-1*lsg_sq, lsg_sq]
             punkte += 1
     else:
         p = Rational(koeff[1], koeff[0])
@@ -827,7 +828,7 @@ def quadr_gl(koeff, i=1):
             punkte += 1
         elif Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) == 0:
             text = text + r' x_{' + gzahl(n1) + '} ~=~ ' + gzahl(Rational(-1*koeff[1],2*koeff[0]))
-            lsg = [Rational(-1*koeff[1],2*koeff[0])]
+            lsg = [Rational(-1*koeff[1], 2*koeff[0])]
             punkte += 2
         else:
             lsg1 = Rational(-1*koeff[1],2*koeff[0]) - sqrt(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2))
@@ -840,7 +841,25 @@ def quadr_gl(koeff, i=1):
                     + '~=~' + gzahl(N(lsg2,3)))
             lsg = [lsg1, lsg2]
             punkte += 4
-        text = [text]
+
+    if schnittpkt:
+        text4 = r' \\'
+        k = 1
+        y_wert = N(fkt.subs(x, 0),2)
+        for element in lsg:
+            if element == 0:
+                text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
+                         + r' \vert 0 ) } \quad ')
+            else:
+                text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
+                         + r' \vert 0)} \quad ')
+            k += 1
+        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if 0 not in lsg else ''
+        text[-1] += text4
+        punkte += len(lsg)
+
+
+    text = [text]
     return text, lsg, punkte
 
 def hornerschema(koeff, nst=[]):
@@ -860,9 +879,9 @@ def hornerschema(koeff, nst=[]):
     zeile1 = ['', ''] + [element for element in koeff]
     zeile2 = ['Berechnung der Partialfunktion  mit Hornerschema: ', nst1,'']
     zeile3 = ['', '', koeff[0]]
-    for step in range(laenge - 1):
-        zeile2.append(zeile3[step+1] * nst1)
-        zeile3.append(koeff[step + 2] + zeile2[step + 2])
+    for step in range(len(koeff) - 1):
+        zeile2.append(zeile3[step + 2] * nst1)
+        zeile3.append(koeff[step + 1] + zeile3[step + 2] * nst1)
     zeilen = [zeile1, zeile2, zeile3]
     # Tabelle Hornerschema
     spalten = 'c|c|'
@@ -891,7 +910,7 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
         else:
             text_quadr, lsg_quadr, punkte_quadr = quadr_gl([koeff[0], koeff[1], koeff[2]])
             fkt_x_ausgekl_str = (vorz_v_aussen(koeff[0], 'x^2') + vorz_v_innen(koeff[1], 'x')
-                                + vorz_str(koeff[2]))
+                                 + vorz_str(koeff[2]))
         lsg_quadr.append(0)
         lsg_quadr.sort()
         text = (r' \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad 0~=~' + fkt_str + r' ~=~ x \cdot ('
@@ -904,19 +923,30 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
         table1, koeff_hs, pkt_hs = hornerschema(koeff, nst)
         p1, p2, p3 = koeff_hs
         fkt_partial_str = vorz_v_aussen(p1,'x^2') + vorz_v_innen(p2, 'x') + vorz_str(p3)
-        text_quadr, lsg_quadr, pkt_quadr = quadr_gl(lsg)
+        text_quadr, lsg_quadr, pkt_quadr = quadr_gl(koeff_hs, i=2)
         text1 = (r' \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
                  + r' \quad \mathrm{durch~probieren:~x~=~}' + gzahl(nst2) + r' \\' + '(' + fkt_str + r')~ \div ~(x'
-                 + vorz_str(-1 * nst2) + ')~=~' + latex(fkt_partial_str))
-        text2 = (r' \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad ' + text_quadr)
+                 + vorz_str(-1 * nst2) + ')~=~' + fkt_partial_str)
+        text2 = (r' \mathrm{Ansatz: ~p(x) } ~=~ 0 \quad \to \quad ' + text_quadr[0])
+        lsg_quadr.append(nst2)
+        lsg_quadr.sort()
         punkte = 4 + pkt_hs + pkt_quadr
         text = [text1, table1, text2]
 
     if schnittpkt:
-        text4 = (r' \\ \mathrm{ S_{x_1}(' + gzahl(N(lsg_quadr[0], 3)) + r' \vert 0) \quad S_{x_2}('
-                + gzahl(N(lsg_quadr[1], 3)) + r' \vert 0) \quad S_{x_3}(' + gzahl(N(lsg_quadr[2], 3))
-                + r' \vert 0)}')
+        text4 = r' \\'
+        k = 1
+        y_wert = N(fkt.subs(x, 0),2)
+        for element in lsg:
+            if element == 0:
+                text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
+                         + r' \vert 0 ) } \quad ')
+            else:
+                text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
+                         + r' \vert 0)} \quad ')
+            k += 1
+        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if 0 not in lsg else ''
         text[-1] += text4
-        punkte += 3
+        punkte += len(lsg)
 
     return text, lsg, punkte
