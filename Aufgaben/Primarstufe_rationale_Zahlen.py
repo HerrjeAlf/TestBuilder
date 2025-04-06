@@ -798,7 +798,9 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
             aufg = aufg + auswahl[element] + r' \\\\'
         else:
             aufg = aufg + auswahl[element]
-        lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
+        lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\' if (element+1) != anzahl \
+            else lsg + regeln_aufgabe[auswahl[element]]
+
 
     if BE != []:
         if len(BE) > 1:
