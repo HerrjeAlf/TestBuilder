@@ -407,7 +407,7 @@ def Graph(x_min, x_max,  *funktionen, bezn=False, name='Graph'):
         ywerte = [fkt.subs(x, elements) for elements in xwerte]
         plt.plot(xwerte, ywerte, linewidth=2)
         werte = [(element, fkt.subs(x, element)) for element in xwerte]
-        xwert_ymax = [element for element in werte if abs(element[1]) <= 5][5][0]
+        xwert_ymax = [element for element in werte if abs(element[1]) <= 5][0][0]
         plt.annotate(fkt_bez[i], xy=(xwert_ymax, fkt.subs(x, xwert_ymax)), xycoords='data',
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
         i += 1
