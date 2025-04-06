@@ -875,15 +875,15 @@ def hornerschema(koeff, nst=[]):
         table1.add_hline(2)
 
     lsg = [zeile3[i+2] for i in range(laenge-1)]
-    text = [table1]
     punkte = len(lsg)
 
-    return text, lsg, punkte
+    return table1, lsg, punkte
 
 def kubische_gl(koeff, nst=[], schnittpkt=False):
     fkt = koeff[0]*x**3 + koeff[1]*x**2 + koeff[2]*x + koeff[3]
     fkt_str = (vorz_v_aussen(koeff[0], 'x^3') + vorz_v_innen(koeff[1], 'x^2')
                + vorz_v_innen(koeff[2], 'x') + vorz_str(koeff[3]))
+    lsg = solve(fkt, x) if nst == [] else nst
     if koeff[3] == 0:
         if koeff[1]== 0:
             text_quadr, lsg_quadr, punkte_quadr = quadr_gl([koeff[0], 0, koeff[2]])
@@ -894,41 +894,29 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
                                 + vorz_str(koeff[2]))
         lsg_quadr.append(0)
         lsg_quadr.sort()
-        punkte = 2 + punkte_quadr
-        text = (r') \quad \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad 0~=~' + fkt_str + r' ~=~ x \cdot ('
+        text = (r' \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad 0~=~' + fkt_str + r' ~=~ x \cdot ('
                 + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad \\ ' + text_quadr[0])
-        if schnittpkt:
-            text = (text + r' \\ \mathrm{ S_{x_1}(' + gzahl(N(lsg_quadr[0],3)) + r' \vert 0) \quad S_{x_2}('
-                    + gzahl(N(lsg_quadr[1], 3)) + r' \vert 0) \quad S_{x_3}(' + gzahl(N(lsg_quadr[2], 3))
-                    + r' \vert 0)} ')
+        punkte = 2 + punkte_quadr
         text = [text]
     else:
-        punkte = 14
-        # hier werden die ganzzahligen Nullstellen des Polynoms bestimmt, die zum Lösen mit dem Hornerscheme benötigt wedren
-        lsg = solve(fkt, x) if nst == [] else nst
-        fkt_nst =
-        fkt_partial = collect(expand(),x)
-        fkt_partial_pq = collect(simplify((x ** 3 + lsg_gzahl[1] / lsg_gzahl[0] * x ** 2
-                                           + lsg_gzahl[2] / lsg_gzahl[0] * x
-                                           + lsg_gzahl[3] / lsg_gzahl[0]) / (x - nst_2)), x)
-        nst_partial = solve(fkt_partial_pq, x)
-        fkt_partial_p = -1 * (nst_partial[0] + nst_partial[1])
-        fkt_partial_q = nst_partial[0] * nst_partial[1]
+        nst = [element for element in lsg if element%1 == 0]
+        nst2 = nst[int(len(nst)/2)]
+        table1, koeff_hs, pkt_hs = hornerschema(koeff, nst)
+        p1, p2, p3 = koeff_hs
+        fkt_partial_str = vorz_v_aussen(p1,'x^2') + vorz_v_innen(p2, 'x') + vorz_str(p3)
+        text_quadr, lsg_quadr, pkt_quadr = quadr_gl(lsg)
+        text1 = (r' \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
+                 + r' \quad \mathrm{durch~probieren:~x~=~}' + gzahl(nst2) + r' \\' + '(' + fkt_str + r')~ \div ~(x'
+                 + vorz_str(-1 * nst2) + ')~=~' + latex(fkt_partial_str))
+        text2 = (r' \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad ' + text_quadr)
+        punkte = 4 + pkt_hs + pkt_quadr
+        text = [text1, table1, text2]
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~'
-                       + fkt_str + r' \quad \mathrm{durch~probieren:~x_1~=~}' + gzahl(nst_2)
-                       + r' \quad (2BE) \\' + '(' + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst_2) + ')~=~'
-                       + latex(fkt_partial) + r' \quad (4P)')
-        loesung.append(table2)
-        loesung.append(latex(fkt_partial) + r'~=~0 \quad \vert ~ \div ' + gzahl_klammer(fkt_a1)
-                       + r' \quad \to \quad 0~=~' + latex(fkt_partial_pq) + r' \quad (2BE) \\'
-                       + r' x_{2/3}~=~ - \frac{' + gzahl_klammer(fkt_partial_p) + r'}{2} \pm \sqrt{ \left('
-                       + r' \frac{' + latex(fkt_partial_p) + r'}{2} \right) ^2-' + gzahl_klammer(fkt_partial_q)
-                       + r'} \quad (2BE) \\' + r' x_2~=~' + gzahl(round(nst_1, 3))
-                       + r' \quad \mathrm{und} \quad x_3~=~' + gzahl(round(nst_3, 3)) + r' \quad (2BE) \\'
-                       + r'S_{x_1}(' + gzahl(nst_2) + r' \vert 0) \quad S_{x_2}(' + gzahl(round(nst_1, 3))
-                       + r' \vert 0) \quad S_{x_3}(' + gzahl(round(nst_3, 3)) + r' \vert 0)'
-                       + r' \quad S_y(0 \vert' + gzahl(fkt_a4) + r') \quad (2BE) \\'
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+    if schnittpkt:
+        text4 = (r' \\ \mathrm{ S_{x_1}(' + gzahl(N(lsg_quadr[0], 3)) + r' \vert 0) \quad S_{x_2}('
+                + gzahl(N(lsg_quadr[1], 3)) + r' \vert 0) \quad S_{x_3}(' + gzahl(N(lsg_quadr[2], 3))
+                + r' \vert 0)}')
+        text[-1] += text4
+        punkte += 3
 
     return text, lsg, punkte
