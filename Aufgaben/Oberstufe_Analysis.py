@@ -2339,7 +2339,6 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
 
     liste_punkte = []
     liste_bez = []
-    i = 0
 
     exp = random.choice([random_selection([2*k for k in range(5)], anzahl=anz_terme),
                          random_selection([k+1 for k in range(5)], anzahl=anz_terme),
@@ -2350,10 +2349,10 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
     fkt = fakt[0]*x**exp[0]
     fkt_str = potenz(fakt[0], exp[0])
     koef = 'a_{' + gzahl(exp[0]) + '} ~=~ ' + gzahl(fakt[0]) + ', ~ '
-    for i in range(anz_terme-1):
-        fkt = fkt + fakt[i+1]*x**exp[i+1]
-        fkt_str = fkt_str + potenz(fakt[i+1], exp[i+1], vorz=True)
-        koef = koef + 'a_{' + gzahl(exp[i+1]) + '} ~=~ ' + gzahl(fakt[i+1]) + '~ ~'
+    for k in range(anz_terme-1):
+        fkt = fkt + fakt[k+1]*x**exp[k+1]
+        fkt_str = fkt_str + potenz(fakt[k+1], exp[k+1], vorz=True)
+        koef = koef + 'a_{' + gzahl(exp[k+1]) + '} ~=~ ' + gzahl(fakt[k+1]) + '~ ~'
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
@@ -2429,6 +2428,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         fkt = collect(expand(faktor * (x - xwert1) * (x - xwert2)), x)
         fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 + xwert2), 'x')
                    + vorz_str(faktor * xwert1 * xwert2))
+        koeff = [faktor, -1*faktor*(xwert1 + xwert2), faktor*xwert1*xwert2]
         print(fkt)
         print(fkt_str)
         p_fkt = -1 * (xwert1 + xwert2)
@@ -2460,9 +2460,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         fkt_2_str = vorz_v_aussen(6*k1, 'x') + vorz_str(2*k2)
         fkt_3 = 6*k1
         fkt_3_str = gzahl(6*k1)
-        # print('x_{E_1} =~= ' + str(xwert_extrema1)), print('x_{E_2} =~= ' + str(xwert_extrema2))
-        # print('x_W =~= ' + str(xwert_wendepkt)), print('Nst:' + str(lsg_nst))
-        # print(fkt_str)
+
     else:
         exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2 oder 3 sein.')
 
@@ -2473,28 +2471,15 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
     grafiken_loesung = []
 
     if 'a' in teilaufg:
-        # Die SuS sollen die Schnittpunkte mit den Achsen berechnen
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        if grad == 2:
-
-            punkte = 3
-        elif grad == 3:
-            pass
-        liste_punkte.append(punkte)
-        i += 1
-
-    if 'b' in teilaufg:
         # Die SuS sollen den Graphen der Funktion zeichnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
 
         if grad == 2:
             # plot(fkt, fkt_n, (x,xmin,xmax))
-
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen der Funktion f. \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(1BE)'
-                                                    r' \quad Graph~(1BE)}')
+                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(5P) }')
             graph_xyfix(fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 4
@@ -2502,30 +2487,55 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             xmin = int(round(nst1 - 0.4, 0))
             xmax = int(round(nst3 + 0.4, 0))
             # plot(fkt, fkt_n, (x,xmin,xmax))
-
             aufgabe.append(str(liste_teilaufg[i])
                            + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] \n\n')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
                                                     r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
+            punkte = 5
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Die SuS sollen die Funktion auf Monotonie untersuchen.
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie die Funktion f auf Monotonie. \n\n')
+        if grad == 2:
+            mono1 = 'steigend' if faktor < 0 else 'fallend'
+            mono2 = 'fallend' if faktor < 0 else 'steigend'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
+                           + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
+                           + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
+            punkte = 2
+        elif grad == 3:
+            mono1 = 'steigend' if ywert_extrema1 > 0 else 'fallend'
+            mono2 = 'fallend' if ywert_extrema1 > 0 else 'steigend'
+            mono3 = 'steigend' if ywert_extrema1 > 0 else 'fallend'
+            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
+                           + gzahl(xwert_extrema1) + ')~ monoton ~' + mono1 + r'} \\' + r' \mathrm{im ~ Intervall ~ I('
+                           + gzahl(xwert_extrema1) + r' \vert ' + gzahl(xwert_extrema2) + r' ) ~monoton~ ' + mono2
+                           + r'} \\' + r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema2)
+                           + r' \vert \infty ) ~ monoton ~' + mono3 + r'}' )
+            punkte = 3
+
+            pass
         liste_punkte.append(punkte)
         i += 1
 
     if 'c' in teilaufg:
-        # Die SuS sollen die Funktion auf Monotonie untersuchen.
+        # Die SuS sollen die Schnittpunkte mit den Achsen berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der Funktion f mit den '
+                       + f'Achsen. \n\n')
         if grad == 2:
-            mono1 = 'steigend' if faktor < 0 else 'fallend'
-            mono2 = 'fallend' if faktor < 0 else 'steigend'
-            aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie die Funktion f auf Monotonie. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
-                           + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
-                           + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
-            punkte = 3
+            text, lsg, punkte = quadr_gl(koeff)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
         elif grad == 3:
-            pass
+            text, lsg, punkte = kubische_gl(koeff, lsg_nst, schnittpkt=True)
+            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
+            for step in range(len(text)-1):
+                loesung.append(text[step+1])
         liste_punkte.append(punkte)
         i += 1
 
@@ -4907,16 +4917,20 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def test(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
+def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    koeff = ([0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1],
+             [1, 0, -1], [1, 1, 0], [1, 1, 1], [1, 2, 1], [1, 3, 1])
 
-    table, lsg =
+    for element in koeff:
+        text, lsg, pkt = quadr_gl(element)
+        loesung.append('~' + text)
+
     aufgabe.append('Test')
-    loesung.append('Test')
 
 
     liste_punkte = [1]
