@@ -2396,11 +2396,12 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
+def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=None, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS den Graphen einer Funktion 2. oder 3. Grades untersuchen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'grad=' wird der Grad der Funktion festgelegt.
     # Mit dem Parameter 'wendenormale=' kann für Teilaufgabe h) festgelegt werden, ob die Wendenormale berechnet werden soll. Standardmäßig ist 'wendenormale=True' und die Wendenormale ist in Teilaufgabe h) enthalten.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -2466,7 +2467,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
 
         if grad == 2:
             # plot(fkt, fkt_n, (x,xmin,xmax))
-            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen der Funktion f. \n\n')
+            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen der Funktion f.')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(1BE)'
                                                     r' \quad Graph~(1BE) \to \quad insgesamt~(5P) }')
             graph_xyfix(fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
@@ -2477,19 +2478,29 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             xmax = int(round(nst3 + 0.4, 0))
             # plot(fkt, fkt_n, (x,xmin,xmax))
             aufgabe.append(str(liste_teilaufg[i])
-                           + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] \n\n')
+                           + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] ')
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
                                                     r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 5
+        if 'b' not in teilaufg:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
     if 'b' in teilaufg:
+        # wählt man Teilaufgabe f, wird unter der Aufgabe kariertes Papier eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('notizen_gross')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+
+    if 'c' in teilaufg:
         # Die SuS sollen die Funktion auf Monotonie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Untersuchen Sie die Funktion f auf Monotonie. \n\n')
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + f') Untersuchen Sie die Funktion f auf Monotonie.'), ' \n\n'))
         if grad == 2:
             mono1 = 'steigend' if faktor < 0 else 'fallend'
             mono2 = 'fallend' if faktor < 0 else 'steigend'
@@ -2507,26 +2518,29 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
                            + r'} \\' + r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema2)
                            + r' \vert \infty ) ~ monoton ~' + mono3 + r'}' )
             punkte = 3
-
-            pass
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
-    if 'c' in teilaufg:
+    if 'd' in teilaufg:
         # Die SuS sollen die Schnittpunkte mit den Achsen berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der Funktion f mit den '
-                       + f'Achsen. \n\n')
+                       + f'Achsen.')
         if grad == 2:
-            text, lsg, punkte = quadr_gl(koeff)
+            text, lsg, punkte = quadr_gl(koeff, schnittpkt=True)
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
         elif grad == 3:
             text, lsg, punkte = kubische_gl(koeff, lsg_nst, schnittpkt=True)
             loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
             for step in range(len(text)-1):
                 loesung.append(text[step+1])
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
+
+
 
     if BE != []:
         if len(BE) != len(teilaufg):
