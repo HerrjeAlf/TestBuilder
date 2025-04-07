@@ -2423,22 +2423,17 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
             xwert2 = xwert1 + wert_abst
             xwerts = 0.5 * (xwert2 + xwert1)
             a_max = int(abs(20 / wert_abst ** 2))
-        print(a_max)
         faktor = -1 * nzahl(1, abs(a_max) * 2) / 2 if xwert1 * xwert2 < 0 else nzahl(1, a_max) / 2
         fkt = collect(expand(faktor * (x - xwert1) * (x - xwert2)), x)
         fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 + xwert2), 'x')
                    + vorz_str(faktor * xwert1 * xwert2))
         koeff = [faktor, -1*faktor*(xwert1 + xwert2), faktor*xwert1*xwert2]
-        print(fkt)
-        print(fkt_str)
         p_fkt = -1 * (xwert1 + xwert2)
         q_fkt = xwert1 * xwert2
-        fkt_str_pq = 'x^2~' + vorz_str(p_fkt) + 'x~' + vorz_str(q_fkt)
     elif grad == 3:
         xwert_extrema1 = -1 * nzahl(1, 4)
         ywert_extrema1 = zzahl(1, 10)
         xwert_extrema2 = nzahl(1,4)
-        xwert_wendepkt = (xwert_extrema1 + xwert_extrema2)/2
         nst = random.randint(xwert_extrema1 + 1, xwert_extrema2 - 1)
         glsystem = Matrix(((nst ** 3, nst ** 2, nst, 1, 0),
                            (xwert_extrema1 ** 3, xwert_extrema1 ** 2, xwert_extrema1, 1, ywert_extrema1),
@@ -2454,12 +2449,6 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c'], grad=2, i=0, BE=[]):
         lsg_nst = solve(fkt, x)
         lsg_nst.sort()
         nst1, nst2, nst3 = lsg_nst
-        fkt_1 = 3*k1 * x**2 + 2*k2 * x + k3
-        fkt_1_str = vorz_v_aussen(3*k1,'x^2') + vorz_v_innen(2*k2, 'x') + vorz_str(k3)
-        fkt_2 = 6*k1 * x + 2*k2
-        fkt_2_str = vorz_v_aussen(6*k1, 'x') + vorz_str(2*k2)
-        fkt_3 = 6*k1
-        fkt_3_str = gzahl(6*k1)
 
     else:
         exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2 oder 3 sein.')

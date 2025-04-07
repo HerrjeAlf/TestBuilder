@@ -25,7 +25,7 @@ for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[potenzgesetze(1),
                  polynome_kennenlernen(2),
-                 polynome_untersuchen(3, grad=2)]]
+                 polynome_untersuchen(3, grad=3)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

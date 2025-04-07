@@ -128,4 +128,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # lsg1(0.53)
 # lsg2([0.105,0.263,0.263,0.105])
 
-print(gzahl('test'))
+print(collect(expand(1.5*(x-4)*(x-3)*(x-1)),x))
