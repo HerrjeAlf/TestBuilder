@@ -294,10 +294,10 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
             # Auswahl des gesuchten Winkels
-            quadrat = ([0, 1, 1, 0, 0], [0, 0, 1, 1, 0])
-            rechteck = ([0, 4, 4, 0, 0], [0, 0, 1, 1, 0])
-            trapez = ([0, 4, 3, 1, 0], [0, 0, 1 , 1, 0])
-            parallelogramm = ([0, 4, 5, 1, 0], [0, 0, 1, 1, 0])
+            quadrat = ([0, 1, 1, 0, 0], [0, 0, 1, 1, 0], 'k')
+            rechteck = ([0, 4, 4, 0, 0], [0, 0, 1, 1, 0], 'k')
+            trapez = ([0, 4, 3, 1, 0], [0, 0, 1 , 1, 0], 'k')
+            parallelogramm = ([0, 4, 5, 1, 0], [0, 0, 1, 1, 0], 'k')
             auswahl = random.choice([0, 1, 2, 3])
             flaeche = [quadrat, rechteck, trapez, parallelogramm]
             flaeche_zeichnen(flaeche[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
