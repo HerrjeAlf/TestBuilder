@@ -298,10 +298,11 @@ def flaeche_zeichnen(*wertetabelle, text=False, name='flaeche'):
     # Textfeld hinzufügen und Position ändern
     if text:
         for element in text: # das Element muss die Form haben [x, y, 'text', fontdict=fontdict, **kwargs]
-            plt.text(*element)
+            plt.text(*element, {'fontsize': 20})
     # print(wertetabelle)
     for element in wertetabelle:
-        plt.plot(element[0], element[1], 'k')
+        plt.plot(*element)
+
     # plt.show()
     return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
 
