@@ -1012,6 +1012,8 @@ def sachaufgabe_strassenbau(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+# Flächen und Körperberechnung
+
 def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
@@ -1182,3 +1184,61 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+    # hier sollen die Schüler*innen
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+    a = nzahl(2,5)
+    h = nzahl(7,12)
+
+    dreiseitiges_prisma = (([0,a,a/2,0],[0,0,sqrt(3)/2*a,0]),
+                           ([h*np.cos(30/180*np.pi),a+h*np.cos(30/180*np.pi),a/2 + h*np.cos(30/180*np.pi),h*np.cos(30/180*np.pi)],
+                            [h*np.sin(30/180*np.pi),h*np.sin(30/180*np.pi), sqrt(3)/2*a+h*np.sin(30/180*np.pi), h*np.sin(30/180*np.pi)]))
+    auswahl = random.choice([0])
+    ausw_bez = ['regelmäßiges dreiseitiges'][auswahl]
+    ausw_krp = [dreiseitiges_prisma]
+    flaeche_zeichnen(*ausw_krp[auswahl], name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Gegeben ist ein {ausw_bez} Prisma mit der Kantenlänge a der Grundfläche von {a}cm und'
+               f' einer Höhe h von {h}cm.',
+               ['Grafik','150px']]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+
+    grafiken_aufgaben = [f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})']
+    grafiken_loesung = []
+
+    if len([element for element in ['a', 'b'] if element in teilaufg]) > 0:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Berechne die Oberfläche des Prismas.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+
+    if 'b' in teilaufg:
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Berechne das Volumen des Prismas.'))
+        if pruef_kl10:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
+    liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
