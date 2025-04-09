@@ -802,7 +802,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     seite_h = seite_a*nzahl(4,8)/10
     seite_FB = N(sqrt(seite_a**2-seite_h**2),3)
     beta = N(math.degrees(math.asin(seite_h / seite_a)),3)
-    gamma_1 = nzahl(20,60)
+    gamma_1 = nzahl(20,40)
     alpha = 90 - gamma_1
     seite_b = N(seite_a * math.sin(math.radians(beta)) / math.sin(math.radians(alpha)), 3)
     gamma = 180 - alpha - beta
@@ -1234,13 +1234,13 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
         else:
             aufgabe.append(' \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad A_G ~=~ \frac{1}{2} \cdot a \cdot h_a ~=~ \frac{1}{2} \cdot '
-                       + gzahl(a) + r'cm \cdot ' + gzahl(hg) + ' cm ~=~ ' + gzahl(0.5*a*hg)
-                       + r' \quad \mathrm{und} \quad A_M ~=~ 3 \cdot a \cdot b ~=~ 3 \cdot ' + gzahl(a) + r' \cdot '
-                       + gzahl(h) + '~=~' + gzahl(3*a*h) + r' \\ \mathrm{Die~Oberfläche~A_O~beträgt~dann:} '
-                       + r' \quad A_O ~=~ A_G + A_M ~=~ ' + gzahl(0.5*a*hg) + vorz_str(3*a*h) + '~=~'
-                       + gzahl(0.5*a*hg + 3*a*h))
+                       + gzahl(a) + r'cm \cdot ' + gzahl(hg) + ' cm ~=~ ' + gzahl(round(0.5*a*hg,1))
+                       + r'cm^2 \quad \mathrm{und} \quad A_M ~=~ 3 \cdot a \cdot b ~=~ 3 \cdot ' + gzahl(a) + r' cm\cdot '
+                       + gzahl(h) + 'cm ~=~' + gzahl(3*a*h) + r'cm^2 \\ \mathrm{Die~Oberfläche~A_O~beträgt~dann:} '
+                       + r' \quad A_O ~=~ 2 \cdot A_G + A_M ~=~ 2 \cdot' + gzahl(round(0.5*a*hg,1)) + 'cm^2'
+                       + vorz_str(3*a*h) + 'cm^2 ~=~' + gzahl(round(a*hg + 3*a*h,1)) + r'cm^2')
         aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
+        liste_punkte.append(6)
         i += 1
 
     if 'b' in teilaufg:
@@ -1252,10 +1252,10 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A_g \cdot h ~=~ ' + gzahl(0.5*a*hg) + r' \cdot '
-                       + gzahl(h) + r' \cdot ' + gzahl(0.5*a*hg*h))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A_g \cdot h ~=~ ' + gzahl(round(0.5*a*hg,1))
+                       + r'cm^2 \cdot ' + gzahl(h) + r'cm ~=~ ' + gzahl(round(0.5*a*hg*h,1)) + r' cm^3 ')
         aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
+        liste_punkte.append(2)
         i += 1
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
