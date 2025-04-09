@@ -1195,6 +1195,7 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
     liste_bez = []
     a = nzahl(2,5)
     h = a + nzahl(2,5)
+    hg = round(sqrt(3)/2*a,1)
 
     dreiseitiges_prisma = (([0,a,a/2,0],[0,0,sqrt(3)/2*a,0], 'k'),
                            ([a+h*np.cos(30/180*np.pi),a/2 + h*np.cos(30/180*np.pi)],
@@ -1205,16 +1206,18 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
                              h * np.sin(30 / 180 * np.pi)], '--'),
                            ([0,h*np.cos(30/180*np.pi)],[0,h*np.sin(30/180*np.pi)], '--'),
                            ([a,a+h*np.cos(30/180*np.pi)],[0,h*np.sin(30/180*np.pi)], 'k'),
-                           ([a/2,a/2 + h*np.cos(30/180*np.pi)],[sqrt(3)/2*a,sqrt(3)/2*a + h*np.sin(30/180*np.pi)], 'k'))
+                           ([a/2,a/2 + h*np.cos(30/180*np.pi)],[sqrt(3)/2*a,sqrt(3)/2*a + h*np.sin(30/180*np.pi)], 'k'),
+                           ([a/2,a/2], [0,sqrt(3)/2*a], 'gray'))
     beschriftung = ([a*0.3, - 0.5, f'{a}cm'],
-                    [a + h*np.cos(30/180*np.pi)/2, h*np.sin(30/180*np.pi)/2 - 0.5, f'{h} cm'])
+                    [a + h*np.cos(30/180*np.pi)/2, h*np.sin(30/180*np.pi)/2 - 0.5, f'{h} cm'], [a/2+0.2,0.4*a, f'$ h_g $'])
     auswahl = random.choice([0])
     ausw_bez = ['regelmäßiges dreiseitiges'][auswahl]
     ausw_krp = [dreiseitiges_prisma]
     flaeche_zeichnen(*ausw_krp[auswahl], text=beschriftung, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Gegeben ist ein {ausw_bez} Prisma mit den Kantenlängen a = {a} cm und h = {h} cm.',
+               NoEscape(f'Gegeben ist ein {ausw_bez} Prisma mit den Kantenlängen a = {a} cm, der Höhe des Prismas '
+                        + r' \\' + f'h = {h} cm und der Höhe in der Grundfläche mit ' + r'$ h_g $' + f' = {hg}cm.'),
                ['Grafik','150px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
@@ -1231,7 +1234,11 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
         else:
             aufgabe.append(' \n\n')
         loesung.append(str(liste_teilaufg[i]) + r') \quad A_G ~=~ \frac{1}{2} \cdot a \cdot h_a ~=~ \frac{1}{2} \cdot '
-                       + gzahl(a) + r'cm \cdot ' + gzahl(h) + ' cm ~=~ ' + gzahl(0.5*a*h))
+                       + gzahl(a) + r'cm \cdot ' + gzahl(hg) + ' cm ~=~ ' + gzahl(0.5*a*hg)
+                       + r' \quad \mathrm{und} \quad A_M ~=~ 3 \cdot a \cdot b ~=~ 3 \cdot ' + gzahl(a) + r' \cdot '
+                       + gzahl(h) + '~=~' + gzahl(3*a*h) + r' \\ \mathrm{Die~Oberfläche~A_O~beträgt~dann:} '
+                       + r' \quad A_O ~=~ A_G + A_M ~=~ ' + gzahl(0.5*a*hg) + vorz_str(3*a*h) + '~=~'
+                       + gzahl(0.5*a*hg + 3*a*h))
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
@@ -1245,7 +1252,8 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad')
+        loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A_g \cdot h ~=~ ' + gzahl(0.5*a*hg) + r' \cdot '
+                       + gzahl(h) + r' \cdot ' + gzahl(0.5*a*hg*h))
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(1)
         i += 1
