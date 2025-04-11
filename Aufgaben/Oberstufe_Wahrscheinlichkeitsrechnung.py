@@ -1562,6 +1562,117 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen die möglichen Fehler eines Signifikanztestes berechnen, neue Entscheidungsregel aufstellen (d.h. das Signifikanzniveau ist vorgegeben) und diskutieren
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    liste_punkte = []
+    liste_bez = []
+
+    wkt = nzahl(2,5)
+    anz = nzahl(5,10) * 20
+    k1 = wkt*anz+nzahl(2,4)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Ein Hersteller von Autoteilen hat bei Produktion eine Fehlertoleranz von {gzahl(wkt)}%. '
+               f'Um diese zu überprüfen werden regelmäßig {gzahl(anz)} Autoteile entnommen und getestet. Sind davon '
+               f'mehr als {k1} fehlerhaft, muss die Produktion gestoppt und die Maschinen neu kalibriert werden. \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if len([element for element in teilaufg if element in ['a', 'b', 'c', 'd']]) > 0:
+        # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.append('Ein rechtsseitiger Signifikanztest soll durchgeführt werden, um zu prüfen, ob die Fehlerquote '
+                       f'höher als {gzahl(wkt)}% ist. \n\n' + str(liste_teilaufg[i])
+                       + f') Formulieren Sie die Testhypothesen und welche Konsequenzen ein Verwerfen dieser '
+                         f'Hypothesen hat (Fehler 1. und 2. Art). \n\n')
+        loesung.append(str(liste_teilaufg[i]) + f') ')
+        '''
+        Das Beispiel beschreibt eine Qualitätskontrolle mit einer Stichprobe von 200 Autoteilen. 
+        Die Fehler erster und zweiter Art beziehen sich auf die Entscheidungen, die auf Basis dieses Tests
+        getroffen werden:
+        Fehler 1. Art (Alpha-Fehler):** Dieser Fehler tritt auf, wenn die Produktion fälschlicherweise gestoppt
+        und die Maschinen neu kalibriert werden, obwohl die tatsächliche Fehlerrate innerhalb der Toleranzgrenze 
+        von 3 % liegt. Das bedeutet, dass die Entscheidung, die Produktion zu stoppen, eine Fehlentscheidung war, 
+        weil das System eigentlich korrekt funktioniert.
+        Fehler 2. Art (Beta-Fehler):** Dieser Fehler tritt auf, wenn die Produktion fälschlicherweise nicht gestoppt 
+        wird, obwohl die tatsächliche Fehlerrate über der erlaubten Grenze von 3 % liegt. In diesem Fall bleibt die 
+        Produktion aktiv, obwohl fehlerhafte Teile hergestellt werden, was langfristig zu Qualitätseinbußen und 
+        möglicherweise zu Reklamationen führen kann.
+        Diese Fehler sind typisch für statistische Tests und hängen von der Stichprobengröße sowie den 
+        festgelegten Entscheidungsgrenzen ab. 
+
+        '''
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if len([element for element in teilaufg if element in ['b', 'c', 'd']]) > 0:
+        # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.extend((r'Da das Stoppen der Produktion sehr teuer ist, soll der Fehler berechnet werden, dass die '
+                       r'Produktion gestoppt wird, obwohl die wirkliche Fehlerquote unter der Fehlertoleranz liegt '
+                       r'(Fehler zweiter Art).',
+                       str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für diesen Fehler. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if len([element for element in teilaufg if element in ['c', 'd']]) > 0:
+        # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.extend((r'In einer Vorstandssitzung ... Stoppen der Maschinen versus Rückruf von autos, wegen fehlerhafter Teile --> minimale summe der Fehler bei 6% fehlerqoute.',
+                       str(liste_teilaufg[i]) + ') . \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if 'd' in teilaufg:
+        # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 4
+        aufgabe.extend('Neuen Maschinen die eine geringere fehlertoleranz haben.'
+                        str(liste_teilaufg[i]) + ') Entwikclen sie neue entscheidungsregel. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte)
+        i += 1
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(
+                f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+'''
+Aufgabe: Qualitätsprüfung in der Produktion
+Ein Unternehmen produziert elektronische Bauteile, die eine sehr geringe Fehlerquote aufweisen sollen. Historische 
+Daten zeigen, dass die durchschnittliche Fehlerquote bei 2 % liegt. Zur Qualitätskontrolle wird regelmäßig eine 
+Stichprobe von 200 Bauteilen entnommen und geprüft.
+Der Hersteller hat festgelegt, dass eine Charge zurückgewiesen wird, wenn bei einem Signifikanzniveau von 
+( \alpha = 1% ) mehr als eine bestimmte Anzahl fehlerhafter Bauteile gefunden wird.
+Teilaufgabe a)
+Formuliere die Hypothesen für den Test. Welcher Verteilung folgt die Anzahl fehlerhafter Bauteile in der Stichprobe?
+Teilaufgabe b)
+Bestimme die Entscheidungsregel: Wie viele fehlerhafte Bauteile müssen in der Stichprobe gefunden werden, 
+damit die Charge verworfen wird?
+'''
+
+
 # mögliche Aufgabe für einen Hypthesentest mit einer Normalverteilung
 '''
 Hier ist eine Aufgabenstellung zum Hypothesentest im Kontext einer Firma, die Photovoltaikanlagen baut:
