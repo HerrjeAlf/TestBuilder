@@ -2351,7 +2351,7 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
     koef = 'a_{' + gzahl(exp[0]) + '} ~=~ ' + gzahl(fakt[0]) + ', ~ '
     for k in range(anz_terme-1):
         fkt = fkt + fakt[k+1]*x**exp[k+1]
-        fkt_str = fkt_str + potenz(fakt[k+1], exp[k+1], vorz=True)
+        fkt_str = fkt_str + potenz(fakt[k+1], exp[k+1], vrz=True)
         koef = koef + 'a_{' + gzahl(exp[k+1]) + '} ~=~ ' + gzahl(fakt[k+1]) + '~ ~'
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -2497,13 +2497,15 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         aufgabe.append('NewPage') if neue_seite == i else ''
 
     if 'c' in teilaufg:
+        fkt_1 = diff(fkt,x,2)
+        kruemmung_x1 = fkt_1.subs(x, xwert_extrema1)
         # Die SuS sollen die Funktion auf Monotonie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                 + f') Untersuchen Sie die Funktion f auf Monotonie.'), ' \n\n'))
         if grad == 2:
-            mono1 = 'steigend' if faktor < 0 else 'fallend'
-            mono2 = 'fallend' if faktor < 0 else 'steigend'
+            mono1 = 'steigend' if kruemmung_x1 < 0 else 'fallend'
+            mono2 = 'fallend' if kruemmung_x1 < 0 else 'steigend'
             loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
                            + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
                            + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
