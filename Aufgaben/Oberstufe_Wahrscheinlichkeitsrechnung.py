@@ -1572,7 +1572,7 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
     liste_bez = []
 
     wkt = nzahl(2,5)
-    anz = nzahl(5,10) * 20
+    anz = nzahl(5,15) * 20
     k1 = wkt*anz+nzahl(2,4)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ein Hersteller von Autoteilen hat bei Produktion eine Fehlertoleranz von {gzahl(wkt)}%. '
@@ -1615,10 +1615,9 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((r'Da das Stoppen der Produktion sehr teuer ist, soll der Fehler berechnet werden, dass die '
-                       r'Produktion gestoppt wird, obwohl die wirkliche Fehlerquote unter der Fehlertoleranz liegt '
-                       r'(Fehler zweiter Art).',
-                       str(liste_teilaufg[i]) + ') Berechnen Sie die Wahrscheinlichkeit für diesen Fehler. \n\n'))
+        aufgabe.extend((r'Da ein Stillstand der Produktion sehr teuer ist, soll der Fehler berechnet '
+                        r'werden, dass die Maschinen umsonst gestoppt wurden (Signifikanzniveau).',
+                       str(liste_teilaufg[i]) + ') Berechnen Sie das Signifikanzniveau des Testes. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1629,7 +1628,8 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((r'In einer Vorstandssitzung ... Stoppen der Maschinen versus Rückruf von autos, wegen fehlerhafter Teile --> minimale summe der Fehler bei 6% fehlerqoute.',
+        aufgabe.extend((r'In einer Vorstandssitzung ... Stoppen der Maschinen versus Rückruf von autos, '
+                        r'wegen fehlerhafter Teile --> minimale summe der Fehler bei 6% fehlerqoute.',
                        str(liste_teilaufg[i]) + ') . \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ')
 
@@ -1641,7 +1641,7 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend('Neuen Maschinen die eine geringere fehlertoleranz haben.'
+        aufgabe.extend(('Neuen Maschinen die eine geringere fehlertoleranz haben.',
                         str(liste_teilaufg[i]) + ') Entwikclen sie neue entscheidungsregel. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ')
 
