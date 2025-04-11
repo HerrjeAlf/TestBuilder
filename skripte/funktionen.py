@@ -247,13 +247,13 @@ def vorz_v_aussen(zahl,string, null=False):
     except Exception as fehler:
         print('Fehler:', fehler)
 
-def potenz(fakt, exp, bas='x', vorz=False):
+def potenz(fakt, exp, bas='x', vrz=False):
     if exp == 1:
-        return gzahl(fakt) + str(bas)
+        return vorz(fakt) + latex(bas) if vrz else latex(bas)
     elif exp == 0:
-        return vorz_str(fakt) if vorz else gzahl(fakt)
+        return vorz_str(fakt) if vrz else gzahl(fakt)
     else:
-        return vorz_str(fakt) + str(bas) + '^' + gzahl(exp) if vorz else gzahl(fakt) + str(bas) + '^' + gzahl(exp)
+        return vorz_str(fakt) + str(bas) + '^' + gzahl(exp) if vrz else gzahl(fakt) + str(bas) + '^' + gzahl(exp)
 
 def binom_str(z1, z2, str1='', str2=''):
     if z1 != 0 and z2 != 0:
