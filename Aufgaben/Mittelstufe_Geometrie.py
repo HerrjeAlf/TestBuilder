@@ -1193,8 +1193,8 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    a = nzahl(2,5)
-    h = a + nzahl(2,5)
+    a = nzahl(5,10)
+    h = a * nzahl(10,20)/5
     hg = round(sqrt(3)/2*a,1)
 
     dreiseitiges_prisma = (([0,a,a/2,0],[0,0,sqrt(3)/2*a,0], 'k'),
