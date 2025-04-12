@@ -17,7 +17,6 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
-
 def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks den Kongruenzsatz erkennen und das Dreieck konstruieren.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
@@ -1013,7 +1012,6 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Flächen und Körperberechnung
-
 def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
