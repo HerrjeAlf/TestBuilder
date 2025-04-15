@@ -5,6 +5,8 @@ from math import degrees
 from sympy import *
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
+
+from scipy.stats import norm, binom
 from skripte.funktionen import *
 from skripte.plotten import *
 from sympy.stats import Binomial, P
@@ -129,13 +131,18 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #     print('sigma(X) = ' + str(sigma))
 #
 # lsg1(0.53)
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
-# Kantenlänge und Höhe definieren
-a = 5  # Seitenlänge des gleichseitigen Dreiecks
-h = 8  # Höhe des Prismas
 
-# Eckpunkte des Prismas definieren
-print(np.cos(30/180*np.pi))
+wkt_h0 = nzahl(2, 4) * 5
+wkt_h1 = wkt_h0 + nzahl(4, 9)
+anz = nzahl(28, 32)*3
+k = round(wkt_h0/100 * anz) + nzahl(2,4)
+wkt_alpha = 1 - N(binom.cdf(k, anz, wkt_h0 / 100), 3)
+wkt_beta = N(binom.cdf(k, anz, wkt_h1 / 100), 3)
+
+print(wkt_h0)
+print(wkt_h1)
+print(anz)
+print(k)
+print(wkt_alpha)
+print(wkt_beta)

@@ -1571,13 +1571,21 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
     liste_punkte = []
     liste_bez = []
 
-    wkt = nzahl(2,5)
-    anz = nzahl(5,15) * 20
-    k1 = wkt*anz+nzahl(2,4)
+    wkt_h0 = nzahl(2,4)*5
+    wkt_h1 = wkt_h0 + nzahl(4,9)
+    anz = nzahl(54,66)
+    k = int(wkt_h0*anz) + nzahl(2,4)
+    wkt_alpha = N(binom.cdf(k, anz, wkt_h0 / 100), 3)
+    wkt_beta = N(binom.cdf(k, anz, wkt_h1 / 100), 3)
+
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               f'Ein Hersteller von Autoteilen hat bei Produktion eine Fehlertoleranz von {gzahl(wkt)}%. '
-               f'Um diese zu überprüfen werden regelmäßig {gzahl(anz)} Autoteile entnommen und getestet. Sind davon '
-               f'mehr als {k1} fehlerhaft, muss die Produktion gestoppt und die Maschinen neu kalibriert werden. \n\n']
+               f'Ein Lehrer möchte seine Vermutung überprüfen, dass die in seinen Klassen durchgeführten wöchentlichen '
+               f'schriftlichen Lernerfolgskontrollen einen positiven Einfluss auf die Leistungen in den '
+               f'Abschlussprüfungen haben. Aus vergangenen Jahren ist bekannt, dass {gzahl(wkt_h0)}% der Schüler und '
+               f'Schülerinnen in der Abschlussprüfung mehr als 50 Punkte erreichen. \n'
+               f'Er legt als Entscheidungsregel fest, dass seine Vermutung als bestätigt gilt wenn mehr als '
+               f'{gzahl(k)} seiner {gzahl(anz)} Schüler und Schülerinnen die 50 Punkte erreichen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -1586,27 +1594,20 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append('Ein rechtsseitiger Signifikanztest soll durchgeführt werden, um zu prüfen, ob die Fehlerquote '
-                       f'höher als {gzahl(wkt)}% ist. \n\n' + str(liste_teilaufg[i])
-                       + f') Formulieren Sie die Testhypothesen und welche Konsequenzen ein Verwerfen dieser '
-                         f'Hypothesen hat (Fehler 1. und 2. Art). \n\n')
-        loesung.append(str(liste_teilaufg[i]) + f') ')
-        '''
-        Das Beispiel beschreibt eine Qualitätskontrolle mit einer Stichprobe von 200 Autoteilen. 
-        Die Fehler erster und zweiter Art beziehen sich auf die Entscheidungen, die auf Basis dieses Tests
-        getroffen werden:
-        Fehler 1. Art (Alpha-Fehler):** Dieser Fehler tritt auf, wenn die Produktion fälschlicherweise gestoppt
-        und die Maschinen neu kalibriert werden, obwohl die tatsächliche Fehlerrate innerhalb der Toleranzgrenze 
-        von 3 % liegt. Das bedeutet, dass die Entscheidung, die Produktion zu stoppen, eine Fehlentscheidung war, 
-        weil das System eigentlich korrekt funktioniert.
-        Fehler 2. Art (Beta-Fehler):** Dieser Fehler tritt auf, wenn die Produktion fälschlicherweise nicht gestoppt 
-        wird, obwohl die tatsächliche Fehlerrate über der erlaubten Grenze von 3 % liegt. In diesem Fall bleibt die 
-        Produktion aktiv, obwohl fehlerhafte Teile hergestellt werden, was langfristig zu Qualitätseinbußen und 
-        möglicherweise zu Reklamationen führen kann.
-        Diese Fehler sind typisch für statistische Tests und hängen von der Stichprobengröße sowie den 
-        festgelegten Entscheidungsgrenzen ab. 
-
-        '''
+        aufgabe.append(str(liste_teilaufg[i]) + f') Formulieren Sie die Testhypothesen und die möglichen Fehler. \n\n')
+        loesung.append(str(liste_teilaufg[i]) + f') Nullhypothese: Die regelmäßigen Lernerfolgskontrollen haben keinen '
+                       + f'positiven Einfluss auf die Abschlussprüfungsergebnisse, wenn {gzahl(k)} oder weniger Schüler '
+                       + f'und Schüler*innen 50 Punkte in den Abschlussprüfungen erreichen. \n'
+                       + f'Fehlertyp 1 (Alpha-Fehler): Der Lehrer sieht seine Vermutung bestätigt und'
+                       + f'nimmt fälschlicherweise an, dass die Lernerfolgskontrollen die Leistungen '
+                       + f'verbessern, obwohl es keinen echten Einfluss gibt. Die Schüler und Schülerinnen'
+                       + f'hätten die gleichen Prüfungsleistungen auch ohne wöchentliche Kontrollen erzielt. \n\n'
+                       + f'Alternativhypothese: Die wöchentlichen Lernerfolgskontrollen haben einen positiven Einfluss '
+                       + f'auf die Abschlussprüfungsergebnisse, wenn mehr als {gzahl(k)} Schüler und Schüler*innen '
+                       + f'50 Punkte erreichen. \n'
+                       + f'Fehlertyp 2 (Beta-Fehler): Der Lehrer sieht seine Vermutung widerlegt, obwohl die '
+                       + f'Lernerfolgskontrollen tatsächlich die Prüfungsleistungen verbessern. Das kann durch eine'
+                       + f'ungünstige Stichprobe oder ein zu hohes Signifikanzniveau verursacht werden.')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -1615,10 +1616,12 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((r'Da ein Stillstand der Produktion sehr teuer ist, soll der Fehler berechnet '
-                        r'werden, dass die Maschinen umsonst gestoppt wurden (Signifikanzniveau).',
-                       str(liste_teilaufg[i]) + ') Berechnen Sie das Signifikanzniveau des Testes. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+        aufgabe.extend((r'Ein Signifikanzniveau von 5% gilt als Standard, bei Bildungsstudien oder schulischen '
+                        r'Untersuchungen. ',
+                       str(liste_teilaufg[i]) + ') Berechnen Sie das Signifikanzniveau des Testes und . \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X > ' + gzahl(k1) + r') ~=~ 1 - P(X \leq ' + gzahl(k1)
+                       + r') ~=~ 1 - F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt/100) + r' \vert ' + gzahl(k1) + ') ~=~ '
+                       + gzahl(wkt) + '~=~' + gzahl(wkt*100) + r' \% \quad (2BE) \\ ')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -1628,9 +1631,18 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((r'In einer Vorstandssitzung ... Stoppen der Maschinen versus Rückruf von autos, '
-                        r'wegen fehlerhafter Teile --> minimale summe der Fehler bei 6% fehlerqoute.',
-                       str(liste_teilaufg[i]) + ') . \n\n'))
+        aufgabe.extend((f'In einer Vorstandssitzung des Unternehmens werden verschiedene Möglichkeiten besprochen, '
+                        f'Kosten einzusparen. Eine Idee ist es, die Entscheidungsregel zum Stoppen der Maschinen so '
+                        f'zu verändern, dass das Signifikanzniveau sinkt und es seltener zum Stoppen der Produktion '
+                        f'kommt. Der leitende Ingenieur, weißt aber darauf hin, dass dann der Fehler 2. Art und damit'
+                        f'die Wahrscheinlichkeit für einen Rückruf steigt. \n'
+                        f'Um die Aussage des Ingenieurs zu belegen, soll die Wahrscheinlichkeit für den Fehler 2. Art '
+                        f'bei der aktuelle Entscheidungsregel X > {gzahl(k1)} und nochmal für beide Fehlerarten '
+                        f'(1. und 2. Art) bei einer veränderten Entscheidungsregel X > {gzahl(k1+1)} berechnet werden.'
+                        f'Dabei soll für die Berechnung des Fehlers 2. Art, von {gzahl(wkt_rr)}% Wahrscheinlichkeit '
+                        f'ausgegangen werden, die für einen Rückruf angesetzt wird.',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie diese Fehler und begründen Sie damit die Aussage des '
+                        + 'Ingenieur. \n\n'))
         loesung.append(str(liste_teilaufg[i]) + r') \quad ')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
