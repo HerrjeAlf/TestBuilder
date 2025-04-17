@@ -133,16 +133,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # lsg1(0.53)
 
 
-wkt_h0 = nzahl(2, 4) * 5
-wkt_h1 = wkt_h0 + nzahl(4, 9)
-anz = nzahl(28, 32)*3
-k = round(wkt_h0/100 * anz) + nzahl(2,4)
-wkt_alpha = 1 - N(binom.cdf(k, anz, wkt_h0 / 100), 3)
-wkt_beta = N(binom.cdf(k, anz, wkt_h1 / 100), 3)
 
-print(wkt_h0)
-print(wkt_h1)
-print(anz)
-print(k)
-print(wkt_alpha)
-print(wkt_beta)

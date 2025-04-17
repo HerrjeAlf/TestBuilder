@@ -1571,12 +1571,19 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
     liste_punkte = []
     liste_bez = []
 
-    wkt_h0 = nzahl(2,4)*5
-    wkt_h1 = wkt_h0 + nzahl(4,9)
-    anz = nzahl(54,66)
-    k = int(wkt_h0*anz) + nzahl(2,4)
-    wkt_alpha = N(binom.cdf(k, anz, wkt_h0 / 100), 3)
+    wkt_h0 = nzahl(2, 4) * 5
+    wkt_h1 = wkt_h0 + nzahl(4, 9)
+    anz = nzahl(28, 32) * 2
+    mu = round(wkt_h0/100*anz)
+    list = [(1 - N(binom.cdf(ki, anz, wkt_h0 / 100), 3), ki,
+             abs(0.05 - 1 + N(binom.cdf(ki, anz, wkt_h0 / 100), 3))) for ki in range(mu-7, mu+8)]
+    min_element = min(list, key=lambda x: x[2])
+    k2 = min_element[1]
+    k = k2 - nzahl(1, 3)
+    wkt_alpha = 1 - N(binom.cdf(k, anz, wkt_h0 / 100), 3)
     wkt_beta = N(binom.cdf(k, anz, wkt_h1 / 100), 3)
+    wkt_alpha_k2 = 1 - N(binom.cdf(k2, anz, wkt_h0 / 100), 3)
+    wkt_beta_k2 = N(binom.cdf(k2, anz, wkt_h1 / 100), 3)
 
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -1590,7 +1597,7 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if len([element for element in teilaufg if element in ['a', 'b', 'c', 'd']]) > 0:
+    if len([element for element in teilaufg if element in ['a', 'b', 'c', 'd', 'e']]) > 0:
         # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -1612,51 +1619,53 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         liste_punkte.append(punkte)
         i += 1
 
-    if len([element for element in teilaufg if element in ['b', 'c', 'd']]) > 0:
+    if len([element for element in teilaufg if element in ['b', 'c', 'd', 'e']]) > 0:
         # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((r'Ein Signifikanzniveau von 5% gilt als Standard, bei Bildungsstudien oder schulischen '
-                        r'Untersuchungen. ',
-                       str(liste_teilaufg[i]) + ') Berechnen Sie das Signifikanzniveau des Testes und . \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X > ' + gzahl(k1) + r') ~=~ 1 - P(X \leq ' + gzahl(k1)
-                       + r') ~=~ 1 - F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt/100) + r' \vert ' + gzahl(k1) + ') ~=~ '
-                       + gzahl(wkt) + '~=~' + gzahl(wkt*100) + r' \% \quad (2BE) \\ ')
+        aufgabe.extend((r'Ein Signifikanzniveau (Fehler 1. Art) von 5% gilt als Standard, bei Bildungsstudien oder'
+                        r'schulischen Untersuchungen. Es bietet eine gute Balance zwischen Fehler 1. und 2. Art.',
+                        str(liste_teilaufg[i]) + ') Weisen Sie nach, dass die gewählte Entscheidungsregel den '
+                        + 'Standard nicht erfüllt. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X > ' + gzahl(k) + r') ~=~ 1 - P(X \leq ' + gzahl(k)
+                       + r') ~=~ 1 - F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt_h0/100) + r' \vert ' + gzahl(k)
+                       + ') ~=~ ' + gzahl(wkt_alpha) + '~=~' + gzahl(wkt_alpha*100) + r' \% \\'
+                       + r' \mathrm{Das~Signifikanzniveau~beträgt~mehr~als~5~ \% ~und~der~Standard~ist~nicht~erfüllt.}')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
-    if len([element for element in teilaufg if element in ['c', 'd']]) > 0:
+    if len([element for element in teilaufg if element in ['c', 'd', 'e']]) > 0:
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((f'In einer Vorstandssitzung des Unternehmens werden verschiedene Möglichkeiten besprochen, '
-                        f'Kosten einzusparen. Eine Idee ist es, die Entscheidungsregel zum Stoppen der Maschinen so '
-                        f'zu verändern, dass das Signifikanzniveau sinkt und es seltener zum Stoppen der Produktion '
-                        f'kommt. Der leitende Ingenieur, weißt aber darauf hin, dass dann der Fehler 2. Art und damit'
-                        f'die Wahrscheinlichkeit für einen Rückruf steigt. \n'
-                        f'Um die Aussage des Ingenieurs zu belegen, soll die Wahrscheinlichkeit für den Fehler 2. Art '
-                        f'bei der aktuelle Entscheidungsregel X > {gzahl(k1)} und nochmal für beide Fehlerarten '
-                        f'(1. und 2. Art) bei einer veränderten Entscheidungsregel X > {gzahl(k1+1)} berechnet werden.'
-                        f'Dabei soll für die Berechnung des Fehlers 2. Art, von {gzahl(wkt_rr)}% Wahrscheinlichkeit '
-                        f'ausgegangen werden, die für einen Rückruf angesetzt wird.',
-                        str(liste_teilaufg[i]) + ') Berechnen Sie diese Fehler und begründen Sie damit die Aussage des '
-                        + 'Ingenieur. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
+        aufgabe.extend(('Aufgrund der relativ geringen Stichprobenanzahl, ist ein Signifikanzniveau von genau '
+                        '5% Zufall. Man kann aber eine Entscheidungsregel in der Nähe dieses Niveaus finden.',
+                        str(liste_teilaufg[i]) + ') Bestimmen Sie diese Entscheidungsregel. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{durch~probieren: \quad k~=~' + gzahl(k2)
+                       + r' \quad da} \quad P(x \leq ' + gzahl(k2) + ') ~=~'  + gzahl(wkt_alpha_k2))
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
-    if 'd' in teilaufg:
+    if len([element for element in teilaufg if element in ['d', 'e']]) > 0:
         # die SuS sollen bei einer gegebenen Wahrscheinlichkeit für den Alpha-Fehler, eine neue Entscheidungsregel finden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend(('Neuen Maschinen die eine geringere fehlertoleranz haben.',
-                        str(liste_teilaufg[i]) + ') Entwikclen sie neue entscheidungsregel. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ')
-
+        text = r' \mathrm{Der~Fehler~ist~nicht~größer~als~20 ~ \% ~ und~die~Balance~damit~gut.}' \
+            if wkt_beta_k2 <= 0.2 else r' \mathrm{Der~Fehler~ist~größer~als~20 ~ \% ~ und~die~Balance~damit~nicht~gut.}'
+        aufgabe.extend((f'Eine gute Balance zwischen dem Fehler 1. und 2. Art liegt vor, wenn der Fehler 2. Art nicht '
+                        f'größer als 20% ist. Das heißt, die Wahrscheinlichkeit den Effekt der wöchentlichen Kontrollen '
+                        f'auf die Ergebnisse in den Abschlussprüfungen zu übersehen, liegt unter 20%.'
+                        f'Der Lehrer geht bei der Berechnung des Fehlers 2. Art von den Ergebnissen seiner Schüler und '
+                        f'Schülerinnen in den letzten Jahren aus und nimmt an, dass mindestens {gzahl(wkt_h1)}% mehr '
+                        f'als 50 Punkte in der Abschlussprüfung schaffen.',
+                        str(liste_teilaufg[i]) + ') Berechnen Sie den Fehler 2. Art und überprüfen die Balance. \n\n'))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad P(X \leq ' + gzahl(k2)
+                       + r') ~=~ F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt_h1/100) + r' \vert ' + gzahl(k2) + ') ~=~ '
+                       + gzahl(wkt_beta_k2) + '~=~' + gzahl(wkt_beta_k2*100) + r' \% \\' + text)
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -1669,20 +1678,6 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
-
-'''
-Aufgabe: Qualitätsprüfung in der Produktion
-Ein Unternehmen produziert elektronische Bauteile, die eine sehr geringe Fehlerquote aufweisen sollen. Historische 
-Daten zeigen, dass die durchschnittliche Fehlerquote bei 2 % liegt. Zur Qualitätskontrolle wird regelmäßig eine 
-Stichprobe von 200 Bauteilen entnommen und geprüft.
-Der Hersteller hat festgelegt, dass eine Charge zurückgewiesen wird, wenn bei einem Signifikanzniveau von 
-( \alpha = 1% ) mehr als eine bestimmte Anzahl fehlerhafter Bauteile gefunden wird.
-Teilaufgabe a)
-Formuliere die Hypothesen für den Test. Welcher Verteilung folgt die Anzahl fehlerhafter Bauteile in der Stichprobe?
-Teilaufgabe b)
-Bestimme die Entscheidungsregel: Wie viele fehlerhafte Bauteile müssen in der Stichprobe gefunden werden, 
-damit die Charge verworfen wird?
-'''
 
 
 # mögliche Aufgabe für einen Hypthesentest mit einer Normalverteilung
