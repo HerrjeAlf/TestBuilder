@@ -2339,7 +2339,6 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
 
     liste_punkte = []
     liste_bez = []
-
     exp = random.choice([random_selection([2*k for k in range(5)], anzahl=anz_terme),
                          random_selection([k+1 for k in range(5)], anzahl=anz_terme),
                          random_selection([k for k in range(9)], anzahl=anz_terme)])
@@ -2450,9 +2449,15 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         lsg_nst = solve(fkt, x)
         lsg_nst.sort()
         nst1, nst2, nst3 = lsg_nst
-
+    elif grad == 4:
+        nst_12 = nzahl(1, 9)
+        nst_34 = nst_12 + nzahl(1, 9)
+        faktor = zzahl(1, 7) / 2
+        fkt = collect(expand(faktor * (x ** 2 - nst_12) * (x ** 2 - nst_34)), x) # f(x)= a*x**4 + x**2*(-a*b - a*c) + a*b*c
+        fkt_str = (vorz_v_aussen(faktor,'x^4') + vorz_v_innen(-1*faktor*(nst_12 + nst_34),'x^2')
+                   + vorz_str(faktor*nst_12 * nst_34))
     else:
-        exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2 oder 3 sein.')
+        exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2, 3 oder 4 sein.')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
@@ -2484,6 +2489,8 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 5
+        elif grad == 4:
+            
         if 'b' not in teilaufg:
             aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if neue_seite == i else ''
