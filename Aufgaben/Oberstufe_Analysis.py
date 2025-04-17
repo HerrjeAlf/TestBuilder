@@ -2494,8 +2494,9 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         elif grad == 3 or grad == 4:
             # plot(fkt, fkt_n, (x,xmin,xmax))
             aufgabe.append(beschriftung(teilaufg,i)
-                           + f'Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] ')
-            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                           + f'Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ].')
+            loesung.append(beschriftung(teilaufg,i, True)
+                           + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
                            + r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
@@ -2521,22 +2522,22 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
                                  + 'Untersuchen Sie die Funktion f auf Monotonie.'), ' \n\n'))
         if kruemmung_x1 > 1:
-            liste_monotonie = ['steigend', 'fallend']
+            liste_monotonie = ['fallend', 'steigend']
             for step in range(len(xwert_extrema) - 1):
                 liste_monotonie.append(liste_monotonie[step])
         else:
-            liste_monotonie = ['fallend', 'steigend']
+            liste_monotonie = ['steigend', 'fallend']
             for step in range(len(xwert_extrema) - 1):
                 liste_monotonie.append(liste_monotonie[step])
 
         text = (beschriftung(teilaufg,i,True) + r' \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
                 + gzahl(xwert_extrema[0]) + ')~ monoton ~' + liste_monotonie[0] + r'} \\')
-        for step in range(len(xwert_extrema)-1):
-            if step != len(xwert_extrema) - 2:
-                text = (text + r' \mathrm{im ~ Intervall ~ I(' + gzahl(xwert_extrema[step+1]) + r' \vert '
-                        + gzahl(xwert_extrema[step+2]) + r' ) ~monoton~ ' + liste_monotonie[step+1]+ r'} \\')
+        for step in range(len(xwert_extrema)):
+            if step < len(xwert_extrema) - 1:
+                text = (text + r' \mathrm{im ~ Intervall ~ I(' + gzahl(xwert_extrema[step]) + r' \vert '
+                        + gzahl(xwert_extrema[step+1]) + r' ) ~monoton~ ' + liste_monotonie[step+1]+ r'} \\')
             else:
-                text = (text +  r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema[step+1])
+                text = (text +  r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema[step])
                            + r' \vert \infty ) ~ monoton ~' + liste_monotonie[step+1]+ r'}')
         loesung.append(text)
         aufgabe.append('NewPage') if neue_seite == i else ''

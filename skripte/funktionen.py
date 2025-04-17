@@ -773,29 +773,30 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         punkte += 1
     elif koeff[0] == 0:
         if koeff[1] == 0:
-            text = r'0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
+            text = r'0 ~=~ f(' + var + ') ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
             lsg = []
             punkte += 1
         elif koeff[2] == 0:
-            text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[1], var) + r' \quad \to \quad ' + var
+            text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[1], var) + r' \quad \to \quad ' + var
                     + '_{' + gzahl(n1) + '} ~=~ 0')
             lsg = [0]
             punkte += 2
         else:
             lsg1 = Rational(-1 * koeff[2], koeff[1])
-            text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[1], var) + vorz_str(koeff[2]) + r' \quad \vert '
-                    + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
+            text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[1], var) + vorz_str(koeff[2])
+                    + r' \quad \vert ' + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
                     + r' \quad \to \quad ' + var + ' ~=~' + gzahl(lsg1) + r' \\')
             lsg = [lsg1]
             punkte += 2
     elif koeff[1] == 0 and koeff[2] == 0:
-        text = r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + r' \quad \to \quad ' + var + '_{' + gzahl(n1) + '} ~=~ 0'
+        text = (r' 0 ~=~ f(' + var + ') ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + r' \quad \to \quad ' + var
+                + '_{' + gzahl(n1) + '} ~=~ 0')
         lsg = [0]
         punkte += 2
     elif koeff[2] == 0:
-        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
+        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
                 + '~=~' + var + r' \cdot \left( ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1])
-                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ '
+                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ f(' + var + ') ~=~ '
                 + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
                 + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad ' + var + '_{ ' + gzahl(n2)
                 + ' } ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
@@ -803,7 +804,7 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         lsg.sort()
         punkte += 4
     elif koeff[1] == 0:
-        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + r' \quad \vert '
+        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + r' \quad \vert '
                 + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
                 + var + '^2 ~=~' + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
         punkte += 2
@@ -824,7 +825,7 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     else:
         p = Rational(koeff[1], koeff[0])
         q = Rational(koeff[2], koeff[0])
-        text = (r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var)
+        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var)
                 + vorz_str(koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
                 + r' 0 ~=~ ' + var + '^2 ' + vorz_v_innen(Rational(koeff[1], koeff[0]), var)
                 + vorz_str(Rational(koeff[2], koeff[0])) + r' \\'
