@@ -131,6 +131,27 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #     print('sigma(X) = ' + str(sigma))
 #
 # lsg1(0.53)
+nst_12 = nzahl(1, 9)
+nst_34 = nst_12 + nzahl(1, 9)
+xmin = int(round(-1 * sqrt(nst_34) - 0.4, 0))
+xmax = int(round(sqrt(nst_34) + 0.4, 0))
+xwert_extrema1 = N(-0.5 * (sqrt(nst_34) + sqrt(nst_12)), 2)
+xwert_extrema3 = N(0.5 * (sqrt(nst_34) + sqrt(nst_12)), 2)
+xwert_extrema = [xwert_extrema1, 0, xwert_extrema3]
+faktor = zzahl(1, 7) / 2
+fkt = collect(expand(faktor * (x ** 2 - nst_12) * (x ** 2 - nst_34)), x)  # f(x)= a*x**4 - x**2*(a*b + a*c) + a*b*c
+fkt_str = (vorz_v_aussen(faktor, 'x^4') + vorz_v_innen(-1 * faktor * (nst_12 + nst_34), 'x^2')
+           + vorz_str(faktor * nst_12 * nst_34))
+fkt_1 = diff(fkt, x, 2)
+kruemmung_x1 = fkt_1.subs(x, xwert_extrema[0])
+if kruemmung_x1 > 1:
+    liste_monotonie = ['steigend', 'fallend']
+    for step in range(len(xwert_extrema)-1):
+        liste_monotonie.append(liste_monotonie[step])
+else:
+    liste_monotonie = ['fallend', 'steigend']
+    for step in range(len(xwert_extrema)-1):
+        liste_monotonie.append(liste_monotonie[step])
 
-
+print(liste_monotonie)
 

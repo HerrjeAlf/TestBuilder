@@ -2423,6 +2423,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             xwert2 = xwert1 + wert_abst
             xwerts = 0.5 * (xwert2 + xwert1)
             a_max = int(abs(20 / wert_abst ** 2))
+        xwert_extrema = [xwerts]
         faktor = -1 * nzahl(1, abs(a_max) * 2) / 2 if xwert1 * xwert2 < 0 else nzahl(1, a_max) / 2
         fkt = collect(expand(faktor * (x - xwert1) * (x - xwert2)), x)
         fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-1 * faktor * (xwert1 + xwert2), 'x')
@@ -2434,6 +2435,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         xwert_extrema1 = -1 * nzahl(1, 4)
         ywert_extrema1 = zzahl(1, 10)
         xwert_extrema2 = nzahl(1,4)
+        xwert_extrema = [xwert_extrema1, xwert_extrema2]
         nst = random.randint(xwert_extrema1 + 1, xwert_extrema2 - 1)
         glsystem = Matrix(((nst ** 3, nst ** 2, nst, 1, 0),
                            (xwert_extrema1 ** 3, xwert_extrema1 ** 2, xwert_extrema1, 1, ywert_extrema1),
@@ -2449,18 +2451,29 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         lsg_nst = solve(fkt, x)
         lsg_nst.sort()
         nst1, nst2, nst3 = lsg_nst
+        xmin = int(round(nst1 - 0.4, 0))
+        xmax = int(round(nst3 + 0.4, 0))
     elif grad == 4:
         nst_12 = nzahl(1, 9)
         nst_34 = nst_12 + nzahl(1, 9)
+        xmin = int(round(-1*sqrt(nst_34) - 0.4, 0))
+        xmax = int(round(sqrt(nst_34) + 0.4, 0))
+        xwert_extrema1 = N(-0.5*(sqrt(nst_34) + sqrt(nst_12)),2)
+        xwert_extrema3 = N(0.5*(sqrt(nst_34) + sqrt(nst_12)),2)
+        xwert_extrema = [xwert_extrema1, 0, xwert_extrema3]
         faktor = zzahl(1, 7) / 2
-        fkt = collect(expand(faktor * (x ** 2 - nst_12) * (x ** 2 - nst_34)), x) # f(x)= a*x**4 + x**2*(-a*b - a*c) + a*b*c
+        fkt = collect(expand(faktor * (x ** 2 - nst_12) * (x ** 2 - nst_34)), x) # f(x)= a*x**4 - x**2*(a*b + a*c) + a*b*c
         fkt_str = (vorz_v_aussen(faktor,'x^4') + vorz_v_innen(-1*faktor*(nst_12 + nst_34),'x^2')
                    + vorz_str(faktor*nst_12 * nst_34))
+        fkt_z_str = (vorz_v_aussen(faktor,'z^2') + vorz_v_innen(-1*faktor*(nst_12 + nst_34),'z')
+                     + vorz_str(faktor*nst_12 * nst_34))
+        koeff = [faktor, -1*faktor*(nst_12 + nst_34), faktor*nst_12 * nst_34]
+
     else:
         exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2, 3 oder 4 sein.')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
+               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$.'),' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -2478,19 +2491,16 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             graph_xyfix(fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 4
-        elif grad == 3:
-            xmin = int(round(nst1 - 0.4, 0))
-            xmax = int(round(nst3 + 0.4, 0))
+        elif grad == 3 or grad == 4:
             # plot(fkt, fkt_n, (x,xmin,xmax))
-            aufgabe.append(str(liste_teilaufg[i])
-                           + f') Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] ')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
-                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
+            aufgabe.append(beschriftung(teilaufg,i)
+                           + f'Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ] ')
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                           + r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 5
-        elif grad == 4:
-            
+
         if 'b' not in teilaufg:
             aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -2505,45 +2515,68 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
 
     if 'c' in teilaufg:
         fkt_1 = diff(fkt,x,2)
-        kruemmung_x1 = fkt_1.subs(x, xwert_extrema1)
+        kruemmung_x1 = fkt_1.subs(x, xwert_extrema[0])
         # Die SuS sollen die Funktion auf Monotonie untersuchen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                + f') Untersuchen Sie die Funktion f auf Monotonie.'), ' \n\n'))
-        if grad == 2:
-            mono1 = 'steigend' if kruemmung_x1 < 0 else 'fallend'
-            mono2 = 'fallend' if kruemmung_x1 < 0 else 'steigend'
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
-                           + gzahl(xwerts) + ')~ monoton ~' + mono1 + r'~und~im~ I(' + gzahl(xwerts)
-                           + r' \vert \infty ) ~monoton~ ' + mono2 + '}')
-            punkte = 2
-        elif grad == 3:
-            mono1 = 'steigend' if ywert_extrema1 > 0 else 'fallend'
-            mono2 = 'fallend' if ywert_extrema1 > 0 else 'steigend'
-            mono3 = 'steigend' if ywert_extrema1 > 0 else 'fallend'
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
-                           + gzahl(xwert_extrema1) + ')~ monoton ~' + mono1 + r'} \\' + r' \mathrm{im ~ Intervall ~ I('
-                           + gzahl(xwert_extrema1) + r' \vert ' + gzahl(xwert_extrema2) + r' ) ~monoton~ ' + mono2
-                           + r'} \\' + r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema2)
-                           + r' \vert \infty ) ~ monoton ~' + mono3 + r'}' )
-            punkte = 3
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + 'Untersuchen Sie die Funktion f auf Monotonie.'), ' \n\n'))
+        if kruemmung_x1 > 1:
+            liste_monotonie = ['steigend', 'fallend']
+            for step in range(len(xwert_extrema) - 1):
+                liste_monotonie.append(liste_monotonie[step])
+        else:
+            liste_monotonie = ['fallend', 'steigend']
+            for step in range(len(xwert_extrema) - 1):
+                liste_monotonie.append(liste_monotonie[step])
+
+        text = (beschriftung(teilaufg,i,True) + r' \mathrm{Die~Funktion~ist~im~Intervall~I(- \infty \vert '
+                + gzahl(xwert_extrema[0]) + ')~ monoton ~' + liste_monotonie[0] + r'} \\')
+        for step in range(len(xwert_extrema)-1):
+            if step != len(xwert_extrema) - 2:
+                text = (text + r' \mathrm{im ~ Intervall ~ I(' + gzahl(xwert_extrema[step+1]) + r' \vert '
+                        + gzahl(xwert_extrema[step+2]) + r' ) ~monoton~ ' + liste_monotonie[step+1]+ r'} \\')
+            else:
+                text = (text +  r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema[step+1])
+                           + r' \vert \infty ) ~ monoton ~' + liste_monotonie[step+1]+ r'}')
+        loesung.append(text)
         aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(punkte)
+        liste_punkte.append(len(liste_monotonie))
         i += 1
 
     if 'd' in teilaufg:
         # Die SuS sollen die Schnittpunkte mit den Achsen berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittpunkte der Funktion f mit den '
-                       + f'Achsen.')
+        aufgabe.append(beschriftung(teilaufg,i) + f'Berechnen Sie die Schnittpunkte der Funktion f mit den '
+                       + f'Achsen. \n\n')
         if grad == 2:
             text, lsg, punkte = quadr_gl(koeff, schnittpkt=True)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
+            loesung.append(beschriftung(teilaufg,i,True) + text[0])
         elif grad == 3:
             text, lsg, punkte = kubische_gl(koeff, lsg_nst, schnittpkt=True)
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + text[0])
+            loesung.append(beschriftung(teilaufg,i,True) + text[0])
             for step in range(len(text)-1):
                 loesung.append(text[step+1])
+        elif grad == 4:
+            text, lsg, punkte = quadr_gl(koeff, var='z')
+            if sqrt(nst_12)%1==0:
+                S1 = r'S_{x_1}(-' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
+                S2 = r'S_{x_2}(' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
+            else:
+                S1 = r'S_{x_1}(- \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
+                S2 = r' S_{x_2}( \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
+            if sqrt(nst_34)%1==0:
+                S3 = r'S_{x_3}(-' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad '
+                S4 = r'S_{x_4}(' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad \mathrm{und} \quad '
+            else:
+                S3 = r' S_{x_3}( - \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad '
+                S4 = r' S_{x_4}( \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad \mathrm{und} \quad '
+
+            loesung.append(beschriftung(teilaufg,i,True) + r' \mathrm{Lösung~durch~Substitution~von}~z=x^2:'
+                           + r' \quad f(x) ~ \to ~ f(z) ~=~ ' + fkt_z_str + r' \\' + text[0]
+                           + r' \\ \mathrm{Rücksubstitution} ~ \sqrt{z} = \pm x \quad \to \quad x_{1,2} ~=~ '
+                           + r' \pm \sqrt{' + gzahl(nst_12) + r'} \quad \mathrm{und} \quad x_{3,4} ~=~ \pm \sqrt{'
+                           + gzahl(nst_34) + r'} \\' + S1 + S2 + S3 + S4 + r' S_{y}( 0 \vert ' + gzahl(koeff[2])
+                           + r') \\')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
