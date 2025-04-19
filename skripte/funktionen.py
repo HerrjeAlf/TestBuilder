@@ -762,7 +762,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             for step in range(len(lsg)):
                 text_zw = vorz_str(tubel[-2-step]) + r' \cdot '+ gzahl_klammer(lsg[step]) + text_zw
                 konst += tubel[-2-step]*lsg[step]
-            text_zw = (vorz_v_aussen(tubel[-1-k], variablen[-k]) + text_zw + r' \quad \vert ' + vorz_str(konst)
+            text_zw = (vorz_v_aussen(tubel[-1-k], variablen[-k]) + text_zw + r' \quad \vert ' + vorz_str(-1*konst)
                        + r' \quad \vert \div '+ gzahl_klammer(tubel[-1-k]) + trennung + variablen[-k]
                        + '~=~' + gzahl(Rational(tubel[-1] - konst, tubel[-1-k])))
             lsg.append(Rational(tubel[-1] - konst, tubel[-1-k]))
