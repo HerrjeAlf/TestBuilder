@@ -2473,7 +2473,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         exit('Fehler bei "polynome_untersuchen": der eingegebene Parameter für "grad=" muss 2, 3 oder 4 sein.')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$.'),' \n\n']
+               NoEscape('Gegeben ist die Funktion f(x) = $' + fkt_str + '$'),' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -4963,20 +4963,19 @@ def kurvendiskussion_polynome_alt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
+def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[], gleichungen=[]):
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    koeff = ([0, 0, 0], [0, 0, 1], [0, 1, 0], [0, 1, 1], [1, 0, 0], [1, 0, 1],
-             [1, 0, -1], [1, 1, 0], [1, 1, 1], [1, 2, 1], [1, 3, 1])
+    gleichungen = [exponenten(4, p=0,ganzz=True), exponenten(4,p=0,ganzz=True), exponenten(4,p=0,ganzz=True)] if gleichungen ==[] else gleichungen
+    text, lsg, punkte = gaussalgorithmus(gleichungen)
 
-    for element in koeff:
-        text, lsg, pkt = quadr_gl(element)
-        loesung.append('~' + text)
-
-    aufgabe.append('Test')
+    aufgabe.append('Lösen Sie das Gleichungssystem.')
+    loesung.append(text[0])
+    loesung.append(text[1])
+    loesung.append(latex(lsg))
 
 
     liste_punkte = [1]

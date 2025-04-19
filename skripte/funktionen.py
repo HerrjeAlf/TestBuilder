@@ -707,18 +707,23 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     beschrift_reverse = {value: key for key, value in beschrift.items()}
     n = len(gleichungen)
     variablen = [liste_teilaufg[step] for step in range(len(gleichungen[0]) - 1)] if variablen == [] else variablen
-    print(gleichungen)
-    zw_lsg = gleichungen.copy()
-    gleichungen = []
+    zw_lsg = []
     for i in range(n):
-        for element in zw_lsg:
+        zw_gl = gleichungen.copy()
+        k = len(zw_lsg)
+        for element in zw_gl:
             if element[i] != 0:
-                gleichungen.append(element)
-                zw_lsg.remove(element)
+                if element[i] == -1:
+                    zw_lsg.insert(k,element)
+                elif element[i] == 1:
+                    zw_lsg.insert(k,element)
+                    k += 1
+                else:
+                    zw_lsg.append(element)
+                gleichungen.remove(element)
+    gleichungen = zw_lsg
 
     loesung = [[beschrift.get(k+1, 'zu groß'), ''] + gleichungen[k] for k in range(n)]
-    print(gleichungen)
-    print(loesung)
 
     for i in range(n):
         for k in range(i+1, n):
@@ -730,7 +735,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
                 gleichungen[k] = neue_zeile
                 loesung.append([beschrift.get(k+1, 'zu groß'), text] + neue_zeile)
 
-    print(loesung)
     k = beschrift_reverse[loesung[-1][0]]
     gleich_lsg = []
     for anz in reversed(list(range(k))):
@@ -738,13 +742,35 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             if eintrag[0] == beschrift[anz+1]:
                 gleich_lsg.append(eintrag) # Letztes Element zurückgeben
                 break
-
-    print(gleich_lsg)
-
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
+    text_lsg = ''
+    lsg = []
+    k = 1
+    for tubel in gleich_lsg:
+        text_lsg = text_lsg + r' \mathrm{aus~ ' + gzahl(tubel[0]) + r'~folgt: } \quad '
+
+        if all(x == 0 for x in tubel[-1 - k:]):
+            text_lsg = r' 0~=~0 \mathrm{Das~Gleichungssystem~hat~unendlich~viele~Lösungen} '
+            break
+        elif all(x == 0 for x in tubel[-1-k: -1]):
+            text_lsg = r' 0 ~ \neq ~' + tubel[-1] + r' \mathrm{Das~Gleichungssystem~ist~nicht~lösbar!} '
+            break
+        else:
+            text_zw = '~=~' + gzahl(tubel[-1])
+            konst = 0
+            trennung = r' \quad \to \quad ' if k <= 3 else r' \\'
+            for step in range(len(lsg)):
+                text_zw = vorz_str(tubel[-2-step]) + r' \cdot '+ gzahl_klammer(lsg[step]) + text_zw
+                konst += tubel[-2-step]*lsg[step]
+            text_zw = (vorz_v_aussen(tubel[-1-k], variablen[-k]) + text_zw + r' \quad \vert ' + vorz_str(konst)
+                       + r' \quad \vert \div '+ gzahl_klammer(tubel[-1-k]) + trennung + variablen[-k]
+                       + '~=~' + gzahl(Rational(tubel[-1] - konst, tubel[-1-k])))
+            lsg.append(Rational(tubel[-1] - konst, tubel[-1-k]))
+            text_lsg = text_lsg + text_zw + r' \\'
+        k += 1
 
 
-    # noch eine Funktion, die loesung als Tabelle darstellt
+    # Funktion, die loesung als Tabelle darstellt
     anz_sp = len(loesung[0])
     spalten = 'c|'
     for step in range(anz_sp):
@@ -757,44 +783,45 @@ def gaussalgorithmus(gleichungen, variablen=[]):
         liste = [''] + [NoEscape('$' + str(element) + '$')  for element in zeile]
         table1.add_row(liste)
         table1.add_hline(2)
-    print(table1)
 
-
-    print(loesung)
-    return loesung, table1
+    text = [table1, text_lsg]
+    lsg.reverse()
+    punkte = len(loesung)
+    return text, lsg, punkte
 
 def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     n1, n2 = (0 + i, 1 + i)
     punkte = 0
     fkt = koeff[0]*x**2 + koeff[1]*x + koeff[2]
+    text = 'f(' + var + r') ~=~ 0 \quad \to \quad '
     if all(x == 0 for x in koeff):
-        text = r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~' + var + '~aus~dem~Definitionsbereich} '
+        text = text + r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~' + var + '~aus~dem~Definitionsbereich} '
         lsg = []
         punkte += 1
     elif koeff[0] == 0:
         if koeff[1] == 0:
-            text = r'0 ~=~ f(' + var + ') ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
+            text = text + '0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
             lsg = []
             punkte += 1
         elif koeff[2] == 0:
-            text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[1], var) + r' \quad \to \quad ' + var
+            text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[1], var) + r' \quad \to \quad ' + var
                     + '_{' + gzahl(n1) + '} ~=~ 0')
             lsg = [0]
             punkte += 2
         else:
             lsg1 = Rational(-1 * koeff[2], koeff[1])
-            text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[1], var) + vorz_str(koeff[2])
+            text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[1], var) + vorz_str(koeff[2])
                     + r' \quad \vert ' + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
                     + r' \quad \to \quad ' + var + ' ~=~' + gzahl(lsg1) + r' \\')
             lsg = [lsg1]
             punkte += 2
     elif koeff[1] == 0 and koeff[2] == 0:
-        text = (r' 0 ~=~ f(' + var + ') ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + r' \quad \to \quad ' + var
+        text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + r' \quad \to \quad ' + var
                 + '_{' + gzahl(n1) + '} ~=~ 0')
         lsg = [0]
         punkte += 2
     elif koeff[2] == 0:
-        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
+        text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
                 + '~=~' + var + r' \cdot \left( ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1])
                 + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ f(' + var + ') ~=~ '
                 + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
@@ -804,7 +831,7 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         lsg.sort()
         punkte += 4
     elif koeff[1] == 0:
-        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + r' \quad \vert '
+        text = (text + r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + r' \quad \vert '
                 + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
                 + var + '^2 ~=~' + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
         punkte += 2
@@ -825,8 +852,8 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     else:
         p = Rational(koeff[1], koeff[0])
         q = Rational(koeff[2], koeff[0])
-        text = (r' 0 ~=~ f(' + var + ') ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var)
-                + vorz_str(koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
+        text = (text + '0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var) + vorz_str(koeff[2])
+                + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
                 + r' 0 ~=~ ' + var + '^2 ' + vorz_v_innen(Rational(koeff[1], koeff[0]), var)
                 + vorz_str(Rational(koeff[2], koeff[0])) + r' \\'
                 + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '

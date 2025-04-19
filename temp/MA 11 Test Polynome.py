@@ -12,7 +12,7 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 11'
+Art = 'Test'
 Titel = 'Polynome'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
@@ -26,7 +26,7 @@ for i in range(anzahl):
     Aufgaben = [[potenzgesetze(1),
                  polynome_kennenlernen(2),
                  polynome_untersuchen(3, grad=3),
-                 polynome_untersuchen(4, ['a'], grad=4)]]
+                 polynome_untersuchen(4, ['d'], grad=4)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:

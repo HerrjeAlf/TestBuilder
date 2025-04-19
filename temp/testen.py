@@ -10,11 +10,11 @@ from skripte.erstellen import *
 # Angaben für den Test im pdf-Dokument
 schule = 'Torhorst - Gesamtschule'
 schulart = 'mit gymnasialer Oberstufe'
-Kurs = 'Leistungskurs'
-Fach = 'Mathematik'
-Klasse = '13'
-Lehrer = 'Herr Herrys'
-Art = 'Testen'
+Kurs = 'Kurs'
+Fach = 'Fach'
+Klasse = 'Test'
+Lehrer = 'Mustermann'
+Art = 'Test'
 Titel = 'Hier wird getestet'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[polynome_untersuchen(1, grad=4)]]
+    Aufgaben = [[testaufgabe(1)]]
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
     for element in Aufgaben:
