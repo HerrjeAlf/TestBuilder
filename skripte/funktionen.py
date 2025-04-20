@@ -342,6 +342,26 @@ def summe_exp(list_term, exp, list_var=[]):
                 summe_str = summe_str + '+' + gzahl_klammer(list_term[n]) + list_exp[n]
     return summe_str
 
+def umformung(zahl, art=['+', '-', '*', ':'][0]):
+    if zahl == 0:
+        if art == ':':
+            exit("Fehler bei umformung(zahl, art): die Zahl ist 0 eine Division damit nicht zulässig.")
+        elif art in ['+', '-']:
+            return ''
+    elif zahl == 1 and art in ['*', ':']:
+        return ''
+    elif art == '+':
+        return r' \quad \vert ' + vorz_str(zahl)
+    elif art == '-':
+        return r' \quad \vert ' + vorz_str(-1*zahl)
+    elif art in ['*', ':'] and zahl == 1:
+        return ''
+    elif art == '*':
+        return r' \quad \vert \cdot ' + gzahl_klammer(zahl)
+    elif art == ':':
+        return r' \quad \vert \div ' + gzahl_klammer(zahl)
+    else:
+        exit("Fehler bei Funktion umformung(zahl, art): art muss aus ['+','-', '*', ':'] sein")
 # diverses
 def kgv(q, p):
     if q == 0 or p == 0:
@@ -664,11 +684,11 @@ def random_selection(list, anzahl=2, wdh=True):
     else:
         print('wdh muss "True" or "False" sein')
 
-def repeat(list, anzahl=2):
+def repeat(list, wdh=2, laenge=False):
     new_list = []
     for element in list:
-        new_list.extend([element for _ in range(anzahl)])
-    return new_list
+        new_list.extend([element for _ in range(wdh)])
+    return new_list[laenge:] if laenge >= len(new_list) else new_list
 
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
@@ -747,8 +767,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     lsg = []
     k = 1
     for tubel in gleich_lsg:
-        text_lsg = text_lsg + r' \mathrm{aus~ ' + gzahl(tubel[0]) + r'~folgt: } \quad '
-
         if all(x == 0 for x in tubel[-1 - k:]):
             text_lsg = r' 0~=~0 \mathrm{Das~Gleichungssystem~hat~unendlich~viele~Lösungen} '
             break
@@ -756,14 +774,15 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             text_lsg = r' 0 ~ \neq ~' + tubel[-1] + r' \mathrm{Das~Gleichungssystem~ist~nicht~lösbar!} '
             break
         else:
+            text_lsg = text_lsg + r' \mathrm{aus~ ' + gzahl(tubel[0]) + r'~folgt: } \quad '
             text_zw = '~=~' + gzahl(tubel[-1])
             konst = 0
             trennung = r' \quad \to \quad ' if k <= 3 else r' \\'
             for step in range(len(lsg)):
                 text_zw = vorz_str(tubel[-2-step]) + r' \cdot '+ gzahl_klammer(lsg[step]) + text_zw
                 konst += tubel[-2-step]*lsg[step]
-            text_zw = (vorz_v_aussen(tubel[-1-k], variablen[-k]) + text_zw + r' \quad \vert ' + vorz_str(-1*konst)
-                       + r' \quad \vert \div '+ gzahl_klammer(tubel[-1-k]) + trennung + variablen[-k]
+            text_zw = (vorz_v_aussen(tubel[-1-k], variablen[-k]) + text_zw + umformung(konst,'-')
+                       + umformung(tubel[-1-k],':') + trennung + variablen[-k]
                        + '~=~' + gzahl(Rational(tubel[-1] - konst, tubel[-1-k])))
             lsg.append(Rational(tubel[-1] - konst, tubel[-1-k]))
             text_lsg = text_lsg + text_zw + r' \\'
