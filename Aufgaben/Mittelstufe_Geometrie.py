@@ -86,9 +86,9 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 3
-        aufgabe.append(str(liste_teilaufg[i]) + ')  Fertige eine Planskizze an, markiere die gegebenen Größen und '
+        aufgabe.append(beschriftung(teilaufg, i) + 'Fertige eine Planskizze an, markiere die gegebenen Größen und '
                                                 'nenne den Kongruenzsatz. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2BE), \quad \to \quad '
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Planskizze} ~ (2BE), \quad \to \quad '
                        + str(auswahl[0]) + r' \quad (1BE)')
         liste_punkte.append(pkt)
         i += 1
@@ -99,15 +99,15 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         pkt = 5
-        aufgabe.append(str(liste_teilaufg[i]) + ') Konstruiere das Dreieck. \n\n')
+        aufgabe.append(beschriftung(teilaufg, i) + 'Konstruiere das Dreieck. \n\n')
         if 'a' not in teilaufg:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Planskizze} ~ (2BE), \quad '
+            loesung.extend((beschriftung(teilaufg, i, True) + r' \mathrm{Planskizze} ~ (2BE), \quad '
                             + str(auswahl[1]) + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~'
                             + str(auswahl[3]) + r'~(1BE), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2BE)',
                             'Figure'))
             pkt += 2
         else:
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + str(auswahl[1])
+            loesung.extend((beschriftung(teilaufg, i, True) + str(auswahl[1])
                            + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~' + str(auswahl[3])
                             + r'~(1BE), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2BE)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
@@ -198,9 +198,9 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, i=0, BE=[]):
         # Hier sollen die SuS aus den gegebenen Daten die fehlende Seitenlänge im rechtw. Dreieck mit dem Satz von Pythagoras berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlende Seitenlänge im Dreieck ABC. '
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne die fehlende Seitenlänge im Dreieck ABC. '
                                                 'Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + auswahl[1])
+        loesung.append(beschriftung(teilaufg, i, True) + auswahl[1])
         liste_punkte.append(5)
         i += 1
 
@@ -215,8 +215,8 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, i=0, BE=[]):
             geg = ''
             punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Winkel des Dreiecks. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + geg + ' sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{'
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne die fehlenden Winkel des Dreiecks. \n\n')
+        loesung.append(beschriftung(teilaufg, i, True) + geg + ' sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{'
                        + st[2] + r'} ~=~ \frac{' + gzahl(l_a) + 'cm}{' + gzahl(l_c)
                        + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
                        + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
@@ -283,7 +283,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, i=0, BE
     if 'a' in teilaufg:
         # Hier sollen die SuS die gegebenen Verhältnisgleichungen für sin, cos und tan vervollständigen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + ') Vervollständige die folgenden Verhältnisgleichungen von Sinus, '
+        aufgabe.append(beschriftung(teilaufg, i) + 'Vervollständige die folgenden Verhältnisgleichungen von Sinus, '
                        + 'Kosiuns und Tangens. \n')
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
@@ -298,7 +298,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, i=0, BE
                          + r'}, \quad cos(' + wk[1] + r')~=~ \frac{' + st[0] + '}{' + st[2]
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesungen + r' \quad (3BE)')
+        loesung.append(beschriftung(teilaufg, i, True) + loesungen + r' \quad (3BE)')
         liste_punkte.append(3)
         i += 1
 
@@ -307,7 +307,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, i=0, BE
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         p = 0 if auswahl_seite != None else p
         auswahl_seite = random.randint(0,2) if auswahl_seite == None else auswahl_seite
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die fehlenden Größen, '
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne die fehlenden Größen, '
                        + 'wenn außer dem rechten Winkel, noch folgende Werte gegeben sind.')
         aufgabe.append(wk[p] + '~=~' + gzahl(wk_werte[p]) + r'^{ \circ } \quad \mathrm{und} \quad ' + st[auswahl_seite]
                        + '~=~' + gzahl(st_werte[auswahl_seite]) + 'cm')
@@ -421,7 +421,7 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, i=0, BE
                              + wk[p] + r')~=~ ' + gzahl(st_werte[auswahl_seite]) + r'cm~ \cdot ~ cos('
                              + gzahl(wk_werte[p]) + r') ~=~' + gzahl(lsg_2) + r'cm \quad (3BE) \\')
 
-            loesung.append(str(liste_teilaufg[i]) + (r') \quad ' + loesung_1)
+            loesung.append(beschriftung(teilaufg, i, True) + loesung_1
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + gzahl(wk_werte[p]) + r'^{ \circ} ~=~ '
                            + gzahl(wk_werte[0]) + r'^{ \circ} \quad (2BE)')
         liste_punkte.append(9)
@@ -474,31 +474,32 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
     if 'a' in teilaufg:
         # Die SuS sollen den Sichtwinkel berechnen, unter dem der Wetterballon gesehen werden kann.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Winkel, unter dem der Beobachter'
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne den Winkel, unter dem der Beobachter'
                                                 f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \mathrm{Lösung~Planskizze~(1BE)} \quad \mathrm{geg:~a~=~'
-                                                 + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
-                                                 + r'km, \quad ges \colon  \alpha \quad (1BE)} \\'
-                                                 + r' tan( \alpha ) ~=~ \frac{a}{c} \quad \vert tan^{-1}()'
-                                                   r'\quad \to \quad \alpha ~=~ tan^{-1} \Big( \frac{a}{c} \Big) ~=~'
-                                                   r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
-                                                 + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
-                                                 + r' ^{ \circ} \quad (3BE)'))
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \mathrm{Lösung~Planskizze~(1BE)} \quad \mathrm{geg:~a~=~'
+                       + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
+                       + r'km, \quad ges \colon  \alpha \quad (1BE)} \\'
+                       + r' tan( \alpha ) ~=~ \frac{a}{c} \quad \vert tan^{-1}()'
+                       + r'\quad \to \quad \alpha ~=~ tan^{-1} \Big( \frac{a}{c} \Big) ~=~'
+                       + r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
+                       + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
+                       + r' ^{ \circ} \quad (3BE)')
         liste_punkte.append(5)
         i += 1
 
     if 'b' in teilaufg:
         # Die SuS sollen den Abstand des Beobachters vom Wetterballon berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Abstand des Ballons vom Beobachter. \n\n')
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne den Abstand des Ballons vom Beobachter. \n\n')
         if 'a' in teilaufg:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
+            loesung.append(beschriftung(teilaufg, i, True) + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
                            + r'b \quad \vert \div sin( \alpha ) \quad \to \quad b ~=~ '
                            + r'\frac{a}{ sin( \alpha )} ~=~ \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
                            + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)')
             pkt = 3
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{geg:~ \alpha ~=~' + str(w_beob)
+            loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{geg:~ \alpha ~=~' + str(w_beob)
                            + r' ^{ \circ},~a~=~' + str(hoehe) + r'km, \quad ges \colon b \quad (1BE)} \\'
                            + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot b \quad \vert \div sin( \alpha ) '
                            + r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} \frac{' + str(hoehe) + r'km }{ sin( '
@@ -543,8 +544,9 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
     if 'a' in teilaufg:
         # Die SuS sollen den Anstellwinkel einer Klappleiter berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
                        + latex(deckenhoehe) + 'm,~b~=~' + latex(laenge_leiter)
                        + r'm, \quad ges \colon  \alpha \quad (1BE)} '
                        + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert sin^{-1}()'
@@ -559,11 +561,13 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
         if anstellwinkel <= 61:
-            loesung.append(str(liste_teilaufg[i]) + (r') \mathrm{Der~Anstellwinkel~ist~kleiner~als~61°~und~somit~der~'
-                                                     r'Dachboden~nicht~gut~zu~begehen. \quad (1BE)}'))
+            loesung.append(beschriftung(teilaufg, i, True)
+                           + r' \mathrm{Der~Anstellwinkel~ist~kleiner~als~61°~und~somit~der~'
+                           + r'Dachboden~nicht~gut~zu~begehen. \quad (1BE)}')
         else:
-            loesung.append(str(liste_teilaufg[i]) + (r') \mathrm{Der~Anstellwinkel~ist~größer~als~61°~und~somit~der~'
-                                                     r'Dachboden~gut~zu~begehen. \quad (1BE)}'))
+            loesung.append(beschriftung(teilaufg, i, True)
+                           + r' \mathrm{Der~Anstellwinkel~ist~größer~als~61°~und~somit~der~'
+                           + r' Dachboden~gut~zu~begehen. \quad (1BE)}')
         liste_punkte.append(1)
         i += 1
 
@@ -581,9 +585,6 @@ def sachaufgabe_turm(nr, koerpergroesse=True, BE=[]):
     # Hier sollen die Schüler*innen die Höhe eines Turms berechnen (Trigonometrie im rechtw. Dreieck).
     # Mit dem Paramter "koerpergroesse=True" wird festgelegt, ob die Körpergröße des Beobachters in der Aufgabe berücksichtigt werden soll bzw. diese in der Aufgabenstellung genannt wird.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-
-
-
 
     liste_bez = [f'{nr}']
     i = 0
@@ -728,10 +729,10 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 8
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die restlichen Winkel im Dreieck. '
-                                                'Fertige dazu eine Planskizze an. \n\n')
-        loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i]) + r') \quad \frac{' + seite_2 + '}{~sin('
-                       + winkel_2 + ')} ~=~' + r' \frac{' + seite_1 + '}{~sin(' + winkel_1
+        aufgabe.append(beschriftung(teilaufg, i)+ 'Berechne die restlichen Winkel im Dreieck. '
+                       + 'Fertige dazu eine Planskizze an. \n\n')
+        loesung.append(gegeben_und_gesucht + beschriftung(teilaufg, i, True) + r' \frac{' + seite_2
+                       + '}{~sin(' + winkel_2 + ')} ~=~' + r' \frac{' + seite_1 + '}{~sin(' + winkel_1
                        + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{ ' + seite_2 + r'} ~=~ \frac{ sin('
                        + winkel_1 + r') }{' + seite_1 + r'} \quad \vert \cdot ' + seite_2 + r' \quad (1BE) \\'
                        + 'sin(' + winkel_2 + r') ~=~ \frac{ sin(' + winkel_1 + r')}{' + seite_1
@@ -742,8 +743,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
                        + gzahl(seite_wert_1) + r'cm} \cdot ' + gzahl(seite_wert_2) + r'cm \right) ~=~'
                        + gzahl(winkel_wert_2) + r'^{ \circ } \quad (2BE) \\' + winkel_3 + r'~=~ 180^{ \circ} ~-~'
                        + gzahl(winkel_wert_1) + r'^{ \circ} ~-~ ' + gzahl(winkel_wert_2) + r'^{ \circ} ~=~ '
-                       + gzahl(winkel_wert_3) + r'^{ \circ} \quad (2BE) \\'
-                       + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\')
+                       + gzahl(winkel_wert_3) + r'^{ \circ} \quad (2BE) \\')
         liste_punkte.append(pkt)
         i += 1
 
@@ -752,15 +752,16 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 4
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Länge der Seite {seite_3} mit dem Sinussatz. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{aus~der~Planskizze~folgt:~} \hspace{15em} \\'
+        aufgabe.append(beschriftung(teilaufg, i)
+                       + 'Berechne die Länge der Seite {seite_3} mit dem Sinussatz. \n\n')
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \mathrm{aus~der~Planskizze~folgt:~} \hspace{15em} \\'
                        + r' \frac{' + seite_1 + '}{~sin(' + winkel_1 + ')} ~=~' + r' \frac{' + seite_3 + '}{~sin('
                        + winkel_3 + r')} \quad \vert \cdot sin(' + winkel_3 + r') \quad \to \quad ' + seite_3
                        + r'~=~ \frac{' + seite_1 + r' \cdot sin(' + winkel_3 + ') }{ sin(' + winkel_1
                        + r') } \quad (2BE) \\' + seite_3 + r'~=~ \frac{' + gzahl(seite_wert_1) + r'cm \cdot sin('
                        + gzahl(winkel_wert_3) + r' ^{ \circ } )}{ sin(' + gzahl(winkel_wert_1) + r' ^{ \circ } )} ~=~'
-                       + gzahl(seite_wert_3) + r'cm \quad (2BE) \\'
-                       + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\')
+                       + gzahl(seite_wert_3) + r'cm \quad (2BE) \\')
         liste_punkte.append(pkt)
         i += 1
 
@@ -771,8 +772,9 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
         pkt = 3
         flaeche = 0.5*seite_wert_1*seite_wert_2*math.sin(math.radians(winkel_wert_3))
         # print(N(flaeche,3))
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechne die Fläche des Dreiecks. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A ~ = ~ \frac{1}{2} \cdot ' + seite_1 + r' \cdot ' + seite_2
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechne die Fläche des Dreiecks. \n\n')
+        loesung.append(beschriftung(teilaufg, i, True) + r' A ~ = ~ \frac{1}{2} \cdot ' + seite_1
+                       + r' \cdot ' + seite_2
                        + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot ' + gzahl(seite_wert_1) + r'cm \cdot '
                        + gzahl(seite_wert_2) + r'cm \cdot sin(' + latex(winkel_wert_3) + r'^{ \circ } ) ~=~ '
                        + gzahl(N(flaeche,3)) + r'cm^2 \quad (3BE) \\'
@@ -865,16 +867,15 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Berechnung eines Winkels mit dem Sinus
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ') Berechnen Sie die Größe der Winkel '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Berechnen Sie die Größe der Winkel '
                                 + r'$ \alpha $' + ' und ' + r'$ \beta $.'))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
-                                                 r' ~=~180^{ \circ } - 90^{ \circ } -' + gzahl(gamma_1)
-                                                 + r'^{ \circ} ~=~' + gzahl(alpha) + r'^{ \circ} \quad (2BE) \\'
-                                                 r' sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad '
-                                                 r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ '
-                                                 r'sin^{-1} \Big( \frac{' + gzahl(seite_h) + '}{' + gzahl(seite_a)
-                                                 + r'} \Big) ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (4BE) \\ '
-                                                 + r' \mathrm{insgesamt~' + str(6) + r'~Punkte} \\'))
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \quad \alpha ~=~180^{ \circ } - 90^{ \circ } - \gamma_1 '
+                       + r' ~=~180^{ \circ } - 90^{ \circ } -' + gzahl(gamma_1) + r'^{ \circ} ~=~' + gzahl(alpha)
+                       + r'^{ \circ} \quad (2BE) \\ sin( \beta ) ~=~ \frac{h}{a} \quad \vert sin^{-1}() \quad '
+                       + r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ sin^{-1} \Big( \frac{'
+                       + gzahl(seite_h) + '}{' + gzahl(seite_a) + r'} \Big) ~=~ ' + gzahl(beta)
+                       + r'^{ \circ} \quad (4BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
@@ -890,14 +891,12 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
                                 + ') Berechnen Sie die Länge der Seite b.'))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
-                                                 r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
-                                                 r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{'
-                                                 + gzahl(seite_a) + r'cm \cdot sin(' + gzahl(beta) + r'^{ \circ})}'
-                                                 r'{sin('
-                                                 + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
-                                                 + r'cm \quad (4BE) \\'
-                                                 + r' \mathrm{insgesamt~' + str(4) + r'~Punkte} \\'))
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
+                       + r' \quad \vert \cdot sin( \beta) \quad \to \quad b~=~'
+                       + r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{' + gzahl(seite_a) + r'cm \cdot sin('
+                       + gzahl(beta) + r'^{ \circ})}' + r'{sin(' + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
+                       + r'cm \quad (4BE) \\')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
@@ -910,16 +909,14 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False
     if 'd' in teilaufg:
         # Berechnung der Fläche des Dreiecks
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                + ') Berechnen Sie die Fläche des Dreiecks ABC.'))
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad \gamma ~=~180^{ \circ } - \alpha - \beta ~=~'
-                                                 r'180^{ \circ } - ' + gzahl(alpha) + r'^{ \circ } - ' + gzahl(beta)
-                                                 + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
-                                                 r' A ~=~ \frac{1}{2} \cdot a \cdot b \cdot sin( \gamma ) ~=~'
-                                                 r' \frac{1}{2} \cdot ' + gzahl(seite_a) + r'cm \cdot '
-                                                 + gzahl(seite_b) + r'cm \cdot sin(' + gzahl(gamma)
-                                                 + r'^{ \circ }) ~=~' + gzahl(flaeche) + r'cm^2 \quad (3BE) \\'
-                                                 + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i)
+                                + 'Berechnen Sie die Fläche des Dreiecks ABC.'))
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' \gamma ~=~180^{ \circ } - \alpha - \beta ~=~ 180^{ \circ } - ' + gzahl(alpha)
+                       + r'^{ \circ } - ' + gzahl(beta) + r'^{ \circ } ~=~' + str(gamma) + r'^{ \circ} \quad (2BE) \\'
+                       + r' A ~=~ \frac{1}{2} \cdot a \cdot b \cdot sin( \gamma ) ~=~ \frac{1}{2} \cdot '
+                       + gzahl(seite_a) + r'cm \cdot ' + gzahl(seite_b) + r'cm \cdot sin(' + gzahl(gamma)
+                       + r'^{ \circ }) ~=~' + gzahl(flaeche) + r'cm^2 \quad (3BE) \\')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
@@ -1075,9 +1072,9 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         # Hier sollen die SuS die geoemtrischen Formen erkennen, aus denen sich der Pool zusammensetzt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 2
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Geben Sie an, aus welchen Teilflächen '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Geben Sie an, aus welchen Teilflächen '
                                 + 'sich die Grundfläche des Pools zusammensetzt.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Aus~zwei~Halbkreisen~links~und~rechts~und~einem~'
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Aus~zwei~Halbkreisen~links~und~rechts~und~einem~'
                        + r'Rechteck~in~der~Mitte.} \quad (2BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
@@ -1094,9 +1091,10 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         pkt = 5
         aufgabe.extend((NoEscape(r' \noindent Am Rand des Pools soll das beim Baden übergelaufene Wasser in eine '
                                 + r'Abflussrinne laufen. Die Gitter für die Abdeckung der Rinne sind 50cm lang.'),
-                                ' \n\n', str(liste_teilaufg[i]) + ')  Berechnen Sie, wie viele Gitter für den Pool '
+                                ' \n\n', beschriftung(teilaufg, i) + 'Berechnen Sie, wie viele Gitter für den Pool '
                                 + 'benötigt werden.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad U_{ges} ~=~ U_{Kreis} + 2 \cdot (Länge - Breite) ~=~ '
+        loesung.append(beschriftung(teilaufg, i, True)
+                       + r' U_{ges} ~=~ U_{Kreis} + 2 \cdot (Länge - Breite) ~=~ '
                        + r' \pi \cdot Breite + 2 \left( ' + vorz_v_aussen(laenge + 2 * radius, 'm ')
                        + vorz_v_innen(2*radius, 'm') + r' \right) ~=~ \pi \cdot ' + gzahl(2*radius)
                        + r' m + 2 \cdot ' + gzahl(laenge) + r'm ~=~' + gzahl(N(2*pi*radius + 2*laenge,3))
@@ -1116,9 +1114,9 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
         pkt = 3
         flaeche = N(laenge*2*radius + pi*radius**2,2)
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + ')  Berechnen Sie die Größe der Grundfläche '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Berechnen Sie die Größe der Grundfläche '
                                  + 'des Pools.'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ '
+        loesung.append(beschriftung(teilaufg, i, True) + r' A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ '
                        + r' ( Länge - Breite ) \cdot Breite + \pi \cdot r^2 \quad (1BE) \\ \hspace{15em} \left( '
                        + vorz_v_aussen(laenge + 2*radius, 'm') + vorz_v_innen(-2*radius, 'm')
                        + r' \right) \cdot ' + gzahl(2*radius) + r' + \pi \cdot \left( ' + gzahl(radius)
@@ -1142,10 +1140,10 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
             liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
             aufgabe.extend((NoEscape(r' \noindent Damit Herr Geiss einen Kopfsprung in den Pool machen kann, '
                                      f'soll dieser {gzahl(hoehe_pool)}m tief sein.'),' \n\n',
-                            NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                     + ') Berechnen Sie die Wassermenge des Pools in $ m^3 $.')))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A \cdot h ~=~ ' + gzahl(flaeche) + r'm^2 \cdot '
-                           + gzahl(hoehe_pool) + 'm ~=~' + gzahl(volumen) +  r'm^3 \\')
+                            NoEscape(r' \noindent ' + stern + beschriftung(teilaufg, i)
+                                     + 'Berechnen Sie die Wassermenge des Pools in $ m^3 $.')))
+            loesung.append(beschriftung(teilaufg, i, True) + r' V ~=~ A \cdot h ~=~ ' + gzahl(flaeche)
+                           + r'm^2 \cdot ' + gzahl(hoehe_pool) + 'm ~=~' + gzahl(volumen) +  r'm^3 \\')
             if pruef_kl10:
                 aufgabe.append(['Bild', '430px'])
                 grafiken_aufgaben.append('notizen_klein')
@@ -1166,10 +1164,11 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
                 aufgabe.extend((NoEscape(r' \noindent Herr Geiss ist ungeduldig und möchte für die Befüllung des Pool '
                                          + f'einen Gartenschlauch nutzen. Mit diesem kann er den Pool mit '
                                          + f'{gzahl(menge_schlauch)}l Wasser pro Stunde befüllen.'),' \n\n',
-                                NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
-                                         + ') Berechne Sie, wie lange es dauert den Pool so zu befüllen .')))
-                loesung.append(str(liste_teilaufg[i]) + r') t ~=~ \frac{' + gzahl(volumen) + 'm^3 }{'
-                               + gzahl(menge_schlauch/1000) + r' \frac{m^3}{h} } ~=~ ' + gzahl(zeit) + r'h \quad (3BE) ')
+                                NoEscape(r' \noindent ' + stern + beschriftung(teilaufg, i)
+                                         + 'Berechne Sie, wie lange es dauert den Pool so zu befüllen .')))
+                loesung.append(beschriftung(teilaufg, i, True) + r' t ~=~ \frac{' + gzahl(volumen) + 'm^3 }{'
+                               + gzahl(menge_schlauch/1000) + r' \frac{m^3}{h} } ~=~ ' + gzahl(zeit)
+                               + r'h \quad (3BE) ')
                 if pruef_kl10:
                     aufgabe.append(['Bild', '430px'])
                     grafiken_aufgaben.append('notizen_klein')
@@ -1206,12 +1205,12 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
                            ([a,a+h*np.cos(30/180*np.pi)],[0,h*np.sin(30/180*np.pi)], 'k'),
                            ([a/2,a/2 + h*np.cos(30/180*np.pi)],[sqrt(3)/2*a,sqrt(3)/2*a + h*np.sin(30/180*np.pi)], 'k'),
                            ([a/2,a/2], [0,sqrt(3)/2*a], 'gray'))
-    beschriftung = ([a*0.3, - 0.5, f'{a}cm'],
+    beschriftung_dr = ([a*0.3, - 0.5, f'{a}cm'],
                     [a + h*np.cos(30/180*np.pi)/2, h*np.sin(30/180*np.pi)/2 - 0.5, f'{h} cm'], [a/2+0.2,0.4*a, f'$ h_g $'])
     auswahl = random.choice([0])
     ausw_bez = ['regelmäßiges dreiseitiges'][auswahl]
     ausw_krp = [dreiseitiges_prisma]
-    flaeche_zeichnen(*ausw_krp[auswahl], text=beschriftung, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+    flaeche_zeichnen(*ausw_krp[auswahl], text=beschriftung_dr, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                NoEscape(f'Gegeben ist ein {ausw_bez} Prisma mit den Kantenlängen a = {a} cm, der Höhe des Prismas '
@@ -1225,13 +1224,13 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
     if len([element for element in ['a', 'b'] if element in teilaufg]) > 0:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Berechne die Oberfläche des Prismas.'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Berechne die Oberfläche des Prismas.'))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad A_G ~=~ \frac{1}{2} \cdot a \cdot h_a ~=~ \frac{1}{2} \cdot '
+        loesung.append(beschriftung(teilaufg, i, True) + r' A_G ~=~ \frac{1}{2} \cdot a \cdot h_a ~=~ \frac{1}{2} \cdot '
                        + gzahl(a) + r'cm \cdot ' + gzahl(hg) + ' cm ~=~ ' + gzahl(round(0.5*a*hg,1))
                        + r'cm^2 \quad \mathrm{und} \quad A_M ~=~ 3 \cdot a \cdot b ~=~ 3 \cdot ' + gzahl(a) + r' cm\cdot '
                        + gzahl(h) + 'cm ~=~' + gzahl(3*a*h) + r'cm^2 \\ \mathrm{Die~Oberfläche~A_O~beträgt~dann:} '
@@ -1250,7 +1249,7 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad V ~=~ A_g \cdot h ~=~ ' + gzahl(round(0.5*a*hg,1))
+        loesung.append(beschriftung(teilaufg, i, True) + r' V ~=~ A_g \cdot h ~=~ ' + gzahl(round(0.5*a*hg,1))
                        + r'cm^2 \cdot ' + gzahl(h) + r'cm ~=~ ' + gzahl(round(0.5*a*hg*h,1)) + r' cm^3 ')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)

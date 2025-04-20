@@ -113,7 +113,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
                                               f'und verbinden diese. \n\n')
             pkt += 2
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
         liste_punkte.append(pkt)
         i += 1
 
@@ -157,7 +157,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                        f'Skalarproduktes. \n\n')
         if 'b' in teilaufg:
             pkt = 3
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
                            + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
                            + r' \overrightarrow{AC} \right) }^2 }~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{'
@@ -166,7 +166,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \quad (3BE) ')
         else:
             pkt = 5
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
                            + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
                            + r' \overrightarrow{AC} \right) }^2 } \quad (1BE) \hspace{10em} \\ '
@@ -190,14 +190,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
                        + f'Kreuzproduktes. \n\n')
         if len([element for element in ['b', 'd'] if element in teilaufg]) > 0:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
                            + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (3BE)')
             pkt = 3
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r' \quad (1BE) \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
@@ -219,14 +219,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des '
                        + f'Kreuzproduktes. \n\n')
         if len([element for element in ['b', 'd', 'e'] if element in teilaufg]) > 0:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ '
                            + gzahl(laenge_kprod) + r' \quad (3BE)')
             pkt = 3
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r' \quad (1BE) \hspace{10em} \\ \overrightarrow{AB} ~=~ \begin{pmatrix} '
                            + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
@@ -258,7 +258,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                                 str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
 
         if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
                            + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx)
                            + r' \quad (1BE) \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
@@ -266,7 +266,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (4BE)')
             pkt = 5
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
                            + r' \overrightarrow{AE}  \right| \hspace{10em} \quad (1BE) \\ \overrightarrow{AB} ~=~ '
                            + r'\begin{pmatrix} ' + gzahl(abx) + r' \\' + gzahl(aby) + r' \\' + gzahl(abz) + r' \\ '
@@ -300,7 +300,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                             + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
                             str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
                            + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
@@ -308,7 +308,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (5BE)')
             pkt = 5
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
                            + r' \right) \cdot \overrightarrow{AS}  \right| \quad (1BE) \hspace{10em} \\'
                            + r'\overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(abx) + r' \\' + gzahl(aby)
@@ -365,18 +365,18 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 = punkt_vektor(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
         ergebnis = faktor_1 * np.array(vektor_1) + faktor_2 * np.array(vektor_2)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den resultierenden Vektor.')
+        aufgabe.append(beschriftung(teilaufg, i) + 'Berechnen Sie den resultierenden Vektor.')
         aufgabe.append(gzahl(faktor_1) + r' \cdot \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                        + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \hspace{20em} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} ' + gzahl(vektor_1[0])
-                       + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
-                       + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
-                       + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                       + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1]) + r' \\' + gzahl(ergebnis[2]) + r' \\'
-                       + r'  \end{pmatrix}  \quad (2P)')
+        loesung.append(beschriftung(teilaufg,i, True) + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} '
+                       + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
+                       + r' \end{pmatrix} ~' + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} '
+                       + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
+                       + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1])
+                       + r' \\' + gzahl(ergebnis[2]) + r' \\' + r'  \end{pmatrix}  \quad (2P)')
         liste_punkte.append(2)
         i += 1
 
@@ -389,11 +389,12 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # print(ergebnis)
         punkte = 3
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Mittelpunkt der folgenden Punkte '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Mittelpunkt der folgenden Punkte '
                        'A( ' + gzahl(vektor_1[0])  + ' | ' + gzahl(vektor_1[1]) + ' | ' + gzahl(vektor_1[2]) + ' ) und '
                        'B( ' + gzahl(vektor_2[0])  + ' | ' + gzahl(vektor_2[1]) + ' | ' + gzahl(vektor_2[2])
                        + ' ). \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
                        + r'  \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\'
                        + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_2[0])
                        + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
@@ -429,7 +430,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                          r' Linearkombination~von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.}'
                          r' \quad (1P) \\')
 
-        aufgabe.extend((str(liste_teilaufg[i]) + ') Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
+        aufgabe.extend((beschriftung(teilaufg,i) + 'Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
                         + ' von b und c dargestellt werden kann.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
                         + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
@@ -478,7 +479,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         else:
             pass
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
                        + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
                        + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
                        + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
@@ -508,9 +510,10 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         zl = ['I', 'II', 'III']
 
         table1 = Tabular('r r r r', row_height=1.2)
-        table1.add_row(str(liste_teilaufg[i]) + ') aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
-                        'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
-                                                 + gzahl(x_3) + '$'), '(1P)')
+        table1.add_row(beschriftung(teilaufg,i)
+                       + 'aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
+                       'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
+                                      + gzahl(x_3) + '$'), '(1P)')
         table1.add_row('', 'II:', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
                                                            + ' = ' + gzahl(y_3) + '$'), '(1P)')
         table1.add_row('', 'III:', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
@@ -556,7 +559,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                  + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2P) }')
         punkte += 2
 
-        aufgabe.extend((str(liste_teilaufg[i]) + ') Berechnen Sie den Wert des Parameters a, '
+        aufgabe.extend((beschriftung(teilaufg,i) + 'Berechnen Sie den Wert des Parameters a, '
                         + 'für den die gegebenen Vektoren linear abhängig sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
                         + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
@@ -586,13 +589,14 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
             vektor_1 = (faktor*vektor_2[0],faktor*vektor_2[1],faktor * vektor_2[2] + zzahl(1,6)/2)
             ergebnis = r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
 
-        aufgabe.extend((str(liste_teilaufg[i]) + f') Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
+        aufgabe.extend((beschriftung(teilaufg, i) + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                         + r' \end{pmatrix} \\'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.} \\'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.} \\'
                        + gzahl(N(vektor_1[0],3)) + '~=~' + gzahl(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'
                        + gzahl(N(vektor_1[0]/vektor_2[0],3)) + r' \\' + gzahl(N(vektor_1[1],3)) + '~=~'
                        + gzahl(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'
@@ -616,13 +620,14 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                     vektor_a[2] + vektor_ab[2]*faktor/10]
         vektor_at = np.array(vektor_t) - np.array(vektor_a)
         vektor_tb = vektor_b - np.array(vektor_t)
-        aufgabe.append(str(liste_teilaufg[i]) + ') In welchem Verhältnis teilt der Punkt T die Strecke AB?')
+        aufgabe.append(beschriftung(teilaufg,i) + 'In welchem Verhältnis teilt der Punkt T die Strecke AB?')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~ ), \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
                        + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
                        + r'~ ).} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
                        + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
                        + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
                        + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
@@ -643,7 +648,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
         #                     + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
         # ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
-        # loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
+        # loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
         #                + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
         #                + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (1P) \\'
         #                + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
@@ -673,11 +678,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
-        aufgabe.append(str(liste_teilaufg[i]) + ') Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
+        aufgabe.append(beschriftung(teilaufg,i)
+                       + 'Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~), \quad T(~' + gzahl(vektor_t[0]) + r'~ \vert ~' + gzahl(vektor_t[1])
                        + r'~ \vert ~' + gzahl(vektor_t[2]) + r'~) \quad und~r~=~' + gzahl(faktor_r) + r'.} \\')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
                        + r' \cdot \mathrm{ (~1~+~ \frac{1}{r} ~)}  ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
                        + gzahl(vektor_a[1]) + r' \\' + gzahl(vektor_a[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} '
                        + gzahl(N(vektor_at[0],3))+ r' \\' + gzahl(N(vektor_at[1],3)) + r' \\'
@@ -811,10 +818,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
                      r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
                      + gzahl(v[2]) + r' \\ \end{pmatrix} \quad (3P) \\')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Gleichung der Geraden g auf,'
+        aufgabe.append(beschriftung(teilaufg, i) + 'Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
+        loesung.append(beschriftung(teilaufg,i, True) + loesung_1)
         i +=1
 
     if 'b' in teilaufg:
@@ -841,9 +847,8 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         else:
             loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4BE) \\'
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + loesung_1 + loesung_2
-                       + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
+        aufgabe.append(beschriftung(teilaufg, i) + 'Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
+        loesung.append(beschriftung(teilaufg,i, True) + loesung_1 + loesung_2)
         i +=1
 
     if 'c' in teilaufg:
@@ -853,14 +858,14 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt not in ['x-y', 'x-z', 'y-z', 'all', None] else spurpunkt
         spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt == None else spurpunkt
         if spurpunkt == 'all':
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Spurpunkte der Geraden g mit den '
+            aufgabe.append(beschriftung(teilaufg, i) + 'Berechnen Sie die Spurpunkte der Geraden g mit den '
                            + f' Achsenebenen. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~der~Spurpunkte~'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Berechnung~der~Spurpunkte~'
                            + r'mit~den~Achsenebenen.} \hspace{10em}')
         else:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Spurpunkt der Geraden g mit der '
+            aufgabe.append(beschriftung(teilaufg, i) + 'Berechnen Sie den Spurpunkt der Geraden g mit der '
                            + spurpunkt + f'-Achsenebene. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~des~Spurpunktes~'
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Berechnung~des~Spurpunktes~'
                            + r'mit~der~' + spurpunkt + r'-Achsenebene.} \hspace{10em}')
 
         if spurpunkt == 'x-y' or spurpunkt == 'all':
@@ -949,7 +954,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
                                           'deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
@@ -975,11 +980,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
-        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie, wie man die Lagebeziehung zweier '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Erläutern Sie, wie man die Lagebeziehung zweier '
                                           'Geraden mathematisch überprüfen kann. \n\n')
         # Tabelle mit dem Text
         table2 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
-        table2.add_row(str(liste_teilaufg[i]) + ')',
+        table2.add_row(beschriftung(teilaufg, i),
                        MultiColumn(2, align='l', data=' Lagebeziehung zweier Geraden'),
                        'Punkte')
         table2.add_row('', '-', 'Zuerst prüft man ob die Geraden parallel sind, '
@@ -1241,8 +1246,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                        r' \end{pmatrix}\\'))
-        aufgabe.append(str(liste_teilaufg[i]) + ') Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathit{Die~Auswahl~war~'
+        aufgabe.append(beschriftung(teilaufg,i) + 'Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathit{Die~Auswahl~war~'
                        + lagebeziehung + r'} \hspace{25em} \\' + loesung_1)
         i += 1
 
@@ -1282,12 +1287,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                             + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                             + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                             + r' \end{pmatrix}\\'))
-        aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Abstand der Geraden g und h. \n\n')
+        aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Abstand der Geraden g und h. \n\n')
 
 
         if lagebeziehung == 'parallel':
             punkte = 7
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Hilfsebene~aufstellen: } \hspace{25em} \\'
+            loesung.append(beschriftung(teilaufg,i, True)
+                           + r' \mathrm{Hilfsebene~aufstellen: } \hspace{25em} \\'
                            + r' H: ~\begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
                            + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
                            + r' \end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} '
@@ -1327,7 +1333,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
         elif lagebeziehung == 'windschief':
             punkte = 7
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Berechnung~mithilfe~der~hessischen~Normalform'
+            loesung.append(beschriftung(teilaufg,i, True)
+                           + r' \mathrm{Berechnung~mithilfe~der~hessischen~Normalform'
                            + r'~der~Hilfsebene~H~deren~Normalenvektor}, \\'
                            + r' \mathrm{~das~Kreuzprodukt~der~Richtungsvektoren~von~g~und~h~ist:} \\'
                            + r' \overrightarrow{n} ~=~ \overrightarrow{v} \times \overrightarrow{u} ~=~'
@@ -1363,7 +1370,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
             [ex, ey, ez] = [cx,cy,cz]
             [px, py, pz] = [wx, wy, wz]
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und h. \n\n')
+            aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und h. \n\n')
         elif 'c' not in teilaufg:
             aufgabe.append('Gegeben sind die beiden Geraden mit folgenden Gleichungen:')
             aufgabe.append(r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
@@ -1375,7 +1382,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                            + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
                                + r' \end{pmatrix} }')
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+            aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
         else:
             aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
@@ -1384,14 +1391,14 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                            + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
                            r' \end{pmatrix} ')
-            aufgabe.append(str(liste_teilaufg[i]) + ') Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+            aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
         sp_vp = skalarprodukt([vx, vy, vz], [px, py, pz])
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
         schnittwinkel = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
+        loesung.append(beschriftung(teilaufg,i, True) + r' cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
                        r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
                        r' \gamma ~=~ cos^{-1} \left( \frac{ \vert \overrightarrow{v}'
@@ -1530,9 +1537,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Parametergleichung der Ebene E auf, '
-                                          f'welche die Punkte A, B und C enthält. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+        aufgabe.append(beschriftung(teilaufg, i) + 'Stellen Sie die Parametergleichung der Ebene E auf, '
+                       + f'welche die Punkte A, B und C enthält. \n\n')
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{AB} ~=~ \begin{pmatrix} '
                        + gzahl(bx-ax) + r' \\' + gzahl(by-ay) + r' \\' + gzahl(bz-az) + r' \\'
                        r' \end{pmatrix} \quad \mathrm{und} \quad \overrightarrow{AC} ~=~ \begin{pmatrix} '
                        + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az) + r' \\'
@@ -1555,9 +1562,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         fakt_n = Rational(ny, ny_gk) if nx_gk == 0 else fakt_n
         fakt_n = Rational(nz, nz_gk) if nx_gk == 0 and ny_gk == 0 else fakt_n
 
-        aufgabe.append(str(liste_teilaufg[i]) + ') Formen Sie die Gleichung für Ebene E in '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Formen Sie die Gleichung für Ebene E in '
                        + 'Normalen- und Koordinatenform um. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(vy * wz) + '-' + gzahl_klammer(vz * wy) + r' \\'
                        + gzahl(vz * wx) + '-' + gzahl_klammer(vx * wz) + r' \\'
                        + gzahl(vx * wy) + '-' + gzahl_klammer(vy * wx) + r' \\ \end{pmatrix} ~=~ \begin{pmatrix} '
@@ -1593,9 +1600,10 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
             lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene~E.} \quad (3BE) \\'
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Überprüfen Sie, ob der Punkt T( {gzahl(tx)} | {gzahl(ty)} | '
                        + f'{gzahl(tz)} ) in der Ebene E liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad E:~' + vorz_v_aussen(nx_gk, r' \cdot ' + gzahl_klammer(tx))
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' E:~' + vorz_v_aussen(nx_gk, r' \cdot ' + gzahl_klammer(tx))
                        + vorz_v_innen(ny_gk, r' \cdot ' + gzahl_klammer(ty))
                        + vorz_v_innen(nz_gk, r' \cdot ' + gzahl_klammer(tz)) + '~=~' + gzahl(np.dot(punkt_a, n_gk))
                        + r' \quad \to \quad ' + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk))
@@ -1637,9 +1645,9 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
             lsg_1 = r' s > 1 \quad \mathrm{Der~Punkt~P~liegt~nicht~im~Parallelogramm.} \quad (1BE) \\'
 
         aufgabe.extend(('Die Punkte A, B und C aus der Ebene E bilden das Parallelogramm ABCD. \n\n',
-                        str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt P( {gzahl(tx)} | {gzahl(ty)} | '
+                        beschriftung(teilaufg, i) + f'Überprüfen Sie, ob der Punkt P( {gzahl(tx)} | {gzahl(ty)} | '
                         + f'{gzahl(tz)} ) im Parallelogramm liegt. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfen~Sie,~ob~der~gegebenen~Punkt~P~im'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Überprüfen~Sie,~ob~der~gegebenen~Punkt~P~im'
                        + r'~Parallelogramm~liegt.} \\' + r' \begin{pmatrix} ' + gzahl(tx) + r' \\' + gzahl(ty) + r' \\'
                        + gzahl(tz) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\'
                        + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} + r \cdot \begin{pmatrix} '
@@ -1715,7 +1723,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt Q( {gzahl(tx)} | {gzahl(ty)} | '
                         + f'{gzahl(tz)} ) im Dreieck der Punkte A, B und C aus Ebene E liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Überprüfe,~ob~der~gegebenen~Punkt~Q~im~Dreieck~'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Überprüfe,~ob~der~gegebenen~Punkt~Q~im~Dreieck~'
                        + r'ABC~liegt.} \\' + r' \begin{pmatrix} ' + gzahl(tx) + r' \\' + gzahl(ty) + r' \\'
                        + gzahl(tz) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\'
                        + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} + r \cdot \begin{pmatrix} '
@@ -1756,7 +1764,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{('
+        loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                        + ergebnis_n0 + r' \quad \to \quad '
                        + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -1777,7 +1785,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + f'{gzahl(ry)} | {gzahl(rz)} ) zur Ebene E. \n\n')
         if 'f' not in teilaufg:
             punkte += 4
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{('
+            loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{('
                            + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                            + ergebnis_n0 + r' \quad \to \quad '
                            + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -1799,7 +1807,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a), (1 / n_betrag * n_gk)), 3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         else:
-            loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
+            loesung.append(beschriftung(teilaufg,i, True) + r' d~=~ \left| \begin{bmatrix} \begin{pmatrix} '
                            + gzahl(rx) + r' \\' + gzahl(ry) + r' \\' + gzahl(rz) + r' \\ '
                            + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -1877,7 +1885,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
                                           f'anderen beiden Darstellungsformen um. \n\n ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \begin{pmatrix} '
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                        r' \end{pmatrix} \quad \to \quad ' + andere_darstellungsform + r' \quad (3BE) \\'
                        r' \overrightarrow{u} ~=~ \begin{pmatrix}'
@@ -1903,7 +1911,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
             grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
             aufgabe.append(['Bild', '300px'])
             loesung.append(['Bild', '300px'])
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad ' + koordinatenform + r' \quad \vert \div '
+        loesung.extend((beschriftung(teilaufg,i, True) + r' ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
                        + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
@@ -1997,7 +2005,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Erläutern Sie die möglichen Lagebeziehungen einer Geraden '
                                           'mit einer Ebene und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
@@ -2022,7 +2030,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         aufgabe.extend((text + 'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                         'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
                         str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{AB} ~=~ \begin{pmatrix} '
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{AB} ~=~ \begin{pmatrix} '
                        + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                        + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
@@ -2049,7 +2057,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
                            + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
                            + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\' + r' \end{pmatrix} ')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad '
+        loesung.append(beschriftung(teilaufg,i, True) + r' '
                        + gzahl(nx_gk) + r' \cdot (' + gzahl(ex) + vorz_str(g_vx) + 'r)'
                        + vorz_str(ny_gk) + r' \cdot (' + gzahl(ey) + vorz_str(g_vy) + 'r)'
                        + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
@@ -2063,7 +2071,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                        + ergebnis_n0 + r' \quad \to \quad '
                        + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -2081,7 +2089,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
             if 'd' not in teilaufg:
                 punkte += 4
-                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                                + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                                + ergebnis_n0 + r' \quad \to \quad '
                                + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -2098,7 +2106,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                                + latex(abs(N(np.dot((punkt_e - punkt_a),(1 / n_betrag * n_gk)),3))) + r' \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             else:
-                loesung.append(str(liste_teilaufg[i]) + r') \quad d: \left| \begin{bmatrix} \begin{pmatrix} '
+                loesung.append(beschriftung(teilaufg,i, True) + r' d: \left| \begin{bmatrix} \begin{pmatrix} '
                                + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -2233,7 +2241,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
         liste_punkte.append(punkte)
-        aufgabe.append(str(liste_teilaufg[i]) + ') Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
+        aufgabe.append(beschriftung(teilaufg,i) + 'Erläutern Sie die möglichen Lagebeziehungen zweier Ebenen '
                                           'und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
@@ -2254,7 +2262,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         punkte = 8 if F_in_E == 'schneiden' else 4
         aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
+        loesung.append(beschriftung(teilaufg,i, True) + r' ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
                        + vorz_v_innen(g_vx,'r') + vorz_v_innen(k_vx, 's') + ')' + vorz_str(ny_gk)
                        + '(' + gzahl(ay) + vorz_v_innen(g_vy,'r') + vorz_v_innen(k_vy, 's') + ')'
                        + vorz_str(nz_gk) + '(' + gzahl(az) + vorz_v_innen(g_vz, 'r')
@@ -2274,7 +2282,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         liste_punkte.append(punkte)
         punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
         aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+        loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
                        + r')^2 } ~=~ ' + ergebnis_n0
                        + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -2292,7 +2300,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
             if 'c' not in teilaufg:
                 punkte =+ 4
-                loesung.append(str(liste_teilaufg[i]) + r') \quad \overrightarrow{n} ~=~ \sqrt{('
+                loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                                + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
                                + r')^2 } ~=~ ' + ergebnis_n0
                                + r' \quad \to \quad ' + r' E: \begin{bmatrix} \overrightarrow{x} ~-~ \begin{pmatrix} '
@@ -2309,7 +2317,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                                + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
             else:
-                loesung.append(str(liste_teilaufg[i]) + r') \quad d~=~ \left| \begin{bmatrix}'
+                loesung.append(beschriftung(teilaufg,i, True) + r' d~=~ \left| \begin{bmatrix}'
                                + r' \begin{pmatrix}' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\ '
                                + r' \end{pmatrix} ~-~ \begin{pmatrix} '
                                + gzahl(ax_E) + r' \\' + gzahl(ay_E) + r' \\' + gzahl(az_E) + r' \\'
@@ -2459,7 +2467,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
                        + f'in der die Gerade g liegt. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2506,7 +2514,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             pkt += 1
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
                        + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2528,7 +2536,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f'die parallel zur Geraden h ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2559,7 +2567,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
             aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
                            + f'der Schar. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
+            loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
                            + summe_exp([nax, nay, naz], 2) + r' } ~=~ '
                            + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
                            + gzahl(h_var) + r'} ~ist:} \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
@@ -2622,7 +2630,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade s der Ebenen a = {gzahl(var1)} '
                        + f'und a = {gzahl(var2)} der Schar. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad E_{' + gzahl(var1) + '}:'
+        loesung.append(beschriftung(teilaufg,i, True) + r' E_{' + gzahl(var1) + '}:'
                        + vorz_v_aussen(nx_1, 'x') + vorz_v_innen(ny_1, 'y')
                        + vorz_v_innen(nz_1,'z') + '~=~' + gzahl(erg_var_1) + lsg_1 + lsg_3
                        + r' \mathrm{und} \quad E_{' + gzahl(var2) + '}:' + vorz_v_aussen(nx_2, 'x')
@@ -2668,7 +2676,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
+            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
                            + r' \hspace{20em} \\' + erg_str + '~=~'
                            + binom_aussen(nx, aex, str2='a', var=binom_klammer(dx,-1*ny2,str2='r'))
                            + binom_innen(ny, aey, str2='a', var=binom_klammer(dy-lsg_kon*nz2,nx2-lsg_var*nz2, str2='r'))

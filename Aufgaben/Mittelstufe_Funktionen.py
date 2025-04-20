@@ -67,7 +67,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf)*3 + anz_pkt*6
         # Lösungen für Gleichungen
-        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Funktionsgleichung(en):} \hspace{10em} \\')
+        lsg = (beschriftung(teilaufg, i, True) + r'  \mathrm{die~Funktionsgleichung(en):} \hspace{10em} \\')
         for step in range(anz_einf):
             lsg = (lsg + 'n=' + gzahl(fkt_n[step]) + r' \quad \mathrm{und} \quad m=' + gzahl(fkt_m[step])
                    + r' \quad \to \quad ' + fkt_bez[step] + r'(x) ~=~' + vorz_v_aussen(fkt_m[step], 'x')
@@ -83,9 +83,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                    + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step]) + r' \quad (6BE) ')
             lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
         if anz_einf + anz_pkt == 1:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus dem Graphen die Funktionsgleichung ab. \n\n')
+            aufgabe.append(beschriftung(teilaufg, i) + f'Lies aus dem Graphen die Funktionsgleichung ab. \n\n')
         else:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Lies aus den Graphen die jeweilige Funktionsgleichung ab.\n\n')
+            aufgabe.append(beschriftung(teilaufg, i) + f'Lies aus den Graphen die jeweilige Funktionsgleichung ab.\n\n')
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -94,7 +94,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         # zu einer vorgegebenen Funktionsgleichung die Nullstellen berechnen anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{die~Nullstellen~werden~berechnet~mit~'
+        lsg = (beschriftung(teilaufg, i, True) + r' \mathrm{die~Nullstellen~werden~berechnet~mit~'
                + r'x_0~=~ - \frac{n}{m}} \\')
         for step in range(anz_einf):
             lsg = (lsg + r' \mathrm{für~' + fkt_bez[step] + r'(x) ~ gilt:} x_0 ~=~ -\frac{' + gzahl(fkt_n[step]) + '}{'
@@ -105,7 +105,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                    + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
                    + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechne die Nullstellen der Graphen mithilfe der '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechne die Nullstellen der Graphen mithilfe der '
                        + f'Funktionsgleichungen. \n\n')
         loesung.append(lsg)
         liste_punkte.append(punkte)
@@ -116,7 +116,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        aufgabe.extend((str(liste_teilaufg[i]) + f') Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
+        aufgabe.extend((beschriftung(teilaufg, i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
                        + f'-2 < x < 2.', 'Grafik \n\n'))
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
@@ -131,7 +131,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                               gzahl(N(fkt.subs(x, 1), 2)), gzahl(N(fkt.subs(x, 2), 2)),''))
             table1.add_hline(2,7)
             return table1
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Wertetabelle~für~die~aufgestellte(n)~'
+        loesung.append(beschriftung(teilaufg, i, True) + r'  \mathrm{Wertetabelle~für~die~aufgestellte(n)~'
                        + r'Funktionsgleichungen.} \hspace{10em}')
         for step in range(anz_einf + anz_pkt):
             loesung.extend((tabelle(liste_fkt[step], liste_fkt_str[step], fkt_bez[step]),' \n\n\n'))
@@ -147,7 +147,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                         f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
                         str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
                         + ' im oberen Koordinatensystem ein. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
         if 'f' not in teilaufg:
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]],
@@ -171,10 +171,10 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
             graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
                         bezn=fkt_bez[k+1], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
-        aufgabe.extend((NoEscape(str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion $' + fkt_bez[k+1] + '(x) = '
+        aufgabe.extend((NoEscape(beschriftung(teilaufg, i) + 'Zeichne den Graphen der Funktion $' + fkt_bez[k+1] + '(x) = '
                        + vorz_v_aussen(fkt_m[anz_einf],'x') + vorz_str(fkt_n[anz_einf])
                        + '$ im oberen Koordinatensystem ein.'), ' \n\n'))
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
+        loesung.extend((beschriftung(teilaufg, i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
         liste_punkte.append(punkte)
         i += 1
@@ -203,9 +203,9 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
                    + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m[anz_einf] * xwert_t + fkt_n[anz_einf])
                    + '~=~' + gzahl(ywert_t))
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
+            aufgabe.append(beschriftung(teilaufg, i) + f'Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
                            + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt. \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg + lsg_vergl)
+            loesung.append(beschriftung(teilaufg, i, True) + lsg + lsg_vergl)
             liste_punkte.append(punkte)
             i += 1
 
@@ -272,8 +272,8 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.extend((f'Das Radar des Flughafens ortet die Boing zuerst bei Punkt P({gzahl(p2[0])}|'
                         f'{gzahl(p2[1])}) und nach {gzahl(zeit)}s bei Punkt Q({gzahl(p1[0])}|{gzahl(p1[1])}). \n\n',
-                        str(liste_teilaufg[i]) + f') Bestimmen Sie die Funktionsgleichung der Flugbahn. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad f(x) ~=~ \frac{y_2 - y_1}{x_2 - x_1} \cdot (x - x_1) + y_1 '
+                        beschriftung(teilaufg, i) + f'Bestimmen Sie die Funktionsgleichung der Flugbahn. \n\n'))
+        loesung.append(beschriftung(teilaufg, i, True) + r' f(x) ~=~ \frac{y_2 - y_1}{x_2 - x_1} \cdot (x - x_1) + y_1 '
                        + r' ~=~ \frac{' + gzahl(p2[1]) + vorz_str(-1*p1[1]) + r'}{' + gzahl(p2[0]) + gzahl(-1*p1[0])
                        + r'} \left(x' + vorz_str(-1*p2[0]) + r' \right) ' + vorz_str(p2[1])
                        + r' \quad (2BE) \\ f(x) ~=~' + gzahl(steigung) + r' \left(x' + vorz_str(-1*p2[0])
@@ -286,9 +286,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         # die SuS sollen den Abstand zwischen zwei Punkten bestimmen und damit die Geschwindigkeit berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie Geschwindigkeit der Boing (in km/h) im '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie Geschwindigkeit der Boing (in km/h) im '
                        + f'Landeanflug. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad d(PQ) ~=~ \sqrt{ \left( ' + gzahl(p2[0])
+        loesung.append(beschriftung(teilaufg, i, True) + r' d(PQ) ~=~ \sqrt{ \left( ' + gzahl(p2[0])
                        + vorz_str(-1*p1[0]) + r' \right) ^2 + \left( ' + gzahl(p2[1]) + vorz_str(-1*p1[1])
                        + r' \right) ^2 } ~=~' + gzahl(abstand) + r'km \quad (2BE) \quad \to \quad v ~=~ \frac{s}{t} '
                        + r'~=~ \frac{' + gzahl(abstand*1000) + 'm}{' + gzahl(zeit) + 's} ~=~'
@@ -303,9 +303,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         punkte = 2
         aufgabe.extend(('Durch die Manipulation rechnet die Flugzeugelektronik der Boeing mit der Funktion '
                         f' f(x) = {gzahl(steigung)}x - {gzahl(abs(n_vers))}. \n\n',
-                        str(liste_teilaufg[i]) + f') Erläutern Sie den Unterschied zur ursprünglichen Funktion '
+                        beschriftung(teilaufg, i) + f'Erläutern Sie den Unterschied zur ursprünglichen Funktion '
                         + f'bzw. Flugbahn. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Der~Unterschied~ist~der~Schnittpunkt~mit~'
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Der~Unterschied~ist~der~Schnittpunkt~mit~'
                        + r'der~y-Achse.~Die~manipulierte} \\ \mathrm{Flugbahn~ist~um~' + gzahl(round(y_vers,3)*1000)
                        + r'm~nach~unten~verschoben. \quad (2BE) }')
         liste_punkte.append(punkte)
@@ -318,9 +318,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         lsg = r' ~ \leq 3.5^{ \circ } \to \mathrm{Die~Boing~ist~nicht~gefährdet.}'
         lsg = r' ~ > 3.5^{ \circ } \to \mathrm{Die~Boing~ist~gefährdet.}' if swinkel > 3.5 else lsg
         aufgabe.extend(('Ein Flugzeug landet unbeschadet, wenn der Anflugwinkel 3,5° nicht überschreiten wird. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie den Anflugwinkel (Schnittwinkel) der Boing. '
+                        beschriftung(teilaufg, i) + f'Berechnen Sie den Anflugwinkel (Schnittwinkel) der Boing. '
                         + f'Ist die Boing gefährdet? \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad tan( \alpha ) ~=~ m \quad \vert tan^{-1}() \to '
+        loesung.append(beschriftung(teilaufg, i, True) + r' tan( \alpha ) ~=~ m \quad \vert tan^{-1}() \to '
                        + r' \alpha ~=~ tan^{-1} \left( ' + gzahl(steigung) + r' \right) ~=~' + gzahl(swinkel) + lsg
                        + r' \quad (4BE)')
         liste_punkte.append(punkte)
@@ -335,9 +335,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.extend(('Im Film landet die Boeing, bevor sie zerbricht, trotz der manipulierten Flugbahn '
                         'auf der Landebahn (Nullstelle). Die Landebahn beginnt im Punkt A(3|0) und endet im '
                         'Koordinatenursprung E(0|0). \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die Landestelle nach der Manipulation '
+                        beschriftung(teilaufg, i) + f'Berechnen Sie die Landestelle nach der Manipulation '
                         + f'des ILS. Landet die Boing auf der Landebahn? \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad x_0 ~=~ - \frac{n}{m} ~=~ - \frac{ ' + gzahl(N(n-y_vers,3))
+        loesung.append(beschriftung(teilaufg, i, True) + r' x_0 ~=~ - \frac{n}{m} ~=~ - \frac{ ' + gzahl(N(n-y_vers,3))
                        + r'}{' + gzahl(N(steigung,3)) + '} ~=~' + gzahl(N(-1*(n-y_vers)/steigung,3)) + lsg
                        + r' \quad (4BE)')
         liste_punkte.append(punkte)
@@ -349,9 +349,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.extend((f'Über dem Flughafen kreisen mehrere Flugzeuge und warten auf Landerlaubnis. Ein Airbus bewegt '
                         f'sich auf der Flugbahn h(x) = {gzahl(steigung_airbus)} x {vorz_str(n_airbus)}, während sich '
                         f'die Boing im Landeanflug befindet. \n\n',
-                        str(liste_teilaufg[i]) + f') Erläutern Sie, woran man erkennen kann, dass sich die Flugbahnen '
+                        beschriftung(teilaufg, i) + f'Erläutern Sie, woran man erkennen kann, dass sich die Flugbahnen '
                         + f'schneiden. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{~Da~die~Steigungen~der~beiden~Geraden~verschieden~'
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{~Da~die~Steigungen~der~beiden~Geraden~verschieden~'
                        + r'sind.} \quad (1BE)')
         liste_punkte.append(1)
         i += 1
@@ -359,9 +359,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     if 'g' in teilaufg:
         # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
                        + f'der Boing. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Ansatz: \quad f(x)=g(x)} '
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Ansatz: \quad f(x)=g(x)} '
                         + r' \quad \to \quad ' + fkt_vers_str + '~=~' + vorz_v_aussen(steigung_airbus,'x')
                         + vorz_str(n_airbus) + r' \quad \vert ' + vorz_v_innen(-1 * steigung_airbus, 'x')
                         + r' \quad \vert ' + vorz_str(-1*float(n_vers)) + r' \quad (3BE) \\'
@@ -396,9 +396,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         else:
             lsg_1 = r' ^{ \circ } \quad (2BE)'
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und '
                        + f'der Boing. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + lsg
+        loesung.append(beschriftung(teilaufg, i, True) + lsg
                        + r' \gamma ~=~ \vert \beta - \alpha \vert ~=~ \vert ' + gzahl(swinkel_airbus) + '~-~'
                        + gzahl_klammer(swinkel) + r' \vert ~=~' + gzahl(N(abs(swinkel_airbus - swinkel),3)) + lsg_1)
         liste_punkte.append(pkt)
@@ -413,9 +413,9 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.extend((f'Da die Gefahr für einen Absturz der Boing zu groß ist, muss Sie im Punkt ({gzahl(xwert)}|'
                         f'{gzahl(ywert)}) orthogonal zur bisherigen (manipulierten) Flugbahn durchstarten und nach '
                         f'einer Schleife eine erneute Landung versuchen. \n\n',
-                        str(liste_teilaufg[i]) + f') Berechnen Sie die neue Flugbahn g(x), '
+                        beschriftung(teilaufg, i) + f'Berechnen Sie die neue Flugbahn g(x), '
                         + f'nachdem die Boing durchgestartet ist. \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Steigung~der~orthogonalen~Flugbahn:} \quad m_g ~=~ '
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Steigung~der~orthogonalen~Flugbahn:} \quad m_g ~=~ '
                        + r' - \frac{1}{m_f} ~=~ - \frac{1}{' + gzahl(steigung) + '} ~=~' + gzahl(steigung_g)
                        + r' \quad (2BE) \\ g(x) ~=~' + gzahl(steigung_g) + binom_klammer(1, -1 * xwert, 'x')
                        + vorz_str(ywert) + '~=~' + vorz_v_aussen(steigung_g,'x')
@@ -465,7 +465,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         punkte = anz_np * 2 + anz_ap * 3
 
         # Lösungen für Gleichungen
-        lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{abgelesener~Scheitelpunkt,~ggf.~der~Faktor~und~die~'
+        lsg = (beschriftung(teilaufg, i, True) + r'  \mathrm{abgelesener~Scheitelpunkt,~ggf.~der~Faktor~und~die~'
                + r'Funktionsgleichung:} \\')
         for step in range(anz_np):
             lsg =  (lsg + r' S \left( ' + gzahl(xwert_s[step]) + r' \vert '
@@ -482,11 +482,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
 
         if anz_np + anz_ap == 1:
             aufgabe.extend(('Im unteren Koordinatensystem ist der Graph einer quadratischen Funktion (Parabel) '
-                            'dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies den Scheitelpunkt und ggf. den '
+                            'dargestellt. \n\n', beschriftung(teilaufg, i) + f'Lies den Scheitelpunkt und ggf. den '
                             + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. ', 'Grafik'))
         else:
             aufgabe.extend(('Im unteren Koordinatensystem sind die Graphen verschiedener quadratischen Funktionen '
-                            '(Parabeln) dargestellt. \n\n', str(liste_teilaufg[i]) + f') Lies die Scheitelpunkte und '
+                            '(Parabeln) dargestellt. \n\n', beschriftung(teilaufg, i) + f'Lies die Scheitelpunkte und '
                             + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen. ', 'Grafik'))
 
         loesung.append(lsg)
@@ -499,7 +499,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
             punkte = anz_np*2 + anz_ap*3
 
             # Lösungen für Gleichungen
-            lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{umgeformte~Funktionsgleichung~lauten:} \hspace{15em}  \\')
+            lsg = (beschriftung(teilaufg, i, True) + r' \mathrm{umgeformte~Funktionsgleichung~lauten:} \hspace{15em}  \\')
             for step in range(anz_np):
                 lsg = (lsg + fkt_bez[step] + r'(x) ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step],'x +')
                        + gzahl(abs(xwert_s[step])) + '^2' + vorz_str(ywert_s[step]) + '~=~ x^2'
@@ -520,11 +520,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
                 lsg = lsg + r' \\ ' if (step + 1) < anz_ap else lsg
 
             if anz_np + anz_ap == 1:
-                aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Gib die Funktionsgleichung '
+                aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + f'Gib die Funktionsgleichung '
                                         + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
 
             else:
-                aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Gib alle Funktionsgleichungen '
+                aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + f'Gib alle Funktionsgleichungen '
                                         + f'aus Teilaufgabe a) auch in der Normalform an.'), '\n\n'))
             loesung.append(lsg)
             liste_punkte.append(punkte)
@@ -535,7 +535,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
                 liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
                 punkte = 0
                 # Lösungen für Gleichungen
-                lsg = (str(liste_teilaufg[i]) + r') \quad \mathrm{Nullstellen~mit~p~q~Formel~berechnen:} \hspace{15em} \\')
+                lsg = (beschriftung(teilaufg, i, True) + r' \mathrm{Nullstellen~mit~p~q~Formel~berechnen:} \hspace{15em} \\')
                 for step in range(anz_np):
                     lsg = (lsg + '0 ~=~ x^2' + vorz_v_innen(-2 * xwert_s[step], 'x')
                            + vorz_str(xwert_s[step] ** 2 + ywert_s[step])
@@ -609,9 +609,9 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         fkt_d_spf_str = (r' \left( x' + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
                          + vorz_str(ywert_s[k]))
         punkte = 3
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Zeichne den Graphen von $'
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Zeichne den Graphen von $'
                                  + bez_fkt_d + '$(x) = $' + fkt_d_spf_str + '$ im Koordinatensystem ein.'), ' \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
                         + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }')
         if 'f' not in teilaufg:
             loesung.append('Figure')
@@ -636,10 +636,10 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         fkt_e_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
                          + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
                          + vorz_str(ywert_s[k]))
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Forme die Funktion $' + bez_fkt_e
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + f'Forme die Funktion $' + bez_fkt_e
                         + '$(x) = $' + fkt_e_nf_str + '$ in die Scheitelpunktform um, nenne Scheitelpunkt und a.'),
                         ' \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + bez_fkt_e + '(x) ~=~' + fkt_e_nf_str + '~=~'
+        loesung.append(beschriftung(teilaufg, i, True) + bez_fkt_e + '(x) ~=~' + fkt_e_nf_str + '~=~'
                        + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
                        + vorz_v_innen(-2 * xwert_s[k], 'x') + r' \right)'
                        + vorz_str(fakt_ap[anz_ap]*xwert_s[k]**2 + ywert_s[k]) + '~=~'
@@ -673,10 +673,10 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
             else:
                 graph_xyfix(*[fkt_e], bezn=bez_fkt_e, name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             punkte = 3
-            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Zeichne den Graphen von '
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + ' Zeichne den Graphen von '
                                     + bez_fkt_e + ' im Koordinatensystem ein und überprüfe deine Ergebnisse aus '
                                     + 'Teilaufgabe e).'))
-            loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
+            loesung.extend((beschriftung(teilaufg, i, True) + r' \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
                             + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }', 'Figure'))
             liste_punkte.append(punkte)
             i += 1
@@ -754,7 +754,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
                                                      + r') Lesen Sie den Scheitelpunkt S'
                                                      + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),
                         ' \n\n'))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
                        + gzahl((nst1 + nst2) / 2) + r' \vert ' + gzahl(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4)
                        + r' \right) \quad (1BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -765,14 +765,14 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         # Parabelgleichung in Scheitelpunktform aufstellen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Stellen Sie die Parabelgleichung in '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Stellen Sie die Parabelgleichung in '
                                 + r'Scheitelpunktform auf.'))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
+        loesung.append(beschriftung(teilaufg, i, True) + r' p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
                        + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (2BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -783,7 +783,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         stern = r'$ ^{ \star } $' if pruef_kl10 else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         punkte = 5
-        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Nullstellen '
+        aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(teilaufg, i) + 'Berechnen Sie die Nullstellen '
                                 + 'und vergleichen Sie ihre Ergebnisse mit dem Graphen.'))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
@@ -791,7 +791,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         else:
             aufgabe.append(' \n\n')
 
-        loesung.append(str(liste_teilaufg[i]) + r') \quad p(x) ~=~ 0 \quad \to \quad 0 ~=~ x^2 '
+        loesung.append(beschriftung(teilaufg, i, True) + r' p(x) ~=~ 0 \quad \to \quad 0 ~=~ x^2 '
                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad (1BE) \hspace{10em} \\'
                        + r' x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q } '
                        + r' ~=~ - \frac{ ' + gzahl(-1*(nst1+nst2)) + r' }{2} \pm \sqrt{ \left( \frac{ '
@@ -814,10 +814,10 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         aufgabe.extend((NoEscape(r' \noindent Gegeben sind zwei Punkte der linearen Funktion g mit P$ \left( '
                                  + gzahl(punkt_p[0]) + r' \vert ' +  gzahl(punkt_p[1]) + r' \right) $ und Q$ \left( '
                                  + gzahl(punkt_q[0]) + r' \vert ' +  gzahl(punkt_q[1]) + r' \right). $'),' \n\n ',
-                        NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                 + r') Zeichnen Sie den Graphen der linearen Funktion g in das obere '
+                        NoEscape(r' \noindent ' + beschriftung(teilaufg, i)
+                                 + 'Zeichnen Sie den Graphen der linearen Funktion g in das obere '
                                  + r'Koordinatensystem ein.'),' \n\n'))
-        loesung.extend((str(liste_teilaufg[i]) + r') \quad \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
+        loesung.extend((beschriftung(teilaufg, i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
@@ -826,7 +826,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         # Funktionsgleichung der gezeichneten linearen Funktionen erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Erläutern Sie anhand des Graphen die '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg, i) + 'Erläutern Sie anhand des Graphen die '
                                 + r'Funktionsgleichung von $ g(x) =  ' + vorz_v_aussen(g_m, 'x')
                                 + vorz_str(g_n) + r'$. '))
         if pruef_kl10:
@@ -863,14 +863,14 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=F
         ywert_s1 = N(fkt_g.subs(x, xwert_s1),3)
         ywert_s2= N(fkt_g.subs(x, xwert_s2),3)
         punkte = 7
-        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i]) + ') Berechnen Sie die Schnittpunkte '
+        aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(teilaufg, i) + 'Berechnen Sie die Schnittpunkte '
                                 + 'der linearen Funktion mit dem Graphen der Parabel.'))
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad g(x) ~=~ p(x) \quad \to \quad  '
+        loesung.append(beschriftung(teilaufg, i, True) + r' g(x) ~=~ p(x) \quad \to \quad  '
                        + vorz_v_aussen(g_m, 'x') + vorz_str(g_n) + '~=~ x^2 '
                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad \vert '
                        + vorz_str(-1*g_n) + r' \quad \vert ' + vorz_v_innen(-1*g_m,'x')
