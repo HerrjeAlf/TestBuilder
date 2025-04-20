@@ -1721,7 +1721,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
             lsg_0 = ''
             lsg_1 = lsg_2 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (1BE) \\'
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob der Punkt Q( {gzahl(tx)} | {gzahl(ty)} | '
+        aufgabe.append(beschriftung(teilaufg, i) + f') Überprüfen Sie, ob der Punkt Q( {gzahl(tx)} | {gzahl(ty)} | '
                         + f'{gzahl(tz)} ) im Dreieck der Punkte A, B und C aus Ebene E liegt. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Überprüfe,~ob~der~gegebenen~Punkt~Q~im~Dreieck~'
                        + r'ABC~liegt.} \\' + r' \begin{pmatrix} ' + gzahl(tx) + r' \\' + gzahl(ty) + r' \\'
@@ -1763,7 +1763,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        aufgabe.append(beschriftung(teilaufg, i) + f'Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                        + ergebnis_n0 + r' \quad \to \quad '
@@ -1781,7 +1781,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkt_r = [rx, ry, rz] = vektor_ganzzahl(punkt_a + np.array(v) + np.array(w)) + n
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand des Punktes R( {gzahl(rx)} | '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand des Punktes R( {gzahl(rx)} | '
                        + f'{gzahl(ry)} | {gzahl(rz)} ) zur Ebene E. \n\n')
         if 'f' not in teilaufg:
             punkte += 4
@@ -1883,7 +1883,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 7
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Formen Sie die Ebenengleichung in die '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Formen Sie die Ebenengleichung in die '
                                           f'anderen beiden Darstellungsformen um. \n\n ')
         loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \begin{pmatrix} '
                        + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
@@ -1905,7 +1905,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die Achsenabschnittsform von E auf '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
         if koordinatensystem:
             grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
@@ -1947,7 +1947,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
     # print('a: ' + str(punkt_a)), print('b: ' + str(punkt_b)), print('c: ' + str(punkt_c), print('vektor v: ' + str(v))
     # print('vektor u: ' + str(u)), print('vektor w: ' + str(w)), print('vektor n: ' + str(n)), print('vektor n_gk: ' + str(n_gk))
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), ' Gegeben ist die Ebene E in der Koordinatenform ',
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben ist die Ebene E in der Koordinatenform ',
                r' E:~ ' + vorz_v_aussen(nx_gk,'x') + vorz_v_innen(ny_gk,'y')
                + vorz_v_innen(nz_gk,'z ~=~') + gzahl(np.dot(punkt_a,n_gk))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -2009,7 +2009,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                                           'mit einer Ebene und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
+        table1.add_row(beschriftung(teilaufg, i), MultiColumn(2, align='l', data='Die Gerade und die Ebene:'),
                        'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
                                 'der Ebene sind senkrecht zueinander und haben keine gemeinsamen Punkte', '2P')
@@ -2029,7 +2029,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         text = 'Gegeben ist die Gerade g durch die Punkte: ' if 'a' in teilaufg else 'und die Gerade g durch die Punkte: '
         aufgabe.extend((text + 'A( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez) + ' ) und ' 
                         'B( ' + gzahl(fx) + ' | ' + gzahl(fy) + ' | ' + gzahl(fz) + ' ).  \n\n',
-                        str(liste_teilaufg[i]) + f') Bestimmen Sie Gleichung der Geraden g. \n\n'))
+                        beschriftung(teilaufg, i) + f'Bestimmen Sie Gleichung der Geraden g. \n\n'))
         loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{AB} ~=~ \begin{pmatrix} '
                        + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -2050,7 +2050,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         liste_punkte.append(punkte)
 
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfe die Lagebeziehung der Geraden g '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Überprüfe die Lagebeziehung der Geraden g '
                                                 f'zur Ebene E und berechne ggf. den Schnittpunkt. \n\n')
         if 'b' not in teilaufg:
             aufgabe.append(r' \mathrm{Gleichung~der~Geraden~g: \overrightarrow{x} \ ~ = ~ \begin{pmatrix}'
@@ -2070,7 +2070,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         punkte = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        aufgabe.append(beschriftung(teilaufg, i) + f'Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk) + r')^2 } ~=~ '
                        + ergebnis_n0 + r' \quad \to \quad '
@@ -2086,7 +2086,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
             punkte = 3
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
+            aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand der Geraden zur Ebene E. \n\n')
             if 'd' not in teilaufg:
                 punkte += 4
                 loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
@@ -2245,7 +2245,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                                           'und deren Eigenschaften. \n\n')
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
-        table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
+        table1.add_row(beschriftung(teilaufg, i), MultiColumn(2, align='l', data='Die Ebenen:'), 'Punkte')
         table1.add_row('', '-', 'sind parallel, d.h. die Normalenvektoren der Ebenen sind parallel und '
                                 'sie haben keine gemeinsamen Punkte', '2P')
         table1.add_row('', '-', 'sind identisch, d.h. die Normalenvektoren der Ebenen sind parallel und '
@@ -2260,7 +2260,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         # Lagebeziehung bestimmen und ggf. Schnittegrade berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8 if F_in_E == 'schneiden' else 4
-        aufgabe.append(str(liste_teilaufg[i]) + f') Bestimmen Sie die Lagebeziehung der Ebenen E und F '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)
                        + vorz_v_innen(g_vx,'r') + vorz_v_innen(k_vx, 's') + ')' + vorz_str(ny_gk)
@@ -2281,7 +2281,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(punkte)
         punkt_aE = [ax_E, ay_E, az_E] = np.array([Rational(np.dot(punkt_d, n_gk), nx_gk), 0, 0])
-        aufgabe.append(str(liste_teilaufg[i]) + f') Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
+        aufgabe.append(beschriftung(teilaufg, i) + f'Stellen Sie die hessische Normalform der Ebene E auf. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
                        + gzahl(nx_gk) + ')^2 + (' + gzahl(ny_gk) + ')^2 + (' + gzahl(nz_gk)
                        + r')^2 } ~=~ ' + ergebnis_n0
@@ -2297,7 +2297,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
             punkte = 3
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             liste_punkte.append(punkte)
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Ebenen E und F. \n\n')
+            aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand der Ebenen E und F. \n\n')
             if 'c' not in teilaufg:
                 punkte =+ 4
                 loesung.append(beschriftung(teilaufg,i, True) + r' \overrightarrow{n} ~=~ \sqrt{('
@@ -2444,9 +2444,9 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar die den '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie diejenige Ebene der Ebenenschar die den '
                        + f'Punkt T( {gzahl(tx)} | {gzahl(ty)} | {gzahl(tz)} ) enthält. \n\n')
-        loesung.append(str(liste_teilaufg[i])  + r') \quad \mathrm{T~in~E_a~einsetzen~und~die~entstandene~'
+        loesung.append(beschriftung(teilaufg, i, True) + r' \mathrm{T~in~E_a~einsetzen~und~die~entstandene~'
                        + r'Gleichung~nach~a~umstellen} \hspace{10em} \\' + erg_str + '~=~'
                        + binom_aussen(nx, aex, str2='a') + r' \cdot ' + gzahl_klammer(tx)
                        + binom_innen(ny, aey, str2='a',) + r' \cdot ' + gzahl_klammer(ty)
@@ -2465,9 +2465,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
         pkt = 7
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
                        + f'in der die Gerade g liegt. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2512,10 +2513,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                    + vorz_v_innen(ny+aey*erg, 'y') + vorz_v_innen(nz+aez*erg,'z') + '~=~'
                    + gzahl(erg_ebene) + r' \quad (1BE) ')
             pkt += 1
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~der~' + str(bez)
-                       + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~der~'
+                       + str(bez) + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
                        + r' \cdot \begin{pmatrix} ' + gzahl(vec[0]) + r' \\' + gzahl(vec[1]) + r' \\' + gzahl(vec[2])
@@ -2534,9 +2535,10 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
         pkt = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie diejenige Ebene der Ebenenschar, '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f'die parallel zur Geraden h ist. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
+        loesung.append(beschriftung(teilaufg,i, True)
+                       + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2565,7 +2567,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             pkt = 6
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
-            aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
+            aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
                            + f'der Schar. \n\n')
             loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
                            + summe_exp([nax, nay, naz], 2) + r' } ~=~ '
@@ -2628,7 +2630,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                      + vorz_v_innen(ny2, 'y') + vorz_v_innen(nz2,'z') + '~=~' + gzahl(erg_var2))
             lsg_3 = r' \quad (1BE) \\'
 
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Schnittgerade s der Ebenen a = {gzahl(var1)} '
+        aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie die Schnittgerade s der Ebenen a = {gzahl(var1)} '
                        + f'und a = {gzahl(var2)} der Schar. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' E_{' + gzahl(var1) + '}:'
                        + vorz_v_aussen(nx_1, 'x') + vorz_v_innen(ny_1, 'y')
@@ -2674,7 +2676,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             # die SuS sollen nachweisen, dass die Schnittgerade zweier Ebenen in allen Ebenen liegt
             pkt = 4
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass die Schnittgerade s in allen '
+            aufgabe.append(beschriftung(teilaufg, i) + f'Weisen Sie nach, dass die Schnittgerade s in allen '
                            + f'Ebenen der Schar liegt. \n\n')
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Einsetzen~der~Schnittgerade~s~in~E_a:} '
                            + r' \hspace{20em} \\' + erg_str + '~=~'
