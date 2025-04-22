@@ -220,8 +220,7 @@ def vorz_str(k, null=False):
     except Exception as fehler:
         print('Fehler:', fehler)
 
-# Darstellung der Faktoren bzw. Vorzeichen neu
-def vorz_v_innen(zahl,string, null=False):
+def vorz_v_innen(zahl, string, null=False):
     try:
         if zahl == 0:
             return '0' if null == True else ''
@@ -229,13 +228,13 @@ def vorz_v_innen(zahl,string, null=False):
             return '-1' if string == '' else '-' + string
         if zahl == 1:
             return '+1' if string == '' else '+' + string
-        if zahl%1 == 0:
+        if zahl % 1 == 0:
             zahl = int(zahl)
         return latex(zahl) + string if zahl < 0 else f'+{latex(zahl)}' + string
     except Exception as fehler:
         print('Fehler:', fehler)
 
-def vorz_v_aussen(zahl,string, null=False):
+def vorz_v_aussen(zahl, string, null=False):
     try:
         if zahl == 0:
             return '0' if null == True else ''
@@ -243,12 +242,13 @@ def vorz_v_aussen(zahl,string, null=False):
             return '-1' if string == '' else '-' + string
         if zahl == 1:
             return '1' if string == '' else string
-        if zahl%1 == 0:
+        if zahl % 1 == 0:
             zahl = int(zahl)
         return latex(zahl) + string
     except Exception as fehler:
         print('Fehler:', fehler)
 
+# Darstellung der Faktoren bzw. Vorzeichen neu
 def potenz(fakt, exp, bas='x', vrz=False):
     if exp == 1:
         return vorz(fakt) + latex(bas) if vrz else latex(bas)
@@ -389,117 +389,162 @@ def beschriftung(teilaufg, i, latex_math=False):
         return str(liste_teilaufg[i]) + r') \quad '
     else:
         return str(liste_teilaufg[i]) + ') '
-    # Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
-def vektor_rational(vec,p,q=1000):
-    vec_p = [element*p for element in vec]
-    print(vec_p)
-    k = 0
-    i = 0
-    for element in vec_p:
-        if element % 1 == 0:
-            k += 1
-        if int(k/q) == 0:
-            i += 1
-    if k == len(vec) and i == len(vec):
-        return True
-    else:
-        return False
+
+# Funktionen zur Optimierung von Ergebnissen mit True and False als Ausgabe
+class vektor():
+    def rational(vec,p,q=1000):
+        vec_p = [element*p for element in vec]
+        print(vec_p)
+        k = 0
+        i = 0
+        for element in vec_p:
+            if element % 1 == 0:
+                k += 1
+            if int(k/q) == 0:
+                i += 1
+        if k == len(vec) and i == len(vec):
+            return True
+        else:
+            return False
 
 # Funktionen zur linearen Algebra
-def punkt_vektor(p,n=3):
-    return np.array([zzahl(1,p) for _ in range(n)])
+    def punkt(p,n=3):
+        return np.array([zzahl(1,p) for _ in range(n)])
 
-def vektor_runden(vec,p):
-    return [N(elements,p) for elements in vec]
+    def runden(vec,p):
+        return [N(elements,p) for elements in vec]
 
-def vektor_ganzzahl(vec):
-    return np.array([int(element) if element % 1 == 0 else element for element in vec])
+    def ganzzahl(vec):
+        return np.array([int(element) if element % 1 == 0 else element for element in vec])
 
-def vektor_kuerzen(vec, p = 50, qout=False):
-    # print('wird an Vektor kürzen übergeben: ' + str(vec))
-    faktor = [x + 1 for x in range(p)]
-    list = np.array(vec)
-    i = 0
-    for element in vec:
-        k = 0
-        if list[i] % 1 == 0:
-            i += 1
+    def kuerzen(vec, p = 50, qout=False):
+        # print('wird an Vektor kürzen übergeben: ' + str(vec))
+        faktor = [x + 1 for x in range(p)]
+        list = np.array(vec)
+        i = 0
+        for element in vec:
+            k = 0
+            if list[i] % 1 == 0:
+                i += 1
+            else:
+                while (list[i] * faktor[k]) % 1 != 0 and k+1 < p:
+                    k += 1
+                list = list * faktor[k]
+                i += 1
+        # print('Liste mit erweiterten Faktoren: ' + str(list)), print('erweitert: ' + str(list))
+        list_pos = [abs(x) for x in list]
+        # print('Liste mit positiven Elementen:' + str(list_pos))
+        teiler = [x+1 for x in range(int(max(list_pos)))]
+        teiler.reverse()
+        # print('Liste der möglichen Teiler: ' + str(teiler))
+        for zahl in teiler:
+            treffer = [1 for x in list if abs(x) % zahl == 0]
+            if sum(treffer) == len(vec):
+                list = [element / zahl for element in list]
+        # print('Liste nach Division mit möglichen Teilern: ' + str(list))
+        if len([element for element in list if element < 0]) == len(list):
+            list = [-1 * element for element in list]
+        # print('gekürzt: ' + str(list))
+        list = np.array([int(element) if element % 1 == 0 else element for element in list])
+        faktor = [Rational(vec[i],list[i]) for i in range(len(list)) if list[i] !=0 and vec[i] != 0]
+        if qout == False:
+            return np.array(list)
         else:
-            while (list[i] * faktor[k]) % 1 != 0 and k+1 < p:
-                k += 1
-            list = list * faktor[k]
-            i += 1
-    # print('Liste mit erweiterten Faktoren: ' + str(list)), print('erweitert: ' + str(list))
-    list_pos = [abs(x) for x in list]
-    # print('Liste mit positiven Elementen:' + str(list_pos))
-    teiler = [x+1 for x in range(int(max(list_pos)))]
-    teiler.reverse()
-    # print('Liste der möglichen Teiler: ' + str(teiler))
-    for zahl in teiler:
-        treffer = [1 for x in list if abs(x) % zahl == 0]
-        if sum(treffer) == len(vec):
-            list = [element / zahl for element in list]
-    # print('Liste nach Division mit möglichen Teilern: ' + str(list))
-    if len([element for element in list if element < 0]) == len(list):
-        list = [-1 * element for element in list]
-    # print('gekürzt: ' + str(list))
-    list = np.array([int(element) if element % 1 == 0 else element for element in list])
-    faktor = [Rational(vec[i],list[i]) for i in range(len(list)) if list[i] !=0 and vec[i] != 0]
-    if qout == False:
-        return np.array(list)
-    else:
-        return np.array(list), faktor[0]
+            return np.array(list), faktor[0]
 
-def vektor_kollinear(vec1, vec2):
-    i = 0
-    lsg = []
-    for i in range(len(vec1)):
-        if vec2[i] == 0:
-            if vec1[i] == 0:
-                pass
+    def kollinear(vec1, vec2):
+        i = 0
+        lsg = []
+        for i in range(len(vec1)):
+            if vec2[i] == 0:
+                if vec1[i] == 0:
+                    pass
+                else:
+                    return False
+            else:
+                lsg.append(vec1[i] / vec2[i])
+        # print(lsg)
+        for element in lsg:
+            # print(element / lsg[0])
+            if element / lsg[0] != 1:
+                return False
+        return True
+
+    def test_senk(vec1, vec2):
+        lsg = [vec1[k] * vec2[k] for k in range(len(vec1))]
+        if sum(lsg) != 0:
+            return False
+        return True
+
+    def max(vec, p):
+        vec_p = [element / p for element in vec]
+        k = 0
+        for element in vec_p:
+            if element % 1 == 0:
+                k += 1
+        if k == len(vec):
+            return True
+        else:
+            return False
+
+    def vergleich(vec1, vec2):
+        if len(vec1) != len(vec2):
+            return print('Vektoren verschieden lang.')
+        i = 0
+        for element in vec1:
+            if vec1[i] == vec2[i]:
+                i += 1
             else:
                 return False
-        else:
-            lsg.append(vec1[i] / vec2[i])
-    # print(lsg)
-    for element in lsg:
-        # print(element / lsg[0])
-        if element / lsg[0] != 1:
-            return False
-    return True
-
-def test_vektor_senk(vec1, vec2):
-    lsg = [vec1[k] * vec2[k] for k in range(len(vec1))]
-    if sum(lsg) != 0:
-        return False
-    return True
-
-def vektor_max(vec, p):
-    vec_p = [element / p for element in vec]
-    k = 0
-    for element in vec_p:
-        if element % 1 == 0:
-            k += 1
-    if k == len(vec):
         return True
-    else:
-        return False
 
-def vektor_vergleich(vec1, vec2):
-    if len(vec1) != len(vec2):
-        return print('Vektoren verschieden lang.')
-    i = 0
-    for element in vec1:
-        if vec1[i] == vec2[i]:
-            i += 1
+    def skalarprodukt(vec1, vec2):
+        if len(vec1) != len(vec2):
+            exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
+        return sum([x * y for x, y in zip(vec1, vec2)])
+
+    def rechnung(obj1, obj2, var1=[], var2=[]):
+        obj1 =  [obj1] if not any(isinstance(element, list) for element in obj1) else obj1
+        obj2 =  [obj2] if not any(isinstance(element, list) for element in obj2) else obj2
+
+        def quotient(z1, z2):
+            if z2 == 0 :
+                text = r' \mathrm{n.d.}' if z1 != 0 else var + r' \in \mathbb{R} '
+                lsg = ()
+                return text, lsg
+            elif z2 != 0:
+                lsg = Rational(z1,z2)
+                text = gzahl(lsg)
+                return text, lsg
+        if len(obj1) == len(obj2) == 1:
+            a1, a2, a3 = obj1[0]
+            b1, b2, b3 = obj2[0]
+            var = var2[0] if var2 != [] else 'r'
+            if all(zahl == 0 for zahl in obj1[0]) or all(zahl == 0 for zahl in obj2[0]):
+                exit('Fehler in vektor.rechnung: Ein Vektor ist der Nullvektor, der keine Richtung hat. '
+                     'Es ist keine Rechnung möglich')
+            else:
+                text1, lsg1 = quotient(a1, b1)
+                text2, lsg2 = quotient(a2, b2)
+                text3, lsg3 = quotient(a3, b3)
+                text_lsg = r' \mathrm{Die~Vektoren~sind~kollinear.} ' if lsg1==lsg2==lsg3 \
+                    else r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
+                text = [r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3)
+                        + r' \\' + r' \end{pmatrix}  ~=~ ' + var + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\'
+                        + gzahl(b2) + r' \\' + gzahl(b3) + r' \\'
+                        + r' \end{pmatrix} \quad \to \quad \begin{matrix} ' + gzahl(a1) + '~=~'
+                        + vorz_v_aussen(b1,var, null=True) + r' \\' + gzahl(a2) + '~=~'
+                        + vorz_v_aussen(b2,var, null=True) + r' \\' + gzahl(a3) + '~=~'
+                        + vorz_v_aussen(b3,var, null=True) + r' \\'
+                        + r' \end{matrix} \quad \to \quad \begin{matrix} ' + var + '~=~' + text1 + r' \\' + var
+                        + '~=~' + text2 + r' \\' + var + '~=~' + text3 + r' \\' + r' \end{matrix} \\' + text_lsg]
+                lsg = [lsg1, lsg2, lsg3]
+                punkte = 4
         else:
-            return False
-    return True
-
-def skalarprodukt(vec1, vec2):
-    if len(vec1) != len(vec2):
-        exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
-    return sum([x * y for x, y in zip(vec1, vec2)])
+            text = ['']
+            lsg = []
+            punkte = 1
+        return text, lsg, punkte
 
 # Wahrscheinlichkeitsrechnung
 def darstellung_mengen(lsg_menge):
@@ -708,7 +753,7 @@ def stelle(liste, vec):
     # hier wird die Stelle eines gesuchten Elements in der Liste ausgegeben
     k = 0
     for tuble in liste:
-        if vektor_vergleich(tuble, vec) == True:
+        if vektor.vergleich(tuble, vec) == True:
             return k
         else:
             k+=1
