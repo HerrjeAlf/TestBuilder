@@ -1006,7 +1006,7 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
         punkte = 4
         mu = n*p
         sigma = N(sqrt(n*p*(1-p)),3)
-        aufgabe.extend((NoEscape(beschriftung(teilaufg,i) + f'Berechnen Sie den Erwartungswert $ \mu $ und '
+        aufgabe.extend((NoEscape(beschriftung(teilaufg,i) + r'Berechnen Sie den Erwartungswert $ \mu $ und '
                                 + r'die Standardabweichung $ \sigma $ von X.'),' \n\n'))
         loesung.append(beschriftung(teilaufg,i, True) + r' \mu ~=~ n \cdot p ~=~' + gzahl(n) + r' \cdot '
                        + gzahl(p) + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad \sigma ~=~ \sqrt{n \cdot p \cdot '
