@@ -29,8 +29,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
-    ortsvektor_a = [ax, ay, az] = punkt_vektor(3)
-    vektor_ab = [abx, aby, abz] = punkt_vektor(4)
+    ortsvektor_a = [ax, ay, az] = vektor.punkt(3)
+    vektor_ab = [abx, aby, abz] = vektor.punkt(4)
     laenge_vektor_ab = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}'
                         + '~=~' + gzahl(N(sqrt(sum(a*a for a in vektor_ab)),3)))
     ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
@@ -44,7 +44,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
 
     if random.random() < 0.5:
         vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
-        while vektor_vergleich(vektor_ac, vektor_ab) == True:
+        while vektor.vergleich(vektor_ac, vektor_ab) == True:
             vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
         laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
@@ -64,7 +64,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                      + r'  \end{pmatrix}  \quad (3P) \\')
     else:
         vektor_bc = random.choice(vektoren_auswahl)
-        while vektor_vergleich(vektor_bc, vektor_ab) == True:
+        while vektor.vergleich(vektor_bc, vektor_ab) == True:
             vektor_bc = random.choice(vektoren_auswahl)
         laenge_vektor_bc = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a*a for a in vektor_bc)),3)))
@@ -147,14 +147,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         i += 1
 
     if 'd' in teilaufg:
-        # Hier sollen die SuS mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
-        sprod = skalarprodukt(vektor_ab, vektor_ac)
+        # Hier sollen die SuS mithilfe des vektor.skalarproduktes die Fläche des Dreiecks ABC ausrechnen
+        sprod = vektor.skalarprodukt(vektor_ab, vektor_ac)
         diskr_ab = sum(a * a for a in vektor_ab)
         diskr_ac = sum(a * a for a in vektor_ac)
         erg = N(0.5 * sqrt(diskr_ab*diskr_ac-sprod**2),3)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
-                       f'Skalarproduktes. \n\n')
+                       f'vektor.skalarproduktes. \n\n')
         if 'b' in teilaufg:
             pkt = 3
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
@@ -241,13 +241,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         i += 1
 
     if 'g' in teilaufg:
-        # mithilfe des Kreuz- und Skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
+        # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
-        kprod_gek = vektor_kuerzen(kprod)
+        kprod_gek = vektor.kuerzen(kprod)
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
         vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
-        erg = N(abs(skalarprodukt(kprod, vektor_ae)),3)
+        erg = N(abs(vektor.skalarprodukt(kprod, vektor_ae)),3)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
                             + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
@@ -284,13 +284,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         i += 1
 
     if 'h' in teilaufg:
-        # mithilfe des Kreuz- und Skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
+        # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
-        kprod_gek = vektor_kuerzen(kprod)
+        kprod_gek = vektor.kuerzen(kprod)
         punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
-        erg = Rational(abs(skalarprodukt(kprod, vektor_as)),6)
+        erg = Rational(abs(vektor.skalarprodukt(kprod, vektor_as)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
                             + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
@@ -361,8 +361,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     if 'a' in teilaufg:
         # resultierenden Vektor einer Vektoraddition berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        vektor_1 = punkt_vektor(5)
-        vektor_2 = punkt_vektor(7)
+        vektor_1 = vektor.punkt(5)
+        vektor_2 = vektor.punkt(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
         ergebnis = faktor_1 * np.array(vektor_1) + faktor_2 * np.array(vektor_2)
         aufgabe.append(beschriftung(teilaufg, i) + 'Berechnen Sie den resultierenden Vektor.')
@@ -383,8 +383,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     if 'b' in teilaufg:
         # Mittelpunkt zweier gegebener Punkte berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        vektor_1 = punkt_vektor(5)
-        vektor_2 = punkt_vektor(7)
+        vektor_1 = vektor.punkt(5)
+        vektor_2 = vektor.punkt(7)
         ergebnis = 0.5 * (np.array(vektor_1) + np.array(vektor_2))
         # print(ergebnis)
         punkte = 3
@@ -412,7 +412,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         punkte = 9
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
-        vektor_2 = [x_2, y_2, z_2] = np.array(punkt_vektor(5))
+        vektor_2 = [x_2, y_2, z_2] = np.array(vektor.punkt(5))
         vektor_3 = [x_3, y_3, z_3] = np.array([zzahl(1,7), zzahl(0,5),zzahl(1,7)])
 
         if linearkombination == None:
@@ -496,8 +496,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         punkte = 0
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
-        vektor_a = [a1, a2, a3] = np.array(punkt_vektor(5))
-        vektor_b = [b1, b2, b3] = np.array(punkt_vektor(5))
+        vektor_a = [a1, a2, a3] = np.array(vektor.punkt(5))
+        vektor_b = [b1, b2, b3] = np.array(vektor.punkt(5))
         vektor_c = [c1, c2, c3] = np.array(vektor_a * faktor_1) + np.array(vektor_b * faktor_2)
         while 0 in vektor_c:
             faktor_1, faktor_2 = random.randint(1, 10) / 2, random.randint(1, 10) / 2
@@ -574,36 +574,18 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
     if 'e' in teilaufg:
         # Vektoren auf Kollinearität überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        vektor_2 = punkt_vektor(5)
+        vektor_1 = vektor.punkt(5)
+        vektor_2 =  b1, b2, b3 = zzahl(3,6)/2 * vektor_1
+        vektor_2 = vektor_2 if random.randint(1,2) == 1 else np.array([b1, b2, b3+zzahl(1,3)])
         faktor = zzahl(2, 40) / 10
-        punkte = 4
-
-        if kollinear == None:
-            kollinear = random.choice([True,False])
-
-        if kollinear == True:
-            faktor = zzahl(2,40)/5
-            vektor_1 = (faktor * vektor_2[0],faktor * vektor_2[1],faktor * vektor_2[2])
-            ergebnis = r' \mathrm{Die~Vektoren~sind~kollinear.} '
-        else:
-            vektor_1 = (faktor*vektor_2[0],faktor*vektor_2[1],faktor * vektor_2[2] + zzahl(1,6)/2)
-            ergebnis = r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
-
+        text, lsg, punkte = vektor.rechnung(vektor_1, vektor_2)
         aufgabe.extend((beschriftung(teilaufg, i) + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                         + r' \end{pmatrix} \\'))
-        loesung.append(beschriftung(teilaufg,i, True)
-                       + r' \mathrm{Prüfen~Sie,~ob~die~gegebenen~Vektoren~kollinear~sind.} \\'
-                       + gzahl(N(vektor_1[0],3)) + '~=~' + gzahl(vektor_2[0]) + r' \cdot r \quad \to \quad r~=~'
-                       + gzahl(N(vektor_1[0]/vektor_2[0],3)) + r' \\' + gzahl(N(vektor_1[1],3)) + '~=~'
-                       + gzahl(vektor_2[1]) + r' \cdot r \quad \to \quad r~=~'
-                       + gzahl(N(vektor_1[1]/vektor_2[1],3)) + r' \\' + gzahl(N(vektor_1[2],3)) + '~=~'
-                       + gzahl(vektor_2[2]) + r' \cdot r \quad \to \quad r~=~'
-                       + gzahl(N(vektor_1[2]/vektor_2[2],3)) + r' \\' + ergebnis
-                       + r' \quad \to \quad \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        loesung.append(beschriftung(teilaufg,i, True) + text[0])
         liste_punkte.append(punkte)
         i += 1
 
@@ -611,8 +593,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        vektor_a = punkt_vektor(5)
-        vektor_ab = punkt_vektor(5)
+        vektor_a = vektor.punkt(5)
+        vektor_ab = vektor.punkt(5)
         vektor_b = np.array(vektor_a) + np.array(vektor_ab)
         faktor = nzahl(1,9)
         vektor_t = [vektor_a[0] + vektor_ab[0]*faktor/10,
@@ -665,8 +647,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        vektor_a = punkt_vektor(5)
-        vektor_b = np.array(vektor_a) + np.array(punkt_vektor(5))
+        vektor_a = vektor.punkt(5)
+        vektor_b = np.array(vektor_a) + np.array(vektor.punkt(5))
         vektor_ab = vektor_b - np.array(vektor_a)
         a1 = nzahl(1,9)
         faktor = a1/10
@@ -715,19 +697,19 @@ def vektoren_koll_ortho(nr, BE=[]):
 
     liste_bez = [f'{str(nr)}']
     i = 0
-    vec_a = vec_b = vec_c = [ax, ay, az] = punkt_vektor(4)
+    vec_a = vec_b = vec_c = [ax, ay, az] = vektor.punkt(4)
     # Vektor der kollinear zu Vektor a ist
     fakt_a = zzahl(3, 10) / 2
     vec_k = [kx, ky, kz] = fakt_a * vec_a
     # Vektor der Orthogonal zu Vektor a ist
     vx, vy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
     vz = (ax * vx + ay * vy) / (-1* az)
-    vec_s = [sx, sy, sz] = vektor_kuerzen([vx, vy, vz])
+    vec_s = [sx, sy, sz] = vektor.kuerzen([vx, vy, vz])
     # beliebige Vektoren
-    while vektor_kollinear(vec_a, vec_b) == True or test_vektor_senk(vec_a, vec_b) == True:
-        vec_b = [bx, by, bz] = punkt_vektor(3)
-    while vektor_kollinear(vec_a, vec_c) == True or test_vektor_senk(vec_a, vec_c) == True or vektor_vergleich(vec_c, vec_b) == True:
-        vec_c = [cx, cy, cz] = punkt_vektor(3)
+    while vektor.kollinear(vec_a, vec_b) == True or vektor.test_senk(vec_a, vec_b) == True:
+        vec_b = [bx, by, bz] = vektor.punkt(3)
+    while vektor.kollinear(vec_a, vec_c) == True or vektor.test_senk(vec_a, vec_c) == True or vektor.vergleich(vec_c, vec_b) == True:
+        vec_c = [cx, cy, cz] = vektor.punkt(3)
     ausw = random.sample([vec_b, vec_c, vec_s, vec_k], 4)
 
     ausw_k = stelle(ausw, vec_k)
@@ -778,16 +760,16 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
-    punkt_a = [ax, ay, az] = punkt_vektor(3)
-    v = [vx, vy, vz] = punkt_vektor(4)
+    punkt_a = [ax, ay, az] = vektor.punkt(3)
+    v = [vx, vy, vz] = vektor.punkt(4)
     punkt_b = [bx, by, bz] = punkt_a + v
     p = random.choice([0,1])
-    punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
+    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
     while (tx - ax) / vx == (ty - ay) / ty == (tz - az) / tz:
-        punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
+        punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
     T_auf_g = random.choice([True, False]) if T_auf_g not in [None, True, False] else T_auf_g
-    punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + (zzahl(1, 30) / 5) * v) if T_auf_g else punkt_t
-    lx, ly, lz = vektor_ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
+    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 30) / 5) * v) if T_auf_g else punkt_t
+    lx, ly, lz = vektor.ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
     if 'a' in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
                    'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
@@ -936,13 +918,13 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     if lagebeziehung == None:
         lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
     v_teiler = random.choice([1, 2, 5])
-    punkt_a = [ax, ay, az] = punkt_vektor(3) # Punkt A liegt auf Gerade g_1
+    punkt_a = [ax, ay, az] = vektor.punkt(3) # Punkt A liegt auf Gerade g_1
     # Vektor v ist der Richtungsvektor von Geraden g_1
-    v = [vx, vy, vz] = vektor_kuerzen([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler, v_teiler])
+    v = [vx, vy, vz] = vektor.kuerzen([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler, v_teiler])
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
     uz = (vx*ux + vy * uy)/ (-1 * vz)
-    u = vektor_kuerzen([ux, uy, uz])
+    u = vektor.kuerzen([ux, uy, uz])
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -1006,8 +988,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         if lagebeziehung == 'identisch':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
+            w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -1036,10 +1018,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         elif lagebeziehung == 'parallel':
             punkte_aufg = 7
             liste_punkte.append(punkte_aufg)
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor_kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
+            w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
             while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
-                punkt_c = [cx, cy, cz] = vektor_ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
+                punkt_c = [cx, cy, cz] = vektor.ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
                          r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
                          r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
@@ -1069,18 +1051,18 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = 15
             liste_punkte.append(punkte_aufg)
             fakt_r = zzahl(1, 7) / 2
-            [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+            [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))
             punkt_d = [dx, dy, dz + zzahl(1,3)]
             fakt_s = zzahl(1, 7) / 2
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
-            w = [wx, wy, wz]= vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
+            w = [wx, wy, wz]= vektor.kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             # while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
             #     fakt_r = zzahl(1, 7) / 2
-            #     [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+            #     [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))
             #     punkt_d = [dx, dy, dz + zzahl(1, 3)]
             #     fakt_s = zzahl(1, 7) / 2
-            #     punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
-            #     w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
+            #     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
+            #     w = [wx, wy, wz] = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
             lsgs = (dx-cx)/wx
             lsgr = fakt_r
             # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
@@ -1151,15 +1133,15 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             liste_punkte.append(punkte_aufg)
             fakt_r = zzahl(1, 7) / 2
             fakt_s = zzahl(1, 7) / 2
-            punkt_d = [dx,dy,dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
-            punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a + fakt_s * np.array(u))
-            [wx, wy, wz] = w = vektor_kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
+            punkt_d = [dx,dy,dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
+            [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
             while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
                 fakt_r = zzahl(1, 7) / 2
                 fakt_s = zzahl(1, 7) / 2
-                punkt_d = [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
-                punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a + fakt_s * np.array(u))
-                [wx, wy, wz] = w = vektor_kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
+                punkt_d = [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
+                punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
+                [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
             lsgs = (dx-cx)/wx
             lsgr = fakt_r
             # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
@@ -1169,7 +1151,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             # print('Punkt D: ' + str(punkt_d))
             # print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
             # print('faktor p ist:' + str(fakt_p) + ' und s ist:' + str(lsgs_alt))
-            schnittpunkt_s = [sx, sy, sz] = (vektor_ganzzahl(punkt_c + lsgs*w))
+            schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs*w))
 
             if vx != 0 and wx != 0:
                 loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
@@ -1256,24 +1238,24 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == 'parallel':
             if 'c' not in teilaufg:
-                punkt_c = [cx,cy,cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u)) # Punkt C liegt auf h
-                w = [wx, wy, wz] = vektor_ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+                punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_a * zzahl(1,7)/2 + vektor.kuerzen(u)) # Punkt C liegt auf h
+                w = [wx, wy, wz] = vektor.ganzzahl(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
                 while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
-                    punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a * zzahl(1,7)/2 + vektor_kuerzen(u))  # Punkt C liegt auf h
-            fakt_r = Rational(skalarprodukt(punkt_c - punkt_a, v), skalarprodukt(v, v))
+                    punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a * zzahl(1,7)/2 + vektor.kuerzen(u))  # Punkt C liegt auf h
+            fakt_r = Rational(vektor.skalarprodukt(punkt_c - punkt_a, v), vektor.skalarprodukt(v, v))
             erg = N(sqrt((cx - ax - fakt_r * vx) ** 2 + (cy - ay - fakt_r * vy) ** 2 + (cz - az - fakt_r * vz) ** 2), 3)
-            erg_cross = [crx, cry, crz] = vektor_ganzzahl(np.cross(punkt_c - punkt_a, v))
+            erg_cross = [crx, cry, crz] = vektor.ganzzahl(np.cross(punkt_c - punkt_a, v))
             erg_alt_disk = Rational(crx ** 2 + cry ** 2 + crz ** 2, vx ** 2 + vy ** 2 + vz ** 2)
             erg_alt = N(sqrt(erg_alt_disk), 3)
         elif lagebeziehung == 'windschief':
             if 'c' not in teilaufg:
                 fakt_r = zzahl(1, 7) / 2
-                [dx, dy, dz] = vektor_ganzzahl(punkt_a + fakt_r * np.array(v))
+                [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))
                 punkt_d = [dx, dy, dz + zzahl(1, 3)]
                 fakt_s = zzahl(1, 7) / 2
-                punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_d + fakt_s * np.array(u))
-                w = [wx, wy, wz] = vektor_kuerzen(punkt_d - punkt_c)
-            vec_n, fakt_n = [nx, ny, nz], fakt_n = vektor_kuerzen(np.cross(v,w), qout=True)
+                punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
+                w = [wx, wy, wz] = vektor.kuerzen(punkt_d - punkt_c)
+            vec_n, fakt_n = [nx, ny, nz], fakt_n = vektor.kuerzen(np.cross(v,w), qout=True)
             fakt_n_str = '' if fakt_n == 1 else gzahl(fakt_n) + r' \cdot '
             erg= N(abs(((cx-ax)*nx+(cy-ay)*ny+(cz-az)*nz)/sqrt(nx**2+ny**2+nz**2)),3)
         if 'c' not in teilaufg:
@@ -1306,9 +1288,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + binom_klammer(az,vz,str2='r') + r' \\ '+ gzahl(np.dot(punkt_c, v)) + '~=~'
                            + gzahl(vx*ax) + vorz_v_innen(vx**2,'r') + vorz_str(vy*ay)
                            + vorz_v_innen(vy**2,'r') + vorz_str(vz*az) + vorz_v_innen(vz**2,'r') + '~=~'
-                           + gzahl(skalarprodukt(punkt_a,v)) + vorz_v_innen(skalarprodukt(v,v),'r')
-                           + r' \quad \vert ' + vorz_str(-1*skalarprodukt(punkt_a,v)) + r' \quad \vert \div '
-                           + gzahl_klammer(skalarprodukt(v,v)) + r' \quad (1BE) \\\\' + r' r~=~ ' + gzahl(fakt_r)
+                           + gzahl(vektor.skalarprodukt(punkt_a,v)) + vorz_v_innen(vektor.skalarprodukt(v,v),'r')
+                           + r' \quad \vert ' + vorz_str(-1*vektor.skalarprodukt(punkt_a,v)) + r' \quad \vert \div '
+                           + gzahl_klammer(vektor.skalarprodukt(v,v)) + r' \quad (1BE) \\\\' + r' r~=~ ' + gzahl(fakt_r)
                            + r' \quad \to \quad \overrightarrow{OS} ~=~ ' + r' \begin{pmatrix} ' +gzahl(ax) + r' \\'
                            + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} ' + vorz_str(fakt_r, null=True)
                            + r' \cdot \begin{pmatrix} ' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
@@ -1362,9 +1344,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         punkte_aufg = 7
         fakt_r = zzahl(1, 3)
         fakt_s = zzahl(1, 7) / 2
-        punkt_f = [fx,fy,fz] = vektor_ganzzahl(np.array(punkt_a) + fakt_r * np.array(v)) # Punkte C und D liegen auf h
-        punkt_e = [ex,ey,ez] = vektor_ganzzahl(np.array(punkt_a) + fakt_s * np.array(u))
-        [px, py, pz] = p = vektor_kuerzen(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
+        punkt_f = [fx,fy,fz] = vektor.ganzzahl(np.array(punkt_a) + fakt_r * np.array(v)) # Punkte C und D liegen auf h
+        punkt_e = [ex,ey,ez] = vektor.ganzzahl(np.array(punkt_a) + fakt_s * np.array(u))
+        [px, py, pz] = p = vektor.kuerzen(np.array(punkt_f) - np.array(punkt_e)) # Vektor w ist der Richtungsvektor von h
 
 
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
@@ -1393,7 +1375,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            r' \end{pmatrix} ')
             aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
-        sp_vp = skalarprodukt([vx, vy, vz], [px, py, pz])
+        sp_vp = vektor.skalarprodukt([vx, vy, vz], [px, py, pz])
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
         schnittwinkel = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
@@ -1447,28 +1429,28 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         lagebeziehung_t_ebene = random.choice([True, False])
     n_gk = np.array([100,100,100])
     v_teiler = zzahl(1, 3)
-    punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt auf Gerade g_1
-    v = [vx, vy, vz] = vektor_ganzzahl(np.array([zzahl(1, 3) * v_teiler,
+    punkt_a = [ax, ay, az] = vektor.punkt(3)  # Punkt A liegt auf Gerade g_1
+    v = [vx, vy, vz] = vektor.ganzzahl(np.array([zzahl(1, 3) * v_teiler,
                                                  zzahl(1, 3) * v_teiler,
                                                  v_teiler]))  # Vektor v ist der Richtungsvektor von Geraden g_1
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1, 3)  # x und y Koordinate von u kann frei gewählt werden
     uz = - 1 * (vx * ux + vy * uy) / vz
-    u = vektor_ganzzahl([ux, uy, uz])
-    punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
+    u = vektor.ganzzahl([ux, uy, uz])
+    punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
     vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
     while len([element for element in vektor_ab if element == 0]) > 0:
-        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
+        punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
         vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
-    punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
+    punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
     vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
     while len([element for element in vektor_ac if element == 0]) > 0:
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
+        punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
         vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
-    w = vektor_ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
-    [wx, wy, wz] = vektor_runden(w, 3)
-    n = [nx, ny, nz] = vektor_ganzzahl(np.cross(v, w))
-    n_gk = [nx_gk, ny_gk, nz_gk] = vektor_kuerzen(n)
+    w = vektor.ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
+    [wx, wy, wz] = vektor.runden(w, 3)
+    n = [nx, ny, nz] = vektor.ganzzahl(np.cross(v, w))
+    n_gk = [nx_gk, ny_gk, nz_gk] = vektor.kuerzen(n)
     n_betrag = np.linalg.norm(n_gk)
     koordinatenform = ('E:~' + vorz_v_aussen(nx_gk, 'x') + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk, 'z')
                        + '~=~' + gzahl(np.dot(punkt_a, n_gk)))
@@ -1479,22 +1461,22 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
     # if lagebeziehung_t_ebene == 'Ebene':
     #     parameter_r = zzahl(2,6)/2
     #     parameter_s = zzahl(2,6)/2
-    #     punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
     #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3BE) \\'
     # elif lagebeziehung_t_ebene == 'Dreieck':
     #     parameter_r = nzahl(1, 6) / 10
     #     parameter_s = 1 - nzahl(1,2)/10 - parameter_r
-    #     punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
     #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~im~Dreieck~ABC.} \quad (3BE) \\'
     # elif lagebeziehung_t_ebene == 'Parallelogramm':
     #     parameter_r = nzahl(1, 6) / 10
     #     parameter_s = 1 - nzahl(1,2)/10 - parameter_r
-    #     punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
     #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~im~Parallelogramm~ABCD.} \quad (3BE) \\'
     # else:
     #     parameter_r = zzahl(2, 6) / 2
     #     parameter_s = zzahl(2, 6) / 2
-    #     [x, y, z] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+    #     [x, y, z] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
     #     punkt_t = [tx, ty, tz] = [x, y, z + zzahl(1,3)]
     #     lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3BE) \\'
 
@@ -1590,12 +1572,12 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         if lagebeziehung_t_ebene == True:
             parameter_r = zzahl(2, 6) / 2
             parameter_s = zzahl(2, 6) / 2
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3BE) \\'
         else:
             parameter_r = zzahl(2, 6) / 2
             parameter_s = zzahl(2, 6) / 2
-            [x, y, z] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            [x, y, z] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             punkt_t = [tx, ty, tz] = [x, y, z + zzahl(1, 3)]
             lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene~E.} \quad (3BE) \\'
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1618,7 +1600,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         if nzahl(1,2) == 1:
             parameter_r = nzahl(1, 5) / 5
             parameter_s = nzahl(1, 5) / 5
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
                      + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
                      + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
@@ -1640,7 +1622,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         else:
             parameter_r = nzahl(1,5) / 5
             parameter_s = 1 + random.choice([1,2,3,4,5]) / 5
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg_0 = ''
             lsg_1 = r' s > 1 \quad \mathrm{Der~Punkt~P~liegt~nicht~im~Parallelogramm.} \quad (1BE) \\'
 
@@ -1689,7 +1671,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         if nzahl(1,2) == 1:
             parameter_r = nzahl(2, 6) / 10
             parameter_s = 1 - nzahl(1,2)/10 - parameter_r
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg_0 = (r' \mathrm{r~=~' + gzahl(parameter_r) + '~und~s~=~' + gzahl(parameter_s)
                      + r'~in~III~einsetzen: \quad }' + gzahl(tz) + '~=~' + gzahl(az) + vorz_str(abz)
                      + r' \cdot ' + gzahl_klammer(parameter_r) + vorz_str(acz) + r' \cdot '
@@ -1717,7 +1699,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                 parameter_s = 1 + random.choice([1,2,3,4,5])/10 - parameter_r
             lsg_2 = 'r + s  > 1'
             lsg_2 = 's > 1' if parameter_s > 1 else lsg_2
-            punkt_t = [tx, ty, tz] = vektor_ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
+            punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
             lsg_0 = ''
             lsg_1 = lsg_2 + r' \quad \mathrm{Der~Punkt~Q~liegt~nicht~im~Dreieck~ABC.} \quad (1BE) \\'
 
@@ -1780,7 +1762,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
         punkte = 3
         liste_punkte.append(punkte)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkt_r = [rx, ry, rz] = vektor_ganzzahl(punkt_a + np.array(v) + np.array(w)) + n
+        punkt_r = [rx, ry, rz] = vektor.ganzzahl(punkt_a + np.array(v) + np.array(w)) + n
         aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand des Punktes R( {gzahl(rx)} | '
                        + f'{gzahl(ry)} | {gzahl(rz)} ) zur Ebene E. \n\n')
         if 'f' not in teilaufg:
@@ -1841,8 +1823,8 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     liste_bez = []
     teiler = zzahl(1,3)
     schnittpunkte = [sx,sy,sz,e]=[zzahl(1,5),zzahl(1,5),zzahl(1,5),1]
-    fkt_kf = [kfx,kfy,kfz,kfe] = vektor_kuerzen([1 / sx, 1 / sy, 1 / sz, e])
-    n = [nx,ny,nz] = vektor_kuerzen([int(kfx), int(kfy), int(kfz)])
+    fkt_kf = [kfx,kfy,kfz,kfe] = vektor.kuerzen([1 / sx, 1 / sy, 1 / sz, e])
+    n = [nx,ny,nz] = vektor.kuerzen([int(kfx), int(kfy), int(kfz)])
     # print(schnittpunkte), print(fkt_kf), print(n)
     punkt_a = [ax,ay,az] = random.choice([np.array([kfe/kfx,0,0]),np.array([0,kfe/kfy,0]),np.array([0,0,kfe/kfz])])
     # print(punkt_a)
@@ -1934,8 +1916,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
     liste_punkte = []
     liste_bez = []
 
-    n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(5)
-    punkt_a = [ax, ay, az] = punkt_vektor(3)  # Punkt A liegt in Ebene E
+    n_gk = [nx_gk, ny_gk, nz_gk] = vektor.punkt(5)
+    punkt_a = [ax, ay, az] = vektor.punkt(3)  # Punkt A liegt in Ebene E
     v = [vx,vy,vz] = np.array([-nz_gk,0,nx_gk])
     u = [ux,uy,uz] = np.array([-ny_gk,nx_gk,0])
     n_betrag = np.linalg.norm(n_gk)
@@ -1959,7 +1941,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
     if g_in_E == 'identisch':
         punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
-        while vektor_vergleich(punkt_e, punkt_f) == True:
+        while vektor.vergleich(punkt_e, punkt_f) == True:
             punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         g_v = [g_vx, g_vy, g_vz] = punkt_f - punkt_e
         lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
@@ -1967,9 +1949,9 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2BE) } \\')
     elif g_in_E == 'schneiden':
         g_v = n_gk
-        while vektor_kollinear(g_v, n_gk) == True:
+        while vektor.kollinear(g_v, n_gk) == True:
             punkt_s = punkt_a + zzahl(1, 3) * v + zzahl(1, 3) * u
-            g_v = [g_vx, g_vy, g_vz] = punkt_vektor(4)
+            g_v = [g_vx, g_vy, g_vz] = vektor.punkt(4)
             ergebnis_r = zzahl(1, 6) / 2
             punkt_e = [ex, ey, ez] = punkt_s - ergebnis_r * g_v
             punkt_f = [fx, fy, fz] = punkt_e + g_v
@@ -1991,8 +1973,8 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3BE) \\')
     elif g_in_E == 'parallel' or 'e' in teilaufg:
         abstand = zzahl(1, 7) / 2 * np.array(n_gk)
-        punkt_e = [ex, ey, ez] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
-        punkt_f = [fx, fy, fz] = vektor_ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
+        punkt_e = [ex, ey, ez] = vektor.ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
+        punkt_f = [fx, fy, fz] = vektor.ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
         g_v = [g_vx, g_vy, g_vz] = np.array(punkt_f - punkt_e)
         lsg = (gzahl(np.dot(n_gk, punkt_e)) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
@@ -2134,13 +2116,13 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     liste_punkte = []
     liste_bez = []
 
-    n_gk = [nx_gk, ny_gk, nz_gk] = punkt_vektor(4)
+    n_gk = [nx_gk, ny_gk, nz_gk] = vektor.punkt(4)
     n_betrag = np.linalg.norm(n_gk)
     if n_betrag % 1 == 0:
         ergebnis_n0 = gzahl(n_betrag)
     else:
         ergebnis_n0 = r' \sqrt{' + gzahl(nx_gk ** 2 + ny_gk ** 2 + nz_gk ** 2) + r'}'
-    punkt_d = [dx, dy, dz] = punkt_vektor(3)
+    punkt_d = [dx, dy, dz] = vektor.punkt(3)
     v = np.array([ny_gk, -1 * nx_gk, 0])
     u = np.array([0, nz_gk, -1 * ny_gk])
     print('n_gk: ' + str(n_gk))
@@ -2154,9 +2136,9 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     # auswahl = 'schneiden'
     if F_in_E == 'identisch':
         punkte = 4
-        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
-        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_b + zzahl(1, 3) * np.array(u))
+        punkt_a = [ax, ay, az] = vektor.ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
+        punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
+        punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 3) * np.array(u))
         g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
         k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
@@ -2166,16 +2148,16 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
 
     elif F_in_E == 'schneiden':
         punkte = 8
-        n = [nx, ny, nz] = punkt_vektor(4)
-        punkt_a = [ax, ay, az] = punkt_vektor(3)
-        while vektor_kollinear(n, n_gk) == True:
-            n = [nx, ny, nz] = punkt_vektor(4)
+        n = [nx, ny, nz] = vektor.punkt(4)
+        punkt_a = [ax, ay, az] = vektor.punkt(3)
+        while vektor.kollinear(n, n_gk) == True:
+            n = [nx, ny, nz] = vektor.punkt(4)
 
-        g_v = [g_vx, g_vy, g_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
-        k_v = [k_vx, k_vy, k_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+        g_v = [g_vx, g_vy, g_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+        k_v = [k_vx, k_vy, k_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
         while np.dot(n_gk, k_v) == 0 or np.dot(n_gk, g_v) == 0:
-            g_v = [g_vx, g_vy, g_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
-            k_v = [k_vx, k_vy, k_vz] = vektor_kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
+            g_v = [g_vx, g_vy, g_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
+            k_v = [k_vx, k_vy, k_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
 
         # print('Vektor n: ' + str(n))
         # print('Vektor g_v: ' + str(g_v))
@@ -2209,9 +2191,9 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     elif F_in_E == 'parallel' or 'd' in teilaufg:
         punkte = 4
         abstand = zzahl(1, 7) / 2
-        punkt_a = [ax, ay, az] = vektor_ganzzahl(punkt_d + abstand * np.array(n_gk))
-        punkt_b = [bx, by, bz] = vektor_ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
-        punkt_c = [cx, cy, cz] = vektor_ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
+        punkt_a = [ax, ay, az] = vektor.ganzzahl(punkt_d + abstand * np.array(n_gk))
+        punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + zzahl(1, 3) * np.array(v))
+        punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a - zzahl(1, 3) * np.array(u))
         g_v = [g_vx, g_vy, g_vz] = np.array(punkt_b - punkt_a)
         k_v = [k_vx, k_vy, k_vz] = np.array(punkt_c - punkt_a)
 
@@ -2345,13 +2327,13 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
     liste_bez = []
 
     # Normalenvektorschar der Ebene erzeugen
-    punkt_d = [dx, dy, dz] = punkt_vektor(4)
-    nv = [nx, ny, nz] = punkt_vektor(4)
+    punkt_d = [dx, dy, dz] = vektor.punkt(4)
+    nv = [nx, ny, nz] = vektor.punkt(4)
     ave = [aex, aey, aez] = [zzahl(0,3), zzahl(0,3), zzahl(0,3)]
-    while vektor_kollinear(nv,ave) == True:
+    while vektor.kollinear(nv,ave) == True:
         ave = [aex, aey, aez] = [zzahl(0,3), zzahl(0,3), zzahl(0,3)]
     ebene = (nx+aex*a)*x + (ny+aey*a)*y + (nz+aez*a)*z
-    erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * a
+    erg = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * a
     erg_str = gzahl(np.dot(punkt_d, nv)) + vorz_v_innen(np.dot(punkt_d, ave),'a')
 
     # Gerade g erzeugen
@@ -2359,7 +2341,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
     g_rv  = random.choice([[ny + aey * g_var, -1 * (nx + aex * g_var), 0],
                            [0, nz + aez * g_var, -1 * (ny + aey * g_var)],
                            [nz + aez * g_var, 0, -1 * (nx + aex * g_var)]])
-    g_rv = [g_vx, g_vy, g_vz] = vektor_kuerzen(g_rv)
+    g_rv = [g_vx, g_vy, g_vz] = vektor.kuerzen(g_rv)
     punkt_g = [gx, gy, gz] = punkt_d + g_rv
 
     # Gerade h erzeugen
@@ -2367,14 +2349,14 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
     h_rv = random.choice([[ny + aey * h_var, -1*(nx + aex * h_var), 0],
                           [0, nz + aez * h_var, -1*(ny + aey * h_var)],
                           [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
-    h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
-    while skalarprodukt(h_rv, [nx + aex*a, ny + aey*a, nz + aez*a]) == 0:
+    h_rv = [h_vx, h_vy, h_vz] = vektor.kuerzen(h_rv)
+    while vektor.skalarprodukt(h_rv, [nx + aex*a, ny + aey*a, nz + aez*a]) == 0:
         h_var = zzahl(1, 4)
         h_rv = random.choice([[ny + aey * h_var, -1 * (nx + aex * h_var), 0],
                               [0, nz + aez * h_var, -1 * (ny + aey * h_var)],
                               [nz + aez * h_var, 0, -1 * (nx + aex * h_var)]])
-        h_rv = [h_vx, h_vy, h_vz] = vektor_kuerzen(h_rv)
-    punkt_h = [hx, hy, hz] = punkt_d + h_rv + vektor_kuerzen(nv)*zzahl(1,3)
+        h_rv = [h_vx, h_vy, h_vz] = vektor.kuerzen(h_rv)
+    punkt_h = [hx, hy, hz] = punkt_d + h_rv + vektor.kuerzen(nv)*zzahl(1,3)
 
     if 'b' in teilaufg and len([element for element in ['d', 'e'] if element in teilaufg]) > 0:
         text = r' \mathrm{und~die~Geraden~g~und~h~mit} \quad '
@@ -2420,17 +2402,17 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
         t_rv = random.choice([[ny + aey * t_var, -1 * (nx + aex * t_var), 0],
                               [0, nz + aez * t_var, -1 * (ny + aey * t_var)],
                               [nz + aez * t_var, 0, -1 * (nx + aex * t_var)]])
-        punkt_t = [tx, ty, tz] = punkt_d + vektor_kuerzen(t_rv)
+        punkt_t = [tx, ty, tz] = punkt_d + vektor.kuerzen(t_rv)
         pkt = 4
-        erg_k = skalarprodukt(punkt_d, nv)
-        erg_a = skalarprodukt(punkt_d, ave)
-        erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * t_var
+        erg_k = vektor.skalarprodukt(punkt_d, nv)
+        erg_a = vektor.skalarprodukt(punkt_d, ave)
+        erg_ebene = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * t_var
         
         if all(punkt_t == punkt_d):
             lsg = r' \quad \to \quad \mathrm{w.A.~T~liegt~in~allen~Ebenen~von~E_a} \quad (2BE)'
         else:
             if  erg_a != 0:
-                lsg = r' \quad \vert ' + vorz_v_innen(-1*skalarprodukt(punkt_d, ave),'a')
+                lsg = r' \quad \vert ' + vorz_v_innen(-1*vektor.skalarprodukt(punkt_d, ave),'a')
             else:
                 lsg = ''
             lsg = (lsg + r' \quad \vert ' + vorz_str(-1*(nx*tx+ny*ty+nz*tz)) + r' \quad \to \quad '
@@ -2461,14 +2443,14 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
     if 'b' in teilaufg:
         # Die SuS sollen diejenige Ebene bestimmen, in der die Gerade g liegt
-        erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * g_var
+        erg = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * g_var
         pkt = 7
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(beschriftung(teilaufg, i) + f'Überprüfen Sie, ob es eine Ebene der Ebenenschar gibt, '
                        + f'in der die Gerade g liegt. \n\n')
         loesung.append(beschriftung(teilaufg,i, True)
-                       + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~g~und~dem'
+                       + r' \mathrm{vektor.skalarprodukt~des~Richtungsvektor~von~g~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2506,7 +2488,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                    + r'-Achse} \quad (2BE)')
         else:
             erg = Rational(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2]), aex * vec[0] + aey * vec[1] + aez * vec[2])
-            erg_ebene = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * erg
+            erg_ebene = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * erg
             lsg = (r' \quad \vert ' + vorz_str(-1 * (nx * vec[0] + ny * vec[1] + nz * vec[2])) + r' \quad \vert \div '
                    + gzahl_klammer(aex * vec[0] + aey * vec[1] + aez * vec[2]) + r' \quad \to \quad a~=~'
                    + gzahl(erg) + r' \quad (2BE) \\ E_{' + gzahl(erg) + r'}:' + vorz_v_aussen(nx+aex*erg, 'x')
@@ -2515,7 +2497,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             pkt += 1
         aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f' die zur {bez} - Achse parallel ist. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Skalarprodukt~des~Richtungsvektor~der~'
+        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{vektor.skalarprodukt~des~Richtungsvektor~der~'
                        + str(bez) + r'-Achse~und~dem~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2531,14 +2513,14 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
     if 'd' in teilaufg:
         # Die SuS sollen diejenige Ebene bestimmen, in die parallel zur Geraden h ist
-        erg = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * h_var
+        erg = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * h_var
         pkt = 4
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie diejenige Ebene der Ebenenschar, '
                        + f'die parallel zur Geraden h ist. \n\n')
         loesung.append(beschriftung(teilaufg,i, True)
-                       + r' \mathrm{Skalarprodukt~des~Richtungsvektor~von~h~und~dem'
+                       + r' \mathrm{vektor.skalarprodukt~des~Richtungsvektor~von~h~und~dem'
                        + r'~Normalenvektor~von~E_a~aufstellen~und~a~berechnen} \\'
                        + r' 0~=~ \begin{pmatrix} ' + binom_str(nx, aex, str2='a') + r' \\'
                        + binom_str(ny, aey, str2='a') + r' \\' + binom_str(nz, aez, str2='a') + r' \\ \end{pmatrix} '
@@ -2595,21 +2577,21 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
 
         var1 = -1 * nzahl(1,2)
         var2 = var1 + nzahl(2,3)
-        erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
-        erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+        erg_var_1 = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * var1
+        erg_var_2 = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * var2
         nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * var1, ny + aey * var1, nz + aez * var1])
         nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * var2, ny + aey * var2, nz + aez * var2])
-        nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
-        nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+        nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor.kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+        nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor.kuerzen([nx_2, ny_2, nz_2, erg_var_2])
         while (nz1*ny2 - ny1*nz2) == 0:
             var1 = -1 * nzahl(1, 2)
             var2 = var1 + nzahl(2, 3)
-            erg_var_1 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var1
-            erg_var_2 = skalarprodukt(punkt_d, nv) + skalarprodukt(punkt_d, ave) * var2
+            erg_var_1 = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * var1
+            erg_var_2 = vektor.skalarprodukt(punkt_d, nv) + vektor.skalarprodukt(punkt_d, ave) * var2
             nx_var1 = [nx_1, ny_1, nz_1] = np.array([nx + aex * var1, ny + aey * var1, nz + aez * var1])
             nx_var2 = [nx_2, ny_2, nz_2] = np.array([nx + aex * var2, ny + aey * var2, nz + aez * var2])
-            nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor_kuerzen([nx_1, ny_1, nz_1, erg_var_1])
-            nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor_kuerzen([nx_2, ny_2, nz_2, erg_var_2])
+            nx_var1_gk = [nx1, ny1, nz1, erg_var1] = vektor.kuerzen([nx_1, ny_1, nz_1, erg_var_1])
+            nx_var2_gk = [nx2, ny2, nz2, erg_var2] = vektor.kuerzen([nx_2, ny_2, nz_2, erg_var_2])
 
         lsg_kon = Rational(erg_var1 - (nx1 * dx + ny1 * dy + nz1 * dz), nz1 * ny2 - ny1 * nz2)
         lsg_var = Rational(ny2 * nx1 - nx2 * ny1, nz1 * ny2 - ny1 * nz2)

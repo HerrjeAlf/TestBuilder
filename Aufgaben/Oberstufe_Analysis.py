@@ -1260,7 +1260,7 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
 
     # hier wird die Funktion erstellt.
     loesung_vektor = [1/3,1/5,1/7]
-    while vektor_rational(loesung_vektor,10) != True:
+    while vektor.rational(loesung_vektor,10) != True:
         xwert_1 = -1 * nzahl(1,3)
         ywert_1 = nzahl(3,8)
         xwert_2 = nzahl(1,3)
@@ -2449,7 +2449,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
                            (3 * xwert_extrema1 ** 2, 2 * xwert_extrema1, 1, 0, 0),
                            (3 * xwert_extrema2 ** 2, 2 * xwert_extrema2, 1, 0, 0)))
         lsg = solve_linear_system(glsystem, a, b, c, d)
-        lsg_gzahl = vektor_kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
+        lsg_gzahl = vektor.kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
         faktor = zzahl(3, 7) / 2
         koeff = k1, k2, k3, k4 = [faktor*element for element in lsg_gzahl]
         fkt = k1 * x ** 3 + k2 * x ** 2 + k3 * x + k4
@@ -2624,7 +2624,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
                            (3 * xwert_extrema1 ** 2, 2 * xwert_extrema1, 1, 0, 0),
                            (3 * xwert_extrema2 ** 2, 2 * xwert_extrema2, 1, 0, 0)))
         lsg = solve_linear_system(glsystem, a, b, c, d)
-        lsg_gzahl = vektor_kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
+        lsg_gzahl = vektor.kuerzen((lsg[a], lsg[b], lsg[c], lsg[d]))
         faktor = zzahl(3, 7) / 2
         fkt_a1, fkt_a2, fkt_a3, fkt_a4 = [faktor*element for element in lsg_gzahl]
         print(fkt_a1)
