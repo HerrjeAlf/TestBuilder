@@ -132,4 +132,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
+vektor = [exponenten(3,0,1)]
+print(vektor)
+print(vektor[0])
+print('nullvektor') if all(zahl == 0 for zahl in vektor[0]) else print('kein Nullvektor')
 
