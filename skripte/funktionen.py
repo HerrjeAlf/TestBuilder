@@ -503,10 +503,7 @@ class vektor():
             exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
         return sum([x * y for x, y in zip(vec1, vec2)])
 
-    def rechnung(obj1, obj2, var1=[], var2=[]):
-        obj1 =  [obj1] if not any(isinstance(element, list) for element in obj1) else obj1
-        obj2 =  [obj2] if not any(isinstance(element, list) for element in obj2) else obj2
-
+    def rechnung(obj1, obj2, var_obj1=[], var_obj2=[]):
         def quotient(z1, z2):
             if z2 == 0 :
                 text = r' \mathrm{n.d.}' if z1 != 0 else var + r' \in \mathbb{R} '
@@ -516,10 +513,24 @@ class vektor():
                 lsg = Rational(z1,z2)
                 text = gzahl(lsg)
                 return text, lsg
-        if len(obj1) == len(obj2) == 1:
+
+        if len(obj1) == len(obj2) == 1 or (len(obj1)== 1 and len(obj2)==2):
+            var = var_obj2[0] if var_obj2 != [] else 'r'
+            if len(obj2)==2:
+                a1, a2, a3 = obj1[0]
+                [[b1, b2, b3], [c1, c2, c3]] = obj2
+                text0 = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                         + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2) + r' \\'
+                         + gzahl(b3) + r' \\' + r' \end{pmatrix} + ' + var + r' \cdot \begin{pmatrix} ' + gzahl(c1)
+                         + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} \quad \left\vert '
+                         + r' - \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2) + r' \\' + gzahl(b3) + r' \\'
+                         + r' \end{pmatrix} \right. \\\\ ')
+                obj1 = [[a1-b1, a2-b2, a3-b3]]
+                obj2 = [[c1, c2, c3]]
+            else:
+                text0 = ''
             a1, a2, a3 = obj1[0]
             b1, b2, b3 = obj2[0]
-            var = var2[0] if var2 != [] else 'r'
             if all(zahl == 0 for zahl in obj1[0]) or all(zahl == 0 for zahl in obj2[0]):
                 exit('Fehler in vektor.rechnung: Ein Vektor ist der Nullvektor, der keine Richtung hat. '
                      'Es ist keine Rechnung möglich')
@@ -527,9 +538,8 @@ class vektor():
                 text1, lsg1 = quotient(a1, b1)
                 text2, lsg2 = quotient(a2, b2)
                 text3, lsg3 = quotient(a3, b3)
-                text_lsg = r' \mathrm{Die~Vektoren~sind~kollinear.} ' if lsg1==lsg2==lsg3 \
-                    else r' \mathrm{Die~Vektoren~sind~nicht~kollinear.} '
-                text = [r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3)
+
+                text = [text0 + r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3)
                         + r' \\' + r' \end{pmatrix}  ~=~ ' + var + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\'
                         + gzahl(b2) + r' \\' + gzahl(b3) + r' \\'
                         + r' \end{pmatrix} \quad \to \quad \begin{matrix} ' + gzahl(a1) + '~=~'
@@ -537,13 +547,32 @@ class vektor():
                         + vorz_v_aussen(b2,var, null=True) + r' \\' + gzahl(a3) + '~=~'
                         + vorz_v_aussen(b3,var, null=True) + r' \\'
                         + r' \end{matrix} \quad \to \quad \begin{matrix} ' + var + '~=~' + text1 + r' \\' + var
-                        + '~=~' + text2 + r' \\' + var + '~=~' + text3 + r' \\' + r' \end{matrix} \\' + text_lsg]
+                        + '~=~' + text2 + r' \\' + var + '~=~' + text3 + r' \\' + r' \end{matrix} ']
                 lsg = [lsg1, lsg2, lsg3]
                 punkte = 4
+        elif (len(obj1) + len(obj2) == 2) or (len(obj1)==1 and len(obj2)==2 and len(var2)==2):
+            if len(obj1) == len(obj2) == 2:
+                if all(zahl == 0 for zahl in obj1[1]) or all(zahl == 0 for zahl in obj2[1]):
+                    exit('Fehler in vektor.rechnung: Ein Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
+                         'der keine Richtung hat.')
+                [[a1, a2, a3], [b1, b2, b3]] = obj1
+                [[c1, c2, c3], [d1, d2, d3]] = obj2
+                var1 = var_obj1[0] if var_obj1 else 'r'
+                var2 = var_obj2[0] if var_obj2 else 's'
+                text0 = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                         + r' \end{pmatrix} + ' + var1 + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
+                         + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(c1) + r' \\'
+                         + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
+                         + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                         + r' \end{pmatrix} \quad \left\vert ' + r' - \begin{pmatrix} ' + gzahl(a1) + r' \\'
+                         + gzahl(a2) + r' \\' + gzahl(a3) + r' \\' + r' \end{pmatrix} \right. \\\\ ')
+                gls_unsortiert = [[b1, b2, b3], [ c1 - a1, c2 - a2, c3 - a3], [d1, d2, d3]]
+                
         else:
             text = ['']
             lsg = []
             punkte = 1
+
         return text, lsg, punkte
 
 # Wahrscheinlichkeitsrechnung

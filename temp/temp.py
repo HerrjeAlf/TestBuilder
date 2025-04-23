@@ -132,8 +132,17 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-vektor = [exponenten(3,0,1)]
-print(vektor)
-print(vektor[0])
-print('nullvektor') if all(zahl == 0 for zahl in vektor[0]) else print('kein Nullvektor')
+obj1 = [vektor.punkt(5), vektor.punkt(5)]
+obj2 = [vektor.punkt(5), vektor.punkt(5)]
+
+[[a1, a2, a3], [b1, b2, b3]], [[c1, c2, c3], [d1, d2, d3]] = obj1, obj2
+
+print(obj1)
+print(obj2)
+print(a1)
+print(a2)
+print(a3)
+print(d1)
+print(d2)
+print(d3)
 
