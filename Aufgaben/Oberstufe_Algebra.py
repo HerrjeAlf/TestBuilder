@@ -578,14 +578,16 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 =  b1, b2, b3 = zzahl(3,6)/2 * vektor_1
         vektor_2 = vektor_2 if random.randint(1,2) == 1 else np.array([b1, b2, b3+zzahl(1,3)])
         faktor = zzahl(2, 40) / 10
-        text, lsg, punkte = vektor.rechnung(vektor_1, vektor_2)
+        text, lsg, punkte = vektor.rechnung([vektor_1], [vektor_2])
+        text_lsg = r' \\ \mathrm{Die~Vektoren~sind~kollinear.} \quad (4BE) ' if lsg[0] == lsg[1] == lsg[2] \
+            else r' \\ \mathrm{Die~Vektoren~sind~nicht~kollinear.} \quad (4BE) '
         aufgabe.extend((beschriftung(teilaufg, i) + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
-                        + r' \end{pmatrix} \\'))
-        loesung.append(beschriftung(teilaufg,i, True) + text[0])
+                        + r' \end{pmatrix} '))
+        loesung.append(beschriftung(teilaufg,i, True) + text[0] + text_lsg)
         liste_punkte.append(punkte)
         i += 1
 
@@ -771,20 +773,15 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 30) / 5) * v) if T_auf_g else punkt_t
     lx, ly, lz = vektor.ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
     if 'a' in teilaufg:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),'Gegeben sind die Punkte '
-                   'A( ' + gzahl(ax)  + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), ' 
-                   'B( ' + gzahl(bx)  + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
-                   'T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ).  \n\n']
-        if 'b' not in teilaufg:
-            aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
-                       + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
-                       + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) \n\n']
-    if 'a' not in teilaufg:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-                   r' \mathrm{Gegeben~ist~die~Gerade g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+                   + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
+                   + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) \n\n']
+    else:
+        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
+                   r' \mathrm{Gegeben~ist~die~Gerade~g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                    + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                    + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
-                   + gzahl(v[2]) + r' \\' + r' \end{pmatrix} .} ']
+                   + gzahl(v[2]) + r' \\' + r' \end{pmatrix} } \hspace{25em} ']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -808,29 +805,17 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
     if 'b' in teilaufg:
         # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 4
-        liste_punkte.append(punkte_aufg)
-        loesung_1 =  (r' \begin{pmatrix} '
-                     + gzahl(N(tx,3)) + r' \\' + gzahl(N(ty,3)) + r' \\' + gzahl(N(tz,3)) + r' \\'
-                     r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                     + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                     + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                     r' \end{pmatrix} \to \begin{matrix} '
-                     + gzahl(N(tx,3)) + '~=~' + gzahl(ax) + vorz_str(vx) + r' \cdot r' + r' \\'
-                     + gzahl(N(ty,3)) + '~=~' + gzahl(ay) + vorz_str(vy) + r' \cdot r' + r' \\'
-                     + gzahl(N(tz,3)) + '~=~' + gzahl(az) + vorz_str(vz) + r' \cdot r' + r' \\'
-                     r' \end{matrix} \quad \to \quad \begin{matrix} '
-                     + 'r=' + gzahl(N(lx,3)) + r' \\' + 'r=' + gzahl(N(ly,3)) + r' \\'
-                     + 'r=' + gzahl(N(lz,3)) + r' \\'
-                     r' \end{matrix} \\')
-        if lx == ly == lz:
-            loesung_2 = r' \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4BE) \\'
+        punkte = 4
+        text, lsg, punkte = vektor.rechnung([punkt_t], [punkt_a, v])
+        if lsg[0] == lsg[1] == lsg[2]:
+            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4BE)'
         else:
-            loesung_2 = r' \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4BE) \\'
+            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4BE)'
 
-        aufgabe.append(beschriftung(teilaufg, i) + 'Überprüfen Sie, ob der Punkt T auf g liegt. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + loesung_1 + loesung_2)
+        aufgabe.append(beschriftung(teilaufg, i) + 'Überprüfen Sie, ob der Punkt T( ' + gzahl(N(tx,3))  + ' | '
+                       + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ) auf g liegt. \n\n')
+        loesung.append(beschriftung(teilaufg,i, True) + text[0] + loesung_2)
+        liste_punkte.append(punkte)
         i +=1
 
     if 'c' in teilaufg:
