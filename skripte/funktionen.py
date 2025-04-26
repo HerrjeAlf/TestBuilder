@@ -550,7 +550,7 @@ class vektor():
                         + '~=~' + text2 + r' \\' + var + '~=~' + text3 + r' \\' + r' \end{matrix} ']
                 lsg = [lsg1, lsg2, lsg3]
                 punkte = 4
-        elif (len(obj1) + len(obj2) == 2) or (len(obj1)==1 and len(obj2)==2 and len(var2)==2):
+        elif (len(obj1) + len(obj2) == 2) or (len(obj1)==1 and len(obj2)==2 and len(var_obj2)==2):
             if len(obj1) == len(obj2) == 2:
                 if all(zahl == 0 for zahl in obj1[1]) or all(zahl == 0 for zahl in obj2[1]):
                     exit('Fehler in vektor.rechnung: Ein Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
