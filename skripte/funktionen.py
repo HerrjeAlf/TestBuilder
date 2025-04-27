@@ -937,8 +937,8 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
             disk = Rational(-1 * koeff[2], koeff[0])
             lsg_sq = N(sqrt(-1 * koeff[2]/ koeff[0]),3)
             text = (text + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ \pm \sqrt{ ' + gzahl(disk)
-                    + r' } \quad \to \quad ' + var + '_{ ' + gzahl(n1) + r'} = \sqrt{ ' + gzahl(disk) + '~=~'
-                    + gzahl(lsg_sq) + r' } \quad \mathrm{und} \quad ' + var + '_{ ' + gzahl(n2) + r' }= - \sqrt{ '
+                    + r' } \quad \to \quad ' + var + '_{ ' + gzahl(n1) + r'} = \sqrt{ ' + gzahl(disk) + ' } ~=~'
+                    + gzahl(lsg_sq) + r' \quad \mathrm{und} \quad ' + var + '_{ ' + gzahl(n2) + r' }= - \sqrt{ '
                     + gzahl(disk) + r' } ~=~' + gzahl(-1*lsg_sq))
             lsg = [-1*lsg_sq, lsg_sq]
             punkte += 1
@@ -977,18 +977,17 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     if schnittpkt:
         text4 = r' \\'
         k = 1
-        y_wert = N(fkt.subs(x, 0),2)
+        y_wert = round(fkt.subs(x, 0),2)
+        print(lsg)
         for element in lsg:
-            if element == 0:
-                text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
-                         + r' \vert 0 ) } \quad ')
-            else:
+            if element != 0:
                 text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
                          + r' \vert 0)} \quad ')
+            else:
+                text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
+                         + r' \vert 0 ) } \quad ')
             k += 1
-        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if 0 not in lsg else ''
-        text[-1] += text4
-        punkte += len(lsg)
+        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if all(x != 0 for x in lsg) else ''
 
 
     text = [text]
@@ -1034,7 +1033,8 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
     fkt = koeff[0]*x**3 + koeff[1]*x**2 + koeff[2]*x + koeff[3]
     fkt_str = (vorz_v_aussen(koeff[0], 'x^3') + vorz_v_innen(koeff[1], 'x^2')
                + vorz_v_innen(koeff[2], 'x') + vorz_str(koeff[3]))
-    lsg = solve(fkt, x) if nst == [] else nst
+    lsg_float = solve(fkt, x) if nst == [] else nst
+    lsg = [N(element,3) for element in lsg_float]
     if koeff[3] == 0:
         if koeff[1]== 0:
             text_quadr, lsg_quadr, punkte_quadr = quadr_gl([koeff[0], 0, koeff[2]])
@@ -1068,7 +1068,7 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
     if schnittpkt:
         text4 = r' \\'
         k = 1
-        y_wert = N(fkt.subs(x, 0),2)
+        y_wert = round(fkt.subs(x, 0),2)
         for element in lsg:
             if element == 0:
                 text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
@@ -1076,8 +1076,8 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
             else:
                 text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
                          + r' \vert 0)} \quad ')
-            k += 1
-        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if 0 not in lsg else ''
+                k += 1
+        text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if all(x != 0 for x in lsg) else ''
         text[-1] += text4
         punkte += len(lsg)
 
