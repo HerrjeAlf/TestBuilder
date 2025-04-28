@@ -2372,7 +2372,7 @@ def polynome_kennenlernen(nr, teilaufg=['a', 'b'], anz_terme=3, i=0, BE=[]):
 
         aufgabe.append(beschriftung(teilaufg,i) + f'Geben Sie den Grad und die Koeffizienten der Funktion f an. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Grad: ~ ' + gzahl(exp[0])
-                       + r'} \quad \mathrm{und} \quad ' + koef)
+                       + r'} \quad \mathrm{und} \quad ' + koef + r' \quad (' + gzahl(1+anz_terme) + 'BE)')
         liste_punkte.append(anz_terme + 1)
         i += 1
 
@@ -2503,8 +2503,8 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             aufgabe.append(beschriftung(teilaufg,i)
                            + f'Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ].')
             loesung.append(beschriftung(teilaufg,i, True)
-                           + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
-                           + r' \quad Graph~(1BE) \to \quad insgesamt~(5P)}')
+                           + r' \mathrm{Koordinatensystem:~2BE \quad Werte:~2BE'
+                           + r' \quad Graph:~1BE \to \quad insgesamt~5BE}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 5
@@ -2544,9 +2544,9 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
                 text = (text + r' \mathrm{im ~ Intervall ~ I(' + gzahl(xwert_extrema[step]) + r' \vert '
                         + gzahl(xwert_extrema[step+1]) + r' ) ~monoton~ ' + liste_monotonie[step+1]+ r'} \\')
             else:
-                text = (text +  r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema[step])
-                           + r' \vert \infty ) ~ monoton ~' + liste_monotonie[step+1]+ r'}')
-        loesung.append(text)
+                text = (text + r' \mathrm{und ~ im ~ Intervall ~ I(' + gzahl(xwert_extrema[step])
+                        + r' \vert \infty ) ~ monoton ~' + liste_monotonie[step+1] + r'}')
+        loesung.append(text + r'\\ \mathrm{insgesamt \quad ' + gzahl(len(liste_monotonie)) + 'BE}')
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(len(liste_monotonie))
         i += 1
@@ -2561,30 +2561,33 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             loesung.append(beschriftung(teilaufg,i,True) + text[0])
         elif grad == 3:
             text, lsg, punkte = kubische_gl(koeff, lsg_nst, schnittpkt=True)
-            loesung.append(beschriftung(teilaufg,i,True) + text[0])
+            loesung.append(beschriftung(teilaufg,i,True)
+                           + r' \mathrm{Ansatz: \quad }' + text[0])
             for step in range(len(text)-1):
                 loesung.append(text[step+1])
         elif grad == 4:
             text, lsg, punkte = quadr_gl(koeff, var='z')
             if sqrt(nst_12)%1==0:
-                S1 = r'S_{x_1}(-' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
-                S2 = r'S_{x_2}(' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
+                S2 = r'S_{x_1}(-' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
+                S3 = r'S_{x_2}(' + gzahl(sqrt(nst_12)) + r' \vert 0) \quad '
             else:
-                S1 = r'S_{x_1}(- \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
-                S2 = r' S_{x_2}( \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
+                S2 = r'S_{x_1}(- \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
+                S3 = r' S_{x_2}( \sqrt{' + gzahl(nst_12) + r'} \vert 0) \quad '
             if sqrt(nst_34)%1==0:
-                S3 = r'S_{x_3}(-' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad '
+                S1 = r'S_{x_3}(-' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad '
                 S4 = r'S_{x_4}(' + gzahl(sqrt(nst_34)) + r' \vert 0) \quad \mathrm{und} \quad '
             else:
-                S3 = r' S_{x_3}( - \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad '
+                S1 = r' S_{x_3}( - \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad '
                 S4 = r' S_{x_4}( \sqrt{' + gzahl(nst_34) + r'} \vert 0) \quad \mathrm{und} \quad '
 
             loesung.append(beschriftung(teilaufg,i,True) + r' \mathrm{Lösung~durch~Substitution~von}~z=x^2:'
-                           + r' \quad f(x) ~ \to ~ f(z) ~=~ ' + fkt_z_str + r' \\' + text[0]
+                           + r' \quad f(x) ~ \to ~ f(z) ~=~ ' + fkt_z_str
+                           + r' \quad (1BE) \\ \mathrm{Ansatz: \quad }' + text[0]
                            + r' \\ \mathrm{Rücksubstitution} ~ \sqrt{z} = \pm x \quad \to \quad x_{1,2} ~=~ '
                            + r' \pm \sqrt{' + gzahl(nst_12) + r'} \quad \mathrm{und} \quad x_{3,4} ~=~ \pm \sqrt{'
-                           + gzahl(nst_34) + r'} \\' + S1 + S2 + S3 + S4 + r' S_{y}( 0 \vert ' + gzahl(koeff[2])
-                           + r') \\')
+                           + gzahl(nst_34) + r'} \quad (2BE) \\' + S1 + S2 + S3 + S4 + r' S_{y}( 0 \vert '
+                           + gzahl(koeff[2]) + r') \quad (2BE) \\')
+            punkte += 5
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
