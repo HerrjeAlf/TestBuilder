@@ -249,9 +249,9 @@ def vorz_v_aussen(zahl, string, null=False):
         print('Fehler:', fehler)
 
 # Darstellung der Faktoren bzw. Vorzeichen neu
-def potenz(fakt, exp, bas='x', vrz=False):
+def potenz(fakt, exp, bas='x', vrz=[False,True][0]):
     if exp == 1:
-        return vorz(fakt) + latex(bas) if vrz else latex(bas)
+        return vorz_str(fakt) + str(bas) if vrz else gzahl(fakt) + str(bas)
     elif exp == 0:
         return vorz_str(fakt) if vrz else gzahl(fakt)
     else:
@@ -918,7 +918,7 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     n1, n2 = (0 + i, 1 + i)
     punkte = 0
     fkt = koeff[0]*x**2 + koeff[1]*x + koeff[2]
-    text = 'f(' + var + r') ~=~ 0 \quad \to \quad '
+    text = ''
     if all(x == 0 for x in koeff):
         text = text + r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~' + var + '~aus~dem~Definitionsbereich} '
         lsg = []
@@ -980,12 +980,12 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         text = (text + '0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var) + vorz_str(koeff[2])
                 + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
                 + r' 0 ~=~ ' + var + '^2 ' + vorz_v_innen(Rational(koeff[1], koeff[0]), var)
-                + vorz_str(Rational(koeff[2], koeff[0])) + r' \\'
+                + vorz_str(Rational(koeff[2], koeff[0])) + r' \quad (2BE) \\'
                 + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '
                 + r' \frac{' + gzahl(p) + r'}{2} \right) ^2 ' + vorz_str(-1*q) + ' } ~=~ '
                 + gzahl(Rational(-1*koeff[1],2*koeff[0])) + r' \pm \sqrt{ '
-                + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \\ ')
-        punkte += 3
+                + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \quad (2BE) \\ ')
+        punkte += 4
         if Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) < 0:
             text = text + r' \mathrm{ n.d. }'
             lsg = []
@@ -1002,15 +1002,14 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
                     + '~=~' + gzahl(N(lsg1,3)) + r' \quad \mathrm{und} \quad ' + var + '_{' + gzahl(n2) + '} ~=~ '
                     + gzahl(Rational(-1*koeff[1],2*koeff[0]))
                     + vorz_str(N(sqrt(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)),3))
-                    + '~=~' + gzahl(N(lsg2,3)))
+                    + '~=~' + gzahl(N(lsg2,3)) + r' \quad (2BE) ')
             lsg = [lsg1, lsg2]
-            punkte += 4
+            punkte += 2
 
     if schnittpkt:
         text4 = r' \\'
         k = 1
         y_wert = round(fkt.subs(x, 0),2)
-        print(lsg)
         for element in lsg:
             if element != 0:
                 text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
@@ -1020,6 +1019,8 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
                          + r' \vert 0 ) } \quad ')
             k += 1
         text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if all(x != 0 for x in lsg) else ''
+        text4 += r' \quad (2BE) '
+        punkte += 2
 
 
     text = [text]
@@ -1077,8 +1078,8 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
                                  + vorz_str(koeff[2]))
         lsg_quadr.append(0)
         lsg_quadr.sort()
-        text = (r' \mathrm{Ansatz: ~f(x)}~=~0 \quad \to \quad 0~=~' + fkt_str + r' ~=~ x \cdot ('
-                + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad \\ ' + text_quadr[0])
+        text = ('0~=~' + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad \\ '
+                + text_quadr[0])
         punkte = 2 + punkte_quadr
         text = [text]
     else:
@@ -1088,13 +1089,13 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
         p1, p2, p3 = koeff_hs
         fkt_partial_str = vorz_v_aussen(p1,'x^2') + vorz_v_innen(p2, 'x') + vorz_str(p3)
         text_quadr, lsg_quadr, pkt_quadr = quadr_gl(koeff_hs, i=2)
-        text1 = (r' \mathrm{Ansatz:~f(x)~=~0} \quad \to \quad 0~=~' + fkt_str
-                 + r' \quad \mathrm{durch~probieren:~x~=~}' + gzahl(nst2) + r' \\' + '(' + fkt_str + r')~ \div ~(x'
-                 + vorz_str(-1 * nst2) + ')~=~' + fkt_partial_str)
-        text2 = (r' \mathrm{Ansatz: ~p(x) } ~=~ 0 \quad \to \quad ' + text_quadr[0])
+        text1 = ('0~=~' + fkt_str + r' \quad \mathrm{durch~probieren:~x~=~}' + gzahl(nst2) + r' \quad (2BE) \\' + '('
+                 + fkt_str + r')~ \div ~(x' + vorz_str(-1 * nst2) + ')~=~' + fkt_partial_str + r' \quad ('
+                 + gzahl(1 + pkt_hs) + 'BE)')
+        text2 = (r' \mathrm{Ansatz: \quad p(x) } ~=~ 0 \quad \to \quad ' + text_quadr[0])
         lsg_quadr.append(nst2)
         lsg_quadr.sort()
-        punkte = 4 + pkt_hs + pkt_quadr
+        punkte = 3 + pkt_hs + pkt_quadr
         text = [text1, table1, text2]
 
     if schnittpkt:
@@ -1110,7 +1111,8 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
                          + r' \vert 0)} \quad ')
                 k += 1
         text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if all(x != 0 for x in lsg) else ''
+        text4 += r' \quad (2BE) '
         text[-1] += text4
-        punkte += len(lsg)
+        punkte += 2
 
     return text, lsg, punkte
