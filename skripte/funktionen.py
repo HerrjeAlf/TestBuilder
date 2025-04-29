@@ -317,30 +317,62 @@ def fakt_var(k):
     else:
         return latex(k)
 
-def summe_exp(list_term, exp, list_var=[]):
-    list_exp = [exp for n in range(len(list_term))] if type(exp) != list else exp
-    if len(list_term) != len(list_exp):
-        exit('Fehler bei der Funktion "summe_potenz" in funktionen.py - die verwendeten Listen sind verschieden lang!')
-    list_exp = ['^' + gzahl(exp) if exp != 1 else '' for exp in list_exp]
-    for n in range(len(list_term)):
-        if list_term[n] != 0:
-            if list_var != []:
-                summe_str = r' \left( ' + gzahl(list_term[n]) + str(list_var[n]) + r' \right) ' + list_exp[n]
-                del list_var[n]
-            else:
-                summe_str = gzahl_klammer(list_term[n]) + list_exp[n]
-            del list_term[n]
-            del list_exp[n]
+class summe():
 
-            break
-    for n in range(len(list_term)):
-        if list_term[n] != 0:
-            if list_var != []:
-                summe_str = (summe_str + r'+ \left( ' + gzahl(list_term[n]) + str(list_var[n])
-                             + r' \right) ' + list_exp[n])
-            else:
-                summe_str = summe_str + '+' + gzahl_klammer(list_term[n]) + list_exp[n]
-    return summe_str
+    def exponenten(list_term, exp, list_var=[]):
+        list_exp = [exp for n in range(len(list_term))] if type(exp) != list else exp
+        if len(list_term) != len(list_exp):
+            exit('Fehler bei der Funktion "summe_potenz" in funktionen.py - die verwendeten Listen sind verschieden lang!')
+        list_exp = ['^' + gzahl(exp) if exp != 1 else '' for exp in list_exp]
+        for n in range(len(list_term)):
+            if list_term[n] != 0:
+                if list_var != []:
+                    summe_str = r' \left( ' + gzahl(list_term[n]) + str(list_var[n]) + r' \right) ' + list_exp[n]
+                    del list_var[n]
+                else:
+                    summe_str = gzahl_klammer(list_term[n]) + list_exp[n]
+                del list_term[n]
+                del list_exp[n]
+
+                break
+        for n in range(len(list_term)):
+            if list_term[n] != 0:
+                if list_var != []:
+                    summe_str = (summe_str + r'+ \left( ' + gzahl(list_term[n]) + str(list_var[n])
+                                 + r' \right) ' + list_exp[n])
+                else:
+                    summe_str = summe_str + '+' + gzahl_klammer(list_term[n]) + list_exp[n]
+        return summe_str
+
+    def terme(terme, list_var=[]):
+        n = len(terme)
+        if list_var != []:
+            if len(list_var) == 1:
+                var = [list_var[0] for element in terme]
+            elif len(list_var) > 1 and len(list_var) != len(terme):
+                exit('Fehler in summe_terme: Die angegebenen Listen sind verschieden lang.')
+            for step in range(n):
+                if terme[0] != 0:
+                    summe_str = vorz_v_aussen(terme[0],var[0])
+                    del terme[0]
+                    del var[0]
+                    break
+                else:
+                    del terme[0]
+                    del var[0]
+            for step in range(len(terme)):
+                summe_str = summe_str + vorz_v_innen(terme[step], var[step])
+        else:
+            for step in range(n):
+                if terme[0] != 0:
+                    summe_str = gzahl(terme[0])
+                    del terme[0]
+                    break
+                else:
+                    del terme[0]
+            for step in range(len(terme)):
+                summe_str = summe_str + vorz_str(terme[step])
+        return summe_str
 
 def umformung(zahl, art=['+', '-', '*', ':'][0]):
     if zahl == 0:
@@ -504,9 +536,9 @@ class vektor():
         return sum([x * y for x, y in zip(vec1, vec2)])
 
     def rechnung(obj1, obj2, var_obj1=[], var_obj2=[]):
-        def quotient(z1, z2):
+        def quotient(z1, z2, gz='~=~'):
             if z2 == 0 :
-                text = r' \mathrm{n.d.}' if z1 != 0 else var + r' \in \mathbb{R} '
+                text = r' \mathrm{~ ist ~ n.d.}' if z1 != 0 else r' \in \mathbb{R} '
                 lsg = ()
                 return text, lsg
             elif z2 != 0:
@@ -546,14 +578,14 @@ class vektor():
                         + vorz_v_aussen(b1,var, null=True) + r' \\' + gzahl(a2) + '~=~'
                         + vorz_v_aussen(b2,var, null=True) + r' \\' + gzahl(a3) + '~=~'
                         + vorz_v_aussen(b3,var, null=True) + r' \\'
-                        + r' \end{matrix} \quad \to \quad \begin{matrix} ' + var + '~=~' + text1 + r' \\' + var
-                        + '~=~' + text2 + r' \\' + var + '~=~' + text3 + r' \\' + r' \end{matrix} ']
+                        + r' \end{matrix} \quad \to \quad \begin{matrix} ' + var + text1 + r' \\' + var
+                        + text2 + r' \\' + var + text3 + r' \\' + r' \end{matrix} ']
                 lsg = [lsg1, lsg2, lsg3]
                 punkte = 4
         elif (len(obj1) + len(obj2) == 2) or (len(obj1)==1 and len(obj2)==2 and len(var_obj2)==2):
             if len(obj1) == len(obj2) == 2:
                 if all(zahl == 0 for zahl in obj1[1]) or all(zahl == 0 for zahl in obj2[1]):
-                    exit('Fehler in vektor.rechnung: Ein Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
+                    exit('Fehler in vektor.rechnung: Der Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
                          'der keine Richtung hat.')
                 [[a1, a2, a3], [b1, b2, b3]] = obj1
                 [[c1, c2, c3], [d1, d2, d3]] = obj2
@@ -564,9 +596,9 @@ class vektor():
                          + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(c1) + r' \\'
                          + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
                          + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
-                         + r' \end{pmatrix} \quad \left\vert ' + r' - \begin{pmatrix} ' + gzahl(a1) + r' \\'
-                         + gzahl(a2) + r' \\' + gzahl(a3) + r' \\' + r' \end{pmatrix} \right. \\\\ ')
-                gls_unsortiert = [[b1, b2, b3], [ c1 - a1, c2 - a2, c3 - a3], [d1, d2, d3]]
+                         + r' \end{pmatrix} \quad \to \quad \beginn{matrix} ' + summe_terme([a1,b2],['',var1]) + '~=~'
+                         + summe_terme([c1,d1],['',var2]) + r' \\' )
+                gls_unsortiert = [[b1, b2, b3], [b1, b2, b3], [c1, c2, c3], [d1, d2, d3]]
                 
         else:
             text = ['']
