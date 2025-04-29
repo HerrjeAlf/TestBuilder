@@ -1295,8 +1295,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + r' \end{pmatrix} \right| }{ \left| \begin{pmatrix} ' + gzahl(vx) + r' \\'
                            + gzahl(vy) + r' \\' + gzahl(vz) + r' \\' + r' \end{pmatrix} \right| } \quad (4BE) \\'
                            + r' d(g,h) ~=~  \frac{ \left| \begin{pmatrix} ' + gzahl(crx) + r' \\' + gzahl(cry) + r' \\'
-                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{' + summe_exp([vx,vy,vz],2)
-                           + r'}} ~=~ \frac{ \sqrt{ ' + summe_exp([crx, cry, crz],2) + r' }}{ \sqrt{ '
+                           + gzahl(crz) + r' \\' + r' \end{pmatrix} \right| }{ \sqrt{'
+                           + summe.exponenten([vx,vy,vz],2) + r'}} ~=~ \frac{ \sqrt{ '
+                           + summe.exponenten([crx, cry, crz],2) + r' }}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
         elif lagebeziehung == 'windschief':
             punkte = 7
@@ -1310,7 +1311,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + gzahl(wz) + r' \\' + r' \end{pmatrix} ~=~ ' + fakt_n_str
                            + r' \begin{pmatrix} ' + gzahl(nx) + r' \\' + gzahl(ny) + r' \\' + gzahl(nz) + r' \\'
                            + r' \end{pmatrix} \quad \to \quad \left| \overrightarrow{n} \right| ~=~ \sqrt{'
-                           + summe_exp([nx,ny,nz],2)+ r'} ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
+                           + summe.exponenten([nx,ny,nz],2)+ r'} ~=~ \sqrt{' + gzahl(nx**2+ny**2+nz**2)
                            + r'} ~=~' + gzahl(N(sqrt(nx**2+ny**2+nz**2),3)) + r' \quad (4BE) \\\\'
                            + r' d(g,h) ~=~ \left| \overrightarrow{P_g Q_h} \cdot \overrightarrow{n_0} \right| ~=~'
                            + r' \left| \begin{pmatrix} ' + gzahl(cx-ax) + r' \\' + gzahl(cy-ay) + r' \\' + gzahl(cz-az)
@@ -2537,7 +2538,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
             aufgabe.append(beschriftung(teilaufg, i) + f'Berechnen Sie den Abstand der Geraden h zur parallelen Ebene '
                            + f'der Schar. \n\n')
             loesung.append(beschriftung(teilaufg,i, True) + r' \left| \overrightarrow{n} \right| ~=~ \sqrt{ '
-                           + summe_exp([nax, nay, naz], 2) + r' } ~=~ '
+                           + summe.exponenten([nax, nay, naz], 2) + r' } ~=~ '
                            + laenge_na_str + r' \quad (2BE) \quad \mathrm{und~ein~Punkt~in~E_{'
                            + gzahl(h_var) + r'} ~ist:} \quad P \left( ' + gzahl(dx) + r' \vert ' + gzahl(dy) + r' \vert '
                            + gzahl(dz) + r' \right) \quad (1BE) \\ '
