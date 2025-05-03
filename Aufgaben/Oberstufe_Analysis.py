@@ -4983,15 +4983,22 @@ def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[], gleichungen=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    gleichungen = [exponenten(5, p=0,ganzz=True), exponenten(5,p=0,ganzz=True), exponenten(5,p=0,ganzz=True), exponenten(5,p=0,ganzz=True)] if gleichungen ==[] else gleichungen
-    text, lsg, punkte = gaussalgorithmus(gleichungen)
+    obj1_1, obj2_1, var_obj1_1, var_obj2_1 = [[1,1,2], [0,0,2]], [[1,2,1],[0,1,0]], ['a'], ['b']
+    obj1_2, obj2_2, var_obj2_2 = [[1,1,1]], [[1,1,2],[0,0,2], [0,1,0]], ['a', 'b']
+    obj1_3, obj2_3, var_obj2_3 = [[0,1,1]], [[0,0,2], [0,1,0]], ['a','b']
+    text1, lsg1, punkte1 = vektor.rechnung(obj1_1, obj2_1, var_obj1_1, var_obj2_1)
+    text2, lsg2, punkte2 = vektor.rechnung(obj1_2, obj2_2, var_obj2=var_obj2_2)
+    text3, lsg3, punkte3 = vektor.rechnung(obj1_3, obj2_3, var_obj2=var_obj2_3)
+
 
     aufgabe.append('Lösen Sie das Gleichungssystem.')
-    loesung.append(text[0])
-    loesung.append(text[1])
-    loesung.append(latex(lsg))
+    loesung.append(text1[0])
+    loesung.extend((NoEscape(r'Lösung der ersten Rechnung: $' + str(lsg1) + '$'), ' \n\n'))
+    loesung.append(text2[0])
+    loesung.extend((NoEscape(r'Lösung der zweiten Rechnung: $' + str(lsg2) + '$'), ' \n\n'))
+    loesung.append(text3[0])
+    loesung.extend((NoEscape(r'Lösung der dritten Rechnung: $' + str(lsg3) + '$'), ' \n\n'))
 
-
-    liste_punkte = [1]
+    liste_punkte = [punkte1 + punkte2]
     liste_bez = ['Test']
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
