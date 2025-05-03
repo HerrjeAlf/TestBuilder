@@ -809,10 +809,10 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         punkte = 4
         text, lsg, punkte = vektor.rechnung([punkt_t], [punkt_a, v])
         if lsg[0] == lsg[1] == lsg[2]:
-            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (4BE)'
+            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (1BE)'
         else:
-            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (4BE)'
-
+            loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (1BE)'
+        punkte += 1
         aufgabe.append(beschriftung(teilaufg, i) + 'Überprüfen Sie, ob der Punkt T( ' + gzahl(N(tx,3))  + ' | '
                        + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ) auf g liegt. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + text[0] + loesung_2)
