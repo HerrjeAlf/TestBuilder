@@ -888,7 +888,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=None, gerade_k=False, i=0, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][0], gerade_k=[False,True][0], i=0, BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
