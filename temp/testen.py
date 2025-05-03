@@ -29,7 +29,7 @@ for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
     Aufgaben = [[rechnen_mit_vektoren(1, ['e']),
                  geraden_aufstellen(2, ['b']),
-                 geraden_aufstellen(3)]]
+                 geraden_lagebeziehung(3, lagebeziehung='parallel')]]
     # hier werden aus der Liste der Aufgaben die Tests erzeugt
     liste_seiten = []
     for element in Aufgaben:

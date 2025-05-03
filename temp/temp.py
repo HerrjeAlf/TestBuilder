@@ -132,17 +132,13 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-obj1 = [vektor.punkt(5), vektor.punkt(5)]
-obj2 = [vektor.punkt(5), vektor.punkt(5)]
+a = [2,3]
+b = [2,3]
 
-[[a1, a2, a3], [b1, b2, b3]], [[c1, c2, c3], [d1, d2, d3]] = obj1, obj2
+if len(a) == 2:
+    print('Länge 2')
+elif 'a' in a:
+    print('es ist eine 2 enthalten.')
 
-print(obj1)
-print(obj2)
-print(a1)
-print(a2)
-print(a3)
-print(d1)
-print(d2)
-print(d3)
-
+if len(a) == len(b) == 2:
+    print('Test')

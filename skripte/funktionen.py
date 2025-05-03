@@ -8,6 +8,7 @@ from pylatex import Document, Package,  Tabular, NoEscape, math
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
+zeilennummer = {1:'I',2: 'II',3: 'III',4: 'IV',5: 'V',6: 'VI',7: 'VII',8: 'VIII',9: 'IX',10: 'X'}
 # Timer Funktion
 def timer(func):
     """
@@ -348,7 +349,7 @@ class summe():
         n = len(terme)
         if list_var != []:
             if len(list_var) == 1:
-                var = [list_var[0] for element in terme]
+                var = [list_var[0] for k in terme]
             elif len(list_var) > 1 and len(list_var) != len(terme):
                 exit('Fehler in summe_terme: Die angegebenen Listen sind verschieden lang.')
             for step in range(n):
@@ -535,16 +536,24 @@ class vektor():
             exit('Die Vektoren müssen die gleiche Dimension haben (gleiche Anzahl an Koordinaten)!')
         return sum([x * y for x, y in zip(vec1, vec2)])
 
+    def invers(matrix):
+        inverse = []
+        for k in range(len(matrix[0])):
+            row = [element[k] for element in matrix]
+            inverse.append(row)
+        return inverse
+
     def rechnung(obj1, obj2, var_obj1=[], var_obj2=[]):
+        punkte = 0
+        # Funktionen, die mehrere Abfragen benötigen
         def quotient(z1, z2, gz='~=~'):
             if z2 == 0 :
                 text = r' \mathrm{~ ist ~ n.d.}' if z1 != 0 else r' \in \mathbb{R} '
                 lsg = ()
-                return text, lsg
             elif z2 != 0:
                 lsg = Rational(z1,z2)
                 text = gzahl(lsg)
-                return text, lsg
+            return text, lsg
 
         if len(obj1) == len(obj2) == 1 or (len(obj1)== 1 and len(obj2)==2):
             var = var_obj2[0] if var_obj2 != [] else 'r'
@@ -556,13 +565,14 @@ class vektor():
                          + gzahl(b3) + r' \\' + r' \end{pmatrix} + ' + var + r' \cdot \begin{pmatrix} ' + gzahl(c1)
                          + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} \quad \left\vert '
                          + r' - \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2) + r' \\' + gzahl(b3) + r' \\'
-                         + r' \end{pmatrix} \right. \\\\ ')
+                         + r' \end{pmatrix} \right. \quad (1BE) \\\\ ')
                 obj1 = [[a1-b1, a2-b2, a3-b3]]
                 obj2 = [[c1, c2, c3]]
+                punkte += 1
             else:
                 text0 = ''
-            a1, a2, a3 = obj1[0]
-            b1, b2, b3 = obj2[0]
+                a1, a2, a3 = obj1[0]
+                b1, b2, b3 = obj2[0]
             if all(zahl == 0 for zahl in obj1[0]) or all(zahl == 0 for zahl in obj2[0]):
                 exit('Fehler in vektor.rechnung: Ein Vektor ist der Nullvektor, der keine Richtung hat. '
                      'Es ist keine Rechnung möglich')
@@ -579,27 +589,180 @@ class vektor():
                         + vorz_v_aussen(b2,var, null=True) + r' \\' + gzahl(a3) + '~=~'
                         + vorz_v_aussen(b3,var, null=True) + r' \\'
                         + r' \end{matrix} \quad \to \quad \begin{matrix} ' + var + text1 + r' \\' + var
-                        + text2 + r' \\' + var + text3 + r' \\' + r' \end{matrix} ']
+                        + text2 + r' \\' + var + text3 + r' \\' + r' \end{matrix} \quad (3BE) ']
                 lsg = [lsg1, lsg2, lsg3]
-                punkte = 4
-        elif (len(obj1) + len(obj2) == 2) or (len(obj1)==1 and len(obj2)==2 and len(var_obj2)==2):
+                punkte += 3
+        elif len(obj1) + len(obj2) == 4:
+            lsg, punkte = [], 0
+            def gls_sortieren(gls, zeilnr=[True,False][1]):
+                matrix = []
+                for k in range(len(gls)):
+                    nr = [zeilennummer[k]] if zeilnr else []
+                    matrix.append(nr + gls[k])
+                rsnull, rnull, snull, nnull = [], [], [], []
+                zahl = 1 if zeilnr else 0
+                for element in matrix:
+                    if element[2 + zahl] == 0 and element[3 + zahl] == 0:
+                        rsnull.append(element)
+                    elif element[2 + zahl] == 0:
+                        rnull.append(element)
+                    elif element[3 + zahl] == 0:
+                        snull.append(element)
+                    else:
+                        nnull.append(element)
+                return [rsnull, rnull, snull, nnull]
+
             if len(obj1) == len(obj2) == 2:
                 if all(zahl == 0 for zahl in obj1[1]) or all(zahl == 0 for zahl in obj2[1]):
                     exit('Fehler in vektor.rechnung: Der Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
                          'der keine Richtung hat.')
-                [[a1, a2, a3], [b1, b2, b3]] = obj1
-                [[c1, c2, c3], [d1, d2, d3]] = obj2
+                [[a1, a2, a3], [b1, b2, b3]], [[c1, c2, c3], [d1, d2, d3]] = obj1, obj2
+                gls_us = obj1 + obj2
                 var1 = var_obj1[0] if var_obj1 else 'r'
                 var2 = var_obj2[0] if var_obj2 else 's'
-                text0 = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
-                         + r' \end{pmatrix} + ' + var1 + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
-                         + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(c1) + r' \\'
-                         + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
-                         + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
-                         + r' \end{pmatrix} \quad \to \quad \beginn{matrix} ' + summe_terme([a1,b2],['',var1]) + '~=~'
-                         + summe_terme([c1,d1],['',var2]) + r' \\' )
-                gls_unsortiert = [[b1, b2, b3], [b1, b2, b3], [c1, c2, c3], [d1, d2, d3]]
-                
+                text = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                        + r' \end{pmatrix} + ' + var1 + r' \cdot  \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
+                        + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(c1)
+                        + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
+                        + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                        + r' \end{pmatrix} \quad \to \quad \beginn{matrix} I \\ II \\ III \\ \end{matrix} '
+                        + r'\quad \beginn{matrix} ' + summe.terme([a1, b1], ['', var1]) + '~=~'
+                        + summe.terme([c1, d1], ['', var2]) + r' \\'
+                        + summe.terme([a2, b2], ['', var1]) + '~=~'
+                        + summe.terme([c2, d2], ['', var2]) + r' \\'
+                        + summe.terme([a3, b3], ['', var1]) + '~=~'
+                        + summe.terme([c3, d3], ['', var2]) + r' \\' + r' \end{matrix} \quad (2BE)')
+
+                gls_usi = vektor.invers([[a1, a2, a3],  [c1, c2, c3], [-1*b1, -1*b2, -1*b3], [d1, d2, d3]])
+                lsg = gls_sortieren(gls_usi, zeilnr=True)
+                punkte += 2
+
+                def probe(lsg):
+                    erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
+                    erg2 = np.array(obj2[0]) + lsg[1]*np.array(obj2[1])
+                    text = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                            + r' \end{pmatrix} + ' + var1 + r' \cdot  \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
+                            + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(c1)
+                            + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
+                            + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                            + r' \end{pmatrix} \quad \to \quad \beginn{pmatrix} '
+                            + gzahl(a1 + lsg[0] * b1) + r'\\' + gzahl(a2 + lsg[0]*b2) + r' \\' + gzahl(a3 + lsg[0]*b3)
+                            + r' \\' + r' \end{pmatrix} ~=~ \beginn{pmatrix} ' + gzahl(c1 + lsg[1] * d1) + r'\\'
+                            + gzahl(c2 + lsg[1]*d2) + r' \\' + gzahl(c3 + lsg[1]*d3) + r' \\'
+                            + r' \end{pmatrix} ')
+                    if erg1-erg2 == 0:
+                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        lsg = lsg
+                    else:
+                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        lsg = []
+                    return text, lsg
+
+
+            elif len(obj1) == 1 and len(obj2) == 3:
+                if all(zahl == 0 for zahl in obj2[1]) or all(zahl == 0 for zahl in obj2[2]):
+                    exit('Fehler in vektor.rechnung: Ein Richtungsvektor der Ebene ist der Nullvektor, '
+                         'der keine Richtung hat.')
+                [[a1, a2, a3]], [[b1, b2, b3], [c1, c2, c3], [d1, d2, d3]] = obj1, obj2
+                gls_us = obj1 + obj2
+                gls_usi = vektor.invers(gls_us, zeilnr=True)
+                var_obj2 = ['r','s'] if len(var_obj2) != 2 else var_obj2
+                var1, var2 = var_obj2[0], var_obj2[1]
+                text = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                        + r' \end{pmatrix} + ' + var1 + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
+                        + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(c1) + r' \\'
+                        + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
+                        + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                        + r' \end{pmatrix} \quad \to \quad \beginn{matrix} I \\ II \\ III \\ \end{matrix} \quad '
+                        + r' \beginn{matrix}' + gzahl(a1) + '~=~'
+                        + summe.terme([b1, c1, d1], ['', var1, var2]) + r' \\' + gzahl(a2) + '~=~'
+                        + summe.terme([b2, c2, d2], ['', var1, var2]) + r' \\' + gzahl(a3) + '~=~'
+                        + summe.terme([b3, c3, d3], ['', var1, var2]) + r' \\'
+                        + r' \end{matrix} \quad (2BE)')
+                gls_usi = vektor.inverse([[a1, a2, a3],  [b1, b2, b3], [c1, c2, c3], [d1, d2, d3]])
+                lsg = gls_sortieren(gls_usi, zeilnr=True)
+                punkte += 2
+
+                def probe(lsg):
+                    erg1 = np.array(obj1[0])
+                    erg2 = np.array(obj2[0]) + lsg[0] * np.array(obj2[1]) + lsg[1] * np.array(obj2[2])
+                    text = (r' \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                            + r' \end{pmatrix} + ' + var1 + r' \cdot \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2)
+                            + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix}  ~=~  \begin{pmatrix} ' + gzahl(c1)
+                            + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} + ' + var2
+                            + r' \cdot \begin{pmatrix} ' + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                            + r' \end{pmatrix} \quad \to \quad \beginn{pmatrix} '
+                            + gzahl(a1) + r'\\' + gzahl(a2) + r' \\' + gzahl(a3) + r' \\'
+                            + r' \end{pmatrix} ~=~ \beginn{pmatrix} ' + gzahl(b1 + lsg[0] * c1 + lsg[1] * d1) + r'\\'
+                            + gzahl(b2 + lsg[0]* c2 + lsg[1] * d2) + r' \\' + gzahl(b3 + lsg[0]*c3 + lsg[1] * d3)
+                            + r' \\' + r' \end{pmatrix} ')
+                    if erg1 - erg2 == 0:
+                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        lsg = lsg
+                    else:
+                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        lsg = []
+                    return text, lsg
+
+            rsnull, rnull, snull, nnull = lsg
+            if len(rsnull) == 2:
+                zeile1 = rsnull[0]
+                zeile2 = rsnull[1]
+                zeile3 = nnull[0]
+                if zeile1[1] != zeile1[2]:
+                    text = [text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                            + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (1BE)']
+                    lsg = []
+                    punkte += 1
+                elif zeile2[1] != zeile2[2]:
+                    text = [text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt: \quad ' + gzahl(zeile2[1])
+                            + '~=~' + gzahl(zeile2[2]) + r' \quad f.A.} \quad (1BE)']
+                    lsg = []
+                    punkte += 1
+                else:
+                    text = [text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                           + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile2[0])
+                            + r'~folgt: \quad ' + gzahl(zeile2[1]) + '~=~' + gzahl(zeile2[2])
+                            + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile3[0]) + r'folgt:} \quad '
+                            + vorz_v_aussen(-1*zeile3[3], var1) + '~=~'
+                            + summe.terme([zeile3[2] - zeile3[1], zeile3[4]],['',var2])
+                            + r' \quad \vert \div ' + gzahl_klammer(-1*zeile3[3]) + r' \\' + var1 + '~=~'
+                            + summe.terme([Rational(zeile3[2] - zeile3[1], -1*zeile3[3]),
+                                           Rational(zeile3[4], -1*zeile3[3])],['',var2])
+                            + r' \quad \to \quad ' + var1 +  r' \in \mathbb{R} \quad (2BE)']
+                    lsg = []
+                    punkte += 4
+            elif len(rsnull) == 1:
+                zeile1 = rsnull[0]
+                if zeile1[1] != zeile1[2]:
+                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + '~folgt: \quad ' + gzahl(zeile1[1])
+                            + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (2BE)')
+                    lsg = []
+                    punkte += 2
+                else: # zeile1[1] == zeile1[2]
+                    text = (text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + '~folgt: \quad ' + gzahl(zeile1[1])
+                           + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (2BE) ')
+                    punkte += 2
+                    if rnull != []:
+                        zeile2 = rnull[0]
+                        text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + '~folgt:} \quad '
+                                + gzahl(zeile2[1]-zeile2[2]) + '~=~' + vorz_v_aussen(zeile2[4], var2)
+                                + r' \quad \vert \div' + gzahl_klammer(zeile2[4]) + r' \quad \to \quad ' + var2
+                                + '~=~' + gzahl(Rational(zeile2[1]-zeile2[2],zeile2[4])) + r' \quad (2BE)')
+                        lsg.append(Rational(zeile2[1]-zeile2[2],zeile2[4]))
+                        punkte += 2
+                        if snull != []:
+                            zeile3 = snull[0]
+                            text = (text + r' \\ \mathrm{aus~' + gzahl(zeile3[0]) + '~folgt:} \quad '
+                                    + gzahl(zeile3[1] - zeile3[2]) + '~=~' + vorz_v_aussen(zeile3[3], var1)
+                                    + r' \quad \vert \div' + gzahl_klammer(zeile3[3]) + r' \quad \to \quad ' + var1
+                                    + '~=~' + gzahl(Rational(zeile3[1] - zeile3[2], zeile3[3])) + r' \quad (2BE)')
+                            lsg.append(Rational(zeile3[1] - zeile3[2], zeile3[3]))
+                            text_pr, lsg_pr = probe(lsg)
+                            text, lsg = text + text_pr, lsg_pr
+                            punkte += 4
+
+            text = [text]
         else:
             text = ['']
             lsg = []
@@ -829,8 +992,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
     :param ergebnisse: Liste der Ergebnisse (Vektor b).
     :return: Liste der Lösungen oder eine Beschreibung der Schritte.
     """
-    beschrift = {1:'I',2: 'II',3: 'III',4: 'IV',5: 'V',6: 'VI',7: 'VII',8: 'VIII',9: 'IX',10: 'X'}
-    beschrift_reverse = {value: key for key, value in beschrift.items()}
+    zeilennummer_reverse = {value: key for key, value in zeilennummer.items()}
     n = len(gleichungen)
     variablen = [liste_teilaufg[step] for step in range(len(gleichungen[0]) - 1)] if variablen == [] else variablen
     zw_lsg = []
@@ -849,23 +1011,23 @@ def gaussalgorithmus(gleichungen, variablen=[]):
                 gleichungen.remove(element)
     gleichungen = zw_lsg
 
-    loesung = [[beschrift.get(k+1, 'zu groß'), ''] + gleichungen[k] for k in range(n)]
+    loesung = [[zeilennummer.get(k+1, 'zu groß'), ''] + gleichungen[k] for k in range(n)]
 
     for i in range(n):
         for k in range(i+1, n):
             if gleichungen[k][i] != 0:
-                text = (gzahl(gleichungen[k][i]) + r' \cdot ' + beschrift.get(i+1, 'zu groß')
-                        + vorz_str(-1 * gleichungen[i][i]) + r' \cdot ' + beschrift.get(k+1, 'zu groß'))
+                text = (gzahl(gleichungen[k][i]) + r' \cdot ' + zeilennummer.get(i+1, 'zu groß')
+                        + vorz_str(-1 * gleichungen[i][i]) + r' \cdot ' + zeilennummer.get(k+1, 'zu groß'))
                 neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
                               for step in range(0, len(gleichungen[0]))]
                 gleichungen[k] = neue_zeile
-                loesung.append([beschrift.get(k+1, 'zu groß'), text] + neue_zeile)
+                loesung.append([zeilennummer.get(k+1, 'zu groß'), text] + neue_zeile)
 
-    k = beschrift_reverse[loesung[-1][0]]
+    k = zeilennummer_reverse[loesung[-1][0]]
     gleich_lsg = []
     for anz in reversed(list(range(k))):
         for eintrag in reversed(loesung):  # Liste von hinten durchgehen
-            if eintrag[0] == beschrift[anz+1]:
+            if eintrag[0] == zeilennummer[anz+1]:
                 gleich_lsg.append(eintrag) # Letztes Element zurückgeben
                 break
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
