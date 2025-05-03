@@ -579,8 +579,9 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 = vektor_2 if random.randint(1,2) == 1 else np.array([b1, b2, b3+zzahl(1,3)])
         faktor = zzahl(2, 40) / 10
         text, lsg, punkte = vektor.rechnung([vektor_1], [vektor_2])
-        text_lsg = r' \\ \mathrm{Die~Vektoren~sind~kollinear.} \quad (4BE) ' if lsg[0] == lsg[1] == lsg[2] \
-            else r' \\ \mathrm{Die~Vektoren~sind~nicht~kollinear.} \quad (4BE) '
+        text_lsg = r' \\ \mathrm{Die~Vektoren~sind~kollinear.} \quad (1BE) ' if lsg[0] == lsg[1] == lsg[2] \
+            else r' \\ \mathrm{Die~Vektoren~sind~nicht~kollinear.} \quad (1BE) '
+        punkte += 1
         aufgabe.extend((beschriftung(teilaufg, i) + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
