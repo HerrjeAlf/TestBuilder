@@ -560,7 +560,7 @@ class vektor():
                 lsg = Rational(z1,z2)
                 text = gzahl(lsg)
             return text, lsg
-
+        # hier werden die Fälle (Vektor-Vektor) und (Vektor-Gerade) betrachtet
         if len(obj1) == len(obj2) == 1 or (len(obj1)== 1 and len(obj2)==2) and len(var_obj2) < 2:
             var = var_obj2[0] if var_obj2 != [] else 'r'
             if len(obj2)==2:
@@ -599,8 +599,9 @@ class vektor():
                 lsg = [lsg1, lsg2, lsg3]
                 punkte += 3
 
+        # hier werden die Fälle (Gerade-Gerade), (Vektor-Ebene) oder (Vektor-2_Richtungsvektoren) betrachtet
         elif len(obj1) + len(obj2) == 4 or len(var_obj2) == 2:
-            def gls_sortieren(gls, zeilnr=[True,False][1]):
+            def gls_sortieren(gls, zeilnr=[True,False][1]): # diese Funktion sortiert das Gleichungssystem nach den vorhandenen Variablen
                 matrix = []
                 for k in range(len(gls)):
                     nr = [zeilennummer[k+1]] if zeilnr else []
@@ -618,7 +619,7 @@ class vektor():
                         nnull.append(element)
                 return [rsnull, rnull, snull, nnull]
 
-            if len(obj1) == len(obj2) == 2:
+            if len(obj1) == len(obj2) == 2: # hier wird der Text und die Probe für den Fall (Gerade-Gerade) erzeugt
                 if all(zahl == 0 for zahl in obj1[1]) or all(zahl == 0 for zahl in obj2[1]):
                     exit('Fehler in vektor.rechnung: Der Richtungsvektor einer der beiden Gerade ist der Nullvektor, '
                          'der keine Richtung hat.')
@@ -644,6 +645,39 @@ class vektor():
                 erg_sort = gls_sortieren(gls_usi, zeilnr=True)
                 punkte += 2
 
+                def rg_rnull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2],zeile[4]], ['', var2])
+                            + umformung(zeile[2],'-') + umformung(zeile[4],':') + r' \quad \to \quad '
+                            + var2 + '~=~' + gzahl(Rational(zeile[1]-zeile[2],zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1]-zeile[2],zeile[4])
+                    return text, lsg
+                def rg_snull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + summe.terme([zeile[1],-1*zeile[3]],['',var1]) + '~=~' + gzahl(zeile[3])
+                            + umformung(zeile[1],'-') + umformung(-1*zeile[3],':') + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2], zeile[3])
+                    return text, lsg
+                def rg_nnull_lsgr(zeile,lsgr):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr)])
+                            + '~=~' + summe.terme([zeile[2], zeile[4]], ['', var2])
+                            + umformung(zeile[2],'-') + umformung(zeile[4],':')
+                            + r' \quad \to \quad ' + var2 + '~=~'
+                            + gzahl(Rational(zeile[1] - zeile[2] - zeile[3]*lsgr, zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2] - zeile[3]*lsgr, zeile[4])
+                    return text, lsg
+                def rg_nnull_lsgs(zeile, lsgs):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + summe.terme([zeile[1], -1*zeile[3]], ['', var1]) + '~=~'
+                            + summe.terme([zeile[2], zeile[4]], ['', r' \cdot ' + gzahl_klammer(lsgs)])
+                            + umformung(zeile[1], '-') + umformung(-1*zeile[3], ':')
+                            + r' \quad \to \quad ' + var1 + '~=~'
+                            + gzahl(Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])
+                    return text, lsg
+
                 def probe(lsg):
                     erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
                     erg2 = np.array(obj2[0]) + lsg[1]*np.array(obj2[1])
@@ -666,7 +700,7 @@ class vektor():
                         lsg = []
                     return text, lsg
 
-            elif len(obj1) == 1 and len(obj2) == 3:
+            elif len(obj1) == 1 and len(obj2) == 3: # hier wird der Text und die Probe für den Fall (Vektor-Ebene) erzeugt
                 if all(zahl == 0 for zahl in obj2[1]) or all(zahl == 0 for zahl in obj2[2]):
                     exit('Fehler in vektor.rechnung: Ein Richtungsvektor der Ebene ist der Nullvektor, '
                          'der keine Richtung hat.')
@@ -691,30 +725,62 @@ class vektor():
                 gls_usi = vektor.invers([[a1, a2, a3],  [b1, b2, b3], [c1, c2, c3], [d1, d2, d3]])
                 erg_sort = gls_sortieren(gls_usi, zeilnr=True)
                 punkte += 2
-
-                def probe(lsg):
-                    erg1 = np.array(obj1[0])
-                    erg2 = np.array(obj2[0]) + lsg[0] * np.array(obj2[1]) + lsg[1] * np.array(obj2[2])
-                    text = (r' \\\\ \mathrm{Probe: \quad } \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\'
-                            + gzahl(a3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(b1) + r' \\'
-                            + gzahl(b2) + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix} ' + vorz_str(lsg[0], null=True)
-                            + r' \cdot  \begin{pmatrix} ' + gzahl(c1) + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\'
-                            + r' \end{pmatrix} ' + vorz_str(lsg[1], null=True) + r' \cdot \begin{pmatrix} '
-                            + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
-                            + r' \end{pmatrix} \quad \to \quad \begin{pmatrix} ' + gzahl(a1) + r'\\' + gzahl(a2)
-                            + r' \\' + gzahl(a3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                            + gzahl(b1 + lsg[0] * c1 + lsg[1] * d1) + r'\\'
-                            + gzahl(b2 + lsg[0]* c2 + lsg[1] * d2) + r' \\' + gzahl(b3 + lsg[0]*c3 + lsg[1] * d3)
-                            + r' \\' + r' \end{pmatrix} ')
-                    if all(erg1[k]-erg2[k] == 0 for k in range(len(erg1))):
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
-                        lsg = lsg
-                    else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
-                        lsg = []
+                def rg_rnull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2], zeile[4]],['', var2])
+                            + umformung(zeile[2], '-') + umformung(zeile[4], ':') + r' \quad \to \quad '
+                            + var2 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2], zeile[4])
+                    return text, lsg
+                def rg_snull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2], zeile[3]],['',var1])
+                            + umformung(zeile[2], '-') + umformung(zeile[3], ':') + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2], zeile[3])
+                    return text, lsg
+                def rg_nnull_lsgr(zeile, lsgr):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
+                            + summe.terme([zeile[2], zeile[3], zeile[4]],
+                                          ['', r' \cdot ' + gzahl_klammer(lsgr), var2])
+                            + umformung(zeile[2] + zeile[3]*lsgr, '-') + umformung(zeile[4], ':')
+                            + r' \quad \to \quad ' + var2 + '~=~'
+                            + gzahl(Rational(zeile[1] - zeile[2] - zeile[3] * lsgr, zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2] - zeile[3] * lsgr, zeile[4])
+                    return text, lsg
+                def rg_nnull_lsgs(zeile, lsgs):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
+                            + summe.terme([zeile[2], zeile[3], zeile[4]],
+                                          ['', var1, r' \cdot ' + gzahl_klammer(lsgs)])
+                            + umformung(zeile[2]+zeile[4]*lsgs, '-') + umformung(zeile[3], ':')
+                            + r' \quad \to \quad ' + var1 + '~=~'
+                            + gzahl(Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])
                     return text, lsg
 
-            elif len(obj1) == 1 and len(obj2) == 2 and len(var_obj2) == 2:
+                def probe(lsg):
+                        erg1 = np.array(obj1[0])
+                        erg2 = np.array(obj2[0]) + lsg[0] * np.array(obj2[1]) + lsg[1] * np.array(obj2[2])
+                        text = (r' \\\\ \mathrm{Probe: \quad } \begin{pmatrix} ' + gzahl(a1) + r' \\' + gzahl(a2) + r' \\'
+                                + gzahl(a3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(b1) + r' \\'
+                                + gzahl(b2) + r' \\' + gzahl(b3) + r' \\' + r' \end{pmatrix} ' + vorz_str(lsg[0], null=True)
+                                + r' \cdot  \begin{pmatrix} ' + gzahl(c1) + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\'
+                                + r' \end{pmatrix} ' + vorz_str(lsg[1], null=True) + r' \cdot \begin{pmatrix} '
+                                + gzahl(d1) + r' \\' + gzahl(d2) + r' \\' + gzahl(d3) + r' \\'
+                                + r' \end{pmatrix} \quad \to \quad \begin{pmatrix} ' + gzahl(a1) + r'\\' + gzahl(a2)
+                                + r' \\' + gzahl(a3) + r' \\' + r' \end{pmatrix} ~=~ \begin{pmatrix} '
+                                + gzahl(b1 + lsg[0] * c1 + lsg[1] * d1) + r'\\'
+                                + gzahl(b2 + lsg[0]* c2 + lsg[1] * d2) + r' \\' + gzahl(b3 + lsg[0]*c3 + lsg[1] * d3)
+                                + r' \\' + r' \end{pmatrix} ')
+                        if all(erg1[k]-erg2[k] == 0 for k in range(len(erg1))):
+                            text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                            lsg = lsg
+                        else:
+                            text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                            lsg = []
+                        return text, lsg
+
+            elif len(obj1) == 1 and len(obj2) == 2 and len(var_obj2) == 2: # hier wird der Text und die Probe für den Fall (Vektor-2_Richtungsvektoren) erzeugt
                 if all(zahl == 0 for zahl in obj2[0]) or all(zahl == 0 for zahl in obj2[1]):
                     exit('Fehler in vektor.rechnung: Ein Richtungsvektor ist der Nullvektor, '
                          'der keine Richtung hat.')
@@ -738,7 +804,34 @@ class vektor():
                 gls_usi = vektor.invers([[a1, a2, a3],  [0, 0, 0], [b1, b2, b3], [c1, c2, c3]])
                 erg_sort = gls_sortieren(gls_usi, zeilnr=True)
                 punkte += 2
-
+                def rg_rnull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + gzahl(zeile[1]) + '~=~' + vorz_v_aussen(zeile[4], var2)
+                            + umformung(zeile[4], ':') + r' \quad \to \quad '
+                            + var2 + '~=~' + gzahl(Rational(zeile[1], zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1], zeile[4])
+                    return text, lsg
+                def rg_snull(zeile):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
+                            + gzahl(zeile[1]) + '~=~' + vorz_v_aussen(zeile[3],var1)
+                            + umformung(zeile[3], ':') + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(zeile[1], zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1], zeile[3])
+                    return text, lsg
+                def rg_nnull_lsgr(zeile, lsgr):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
+                            + summe.terme([zeile[3], zeile[4]], [r' \cdot ' + gzahl_klammer(lsgr), var2])
+                            + umformung(zeile[3]*lsgr, '-') + umformung(zeile[4], ':') + r' \quad \to \quad '
+                            + var2 + '~=~' + gzahl(Rational(zeile[1] - zeile[3] * lsgr, zeile[4])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[3] * lsgr, zeile[4])
+                    return text, lsg
+                def rg_nnull_lsgs(zeile, lsgs):
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
+                            + summe.terme([zeile[3], zeile[4]],[var1, r' \cdot ' + gzahl_klammer(lsgs)])
+                            + umformung(zeile[4]*lsgs, '-') + umformung(zeile[3], ':') + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
+                    lsg = Rational(zeile[1] - zeile[4] * lsgs, zeile[3])
+                    return text, lsg
                 def probe(lsg):
                     erg1 = np.array(obj1[0])
                     erg2 = lsg[0] * np.array(obj2[0]) + lsg[1] * np.array(obj2[1])
@@ -760,23 +853,25 @@ class vektor():
                         lsg = []
                     return text, lsg
 
-            # Ab hier werden alle möglichen Varianten der Lösung erzeugt
+            # hier werden die Gleichungen nach ihren Lösungen sortiert 1 (rsnull): r und s sind null, 2 (rnull): r ist null, 3 (snull): s ist null und 4 (nnull): nichts ist null
             rsnull, rnull, snull, nnull = erg_sort
-            if len(rsnull) == 2:
+
+            # Ab hier werden alle möglichen Varianten der Lösung erzeugt
+            if len(rsnull) == 2: # Ihr werden alle Lösungen erzeugt, wenn rsnull zweimal auftritt
                 zeile1 = rsnull[0]
                 zeile2 = rsnull[1]
                 zeile3 = nnull[0]
-                if zeile1[1] != zeile1[2]:
+                if zeile1[1] != zeile1[2]: # die erste Zeile erzeugt einen Widerspruch
                     text = (text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
-                elif zeile2[1] != zeile2[2]:
+                elif zeile2[1] != zeile2[2]: # die zweite Zeile erzeugt einen Widerspruch
                     text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt: \quad ' + gzahl(zeile2[1])
                             + '~=~' + gzahl(zeile2[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
-                else:
+                else: # hier kann nur noch 1-1-4 auftreten, alles andere wird ausgeschlossen, weil kein Richtungsvektor [0,0,0] sein darf
                     text = (text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile2[0])
                             + r'~folgt: \quad ' + gzahl(zeile2[1]) + '~=~' + gzahl(zeile2[2])
@@ -789,35 +884,37 @@ class vektor():
                             + r' \quad \to \quad ' + var1 + r' \in \mathbb{R} \quad (2BE)')
                     lsg = []
                     punkte += 4
-            elif len(rsnull) == 1:
+            elif len(rsnull) == 1: # hier werden alle Fälle erzeugt, wenn rsnull einmal auftritt
                 zeile1 = rsnull[0]
-                if zeile1[1] != zeile1[2]:
+                if zeile1[1] != zeile1[2]: # die erste Zeile rsnull, erzeugt einen Widerspruch
                     text = (text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
-                else: # zeile1[1] == zeile1[2]
+                else: # die erste Zeile ist eine wahre Aussage 1-...
                     text = (text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                            + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (2BE) ')
                     punkte += 2
-                    if rnull != []:
-                        zeile2 = rnull[0]
-                        text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt:} \quad '
-                                + gzahl(zeile2[1]-zeile2[2]) + '~=~' + vorz_v_aussen(zeile2[4], var2)
-                                + umformung(zeile2[4],':') + r' \quad \to \quad ' + var2
-                                + '~=~' + gzahl(Rational(zeile2[1]-zeile2[2],zeile2[4])) + r' \quad (2BE)')
-                        lsg.append(Rational(zeile2[1]-zeile2[2],zeile2[4]))
+                    if rnull != []: # 1-2-...
+                        rnull_text, rnull_lsg = rg_rnull(rnull[0])
+                        text = text + rnull_text
+                        lsg.append(rnull_lsg)
                         punkte += 2
-                        if snull != []:
-                            zeile3 = snull[0]
-                            text = (text + r' \\ \mathrm{aus~' + gzahl(zeile3[0]) + r'~folgt:} \quad '
-                                    + gzahl(zeile3[1] - zeile3[2]) + '~=~' + vorz_v_aussen(zeile3[3], var1)
-                                    + umformung(zeile3[3],':') + r' \quad \to \quad ' + var1
-                                    + '~=~' + gzahl(Rational(zeile3[1] - zeile3[2], zeile3[3])) + r' \quad (2BE)')
-                            lsg.insert(0,Rational(zeile3[1] - zeile3[2], zeile3[3]))
+                        if snull != []: # 1-2-3 (erfordert Probe um das Ergebnis zu überprüfen)
+                            snull_text, snull_lsg = rg_snull(snull[0])
+                            text = text + snull_text
+                            lsg.insert(0,snull_lsg)
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
                             punkte += 4
+                        elif nnull != []: # 1-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
+                            nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
+                            text = text + nnull_text
+                            lsg.insert(0,nnull_lsg)
+                            text_pr, lsg_pr = probe(lsg)
+                            text, lsg = text + text_pr, lsg_pr
+                            punkte += 4
+
 
             text = [text]
         else:
