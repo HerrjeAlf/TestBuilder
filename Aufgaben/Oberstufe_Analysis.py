@@ -913,12 +913,21 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         return fkt, fkt_uf, fkt_abl, pkt
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
+        if type(anzahl) != int:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-    elif wdh != False:
-        teilaufg = repeat(teilaufg, wdh)
-        exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
-             "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
+        else:
+            anzahl = 26 if anzahl > 26 else anzahl
+            teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        if type(wdh) != int or len(teilaufg)*wdh > 26:
+            exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
+                 "26 Teilaufgaben ergeben.")
+        else:
+            print(teilaufg)
+            anzahl = 26 if anzahl > 26 or anzahl == False else anzahl
+            teilaufg = repeat(teilaufg, wdh, laenge=anzahl)
+            print(teilaufg)
+
     aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
                 'f': fkt_ln, 'g': fkt_wurzel_exp, 'h': verkettet_exp, 'i': verkettet_ln,
                 'j': verkettet_wurzel}

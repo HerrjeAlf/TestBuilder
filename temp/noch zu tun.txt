@@ -1,5 +1,6 @@
 allgemein:
 - alte Skripte in neue Form anpassen
+- optional Zeitstempel in Fußzeile
 
 Berechnungen:
  - kleine Kurvendiskussion
@@ -12,6 +13,17 @@ in Aufgaben Analysis:
 - Kurvendiskussion von Exponentialfkt mit Parameter um zwei Teilaufgaben ergänzen
     --> 1. weise nach das Stammfunktion stimmt
     --> 2. berechne mit x-Achse eingeschlossene Fläche (x, oo)
+
+- kurvendiskussion_exponentialfkt_parameter
+    --> Bei der Ausgabe fehlt bei der Funktion der Parameter also z.B. f_b(x).
+    --> der Parameter wird nicht definiert. Also b element R
+
+überlegende Aufgabentypen (als Differenzierung)
+    --> Rotationsvolumen
+    --> Differentialgleichungen
+    --> Pyysikalische Kontextanwendungen
+        --> Entladekurve Kondensator mit t-I-Diagramm und Flächenberechnung (Ladungsbestimmung)
+        --> t-s-Diagramme zur Bestimmung der Geschwindigkeit bzw. der Beschleunigung
 
 in Aufgaben Wahrscheinlichkeit:
 
