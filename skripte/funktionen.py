@@ -1144,7 +1144,7 @@ def repeat(list, wdh=2, laenge=False):
     new_list = []
     for element in list:
         new_list.extend([element for _ in range(wdh)])
-    return new_list[laenge:] if laenge >= len(new_list) else new_list
+    return new_list[:laenge] if laenge else new_list
 
 def polynom(p):  # erzeugt eine Funktion und deren Ableitungen mit p Summanden und maximal p-Grades
     fkt = random.choice([zzahl(1, 10), 0])
