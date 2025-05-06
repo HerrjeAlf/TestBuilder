@@ -572,12 +572,11 @@ class vektor():
                          + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\' + r' \end{pmatrix} \quad \left\vert '
                          + r' - \begin{pmatrix} ' + gzahl(b1) + r' \\' + gzahl(b2) + r' \\' + gzahl(b3) + r' \\'
                          + r' \end{pmatrix} \right. \quad (1BE) \\\\ ')
-                obj1 = [a1-b1, a2-b2, a3-b3]
-                obj2 = [c1, c2, c3]
+                obj1 = [[a1-b1, a2-b2, a3-b3]]
+                obj2 = [[c1, c2, c3]]
                 punkte += 1
             else:
                 text0 = ''
-
             if all(zahl == 0 for zahl in obj1[0]) or all(zahl == 0 for zahl in obj2[0]):
                 exit('Fehler in vektor.rechnung: Ein Vektor ist der Nullvektor, der keine Richtung hat. '
                      'Es ist keine Rechnung möglich')
