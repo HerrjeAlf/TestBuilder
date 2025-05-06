@@ -1297,8 +1297,8 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     elif koeff[2] == 0:
         text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
                 + '~=~' + var + r' \cdot \left( ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1])
-                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ f(' + var + ') ~=~ '
-                + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
+                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0  \quad (2BE) \\ 0 ~=~ f(' + var
+                + ') ~=~ ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
                 + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad ' + var + '_{ ' + gzahl(n2)
                 + ' } ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
         lsg = [0, Rational(-1*koeff[1], koeff[0])]
@@ -1427,7 +1427,7 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
                                  + vorz_str(koeff[2]))
         lsg_quadr.append(0)
         lsg_quadr.sort()
-        text = ('0~=~' + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad \\ '
+        text = ('0~=~' + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad (2BE) \\ '
                 + text_quadr[0])
         punkte = 2 + punkte_quadr
         text = [text]
