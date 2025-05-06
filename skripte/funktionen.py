@@ -581,7 +581,7 @@ class vektor():
                 exit('Fehler in vektor.rechnung: Ein Vektor ist der Nullvektor, der keine Richtung hat. '
                      'Es ist keine Rechnung möglich')
             else:
-                [a1, a2, a3], [b1, b2, b3]  = obj1[0], obj2[0]
+                [a1, a2, a3], [b1, b2, b3] = obj1[0], obj2[0]
                 text1, lsg1 = quotient(a1, b1)
                 text2, lsg2 = quotient(a2, b2)
                 text3, lsg3 = quotient(a3, b3)
