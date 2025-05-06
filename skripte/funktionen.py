@@ -659,6 +659,28 @@ class vektor():
                             + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2], zeile[3])
                     return text, lsg
+
+                def rg_nnull_2x(zeilen):
+                    zeile1 = zeilen[0]
+                    zeile2 = zeilen[1]
+                    text = (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt:} \quad '
+                            + summe.terme([zeile1[1], -1*zeile1[3]],['',var1]) + '~=~'
+                            + summe.terme([zeile1[2], zeile1[4]], ['', var2])
+                            + umformung(zeile1[2],'-') + umformung(zeile1[4],':')
+                            + r' \quad \to \quad ' + var2 + '~=~' + gzahl(Rational(zeile1[1] - zeile1[2], zeile1[4]))
+                            + vorz_v_innen(Rational(-1*zeile1[3],zeile1[4]), var1)+ r' \quad (2BE) \\ ')
+                    lsg_c, lsg_var1 = Rational(zeile1[1] - zeile1[2], zeile1[4]), Rational(-1*zeile1[3],zeile1[4])
+                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt:} \quad '
+                            + summe.terme([zeile2[1], -1*zeile2[3]],['',var1]) + '~=~'
+                            + summe.terme([zeile2[2], zeile2[4]],
+                                          ['', r' \cdot ' + binom_klammer(lsg_c, lsg_var1, str2=var1)]) + '~=~'
+                            + summe.terme([zeile2[2], zeile2[4]*lsg_c, zeile2[4]*lsg_var1], ['','', var1])
+                            + umformung(zeile2[1], '-') + umformung(zeile2[4]*lsg_var1, '-')
+                            + r' \quad \to \quad ' + var2 + '~=~' + gzahl(Rational(zeile1[1] - zeile1[2], zeile1[4]))
+                            + vorz_v_innen(Rational(-1*zeile1[3],zeile1[4]), var1)+ r' \quad (2BE) \\ '
+                            )
+                    return text, lsg
+
                 def rg_nnull_lsgr(zeile,lsgr):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr)])
@@ -677,6 +699,7 @@ class vektor():
                             + gzahl(Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])
                     return text, lsg
+
 
                 def probe(lsg):
                     erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
@@ -914,6 +937,16 @@ class vektor():
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
                             punkte += 4
+                    elif snull != []: # 1-3-4 (erfordert Probe um das Ergebnis zu überprüfen)
+                        snull_text, snull_lsg = rg_snull(snull[0])
+                        text = text + snull_text
+                        lsg.append( snull_lsg)
+                        nnull_text, nnull_lsg = rg_nnull_lsgr(nnull[0], lsg[0])
+                        text = text + nnull_text
+                        lsg.insert(0, nnull_lsg)
+                        text_pr, lsg_pr = probe(lsg)
+                        text, lsg = text + text_pr, lsg_pr
+                        punkte += 6
 
 
             text = [text]
@@ -1264,8 +1297,8 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     elif koeff[2] == 0:
         text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
                 + '~=~' + var + r' \cdot \left( ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1])
-                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0 \\ 0 ~=~ f(' + var + ') ~=~ '
-                + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
+                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0  \quad (2BE) \\ 0 ~=~ f(' + var
+                + ') ~=~ ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
                 + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad ' + var + '_{ ' + gzahl(n2)
                 + ' } ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
         lsg = [0, Rational(-1*koeff[1], koeff[0])]
@@ -1394,7 +1427,7 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
                                  + vorz_str(koeff[2]))
         lsg_quadr.append(0)
         lsg_quadr.sort()
-        text = ('0~=~' + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad \\ '
+        text = ('0~=~' + fkt_str + r' ~=~ x \cdot (' + fkt_x_ausgekl_str + r') \quad \to \quad x = 0 \quad (2BE) \\ '
                 + text_quadr[0])
         punkte = 2 + punkte_quadr
         text = [text]
