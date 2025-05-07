@@ -1362,10 +1362,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            r' \end{pmatrix} ')
             aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
-        sp_vp = vektor.skalarprodukt([vx, vy, vz], [px, py, pz])
+        sp_vp = vektor.skalarprodukt([px, py, pz],[vx, vy, vz])
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
-        schnittwinkel = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
+        erg = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
+        schwnittwinkel = 180 - erg if erg > 90 else erg
 
         loesung.append(beschriftung(teilaufg,i, True) + r' cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
