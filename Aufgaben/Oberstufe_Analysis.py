@@ -4215,7 +4215,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + vorz_str(2*a*c) + vorz_v_innen(c**2,'b') + r' \right) \cdot e^{' + gzahl(c)
                        + r' \cdot \left( ' + gzahl(-1/c) + vorz_str(-1/a) + r' \cdot b \right)} ~=~ '
                        + gzahl(a*c) + r' \cdot e^{' + vorz_str(-1*c/a) + r'b -1} \quad (2BE) \\ \mathrm{da~e^{'
-                       + vorz(-1*c/a) + r'b -1} ~immer~ \neq 0 }' + r' \quad \to \quad '
+                       + vorz_str(-1*c/a) + r'b -1} ~immer~ \neq 0 }' + r' \quad \to \quad '
                        + r' f^{ \prime \prime } \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,r'b') + r' \right)~=~'
                        + gzahl(a*c) + lsg_extrema + r' \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
