@@ -1366,7 +1366,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
         erg = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
-        schwnittwinkel = 180 - erg if erg > 90 else erg
+        schnittwinkel = 180 - erg if erg > 90 else erg
 
         loesung.append(beschriftung(teilaufg,i, True) + r' cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
                        r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
