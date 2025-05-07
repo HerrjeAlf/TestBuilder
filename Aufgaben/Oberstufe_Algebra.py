@@ -1362,10 +1362,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            r' \end{pmatrix} ')
             aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
 
-        sp_vp = vektor.skalarprodukt([px, py, pz],[vx, vy, vz])
+        sp_vp = abs(vektor.skalarprodukt([px, py, pz],[vx, vy, vz]))
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         l_p = sqrt(px ** 2 + py ** 2 + pz ** 2)
-        erg = N(acos(sp_vp / (l_v * l_p)) * 180 / pi, 3)
+        erg = N(acos(sp_vp / (l_p * l_v)) * 180 / pi, 3)
         schnittwinkel = 180 - erg if erg > 90 else erg
 
         loesung.append(beschriftung(teilaufg,i, True) + r' cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
@@ -1385,7 +1385,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
                        + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2BE) \\'
                        + r' \gamma ~=~ cos^{-1} \left( \frac{' + gzahl(abs(N(sp_vp,3))) + '}{'
-                       + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
+                       + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_pw,3))
                        + r'} \right) ~=~' + gzahl(schnittwinkel)
                        + r' \quad (2BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         liste_punkte.append(punkte_aufg)
