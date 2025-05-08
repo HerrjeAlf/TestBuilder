@@ -1043,7 +1043,7 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             untere_grenze_ger = int(untere_grenze) if untere_grenze%1 != 0 else untere_grenze
             obere_grenze_ger = int(round(obere_grenze+0.5))
             F_obere_grenze = round(binom.cdf(obere_grenze_ger, n, p), 3)
-            F_untere_grenze = round(binom.cdf(untere_grenze_ger, n, p), 3)
+            F_untere_grenze = round(binom.cdf(untere_grenze_ger - 1, n, p), 3)
             wkt_intervall = F_obere_grenze - F_untere_grenze
             aufgabe.extend((NoEscape(r' \noindent Berechnen Sie das symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
