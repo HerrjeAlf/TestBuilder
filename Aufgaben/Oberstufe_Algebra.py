@@ -1389,7 +1389,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
                        + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2BE) \\'
                        + r' \gamma ~=~ cos^{-1} \left( \frac{' + gzahl(N(sp_vp,3)) + '}{'
-                       + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_pw,3))
+                       + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
                        + r'} \right) ~=~' + gzahl(erg) + text
                        + r' \quad (2BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
         liste_punkte.append(punkte_aufg)
