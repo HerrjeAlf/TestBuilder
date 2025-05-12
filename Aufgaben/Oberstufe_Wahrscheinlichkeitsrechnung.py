@@ -1041,9 +1041,9 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             untere_grenze = N(mu - ausw_sigm * sigma,4)
             obere_grenze = N(mu + ausw_sigm * sigma,4)
             untere_grenze_ger = int(untere_grenze) if untere_grenze%1 != 0 else untere_grenze
-            obere_grenze_ger = round(obere_grenze+0.5)
+            obere_grenze_ger = int(round(obere_grenze+0.5))
             F_obere_grenze = round(binom.cdf(obere_grenze_ger, n, p), 3)
-            F_untere_grenze = round(binom.cdf(untere_grenze_ger, n, p), 3)
+            F_untere_grenze = round(binom.cdf(untere_grenze_ger - 1, n, p), 3)
             wkt_intervall = F_obere_grenze - F_untere_grenze
             aufgabe.extend((NoEscape(r' \noindent Berechnen Sie das symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
@@ -1161,13 +1161,13 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
                         beschriftung(teilaufg,i) + 'Berechnen Sie das Prognoseintervall in Prozent, '
                        + 'dass der Pflanzenhändler angeben sollte. \n\n'))
         loesung.append(beschriftung(teilaufg,i, True)
-                       + r' I ~ \left[ p - c \cdot sqrt{ \frac{p \cdot (1-p)}{n} } '
-                       + r' \left\vert p + c \cdot sqrt{ \frac{p \cdot (1-p)}{n}} \right. \right]  ~=~ '
-                       + r' \left[ ' + gzahl(keimen/100) + vorz_str(-1*c_2) + r' \cdot sqrt{ \frac{ '
-                       + gzahl(keimen/100) + r' \left(' + gzahl(1-keimen/100) + ' }{ ' + gzahl(anzahl) +  ' } } '
-                       + r' \left\vert ' + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot sqrt{ \frac{ '
-                       + gzahl(keimen / 100) + r' \left( ' + gzahl(1 - keimen / 100) + ' }{ ' + gzahl(anzahl)
-                       + r' } } \right. \right]  ~=~ \left[ '
+                       + r' I ~ \left[ p - c \cdot \sqrt{ \frac{p \cdot (1-p)}{n} } '
+                       + r' \left\vert p + c \cdot \sqrt{ \frac{p \cdot (1-p)}{n}} \right. \right]  ~=~ '
+                       + r' \left[ ' + gzahl(keimen/100) + vorz_str(-1*c_2) + r' \cdot \sqrt{ \frac{ '
+                       + gzahl(keimen/100) + r' \cdot' + gzahl(1-keimen/100) + r' }{ ' + gzahl(anzahl) +  ' } } '
+                       + r' \left\vert ' + gzahl(keimen / 100) + vorz_str(c_2) + r' \cdot \sqrt{ \frac{ '
+                       + gzahl(keimen / 100) + r' \cdot ' + gzahl(1 - keimen / 100) + r' }{ ' + gzahl(anzahl)
+                       + r' } } \right. \right] ~=~ \left[ '
                        + gzahl(N(keimen/100-c_2*sqrt(keimen*(100-keimen)/(anzahl*10000)),3)) + r' \left\vert '
                        + gzahl(N(keimen/100+c_2*sqrt(keimen*(100-keimen)/(anzahl*10000)),3))
                        + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen-c_2*sqrt(keimen*(100-keimen)/(anzahl)),3))
