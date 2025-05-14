@@ -1885,9 +1885,9 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
     # hier wird die Funktion erstellt.
     def Aufgabe_Variante_1():
 
-        Text = ('Ein Patient nimmt ein Medikament ein. Anschließend wird die Konzentration des Medikaments im Blut'
-                ' jede Stunde in mg/l gemessen. Die Messwerte ergeben folgende Tabelle: \n\n')
-
+        text = ('Ein Patient nimmt ein Medikament ein. Anschließend wird die Konzentration des Medikaments im Blut'
+                ' jede Stunde in mg/l gemessen. ')
+        text2 = 'Die Messwerte ergeben folgende Tabelle: '
         Grundwert = nzahl(10, 20) * 10
         Prozentwert = nzahl(5, 15)
         Wachstumsfaktor = 1 - Prozentwert/100
@@ -1898,17 +1898,17 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                 Liste.append(int(wert))
             else:
                 Liste.append(wert)
-
         Einheit_y = 'mg/l'
         Einheit_x = 'Stunden'
         Tabelle_beschriftung = 'Konzentrationsentwicklung:'
-        return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
+        text3 = (f'Dabei wurde festgestellt, dass diese am Anfang {gzahl(Grundwert)} mg/l betrug und '
+                 f'{gzahl(Prozentwert)}% pro Stunde abnimmt')
+        return text, text2, text3, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
 
     def Aufgabe_Variante_2():
 
-        Text = ('Die Anzahl der Einwohner in Millionen eines Landes wurde jedes Jahr bestimmt. Die Ergebnisse'
-                ' wurden in der folgenden Tabelle festgehalten: \n\n')
-
+        text = 'Die Einwohnerzahl eines Landes wurde jedes Jahr gezählt (Angaben in Millionen). '
+        text2 = 'Die Ergebnisse wurden in der folgenden Tabelle festgehalten:'
         Grundwert = nzahl(80, 200)
         Prozentwert = zzahl(10,50)/10
         Wachstumsfaktor = 1 + Prozentwert/100
@@ -1922,12 +1922,15 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
         Einheit_y = 'Millionen'
         Einheit_x = 'Jahren'
         Tabelle_beschriftung = 'Bevölkerungsentwicklung:'
-        return Text, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
+        richtung = 'zu' if Prozentwert > 0 else 'ab'
+        text3 = (f'Dabei wurde festgestellt, das die Einwohnerzahl jedes Jahr von ursprünglich {gzahl(Grundwert)} '
+                 f'Millionen Menschen um {gzahl(abs(Prozentwert))}% {richtung}nimmt.')
+        return text, text2, text3, Liste, Wachstumsfaktor, Grundwert, Einheit_y, Einheit_x, Tabelle_beschriftung
 
     if random.random() < 0.5:
-        Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_1()
+        text, text2, text3, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_1()
     else:
-        Aufg_Text, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_2()
+        text, text2, text3, Aufg_Liste, Aufg_a, Aufg_c0, Aufg_Einheit_y, Aufg_Einheit_x, Tab_beschr = Aufgabe_Variante_2()
 
     Aufg_t = nzahl(7, 10)
     Aufg_wert_y = int(N(Aufg_Liste[Aufg_t], 2))
@@ -1953,12 +1956,12 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                    str(N(Aufg_Liste[4] / Aufg_Liste[3], 4)).rstrip(' 0'))
     table3.add_hline(2, 6)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), Aufg_Text]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), text]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
+    if 'a' in teilaufg:
         # Die SuS sollen mithilfe des Quotienten aufeinanderfolgender Werte das exponentielle Wachstum nachweisen,
 
         punkte_aufg = 3
@@ -1968,12 +1971,15 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
         # grafische Darstellung des Sachverhaltes
 
         # Aufgaben und Lösungen
-        aufgabe.extend((table2, ' \n\n\n', beschriftung(teilaufg,i) + 'Weisen Sie nach, dass es sich um exponentielles '
-                                            'Wachstum handelt.\n\n'))
+        aufgabe.extend((text2 + ' \n\n', table2, ' \n\n\n',
+                        beschriftung(teilaufg,i)
+                        + 'Weisen Sie nach, dass es sich um exponentielles Wachstum handelt.\n\n'))
         loesung.extend((beschriftung(teilaufg,i, True)
                         + r' \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
                         + r'um~exponentielles~Wachstum. \quad (1BE)}', table3))
         i += 1
+    else:
+        aufgabe.append(text3 + '\n\n')
 
     if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
         # Die SuS sollen mithilfe der Werte und dem Quotienten aus der vorherigen Teilaufgabe, die Gleichung dieser Wachstumsfunktion aufstellen.
@@ -4215,7 +4221,7 @@ def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 
                        + vorz_str(2*a*c) + vorz_v_innen(c**2,'b') + r' \right) \cdot e^{' + gzahl(c)
                        + r' \cdot \left( ' + gzahl(-1/c) + vorz_str(-1/a) + r' \cdot b \right)} ~=~ '
                        + gzahl(a*c) + r' \cdot e^{' + vorz_str(-1*c/a) + r'b -1} \quad (2BE) \\ \mathrm{da~e^{'
-                       + vorz(-1*c/a) + r'b -1} ~immer~ \neq 0 }' + r' \quad \to \quad '
+                       + vorz_str(-1*c/a) + r'b -1} ~immer~ \neq 0 }' + r' \quad \to \quad '
                        + r' f^{ \prime \prime } \left( ' + gzahl(-1/c) + vorz_v_innen(-1/a,r'b') + r' \right)~=~'
                        + gzahl(a*c) + lsg_extrema + r' \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE}')
