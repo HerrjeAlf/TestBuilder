@@ -12,6 +12,7 @@ from sympy import *
 from sympy.plotting import plot
 from skripte.funktionen import *
 from skripte.plotten import *
+from math import log
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -1992,7 +1993,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
         loesung.append(beschriftung(teilaufg,i, True) + r' f(x)~=~' + str(Aufg_c0) + r' \cdot '
                        + str(Aufg_a) + r'^x \quad (2BE) \\')
         i += 1
-    if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
+    if 'c' in teilaufg:
         # Mithilfe der Gleichung aus Teilaufgabe 'b' sollen die SuS einen x-Wert bei gegebenen y-Wert berechnen.
 
         punkte_aufg = 3
@@ -2008,7 +2009,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
                        + r' \cdot '+ str(Aufg_a) + r'^x \quad \vert \div ' + str(Aufg_c0)
                        + r' \quad \to \quad ' + latex(Rational(Aufg_wert_y,Aufg_c0))
                        + r'~=~'+ str(Aufg_a) + r'^x \quad \vert \log_{' + str(Aufg_a)
-                       + r'} \quad \to \quad x~=~' + str(N(math.log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
+                       + r'} \quad \to \quad x~=~' + str(N(log(Rational(Aufg_wert_y,Aufg_c0),Aufg_a),5))
                        + r' \quad (3BE) \\')
         i += 1
 
