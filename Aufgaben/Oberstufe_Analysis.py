@@ -59,8 +59,6 @@ def logarithmusgesetze(nr, anzahl=1, BE=[]):
         else:
             aufg = aufg + auswahl[element]
         lsg = lsg + regeln_aufgabe[auswahl[element]] + r' \\'
-
-    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(anzahl) + r'~BE}'
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
@@ -1707,15 +1705,16 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
         liste_punkte = [punkte]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
+def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, wdh=False, i=0, BE=[]):
     # Die SuS sollen verschiedene Exponentialgleichungen lösen.
     # Mithilfe von "teilaufg=[]" können folgenden Gleichungstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Exponentfkt
-    # b) schwierige Exponentfkt
-    # c) Exponentialfkt mit einf. lin. Fkt als Exponenten
-    # d) Exponentialfkt mit lin. Fkt als Exponenten
-    # e) Summe von Exponentialfkt
-    # f) Logarithmusfkt
+    # b) Exponentfkt mit einem Faktor
+    # c) Exponentfkt mit einem Faktor und einem Summanden
+    # d) Exponentialfkt mit einf. lin. Fkt als Exponenten
+    # e) Exponentialfkt mit lin. Fkt als Exponenten
+    # f) Summe von Exponentialfkt
+    # g) Logarithmusfkt
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
@@ -1739,21 +1738,57 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
         pkt = 1
         return aufg, lsg, pkt
 
-    def exp_schwer():
+    def exp_faktor():
         pkt = 3
-        basis_2 = nzahl(2,8)
+        basis_2 = nzahl(1,8)
         exponent_2 = nzahl(2,5)
-        exponent_2_summe = zzahl(1,3)
+        exponent_2_summe = exponent_2 + random.choice([-1,1]) * nzahl(0,exponent_2)
         faktor = zzahl(2,30)*20
         ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
+        while abs(ergebnis_2 * faktor) > 10 ** 5:
+            basis_2 = basis_2 - 1 if basis_2 > 2 else basis_2
+            exponent_2_summe = exponent_2_summe - 1 if exponent_2_summe > 1 else exponent_2_summe
+            faktor = faktor / 10
+            ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
+        erg_2 = faktor*ergebnis_2
+        erg_3 = ergebnis_2
         aufg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe)
-                + r'} ~=~ ' + gzahl(faktor*ergebnis_2))
+                + r'} ~=~ ' + gzahl(erg_2))
         lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ '
-               + gzahl(faktor*ergebnis_2) + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad '
-               + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(ergebnis_2)
+               + gzahl(erg_2) + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad '
+               + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(erg_3)
                + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad (1BE) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
                + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2)) + r' \quad (2BE)'
+        return aufg, lsg, pkt
+
+    def exp_faktor_summe():
+        pkt = 3
+        basis_2 = nzahl(2,8)
+        exponent_2 = nzahl(2,5)
+        exponent_2_sum = exponent_2 + random.choice([-1, 1]) * nzahl(0, exponent_2)
+        faktor = zzahl(2, 30) * 20
+        ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
+        while abs(ergebnis_2 * faktor) > 10 ** 5:
+            basis_2 = basis_2 - 1 if basis_2 > 2 else basis_2
+            exponent_2_sum = exponent_2_sum - 1 if exponent_2_sum > 1 else exponent_2_sum
+            faktor = faktor / 10
+            ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
+        summand = zzahl(1,100)*faktor
+        umf_sum = '+' if summand < 0 else '-'
+        erg_1 = faktor*ergebnis_2+summand
+        erg_2 = faktor*ergebnis_2
+        erg_3 = ergebnis_2
+        aufg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
+                + r'} ' + vorz_str(summand) + ' ~=~ ' + gzahl(erg_1))
+        lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
+               + r'} ' + vorz_str(summand) + '~=~ ' + gzahl(erg_1) + umformung(summand, umf_sum)
+               + r' \quad \to \quad ' + gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
+               + r'} ~=~ ' + gzahl(erg_2) + umformung(faktor, ':') + r' \quad (2BE) \\'
+               + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum) + r'} ~=~ ' + gzahl(erg_3)
+               + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad \to \quad x' + vorz_str(exponent_2_sum)
+               + r' ~=~ ' + gzahl(exponent_2 + exponent_2_sum) + r' \quad \vert ' + vorz_str(-1 * exponent_2_sum)
+               + r' \quad \to \quad x ~=~ ' + gzahl(exponent_2)) + r' \quad (3BE)'
         return aufg, lsg, pkt
 
     def exp_linear_einfach():
@@ -1829,8 +1864,8 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
                + gzahl(N(exp(summand)**(1/(faktor_exp_1-faktor_exp_2)),3)) + r' \quad (2BE)')
         return aufg, lsg, pkt
 
-    auswahl = {'a': exp_einfach, 'b': exp_schwer, 'c': exp_linear_einfach, 'd': exp_linear_schwer,
-                'e': exp_summe,'f': logarithmus}
+    auswahl = {'a': exp_einfach, 'b': exp_faktor, 'c': exp_faktor_summe, 'd': exp_linear_einfach,
+               'e': exp_linear_schwer, 'f': exp_summe,'g': logarithmus}
 
     if anzahl != False:
         if type(anzahl) != int:
@@ -1854,14 +1889,14 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=F
     for element in teilaufg:
         aufg, lsg, pkt = auswahl[element]()
         if (i + 1) % 2 != 0:
-            aufg_text = aufg_text + beschriftung(teilaufg,i) + aufg
+            aufg_text = aufg_text + beschriftung(teilaufg,i) + r' \quad ' +  aufg
             if i + 1 < len(teilaufg):
-                aufg_text = aufg_text + r' \hspace{5em} '
+                aufg_text = aufg_text + r' \hspace{10em} '
         elif (i + 1) % 2 == 0 and i+1 < len(teilaufg):
-            aufg_text = aufg_text + beschriftung(teilaufg,i) + aufg + r' \\\\'
+            aufg_text = aufg_text + beschriftung(teilaufg,i) + r' \quad ' + aufg + r' \\\\'
         else:
-            aufg_text = aufg_text + beschriftung(teilaufg,i) + aufg
-        lsg_aufg = (lsg_aufg + beschriftung(teilaufg,i, True) + lsg + r' \\')
+            aufg_text = aufg_text + beschriftung(teilaufg,i) + r' \quad ' + aufg
+        lsg_aufg = (lsg_aufg + beschriftung(teilaufg,i, True) + r' \quad ' + lsg + r' \\')
         punkte += pkt
         i += 1
 
@@ -1948,7 +1983,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
 
     table3 = Tabular('c|c|c|c|c|c|', row_height=1.5)
     table3.add_hline(2, 6)
-    table3.add_row('Ergebnisse: ', 'Quotient der Werte', NoEscape(r'$ \frac{a1}{a0} $'),
+    table3.add_row('Übersichtstabelle der Quotienten (2BE): ', 'Quotient der Werte', NoEscape(r'$ \frac{a1}{a0} $'),
                    NoEscape(r'$ \frac{a2}{a1} $'), NoEscape(r'$ \frac{a3}{a2} $'), NoEscape(r'$\frac{a4}{a3}$'))
     table3.add_hline(2, 6)
     table3.add_row('', 'Quotienten', str(N(Aufg_Liste[1] / Aufg_Liste[0], 4)).rstrip(' 0'),
@@ -1964,9 +1999,7 @@ def wachstumsfunktion(nr, teilaufg=['a', 'b', 'c', 'd'], i=0, BE=[]):
 
     if 'a' in teilaufg:
         # Die SuS sollen mithilfe des Quotienten aufeinanderfolgender Werte das exponentielle Wachstum nachweisen,
-
-        punkte_aufg = 3
-        liste_punkte.append(punkte_aufg)
+        liste_punkte.append(3)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
 
         # grafische Darstellung des Sachverhaltes

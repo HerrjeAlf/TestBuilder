@@ -131,14 +131,26 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #     print('sigma(X) = ' + str(sigma))
 #
 # lsg1(0.53)
+basis_2 = nzahl(2, 8)
+exponent_2 = nzahl(2, 5)
+exponent_2_sum = zzahl(1, 3)
+faktor = zzahl(2, 30) * 20
+ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
+while abs(ergebnis_2 * faktor) > 10 ** 4:
+    basis_2 -= 1 if basis_2 > 2 else 0
+    faktor = faktor / 10
+    ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
+summand = zzahl(1, 100) * faktor
+umf_sum = '+' if summand < 0 else '-'
+if type(ergebnis_2) == float:
+    erg_1 = Rational(faktor * ergebnis_2 + summand)
+    erg_2 = Rational(faktor * ergebnis_2)
+    erg_3 = Rational(ergebnis_2)
+else:
+    erg_1 = faktor * ergebnis_2 + summand
+    erg_2 = faktor * ergebnis_2
+    erg_3 = ergebnis_2
 
-a = [2,3]
-b = [2,3]
-
-if len(a) == 2:
-    print('Länge 2')
-elif 'a' in a:
-    print('es ist eine 2 enthalten.')
-
-if len(a) == len(b) == 2:
-    print('Test')
+print(erg_1)
+print(erg_2)
+print(erg_3)
