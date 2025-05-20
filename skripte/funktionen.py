@@ -660,24 +660,31 @@ class vektor():
                     return text, lsg
 
                 def rg_nnull_2x(zeilen):
-                    zeile1 = zeilen[0]
-                    zeile2 = zeilen[1]
-                    text = (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt:} \quad '
-                            + summe.terme([zeile1[1], -1*zeile1[3]],['',var1]) + '~=~'
-                            + summe.terme([zeile1[2], zeile1[4]], ['', var2])
-                            + umformung(zeile1[2],'-') + umformung(zeile1[4],':')
-                            + r' \quad \to \quad ' + var2 + '~=~' + gzahl(Rational(zeile1[1] - zeile1[2], zeile1[4]))
-                            + vorz_v_innen(Rational(-1*zeile1[3],zeile1[4]), var1)+ r' \quad (2BE) \\ ')
-                    lsg_c, lsg_var1 = Rational(zeile1[1] - zeile1[2], zeile1[4]), Rational(-1*zeile1[3],zeile1[4])
-                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt:} \quad '
-                            + summe.terme([zeile2[1], -1*zeile2[3]],['',var1]) + '~=~'
-                            + summe.terme([zeile2[2], zeile2[4]],
-                                          ['', r' \cdot ' + binom_klammer(lsg_c, lsg_var1, str2=var1)]) + '~=~'
-                            + summe.terme([zeile2[2], zeile2[4]*lsg_c, zeile2[4]*lsg_var1], ['','', var1])
-                            + umformung(zeile2[1], '-') + umformung(zeile2[4]*lsg_var1, '-')
-                            + r' \quad \to \quad ' + var2 + '~=~' + gzahl(Rational(zeile1[1] - zeile1[2], zeile1[4]))
-                            + vorz_v_innen(Rational(-1*zeile1[3],zeile1[4]), var1)+ r' \quad (2BE) \\ '
-                            )
+                    bez1, a1, b1, c1, d1 = zeilen[0][0], zeilen[0][1], -1*zeilen[0][3], zeilen[0][2], zeilen[0][4]
+                    bez2, a2, b2, c2, d2 = zeilen[1][0], zeilen[1][1], -1*zeilen[1][3], zeilen[1][2], zeilen[1][4]
+                    text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
+                            + summe.terme([a1, b1],['',var1]) + '~=~'
+                            + summe.terme([c1, d1], ['', var2]) + umformung(c1,'-')
+                            + umformung(d1,':') + r' \quad \to \quad ' + var2 + '~=~'
+                            + gzahl(Rational(a1 - c1, d1)) + vorz_v_innen(Rational(b1, d1), var1)
+                            + r' \quad (2BE) ')
+                    lsg_c, lsg_var1 = Rational(a1 - c1, d1), Rational(b1, d1)
+                    text = (text + r' \\ \mathrm{aus~' + gzahl(bez2) + r'~folgt:} \quad '
+                            + summe.terme([a2, b2],['',var1]) + '~=~'
+                            + summe.terme([c2, d2],['', r' \cdot ' + binom_klammer(Rational(a1 - c1, d1), Rational(b1, d1), str2=var1)])
+                            + '~=~' + summe.terme([c2, Rational(d2*(a1-c1),d1), Rational(d2*b1,d1)], ['','', var1])
+                            + umformung(c2, '-') + umformung(Rational(d2*(a1-c1),d1), '-')
+                            + r' \quad \vert ' + vorz_v_innen(-1*b1, var1)
+                            + r' \quad (2BE) \\ ' + gzahl(Rational(a2*d1 - c2*d1 + d2*(c1-a1),d1)) + '~=~'
+                            + vorz_v_aussen(Rational(d2*b1-b2*d1,d1), var1) + r' \quad \vert \div '
+                            + gzahl_klammer(Rational(d2*b1-b2*d1,d1)) + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1))
+                            + r' \quad (2BE) \\ \mathrm{und} \quad ' + var2 + '~=~'
+                            + summe.terme([Rational(a1 - c1, d1),Rational(b1, d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1))])
+                            + '~=~' + gzahl(Rational(a1 - c1, d1) - Rational(b1*(a2*d1 - c2*d1 + d2*c1 - d2*a1), d1*(b2*d1 - d2*b1)))
+                            + r' \quad (1BE)')
+                    lsg = [Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1),
+                           Rational(a1 - c1, d1) - Rational(b1*(a2*d1 - c2*d1 + d2*c1 - d2*a1), d1*(b2*d1 - d2*b1))]
                     return text, lsg
 
                 def rg_nnull_lsgr(zeile,lsgr):
@@ -939,14 +946,19 @@ class vektor():
                     elif snull != []: # 1-3-4 (erfordert Probe um das Ergebnis zu überprüfen)
                         snull_text, snull_lsg = rg_snull(snull[0])
                         text = text + snull_text
-                        lsg.append( snull_lsg)
+                        lsg.append(snull_lsg)
                         nnull_text, nnull_lsg = rg_nnull_lsgr(nnull[0], lsg[0])
                         text = text + nnull_text
                         lsg.insert(0, nnull_lsg)
                         text_pr, lsg_pr = probe(lsg)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 6
-
+                    else:
+                        text_nnull2, lsg_nnull2 = rg_nnull_2x(nnull)
+                        text = text + text_nnull2
+                        text_pr, lsg_pr = probe(lsg_nnull2)
+                        text, lsg = text + text_pr, lsg_pr
+                        punkte += 7
 
             text = [text]
         else:

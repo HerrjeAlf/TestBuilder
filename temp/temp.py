@@ -131,26 +131,10 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #     print('sigma(X) = ' + str(sigma))
 #
 # lsg1(0.53)
-basis_2 = nzahl(2, 8)
-exponent_2 = nzahl(2, 5)
-exponent_2_sum = zzahl(1, 3)
-faktor = zzahl(2, 30) * 20
-ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
-while abs(ergebnis_2 * faktor) > 10 ** 4:
-    basis_2 -= 1 if basis_2 > 2 else 0
-    faktor = faktor / 10
-    ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
-summand = zzahl(1, 100) * faktor
-umf_sum = '+' if summand < 0 else '-'
-if type(ergebnis_2) == float:
-    erg_1 = Rational(faktor * ergebnis_2 + summand)
-    erg_2 = Rational(faktor * ergebnis_2)
-    erg_3 = Rational(ergebnis_2)
-else:
-    erg_1 = faktor * ergebnis_2 + summand
-    erg_2 = faktor * ergebnis_2
-    erg_3 = ergebnis_2
 
-print(erg_1)
-print(erg_2)
-print(erg_3)
+
+zeile1 = [1,2,3,4]
+
+a1, b1, c1, d1 = zeile1
+
+print(a1)

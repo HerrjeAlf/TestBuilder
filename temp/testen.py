@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[exponentialgleichungen(1, wdh=3)]]
+    Aufgaben = [[testaufgabe(1)]]
 
     # Test der neuen Funktion vektor.rechnen
     # Aufgaben = [[rechnen_mit_vektoren(1, ['e']),

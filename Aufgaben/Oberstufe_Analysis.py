@@ -5034,7 +5034,7 @@ def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[], gleichungen=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    obj1_1, obj2_1, var_obj1_1, var_obj2_1 = [[1,1,2], [0,0,2]], [[1,2,1],[0,1,3]], ['a'], ['b']
+    obj1_1, obj2_1, var_obj1_1, var_obj2_1 = [[1,1,2], [2,2,0]], [[1,2,2],[1,3,0]], ['a'], ['b']
     obj1_2, obj2_2, var_obj2_2 = [[1,1,1]], [[1,1,2],[0,0,2], [0,1,3]], ['a', 'b']
     obj1_3, obj2_3, var_obj2_3 = [[0,1,1]], [[0,0,2], [0,1,3]], ['a','b']
     text1, lsg1, punkte1 = vektor.rechnung(obj1_1, obj2_1, var_obj1_1, var_obj2_1)
