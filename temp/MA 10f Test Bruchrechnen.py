@@ -16,7 +16,7 @@ Art = 'HAK 12'
 Titel = 'Bruchrechnen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = [True,False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = [True,False][1] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
