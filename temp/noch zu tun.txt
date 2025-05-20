@@ -8,11 +8,13 @@ Berechnungen:
 
 Fehler / Entwicklung:
 in Aufgaben Analysis:
-- Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
 - Biquadratische Funktion mit ganzzahligen Extrema, da Nullstellen irrational sein können
 - Kurvendiskussion von Exponentialfkt mit Parameter um zwei Teilaufgaben ergänzen
     --> 1. weise nach das Stammfunktion stimmt
     --> 2. berechne mit x-Achse eingeschlossene Fläche (x, oo)
+- extremalproblem mit einer e-Funktion
+
+- Parameter_1 liefert ab und zu falsche Werte und 5c fehlen die Punkte
 
 - kurvendiskussion_exponentialfkt_parameter
     --> Bei der Ausgabe fehlt bei der Funktion der Parameter also z.B. f_b(x).

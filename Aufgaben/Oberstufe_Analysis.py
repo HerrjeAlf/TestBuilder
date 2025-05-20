@@ -1740,14 +1740,15 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
 
     def exp_faktor():
         pkt = 3
-        basis_2 = nzahl(1,8)
+        basis_2 = nzahl(2,8)
         exponent_2 = nzahl(2,5)
-        exponent_2_summe = exponent_2 + random.choice([-1,1]) * nzahl(0,exponent_2)
+        exponent_2_summe = zzahl(1,exponent_2)
+        vorz_exp = -1 if exponent_2_summe < 0 else 1
         faktor = zzahl(2,30)*20
         ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
         while abs(ergebnis_2 * faktor) > 10 ** 5:
             basis_2 = basis_2 - 1 if basis_2 > 2 else basis_2
-            exponent_2_summe = exponent_2_summe - 1 if exponent_2_summe > 1 else exponent_2_summe
+            exponent_2_summe = vorz_exp * (abs(exponent_2_summe) - 1) if exponent_2_summe > 1 else exponent_2_summe
             faktor = faktor / 10
             ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_summe)
         erg_2 = faktor*ergebnis_2
@@ -1766,12 +1767,13 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
         pkt = 3
         basis_2 = nzahl(2,8)
         exponent_2 = nzahl(2,5)
-        exponent_2_sum = exponent_2 + random.choice([-1, 1]) * nzahl(0, exponent_2)
-        faktor = zzahl(2, 30) * 20
+        exponent_2_sum = zzahl(1,exponent_2)
+        vorz_exp = -1 if exponent_2_sum < 0 else 1
+        faktor = zzahl(2,30)*20
         ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
         while abs(ergebnis_2 * faktor) > 10 ** 5:
             basis_2 = basis_2 - 1 if basis_2 > 2 else basis_2
-            exponent_2_sum = exponent_2_sum - 1 if exponent_2_sum > 1 else exponent_2_sum
+            exponent_2_sum = vorz_exp * (abs(exponent_2_sum) - 1) if exponent_2_sum > 1 else exponent_2_sum
             faktor = faktor / 10
             ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
         summand = zzahl(1,100)*faktor
@@ -1879,7 +1881,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
             exit("Fehler in exponentialgleichungen(nr, ...): Der Parameter 'wdh=' muss eine natürliche Zahl "
                  "kleiner 14 sein.")
         else:
-            anzahl = 26 if anzahl > 26 or anzahl == False else anzahl
+            anzahl = 26 if anzahl > 26 or anzahl == False or len(teilaufg)*wdh > 26 else len(teilaufg)*wdh
             teilaufg = repeat(teilaufg, wdh, laenge=anzahl)
 
     aufg_text = ''
