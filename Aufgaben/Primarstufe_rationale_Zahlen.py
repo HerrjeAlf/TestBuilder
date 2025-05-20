@@ -27,7 +27,7 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, anz
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     if anzahl != False:
-        anzahl = 26 if anzahl > 26 else anzahl
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
     if wdh != False:
         teilaufg = repeat(teilaufg, wdh)
@@ -128,7 +128,7 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, anz
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, i=0, BE=[]):
+def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, i=0, BE=[]):
     # Die SuS sollen Brüche mit so weit wie möglich kürzen.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) trivialer Bruch
@@ -146,9 +146,10 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, i=0, BE=[]):
     punkte = 0
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 27:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     # Erstellen der Liste der Brüche mit Zähler und NenneR
     if teilaufg.count('a') > 9:
@@ -259,7 +260,7 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, i=0, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, i=0, BE=[]):
+def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, BE=[]):
     # Die SuS sollen eine vorgegebene Gleichung von Bruchtermen so ergänzen, dass diese richtig ist.
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung von Bruchtermen mit unbekannten Nenner
@@ -274,9 +275,10 @@ def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, i=0, BE=[]):
     punkte = 0
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 13:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 13 sein.")
-        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                f'Ergänzen Sie die Terme so, dass die jeweilige Gleichung stimmt.']
@@ -415,6 +417,12 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
 
     liste_bez = [f'{str(nr)}']
 
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Berechne den angegebenen Bruchterm.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -539,11 +547,6 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
                + vorz_str(zaehler_2_erw) + '}{' + gzahl(nenner) + r'} ~=~ ' + gzahl(loesung))
         return aufg, lsg
 
-    if anzahl != False:
-        anzahl = 26 if anzahl > 26 else anzahl
-        teilaufg = random_selection(teilaufg, anzahl, True)
-    if wdh != False:
-        teilaufg = repeat(teilaufg, wdh)
     aufgaben = {'a': einf_pp_gleichn_bruchterm, 'b': pp_gleichn_bruchterm, 'c': pn_gleichn_bruchterm,
                 'd': nn_gleichn_bruchterm, 'e': bel_gleichn_bruchterm, 'f': einf_pp_ungl_bruchterm,
                 'g': pp_ungl_bruchterm, 'h': pn_ungl_bruchterm, 'i': nn_ungl_bruchterm, 'j':bel_ungl_bruchterm}
@@ -581,7 +584,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i=0, BE=[]):
+def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS Brüche multiplizieren und dividieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfachen Bruchterm multiplizieren (beide positiv)
@@ -596,6 +599,13 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Berechne den gegebenen Bruchterm.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -717,11 +727,6 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i
                    + '}{' + gzahl(zaehler2)+ r'} ~=~' + gzahl(ergebnis))
         return aufg, lsg
 
-
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': einf_pp_bruchterm_multi, 'b': einf_bruchterm_multi, 'c': bruchterm_kuerz_multi,
                 'd': einf_pp_bruchterm_div, 'e': einf_bruchterm_div, 'f': bruchterm_kuerz_div}
 
@@ -813,7 +818,7 @@ def potenzgesetze(nr, anzahl=1, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, wdh= False, i=0, BE=[]):
     # Hier sollen die SuS zwei Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und Exponenten
@@ -829,6 +834,12 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -922,10 +933,6 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
                + '} ~=~ ' + gzahl(fakt1*fakt2) + r' \cdot ' + bas + '^{' + gzahl(exp1+exp2, exp=True) + '}' + w_erg)
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
                 'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': var_bas_fakt}
 
@@ -963,7 +970,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS zwei Potenzen dividieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und Exponenten
@@ -982,6 +989,12 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -1195,10 +1208,6 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
                + w_erg)
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_bas_exp, 'b': pos_zahl_bas, 'c': neg_zahl_bas, 'd': bel_zahl_bas,
                 'e': var_bas_pos_exp, 'f': var_bas_exp, 'g': triv_var_bas_fakt, 'h': einf_var_bas_fakt,
                 'i': nor_var_bas_fakt, 'j': schw_var_bas_fakt}
@@ -1242,7 +1251,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS zwei Potenzen multiplizieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
@@ -1261,6 +1270,12 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -1452,10 +1467,6 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
                + gzahl(nenner) + '}} ~=~' + bas + '^{' + gzahl(erg, exp=True) + '}' + w_erg)
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp,
                 'e': pos_zahl_und_ungln_exp, 'f': zahl_ungln_exp, 'g': var_pos_ungln_exp, 'h': var_ungln_exp,
                 'i': var_pos_sqrt, 'j': var_sqrt}
@@ -1494,7 +1505,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS mehrere Potenzen, mit verschiedenen Exponenten, multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) vier Faktoren aus zwei Basen und ganzzahligen Exponenten
@@ -1510,6 +1521,12 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -1568,7 +1585,6 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 
         return aufg, lsg
 
-
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
             exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
@@ -1608,7 +1624,7 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS zwei Potenzen dividieren, deren Exponenten aus rationalen Zahlen (Brüchen) besteht.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenzen mit nat. Zahlen und gleichnamigen positiven rationalen Exponenten
@@ -1627,6 +1643,12 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -1821,10 +1843,6 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
                + '}' + w_erg)
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': pos_zahl_und_gln_exp, 'b': zahl_gln_exp, 'c': var_pos_gln_exp, 'd': var_gln_exp,
                 'e': pos_zahl_und_ungln_exp, 'f': zahl_ungln_exp, 'g': var_pos_ungln_exp, 'h': var_ungln_exp,
                 'i': var_pos_sqrt, 'j': var_sqrt}
@@ -1863,7 +1881,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, i=0, BE=[]):
+def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS das Produkt und die Potenz mehrerer Potenzen multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Potenz einer Potenz mit ganzzahligen Exponenten
@@ -1877,6 +1895,12 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Vereinfache.']
@@ -1939,10 +1963,6 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
                + gzahl(Rational(zaehler, nenner), exp=True) + r'}')
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': var_pot_ganzz_exp, 'b': var_pot_pos_rat_exp, 'c': var_pot_rat_exp,
                 'd': mult_var_ganzz_exp, 'e': mult_var_rat_exp}
 
@@ -1979,7 +1999,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, i=0, BE=[]):
+def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS Zahlen in wissenschaftliche Schreibweise oder als Dezimalzahl umformen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) grosse natürliche Zahl in wissenschaftliche Schreibweise (exp > 5) umformen
@@ -1994,6 +2014,12 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Notiere die gegebene Zahl in wissenschaftlicher Schreibweise bzw. als Dezimalbruch.']
@@ -2011,10 +2037,6 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
         lsg = aufg + '~=~' + darstellung_zahl(zahl, exponent=(zp+exp-komma), darstellung=art_aus)
         return aufg, lsg
 
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': [nzahl(6,12), 'dezi'],
                 'b': [nzahl(6,12), 'wiss'],
                 'c': [-1* nzahl(6,12), 'dezi'],
@@ -2052,7 +2074,7 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, i=0, BE=[]):
+def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen mit verschiedenen Vorsätzen einer Einheit ineinander umrechnen.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Umrechnen von physikalischen Einheiten wie s, V oder W
@@ -2065,6 +2087,12 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, i=0, BE
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Rechne um.']
@@ -2154,11 +2182,6 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, i=0, BE
                + r'})^3~ m^3 ~=~' + zahl_str_erg + '~' + vors2 + 'm^3')
         return aufg, lsg
 
-
-    if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = random_selection(teilaufg, anzahl, True)
     aufgaben = {'a': bel_groessen, 'b': laengen, 'c': flaechen, 'd': volumen}
 
     aufg = ''
