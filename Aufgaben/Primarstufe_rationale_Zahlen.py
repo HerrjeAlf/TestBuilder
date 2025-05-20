@@ -27,13 +27,10 @@ def brueche_erweitern(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, anz
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 27:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
-        teilaufg = [random.choice(teilaufg) for zahl in range(anzahl)]
-    elif wdh != False:
+        anzahl = 26 if anzahl > 26 else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
         teilaufg = repeat(teilaufg, wdh)
-        exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
-             "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
 
     # Erstellen der Liste der Brüche mit Zähler und NenneR
     if teilaufg.count('a') > 9:
@@ -398,7 +395,7 @@ def bruchteile_berechnen(nr, anzahl=2, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, i=0, BE=[]):
+def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS gleichnamige und ungleichnamige Brüche addieren und subtrahieren.
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfacher gleichnamiger Bruchterm (beide positiv)
@@ -543,9 +540,10 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
         return aufg, lsg
 
     if anzahl != False:
-        if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+        anzahl = 26 if anzahl > 26 else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
     aufgaben = {'a': einf_pp_gleichn_bruchterm, 'b': pp_gleichn_bruchterm, 'c': pn_gleichn_bruchterm,
                 'd': nn_gleichn_bruchterm, 'e': bel_gleichn_bruchterm, 'f': einf_pp_ungl_bruchterm,
                 'g': pp_ungl_bruchterm, 'h': pn_ungl_bruchterm, 'i': nn_ungl_bruchterm, 'j':bel_ungl_bruchterm}
