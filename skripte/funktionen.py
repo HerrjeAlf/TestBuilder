@@ -750,6 +750,7 @@ class vektor():
                 gls_usi = vektor.invers([[a1, a2, a3],  [b1, b2, b3], [c1, c2, c3], [d1, d2, d3]])
                 erg_sort = gls_sortieren(gls_usi, zeilnr=True)
                 punkte += 2
+
                 def rg_rnull(zeile):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2], zeile[4]],['', var2])
@@ -782,7 +783,6 @@ class vektor():
                             + gzahl(Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])
                     return text, lsg
-
                 def probe(lsg):
                         erg1 = np.array(obj1[0])
                         erg2 = np.array(obj2[0]) + lsg[0] * np.array(obj2[1]) + lsg[1] * np.array(obj2[2])
