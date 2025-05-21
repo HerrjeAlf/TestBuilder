@@ -658,8 +658,7 @@ class vektor():
                             + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2], zeile[3])
                     return text, lsg
-
-                def rg_nnull_2x(zeilen):
+                def rg_nnull(zeilen):
                     bez1, a1, b1, c1, d1 = zeilen[0][0], zeilen[0][1], -1*zeilen[0][3], zeilen[0][2], zeilen[0][4]
                     bez2, a2, b2, c2, d2 = zeilen[1][0], zeilen[1][1], -1*zeilen[1][3], zeilen[1][2], zeilen[1][4]
                     text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
@@ -686,7 +685,6 @@ class vektor():
                     lsg = [Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1),
                            Rational(a1 - c1, d1) - Rational(b1*(a2*d1 - c2*d1 + d2*c1 - d2*a1), d1*(b2*d1 - d2*b1))]
                     return text, lsg
-
                 def rg_nnull_lsgr(zeile,lsgr):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr)])
@@ -705,8 +703,6 @@ class vektor():
                             + gzahl(Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])
                     return text, lsg
-
-
                 def probe(lsg):
                     erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
                     erg2 = np.array(obj2[0]) + lsg[1]*np.array(obj2[1])
@@ -954,7 +950,7 @@ class vektor():
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 6
                     else:
-                        text_nnull2, lsg_nnull2 = rg_nnull_2x(nnull)
+                        text_nnull2, lsg_nnull2 = rg_nnull(nnull)
                         text = text + text_nnull2
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr

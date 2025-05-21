@@ -587,7 +587,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
                                + gzahl(N(xwert_s[anz_np + step] + sqrt(-1*Rational(ywert_s[anz_np + step], fakt_ap[step])),3))
                                + r' \quad (2BE)')
                         punkte += 2
-                    lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsgS
+                    lsg = lsg + r' \\ ' if (anz_np + step + 1) < anz_np + anz_ap else lsg
                 if anz_np + anz_ap == 1:
                     aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                             + f') Berechne die Nullstellen des Graphen mithilfe '
