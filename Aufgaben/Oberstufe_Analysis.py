@@ -5034,9 +5034,9 @@ def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[], gleichungen=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    obj1_1, obj2_1, var_obj1_1, var_obj2_1 = [[1,1,2], [2,2,0]], [[1,2,2],[1,3,0]], ['a'], ['b']
-    obj1_2, obj2_2, var_obj2_2 = [[1,1,1]], [[1,1,2],[0,2,2], [0,1,3]], ['a', 'b']
-    obj1_3, obj2_3, var_obj2_3 = [[0,1,1]], [[0,5,2], [0,1,3]], ['a','b']
+    obj1_1, obj2_1, var_obj1_1, var_obj2_1 = [[1,1,2], [0,0,1]], [[2,2,2],[1,1,0]], ['a'], ['b']
+    obj1_2, obj2_2, var_obj2_2 = [[1,1,2]], [[2,2,2],[0,0,1], [1,1,0]], ['a', 'b']
+    obj1_3, obj2_3, var_obj2_3 = [[1,1,2]], [[0,0,1], [1,1,0]], ['a','b']
     text1, lsg1, punkte1 = vektor.rechnung(obj1_1, obj2_1, var_obj1_1, var_obj2_1)
     text2, lsg2, punkte2 = vektor.rechnung(obj1_2, obj2_2, var_obj2=var_obj2_2)
     text3, lsg3, punkte3 = vektor.rechnung(obj1_3, obj2_3, var_obj2=var_obj2_3)
@@ -5044,11 +5044,11 @@ def testaufgabe(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[], gleichungen=[]):
 
     aufgabe.append('Lösen Sie das Gleichungssystem.')
     loesung.append(text1[0])
-    loesung.extend((NoEscape(r'Lösung der ersten Rechnung: $' + str(lsg1) + '$'), ' \n\n'))
+    loesung.extend((NoEscape(r'Lösung der ersten Rechnung: $' + str(lsg1) + '$ und Punkte: ' + str(punkte1)), ' \n\n'))
     loesung.append(text2[0])
-    loesung.extend((NoEscape(r'Lösung der zweiten Rechnung: $' + str(lsg2) + '$'), ' \n\n'))
+    loesung.extend((NoEscape(r'Lösung der zweiten Rechnung: $' + str(lsg2) + '$ und Punkte: ' + str(punkte2)), ' \n\n'))
     loesung.append(text3[0])
-    loesung.extend((NoEscape(r'Lösung der dritten Rechnung: $' + str(lsg3) + '$'), ' \n\n'))
+    loesung.extend((NoEscape(r'Lösung der dritten Rechnung: $' + str(lsg3) + '$ und Punkte: ' + str(punkte3)), ' \n\n'))
 
     liste_punkte = [punkte1 + punkte2]
     liste_bez = ['Test']

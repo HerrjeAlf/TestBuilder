@@ -648,15 +648,16 @@ class vektor():
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2],zeile[4]], ['', var2])
                             + umformung(zeile[2],'-') + umformung(zeile[4],':') + r' \quad \to \quad '
-                            + var2 + '~=~' + gzahl(Rational(zeile[1]-zeile[2],zeile[4])) + r' \quad (2BE)')
+                            + var2 + '~=~' + gzahl(Rational(zeile[1]-zeile[2],zeile[4])) + r' \quad (1BE)')
                     lsg = Rational(zeile[1]-zeile[2],zeile[4])
                     return text, lsg
                 def rg_snull(zeile):
-                    text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
-                            + summe.terme([zeile[1],-1*zeile[3]],['',var1]) + '~=~' + gzahl(zeile[3])
-                            + umformung(zeile[1],'-') + umformung(-1*zeile[3],':') + r' \quad \to \quad '
-                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
-                    lsg = Rational(zeile[1] - zeile[2], zeile[3])
+                    bez, a1, b1, c1, d1 = zeile[0], zeile[1], -1*zeile[3], zeile[2], zeile[4]
+                    text = (r' \\ \mathrm{aus~' + gzahl(bez) + r'~folgt:} \quad '
+                            + summe.terme([a1, b1],['',var1]) + '~=~' + gzahl(c1)
+                            + umformung(a1,'-') + umformung(b1,':') + r' \quad \to \quad '
+                            + var1 + '~=~' + gzahl(Rational(c1 - a1, b1)) + r' \quad (1BE)')
+                    lsg = Rational(c1-a1,b1)
                     return text, lsg
                 def rg_nnull(zeilen):
                     pkt = 3
@@ -778,14 +779,14 @@ class vektor():
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2], zeile[4]],['', var2])
                             + umformung(zeile[2], '-') + umformung(zeile[4], ':') + r' \quad \to \quad '
-                            + var2 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[4])) + r' \quad (2BE)')
+                            + var2 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[4])) + r' \quad (1BE)')
                     lsg = Rational(zeile[1] - zeile[2], zeile[4])
                     return text, lsg
                 def rg_snull(zeile):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + summe.terme([zeile[2], zeile[3]],['',var1])
                             + umformung(zeile[2], '-') + umformung(zeile[3], ':') + r' \quad \to \quad '
-                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (2BE)')
+                            + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[2], zeile[3])) + r' \quad (1BE)')
                     lsg = Rational(zeile[1] - zeile[2], zeile[3])
                     return text, lsg
                 def rg_nnull(zeilen):
@@ -919,14 +920,14 @@ class vektor():
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + vorz_v_aussen(zeile[4], var2)
                             + umformung(zeile[4], ':') + r' \quad \to \quad '
-                            + var2 + '~=~' + gzahl(Rational(zeile[1], zeile[4])) + r' \quad (2BE)')
+                            + var2 + '~=~' + gzahl(Rational(zeile[1], zeile[4])) + r' \quad (1BE)')
                     lsg = Rational(zeile[1], zeile[4])
                     return text, lsg
                 def rg_snull(zeile):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + gzahl(zeile[1]) + '~=~' + vorz_v_aussen(zeile[3],var1)
                             + umformung(zeile[3], ':') + r' \quad \to \quad '
-                            + var1 + '~=~' + gzahl(Rational(zeile[1], zeile[3])) + r' \quad (2BE)')
+                            + var1 + '~=~' + gzahl(Rational(zeile[1], zeile[3])) + r' \quad (1BE)')
                     lsg = Rational(zeile[1], zeile[3])
                     return text, lsg
                 def rg_nnull(zeilen):
@@ -1070,14 +1071,14 @@ class vektor():
                         rnull_text, rnull_lsg = rg_rnull(rnull[0])
                         text = text + rnull_text
                         lsg.append(rnull_lsg)
-                        punkte += 2
+                        punkte += 1
                         if snull != []: # 1-2-3 (erfordert Probe um das Ergebnis zu überprüfen)
                             snull_text, snull_lsg = rg_snull(snull[0])
                             text = text + snull_text
                             lsg.insert(0,snull_lsg)
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
-                            punkte += 4
+                            punkte += 2
                         elif nnull != []: # 1-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
                             nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
                             text = text + nnull_text
@@ -1094,13 +1095,30 @@ class vektor():
                         lsg.insert(0, nnull_lsg)
                         text_pr, lsg_pr = probe(lsg)
                         text, lsg = text + text_pr, lsg_pr
-                        punkte += 6
-                    else:
+                        punkte += 5
+                    else: # 1-4-4 (erfordert Probe um das Ergebnis zu überprüfen)
                         text_nnull2, lsg_nnull2, lsg_pkt = rg_nnull(nnull)
                         text = text + text_nnull2
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += lsg_pkt + 2
+            elif len(rnull) == 2:
+                rnull1_text, rnull1_lsg = rg_rnull(rnull[0])
+                rnull2_text, rnull2_lsg = rg_rnull(rnull[1])
+                if rnull1_lsg != rnull2_lsg:
+                    text = text + rnull1_text + rnull2_text
+                    lsg=[]
+                    punkte += 2
+                elif rnull1_lsg == rnull2_lsg:
+                    text, lsg = text + rnull1_text + rnull2_text, [rnull1_lsg]
+                    punkte += 2
+                    if snull != []:
+                        snull_text, snull_lsg = rg_snull(snull[0])
+                        text = text + snull_text
+                        lsg.insert(0, snull_lsg)
+                        text_pr, lsg_pr = probe(lsg)
+                        text, lsg = text + text_pr, lsg_pr
+                        punkte += 3
 
             text = [text]
         else:
