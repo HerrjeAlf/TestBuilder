@@ -659,14 +659,22 @@ class vektor():
                     lsg = Rational(zeile[1] - zeile[2], zeile[3])
                     return text, lsg
                 def rg_nnull(zeilen):
+                    pkt = 3
                     bez1, a1, b1, c1, d1 = zeilen[0][0], zeilen[0][1], -1*zeilen[0][3], zeilen[0][2], zeilen[0][4]
                     bez2, a2, b2, c2, d2 = zeilen[1][0], zeilen[1][1], -1*zeilen[1][3], zeilen[1][2], zeilen[1][4]
+                    if Rational(d2*b1-b2*d1,d1) != 1:
+                        zws3 = (umformung(Rational(d2*b1-b2*d1,d1), ':') + r' \quad \to \quad ' + var1 + '~=~'
+                                + gzahl(Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1)) + r' \quad (2BE) \\')
+                        pkt += 2
+                    else:
+                        zws3 = r' \quad (1BE) \quad '
+                        pkt += 1
                     text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
                             + summe.terme([a1, b1],['',var1]) + '~=~'
                             + summe.terme([c1, d1], ['', var2]) + umformung(c1,'-')
                             + umformung(d1,':') + r' \quad \to \quad ' + var2 + '~=~'
                             + gzahl(Rational(a1 - c1, d1)) + vorz_v_innen(Rational(b1, d1), var1)
-                            + r' \quad (2BE) ')
+                            + r' \quad (1BE) ')
                     lsg_c, lsg_var1 = Rational(a1 - c1, d1), Rational(b1, d1)
                     text = (text + r' \\ \mathrm{aus~' + gzahl(bez2) + r'~folgt:} \quad '
                             + summe.terme([a2, b2],['',var1]) + '~=~'
@@ -674,17 +682,15 @@ class vektor():
                             + '~=~' + summe.terme([c2, Rational(d2*(a1-c1),d1), Rational(d2*b1,d1)], ['','', var1])
                             + umformung(c2, '-') + umformung(Rational(d2*(a1-c1),d1), '-')
                             + r' \quad \vert ' + vorz_v_innen(-1*b1, var1)
-                            + r' \quad (2BE) \\ ' + gzahl(Rational(a2*d1 - c2*d1 + d2*(c1-a1),d1)) + '~=~'
-                            + vorz_v_aussen(Rational(d2*b1-b2*d1,d1), var1)
-                            + umformung(Rational(d2*b1-b2*d1,d1), ':') + r' \quad \to \quad '
-                            + var1 + '~=~' + gzahl(Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1))
-                            + r' \quad (2BE) \\ \mathrm{und} \quad ' + var2 + '~=~'
+                            + r' \quad (1BE) \\ ' + vorz_v_aussen(Rational(d2*b1-b2*d1,d1), var1) + '~=~'
+                            + gzahl(Rational(a2*d1 - c2*d1 + d2*(c1-a1),d1)) + zws3
+                            + r' \mathrm{und} \quad ' + var2 + '~=~'
                             + summe.terme([Rational(a1 - c1, d1),Rational(b1, d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1-b2*d1))])
                             + '~=~' + gzahl(Rational(a1 - c1, d1) - Rational(b1*(a2*d1 - c2*d1 + d2*c1 - d2*a1), d1*(b2*d1 - d2*b1)))
                             + r' \quad (1BE)')
                     lsg = [Rational(a2*d1 - c2*d1 + d2*c1 - d2*a1, d2*b1 - b2*d1),
                            Rational(a1 - c1, d1) - Rational(b1*(a2*d1 - c2*d1 + d2*c1 - d2*a1), d1*(b2*d1 - d2*b1))]
-                    return text, lsg
+                    return text, lsg, pkt
                 def rg_nnull_lsgr(zeile,lsgr):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr)])
@@ -702,6 +708,23 @@ class vektor():
                             + r' \quad \to \quad ' + var1 + '~=~'
                             + gzahl(Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])
+                    return text, lsg
+                def rg_nnull_probe(zeile, lsg):
+                    bez, a1, b1, c1, d1  = zeile[0], zeile[1], -1*zeile[3], zeile[2], zeile[4]
+                    var1, var2 = lsg
+                    erg1 = a1 + lsg1*b1 if type(a1 + lsg1*b1) != float else N(a1+lsg1*b1,3)
+                    erg2 = c1 + lsg2*d1 if type(c1 + lsg2*d1) != float else N(c1+lsg2*d1,3)
+                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
+                            + r'. } \hspace{10em} \\ '
+                            + summe.terme([a,b1], ['', r' \cdot ' + gzahl_klammer(lsg1)])
+                            + '~=~' + summe.terme([c1, d1], ['', r' \cdot ' + gzahl_klammer(lsg2)])
+                            + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
+                    if erg1 - erg2 == 0:
+                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        lsg = lsg
+                    else:
+                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        lsg = []
                     return text, lsg
                 def probe(lsg):
                     erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
@@ -766,34 +789,51 @@ class vektor():
                     lsg = Rational(zeile[1] - zeile[2], zeile[3])
                     return text, lsg
                 def rg_nnull(zeilen):
+                    pkt = 0
                     bez1, a1, b1, c1, d1 = zeilen[0]
+                    if d1 !=1:
+                        zws1 = ((umformung(d1, ':') + r' \quad \to \quad ' + var2 + '~=~'
+                                + summe.terme([Rational(a1 - b1, d1), Rational(-1 * c1, d1)], ['', var1]))
+                                + r' \quad (2BE) ')
+                        pkt += 2
+                    else:
+                        zws1 = r' \quad (1BE) '
+                        pkt += 1
                     bez2, a2, b2, c2, d2 = zeilen[1]
+                    if Rational(b2*d1 + d2*a1 - d2*b1, d1) != 0:
+                        zws2 = umformung(Rational(b2*d1 + d2*a1 - d2*b1, d1),'-') + r' \quad (2BE) \\ '
+                        pkt += 2
+                    else:
+                        zws2 = r' \quad (1BE)'
+                        pkt += 1
+                    if Rational(c2*d1 - d2*c1, d1) != 1:
+                        zws3 = (umformung(Rational(c2*d1 - d2*c1, d1), ':') + r' \quad \to \quad '
+                                + var1 + '~=~' + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))
+                                + r' \quad (2BE) \\ ')
+                        pkt += 2
+                    else:
+                        zws3 = r' \quad (1BE) \quad '
+                        pkt += 1
                     text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
                             + gzahl(a1) + '~=~' + summe.terme([b1, c1, d1], ['', var1, var2])
                             + umformung(b1,'-') + r' \quad \vert ' + vorz_v_innen(-1*c1, var1)
                             + r' \quad \to \quad ' + vorz_v_aussen(d1, var2) + '~=~'
-                            + summe.terme([a1-b1,-1*c1],['', var1]) + umformung(d1, ':')
-                            + r' \quad \to \quad ' + var2 + '~=~'
-                            + summe.terme([Rational(a1-b1,d1), Rational(-1*c1,d1)],['', var1])
-                            + r' \quad (2BE) ')
-                    lsg_c, lsg_var1 = Rational(a1 - b1, d1), Rational(-1*c1, d1)
-                    text = (text + r' \\ \mathrm{aus~' + gzahl(bez2) + r'~folgt:} \quad '
+                            + summe.terme([a1-b1,-1*c1],['', var1]) + zws1
+                            + r' \\ \mathrm{aus~' + gzahl(bez2) + r'~folgt:} \quad '
                             + gzahl(a2) + '~=~'
                             + summe.terme([b2, c2, d2], ['', var1, r' \cdot ' + binom_klammer(Rational(a1 - b1, d1), Rational(-1*c1, d1), str2=var1)])
                             + r' \quad \to \quad ' + gzahl(a2) + '~=~'
                             + summe.terme([Rational(b2*d1 + d2*a1 - d2*b1, d1), Rational(c2*d1 - d2*c1, d1)],['', var1])
-                            + umformung(Rational(b2*d1 + d2*a1 - d2*b1, d1),'-')
-                            + r' \quad (2BE) \\ ' + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, d1)) + '~=~'
-                            + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1)
-                            + umformung(Rational(c2*d1 - d2*c1, d1), ':') + r' \quad \to \quad '
-                            + var1 + '~=~' + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))
-                            + r' \quad (2BE) \\ \mathrm{und} \quad ' + var2 + '~=~'
+                            + zws2 + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1) + '~=~'
+                            + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, d1))
+                            + zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
                             + summe.terme([Rational(a1-b1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))])
                             + '~=~' + gzahl(Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1)))
                             + r' \quad (1BE)')
                     lsg = [Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1),
                            Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1))]
-                    return text, lsg
+                    pkt += 1
+                    return text, lsg, pkt
                 def rg_nnull_lsgr(zeile, lsgr):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
                             + summe.terme([zeile[2], zeile[3], zeile[4]],
@@ -811,6 +851,23 @@ class vektor():
                             + r' \quad \to \quad ' + var1 + '~=~'
                             + gzahl(Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])
+                    return text, lsg
+                def rg_nnull_probe(zeile, lsg):
+                    bez, a1, b1, c1, d1  = zeile
+                    var1, var2 = lsg
+                    erg1 = a1 if type(a1) != float else N(a1,3)
+                    erg2 = b1 + lsg1*c1 + lsg2*d1 if type(b1 + lsg1*c1 + lsg2*d1) != float else N(b1 + lsg1*c1+lsg2*d1,3)
+                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
+                            + r'. } \hspace{10em} \\ '
+                            + gzahl(a1) + '~=~'
+                            + summe.terme([b1, c1, d1], ['', r' \cdot ' + gzahl_klammer(lsg1), r' \cdot ' + gzahl_klammer(lsg2)])
+                            + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
+                    if erg1 - erg2 == 0:
+                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        lsg = lsg
+                    else:
+                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        lsg = []
                     return text, lsg
                 def probe(lsg):
                         erg1 = np.array(obj1[0])
@@ -849,11 +906,11 @@ class vektor():
                         + r' \cdot \begin{pmatrix} ' + gzahl(c1) + r' \\' + gzahl(c2) + r' \\' + gzahl(c3) + r' \\'
                         + r' \end{pmatrix} \quad \to \quad \begin{matrix} I \\ II \\ III \\ \end{matrix} \quad '
                         + r' \begin{matrix}' + gzahl(a1) + '~=~'
-                        + summe.terme([0, b1, c1], ['', var1, var2], null=True)
+                        + summe.terme([b1, c1], [var1, var2], null=True)
                         + r' \\' + gzahl(a2) + '~=~'
-                        + summe.terme([0, b2, c2], ['', var1, var2], null=True)
+                        + summe.terme([b2, c2], [var1, var2], null=True)
                         + r' \\' + gzahl(a3) + '~=~'
-                        + summe.terme([0, b3, c3], ['', var1, var2], null=True) + r' \\'
+                        + summe.terme([b3, c3], [var1, var2], null=True) + r' \\'
                         + r' \end{matrix} \quad (2BE)')
                 gls_usi = vektor.invers([[a1, a2, a3],  [0, 0, 0], [b1, b2, b3], [c1, c2, c3]])
                 erg_sort = gls_sortieren(gls_usi, zeilnr=True)
@@ -872,6 +929,49 @@ class vektor():
                             + var1 + '~=~' + gzahl(Rational(zeile[1], zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1], zeile[3])
                     return text, lsg
+                def rg_nnull(zeilen):
+                    pkt = 0
+                    bez1, a1, lz, c1, d1 = zeilen[0]
+                    if d1 != 1:
+                        zws1 = (umformung(d1, ':') + r' \quad \to \quad ' + var2 + '~=~'
+                                      + summe.terme([Rational(a1,d1), Rational(-1*c1,d1)],['', var1])
+                                      + r' \quad (2BE) ')
+                        pkt += 2
+                    else:
+                        zws1 = r' \quad (1BE) '
+                        pkt += 1
+                    bez2, a2, lz, c2, d2 = zeilen[1]
+                    if d2 * a1 != 0:
+                        zws2 = umformung(Rational(d2*a1, d1),'-') + r' \quad (2BE) \\ '
+                        pkt += 2
+                    else:
+                        zws2 = r' \quad (1BE) '
+                        pkt += 1
+                    if Rational(c2 * d1 - d2 * c1, d1) != 1:
+                        zws3 = (umformung(Rational(c2 * d1 - d2 * c1, d1), ':') + r' \quad \to \quad ' + var1 + '~=~'
+                                + gzahl(Rational(a2 * d1 - d2 * a1, c2 * d1 - d2 * c1)) + r' \quad (2BE) \\')
+                        pkt += 2
+                    else:
+                        zws3 = r' \quad (1BE) \quad '
+                        pkt += 1
+                    text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
+                            + gzahl(a1) + '~=~' + summe.terme([c1, d1], [var1, var2])
+                            + r' \quad \vert ' + vorz_v_innen(-1*c1, var1)
+                            + r' \quad \to \quad ' + vorz_v_aussen(d1, var2) + '~=~'
+                            + summe.terme([a1,-1*c1],['', var1]) + zws1 + r' \\ \mathrm{aus~'
+                            + gzahl(bez2) + r'~folgt:} \quad ' + gzahl(a2) + '~=~'
+                            + summe.terme([c2, d2], [var1, r' \cdot ' + binom_klammer(Rational(a1, d1), Rational(-1*c1, d1), str2=var1)])
+                            + r' \quad \to \quad ' + gzahl(a2) + '~=~'
+                            + summe.terme([Rational(d2*a1, d1), Rational(c2*d1 - d2*c1, d1)],['', var1])
+                            + zws2 + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1) + '~=~'
+                            + gzahl(Rational(a2*d1 - d2*a1, d1))
+                            + zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
+                            + summe.terme([Rational(a1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - d2*a1, c2*d1 - d2*c1))])
+                            + '~=~' + gzahl(Rational(a1,d1) - Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1)))
+                            + r' \quad (1BE)')
+                    pkt += 1
+                    lsg = [Rational(a2*d1 - d2*a1, c2*d1 - d2*c1), Rational(a1,d1) - Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1))]
+                    return text, lsg, pkt
                 def rg_nnull_lsgr(zeile, lsgr):
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
                             + summe.terme([zeile[3], zeile[4]], [r' \cdot ' + gzahl_klammer(lsgr), var2])
@@ -885,6 +985,23 @@ class vektor():
                             + umformung(zeile[4]*lsgs, '-') + umformung(zeile[3], ':') + r' \quad \to \quad '
                             + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[4] * lsgs, zeile[3])
+                    return text, lsg
+                def rg_nnull_probe(zeile, lsg):
+                    bez, a1, lz, c1, d1  = zeile
+                    var1, var2 = lsg
+                    erg1 = a1 if type(a1) != float else N(a1,3)
+                    erg2 = lsg1*c1 + lsg2*d1 if type(lsg1*c1 + lsg2*d1) != float else N(lsg1*c1+lsg2*d1,3)
+                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
+                            + r'. } \hspace{10em} \\ '
+                            + gzahl(a1) + '~=~'
+                            + summe.terme([c1, d1], ['', r' \cdot ' + gzahl_klammer(lsg1), r' \cdot ' + gzahl_klammer(lsg2)])
+                            + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
+                    if erg1 - erg2 == 0:
+                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        lsg = lsg
+                    else:
+                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        lsg = []
                     return text, lsg
                 def probe(lsg):
                     erg1 = np.array(obj1[0])
@@ -979,11 +1096,11 @@ class vektor():
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 6
                     else:
-                        text_nnull2, lsg_nnull2 = rg_nnull(nnull)
+                        text_nnull2, lsg_nnull2, lsg_pkt = rg_nnull(nnull)
                         text = text + text_nnull2
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr
-                        punkte += 7
+                        punkte += lsg_pkt + 2
 
             text = [text]
         else:
