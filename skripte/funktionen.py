@@ -1078,7 +1078,7 @@ class vektor():
                             lsg.insert(0,snull_lsg)
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
-                            punkte += 2
+                            punkte += 3
                         elif nnull != []: # 1-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
                             nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
                             text = text + nnull_text
@@ -1129,11 +1129,11 @@ class vektor():
                 rnull_text, rnull_lsg = rg_rnull(rnull[0])
                 text = text + rnull_text
                 punkte += 1
-                if snull != []:
+                if snull != []: # 2-3-...
                     snull_text, snull_lsg = rg_snull(snull[0])
                     text = text + snull_text
                     lsg.insert(0, snull_lsg)
-
+                    punkte += 1
             text = [text]
         else:
             text = ['']
