@@ -1102,7 +1102,7 @@ class vektor():
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += lsg_pkt + 2
-            elif len(rnull) == 2:
+            elif len(rnull) == 2: # hier werden alle Fälle erzeugt, wenn rsnull zweimal auftritt
                 rnull1_text, rnull1_lsg = rg_rnull(rnull[0])
                 rnull2_text, rnull2_lsg = rg_rnull(rnull[1])
                 if rnull1_lsg != rnull2_lsg:
