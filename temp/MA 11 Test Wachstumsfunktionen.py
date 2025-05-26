@@ -14,11 +14,11 @@ Kurs = 'Grundkurs'
 Fach = 'Mathematik'
 Klasse = '11'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 12'
+Art = 'HAK 13'
 Titel = 'Wachstumsfunktionen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = [False, True][1] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+probe = [False, True][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B uswy
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
