@@ -1102,23 +1102,37 @@ class vektor():
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += lsg_pkt + 2
-            elif len(rnull) == 2: # hier werden alle Fälle erzeugt, wenn rsnull zweimal auftritt
+            elif len(rnull) == 2: # hier werden alle Fälle erzeugt, wenn rnull zweimal auftritt
                 rnull1_text, rnull1_lsg = rg_rnull(rnull[0])
                 rnull2_text, rnull2_lsg = rg_rnull(rnull[1])
-                if rnull1_lsg != rnull2_lsg:
-                    text = text + rnull1_text + rnull2_text
-                    lsg=[]
-                    punkte += 2
-                elif rnull1_lsg == rnull2_lsg:
-                    text, lsg = text + rnull1_text + rnull2_text, [rnull1_lsg]
-                    punkte += 2
-                    if snull != []:
+                text = text + rnull1_text + rnull2_text
+                punkte += 2
+                if rnull1_lsg != rnull2_lsg: # 2 != 2 --> die beiden Lösungen aus den rnull-Gleichungen für var2 sind nicht gleich, d.h. das Gleichungssystem ist nicht lösbar
+                    lsg = []
+                elif rnull1_lsg == rnull2_lsg: # 2-2 --> die beiden Lösungen aus den rnull-Gleichungen für var2 sind gleich und var1 muss mit snull oder nnull bestimmt werden
+                    lsg = [rnull1_lsg]
+                    if snull != []: # 2-2-3 (erfordert Probe um das Ergebnis zu überprüfen)
                         snull_text, snull_lsg = rg_snull(snull[0])
                         text = text + snull_text
                         lsg.insert(0, snull_lsg)
                         text_pr, lsg_pr = probe(lsg)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 3
+                    elif nnull != []: # 2-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
+                        nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
+                        text = text + nnull_text
+                        lsg.insert(0, nnull_lsg)
+                        text_pr, lsg_pr = probe(lsg)
+                        text, lsg = text + text_pr, lsg_pr
+                        punkte += 4
+            elif len(rnull) == 1: # hier werden alle Fälle erzeugt, wenn rnull einmal auftritt
+                rnull_text, rnull_lsg = rg_rnull(rnull[0])
+                text = text + rnull_text
+                punkte += 1
+                if snull != []:
+                    snull_text, snull_lsg = rg_snull(snull[0])
+                    text = text + snull_text
+                    lsg.insert(0, snull_lsg)
 
             text = [text]
         else:
