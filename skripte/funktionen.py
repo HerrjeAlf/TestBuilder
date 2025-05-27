@@ -859,8 +859,7 @@ class vektor():
                     erg1 = a1 if type(a1) != float else N(a1,3)
                     erg2 = b1 + lsg1*c1 + lsg2*d1 if type(b1 + lsg1*c1 + lsg2*d1) != float else N(b1 + lsg1*c1+lsg2*d1,3)
                     text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
-                            + r'. } \hspace{10em} \\ '
-                            + gzahl(a1) + '~=~'
+                            + r'. } \hspace{10em} \\ ' + gzahl(a1) + '~=~'
                             + summe.terme([b1, c1, d1], ['', r' \cdot ' + gzahl_klammer(lsg1), r' \cdot ' + gzahl_klammer(lsg2)])
                             + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
@@ -993,8 +992,7 @@ class vektor():
                     erg1 = a1 if type(a1) != float else N(a1,3)
                     erg2 = lsg1*c1 + lsg2*d1 if type(lsg1*c1 + lsg2*d1) != float else N(lsg1*c1+lsg2*d1,3)
                     text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
-                            + r'. } \hspace{10em} \\ '
-                            + gzahl(a1) + '~=~'
+                            + r'. } \hspace{10em} \\ ' + gzahl(a1) + '~=~'
                             + summe.terme([c1, d1], ['', r' \cdot ' + gzahl_klammer(lsg1), r' \cdot ' + gzahl_klammer(lsg2)])
                             + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
@@ -1134,6 +1132,23 @@ class vektor():
                     text = text + snull_text
                     lsg.insert(0, snull_lsg)
                     punkte += 1
+                    if snull[1]: # 2-3-3
+                        snull_text, snull_lsg = rg_snull(snull[0])
+                        text = text + snull_text
+                        punkte += 1
+                        if lsg[0] == snull_lsg: # probe wenn 2-3=3
+                            text_pr, lsg_pr = probe(lsg)
+                            text, lsg = text + text_pr, lsg_pr
+                            punkte += 2
+                        elif lsg[0] != snull_lsg: # lsg ist leer wenn 2-3!=3
+                            lsg = []
+                    elif nnull != []: # 2-3-4 --> 4 dient als Probe
+                        nnull_text, nnull_lsg = rg_nnull_probe(nnull[0], lsg)
+                        text = text + nnull_text
+                        lsg = nnull_lsg
+                        punkte += 2
+
+
             text = [text]
         else:
             text = ['']
