@@ -12,7 +12,7 @@ Kurs = ('EK und GK')
 Fach = 'Mathematik'
 Klasse = '10f'
 Lehrer = 'Herr Herrys'
-Art = 'HAK 12'
+Art = 'HAK 11'
 Titel = 'Bruchrechnen'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
@@ -24,7 +24,8 @@ liste_bez = ['Aufgabe']
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[brueche_erweitern(1), brueche_kuerzen(2), brueche_ergaenzen(3),
-                 brueche_add_subr(4, ['e','j'], wdh=2)]]
+                 brueche_add_subr(4, ['e','j'], wdh=2),
+                 brueche_mul_div(5,['c', 'f'], wdh=2)]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
     for element in Aufgaben:
