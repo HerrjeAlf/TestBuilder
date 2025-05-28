@@ -132,10 +132,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-list =[[1],[2]]
+list = []
 
-if list[1]:
-    print(list[1])
-elif list[2]:
-    print('geht nicht')
+print('leere Liste zählt') if list else print('leere liste zählt nicht')
 

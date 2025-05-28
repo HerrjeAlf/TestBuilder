@@ -1764,7 +1764,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
         return aufg, lsg, pkt
 
     def exp_faktor_summe():
-        pkt = 3
+        pkt = 4
         basis_2 = nzahl(2,8)
         exponent_2 = nzahl(2,5)
         exponent_2_sum = zzahl(1,exponent_2)
@@ -1786,7 +1786,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
         lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
                + r'} ' + vorz_str(summand) + '~=~ ' + gzahl(erg_1) + umformung(summand, umf_sum)
                + r' \quad \to \quad ' + gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
-               + r'} ~=~ ' + gzahl(erg_2) + umformung(faktor, ':') + r' \quad (2BE) \\'
+               + r'} ~=~ ' + gzahl(erg_2) + umformung(faktor, ':') + r' \quad (1BE) \\'
                + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum) + r'} ~=~ ' + gzahl(erg_3)
                + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad \to \quad x' + vorz_str(exponent_2_sum)
                + r' ~=~ ' + gzahl(exponent_2 + exponent_2_sum) + r' \quad \vert ' + vorz_str(-1 * exponent_2_sum)
