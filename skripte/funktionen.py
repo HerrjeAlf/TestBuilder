@@ -55,19 +55,19 @@ def gzahl(k, exp=False, null=True):
             return '^' + latex(k)
     return latex(int(k)) if k % 1 == 0 else latex(k)
 
-def gzahl_klammer(k, str='', null=True, eins=False):
+def gzahl_klammer(k, string='', null=True, eins=False):
     try:
         if k == 0 and null != True:
             return ''
         k = int(k) if k % 1 == 0 else k
         if k < 0:
-            if str != '' and k == -1 and eins == False:
-                return r' \left( -' + str + r' \right)'
-            return r' \left(' + latex(k) + str + r' \right)'
+            if string != '' and k == -1 and eins == False:
+                return r' \left( -' + str(string) + r' \right)'
+            return r' \left(' + latex(k) + str(string) + r' \right)'
         else:
-            if str != '' and k == 1 and eins == False:
-                return str
-            return latex(k) + str
+            if string != '' and k == 1 and eins == False:
+                return str(string)
+            return latex(k) + str(string)
     except Exception as fehler:
         print('Fehler:', fehler)
 
@@ -376,18 +376,18 @@ class summe():
                 else:
                     del terme[0]
             for step in range(len(terme)):
-                summe_str = summe_str + vorz_str(terme[step])
+                summe_str += vorz_str(terme[step])
         if summe_str == '':
             summe_str = '0' if null else ''
         return summe_str
 
 def umformung(zahl, art=['+', '-', '*', ':'][0]):
-    if zahl == 0:
-        if art == ':':
-            exit("Fehler bei umformung(zahl, art): die Zahl ist 0 eine Division damit nicht zulässig.")
-        elif art in ['+', '-']:
-            return ''
-    elif zahl == 1 and art in ['*', ':']:
+    # if zahl == 0:
+    #     if art == ':':
+    #         exit("Fehler bei umformung(zahl, art): die Zahl ist 0 eine Division damit nicht zulässig.")
+    #     elif art in ['+', '-']:
+    #         return ''
+    if zahl == 1 and art in ['*', ':']:
         return ''
     elif art == '+':
         return r' \quad \vert ' + vorz_str(zahl)
@@ -671,6 +671,9 @@ class vektor():
                     else:
                         zws3 = r' \quad (1BE) \quad '
                         pkt += 1
+
+                    print(zeilen)
+                    print(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))
                     text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
                             + summe.terme([a1, b1],['',var1]) + '~=~'
                             + summe.terme([c1, d1], ['', var2]) + umformung(a1,'-')
@@ -689,8 +692,8 @@ class vektor():
                             + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],['', r' \cdot ' + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))], eins=True)
                             + '~=~' + gzahl(Rational(c1 - a1, b1) - Rational(d1*(c2*b1-a2*b1-b2*c1+b2*a1), b1*(b2*d1-d2*b1)))
                             + r' \quad (1BE)')
-                    lsg = [Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b2*d1 - d2*b1),
-                           Rational(c1 - a1, b1) - Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1))]
+                    lsg = [Rational(c1 - a1, b1) - Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1)),
+                           Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b2*d1 - d2*b1)]
                     return text, lsg, pkt
                 def rg_nnull_lsgr(zeile,lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
@@ -1164,23 +1167,14 @@ class vektor():
                 nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], rnull_lsg)
                 nnull_probe_text, nnull_probe_lsg = rg_nnull_probe(nnull[1], [nnull_lsg, rnull_lsg])
                 text, lsg  = text + rnull_text + nnull_text + nnull_probe_text, nnull_probe_lsg
-                punkte += 4
-            else: # 4-4-4
+                punkte += 5
+            elif len(nnull) == 3: # 4-4-4
                 nnull_text, nnull_lsg, nnull_pkt = rg_nnull(nnull)
                 nnull_probe_text, nnull_probe_lsg = rg_nnull_probe(nnull[2], nnull_lsg)
                 text, lsg = text + nnull_text + nnull_probe_text, nnull_probe_lsg
                 punkte += nnull_pkt + 2
-
-
-
-
-
-
-
-
-
-
-
+            else:
+                print('Vektoren wurde nicht berechnet, weil vektor.rechnung die Kombination nicht kennt.')
             text = [text]
         else:
             text = ['']
