@@ -136,3 +136,4 @@ list = []
 
 print('leere Liste zählt') if list else print('leere liste zählt nicht')
 
+print(liste_teilaufg)

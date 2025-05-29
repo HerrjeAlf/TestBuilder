@@ -357,7 +357,7 @@ class summe():
                 var = list_var
             for step in range(n):
                 if terme[0] != 0:
-                    summe_str = vorz_v_aussen(terme[0],var[0])
+                    summe_str = gzahl(terme[0]) + str(var[0]) if eins and var[0] not in liste_teilaufg else vorz_v_aussen(terme[0],var[0])
                     del terme[0]
                     del var[0]
                     break
@@ -365,7 +365,7 @@ class summe():
                     del terme[0]
                     del var[0]
             for step in range(len(terme)):
-                summand = vorz_str(terme[step]) + str(var[step]) if eins else vorz_v_innen(terme[step], var[step])
+                summand = vorz_str(terme[step]) + str(var[step]) if eins and var[step] not in liste_teilaufg else vorz_v_innen(terme[step], var[step])
                 summe_str = summe_str + summand
         else:
             for step in range(n):
@@ -686,25 +686,25 @@ class vektor():
                             + r' \quad (1BE) \\ ' + vorz_v_aussen(Rational(b2*d1-d2*b1,b1), var2) + '~=~'
                             + gzahl(Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b1)) + zws3
                             + r' \mathrm{und} \quad ' + var1 + '~=~'
-                            + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],['', r' \cdot ' + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))])
+                            + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],['', r' \cdot ' + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))], eins=True)
                             + '~=~' + gzahl(Rational(c1 - a1, b1) - Rational(d1*(c2*b1-a2*b1-b2*c1+b2*a1), b1*(b2*d1-d2*b1)))
                             + r' \quad (1BE)')
                     lsg = [Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b2*d1 - d2*b1),
                            Rational(c1 - a1, b1) - Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1))]
                     return text, lsg, pkt
-                def rg_nnull_lsgr(zeile,lsgr):
+                def rg_nnull_lsgr(zeile,lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
-                            + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr)])
+                            + summe.terme([zeile[1], -1*zeile[3]],['',r' \cdot ' + gzahl_klammer(lsgr, eins=True)], eins=True)
                             + '~=~' + summe.terme([zeile[2], zeile[4]], ['', var2])
                             + umformung(zeile[2],'-') + umformung(zeile[4],':')
                             + r' \quad \to \quad ' + var2 + '~=~'
                             + gzahl(Rational(zeile[1] - zeile[2] - zeile[3]*lsgr, zeile[4])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2] - zeile[3]*lsgr, zeile[4])
                     return text, lsg
-                def rg_nnull_lsgs(zeile, lsgs):
+                def rg_nnull_lsgs(zeile, lsgs): # hier wird die Lösung für s in nnull eingesetzt und das Ergebnis ist lsgr
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
                             + summe.terme([zeile[1], -1*zeile[3]], ['', var1]) + '~=~'
-                            + summe.terme([zeile[2], zeile[4]], ['', r' \cdot ' + gzahl_klammer(lsgs)])
+                            + summe.terme([zeile[2], zeile[4]], ['', r' \cdot ' + gzahl_klammer(lsgs, eins=True)], eins=True)
                             + umformung(zeile[1], '-') + umformung(-1*zeile[3], ':')
                             + r' \quad \to \quad ' + var1 + '~=~'
                             + gzahl(Rational(zeile[2] - zeile[1] + zeile[4]*lsgs, -1*zeile[3])) + r' \quad (2BE)')
@@ -721,10 +721,10 @@ class vektor():
                             + '~=~' + summe.terme([c1, d1], ['', r' \cdot ' + gzahl_klammer(var2)], eins=True)
                             + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
                     return text, lsg
                 def probe(lsg):
@@ -742,10 +742,10 @@ class vektor():
                             + gzahl(c2 + lsg[1]*d2) + r' \\' + gzahl(c3 + lsg[1]*d3) + r' \\'
                             + r' \end{pmatrix} ')
                     if all(erg1[k]-erg2[k] == 0 for k in range(len(erg1))):
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
                     return text, lsg
 
@@ -828,26 +828,26 @@ class vektor():
                             + zws2 + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1) + '~=~'
                             + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, d1))
                             + zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
-                            + summe.terme([Rational(a1-b1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))])
+                            + summe.terme([Rational(a1-b1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))], eins=True)
                             + '~=~' + gzahl(Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1)))
                             + r' \quad (1BE)')
                     lsg = [Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1),
                            Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1))]
                     pkt += 1
                     return text, lsg, pkt
-                def rg_nnull_lsgr(zeile, lsgr):
+                def rg_nnull_lsgr(zeile, lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
                             + summe.terme([zeile[2], zeile[3], zeile[4]],
-                                          ['', r' \cdot ' + gzahl_klammer(lsgr), var2])
+                                          ['', r' \cdot ' + gzahl_klammer(lsgr, eins=True), var2], eins=True)
                             + umformung(zeile[2] + zeile[3]*lsgr, '-') + umformung(zeile[4], ':')
                             + r' \quad \to \quad ' + var2 + '~=~'
                             + gzahl(Rational(zeile[1] - zeile[2] - zeile[3] * lsgr, zeile[4])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[2] - zeile[3] * lsgr, zeile[4])
                     return text, lsg
-                def rg_nnull_lsgs(zeile, lsgs):
+                def rg_nnull_lsgs(zeile, lsgs): # hier wird die Lösung für s in nnull eingesetzt und das Ergebnis ist lsgr
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
                             + summe.terme([zeile[2], zeile[3], zeile[4]],
-                                          ['', var1, r' \cdot ' + gzahl_klammer(lsgs)])
+                                          ['', var1, r' \cdot ' + gzahl_klammer(lsgs, eins=True)], eins=True)
                             + umformung(zeile[2]+zeile[4]*lsgs, '-') + umformung(zeile[3], ':')
                             + r' \quad \to \quad ' + var1 + '~=~'
                             + gzahl(Rational(zeile[1] - zeile[2] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
@@ -863,10 +863,10 @@ class vektor():
                             + summe.terme([b1, c1, d1], ['', r' \cdot ' + gzahl_klammer(var1), r' \cdot ' + gzahl_klammer(var2)], eins=True)
                             + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
                     return text, lsg
                 def probe(lsg):
@@ -884,10 +884,10 @@ class vektor():
                                 + gzahl(b2 + lsg[0]* c2 + lsg[1] * d2) + r' \\' + gzahl(b3 + lsg[0]*c3 + lsg[1] * d3)
                                 + r' \\' + r' \end{pmatrix} ')
                         if all(erg1[k]-erg2[k] == 0 for k in range(len(erg1))):
-                            text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                            text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                             lsg = lsg
                         else:
-                            text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                            text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                             lsg = []
                         return text, lsg
 
@@ -972,16 +972,16 @@ class vektor():
                     pkt += 1
                     lsg = [Rational(a2*d1 - d2*a1, c2*d1 - d2*c1), Rational(a1,d1) - Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1))]
                     return text, lsg, pkt
-                def rg_nnull_lsgr(zeile, lsgr):
+                def rg_nnull_lsgr(zeile, lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
-                            + summe.terme([zeile[3], zeile[4]], [r' \cdot ' + gzahl_klammer(lsgr), var2])
+                            + summe.terme([zeile[3], zeile[4]], [r' \cdot ' + gzahl_klammer(lsgr, eins=True), var2], eins=True)
                             + umformung(zeile[3]*lsgr, '-') + umformung(zeile[4], ':') + r' \quad \to \quad '
                             + var2 + '~=~' + gzahl(Rational(zeile[1] - zeile[3] * lsgr, zeile[4])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[3] * lsgr, zeile[4])
                     return text, lsg
-                def rg_nnull_lsgs(zeile, lsgs):
+                def rg_nnull_lsgs(zeile, lsgs): # hier wird die Lösung für s in nnull eingesetzt und das Ergebnis ist lsgr
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad ' + gzahl(zeile[1]) + '~=~'
-                            + summe.terme([zeile[3], zeile[4]],[var1, r' \cdot ' + gzahl_klammer(lsgs)])
+                            + summe.terme([zeile[3], zeile[4]],[var1, r' \cdot ' + gzahl_klammer(lsgs, eins=True)], eins=True)
                             + umformung(zeile[4]*lsgs, '-') + umformung(zeile[3], ':') + r' \quad \to \quad '
                             + var1 + '~=~' + gzahl(Rational(zeile[1] - zeile[4] * lsgs, zeile[3])) + r' \quad (2BE)')
                     lsg = Rational(zeile[1] - zeile[4] * lsgs, zeile[3])
@@ -996,10 +996,10 @@ class vektor():
                             + summe.terme([c1, d1], [r' \cdot ' + gzahl_klammer(var1), r' \cdot ' + gzahl_klammer(var2)], eins=True)
                             + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
                     return text, lsg
                 def probe(lsg):
@@ -1016,10 +1016,10 @@ class vektor():
                             + gzahl(lsg[0]* b2 + lsg[1] * c2) + r' \\' + gzahl(lsg[0]*b3 + lsg[1] * c3)
                             + r' \\' + r' \end{pmatrix} ')
                     if all(erg1[k]-erg2[k] == 0 for k in range(len(erg1))):
-                        text = text + r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text = text + r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
                     return text, lsg
 
@@ -1032,17 +1032,17 @@ class vektor():
                 zeile2 = rsnull[1]
                 zeile3 = nnull[0]
                 if zeile1[1] != zeile1[2]: # die erste Zeile erzeugt einen Widerspruch
-                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                    text += (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
                 elif zeile2[1] != zeile2[2]: # die zweite Zeile erzeugt einen Widerspruch
-                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt: \quad ' + gzahl(zeile2[1])
+                    text += (r' \\ \mathrm{aus~' + gzahl(zeile2[0]) + r'~folgt: \quad ' + gzahl(zeile2[1])
                             + '~=~' + gzahl(zeile2[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
                 else: # hier kann nur noch 1-1-4 auftreten, alles andere wird ausgeschlossen, weil kein Richtungsvektor [0,0,0] sein darf
-                    text = (text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                    text += (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile2[0])
                             + r'~folgt: \quad ' + gzahl(zeile2[1]) + '~=~' + gzahl(zeile2[2])
                             + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile3[0]) + r'~folgt:} \quad '
@@ -1057,53 +1057,53 @@ class vektor():
             elif len(rsnull) == 1: # hier werden alle Fälle erzeugt, wenn rsnull einmal auftritt
                 zeile1 = rsnull[0]
                 if zeile1[1] != zeile1[2]: # die erste Zeile rsnull, erzeugt einen Widerspruch
-                    text = (text + r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                    text += (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                             + '~=~' + gzahl(zeile1[2]) + r' \quad f.A.} \quad (1BE)')
                     lsg = []
                     punkte += 1
                 else: # die erste Zeile ist eine wahre Aussage 1-...
-                    text = (text +  r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
+                    text += (r' \\ \mathrm{aus~' + gzahl(zeile1[0]) + r'~folgt: \quad ' + gzahl(zeile1[1])
                            + '~=~' + gzahl(zeile1[2]) + r' \quad w.A.} \quad (2BE) ')
                     punkte += 2
                     if snull != []: # 1-2-...
                         snull_text, snull_lsg = rg_snull(snull[0])
-                        text = text + snull_text
+                        text += snull_text
                         lsg.append(snull_lsg)
                         punkte += 1
                         if rnull != []: # 1-2-3 (erfordert Probe um das Ergebnis zu überprüfen)
                             rnull_text, rnull_lsg = rg_rnull(rnull[0])
-                            text = text + rnull_text
+                            text += rnull_text
                             lsg.append(rnull_lsg)
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
                             punkte += 3
                         elif nnull != []: # 1-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
                             nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
-                            text = text + nnull_text
+                            text += nnull_text
                             lsg.append(nnull_lsg)
                             text_pr, lsg_pr = probe(lsg)
                             text, lsg = text + text_pr, lsg_pr
                             punkte += 4
                     elif rnull != []: # 1-3-4 (erfordert Probe um das Ergebnis zu überprüfen)
                         rnull_text, rnull_lsg = rg_rnull(rnull[0])
-                        text = text + rnull_text
+                        text += rnull_text
                         lsg.append(rnull_lsg)
                         nnull_text, nnull_lsg = rg_nnull_lsgr(nnull[0], lsg[0])
-                        text = text + nnull_text
+                        text += nnull_text
                         lsg.append( nnull_lsg)
                         text_pr, lsg_pr = probe(lsg)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 5
                     else: # 1-4-4 (erfordert Probe um das Ergebnis zu überprüfen)
                         text_nnull2, lsg_nnull2, lsg_pkt = rg_nnull(nnull)
-                        text = text + text_nnull2
+                        text += text_nnull2
                         text_pr, lsg_pr = probe(lsg_nnull2)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += lsg_pkt + 2
-            elif len(snull) == 2: # hier werden alle Fälle erzeugt, wenn snull zweimal auftritt
+            elif len(snull) == 2: # hier werden alle Fälle erzeugt, wenn snull (2-2-...) zweimal auftritt
                 snull1_text, snull1_lsg = rg_snull(snull[0])
                 snull2_text, snull2_lsg = rg_snull(snull[1])
-                text = text + snull1_text + snull2_text
+                text += snull1_text + snull2_text
                 punkte += 2
                 if snull1_lsg != snull2_lsg: # 2 != 2 --> die beiden Lösungen aus den snull-Gleichungen für var2 sind nicht gleich, d.h. das Gleichungssystem ist nicht lösbar
                     lsg = []
@@ -1111,43 +1111,70 @@ class vektor():
                     lsg = [snull1_lsg]
                     if rnull != []: # 2-2-3 (erfordert Probe um das Ergebnis zu überprüfen)
                         rnull_text, rnull_lsg = rg_rnull(rnull[0])
-                        text = text + rnull_text
+                        text += rnull_text
                         lsg.append( rnull_lsg)
                         text_pr, lsg_pr = probe(lsg)
                         text, lsg = text + text_pr, lsg_pr
                         punkte += 3
                     elif nnull != []: # 2-2-4 (erfordert Probe um das Ergebnis zu überprüfen)
                         nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], lsg[0])
-                        text = text + nnull_text
-                        lsg.append( nnull_lsg)
-                        text_pr, lsg_pr = probe(lsg)
-                        text, lsg = text + text_pr, lsg_pr
+                        text_pr, lsg_pr = probe([lsg[0], nnull_lsg])
+                        text, lsg = text + nnull_text + text_pr, lsg_pr
                         punkte += 4
-            elif len(snull) == 1: # hier werden alle Fälle erzeugt, wenn snull einmal auftritt
+            elif len(snull) == 1: # hier werden alle Fälle erzeugt, wenn snull (2-...) einmal auftritt
                 snull_text, snull_lsg = rg_snull(snull[0])
-                text = text + snull_text
+                text += snull_text
                 lsg = [snull_lsg]
                 punkte += 1
                 if rnull != []: # 2-3-...
                     rnull_text, rnull_lsg = rg_rnull(rnull[0])
-                    text = text + rnull_text
-                    lsg.append( rnull_lsg)
+                    text += rnull_text
+                    lsg.append(rnull_lsg)
                     punkte += 1
                     if len(rnull) == 2: # 2-3-3
                         rnull_text, rnull_lsg = rg_rnull(rnull[1])
-                        text = text + rnull_text
+                        text += rnull_text
                         punkte += 1
                         lsg = [] if lsg[0] != rnull_lsg else lsg
                     elif nnull != []: # 2-3-4 --> 4 dient als Probe
                         nnull_text, nnull_lsg = rg_nnull_probe(nnull[0], lsg)
-                        text = text + nnull_text
+                        text += nnull_text
                         lsg = nnull_lsg
                         punkte += 2
                 elif len(nnull) == 2: # 2-4-4
-                    nnull_text, nnull_lsg, nnull_pkt = rg_rnull(nnull)
-                    text = text + nnull_text
-                    punkte += nnull_pkt
-                    lsg = nnull_lsg if nnull_lsg else []
+                    nnull_text, nnull_lsg = rg_nnull_lsgr(nnull[0], lsg[0])
+                    nnull_probe_text, nnull_probe_lsg = rg_nnull_probe(nnull[1], [lsg[0], nnull_lsg])
+                    text += nnull_text + nnull_probe_text
+                    lsg = nnull_probe_lsg
+                    punkte += 4
+            elif len(rnull) == 2: # hier werden alle Fälle erzeugt, wenn rnull (3-3-..) zweimal auftritt
+                rnull1_text, rnull1_lsg = rg_rnull(rnull[0])
+                rnull2_text, rnull2_lsg = rg_rnull(rnull[1])
+                text += rnull1_text + rnull2_text
+                punkte += 2
+                if rnull1_lsg != rnull2_lsg: # 3 != 3 --> die beiden Lösungen aus den rnull-Gleichungen für var2 sind nicht gleich, d.h. das Gleichungssystem ist nicht lösbar
+                    lsg = []
+                else: # 3-3-4
+                    nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], rnull1_lsg)
+                    text_pr, lsg_pr = probe([nnull_lsg, rnull1_lsg])
+                    text, lsg = text + nnull_text + text_pr, lsg_pr
+                    punkte += 4
+            elif len(rnull) == 1: # 3-4-4
+                rnull_text, rnull_lsg = rg_rnull(rnull[0])
+                nnull_text, nnull_lsg = rg_nnull_lsgs(nnull[0], rnull_lsg)
+                nnull_probe_text, nnull_probe_lsg = rg_nnull_probe(nnull[1], [nnull_lsg, rnull_lsg])
+                text, lsg  = text + rnull_text + nnull_text + nnull_probe_text, nnull_probe_lsg
+                punkte += 4
+            else: # 4-4-4
+                nnull_text, nnull_lsg, nnull_pkt = rg_nnull(nnull)
+                nnull_probe_text, nnull_probe_lsg = rg_nnull_probe(nnull[2], nnull_lsg)
+                text, lsg = text + nnull_text + nnull_probe_text, nnull_probe_lsg
+                punkte += nnull_pkt + 2
+
+
+
+
+
 
 
 
@@ -1474,12 +1501,12 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     fkt = koeff[0]*x**2 + koeff[1]*x + koeff[2]
     text = ''
     if all(x == 0 for x in koeff):
-        text = text + r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~' + var + '~aus~dem~Definitionsbereich} '
+        text += r'0 ~=~ 0 ~ w.A. \mathrm{für~alle~' + var + '~aus~dem~Definitionsbereich} '
         lsg = []
         punkte += 1
     elif koeff[0] == 0:
         if koeff[1] == 0:
-            text = text + '0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
+            text += '0 ~=~ ' + gzahl(koeff[2]) + ' ~ f.A. '
             lsg = []
             punkte += 1
         elif koeff[2] == 0:
@@ -1541,11 +1568,11 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
                 + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \quad (2BE) \\ ')
         punkte += 4
         if Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) < 0:
-            text = text + r' \mathrm{ n.d. }'
+            text += r' \mathrm{ n.d. }'
             lsg = []
             punkte += 1
         elif Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) == 0:
-            text = text + var + '_{' + gzahl(n1) + '} ~=~ ' + gzahl(Rational(-1*koeff[1],2*koeff[0]))
+            text += var + '_{' + gzahl(n1) + '} ~=~ ' + gzahl(Rational(-1*koeff[1],2*koeff[0]))
             lsg = [Rational(-1*koeff[1], 2*koeff[0])]
             punkte += 2
         else:
