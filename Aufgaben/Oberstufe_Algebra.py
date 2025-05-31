@@ -1224,10 +1224,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=[True, False][random.choice([0,1])], i=0, BE=[]):
+def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=[True, False][random.choice([0,1])], neue_seite=None, i=0, BE=[]):
     # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene=True" liegt oder auch nicht "lagebeziehung_t_ebene=False". Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -1339,8 +1340,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(cx - ax) + r' \\' + gzahl(cy - ay) + r' \\' + gzahl(cz - az) + r' \\'
                        r' \end{pmatrix} \quad (3BE) \\'
                        r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'b' in teilaufg:
         # gegebene Ebenengleichung von Parameterform in Normalen- und Koordinatenform umformen
         punkte = 7
@@ -1368,8 +1369,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk,'z') + '~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'c' in teilaufg:
         # Überprüfen, ob ein Punkt in der Ebene liegt
         punkte = 3
@@ -1396,8 +1397,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + vorz_v_innen(nz_gk, r' \cdot ' + gzahl_klammer(tz)) + '~=~' + gzahl(np.dot(punkt_a, n_gk))
                        + r' \quad \to \quad ' + gzahl(np.dot(n_gk, punkt_t)) + '~=~' + gzahl(np.dot(punkt_a, n_gk))
                        + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'd' in teilaufg:
         # Die SuS sollen überprüfen, ob der Punkt P im von den Punkten ABC aufgespannte Parallelogramm liegt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1467,8 +1468,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad (2BE) \\\\'
                        + lsg_0 + lsg_1)
         liste_punkte.append(punkte)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'e' in teilaufg:
         # Die SuS sollen überprüfen, ob der Punkt Q im Dreieck ABC der Ebene E liegt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1543,8 +1544,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(parameter_r) + r' \quad \to \quad s ~=~' + gzahl(parameter_s) + r' \quad (2BE) \\\\'
                        + lsg_0 + lsg_1)
         liste_punkte.append(punkte)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'f' in teilaufg:
         # Die SuS sollen die hessische Normalform der Ebene aufstellen
         punkte = 3
@@ -1561,8 +1562,8 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                        + r' \end{pmatrix} ~=~0 \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'g' in teilaufg:
         # Berechnung des Abstandes eines Punktes R von der Ebene
         punkte = 3
@@ -1608,6 +1609,7 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
                            + gzahl_klammer(nz_gk) + r' \right) \right|  ~=~ '
                            + gzahl(abs(N(np.dot((punkt_r - punkt_a),(1 / n_betrag * n_gk)),3)))
                            + r' \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
 
     if BE != []:
