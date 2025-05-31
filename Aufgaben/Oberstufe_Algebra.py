@@ -1620,11 +1620,12 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False, i=0, BE=[]):
+def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordinatenform'][random.choice([0, 1])], neue_seite=None, i=0, BE=[]):
     # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "form=" kann die Form der Ebenengleichung festgelegt werden. Sie kann "form="normalenform" oder "form=koordinatenform" sein. Standardmäßig wird die Form zufällig ausgewählt.
     # Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -1644,8 +1645,6 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
     koordinatenform = ('E:~' + vorz_v_aussen(nx,'x')  + vorz_v_innen(ny,'y')
                        + vorz_v_innen(nz,'z') + '~=~' + gzahl(np.dot(punkt_a,n)))
 
-    if form == None:
-        form = random.choice(['normalenform', 'koordinatenform'])
     if form == 'normalenform' and 'a' in teilaufg:
         ebenengleichung = normalenform
         andere_darstellungsform = koordinatenform
@@ -1688,6 +1687,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
                        r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix}'
                        + gzahl(0) + r' \\' + gzahl(-1*nz) + r' \\' + gzahl(ny) + r' \\'
                        r' \end{pmatrix} \quad (4BE) \\')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
 
     if 'b' in teilaufg:
@@ -1697,16 +1697,19 @@ def ebenen_umformen(nr, teilaufg=['a', 'b'], form=None, koordinatensystem=False,
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(beschriftung(teilaufg, i) + f'Stellen Sie die Achsenabschnittsform von E auf '
                        + f'und zeichnen Sie ein Schrägbild der Ebene.')
-        if koordinatensystem:
-            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
-            aufgabe.append(['Bild', '300px'])
-            loesung.append(['Bild', '300px'])
         loesung.extend((beschriftung(teilaufg,i, True) + r' ' + koordinatenform + r' \quad \vert \div '
                        + gzahl(np.dot(punkt_a,n)) + r' \quad \to \quad ' + r'E:~ \frac{x}{' + gzahl_klammer(sx)
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
                        + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
-        i += 1
+        aufgabe.append('NewPage') if neue_seite == i else ''
 
+    if 'c' in teilaufg:
+        # wählt man Teilaufgabe c, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('3dim_Koordinatensystem')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+
+        i += 1
     if BE != []:
         if len(BE) != len(teilaufg):
             print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
