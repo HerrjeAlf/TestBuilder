@@ -19,10 +19,10 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ks=None, i=0, BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], neue_seite=None, i=0, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Der Parameter "ks=" legt fest, ob die Aufgabe ein leeres dreidimensionales Koordinatensystem oder kariertes Papier enthält. Der Parameter kann "None", "True" oder "False" sein". Standardmäßig ist "ks=None" und somit gibt kein Koordinatensystem und kein kariertes Papier.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
@@ -91,7 +91,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
                    + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
                    + 'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ), '
-                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ) ']
+                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ) \n\n']
     else:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
                    + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
@@ -106,14 +106,18 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         pkt = 2
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if ks == True:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
-                                              f'und verbinden diese. \n\n')
-        else:
-            aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
-                                              f'und verbinden diese. \n\n')
+        if 'i' in teilaufg:
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                     + f'Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
+                                     + f'und verbinden diese.'), ' \n\n'))
             pkt += 2
+        else:
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg, i)
+                                     + f'Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
+                                     + f'und verbinden diese.'), ' \n\n'))
+            pkt += 4
         loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -121,16 +125,17 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.append(str(liste_teilaufg[i]) + f') Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist. \n\n')
-        loesung.append(str(liste_teilaufg[i]) + (r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
-                                           + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\'
-                                           + gzahl(vektor_ab[2]) + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{('
-                                           + gzahl(vektor_ab[0]) + ')^2 ~+~(' + gzahl(vektor_ab[1]) + ')^2 ~+~('
-                                           + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab + r' \quad (2P) \\'
-                                           + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
-                                           + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
-                                           + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}'))
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + f'Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist.'),' \n\n'))
+        loesung.append(beschriftung(teilaufg,i, True) + r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
+                       + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
+                       + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + gzahl(vektor_ab[0]) + ')^2 ~+~('
+                       + gzahl(vektor_ab[1]) + ')^2 ~+~(' + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab
+                       + r' \quad (2P) \\' + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
+                       + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -138,11 +143,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(str(liste_teilaufg[i]) + (f') Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
-                                           + f' das Parallelogramm ABCD bilden.'))
-        loesung.append(str(liste_teilaufg[i]) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + f'Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
+                                 + f' das Parallelogramm ABCD bilden.'), ' \n\n'))
+        loesung.append(beschriftung(teilaufg,i, True) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -153,17 +160,18 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         diskr_ac = sum(a * a for a in vektor_ac)
         erg = N(0.5 * sqrt(diskr_ab*diskr_ac-sprod**2),3)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
-                       f'vektor.skalarproduktes. \n\n')
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Skalarproduktes.'),
+                        ' \n\n'))
         if 'b' in teilaufg:
             pkt = 3
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
                            + r' { \left| \overrightarrow{AC} \right| }^2 - { \left( \overrightarrow{AB} \cdot '
-                           + r' \overrightarrow{AC} \right) }^2 }~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{'
+                           + r' \overrightarrow{AC} \right) }^2 } \quad (1BE) \\ A ~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{'
                            + gzahl(diskr_ab) + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac)
                            + r'} \right) }^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2 } ~=~' + gzahl(erg)
-                           + r' \quad (3BE) ')
+                           + r' \quad (2BE) ')
         else:
             pkt = 5
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
@@ -179,6 +187,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\ A ~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{' + gzahl(diskr_ab)
                            + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac) + r'} \right) }^2 - \left( '
                            + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg) + r' \quad (4BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -187,8 +196,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         laenge_kprod =  N(sqrt(sum(a*a for a in kprod)),3)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Dreiecks ABC mithilfe des '
-                       + f'Kreuzproduktes. \n\n')
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Kreuzproduktes.'),
+                        ' \n\n'))
         if len([element for element in ['b', 'd'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
@@ -208,6 +218,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
                            + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (4BE)')
             pkt = 5
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -216,8 +227,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         laenge_kprod = N(sqrt(sum(a * a for a in kprod)), 3)
-        aufgabe.append(str(liste_teilaufg[i]) + f') Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des '
-                       + f'Kreuzproduktes. \n\n')
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                                 + f'Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des Kreuzproduktes.'),
+                        ' \n\n'))
         if len([element for element in ['b', 'd', 'e'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
@@ -237,6 +249,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ ' + gzahl(laenge_kprod)
                            + r' \quad (4BE)')
             pkt = 5
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -249,13 +262,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
         erg = N(abs(vektor.skalarprodukt(kprod, vektor_ae)),3)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
-            aufgabe.extend(('Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
-                            + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
-                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+            aufgabe.extend((NoEscape(r' \noindent ' + 'Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | '
+                                     + gzahl(ey) + ' | ' + gzahl(ez)
+                                     + '), der mit den Punkten A, B und C ein Spat bildet.'), ' \n\n',
+                            beschriftung(teilaufg, i) + f'Berechnen Sie das Volumen des Spates. \n\n'))
         else:
-                aufgabe.extend(('und ein weiterer \n Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey) + ' | ' + gzahl(ez)
-                                + '), der mit den Punkten A, B und C ein Spat bildet. \n\n',
-                                str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen des Spates. \n\n'))
+                aufgabe.extend((NoEscape('und ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey)
+                                         + ' | ' + gzahl(ez) + '), der mit den Punkten A, B und C ein Spat bildet. '),
+                                ' \n\n', beschriftung(teilaufg, i) + f'Berechnen Sie das Volumen des Spates. \n\n'))
 
         if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
@@ -280,6 +294,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
                            + r' \quad (6BE)')
             pkt = 7
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -292,13 +307,13 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
         erg = Rational(abs(vektor.skalarprodukt(kprod, vektor_as)),6)
         if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
-            aufgabe.extend(('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
-                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
+            aufgabe.extend((NoEscape('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | '
+                                     + gzahl(sz) + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet.'),
+                            ' \n\n', beschriftung(teilaufg, i) + f'Berechnen Sie das Volumen der Pyramide. \n\n'))
         else:
-            aufgabe.extend(('sowie ein weiterer \n Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
-                            + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet. \n\n',
-                            str(liste_teilaufg[i]) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
+            aufgabe.extend((NoEscape('sowie ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
+                                     + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet.'), ' \n\n',
+                            beschriftung(teilaufg, i) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
         if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
@@ -322,18 +337,21 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                            + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
                            + r' \quad (6BE)')
             pkt = 7
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
-    if ks != None:
-        if ks == True:
-            grafiken_loesung = grafiken_aufgaben = ['3dim_Koordinatensystem']
-            aufgabe.append(['Bild','300px'])
-            loesung.append(['Bild','300px'])
-        else:
-            grafiken_loesung = grafiken_aufgaben = ['kariertes_Papier']
-            aufgabe.append(['Bild','400px'])
-            loesung.append(['Bild','400px'])
+    if 'i' in teilaufg:
+        # wählt man Teilaufgabe i, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('3dim_Koordinatensystem')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+
+    if 'j' in teilaufg:
+        # wählt man Teilaufgabe j, wird unter der Teilaufaufgabe kariertes Papier eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('kariertes_Papier')
+        aufgabe.append('NewPage') if neue_seite == i else ''
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -343,11 +361,12 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=None, kollinear=None, i=0, BE=[]):
+def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=[True, False][random.choice([0,1])], kollinear=None, neue_seite=None, i=0, BE=[]):
     # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "linearkombination=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe c) als Linearkombination darstellen lassen. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig.  Er kann auch True oder False sein.
     # Mit dem Parameter "kollinear=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe e) kollinear sind. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig. Er kann auch True oder False sein.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -377,6 +396,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1])
                        + r' \\' + gzahl(ergebnis[2]) + r' \\' + r'  \end{pmatrix}  \quad (2P)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)
         i += 1
 
@@ -403,6 +423,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
                        + gzahl(ergebnis[0]) + ' | ' + gzahl(ergebnis[1]) + ' | ' + gzahl(ergebnis[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -413,22 +434,18 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
         vektor_2 = [x_2, y_2, z_2] = np.array(vektor.punkt(5))
-        vektor_3 = [x_3, y_3, z_3] = np.array([zzahl(1,7), zzahl(0,5),zzahl(1,7)])
-
-        if linearkombination == None:
-            linearkombination = random.choice([True,False])
+        vektor_3 = [x_3, y_3, z_3] = np.array([zzahl(1,7), zzahl(0,5),zzahl(0,7)])
 
         if linearkombination == True:
             vektor_1 = [x_1, y_1, z_1] = np.array(vektor_2*faktor_1) + np.array(vektor_3*faktor_2)
-            loesung_2 = (r' \mathrm{w.A. \quad \to \quad Vektor~ \overrightarrow{a} ~lässt~sich~als~Linearkombination~'
-                         r'von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.} \quad (1P) \\')
+            loesung_2 = (r' \\ \mathrm{Vektor~ \overrightarrow{a} ~lässt~sich~als~Linearkombination~'
+                         r'von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen. } \quad (1BE) \\')
         else:
             vektor_1 = [x_1, y_1, z_1] = (vektor_2[0] * faktor_1 + vektor_3[0] * faktor_2,
                                           vektor_2[1] * faktor_1 + vektor_3[1] * faktor_2,
                                           vektor_2[2] * faktor_1 + vektor_3[2] * faktor_2 + zzahl(1,3))
-            loesung_2 = (r' \mathrm{f.A. \quad \to \quad Vektor~ \overrightarrow{a} ~lässt~sich~nicht~als~'
-                         r' Linearkombination~von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen.}'
-                         r' \quad (1P) \\')
+            loesung_2 = (r' \\ \mathrm{Vektor~ \overrightarrow{a} ~lässt~sich~nicht~als~Linearkombination~'
+                         r' von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen. } \quad (1BE) \\')
 
         aufgabe.extend((beschriftung(teilaufg,i) + 'Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
                         + ' von b und c dargestellt werden kann.',
@@ -439,55 +456,12 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
                         + r' \end{pmatrix} \\'))
 
-        loesung_1 = (r' \mathrm{aus~I~folgt:} \quad ' + gzahl(x_1) + '~=~' + vorz_v_aussen(x_2,r' \cdot r')
-                     + vorz_v_innen(x_3,'s') + r' \cdot \quad \to \quad r~=~'
-                     + gzahl(Rational(x_1,x_2)) + vorz_str(Rational(-1*x_3,x_2))
-                     + r' \cdot s \quad (2P) \\')
-
-        if y_3 != 0:
-            lsg_s = N((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2),3)
-            lsg_r = N((x_1 / x_2) - (x_3/ x_2) * ((y_1 - (x_1*y_2)/x_2)/(y_3 - (x_3*y_2)/x_2)),3)
-            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~II} \quad ' + gzahl(y_1) + '~=~'
-                         + gzahl(y_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
-                         + vorz_str(y_3) + r' \cdot s \quad (1P) \\'
-                         + gzahl(y_1) + vorz_str(Rational(-1*x_1*y_2,x_2)) + r' ~=~ s \cdot \left('
-                         + gzahl(Rational(-1*x_3*y_2,x_2)) + vorz_str(y_3)
-                         + r' \right) \quad (1P) \quad \to \quad '
-                         + r' s ~=~ ' + gzahl(lsg_s) + r' \quad (1P) \quad \to \quad r ~=~' + gzahl(lsg_r)
-                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~III: ' + gzahl(z_1) + '~=~' + gzahl(lsg_r)
-                         + r' \cdot ' + gzahl_klammer(z_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(z_3)
-                         + r' ~=~ ' + gzahl(N(z_2*lsg_r+z_3*lsg_s,3)) + r'} \quad (1P)')
-        elif z_3 != 0:
-            lsg_r = N(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)),3)
-            lsg_s = N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3)
-            print(lsg_r)
-            print(lsg_s)
-            loesung_1 = (loesung_1 + r' \mathrm{r~einsetzen~in~III} \quad ' + gzahl(z_1) + '~=~'
-                         + gzahl(z_2) + r' \cdot \left(' + gzahl(Rational(x_1,x_2))
-                         + vorz_str(Rational(-1*x_3,x_2)) + r' \cdot s \right)'
-                         + vorz_str(z_3) + r' \cdot s \quad (2P) \\'
-                         + gzahl(z_1) + vorz_str(Rational(-1* x_1*z_2,x_2)) + r' ~=~ s \cdot \left('
-                         + gzahl(Rational(-1*x_3*z_2,x_2)) + vorz_str(z_3)
-                         + r' \cdot s \right) \quad (2P) \quad \to \quad '
-                         + r' s ~=~ ' + gzahl(Rational((z_1 - (x_1*z_2)/x_2),(z_3 - (x_3*z_2)/x_2)))
-                         + r' \quad (1P) \quad  r~=~ '
-                         + gzahl(N(x_1 / x_2 - (x_3/ x_2)*((z_1 + (x_1*z_2)/x_2)/(z_3 - (x_3*z_2)/x_2)),3))
-                         + r' \quad (1P) \\ \mathrm{Einsetzen~in~II: ' + gzahl(y_1) + '~=~' + gzahl(lsg_r)
-                         + r' \cdot ' + gzahl_klammer(y_2) + vorz_str(lsg_s) + r' \cdot ' + gzahl_klammer(y_3)
-                         + r' ~=~ ' + gzahl(N(y_2*lsg_r+y_3*lsg_s,3)) + r'} \quad (1P)')
-        else:
-            pass
-
-        loesung.append(beschriftung(teilaufg,i, True)
+        loesung_1, lsg, punkte = vektor.rechnung([vektor_1],[vektor_2, vektor_3], var_obj2=['r', 's'])
+        loesung.append(beschriftung(teilaufg, i, True)
                        + r' \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
-                       + r'~von~b~und~c~dargestellt~werden~kann.} \\' + r' \begin{pmatrix} ' + gzahl(x_1) + r' \\'
-                       + gzahl(y_1) + r' \\' + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                       + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
-                       + r' \end{pmatrix}  ~+~s \cdot \begin{pmatrix}' + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\'
-                       + gzahl(z_3) + r' \\' + r' \end{pmatrix} \quad (1P) \\' + loesung_1 + r' \\ ' + loesung_2
-                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-        liste_punkte.append(punkte)
+                       + r'~von~b~und~c~dargestellt~werden~kann.} \\' + loesung_1[0] + loesung_2)
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte + 1)
         i += 1
 
     if 'd' in teilaufg:
@@ -568,6 +542,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
                         + r' \end{pmatrix} \\'))
         loesung.append(lsg_1+lsg_2+lsg_3)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -589,6 +564,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                         + r' \end{pmatrix} '))
         loesung.append(beschriftung(teilaufg,i, True) + text[0] + text_lsg)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -596,37 +572,41 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        vektor_a = vektor.punkt(5)
-        vektor_ab = vektor.punkt(5)
-        vektor_b = np.array(vektor_a) + np.array(vektor_ab)
+        vektor_a = [a1, a2, a3] = vektor.punkt(5)
+        vektor_ab = [ab1, ab2, ab3] = vektor.punkt(5)
+        vektor_b = [b1, b2, b3] = np.array(vektor_a) + np.array(vektor_ab)
         faktor = nzahl(1,9)
-        vektor_t = [vektor_a[0] + vektor_ab[0]*faktor/10,
-                    vektor_a[1] + vektor_ab[1]*faktor/10,
-                    vektor_a[2] + vektor_ab[2]*faktor/10]
-        vektor_at = np.array(vektor_t) - np.array(vektor_a)
-        vektor_tb = vektor_b - np.array(vektor_t)
+        f1, f2 = faktor / 10, 1 - faktor / 10
+        vektor_t = [t1, t2, t3] = [a1 + ab1*f1, a2 + ab2*f1, a3 + ab3*f1]
+        vektor_at = [at1, at2, at3] = f1 * np.array(vektor_ab)
+        vektor_tb = [tb1, tb2, tb3] = f2 * np.array(vektor_ab)
         aufgabe.append(beschriftung(teilaufg,i) + 'In welchem Verhältnis teilt der Punkt T die Strecke AB?')
-        aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
-                       + gzahl(vektor_a[2]) + r'~ ), \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
-                       + r'~ \vert ~' + gzahl(vektor_b[2]) + r'~) \quad und \quad T( ~' + gzahl(N(vektor_t[0],3))
-                       + r'~ \vert ~' + gzahl(N(vektor_t[1],3)) + r'~ \vert ~' + gzahl(N(vektor_t[2],3))
-                       + r'~ ).} \\')
-        loesung.append(beschriftung(teilaufg,i, True)
+        aufgabe.append(r' \mathrm{ A(~' + gzahl(a1) + r'~ \vert ~' + gzahl(a2) + r'~ \vert ~' + gzahl(a3)
+                       + r'~ ), \quad B(~' + gzahl(b1) + r'~ \vert ~' + gzahl(b2) + r'~ \vert ~' + gzahl(b3)
+                       + r'~) \quad und \quad T( ~' + gzahl(t1) + r'~ \vert ~' + gzahl(t2) + r'~ \vert ~' + gzahl(t3)
+                       + r'~ ). } \\')
+        lsg_text, lsg, punkte = vektor.rechnung([vektor_at], [vektor_tb])
+        print(vektor_at)
+        print(vektor_tb)
+        print()
+        loesung.append(beschriftung(teilaufg, i, True)
                        + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
-                       + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
-                       + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
-                       + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
-                       + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
-                       + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad '
-                       + r'  \begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
-                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-                       + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
-                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-                       + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
-                       + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-                       + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~}' + str(punkte) + r'BE')
-        # alternative Variante
-
+                       + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\' + lsg_text[0])
+        # loesung.append(beschriftung(teilaufg,i, True)
+        #                + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
+        #                + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
+        #                + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
+        #                + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
+        #                + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
+        #                + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad '
+        #                + r'  \begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
+        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+        #                + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
+        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+        #                + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
+        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
+        #                + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~}' + str(punkte) + r'BE')
+        # alternative Variante:
         # laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
         #                     + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
         # ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
@@ -643,6 +623,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         #                + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
         #                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
 
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -683,6 +664,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(N(vektor_b[1],3)) + r' \\' + gzahl(N(vektor_b[2],3)) + r' \\'
                        + r' \end{pmatrix} \quad \to \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r' ~) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -754,11 +736,12 @@ def vektoren_koll_ortho(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=None, i=0, BE=[]):
+def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[None, True, False][1], spurpunkt=['x-y', 'x-z', 'y-z', 'all', None][0], neue_seite=None, i=0, BE=[]):
     # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "spurpunkt=" kann für Teilaufgabe c) festgelegt werden, welcher Spurpunkt berechnet werden soll. Standardmäßig ist "spurpunkt=None" und die Auswahl zufällig. Er kann 'x-y', 'x-z', 'y-z' oder 'all' (für alle) sein.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -791,7 +774,6 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         # Aufstellen der Geradengleichung bei gegebenen Punkten
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte_aufg = 3
-        liste_punkte.append(punkte_aufg)
         loesung_1 = (r' \overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
                      + gzahl(v[2]) + r' \\ \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~'
                      r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
@@ -801,7 +783,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         aufgabe.append(beschriftung(teilaufg, i) + 'Stellen Sie die Gleichung der Geraden g auf,'
                                           f' welche die Punkte A und B enthält. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + loesung_1)
-        i +=1
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(punkte_aufg)
+        i += 1
 
     if 'b' in teilaufg:
         # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
@@ -816,8 +800,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
         aufgabe.append(beschriftung(teilaufg, i) + 'Überprüfen Sie, ob der Punkt T( ' + gzahl(N(tx,3))  + ' | '
                        + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ) auf g liegt. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + text[0] + loesung_2)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
-        i +=1
+        i += 1
 
     if 'c' in teilaufg:
         # Berechnung der Spurpunkte der Gerade mit den Koordinatenebenen
@@ -877,9 +862,9 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
                            + r' \end{pmatrix} \quad \to \quad S_{yz} ~=~ \left( ' + gzahl(s3x) + r' \vert '
                            + gzahl(s3y) + r' \vert ' + gzahl(s3z) + r' \right) \quad (2BE)')
             punkte += 4
-
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
-        i +=1
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -889,11 +874,12 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=False, spurpunkt=No
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][0], gerade_k=[False,True][0], i=0, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][0], gerade_k=[False,True][0],  neue_seite=None, i=0, BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "gerade_k=" kann festgelegt ('True' oder 'False') werden, ob der Schnittwinkel bei Geraden, die sich schneiden zwischen den gegebenen Geraden g und h oder einer neuen Geraden k berechnet werden soll. Standardmäßig wird dann keine Gerade k erzeugt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -941,9 +927,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
 
         if 'b' in teilaufg:
             loesung.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'b' in teilaufg:
         # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -965,158 +951,53 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + 'erhält man keine Lösung, sind die Geraden windschief. ', '2BE')
         table2.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table2)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'c' in teilaufg:
         # Lagebeziehung zweier gegebener Geraden bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == 'identisch':
-            punkte_aufg = 7
-            liste_punkte.append(punkte_aufg)
             punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
-            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
-                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
-                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3BE) \\\\'
-                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
-                         r' \begin{pmatrix} '
-                         + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
-                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         + gzahl(ax) + '~=~' + gzahl(cx) + vorz_str(wx) + r' \cdot r' + r' \\'
-                         + gzahl(ay) + '~=~' + gzahl(cy) + vorz_str(wy) + r' \cdot r' + r' \\'
-                         + gzahl(az) + '~=~' + gzahl(cz) + vorz_str(wz) + r' \cdot r' + r' \\'
-                         r' \end{matrix} \quad \to \quad \begin{matrix} '
-                         + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
-                         + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g~und~h~sind~identisch.} \quad (4BE) \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
-        elif lagebeziehung == 'parallel':
-            punkte_aufg = 7
+            lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
+            lsg2, erg2, pkt2 = vektor.rechnung([punkt_a],[punkt_c, w], var_obj2=['r'])
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\' + lsg1[0]
+                         + r' \\ \mathrm{g~und~h~sind~parallel} \quad (1BE) \\\\'
+                         + r' \mathrm{ Überprüfen~ob~Stützvektor~von~g~auf~h~liegt. } \hspace{10em} \\'
+                         + lsg2[0] + r' \\ \mathrm{ Die~Geraden~g~und~h~sind~identisch. } \quad (1BE) \\')
+            punkte_aufg = pkt1 + pkt2 + 2
             liste_punkte.append(punkte_aufg)
+        elif lagebeziehung == 'parallel':
             punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
             w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
             while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                 punkt_c = [cx, cy, cz] = vektor.ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
-            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
-                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
-                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~parallel} \quad (3BE) \\\\'
-                         r' \mathrm{Überprüfen~ob~Stützvektor~von~g~auf~h~liegt.} \hspace{15em} \\'
-                         r' \begin{pmatrix} '
-                         + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
-                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         + gzahl(ax) + '~=~' + gzahl(cx) + vorz_str(wx) + r' \cdot r' + r' \\'
-                         + gzahl(ay) + '~=~' + gzahl(cy) + vorz_str(wy) + r' \cdot r' + r' \\'
-                         + gzahl(az) + '~=~' + gzahl(cz) + vorz_str(wz) + r' \cdot r' + r' \\'
-                         r' \end{matrix} \quad \to \quad \begin{matrix} '
-                         + 'r=' + gzahl(N((ax-cx)/wx,3)) + r' \\' + 'r=' + gzahl(N((ay-cy)/wy,3)) + r' \\'
-                         + 'r=' + gzahl(N((az-cz)/wz,3)) + r' \\ \end{matrix} \\'
-                         r' \mathrm{Die~Geraden~g~und~h~sind~echt~parallel.} \quad (4BE) \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
-        elif lagebeziehung == 'windschief':
-            punkte_aufg = 15
+            lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
+            lsg2, erg2, pkt2 = vektor.rechnung([punkt_a],[punkt_c, w], var_obj2=['r'])
+            loesung_1 = (r' \mathrm{ Überpüfen~der~Geraden~auf~Parallelität } \hspace{10em} \\' + lsg1[0]
+                         + r' \\ \mathrm{g~und~h~sind~parallel} \quad (1BE) \\\\'
+                         + r' \mathrm{ Überprüfen~ob~Stützvektor~von~g~auf~h~liegt. } \hspace{10em} \\'
+                         + lsg2[0] + r' \\ \mathrm{ Die~Geraden~g~und~h~sind~echt~parallel. } \quad (1BE) \\')
+            punkte_aufg = pkt1 + pkt2 + 2
             liste_punkte.append(punkte_aufg)
+        elif lagebeziehung == 'windschief':
             fakt_r = zzahl(1, 7) / 2
             [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))
             punkt_d = [dx, dy, dz + zzahl(1,3)]
             fakt_s = zzahl(1, 7) / 2
             punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
             w = [wx, wy, wz]= vektor.kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
-            # while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
-            #     fakt_r = zzahl(1, 7) / 2
-            #     [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))
-            #     punkt_d = [dx, dy, dz + zzahl(1, 3)]
-            #     fakt_s = zzahl(1, 7) / 2
-            #     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
-            #     w = [wx, wy, wz] = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
-            lsgs = (dx-cx)/wx
-            lsgr = fakt_r
-            # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
-            # lsgs = (-1 * (ax * vy) + (ay * vx) + (cx * vy) - (cy * vx)) / (vx * wy - vy * wx)
-
-            if vx != 0 and wx != 0:
-                loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
-                             + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1*cx)
-                             + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
-                             + gzahl(N((ax-cx)/wx,3)) + vorz_str(N(vx/wx,3)) + r' \cdot r \quad (2BE) \\')
-                if vy != 0 and wy != 0:
-                    loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
-                                 + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax-cx)/wx,3))
-                                 + vorz_str(N(vx/wx,3)) + r' \cdot r \big) \\'
-                                 + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx*cy + wy*(ax - cx))/wx,3))
-                                 + vorz_str(N(wy*vx/wx,3)) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1*vy) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1*N((wx*cy + wy*(ax - cx))/wx,3)) + r' \quad (2BE) \\'
-                                 + gzahl(N(ay-(wx*cy+wy*(ax-cx))/wx,3)) + '~=~' + gzahl(N((vx*wy-vy*wx)/wx,3))
-                                 + r' \cdot r \quad \vert \div ' + gzahl_klammer(N((vx*wy-vy*wx)/wx,3))
-                                 + r' \quad \to \quad r~=~' + gzahl(lsgr)
-                                 + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(lsgs) + r' \quad (3BE) \\')
-                    if vz != 0 and wz != 0:
-                        loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az+vz*lsgr,3))
-                                     + '~=~' + gzahl(N(cz+wz*lsgs,3))
-                                     + r' \quad (2BE) \\ \to \mathrm{Widerspruch} ~ \to ~ '
-                                       r'  \mathrm{Die~Geraden~sind~Windschief.} \quad (1BE)')
-                    else:
-                        sys.exit('vz oder wz ist null.')
-                else:
-                    sys.exit('vy oder wy ist null.')
-            else:
-                sys.exit('va oder wa ist null.')
-
-
-            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
-                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
-                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3BE) \\\\'
-                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
-                         r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                         + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
-                         r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix}'
-                         'I: ~~' + gzahl(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
-                         'II: ~' + gzahl(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
-                         'III: ~' + gzahl(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
-                         r' \end{matrix} \begin{matrix} '
-                         + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
-                         + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
-                         + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                         r' \end{matrix} \quad (2BE) \\\\'  + loesung_2 + loesung_3 + loesung_4 + r' \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
-        else:
-            punkte_aufg = 17
+            lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
+            lsg2, erg2, pkt2 = vektor.rechnung([punkt_a, v],[punkt_c, w], var_obj1=['r'], var_obj2=['s'])
+            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{10em} \\' + lsg1[0]
+                         + r' \\ \mathrm{g~und~h~sind~nicht~parallel} \quad (1BE) \\\\'
+                         + r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
+                         + lsg2[0] + r' \quad (2BE) \\ \to \mathrm{Widerspruch} ~ \to ~ '
+                         + r' \\ \mathrm{ Die~Geraden~sind~Windschief. } \quad (1BE)')
+            punkte_aufg = pkt1 + pkt2 + 2
             liste_punkte.append(punkte_aufg)
+        else:
             fakt_r = zzahl(1, 7) / 2
             fakt_s = zzahl(1, 7) / 2
             punkt_d = [dx,dy,dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
@@ -1129,80 +1010,17 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                 punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
                 [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
             lsgs = (dx-cx)/wx
-            lsgr = fakt_r
-            # lsgr = -1 * (ax * wy - ay * wx - cx * wy + cy * wx) / (vx * wy - vy * wx)
-            # lsgs_alt = (-1*(ax*vy)+(ay*vx)+(cx*vy)-(cy*vx))/(vx*wy-vy*wx)
-            # print('vektor d-c: ' + str(np.array(punkt_d-punkt_c)))
-            # print('Vektor w ist: ' + str(w))
-            # print('Punkt D: ' + str(punkt_d))
-            # print('faktor r ist:' + str(fakt_r) + ' und r ist:' + str(lsgr))
-            # print('faktor p ist:' + str(fakt_p) + ' und s ist:' + str(lsgs_alt))
-            schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs*w))
-
-            if vx != 0 and wx != 0:
-                loesung_2 = (r' \mathrm{I~nach~s~umstellen:} \quad ' + str(ax) + vorz_str(vx) + r' \cdot r ~=~'
-                             + gzahl(cx) + vorz_str(wx) + r' \cdot s \quad \vert ' + vorz_str(-1 * cx)
-                             + r' ~ \vert \div ' + gzahl_klammer(wx) + r' \quad \to \quad s ~=~ '
-                             + gzahl(N((ax - cx) / wx, 3)) + vorz_str(N(vx / wx, 3)) + r' \cdot r \quad (2BE) \\')
-                if vy != 0 and wy != 0:
-                    loesung_3 = (r' \mathrm{s~in~II~einsetzen:} \quad ' + str(ay) + vorz_str(vy) + r' \cdot r ~=~'
-                                 + gzahl(cy) + vorz_str(wy) + r' \cdot \big( ' + gzahl(N((ax - cx) / wx, 3))
-                                 + vorz_str(N(vx / wx, 3)) + r' \cdot r \big) \\'
-                                 + str(ay) + vorz_str(vy) + r' \cdot r ~=~' + gzahl(N((wx * cy + wy * (ax - cx)) / wx, 3))
-                                 + vorz_str(N(wy * vx / wx, 3)) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1 * vy) + r' \cdot r \quad \vert ~'
-                                 + vorz_str(-1 * N((wx * cy + wy * (ax - cx)) / wx, 3)) + r' \quad (2BE) \\'
-                                 + gzahl(N(ay - (wx * cy + wy * (ax - cx)) / wx, 3)) + '~=~'
-                                 + gzahl(N((vx * wy - vy * wx) / wx, 3)) + r' \cdot r \quad \vert \div '
-                                 + gzahl_klammer(N((vx * wy - vy * wx) / wx, 3))
-                                 + r' \quad \to \quad r~=~' + gzahl(lsgr)
-                                 + r' \quad \mathrm{und} \quad s ~=~'
-                                 + gzahl(lsgs) + r' \quad (3BE) \\')
-                    if vz != 0 and wz != 0:
-                        loesung_4 = (r' \mathrm{r~und~s~in~III~einsetzen:~} \quad ' + gzahl(az) + vorz_str(vz)
-                                     + r' \cdot (' + gzahl(lsgr) + r') ~=~ ' + gzahl(cz) + vorz_str(wz)
-                                     + r' \cdot (' + gzahl(lsgs) + r') \quad \to \quad ' + gzahl(N(az + vz * lsgr, 3))
-                                     + '~=~' + gzahl(N(cz + wz * lsgs, 3))
-                                     + r' \quad (2BE) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
-                                       r'  \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert '
-                                     + str(sy) + r' \vert ' + str(sz) + r').} \quad (2BE)')
-                    else:
-                        sys.exit('vz oder wz ist null.')
-                else:
-                    sys.exit('vy oder wy ist null.')
-            else:
-                sys.exit('va oder wa ist null.')
-
-
-            loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\'
-                         r'  \begin{pmatrix}' + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ r \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix} '
-                         'r~=~' + gzahl(N(vx/wx,3)) + r' \\'
-                         'r~=~' + gzahl(N(vy/wy,3)) + r' \\'
-                         'r~=~' + gzahl(N(vz/wz,3)) + r' \\'
-                         r' \end{matrix} \quad \to \quad \mathrm{g~und~h~sind~nicht~parallel} \quad (3BE) \\\\'
-                         r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
-                         r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                         r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                         + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'
-                         r' \end{pmatrix} ~=~ \begin{pmatrix} '
-                         + gzahl(cx) + r' \\' + gzahl(cy) + r' \\' + gzahl(cz) + r' \\'
-                         r' \end{pmatrix} ~+~ s \cdot \begin{pmatrix} '
-                         + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
-                         r' \end{pmatrix} \quad \to \quad \begin{matrix}'
-                         'I: ~~' + gzahl(ax) + vorz_str(vx) + r' \cdot r ~=~' + r' \\'
-                         'II: ~' + gzahl(ay) + vorz_str(vy) + r' \cdot r ~=~' + r' \\'
-                         'III: ~' + gzahl(az) + vorz_str(vz) + r' \cdot r~=~' + r' \\'
-                         r' \end{matrix} \begin{matrix} '
-                         + gzahl(cx) + vorz_str(wx) + r' \cdot s' + r' \\'
-                         + gzahl(cy) + vorz_str(wy) + r' \cdot s' + r' \\'
-                         + gzahl(cz) + vorz_str(wz) + r' \cdot s' + r' \\'
-                         r' \end{matrix} \quad (2BE) \\\\' + loesung_2 + loesung_3 + loesung_4 + r' \\'
-                         + r' \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
-
-            # print(v), print(w), print(punkt_c)
+            schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs * w))
+            lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
+            lsg2, erg2, pkt2 = vektor.rechnung([punkt_a, v],[punkt_c, w], var_obj1=['r'], var_obj2=['s'])
+            loesung_1 = (r' \mathrm{ Überpüfen~der~Geraden~auf~Parallelität } \hspace{10em} \\' + lsg1[0]
+                         + r' \\ \mathrm{g~und~h~sind~nicht~parallel} \quad (1BE) \\\\'
+                         + r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
+                         + lsg2[0] + r' \quad (2BE) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
+                         + r' \\ \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert ' + str(sy) + r' \vert '
+                         + str(sz) + r'). } \quad (2BE)')
+            punkte_aufg = pkt1 + pkt2 + 3
+            liste_punkte.append(punkte_aufg)
 
         aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
                         r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
@@ -1217,8 +1035,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         aufgabe.append(beschriftung(teilaufg,i) + 'Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' \mathit{Die~Auswahl~war~'
                        + lagebeziehung + r'} \hspace{25em} \\' + loesung_1)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'd' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1321,10 +1139,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + r' \end{pmatrix} \right| ~=~ \left| \frac{ '
                            + gzahl((cx-ax)*nx) + vorz_str((cy-ay)*ny) + vorz_str((cz-az)*nz) + r' }{ \sqrt{'
                            + gzahl(nx**2+ny**2+nz**2) + r'}} \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
-
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'e' in teilaufg:
         # Schnittwinkel zweier gegebener Geraden berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -1392,6 +1209,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
                        + r'} \right) ~=~' + gzahl(erg) + text
                        + r' \quad (2BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte_aufg)
         i += 1
 
@@ -1402,23 +1220,19 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         else:
             liste_punkte = BE
 
-
     print('liste Punkte: ' + str(liste_punkte))
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=None, i=0, BE=[]):
+def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebeziehung_t_ebene=[True, False][random.choice([0,1])], i=0, BE=[]):
     # Aufgaben zum Aufstellen der Ebenengleichung und Lagebziehung Punkt-Ebene.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung_t_ebene=" kann festgelegt werden, ob der Punkt T in Ebene E "lagebeziehung_t_ebene=True" liegt oder auch nicht "lagebeziehung_t_ebene=False". Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-
     liste_punkte = []
     liste_bez = []
 
-    if lagebeziehung_t_ebene == None:
-        lagebeziehung_t_ebene = random.choice([True, False])
     n_gk = np.array([100,100,100])
     v_teiler = zzahl(1, 3)
     punkt_a = [ax, ay, az] = vektor.punkt(3)  # Punkt A liegt auf Gerade g_1

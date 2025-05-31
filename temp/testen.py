@@ -27,7 +27,15 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[testaufgabe(1)]]
+    Aufgaben = [[rechnen_mit_vektoren(1),
+                 geraden_aufstellen(2, ['b']),
+                 geraden_lagebeziehung(3, ['c'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][1]),
+                 geraden_lagebeziehung(3, ['c'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][2]),
+                 geraden_lagebeziehung(3, ['c'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][3]),
+                 geraden_lagebeziehung(3, ['c'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][4]),
+                 testaufgabe(3)]]
+
+    # Aufgaben = [[testaufgabe(1)]]
 
     # Test der neuen Funktion vektor.rechnen
     # Aufgaben = [[rechnen_mit_vektoren(1, ['e']),

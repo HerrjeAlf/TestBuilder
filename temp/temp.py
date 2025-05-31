@@ -11,7 +11,6 @@ from skripte.funktionen import *
 from skripte.plotten import *
 from sympy.stats import Binomial, P
 
-
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # b = list(range(1,4))
 # print(b)
@@ -132,8 +131,9 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-list = []
+vec = [nzahl(1,9)/10, nzahl(1,9)/10]
 
-print('leere Liste zählt') if list else print('leere liste zählt nicht')
+vec_gek = vektor.kuerzen(vec)
+print(vec)
+print(vec_gek)
 
-print(liste_teilaufg)

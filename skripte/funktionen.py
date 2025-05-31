@@ -553,13 +553,18 @@ class vektor():
         punkte = 0
         lsg = []
         # Funktionen, die mehrere Abfragen benötigen
-        def quotient(z1, z2, gz='~=~'):
-            if z2 == 0 :
-                text = r' \mathrm{~ ist ~ n.d.}' if z1 != 0 else r' \in \mathbb{R} '
+        def quotient(zae, nen, gz='~=~'):
+            if nen == 0 :
+                text = r' \mathrm{~ ist ~ n.d.}' if zae != 0 else r' \in \mathbb{R} '
                 lsg = ()
-            elif z2 != 0:
-                lsg = Rational(z1,z2)
-                text = gzahl(lsg)
+            else:
+                erw = vektor.kuerzen([zae, nen])
+                z1, z2 = erw[0], erw[1]
+                print('Zähler: ' + gzahl(zae) + ' und Nenner: ' + gzahl(nen))
+                print('Zähler: ' + gzahl(z1) + ' und Nenner: ' + gzahl(z2))
+                lsg = Rational(z1, z2)
+                print(lsg)
+                text = latex(Rational(z1, z2))
             return text, lsg
         # hier werden die Fälle (Vektor-Vektor) und (Vektor-Gerade) betrachtet
         if len(obj1) == len(obj2) == 1 or (len(obj1)== 1 and len(obj2)==2) and len(var_obj2) < 2:
@@ -869,15 +874,15 @@ class vektor():
                     var1, var2 = lsg
                     erg1 = a1 if type(a1) != float else N(a1,3)
                     erg2 = b1 + var1*c1 + var2*d1 if type(b1 + var1*c1 + var2*d1) != float else N(b1 + var1*c1+var2*d1,3)
-                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
-                            + r' } \\ ' + gzahl(a1) + '~=~'
+                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~} ' + bez
+                            + r' \\ ' + gzahl(a1) + '~=~'
                             + summe.terme([b1, c1, d1], ['', r' \cdot ' + gzahl_klammer(var1), r' \cdot ' + gzahl_klammer(var2)], eins=True)
-                            + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
+                            + r' \quad \to \quad ' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
-                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{ w.A. }  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{ f.A. }  \quad (2BE) '
                         lsg = []
                     return text, lsg
                 def probe(lsg):
@@ -1006,15 +1011,15 @@ class vektor():
                     var1, var2 = lsg
                     erg1 = a1 if type(a1) != float else N(a1,3)
                     erg2 = var1*c1 + var2*d1 if type(var1*c1 + var2*d1) != float else N(var1*c1+var2*d1,3)
-                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~' + bez
-                            + r' } \\ ' + gzahl(a1) + '~=~'
+                    text = (r' \\\\ \mathrm{Probe~durch~Einsetzen~der~Lösungen~in~Gleichung~} ' + bez
+                            + r' \\ ' + gzahl(a1) + '~=~'
                             + summe.terme([c1, d1], [r' \cdot ' + gzahl_klammer(var1), r' \cdot ' + gzahl_klammer(var2)], eins=True)
-                            + r' \quad \to \quad' + gzahl(erg1) + '~=~' + gzahl(erg2))
+                            + r' \quad \to \quad ' + gzahl(erg1) + '~=~' + gzahl(erg2))
                     if erg1 - erg2 == 0:
-                        text += r' \quad \mathrm{w.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{ w.A. }  \quad (2BE) '
                         lsg = lsg
                     else:
-                        text += r' \quad \mathrm{f.A.}  \quad (2BE) '
+                        text += r' \quad \mathrm{ f.A. }  \quad (2BE) '
                         lsg = []
                     return text, lsg
                 def probe(lsg):
@@ -1062,10 +1067,10 @@ class vektor():
                             + r'~folgt: \quad ' + gzahl(zeile2[1]) + '~=~' + gzahl(zeile2[2])
                             + r' \quad w.A.} \quad (1BE) \\ \mathrm{aus~' + gzahl(zeile3[0]) + r'~folgt:} \quad '
                             + vorz_v_aussen(-1*zeile3[3], var1) + '~=~'
-                            + summe.terme([zeile3[2] - zeile3[1], zeile3[4]],['',var2])
+                            + summe.terme([zeile3[2] - zeile3[1], zeile3[4]],['', var2])
                             + umformung(-1*zeile3[3],':') + r' \\' + var1 + '~=~'
                             + summe.terme([Rational(zeile3[2] - zeile3[1], -1*zeile3[3]),
-                                           Rational(zeile3[4], -1*zeile3[3])],['',var2])
+                                           Rational(zeile3[4], -1*zeile3[3])],['', var2])
                             + r' \quad \to \quad ' + var1 + r' \in \mathbb{R} \quad (2BE)')
                     lsg = []
                     punkte += 4
