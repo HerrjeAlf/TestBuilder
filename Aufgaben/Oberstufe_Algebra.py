@@ -576,7 +576,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_ab = [ab1, ab2, ab3] = vektor.punkt(5)
         vektor_b = [b1, b2, b3] = np.array(vektor_a) + np.array(vektor_ab)
         faktor = nzahl(1,9)
-        f1, f2 = faktor / 10, 1 - faktor / 10
+        f1, f2 = round(faktor / 10, 1), round(1 - faktor / 10, 1)
         vektor_t = [t1, t2, t3] = [a1 + ab1*f1, a2 + ab2*f1, a3 + ab3*f1]
         vektor_at = [at1, at2, at3] = f1 * np.array(vektor_ab)
         vektor_tb = [tb1, tb2, tb3] = f2 * np.array(vektor_ab)
@@ -586,9 +586,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r'~) \quad und \quad T( ~' + gzahl(t1) + r'~ \vert ~' + gzahl(t2) + r'~ \vert ~' + gzahl(t3)
                        + r'~ ). } \\')
         lsg_text, lsg, punkte = vektor.rechnung([vektor_at], [vektor_tb])
-        print(vektor_at)
-        print(vektor_tb)
-        print()
+        # print(vektor_at), print(vektor_tb)
         loesung.append(beschriftung(teilaufg, i, True)
                        + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
                        + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\' + lsg_text[0])
@@ -736,7 +734,7 @@ def vektoren_koll_ortho(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[None, True, False][1], spurpunkt=['x-y', 'x-z', 'y-z', 'all', None][0], neue_seite=None, i=0, BE=[]):
+def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][random.choice([0, 1])], spurpunkt=['x-y', 'x-z', 'y-z', 'all', None][0], neue_seite=None, i=0, BE=[]):
     # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
@@ -750,11 +748,10 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[None, True, False]
     v = [vx, vy, vz] = vektor.punkt(4)
     punkt_b = [bx, by, bz] = punkt_a + v
     p = random.choice([0,1])
-    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
+    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 5)) * np.array([vy, vx, vz + zzahl(1, 3)]))
     while (tx - ax) / vx == (ty - ay) / ty == (tz - az) / tz:
-        punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 10) / 2) * np.array([vy, vx, vz + zzahl(1, 3)]))
-    T_auf_g = random.choice([True, False]) if T_auf_g not in [None, True, False] else T_auf_g
-    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 30) / 5) * v) if T_auf_g else punkt_t
+        punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 5)) * np.array([vy, vx, vz + zzahl(1, 3)]))
+    punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + zzahl(1, 5) * v) if T_auf_g else punkt_t
     lx, ly, lz = vektor.ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
     if 'a' in teilaufg:
         aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
@@ -892,7 +889,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     v_teiler = random.choice([1, 2, 5])
     punkt_a = [ax, ay, az] = vektor.punkt(3) # Punkt A liegt auf Gerade g_1
     # Vektor v ist der Richtungsvektor von Geraden g_1
-    v = [vx, vy, vz] = vektor.kuerzen([zzahl(1, 6) / 2 * v_teiler, zzahl(1, 6) / 2 * v_teiler, v_teiler])
+    v = [vx, vy, vz] = vektor.kuerzen([round(zzahl(1, 6) / 2 * v_teiler, 1),
+                                       round(zzahl(1, 6) / 2 * v_teiler, 1),
+                                       round(v_teiler, 1)])
     # Vektor u steht orthogonal auf v
     ux, uy = zzahl(1, 3), zzahl(1,3) # x und y Koordinate von u kann frei gewählt werden
     uz = (vx*ux + vy * uy)/ (-1 * vz)
@@ -958,8 +957,10 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         # Lagebeziehung zweier gegebener Geraden bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if lagebeziehung == 'identisch':
-            punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(v)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10 * np.array(v)) # Vektor w ist der Richtungsvektor von h
+            fakt0 = zzahl(1,30)/5
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl([round(ax + fakt0*vx, 1), round(ay + fakt0*vy, 1), round(az + fakt0*vz, 1)]) # Punkt C liegt auf h
+            fakt1 = zzahl(1, 30) / 10
+            w = [wx, wy, wz] = vektor.kuerzen([round(fakt1 * vx,1),round(fakt1 * vy,1), round(fakt1 * vz,1)]) # Vektor w ist der Richtungsvektor von h
             lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
             lsg2, erg2, pkt2 = vektor.rechnung([punkt_a],[punkt_c, w], var_obj2=['r'])
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{20em} \\' + lsg1[0]
@@ -970,7 +971,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             liste_punkte.append(punkte_aufg)
         elif lagebeziehung == 'parallel':
             punkt_c = [cx,cy,cz] = vektor.ganzzahl((punkt_a) + zzahl(1,30)/5*np.array(u)) # Punkt C liegt auf h
-            w = [wx, wy, wz] = vektor.kuerzen(zzahl(1,30)/10* np.array(v)) # Vektor w ist der Richtungsvektor von h
+            fakt1 = zzahl(1,30)/10
+            w = [wx, wy, wz] = vektor.kuerzen([round(fakt1 * vx,1),round(fakt1 * vy,1), round(fakt1 * vz,1)])  # Vektor w ist der Richtungsvektor von h
+
             while (cx-ax)/vx == (cy-ay)/vy == (cz-az)/vz:
                 punkt_c = [cx, cy, cz] = vektor.ganzzahl((punkt_a) + zzahl(1, 30) / 5 * np.array(u))  # Punkt C liegt auf h
             lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
@@ -993,32 +996,34 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             loesung_1 = (r' \mathrm{Überpüfen~der~Geraden~auf~Parallelität} \hspace{10em} \\' + lsg1[0]
                          + r' \\ \mathrm{g~und~h~sind~nicht~parallel} \quad (1BE) \\\\'
                          + r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
-                         + lsg2[0] + r' \quad (2BE) \\ \to \mathrm{Widerspruch} ~ \to ~ '
-                         + r' \\ \mathrm{ Die~Geraden~sind~Windschief. } \quad (1BE)')
+                         + lsg2[0] + r' \\ \mathrm{ Die~Geraden~sind~Windschief. } \quad (1BE)')
             punkte_aufg = pkt1 + pkt2 + 2
             liste_punkte.append(punkte_aufg)
         else:
             fakt_r = zzahl(1, 7) / 2
             fakt_s = zzahl(1, 7) / 2
             punkt_d = [dx,dy,dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
-            punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
+            punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
             [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
-            while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
-                fakt_r = zzahl(1, 7) / 2
-                fakt_s = zzahl(1, 7) / 2
-                punkt_d = [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
-                punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
-                [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
-            lsgs = (dx-cx)/wx
-            schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs * w))
+            # while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
+            #     fakt_r = zzahl(1, 7) / 2
+            #     fakt_s = zzahl(1, 7) / 2
+            #     punkt_d = [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
+            #     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
+            #     [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
+            # print(punkt_a), print(v), print(punkt_c), print(w)
             lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
             lsg2, erg2, pkt2 = vektor.rechnung([punkt_a, v],[punkt_c, w], var_obj1=['r'], var_obj2=['s'])
+            # print(erg2)
+            # lsgs = (dx - cx) / wx
+            lsgs = erg2[1]
+            # print(lsgs)
+            schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs * w))
             loesung_1 = (r' \mathrm{ Überpüfen~der~Geraden~auf~Parallelität } \hspace{10em} \\' + lsg1[0]
                          + r' \\ \mathrm{g~und~h~sind~nicht~parallel} \quad (1BE) \\\\'
                          + r' \mathrm{Schnittpunkt~finden,~indem~man~die~Geraden~gleichsetzt:~g~=~h} \hspace{5em} \\'
-                         + lsg2[0] + r' \quad (2BE) \\ \to \mathrm{wahre~Aussage} ~ \to ~ '
-                         + r' \\ \mathrm{Die~Geraden~schneiden~sich~in~S(' + str(sx) + r' \vert ' + str(sy) + r' \vert '
-                         + str(sz) + r'). } \quad (2BE)')
+                         + lsg2[0] + r' \\ \mathrm{Die~Geraden~schneiden~sich~in~S(' + gzahl(sx) + r' \vert '
+                         + gzahl(sy) + r' \vert ' + gzahl(sz) + r'). } \quad (2BE)')
             punkte_aufg = pkt1 + pkt2 + 3
             liste_punkte.append(punkte_aufg)
 
@@ -1220,7 +1225,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         else:
             liste_punkte = BE
 
-    print('liste Punkte: ' + str(liste_punkte))
+    # print('liste Punkte: ' + str(liste_punkte))
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
@@ -1246,14 +1251,14 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
     u = vektor.ganzzahl([ux, uy, uz])
     punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
     vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
-    while len([element for element in vektor_ab if element == 0]) > 0:
-        punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
-        vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
+    # while any(element == 0 for element in vektor_ab):
+    #     punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_a + v)  # Punkte C und D liegen auf h
+    #     vektor_ab = [abx, aby, abz] = [bx - ax, by - ay, bz - az]
     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
     vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
-    while len([element for element in vektor_ac if element == 0]) > 0:
-        punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
-        vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
+    # while any(element == 0 for element in vektor_ac):
+    #     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_b + zzahl(1, 4) * np.array(u))
+    #     vektor_ac = [acx, acy, acz] = [cx - ax, cy - ay, cz - az]
     w = vektor.ganzzahl(punkt_c - punkt_a)  # Vektor w ist der Richtungsvektor von h
     [wx, wy, wz] = vektor.runden(w, 3)
     n = [nx, ny, nz] = vektor.ganzzahl(np.cross(v, w))
@@ -1261,32 +1266,6 @@ def ebene_und_punkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], lagebezieh
     n_betrag = np.linalg.norm(n_gk)
     koordinatenform = ('E:~' + vorz_v_aussen(nx_gk, 'x') + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk, 'z')
                        + '~=~' + gzahl(np.dot(punkt_a, n_gk)))
-
-    # lagebeziehung_t_ebene == False if 'f' in teilaufg else lagebeziehung_t_ebene
-    # if lagebeziehung_t_ebene == None and 'f' not in teilaufg:
-    #     lagebeziehung_t_ebene = random.choice([False, 'Ebene', 'Dreieck', 'Parallelogramm'])
-    # if lagebeziehung_t_ebene == 'Ebene':
-    #     parameter_r = zzahl(2,6)/2
-    #     parameter_s = zzahl(2,6)/2
-    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-    #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~in~der~Ebene~E.} \quad (3BE) \\'
-    # elif lagebeziehung_t_ebene == 'Dreieck':
-    #     parameter_r = nzahl(1, 6) / 10
-    #     parameter_s = 1 - nzahl(1,2)/10 - parameter_r
-    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-    #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~im~Dreieck~ABC.} \quad (3BE) \\'
-    # elif lagebeziehung_t_ebene == 'Parallelogramm':
-    #     parameter_r = nzahl(1, 6) / 10
-    #     parameter_s = 1 - nzahl(1,2)/10 - parameter_r
-    #     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-    #     lsg = r' \quad \mathrm{w.A.} \\ \mathrm{Der~Punkt~T~liegt~im~Parallelogramm~ABCD.} \quad (3BE) \\'
-    # else:
-    #     parameter_r = zzahl(2, 6) / 2
-    #     parameter_s = zzahl(2, 6) / 2
-    #     [x, y, z] = vektor.ganzzahl(punkt_a + parameter_r * np.array(v) + parameter_s * np.array(w))
-    #     punkt_t = [tx, ty, tz] = [x, y, z + zzahl(1,3)]
-    #     lsg = r' \quad \mathrm{f.A.} \\ \mathrm{Der~Punkt~T~liegt~nicht~in~der~Ebene.} \quad (3BE) \\'
-
     if n_betrag%1 == 0:
         ergebnis_n0 = gzahl(n_betrag)
     else:
@@ -1624,7 +1603,6 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
     # Aufgaben zum Umformen der Ebenengleichungen aus Normalen- oder Koordinatenform und mithilfe der Achsenabschnittsform Ebene zeichnen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "form=" kann die Form der Ebenengleichung festgelegt werden. Sie kann "form="normalenform" oder "form=koordinatenform" sein. Standardmäßig wird die Form zufällig ausgewählt.
-    # Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -1689,7 +1667,6 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
                        r' \end{pmatrix} \quad (4BE) \\')
         aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
-
     if 'b' in teilaufg:
         # Aufstellen der Achsenabschnittsform der Ebene und zeichnen der Ebene in 3-dim-Koordinatenform
         punkte = 3
@@ -1702,7 +1679,6 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
                        + r'} + \frac{y}{' + gzahl_klammer(sy) + r'} + \frac{z}{' + gzahl_klammer(sz) + r'} ~=~'
                        + str(1) + r' \quad (1BE) \\ \mathrm{Zeichnung: \quad (2BE)}', ''))
         aufgabe.append('NewPage') if neue_seite == i else ''
-
     if 'c' in teilaufg:
         # wählt man Teilaufgabe c, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
         aufgabe.append(['Bild', '400px'])
@@ -1718,7 +1694,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, BE=[]):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch', 'parallel', 'schneiden'][random.choice([0,2])], i=0, BE=[]):
     # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung.# Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "g_in_E=" kann die Lagebeziehung der Geraden g zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
@@ -1746,8 +1722,6 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    if g_in_E == None and 'e' not in teilaufg:
-        g_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
 
     if g_in_E == 'identisch':
         punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
@@ -1814,7 +1788,6 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
         table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
         loesung.append(table1)
         i += 1
-
     if 'b' in teilaufg:
         # Geradengleichung aus zwei gegebenen Punkten aufstellen
         punkte = 2
@@ -1833,7 +1806,6 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         liste_punkte.append(punkte)
         i += 1
-
     if 'c' in teilaufg:
         # die Lagebeziehung einer Ebene mit einer Geraden bestimmen
         punkte = 3
@@ -1857,7 +1829,6 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=None, i=0, B
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1BE) \\'
                        + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
-
     if 'd' in teilaufg:
         # Aufstellen der hessischen Normalform einer Ebene
         punkte = 4

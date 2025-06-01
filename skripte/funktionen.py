@@ -433,7 +433,6 @@ def beschriftung(teilaufg, i, latex_math=False):
 class vektor():
     def rational(vec,p,q=1000):
         vec_p = [element*p for element in vec]
-        print(vec_p)
         k = 0
         i = 0
         for element in vec_p:
@@ -560,11 +559,9 @@ class vektor():
             else:
                 erw = vektor.kuerzen([zae, nen])
                 z1, z2 = erw[0], erw[1]
-                print('Zähler: ' + gzahl(zae) + ' und Nenner: ' + gzahl(nen))
-                print('Zähler: ' + gzahl(z1) + ' und Nenner: ' + gzahl(z2))
                 lsg = Rational(z1, z2)
-                print(lsg)
                 text = latex(Rational(z1, z2))
+                # print(zae), print(nen), print(lsg), print(text)
             return text, lsg
         # hier werden die Fälle (Vektor-Vektor) und (Vektor-Gerade) betrachtet
         if len(obj1) == len(obj2) == 1 or (len(obj1)== 1 and len(obj2)==2) and len(var_obj2) < 2:
@@ -677,8 +674,6 @@ class vektor():
                         zws3 = r' \quad (1BE) \quad '
                         pkt += 1
 
-                    print(zeilen)
-                    print(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))
                     text = (r' \\ \mathrm{aus~' + gzahl(bez1) + r'~folgt:} \quad '
                             + summe.terme([a1, b1],['',var1]) + '~=~'
                             + summe.terme([c1, d1], ['', var2]) + umformung(a1,'-')
@@ -699,10 +694,11 @@ class vektor():
                     else:
                         text += (zws3 + r' \mathrm{und} \quad ' + var1 + '~=~'
                                  + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],['', r' \cdot ' + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))], eins=True)
-                                 + '~=~' + gzahl(Rational(c1 - a1, b1) - Rational(d1*(c2*b1-a2*b1-b2*c1+b2*a1), b1*(b2*d1-d2*b1)))
+                                 + '~=~' + gzahl(Rational(c1 - a1, b1) + Rational(d1*(c2*b1-a2*b1-b2*c1+b2*a1), b1*(b2*d1-d2*b1)))
                                  + r' \quad (1BE)')
-                        lsg = [Rational(c1 - a1, b1) - Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1)),
+                        lsg = [Rational(c1 - a1, b1) + Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1)),
                                Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b2*d1 - d2*b1)]
+                    print(lsg)
                     return text, lsg, pkt
                 def rg_nnull_lsgr(zeile,lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
                     text = (r' \\ \mathrm{aus~' + gzahl(zeile[0]) + r'~folgt:} \quad '
@@ -738,6 +734,7 @@ class vektor():
                     else:
                         text += r' \quad \mathrm{f.A.}  \quad (2BE) '
                         lsg = []
+                    print(lsg)
                     return text, lsg
                 def probe(lsg):
                     erg1 = np.array(obj1[0]) + lsg[0]*np.array(obj1[1])
@@ -845,10 +842,10 @@ class vektor():
                     else:
                         text += (zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
                                  + summe.terme([Rational(a1-b1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1))], eins=True)
-                                 + '~=~' + gzahl(Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1)))
+                                 + '~=~' + gzahl(Rational(a1-b1,d1) + Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1)))
                                  + r' \quad (1BE)')
                         lsg = [Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, c2*d1 - d2*c1),
-                               Rational(a1-b1,d1) - Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1))]
+                               Rational(a1-b1,d1) + Rational(c1*(a2*d1 - b2*d1 - d2*a1 + d2*b1),d1*(c2*d1 - d2*c1))]
                     pkt += 1
                     return text, lsg, pkt
                 def rg_nnull_lsgr(zeile, lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs
@@ -987,9 +984,9 @@ class vektor():
                     else:
                         text += (zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
                         + summe.terme([Rational(a1,d1), Rational(-1*c1,d1)],['', r' \cdot ' + gzahl_klammer(Rational(a2*d1 - d2*a1, c2*d1 - d2*c1))])
-                        + '~=~' + gzahl(Rational(a1,d1) - Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1)))
+                        + '~=~' + gzahl(Rational(a1,d1) + Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1)))
                         + r' \quad (1BE)')
-                        lsg = [Rational(a2*d1 - d2*a1, c2*d1 - d2*c1), Rational(a1,d1) - Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1))]
+                        lsg = [Rational(a2*d1 - d2*a1, c2*d1 - d2*c1), Rational(a1,d1) + Rational(c1*(a2*d1 - d2*a1),d1*(c2*d1 - d2*c1))]
                     pkt += 1
                     return text, lsg, pkt
                 def rg_nnull_lsgr(zeile, lsgr): # hier wird die Lösung für r in nnull eingesetzt und das Ergebnis ist lsgs

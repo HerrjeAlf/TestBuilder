@@ -131,9 +131,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-vec = [nzahl(1,9)/10, nzahl(1,9)/10]
-
-vec_gek = vektor.kuerzen(vec)
-print(vec)
-print(vec_gek)
-
+vektor = [zzahl(0,5),zzahl(0,5),zzahl(0,5)]
+print(vektor)
+if any(element == 0 for element in vektor):
+    print(vektor)
