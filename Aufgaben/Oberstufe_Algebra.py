@@ -399,7 +399,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(2)
         i += 1
-
     if 'b' in teilaufg:
         # Mittelpunkt zweier gegebener Punkte berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -426,7 +425,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'c' in teilaufg:
         # Linearkombination von Vektoren überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -463,7 +461,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte + 1)
         i += 1
-
     if 'd' in teilaufg:
         # Parameter a für Linearkombination von Vektoren berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -545,7 +542,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'e' in teilaufg:
         # Vektoren auf Kollinearität überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -567,7 +563,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'f' in teilaufg:
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -624,7 +619,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'g' in teilaufg:
         # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -783,7 +777,6 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][rando
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte_aufg)
         i += 1
-
     if 'b' in teilaufg:
         # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -800,7 +793,6 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][rando
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
     if 'c' in teilaufg:
         # Berechnung der Spurpunkte der Gerade mit den Koordinatenebenen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -882,10 +874,6 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     liste_punkte = []
     liste_bez = []
 
-    if lagebeziehung not in ['identisch', 'parallel', 'windschief', 'schneiden', None]:
-        sys.exit("Lagebeziehung muss 'identisch' , 'parallel', 'windschief', 'schneiden', oder None sein")
-    if lagebeziehung == None:
-        lagebeziehung = random.choice(['identisch', 'parallel', 'windschief', 'schneiden'])
     v_teiler = random.choice([1, 2, 5])
     punkt_a = [ax, ay, az] = vektor.punkt(3) # Punkt A liegt auf Gerade g_1
     # Vektor v ist der Richtungsvektor von Geraden g_1
@@ -1017,7 +1005,6 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             # print(erg2)
             # lsgs = (dx - cx) / wx
             lsgs = erg2[1]
-            # print(lsgs)
             schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs * w))
             loesung_1 = (r' \mathrm{ Überpüfen~der~Geraden~auf~Parallelität } \hspace{10em} \\' + lsg1[0]
                          + r' \\ \mathrm{g~und~h~sind~nicht~parallel} \quad (1BE) \\\\'
@@ -1694,10 +1681,11 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch', 'parallel', 'schneiden'][random.choice([0,2])], i=0, BE=[]):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch', 'parallel', 'schneiden'][random.choice(range(2))], neue_seite=None, i=0, BE=[]):
     # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung.# Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "g_in_E=" kann die Lagebeziehung der Geraden g zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -1786,6 +1774,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
         table1.add_row('', '-', 'schneiden sich, d.h. der Richtungsvektor der Geraden und der Normalenvektor '
                                 'der Ebene sind nicht senkrecht zueinander und haben den Schnittpunkt gemeinsam', '2P')
         table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         loesung.append(table1)
         i += 1
     if 'b' in teilaufg:
@@ -1804,6 +1793,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
                        + gzahl(g_vx) + r' \\' + gzahl(g_vy) + r' \\' + gzahl(g_vz) + r' \\'
                        + r' \end{pmatrix} \quad (2BE) \\ '
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
     if 'c' in teilaufg:
@@ -1828,6 +1818,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
                        + vorz_str(nz_gk) + r' \cdot (' + gzahl(ez) + vorz_str(g_vz) + 'r) ~=~'
                        + gzahl(np.dot(punkt_a, n_gk)) + r' \quad (1BE) \\'
                        + lsg + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
     if 'd' in teilaufg:
         # Aufstellen der hessischen Normalform einer Ebene
@@ -1889,10 +1880,11 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
+def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'parallel', 'schneiden'][random.choice(range(3))], neue_seite=None, i=0, BE=[]):
     # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "F_in_E=" kann die Lagebeziehung der Ebene F zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -1907,15 +1899,8 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
     punkt_d = [dx, dy, dz] = vektor.punkt(3)
     v = np.array([ny_gk, -1 * nx_gk, 0])
     u = np.array([0, nz_gk, -1 * ny_gk])
-    print('n_gk: ' + str(n_gk))
-    print('Punkt D: ' + str(punkt_d))
-    print('Vektor v: ' + str(v))
-    print('Vektor u: ' + str(u))
+    # print('n_gk: ' + str(n_gk)), print('Punkt D: ' + str(punkt_d)), print('Vektor v: ' + str(v)), print('Vektor u: ' + str(u))
 
-    if F_in_E == None and 'd' not in teilaufg:
-        F_in_E = random.choice(['identisch', 'parallel', 'schneiden'])
-
-    # auswahl = 'schneiden'
     if F_in_E == 'identisch':
         punkte = 4
         punkt_a = [ax, ay, az] = vektor.ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
@@ -1941,11 +1926,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
             g_v = [g_vx, g_vy, g_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([nz, 0, -1 * nx]))
             k_v = [k_vx, k_vy, k_vz] = vektor.kuerzen(zzahl(1, 7) / 2 * np.array([-1 * ny, nx, 0]))
 
-        # print('Vektor n: ' + str(n))
-        # print('Vektor g_v: ' + str(g_v))
-        # print('Vektor k_v: ' + str(k_v))
-        # print(-1 * np.dot(n_gk, k_v))
-        # print(np.dot(n_gk, g_v))
+        # print('Vektor n: ' + str(n)) ,print('Vektor g_v: ' + str(g_v)), print('Vektor k_v: ' + str(k_v)), print(-1 * np.dot(n_gk, k_v)), print(np.dot(n_gk, g_v))
         g_stütz = [g_sx, g_sy, g_sz] = punkt_a + Rational(np.dot(punkt_d - punkt_a, n_gk), np.dot(n_gk, g_v)) * g_v
         g_richtung = [g_rx, g_ry, g_rz] = Rational(-1 * np.dot(n_gk, k_v), np.dot(n_gk, g_v)) * g_v + k_v
 
@@ -1983,9 +1964,6 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                + r' \quad \mathrm{f.A. \quad Die~Ebene~F~ist~parallel~zur~Ebene~E. \quad (2BE) } \\'
                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
-    if F_in_E not in (None,'identisch', 'parallel', 'schneiden'):
-        exit("F_in_E muss None, 'identisch', 'parallel' oder 'schneiden' sein.")
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Ebenen E und F mit',
                r' E: ~' + vorz_v_aussen(nx_gk, 'x') + vorz_v_innen(ny_gk,'y') + vorz_v_innen(nz_gk, 'z ~=~')
                + gzahl(np.dot(punkt_d, n_gk))
@@ -2017,6 +1995,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
         table1.add_row('', '-', 'schneiden sich, d.h. die Normalenvektoren der Ebenen sind nicht parallel und '
                                 'die gemeinsamen Punkte liegen auf einer Geraden ', '2P')
         table1.add_row('','','', 'insg.: ' + str(punkte) + ' P')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         loesung.append(table1)
         i += 1
 
@@ -2036,6 +2015,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                        + vorz_v_innen(ny_gk * k_vy, 's') + vorz_str(nz_gk * az) + vorz_v_innen(nz_gk * g_vz, 'r')
                        + vorz_v_innen(nz_gk * k_vz, 's') + '~=~' + gzahl(np.dot(punkt_d, n_gk)) + r' \quad (1BE) \\'
                        + lsg)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -2054,6 +2034,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                        + r' \end{pmatrix} \end{bmatrix} \cdot \frac{1}{' + ergebnis_n0 + r'} \begin{pmatrix} '
                        + gzahl(nx_gk) + r' \\' + gzahl(ny_gk) + r' \\' + gzahl(nz_gk) + r' \\'
                        + r' \end{pmatrix} ~=~0 \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         i += 1
 
         if 'd' in teilaufg:
@@ -2090,6 +2071,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
                                + r' \end{pmatrix} \right| ~=~'
                                + gzahl(abs(N(np.dot((punkt_a - punkt_aE), 1 / n_betrag * n_gk), 3))) + r' \\'
                                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
+            aufgabe.append('NewPage') if neue_seite == i else ''
             i += 1
 
     if BE != []:
@@ -2100,9 +2082,10 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=None, i=0, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, BE=[]):
+def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], neue_seite=None, i=0, BE=[]):
     # Lagebeziehungen einer Ebenenschar mit den Koordinatenachsen, geg. Geraden und verschiedenen Ebenen der Schar.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -2219,7 +2202,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + vorz_v_innen(aey*ty,'a') + vorz_v_innen(aez*tz,'a') + r' \quad (2BE) \\'
                        + erg_str + '~=~' + gzahl(nx*tx+ny*ty+nz*tz) + vorz_v_innen(aex*tx+aey*ty+aez*tz,'a')
                        + lsg)
-
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -2255,6 +2238,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + vorz_str(nz+aez*g_var, null=True) + r'\cdot' + gzahl_klammer(gz, null=True)
                        + '~=~' + gzahl(erg) + r' \quad (1BE) \\' + gzahl(erg) + '~=~' + gzahl(erg)
                        + r' \quad \to \quad \mathrm{g~liegt~in~E_{' + gzahl(g_var) + r'} } \quad (2BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -2290,6 +2274,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + ' 0~=~' + gzahl(nx * vec[0]) + vorz_str(ny * vec[1]) + vorz_str(nz * vec[2])
                        + vorz_v_innen(aex * vec[0], 'a') + vorz_v_innen(aey * vec[1], 'a')
                        + vorz_v_innen(aez * vec[2], 'a') + lsg)
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -2319,6 +2304,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + r' \quad (2BE) \\ \mathrm{Die~folgende~Ebene~ist~parallel~zu~h} \quad  E_{' + gzahl(h_var)
                        + r'}:' + vorz_v_aussen(nx+aex*h_var, 'x') + vorz_v_innen(ny+aey*h_var, 'y')
                        + vorz_v_innen(nz+aez*h_var,'z') + '~=~' + gzahl(erg) + r' \quad (1BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -2349,6 +2335,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                            + gzahl_klammer(nax) + vorz_str(hy - dy, null=True) + r' \cdot '
                            + gzahl_klammer(nay) + vorz_str(hz - dz, null=True) + r' \cdot '
                            + gzahl_klammer(naz) + r' \right) \right|  ~=~ ' + gzahl(abs(erg)) + r' \quad (3BE)')
+            aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(pkt)
             i += 1
 
@@ -2433,6 +2420,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                        + gzahl(dz + lsg_kon * ny2) + r' \\' + r' \end{pmatrix} ~+~ r \cdot \begin{pmatrix} '
                        + gzahl(-1*ny2) + r' \\' + gzahl(nx2 - lsg_var * nz2)
                        + r' \\' + gzahl(lsg_var*ny2) + r' \\' + r' \end{pmatrix} \quad (1BE)')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -2461,6 +2449,7 @@ def ebenenschar_buendel(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], i=0, B
                            + vorz_v_innen(-1*aex*ny2 + aey*(nx2-lsg_var*nz2) + aez*lsg_var*ny2, 'ar')
                            + r' \quad \mathrm{w.A. \quad \to ~ Schnittgerade~s~liegt~für~alle~a~in~der~Ebenenschar.} '
                            + r' \quad (2BE)')
+            aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(pkt)
             i += 1
 
