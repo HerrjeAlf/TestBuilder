@@ -11,7 +11,6 @@ from skripte.funktionen import *
 from skripte.plotten import *
 from sympy.stats import Binomial, P
 
-
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 # b = list(range(1,4))
 # print(b)
@@ -132,7 +131,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-
-zahl = darstellung_zahl(0.000000345,darstellung='dezi')
-
-print(zahl)
+vektor = [zzahl(0,5),zzahl(0,5),zzahl(0,5)]
+print(vektor)
+if any(element == 0 for element in vektor):
+    print(vektor)
