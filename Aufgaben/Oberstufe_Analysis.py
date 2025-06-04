@@ -124,7 +124,7 @@ def rechenregeln_integrale(nr, anzahl=1, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Aufgaben zur Differenzialrechnung
-def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=None, i=0, BE=[]):
+def folgen(nr, teilaufg=['a', 'b', 'c', 'd'], ausw_folgenart=[ 'arithmetisch', 'geometrisch', 'keine Vorschrift'][random.choice([0,1,2])], i=0, BE=[]):
     # Hier sollen die SuS Zahlenfolge um weitere Folgenglieder ergänzen, die Art (arithmetisch oder geometrisch) erkennen, ein Bildungsgesetz benennen und ggf. ein bestimmtes Folgenglied berechnen.
     # Mit dem Parameter "teilaufg=[]" kann festgelegt werden, welche Teilaufgaben verwendet werden. Standardmäßig werden alle Teilaufgabe verwendet.
     # Mit "ausw_folgenart=" kann festgelegt werden, ob es sich um arithmetische oder geometrische Zahlenfolge handelt, oder keine spezielle Zahlenfolge vorliegt. Der Parameter "ausw_folgenart=" kann None, 'arithmetisch', 'geometrisch' oder 'keine Vorschrift' sein. Standardmäßig ist None eingestellt und die Auswahl damit zufällig.

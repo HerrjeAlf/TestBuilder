@@ -132,7 +132,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-list = []
 
-print('leere Liste zählt') if list else print('leere liste zählt nicht')
+zahl = darstellung_zahl(0.000000345,darstellung='dezi')
 
+print(zahl)
