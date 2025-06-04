@@ -22,9 +22,7 @@ for i in range(anzahl):
                  wiss_schreibweise(5,['e'], anzahl=4),
                  wiss_schreibweise(6,['f'], anzahl=4)],
                 [einheiten_umrechnen(7, ['a'], anzahl=4),
-                 einheiten_umrechnen(8, ['b'], anzahl=4),
-                 einheiten_umrechnen(9, ['c'], anzahl=4),
-                 einheiten_umrechnen(10, ['d'], anzahl=4),]]
+                 einheiten_umrechnen(8, ['b'], anzahl=4)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
