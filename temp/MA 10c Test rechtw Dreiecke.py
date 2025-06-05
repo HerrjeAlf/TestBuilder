@@ -12,11 +12,11 @@ Kurs = ('Grundkurs')
 Fach = 'Mathematik'
 Klasse = '10c'
 Lehrer = 'Herr Herrys'
-Art = 'KA für Daria'
-Titel = 'Klassenarbeit zur Trigonometrie im rechtw. Dreieck'
+Art = 'Test 01'
+Titel = 'Trigonometrie im rechtw. Dreieck'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werdenw
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+anzahl = 3 # wie viele verschiedenen Tests sollen erzeugt werdenw
+probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
