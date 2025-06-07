@@ -4,7 +4,7 @@ import time
 import numpy as np
 import string
 from sympy import *
-from pylatex import Document, Package,  Tabular, NoEscape, math
+from pylatex import Document, Package,  Tabular, NoEscape
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
@@ -124,7 +124,7 @@ def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
         exp = list[1]
         if exp < 0:
             for step in range(abs(exp)):
-                list[0].append( '0')
+                list[0].insert(0, '0')
             zp = 0
             div, rest = divmod(len(list[0]), 3)
             for k in range(div):
