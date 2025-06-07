@@ -17,27 +17,20 @@ Zeithmft = 25
 Phase = ['Einführungsphase', 'Qualifikationsphase'][0]
 Thema = 'Analysis'
 datum_delta = 1  # Wann wird die Klausur (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
-clean_tex = [True, False][1] # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = [True, False][0] # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil1 = [[brueche_add_subr(1, ['e', 'j'], anzahl=4),
-                   brueche_mul_div(2, ['b', 'c', 'e', 'f']),
-                   potenzgesetz_eins(3, ['d', 'g'], anzahl=3),
-                   potenzgesetz_zwei(4, ['d', 'g', 'i']),
-                   potenzgesetz_eins_erw(5, ['f', 'h', 'i', 'j']),
-                   potenzgesetz_eins_mehrfach(6, ['c', 'e']),
-                   potenzgesetz_zwei_erw(7, ['f', 'h', 'i', 'j']),
-                   potenzgesetz_drei_vier(8, ['c', 'e'])]]
+aufgaben_teil1 = [[logarithmusgesetze(1, anzahl=2),
+                   potenzgesetze(2, anzahl=2),
+                   polynome_kennenlernen(3, BE=[2,3]),
+                   extremalproblem_einfach(4, BE=[5]),
+                   polynome_untersuchen(5, ['a', 'c'], grad=2, BE=[3,2])]]
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[wiss_schreibweise(1, anzahl=4),
-                   einheiten_umrechnen(2, anzahl=4),
-                   terme_addieren(3, ['b', 'g', 'j', 'l']),
-                   terme_multiplizieren(4, ['a', 'c', 'd']),
-                   terme_ausmultiplizieren(5, ['a', 'c', 'e', 'h', 'j']),
-                   terme_ausklammern(6, ['a', 'd', 'e']),
-                   gleichungen(7, ['c', 'f', 'i', 'k'])],
-                  [stirb_langsam_2(8, ['a', 'b', 'c', 'd', 'e'])]]
+aufgaben_teil2 = [[rekonstruktion(1),
+                   polynome_untersuchen(2, ['d'], grad=3),
+                   exponentialgleichungen(3, ['a', 'b', 'c'], anzahl=2),
+                   wachstumsfunktion(4)]]
 
 
 

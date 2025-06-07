@@ -2545,7 +2545,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             # plot(fkt, fkt_n, (x,xmin,xmax))
             aufgabe.append(str(liste_teilaufg[i]) + f') Zeichnen Sie den Graphen der Funktion f.')
             loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(1BE)'
-                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(5P) }')
+                                                    r' \quad Graph~(1BE) \to \quad insgesamt~(4BE) }')
             graph_xyfix(fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 4
@@ -2554,8 +2554,8 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
             aufgabe.append(beschriftung(teilaufg,i)
                            + f'Zeichnen Sie den Graphen im Intervall I[ {gzahl(xmin)} | {gzahl(xmax)} ].')
             loesung.append(beschriftung(teilaufg,i, True)
-                           + r' \mathrm{Koordinatensystem:~2BE \quad Werte:~2BE'
-                           + r' \quad Graph:~1BE \to \quad insgesamt~5BE}')
+                           + r' \mathrm{Koordinatensystem~(2BE) \quad Werte~(2BE)'
+                           + r' \quad Graph~(1BE) \to \quad insgesamt~(5BE)}')
             Graph(xmin, xmax, fkt, name=f'Loesung_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
             punkte = 5
@@ -2571,6 +2571,9 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
         aufgabe.append(['Bild', '400px'])
         grafiken_aufgaben.append('notizen_gross')
         aufgabe.append('NewPage') if neue_seite == i else ''
+        if 'b' == teilaufg[-1]:
+            aufgabe.append(' \n\n')
+            print(teilaufg[-1])
 
     if 'c' in teilaufg:
         fkt_1 = diff(fkt,x,2)
