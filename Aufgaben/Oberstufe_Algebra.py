@@ -19,7 +19,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], neue_seite=None, i=0, BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], neue_seite=None, i=0, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
@@ -39,8 +39,6 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
                         [zf_vorz(aby), zf_vorz(abx), zf_vorz(abz)],
                         [zf_vorz(abz), zf_vorz(abx), zf_vorz(aby)],
                         [zf_vorz(abz), zf_vorz(aby), zf_vorz(abx)]]
-
-
 
     if random.random() < 0.5:
         vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
@@ -106,7 +104,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         pkt = 2
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if 'i' in teilaufg:
+        if 'b' in teilaufg:
             aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
                                      + f'Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
                                      + f'und verbinden diese.'), ' \n\n'))
@@ -122,6 +120,16 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         i += 1
 
     if 'b' in teilaufg:
+        # wählt man Teilaufgabe i, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('3dim_Koordinatensystem')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+    if 'c' in teilaufg:
+        # wählt man Teilaufgabe j, wird unter der Teilaufaufgabe kariertes Papier eingefügt
+        aufgabe.append(['Bild', '400px'])
+        grafiken_aufgaben.append('kariertes_Papier')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+    if 'd' in teilaufg:
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
@@ -138,8 +146,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
-    if 'c' in teilaufg:
+    if 'e' in teilaufg:
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
@@ -152,8 +159,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
-
-    if 'd' in teilaufg:
+    if 'f' in teilaufg:
         # Hier sollen die SuS mithilfe des vektor.skalarproduktes die Fläche des Dreiecks ABC ausrechnen
         sprod = vektor.skalarprodukt(vektor_ab, vektor_ac)
         diskr_ab = sum(a * a for a in vektor_ab)
@@ -190,8 +196,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
-
-    if 'e' in teilaufg:
+    if 'g' in teilaufg:
         # Hier sollen die SuS mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
@@ -221,8 +226,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
-
-    if 'f' in teilaufg:
+    if 'h' in teilaufg:
         # mithilfe des Kreuzproduktes die Fläche des Parallelogramms ABCD ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
@@ -252,8 +256,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
-
-    if 'g' in teilaufg:
+    if 'i' in teilaufg:
         # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
@@ -297,8 +300,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
-
-    if 'h' in teilaufg:
+    if 'j' in teilaufg:
         # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
@@ -340,18 +342,6 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], n
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(pkt)
         i += 1
-
-    if 'i' in teilaufg:
-        # wählt man Teilaufgabe i, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
-        aufgabe.append(['Bild', '400px'])
-        grafiken_aufgaben.append('3dim_Koordinatensystem')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-
-    if 'j' in teilaufg:
-        # wählt man Teilaufgabe j, wird unter der Teilaufaufgabe kariertes Papier eingefügt
-        aufgabe.append(['Bild', '400px'])
-        grafiken_aufgaben.append('kariertes_Papier')
-        aufgabe.append('NewPage') if neue_seite == i else ''
 
     if BE != []:
         if len(BE) != len(teilaufg):
