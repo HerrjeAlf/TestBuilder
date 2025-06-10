@@ -1756,7 +1756,7 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
         aufg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe)
                 + r'} ~=~ ' + gzahl(erg_2))
         lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ '
-               + gzahl(erg_2) + r' \quad \vert \div ' + gzahl_klammer(faktor) + r' \quad \to \quad '
+               + gzahl(erg_2) + umformung(faktor,':') + r' \quad \to \quad '
                + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_summe) + r'} ~=~ ' + gzahl(erg_3)
                + r' \quad \vert \log_{' + gzahl(basis_2) + r'} \quad (1BE) \\ x' + vorz_str(exponent_2_summe) + r' ~=~ '
                + gzahl(exponent_2 + exponent_2_summe) + r' \quad \vert ' + vorz_str(-1 * exponent_2_summe)
@@ -1777,14 +1777,13 @@ def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anz
             faktor = faktor / 10
             ergebnis_2 = basis_2 ** (exponent_2 + exponent_2_sum)
         summand = zzahl(1,100)*faktor
-        umf_sum = '+' if summand < 0 else '-'
         erg_1 = faktor*ergebnis_2+summand
         erg_2 = faktor*ergebnis_2
         erg_3 = ergebnis_2
         aufg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
                 + r'} ' + vorz_str(summand) + ' ~=~ ' + gzahl(erg_1))
         lsg = (gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
-               + r'} ' + vorz_str(summand) + '~=~ ' + gzahl(erg_1) + umformung(summand, umf_sum)
+               + r'} ' + vorz_str(summand) + '~=~ ' + gzahl(erg_1) + umformung(summand, '-')
                + r' \quad \to \quad ' + gzahl(faktor) + r' \cdot ' + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum)
                + r'} ~=~ ' + gzahl(erg_2) + umformung(faktor, ':') + r' \quad (1BE) \\'
                + gzahl(basis_2) + '^{x' + vorz_str(exponent_2_sum) + r'} ~=~ ' + gzahl(erg_3)
