@@ -1525,7 +1525,7 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
     fkt_a_str_3 = (gzahl(m) + r' \cdot \left( \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 - '
                    + gzahl(Rational(n**2, 4*m**2)) + r' \right) ')
     fkt_a_str_4 = (gzahl(m) + r' \left( x ' + vorz_str(Rational(n,2*m)) + r' \right) ^2 '
-                   + vorz_str(Rational(n**2, 4*m)))
+                   + vorz_str(Rational(n**2, -4*m)))
     xwert = -1 * Rational(n, 2*m)
     ywert = Rational(n,2)
     wert_A = Rational(n**2, -4*m)
@@ -1581,7 +1581,6 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     # Mit dem Parameter 'xwerte=' können die x-Werte von drei Punkten der Funktion in der Form [x1, x2, x3] vorgegeben werden. Standardmäßig ist die Liste leer und die x-Werte werden zufällig zwischen -3 und 3 gebildet.
     # Mit dem Parameter 'faktor=' kann der Streckungs- bzw. Stazchungsfaktor der Funktion festgelegt werden. Standardmäßig ist der Wert None und der Faktor wird zufällig zwischen 0,5 und 4 gebildet.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    punkte = 11
     liste_bez = [f'{str(nr)}']
     # hier wird die Funktion erstellt.
     faktor = zzahl(1, 8)/2 if faktor == None or type(faktor) != int else faktor
@@ -1590,19 +1589,19 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
         xwert_3 = xwert_2 + 1
         xwert_1 = xwert_2 - 1
 
-    while (-1*(xwert_1**2 - xwert_2**2)*(xwert_1**2*xwert_3 - xwert_1*xwert_3**2)
+    if (-1*(xwert_1**2 - xwert_2**2)*(xwert_1**2*xwert_3 - xwert_1*xwert_3**2)
            + (xwert_1**2 - xwert_3**2)*(xwert_1**2*xwert_2 - xwert_1*xwert_2**2) == 0):
-        if len(xwerte) != 3 or not all(type(n) == int for n in xwerte):
-            xwert_2 = zzahl(1, 2)
-            xwert_3 = xwert_2 + 1
-            xwert_1 = xwert_2 - 1
+        xwert_2 = -1*xwert_2
+        xwert_3 = xwert_2 + 1
+        xwert_1 = xwert_2 - 1
 
     ywert_2 = zzahl(1, 3)
     ywert_3 = faktor * (xwert_3 - xwert_2) ** 2 + ywert_2
     ywert_1 = faktor * (xwert_1 - xwert_2) ** 2 + ywert_2
     fkt_str = (vorz_v_aussen(faktor, 'x^2') + vorz_v_innen(-2 * faktor * xwert_2, 'x')
-               + vorz_str((faktor * (xwert_2 ** 2)) + ywert_2))
+               + vorz_str(faktor * (xwert_2 ** 2) + ywert_2))
     fkt = faktor * (x - xwert_2) ** 2 + ywert_2
+
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Von einer Funktion 2. Grades sind die folgenden Punkte gegeben:  S(' + gzahl(xwert_1) + '|'
@@ -1613,66 +1612,11 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
     grafiken_loesung = []
 
     # Rekonstruktion der Funktion
-    # Zeilen 1 bis 3 vom LGS:
 
-    a1 = xwert_1 ** 2
-    b1 = xwert_1
-    c1 = 1
-    d1 = ywert_1
-
-
-    a2 = xwert_2 ** 2
-    b2 = xwert_2
-    c2 = 1
-    d2 = ywert_2
-
-    a3 = xwert_3 ** 2
-    b3 = xwert_3
-    c3 = 1
-    d3 = ywert_3
-
-    # Zeile 4 und 5 vom LGS:
-
-    z4 = NoEscape(gzahl(a1) + r'$ \cdot II' + vorz_str(-1 * a2) + r' \cdot I $')
-    a4 = 0
-    b4 = a1 * b2 - a2 * b1
-    c4 = a1 - a2
-    d4 = a1 * d2 - a2 * d1
-
-    z5 = NoEscape(gzahl(a1) + r'$ \cdot III' + vorz_str(-1 * a3) + r' \cdot I $')
-    a5 = 0
-    b5 = a1 * b3 - a3 * b1
-    c5 = a1 - a3
-    d5 = a1 * d3 - a3 * d1
-
-    # Zeile 6 vom LGS:
-
-    z6 = NoEscape(gzahl(b4) + r'$ \cdot III' + vorz_str(-1 * b5) + r' \cdot II $')
-    b6 = 0
-    c6 = b4 * c5 - b5 * c4
-    d6 = b4 * d5 - b5 * d4
-
-    # Lösungen des LGS:
-
-    lsg_c = d6 / c6
-    lsg_b = (d4 - (c4 * lsg_c)) / b4
-    lsg_a = (d1 - (c1 * lsg_c) - (b1 * lsg_b)) / a1
-
-
-    table2 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
-    table2.add_hline(2, 7)
-    table2.add_row('Berechnung mit Gauß-Algorithmus','Nr.', 'Berechnung', 'a', 'b', 'c', 'lsg', '')
-    table2.add_hline(2, 7)
-    table2.add_row('','I', ' ', gzahl(a1), gzahl(b1), gzahl(c1), gzahl(d1), '')
-    table2.add_row('', 'II', ' ', gzahl(a2), gzahl(b2), gzahl(c2), gzahl(d2), '')
-    table2.add_row('', 'III', ' ', gzahl(a3), gzahl(b3), gzahl(c3), gzahl(d3), '')
-    table2.add_hline(2, 7)
-    table2.add_row('', 'II', z4, gzahl(a4), gzahl(b4), gzahl(c4), gzahl(d4), '(1BE)')
-    table2.add_row('', 'III', z5, gzahl(a5), gzahl(b5), gzahl(c5), gzahl(d5), '(1BE)')
-    table2.add_hline(2, 7)
-    table2.add_row('', 'III', z6, ' ', gzahl(b6), gzahl(c6), gzahl(d6), '(1BE)')
-    table2.add_hline(2, 7)
-
+    text_gauss, lsg, pkt = gaussalgorithmus([[xwert_1 ** 2, xwert_1, 1, ywert_1],
+                                             [xwert_2 ** 2, xwert_2, 1, ywert_2],
+                                             [xwert_3 ** 2, xwert_3, 1, ywert_3]])
+    # print([xwert_1 ** 2, xwert_1, 1, ywert_1], [xwert_2 ** 2, xwert_2, 1, ywert_2], [xwert_3 ** 2, xwert_3, 1, ywert_3]), print(fkt_str), print(lsg)
     # Aufgaben und Lösungen
     loesung.append(r' \mathrm{Die~allgemeine~Funktionsgleichung~lautet \quad }'
                    + r' f(x)~= ~ a  x^2 ~ + ~ b x ~ + ~ c \quad (1BE) \\'
@@ -1684,25 +1628,14 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ' ) ~=~ } '
                    + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
                    + vorz_v_innen(xwert_3,'b + c ~=~' + gzahl(ywert_3) + r' \quad (1BE)'))
-    loesung.append(table2)
-    loesung.append(r' \mathrm{aus~III~folgt:~' + vorz_v_aussen(c6,'c~=~') + vorz_str(d6) + r' \quad \vert \div '
-                   + gzahl_klammer(c6) + r' \quad \to \quad c~=~' + latex(lsg_c) + r' \quad (1BE) } \\'
-                   + r' \mathrm{aus~II~folgt:~' + vorz_v_aussen(b4,'b~') + vorz_str(c4)
-                   + r' \cdot ~' + gzahl_klammer(lsg_c) + '~=~' + gzahl(d4) + r' \quad \vert ~-~'
-                   + gzahl_klammer(c4 * lsg_c) + r' \quad \vert \div ' + gzahl_klammer(b4)
-                   + r' \quad \to \quad b~=~' + latex(lsg_b) + r' \quad (1BE) } \\'
-                   + r' \mathrm{aus~I~folgt:~ ' + vorz_v_aussen(a1,'a') + vorz_str(b1) + r' \cdot '
-                   + gzahl_klammer(lsg_b) + vorz_str(c1) + r' \cdot ' + gzahl_klammer(lsg_c) + '~=~'
-                   + gzahl(d1) + r' \quad \vert ~-~' + gzahl_klammer(b1 * lsg_b + c1 * lsg_c)
-                   + r' \quad \vert \div ' + gzahl_klammer(a1) + r' \quad \to \quad a~=~' + latex(lsg_a)
-                   + r' \quad (1BE) }  \\' + r' \bm{f(x)~=~' + vorz_v_aussen(lsg_a,'x^2')
-                   + vorz_v_innen(lsg_b,'x') + vorz_str(lsg_c) + r'} \quad (1BE) \\'
-                   + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+    loesung.append(text_gauss[0])
+    loesung.append(text_gauss[1] + r' \bm{f(x)~=~' + vorz_v_aussen(lsg[0],'x^2')
+                   + vorz_v_innen(lsg[1],'x') + vorz_str(lsg[2]) + r'} \quad (1BE) ')
 
     if BE != []:
         liste_punkte = BE
     else:
-        liste_punkte = [punkte]
+        liste_punkte = [pkt + 5]
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def exponentialgleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=False, wdh=False, i=0, BE=[]):
