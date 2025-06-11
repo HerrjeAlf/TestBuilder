@@ -8,6 +8,7 @@ from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPa
 
 from scipy.stats import norm, binom
 from skripte.funktionen import *
+from collections import Counter
 from skripte.plotten import *
 from sympy.stats import Binomial, P
 
@@ -131,7 +132,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-vektor = [zzahl(0,5),zzahl(0,5),zzahl(0,5)]
-print(vektor)
-if any(element == 0 for element in vektor):
-    print(vektor)
+
+
+plot(2*x**2+4*x+4)
+
