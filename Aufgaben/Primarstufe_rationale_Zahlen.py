@@ -134,11 +134,11 @@ def brueche_kuerzen(nr, teilaufg=['a', 'b', 'c'], anzahl=False, wdh=False, i=0, 
     # a) trivialer Bruch
     # b) einfacher Bruch
     # c) schwerer Bruch
-    #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
     aufg = ''
@@ -265,11 +265,12 @@ def brueche_ergaenzen(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, BE=
     # Mithilfe von "teilaufg=[]" können folgenden Funktionstypen (auch mehrfach der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung von Bruchtermen mit unbekannten Nenner
     # b) Gleichung von Bruchtermen mit unbekannten Zähler
-    #
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+
     # Der Parameter "anzahl_fakt=" gibt die Anzahl der Faktoren, mit denen die Brüche erweitert werden, vor.
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Funktionstypen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
     punkte = 0
@@ -412,6 +413,7 @@ def brueche_add_subr(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 
     # j) beliebiger ungleichnamiger Bruchterm
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -595,6 +597,7 @@ def brueche_mul_div(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, w
     # f) Bruchterm kürzen und dividieren (beliebige Vorzeichen)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -830,6 +833,7 @@ def potenzgesetz_eins(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], anzahl=F
     # g) Potenzen mit Variablen, Faktoren und ganzz. Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -985,6 +989,7 @@ def potenzgesetz_zwei(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     # j) Division von Potenzen mit jeweils zwei Variablen, Faktoren und ganzz. Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -1266,6 +1271,7 @@ def potenzgesetz_eins_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quostient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -1517,6 +1523,7 @@ def potenzgesetz_eins_mehrfach(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     # g) sechs Faktoren aus drei Basen und rationalen Exponenten (als Dezimalbruch)
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -1639,6 +1646,7 @@ def potenzgesetz_zwei_erw(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 
     # j) Potenzen mit Variablen und ungleichnamigen rationalen Exponenten, dargestellt als Quotient und Wurzel
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -1891,6 +1899,7 @@ def potenzgesetz_drei_vier(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], anzahl=False,
     # e) Produkt zweier Potenzen mit gleichem rationalen Exponenten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -2010,6 +2019,7 @@ def wiss_schreibweise(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False,
     # e) Zahl in wissenschaftliche Schreibweise (1 < exp < 5) in Dezimalzahl umformen
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
@@ -2083,6 +2093,146 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fal
     # d) Umrechnen von Volumeneinheiten
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Rechne um.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    def vorsaetze(n, p=1):
+        if p == 1:
+            return random_selection([['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]], n, False)
+        elif p == 2:
+            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
+                                         ['k', 3], ['M', 6], ['G', 9], ['T', 12]], n, False)
+        elif p == 3:
+            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
+                                         ['da', 1], ['h', 2], ['k',3], ['M', 6], ['G', 9], ['T', 12]], n, False)
+        else:
+            print('p muss 1, 2 odere 3 sein.')
+
+
+    def bel_groessen():
+        vors = [['p', -12], ['n', -9], [r' \mu ', -6], ['m', -3], ['k', 3], ['M', 6], ['G', 9], ['T', 12]]
+        ausw_gr = random.choice(['s', 'J', 'N', 'C', 'V', 'A', 'W'])
+        ausw = nzahl(0,7)
+        komma = nzahl(1,2)
+        exp = vors[ausw][1]
+        anz_ziffern = nzahl(1, 2)
+        zahl = nzahl(1,9)
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1,9) * 10**(step+1)
+        zahl_str = darstellung_zahl(zahl, exponent=anz_ziffern-exp-komma, darstellung='dezi')
+        aufg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + ausw_gr)
+        lsg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~' + zahl_str + r' \cdot 10^{' + gzahl(exp) + '}~'
+               + ausw_gr + '~=~' + gzahl(zahl*10**(-1*komma)) + '~' + ausw_gr)
+        return aufg, lsg
+
+    def laengen():
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
+        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw+schritt][0], vors[ausw+schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1,9)
+        exp_anf = exp2-exp1-komma
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1,9) * 10**(step+1)
+        zahl_str_anf = darstellung_zahl(zahl, exponent=exp2-exp1-komma+anz_ziffern, darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1*komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm ~=~ ...' + vors2 + 'm'
+        lsg = (zahl_str_anf + '~' + vors1 + r' m ~=~' + zahl_str_anf + r' \cdot \frac{10^{'
+               + gzahl(exp1) + '}}{10^{' + gzahl(exp2) + r'}} \cdot 10^{' + gzahl(exp2)
+               + r'}~ m ~=~' + zahl_str_erg + '~' + vors2 + 'm')
+        return aufg, lsg
+
+    def flaechen():
+        ausw = random.randint(0,5)
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
+        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
+        exp_anf = exp2 - exp1 - komma
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
+        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*2 - exp1*2) - komma + anz_ziffern), darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm^2 ~=~ ...' + vors2 + 'm^2'
+        lsg = (zahl_str_anf + '~' + vors1 + r'm^2 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
+               + gzahl(exp1) + '})^2}{(10^{' + gzahl(exp2) + r'})^2} \cdot (10^{' + gzahl(exp2)
+               + r'})^2~ m^2 ~=~' + zahl_str_erg + '~' + vors2 + 'm^2')
+        return aufg, lsg
+
+    def volumen():
+        ausw = random.randint(0,5)
+        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
+        ausw, schritt, komma = nzahl(0, 5), 1, nzahl(1,2)
+        schritt = -1 if ausw >= 3 else schritt
+        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
+        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
+        exp_anf = exp2 - exp1 - komma
+        for step in range(anz_ziffern):
+            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
+        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*3 - exp1*3) - komma + anz_ziffern), darstellung='dezi')
+        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
+        aufg = zahl_str_anf + '~' + vors1 + r'm^3 ~=~ ...' + vors2 + 'm^3'
+        lsg = (zahl_str_anf + '~' + vors1 + r'm^3 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
+               + gzahl(exp1) + '})^3}{(10^{' + gzahl(exp2) + r'})^3} \cdot (10^{' + gzahl(exp2)
+               + r'})^3~ m^3 ~=~' + zahl_str_erg + '~' + vors2 + 'm^3')
+        return aufg, lsg
+
+    aufgaben = {'a': bel_groessen, 'b': laengen, 'c': flaechen, 'd': volumen}
+
+    aufg = ''
+    lsg = ''
+    punkte = 0
+    for element in teilaufg:
+        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
+        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
+        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
+        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
+            aufg = aufg + r' \hspace{5em} '
+        elif i+1 < len(teilaufg):
+            aufg = aufg + r' \\\\'
+
+        punkte += 1
+        i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [punkte]
+        liste_punkte = BE
+    else:
+        liste_punkte = [punkte]
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
+    # Hier sollen die SuS gegebenen Zahlen in Prozent- und Dezimalschreibweise umwandeln
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # a) Umwandeln einfacher Dezimalbrüche in Prozentschreibweise
+    # b) Umwandeln einfacher Prozente in Dezimalschreibweise
+    # c) Umwandeln von Dezimalbrüchen in Prozentschreibweise
+    # d) Umwandeln von Prozenten in Dezimalschreibweise
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
