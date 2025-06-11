@@ -1,6 +1,7 @@
 import string
 import numpy as np
 import random, math
+from collections import Counter
 from pylatex import (Document, NoEscape, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, MultiRow)
 from pylatex.utils import bold
@@ -2226,138 +2227,49 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fal
 def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen in Prozent- und Dezimalschreibweise umwandeln
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # a) Umwandeln einfacher Dezimalbrüche in Prozentschreibweise
-    # b) Umwandeln einfacher Prozente in Dezimalschreibweise
-    # c) Umwandeln von Dezimalbrüchen in Prozentschreibweise
-    # d) Umwandeln von Prozenten in Dezimalschreibweise
-    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    # b) Umwandeln einfacher Prozente in Bruch- und Dezimalschreibweise
+    # c) Umwandeln einfacher Dezimalbrüche in Prozentschreibweise
+    # d) Umwandeln einfacher Prozente in Dezimalschreibweise
+    # e) Umwandeln von Dezimalbrüchen in Prozentschreibweise
+    # f) Umwandeln von Prozenten in Dezimalschreibweise
 
     liste_bez = [f'{str(nr)}']
 
     if anzahl != False:
         anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
-    if wdh != False:
+    elif wdh != False:
         teilaufg = repeat(teilaufg, wdh)
-
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Rechne um.']
+    anz_teilaufg = Counter(teilaufg)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    def vorsaetze(n, p=1):
-        if p == 1:
-            return random_selection([['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]], n, False)
-        elif p == 2:
-            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
-                                         ['k', 3], ['M', 6], ['G', 9], ['T', 12]], n, False)
-        elif p == 3:
-            return random_selection([['p', -12], ['n', -9], [r' \mu', -6], ['m', -3], ['c', -2], ['d', -1],
-                                         ['da', 1], ['h', 2], ['k',3], ['M', 6], ['G', 9], ['T', 12]], n, False)
-        else:
-            print('p muss 1, 2 odere 3 sein.')
+    if 'a' in teilaufg:
+        # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
+        anz_aufg = anz_teilaufg['a']
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
 
+        loesung.extend((beschriftung(teilaufg,i, True)
+                        + r' \mathrm{Alle~Quotienten~sind~gleich~gross.~Damit~handelt~es~sich~'
+                        + r'um~exponentielles~Wachstum. \quad (1BE)}', table3))
 
-    def bel_groessen():
-        vors = [['p', -12], ['n', -9], [r' \mu ', -6], ['m', -3], ['k', 3], ['M', 6], ['G', 9], ['T', 12]]
-        ausw_gr = random.choice(['s', 'J', 'N', 'C', 'V', 'A', 'W'])
-        ausw = nzahl(0,7)
-        komma = nzahl(1,2)
-        exp = vors[ausw][1]
-        anz_ziffern = nzahl(1, 2)
-        zahl = nzahl(1,9)
-        for step in range(anz_ziffern):
-            zahl = zahl + nzahl(1,9) * 10**(step+1)
-        zahl_str = darstellung_zahl(zahl, exponent=anz_ziffern-exp-komma, darstellung='dezi')
-        aufg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~ ...' + ausw_gr)
-        lsg = (zahl_str + '~' + vors[ausw][0] + ausw_gr + r'~=~' + zahl_str + r' \cdot 10^{' + gzahl(exp) + '}~'
-               + ausw_gr + '~=~' + gzahl(zahl*10**(-1*komma)) + '~' + ausw_gr)
-        return aufg, lsg
-
-    def laengen():
-        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
-        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
-        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw+schritt][0], vors[ausw+schritt][1]
-        anz_ziffern, zahl = nzahl(1, 2), nzahl(1,9)
-        exp_anf = exp2-exp1-komma
-        for step in range(anz_ziffern):
-            zahl = zahl + nzahl(1,9) * 10**(step+1)
-        zahl_str_anf = darstellung_zahl(zahl, exponent=exp2-exp1-komma+anz_ziffern, darstellung='dezi')
-        zahl_str_erg = gzahl(zahl * (10 ** (-1*komma)))
-        aufg = zahl_str_anf + '~' + vors1 + r'm ~=~ ...' + vors2 + 'm'
-        lsg = (zahl_str_anf + '~' + vors1 + r' m ~=~' + zahl_str_anf + r' \cdot \frac{10^{'
-               + gzahl(exp1) + '}}{10^{' + gzahl(exp2) + r'}} \cdot 10^{' + gzahl(exp2)
-               + r'}~ m ~=~' + zahl_str_erg + '~' + vors2 + 'm')
-        return aufg, lsg
-
-    def flaechen():
-        ausw = random.randint(0,5)
-        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        ausw, schritt, komma = nzahl(0, 5), nzahl(1,2), nzahl(1,2)
-        schritt = -1 * nzahl(1,2) if ausw >= 3 else schritt
-        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
-        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
-        exp_anf = exp2 - exp1 - komma
-        for step in range(anz_ziffern):
-            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
-        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*2 - exp1*2) - komma + anz_ziffern), darstellung='dezi')
-        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
-        aufg = zahl_str_anf + '~' + vors1 + r'm^2 ~=~ ...' + vors2 + 'm^2'
-        lsg = (zahl_str_anf + '~' + vors1 + r'm^2 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
-               + gzahl(exp1) + '})^2}{(10^{' + gzahl(exp2) + r'})^2} \cdot (10^{' + gzahl(exp2)
-               + r'})^2~ m^2 ~=~' + zahl_str_erg + '~' + vors2 + 'm^2')
-        return aufg, lsg
-
-    def volumen():
-        ausw = random.randint(0,5)
-        vors = [['n', -9], [r' \mu ', -6], ['m', -3], ['c', -2], ['d', -1], ['k', 3]]
-        ausw, schritt, komma = nzahl(0, 5), 1, nzahl(1,2)
-        schritt = -1 if ausw >= 3 else schritt
-        vors1, exp1, vors2, exp2 = vors[ausw][0], vors[ausw][1], vors[ausw + schritt][0], vors[ausw + schritt][1]
-        anz_ziffern, zahl = nzahl(1, 2), nzahl(1, 9)
-        exp_anf = exp2 - exp1 - komma
-        for step in range(anz_ziffern):
-            zahl = zahl + nzahl(1, 9) * 10 ** (step + 1)
-        zahl_str_anf = darstellung_zahl(zahl, exponent=((exp2*3 - exp1*3) - komma + anz_ziffern), darstellung='dezi')
-        zahl_str_erg = gzahl(zahl * (10 ** (-1 * komma)))
-        aufg = zahl_str_anf + '~' + vors1 + r'm^3 ~=~ ...' + vors2 + 'm^3'
-        lsg = (zahl_str_anf + '~' + vors1 + r'm^3 ~=~' + zahl_str_anf + r' \cdot \frac{(10^{'
-               + gzahl(exp1) + '})^3}{(10^{' + gzahl(exp2) + r'})^3} \cdot (10^{' + gzahl(exp2)
-               + r'})^3~ m^3 ~=~' + zahl_str_erg + '~' + vors2 + 'm^3')
-        return aufg, lsg
-
-    aufgaben = {'a': bel_groessen, 'b': laengen, 'c': flaechen, 'd': volumen}
-
-    aufg = ''
-    lsg = ''
-    punkte = 0
-    for element in teilaufg:
-        teilaufg_aufg, teilaufg_lsg = aufgaben[element]()
-        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg + r' \\\\'
-        if (i+1) % 2 != 0 and i+1 < len(teilaufg):
-            aufg = aufg + r' \hspace{5em} '
-        elif i+1 < len(teilaufg):
-            aufg = aufg + r' \\\\'
-
-        punkte += 1
-        i += 1
+        i += anz_aufg
 
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [punkte]
+            liste_punkte = [len(teilaufg)]
         liste_punkte = BE
     else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
+        liste_punkte = [len(teilaufg)]
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
