@@ -132,7 +132,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-
-
-plot(2*x**2+4*x+4)
-
+print(random_selection(list(range(1, 9)), 3, False))

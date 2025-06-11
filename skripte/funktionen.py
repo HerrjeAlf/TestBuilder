@@ -1379,11 +1379,9 @@ def random_selection(list, anzahl=2, wdh=True):
         random.shuffle(liste)
         return liste
     elif wdh == False:
-        if anzahl > len(list):
-            anzahl = len(list)
+        anzahl = len(list) if anzahl > len(list) else anzahl
         random.shuffle(list)
-        Liste = [list[k] for k in range(anzahl)]
-        return Liste
+        return list[:anzahl]
     else:
         print('wdh muss "True" or "False" sein')
 
