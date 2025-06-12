@@ -1456,7 +1456,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
                 loesung.append([zeilennummer.get(k+1, 'zu groß'), text] + neue_zeile)
 
     k = zeilennummer_reverse[loesung[-1][0]]
-    print(loesung)
     gleich_lsg = []
 
     for anz in reversed(list(range(1,n+1))):
@@ -1464,7 +1463,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             if eintrag[0] == zeilennummer[anz]:
                 gleich_lsg.append(eintrag) # Letztes Element zurückgeben
                 break
-        print(gleich_lsg)
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
     text_lsg = ''
     lsg = []
