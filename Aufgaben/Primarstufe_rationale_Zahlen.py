@@ -2254,20 +2254,37 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
     if 'a' in teilaufg:
         # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
         anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 9
-        zahlen = random_selection(list(range(1, 9)), anz_aufg, wdh=False)
+        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
         aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
         lsg = text = ''
         for step in range(anz_aufg):
-            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[i] / 10)
+            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100)
                      + r' ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} \% ')
-            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[i] / 10) + r' ~=~ \frac{ '
-                    + gzahl(zahlen[i] * 10) + ' }{100} ~=~ ' + gzahl(zahlen[i] * 10) + r' \% ')
-            if step % 2 == 0:
-                text += r' \hspace{5em} '
-                lsg += r' \hspace{5em} '
-            else:
-                text += r' \\\\ '
-                lsg += r' \\ '
+            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100) + r' ~=~ \frac{ '
+                    + gzahl(zahlen[step]) + ' }{100} ~=~ ' + gzahl(zahlen[step]) + r' \% ')
+            text += r' \hspace{5em} ' if step % 2 == 0 else r' \\\\ '
+            lsg += r' \hspace{5em} ' if step % 2 == 0 else r' \\ '
+            i += 1
+        if anz_aufg % 2 != 0:
+            text += r' \hspace{12em} '
+            lsg += r' \hspace{11em} '
+        aufgabe.append(text)
+        loesung.append(lsg)
+
+
+    if 'b' in teilaufg:
+        # Die SuS sollen einfache  in Bruch- und Prozentschreibweise notieren
+        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 10 else 9
+        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
+        aufgabe.append('Notiere als Bruch und Dezimalbruch.')
+        lsg = text = ''
+        for step in range(anz_aufg):
+            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step])
+                     + r' \% ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} ')
+            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step]) + r' \% ~=~ \frac{ '
+                    + gzahl(zahlen[step]) + ' }{100} ~=~ ' + gzahl(zahlen[step] / 100) + r' \% ')
+            text += r' \hspace{5em} ' if step % 2 == 0 else r' \\\\ '
+            lsg += r' \hspace{5em} ' if step % 2 == 0 else r' \\ '
             i += 1
         if anz_aufg % 2 != 0:
             text += r' \hspace{12em} '
