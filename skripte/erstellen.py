@@ -891,7 +891,7 @@ def klausur(liste_seiten_teil1, angb_teil1, liste_seiten_teil2, angb_teil2, clea
             (angb_teil2[0], angb_teil2[1], angb_teil2[2], angb_teil2[3],
              angb_teil2[4], angb_teil2[5], angb_teil2[6], angb_teil2[7], angb_teil2[8])
         in_tagen, liste_bez, liste_punkte = angb_teil2[9], angb_teil2[10], angb_teil2[11]
-        Datum = (datetime.now() - timedelta(days=in_tagen)).strftime('%d. %B %Y')
+        Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d. %B %Y')
         print(f'\033[38;2;100;141;229m\033[1m\033[0m')
 
         # erstellen der Tabelle zur Punkteübersicht
