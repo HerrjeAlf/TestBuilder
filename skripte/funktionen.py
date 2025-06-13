@@ -1417,13 +1417,7 @@ def stelle(liste, vec):
 
 # Teilberechnungen für Analysis
 def gaussalgorithmus(gleichungen, variablen=[]):
-    """
-    Löst ein lineares Gleichungssystem mit der Methode der Gaußschen Elimination.
 
-    :param koeffizienten: Liste der Koeffizienten (Matrix A).
-    :param ergebnisse: Liste der Ergebnisse (Vektor b).
-    :return: Liste der Lösungen oder eine Beschreibung der Schritte.
-    """
     zeilennummer_reverse = {value: key for key, value in zeilennummer.items()}
     n = len(gleichungen)
     variablen = [liste_teilaufg[step] for step in range(len(gleichungen[0]) - 1)] if variablen == [] else variablen
@@ -1450,24 +1444,20 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             if gleichungen[k][i] != 0:
                 text = (gzahl(gleichungen[k][i]) + r' \cdot ' + zeilennummer.get(i+1, 'zu groß')
                         + vorz_str(-1 * gleichungen[i][i]) + r' \cdot ' + zeilennummer.get(k+1, 'zu groß'))
-                neue_zeile = [gleichungen[i][i] * gleichungen[k][step] - gleichungen[k][i] * gleichungen[i][step]
+                neue_zeile = [gleichungen[k][i] * gleichungen[i][step] - gleichungen[i][i] * gleichungen[k][step]
                               for step in range(0, len(gleichungen[0]))]
                 gleichungen[k] = neue_zeile
                 loesung.append([zeilennummer.get(k+1, 'zu groß'), text] + neue_zeile)
 
     k = zeilennummer_reverse[loesung[-1][0]]
     gleich_lsg = []
+    for anz in range(n, 0, -1):
+        gleich_lsg.append(next(e for e in reversed(loesung) if e[0] == zeilennummer[anz]))
 
-    for anz in reversed(list(range(1,n+1))):
-        for eintrag in reversed(loesung):  # Liste von hinten durchgehen
-            if eintrag[0] == zeilennummer[anz]:
-                gleich_lsg.append(eintrag) # Letztes Element zurückgeben
-                break
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
     text_lsg = ''
     lsg = []
-    k = 1
-    for tubel in gleich_lsg:
+    for k, tubel in enumerate(gleich_lsg, 1):
         if all(x == 0 for x in tubel[-1 - k:]):
             text_lsg = r' 0~=~0 \mathrm{Das~Gleichungssystem~hat~unendlich~viele~Lösungen} '
             break
@@ -1488,7 +1478,6 @@ def gaussalgorithmus(gleichungen, variablen=[]):
             lsg.append(Rational(tubel[-1] - konst, tubel[-1-k]))
             text_lsg = text_lsg + text_zw + r' \\'
         k += 1
-
 
     # Funktion, die loesung als Tabelle darstellt
     anz_sp = len(loesung[0])
