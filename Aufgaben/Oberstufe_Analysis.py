@@ -1622,12 +1622,12 @@ def rekonstruktion(nr, xwerte=[], faktor=None, BE=[]):
                    + r' f(x)~= ~ a  x^2 ~ + ~ b x ~ + ~ c \quad (1BE) \\'
                    + r' \mathrm{aus~den~gegebenen~Punkten~folgt:} \quad '
                    + r' \mathrm{I:~f(' + gzahl(xwert_1) + ')~=~' + gzahl(ywert_1) + r' \quad \to \quad '
-                   + vorz_v_aussen(xwert_1**2,'a') + vorz_v_innen(xwert_1, 'b') + ' + c ~=~' + gzahl(ywert_1)
+                   + summe.terme([xwert_1**2, xwert_1, 1], ['a','b','c'])  + '~=~' + gzahl(ywert_1)
                    + r' \quad (1BE)} \\ \mathrm{II:~f(' + gzahl(xwert_2) + ')~=~' + gzahl(ywert_2)
-                   + r' \quad \to \quad ' + vorz_v_aussen(xwert_2**2, 'a') + vorz_v_innen(xwert_2, 'b')
-                   + ' + c ~=~' + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ' ) ~=~ } '
-                   + gzahl(ywert_3) + r' \quad \to \quad ' + vorz_v_aussen(xwert_3**2, 'a')
-                   + vorz_v_innen(xwert_3,'b + c ~=~' + gzahl(ywert_3) + r' \quad (1BE)'))
+                   + r' \quad \to \quad ' + summe.terme([xwert_2**2, xwert_2, 1], ['a','b','c']) + ' ~=~'
+                   + gzahl(ywert_2) + r' \quad (1BE)} \\ \mathrm{III:~f(' + gzahl(xwert_3) + ' ) ~=~ } '
+                   + gzahl(ywert_3) + r' \quad \to \quad ' + summe.terme([xwert_3**2, xwert_3, 1], ['a','b','c'])
+                   + ' ~=~' + gzahl(ywert_3) + r' \quad (1BE)')
     loesung.append(text_gauss[0])
     loesung.append(text_gauss[1] + r' \bm{f(x)~=~' + vorz_v_aussen(lsg[0],'x^2')
                    + vorz_v_innen(lsg[1],'x') + vorz_str(lsg[2]) + r'} \quad (1BE) ')
