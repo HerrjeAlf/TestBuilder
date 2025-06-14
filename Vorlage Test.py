@@ -1,4 +1,5 @@
 import os
+import sys
 from helpers import root_path
 from PyPDF2 import PdfMerger
 from Aufgaben import *
@@ -55,7 +56,20 @@ for i in range(anzahl):
             liste_punkte.extend(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-    angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+    if sys.argv[1] == 'website':
+        schnell = True if sys.argv[2] == 'True' else False
+
+        if schnell:
+            uuid, identifier = sys.argv[-1], sys.argv[-2]
+
+            angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, None, liste_bez, liste_punkte, schnell, identifier, uuid]
+        else:
+            probe = True if sys.argv[8] == 'Probe' else False
+
+            schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, identifier, uuid = sys.argv[3:]
+            angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, schnell, identifier, uuid]
+    else:
+        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
     pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
