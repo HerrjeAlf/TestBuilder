@@ -1455,7 +1455,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
         gleich_lsg.append(next(e for e in reversed(loesung) if e[0] == zeilennummer[anz]))
 
     # und hier eine Funktion die aus gleich_lsg den Lösungstext erstellt "aus III folgte c = ..."
-    text_lsg = ''
+    text_lsg = r' \mathrm{Die~Tabelle~ergibt~(~' + gzahl(len(loesung)-3) + r'BE). \hspace{10em} } \\ '
     lsg = []
     for k, tubel in enumerate(gleich_lsg, 1):
         if all(x == 0 for x in tubel[-1 - k:]):
@@ -1464,7 +1464,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
         elif all(x == 0 for x in tubel[-1-k: -1]):
             text_lsg = r' 0 ~ \neq ~' + tubel[-1] + r' \mathrm{Das~Gleichungssystem~ist~nicht~lösbar!} '
             break
-        else:
+        else
             text_lsg = text_lsg + r' \mathrm{aus~ ' + gzahl(tubel[0]) + r'~folgt: } \quad '
             text_zw = '~=~' + gzahl(tubel[-1])
             konst = 0
@@ -1476,7 +1476,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
                        + umformung(tubel[-1-k],':') + trennung + variablen[-k]
                        + '~=~' + gzahl(Rational(tubel[-1] - konst, tubel[-1-k])))
             lsg.append(Rational(tubel[-1] - konst, tubel[-1-k]))
-            text_lsg = text_lsg + text_zw + r' \\'
+            text_lsg = text_lsg + text_zw + r' \quad (1BE) \\ '
         k += 1
 
     # Funktion, die loesung als Tabelle darstellt
