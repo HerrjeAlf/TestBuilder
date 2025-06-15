@@ -1012,7 +1012,8 @@ def anwend_abl_seilbahn(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], i=0, BE=[])
     plt.plot(xwerte, ywerte_huegel)
     # plt.show()
     plt.savefig('img/temp/' + str(nr), dpi=200, bbox_inches="tight", pad_inches=0.02)
-
+    plt.close('all')
+    plt.clf()
     # plt.plot(xwerte, ywerte_huegel, x_wert_s, fkt, '$f(x) =' + latex(fkt) + '$', 'Hügel', 'Aufgabe_3')
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
@@ -1319,7 +1320,9 @@ def rekonstruktion_und_extremalproblem(nr, teilaufg=['a', 'b', 'c'], gleichung=T
         plt.plot([0, xwert_p], [ywert_p, ywert_p])
         plt.plot([xwert_p, xwert_p], [ywert_p, 0])
         plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
-        return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+        plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+        plt.close('all')
+        plt.clf()
 
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
 
@@ -1571,7 +1574,9 @@ def extremalproblem_einfach(nr, i=0, BE=[]):
         plt.plot([0, xwert_p], [ywert_p, ywert_p])
         plt.plot([xwert_p, xwert_p], [ywert_p, 0])
         plt.scatter([xwert_p, ], [ywert_p, ], 50, color='blue')
-        return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+        plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+        plt.close('all')
+        plt.clf()
     Darstellung(fkt, xmax, xwert_2, ywert_2, f'Aufgabe_{nr}')
     liste_punkte = [9] if BE == [] else BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

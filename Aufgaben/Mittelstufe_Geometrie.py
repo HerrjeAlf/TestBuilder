@@ -1047,6 +1047,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         for element in bahnen:
             plt.plot(element[0], element[1], 'k')
 
+
         # Doppelseitige Pfeile für Länge und Breite
         plt.annotate('', xy=(-radius, 0), xytext=(laenge + radius, 0),
                      arrowprops=dict(arrowstyle='<->', lw=1.5))
@@ -1061,7 +1062,9 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
         # Achsen ausschalten
         ax.axis('off')
 
-        return plt.savefig('img/temp/pool', dpi=200, bbox_inches='tight', pad_inches=0)
+        plt.savefig('img/temp/pool', dpi=200, bbox_inches='tight', pad_inches=0)
+        plt.close('all')
+        plt.clf()
 
     pool_zeichnen(anz_bahnen, laenge, radius, gzahl(laenge+2*radius), gzahl(2*radius) )
 

@@ -199,7 +199,9 @@ def dreieck_zeichnen_mit_textfeld(pkt, pkt_bez, st, wk, name, text=''):
     # plt.show()
     # Hinzufügen eines Textfeldes
     text_ax.text(0.5, 0.5, text, va='center', ha='center', fontsize=24)
-    return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=300)
+    plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=300)
+    plt.close('all')
+    plt.clf()
 
 def dreieck_zeichnen(pkt, pkt_bez=False, st=False, wk=False, name='noName'):
     fig, ax = plt.subplots()
@@ -239,7 +241,9 @@ def dreieck_zeichnen(pkt, pkt_bez=False, st=False, wk=False, name='noName'):
         am2 = AngleAnnotation(pkt[1], l1[1], l3[0], ax=ax, size=500, text=r'$' + wk[1] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
         am3 = AngleAnnotation(pkt[2], l2[0], l1[0], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
     # plt.show()
-    return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=300)
+    plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches=0, dpi=300)
+    plt.close('all')
+    plt.clf()
 
 def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     fig, ax = plt.subplots()
@@ -283,7 +287,9 @@ def dreieck_zeichnen_mit_hoehe(pkt, pkt_bez, st, wk, name):
     am3 = AngleAnnotation(pkt[2], pkt[0], pkt[3], ax=ax, size=500, text=r'$' + wk[2] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
     am4 = AngleAnnotation(pkt[3], pkt[1], pkt[2], ax=ax, size=300, text=r'$' + wk[3] + '$', textposition='inside', unit='pixels', text_kw={'fontsize': 18})
     # plt.show()
-    return plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi=300)
+    plt.savefig('img/temp/' + name, bbox_inches= 'tight', pad_inches = 0, dpi=300)
+    plt.close('all')
+    plt.clf()
 
 def flaeche_zeichnen(*wertetabelle, text=False, name='flaeche'):
     fig, ax = plt.subplots()
@@ -304,7 +310,9 @@ def flaeche_zeichnen(*wertetabelle, text=False, name='flaeche'):
         plt.plot(*element)
 
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+    plt.close('all')
+    plt.clf()
 
 # Analysis
 def graph_xyfix(*funktionen, bezn=False, name='Graph'):
@@ -346,7 +354,9 @@ def graph_xyfix(*funktionen, bezn=False, name='Graph'):
                      xytext=(+5, +5), textcoords='offset points', fontsize=12)
         i += 1
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+    plt.close('all')
+    plt.clf()
 
 def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
     # lswerte sind für die Werte für die Lösungen
@@ -377,7 +387,9 @@ def graph_xyfix_plus(a_1, b_1, xwert, fkt , titel, n, name, *lswerte):
         elif werte is not None and lswerte[i + 1] is not None:  # Überprüft, ob es den Wert oder den nächsten Wert gibt
             plt.plot(werte, lswerte[i + 1], linewidth=1)
     plt.suptitle(titel, usetex=True)
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+    plt.close('all')
+    plt.clf()
 
 def Graph(x_min, x_max,  *funktionen, bezn=False, name='Graph'):
     fig, ax = plt.subplots()
@@ -414,7 +426,9 @@ def Graph(x_min, x_max,  *funktionen, bezn=False, name='Graph'):
         i += 1
     plt.grid(True)
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0)
+    plt.close('all')
+    plt.clf()
 
 # Wahrscheinlichkeit
 def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $'):
@@ -453,7 +467,9 @@ def Baumdiagramm_zmZ(stf, wkt, name, bz='E', bz2= r'$ \overline{' + 'E' + '} $')
             # print('xwerte: ' + str(xwerte))
             # print('ywerte_1: ' + str(ywerte_1))
             # print('ywerte_2: ' + str(ywerte_2))
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.close('all')
+    plt.clf()
 
 def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{' + 'E' + '} $'):
     fig, ax = plt.subplots()
@@ -502,16 +518,22 @@ def Baumdiagramm_zoZ(stf, anzahl_1, anzahl_2, name, bz1='E', bz2= r'$ \overline{
         wkt_liste_anzahl_1_neu.extend(wkt_liste_anzahl_1)
         wkt_liste_anzahl_2.extend(wkt_liste_anzahl_2_neu)
         wkt_liste_anzahl_1 = wkt_liste_anzahl_1_neu
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.close('all')
+    plt.clf()
 
 def histogramm(liste_kategorien, liste_werte, name, titel='Histogramm'):
     plt.title(titel)
     plt.xticks(liste_kategorien)
     plt.bar(liste_kategorien, liste_werte, width=0.65, edgecolor='black', linewidth=2)
     # plt.show()
-    return plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches="tight", pad_inches=0.02)
+    plt.close('all')
+    plt.clf()
 
 def loeschen():
     plt.figure().clear()
 
-# histogramm([1,2,3,4],[0.1,0.3,0.2,0.4], 'Test', titel='Test')
+# Add this after every plotting operation:
+plt.close('all')
+plt.clf()

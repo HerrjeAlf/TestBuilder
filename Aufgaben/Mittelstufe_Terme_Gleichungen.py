@@ -243,7 +243,10 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 ax.axvspan(0, x_max, ymin=0, ymax=1, color='gray', alpha=0.5)
                 ax.axvspan(x_max, x_max + 1, ymin=0, ymax=y_max, color='gray', alpha=0.5)
                 # plt.show()
-                return plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+                plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+                plt.close('all')
+                plt.clf()
+
             create_rectangle(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                      + f') Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
