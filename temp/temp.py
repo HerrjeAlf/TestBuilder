@@ -132,5 +132,3 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-liste = [element*5 for element in range(1,20)]
-print(liste)

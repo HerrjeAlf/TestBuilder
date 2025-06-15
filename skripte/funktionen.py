@@ -1464,7 +1464,7 @@ def gaussalgorithmus(gleichungen, variablen=[]):
         elif all(x == 0 for x in tubel[-1-k: -1]):
             text_lsg = r' 0 ~ \neq ~' + tubel[-1] + r' \mathrm{Das~Gleichungssystem~ist~nicht~lösbar!} '
             break
-        else
+        else:
             text_lsg = text_lsg + r' \mathrm{aus~ ' + gzahl(tubel[0]) + r'~folgt: } \quad '
             text_zw = '~=~' + gzahl(tubel[-1])
             konst = 0
