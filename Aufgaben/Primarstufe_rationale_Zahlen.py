@@ -2232,8 +2232,9 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
+    # a) Umwandeln einfacher Dezimalbrüche in Bruch- und Prozentreibweise
     # b) Umwandeln einfacher Prozente in Bruch- und Dezimalschreibweise
-    # c) Umwandeln einfacher Dezimalbrüche in Prozentschreibweise
+    # c) Umwandeln einfacher Dezimalbrüche oder Prozente
     # d) Umwandeln einfacher Prozente in Dezimalschreibweise
     # e) Umwandeln von Dezimalbrüchen in Prozentschreibweise
     # f) Umwandeln von Prozenten in Dezimalschreibweise
@@ -2253,7 +2254,7 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
 
     if 'a' in teilaufg:
         # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
-        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 9
+        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 19 else 19
         zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
         aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
         lsg = text = ''
@@ -2270,9 +2271,81 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
             lsg += r' \hspace{11em} '
         aufgabe.append(text)
         loesung.append(lsg)
-
-
     if 'b' in teilaufg:
+        # Die SuS sollen einfache  in Bruch- und Prozentschreibweise notieren
+        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 19 else 19
+        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
+        aufgabe.append('Notiere als Bruch und Dezimalbruch.')
+        lsg = text = ''
+        for step in range(anz_aufg):
+            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step])
+                     + r' \% ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} ')
+            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step]) + r' \% ~=~ \frac{ '
+                    + gzahl(zahlen[step]) + ' }{100} ~=~ ' + gzahl(zahlen[step] / 100))
+            text += r' \hspace{5em} ' if step % 2 == 0 else r' \\\\ '
+            lsg += r' \hspace{5em} ' if step % 2 == 0 else r' \\ '
+            i += 1
+        if anz_aufg % 2 != 0:
+            text += r' \hspace{12em} '
+            lsg += r' \hspace{11em} '
+        aufgabe.append(text)
+        loesung.append(lsg)
+    if 'c' in teilaufg:
+        # Die SuS sollen einfache Dezimalbrüche oder Prozente mit der Bruchdarstellung als Zwischenschritt ineinander umwandeln
+        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 19 else 19
+        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
+        aufgabe.append('Notiere als echter Bruch und als Dezimalbruch bzw. als Prozentangabe.')
+        if anz_aufg % 2 != 0:
+            step = anz_aufg - 1
+            liste = [[gzahl(zahlen[step]) + r' \% ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} ',
+                      gzahl(zahlen[step]) + r' \% ~=~ \frac{ ' + gzahl(zahlen[step]) + ' }{100} ~=~ '
+                      + gzahl(zahlen[step] / 100)]]
+            anz_aufg -= 1
+        else:
+            liste = []
+        for step in range(0, anz_aufg, 2):
+            liste.extend(([gzahl(zahlen[step]/100) + r' ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} \% ',
+                           gzahl(zahlen[step] / 100) + r' ~=~ \frac{ ' + gzahl(zahlen[step]) + ' }{100} ~=~ '
+                           + gzahl(zahlen[step]) + r' \% '],
+                          [gzahl(zahlen[step+1]) + r' \% ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} ',
+                           gzahl(zahlen[step + 1]) + r' \% ~=~ \frac{ ' + gzahl(zahlen[step + 1]) + ' }{100} ~=~ '
+                           + gzahl(zahlen[step + 1] / 100)]))
+        random.shuffle(liste)
+        for step, element in enumerate(liste):
+            liste[step] = [beschriftung(liste_teilaufg, i, True) + element[0],
+                           beschriftung(liste_teilaufg, i, True) + element[1]]
+            i += 1
+        text = lsg = ''
+        for step, element in enumerate(liste):
+            text += element[0] + r' \hspace{5em} ' if step % 2 == 0 else element[0] + r' \\\\ '
+            lsg += element[1] + r' \hspace{5em} ' if step % 2 == 0 else element[1] + r' \\ '
+            i += 1
+        if len(liste) % 2 != 0:
+            text += r' \hspace{13em} '
+            lsg += r' \hspace{12em} '
+        aufgabe.append(text)
+        loesung.append(lsg)
+
+    if 'd' in teilaufg:
+        # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
+        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 9
+        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
+        aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
+        lsg = text = ''
+        for step in range(anz_aufg):
+            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100)
+                     + r' ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} \% ')
+            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100) + r' ~=~ '
+                    + gzahl(zahlen[step]) + r' \% ')
+            text += r' \hspace{5em} ' if step + 1 % 3 == 0 else r' \\\\ '
+            lsg += r' \hspace{5em} ' if step + 1 % 3 == 0 else r' \\ '
+            i += 1
+        if anz_aufg % 3 != 0:
+            text += r' \hspace{12em} '
+            lsg += r' \hspace{11em} '
+        aufgabe.append(text)
+        loesung.append(lsg)
+    if 'e' in teilaufg:
         # Die SuS sollen einfache  in Bruch- und Prozentschreibweise notieren
         anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 10 else 9
         zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)

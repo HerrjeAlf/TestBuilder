@@ -27,7 +27,7 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[lineare_funktionen(1)]]
+    Aufgaben = [[schreibweise_prozent_dezimal(1, ['a', 'b', 'c'], wdh=3)]]
 
     # Aufgaben = [[rechnen_mit_vektoren(1),
     #              geraden_aufstellen(2, ['b']),

@@ -132,3 +132,10 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
+list1 = list2 = ''
+
+list1 += 'list1'
+list2 += 'list2'
+
+print(list1)
+print(list2)
