@@ -2254,7 +2254,7 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
 
     if 'a' in teilaufg:
         # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
-        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 19 else 19
+        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 10
         zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
         aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
         lsg = text = ''
@@ -2273,7 +2273,7 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         loesung.append(lsg)
     if 'b' in teilaufg:
         # Die SuS sollen einfache  in Bruch- und Prozentschreibweise notieren
-        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 19 else 19
+        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 10 else 10
         zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
         aufgabe.append('Notiere als Bruch und Dezimalbruch.')
         lsg = text = ''
@@ -2292,7 +2292,7 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         loesung.append(lsg)
     if 'c' in teilaufg:
         # Die SuS sollen einfache Dezimalbrüche oder Prozente mit der Bruchdarstellung als Zwischenschritt ineinander umwandeln
-        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 19 else 19
+        anz_aufg = anz_teilaufg['b'] if anz_teilaufg['b'] < 10 else 10
         zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
         aufgabe.append('Notiere als echter Bruch und als Dezimalbruch bzw. als Prozentangabe.')
         if anz_aufg % 2 != 0:
@@ -2327,14 +2327,14 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         loesung.append(lsg)
 
     if 'd' in teilaufg:
-        # Die SuS sollen einfache Dezimalbrüche in Bruch- und Prozentschreibweise notieren
-        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 9
-        zahlen = random_selection([element*5 for element in range(1,20)], anz_aufg, wdh=False)
-        aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
+        # Die SuS sollen einfache Dezimalbrüche in Prozentschreibweise notieren
+        anz_aufg = anz_teilaufg['a'] if anz_teilaufg['d'] < 9 else 9
+        zahlen = random_selection(list(range(1,200)), wdh=False)
+        aufgabe.append('Notiere in Prozentschreibweise.')
         lsg = text = ''
         for step in range(anz_aufg):
             text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100)
-                     + r' ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} \% ')
+                     + r' ~=~ \hspace{2em} \% ')
             lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100) + r' ~=~ '
                     + gzahl(zahlen[step]) + r' \% ')
             text += r' \hspace{5em} ' if step + 1 % 3 == 0 else r' \\\\ '

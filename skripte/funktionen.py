@@ -1371,6 +1371,8 @@ def elemente_sort(st_werte):
     return st_werte_sort
 
 def random_selection(list, anzahl=2, wdh=True):
+    if not isinstance(wdh, bool):
+        raise ValueError('wdh muss "True" oder "False" sein')
     if wdh == True:
         liste = []
         random.shuffle(list)
@@ -1378,12 +1380,10 @@ def random_selection(list, anzahl=2, wdh=True):
             liste.append(list[k % len(list)])
         random.shuffle(liste)
         return liste
-    elif wdh == False:
+    else:
         anzahl = len(list) if anzahl > len(list) else anzahl
         random.shuffle(list)
         return list[:anzahl]
-    else:
-        print('wdh muss "True" or "False" sein')
 
 def repeat(list, wdh=2):
     new_list = []
