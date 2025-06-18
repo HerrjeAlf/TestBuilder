@@ -853,7 +853,7 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][rando
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=[None, 'identisch', 'parallel', 'windschief', 'schneiden'][0], gerade_k=[False,True][0],  neue_seite=None, i=0, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=['identisch', 'parallel', 'windschief', 'schneiden'][random.choice([0,1,2,3])], gerade_k=[False,True][0],  neue_seite=None, i=0, BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
@@ -1671,7 +1671,7 @@ def ebenen_umformen(nr, teilaufg=['a', 'b', 'c'], form=['normalenform', 'koordin
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch', 'parallel', 'schneiden'][random.choice(range(2))], neue_seite=None, i=0, BE=[]):
+def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], lagebeziehung=['identisch', 'parallel', 'schneiden'][random.choice(range(2))], neue_seite=None, i=0, BE=[]):
     # Lagebeziehungen einer Ebene mit einer Geraden und ggf. Abstandsberechnung.# Mit dem Parameter "koordinatensystem=" kann den SuS ein leeres Koordinatensystem "koordinatensystem=True" erzeugt werden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "g_in_E=" kann die Lagebeziehung der Geraden g zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
@@ -1701,7 +1701,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if g_in_E == 'identisch':
+    if lagebeziehung == 'identisch':
         punkt_e = [ex, ey, ez] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         punkt_f = [fx, fy, fz] = punkt_a + zzahl(1, 7) / 2 * v + zzahl(1, 7) / 2 * u
         while vektor.vergleich(punkt_e, punkt_f) == True:
@@ -1710,7 +1710,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
         lsg = (gzahl(nx_gk * ex + ny_gk * ey + nz_gk * ez) + '~=~'
                + gzahl(np.dot(punkt_a, n_gk))
                + r' \quad \mathrm{w.A. \quad Die~Gerade~liegt~in~der~Ebene. \quad (2BE) } \\')
-    elif g_in_E == 'schneiden':
+    elif lagebeziehung == 'schneiden':
         g_v = n_gk
         while vektor.kollinear(g_v, n_gk) == True:
             punkt_s = punkt_a + zzahl(1, 3) * v + zzahl(1, 3) * u
@@ -1734,7 +1734,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
                + gzahl(ez + ergebnis_r * g_vz) + r' \\ \end{pmatrix} \quad \to \quad S('
                + gzahl(ex + ergebnis_r * g_vx) + r' \vert ' + gzahl(ey + ergebnis_r * g_vy) + r' \vert '
                + gzahl(ez + ergebnis_r * g_vz) + r') \quad (3BE) \\')
-    elif g_in_E == 'parallel' or 'e' in teilaufg:
+    elif lagebeziehung == 'parallel' or 'e' in teilaufg:
         abstand = zzahl(1, 7) / 2 * np.array(n_gk)
         punkt_e = [ex, ey, ez] = vektor.ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(v) + abstand)
         punkt_f = [fx, fy, fz] = vektor.ganzzahl(punkt_a + zzahl(1, 7) / 2 * np.array(u) + abstand)
@@ -1790,7 +1790,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
         # die Lagebeziehung einer Ebene mit einer Geraden bestimmen
         punkte = 3
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if g_in_E == 'schneiden':
+        if lagebeziehung == 'schneiden':
             punkte += 4
         liste_punkte.append(punkte)
 
@@ -1870,7 +1870,7 @@ def ebene_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], g_in_E=['identisch'
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'parallel', 'schneiden'][random.choice(range(3))], neue_seite=None, i=0, BE=[]):
+def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], lagebeziehung=['identisch', 'parallel', 'schneiden'][random.choice(range(3))], neue_seite=None, i=0, BE=[]):
     # Lagebeziehungen zweier Ebenen und ggf. der Abstandsberechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "F_in_E=" kann die Lagebeziehung der Ebene F zur Ebene E festgelegt werden. Sie kann 'identisch', 'parallel' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
@@ -1891,7 +1891,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'paralle
     u = np.array([0, nz_gk, -1 * ny_gk])
     # print('n_gk: ' + str(n_gk)), print('Punkt D: ' + str(punkt_d)), print('Vektor v: ' + str(v)), print('Vektor u: ' + str(u))
 
-    if F_in_E == 'identisch':
+    if lagebeziehung == 'identisch':
         punkte = 4
         punkt_a = [ax, ay, az] = vektor.ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(v))
         punkt_b = [bx, by, bz] = vektor.ganzzahl(punkt_d + zzahl(1, 7) / 2 * np.array(u))
@@ -1903,7 +1903,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'paralle
                + r' \quad \mathrm{w.A. \quad Die~Ebene~F~liegt~in~der~Ebene~E. \quad (2BE) } \\'
                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
-    elif F_in_E == 'schneiden':
+    elif lagebeziehung == 'schneiden':
         punkte = 8
         n = [nx, ny, nz] = vektor.punkt(4)
         punkt_a = [ax, ay, az] = vektor.punkt(3)
@@ -1941,7 +1941,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'paralle
                + gzahl(g_rz) + r' \\' + r' \end{pmatrix} \quad (2BE) \\'
                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
 
-    elif F_in_E == 'parallel' or 'd' in teilaufg:
+    elif lagebeziehung == 'parallel' or 'd' in teilaufg:
         punkte = 4
         abstand = zzahl(1, 7) / 2
         punkt_a = [ax, ay, az] = vektor.ganzzahl(punkt_d + abstand * np.array(n_gk))
@@ -1992,7 +1992,7 @@ def ebene_ebene(nr, teilaufg=['a', 'b', 'c', 'd'], F_in_E=['identisch', 'paralle
     if 'b' in teilaufg:
         # Lagebeziehung bestimmen und ggf. Schnittegrade berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 8 if F_in_E == 'schneiden' else 4
+        punkte = 8 if lagebeziehung == 'schneiden' else 4
         aufgabe.append(beschriftung(teilaufg, i) + f'Bestimmen Sie die Lagebeziehung der Ebenen E und F '
                                                 f'und berechnen Sie ggf. die Schnittgerade. \n\n')
         loesung.append(beschriftung(teilaufg,i, True) + r' ' + gzahl(nx_gk) + r' \cdot (' + gzahl(ax)

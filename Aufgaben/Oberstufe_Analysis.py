@@ -2594,7 +2594,7 @@ def polynome_untersuchen(nr, teilaufg=['a', 'b', 'c', 'd'], grad=2, neue_seite=N
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Komplexe Aufgaben (d.h. zur Differenzial- und Integralrechnung)
-def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, grad=3, wendenormale=True, i=0, BE=[]):
+def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=[False, True][0], grad=3, wendenormale=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine vollständige Kurvendiskussion eines Polynoms (dritten oder vierten Grades) durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
@@ -3182,7 +3182,7 @@ def kurvendiskussion_polynome(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', '
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=None, i=0, BE=[]):
+def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitungen=[False, True][0], i=0, BE=[]):
     # In dieser Aufgaben sollen die SuS eine Kurvendiskussion einer Polynomfunktion (dritten Grades) mit einem Parameter durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe d) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe d) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen mithilfe der Ableitungsregeln die Berechnung der Ableitung erläutern.
@@ -3253,7 +3253,6 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + gzahl(grenzwert_pos) + r'} \\ \lim\limits_{x \to - \infty} '
                        + fkt_str + r'~=~\bm{' + gzahl(grenzwert_neg) + r'} \quad (2BE)')
         i += 1
-
     if 'b' in teilaufg:
         # Die SuS sollen die Funktion auf Symmetrie untersuchen.
 
@@ -3275,7 +3274,6 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         aufgabe.append(beschriftung(teilaufg,i) + f'Überprüfen Sie die Symmetrie der Funktion f. \n\n')
         loesung.append(beschriftung(teilaufg, i, True) + lsg)
         i += 1
-
     if 'c' in teilaufg:
         # Die SuS sollen hier die Schnittpunkte mit den Achsen berechnen. Da alle Nullstellen vom Parameter a abhängen, ist eine Nullstelle gegeben.
 
@@ -3328,7 +3326,6 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + r' \bm{\quad S_y(0 \vert' + vorz_v_aussen(fkt_a0,'a^3', null=True) + r')} \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
-
     if len([element for element in ['d', 'e', 'f', 'g'] if element in teilaufg]) > 0:
         # Je nach gewählten Parameter 'ableitung=' müssen die SuS entweder die ersten drei Ableitungen berechnen bzw. die Berechnung der Ableitung begründen.
 
@@ -3351,7 +3348,8 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
 
         if ableitungen:
             punkte = 4
-            aufgabe.extend(('Gegeben sind die ersten drei Ableitungen der Funktion f.',
+            text = 'Gegeben sind ' if any([element for element in teilaufg if element in ['a', 'b', 'c']]) else 'sowie '
+            aufgabe.extend((text + 'die ersten drei Ableitungen der Funktion f.',
                             r'f^{ \prime }(x) ~=~' + fkt_1_str
                             + r' \hspace{5em} f^{ \prime \prime }(x) ~=~' + fkt_2_str
                             + r' \hspace{5em} f^{ \prime \prime \prime } (x) ~=~' + fkt_3_str,
@@ -3380,7 +3378,6 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                            + r'} \\ \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         liste_punkte.append(punkte)
         i += 1
-
     if 'e' in teilaufg:
         # Die SuS sollen die Extrempunkte und deren Art mithilfe des hinreichenden Kriteriums berechnen.
 
@@ -3452,7 +3449,6 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
                        + gzahl(N(x_2_fkt_2,3)) + r' \quad (1BE)' + lsg_extrema_2
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE} \\')
         i += 1
-
     if 'f' in teilaufg:
         # Die SuS sollen dem Wendepunkt der Funktion berechnen.
 
@@ -3516,7 +3512,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
         xmax_f = int(nst_3_a1 + 1)
         Graph(xmin_f,xmax_f,fkt_a1,name=f'Aufgabe_{nr}{liste_teilaufg[i]}')
         aufgabe.extend(('In der folgenden Abbildung ist ein Graph der Parameterfunktion dargestellt. '
-                        'Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt.', 'Figure',
+                        'Dabei wurde für a ein Wert aus den natürlichen Zahlen gewählt.', 'Grafik',
                         beschriftung(teilaufg,i) + f'Bestimmen Sie aus dem Graphen den zugehörigen Wert von a. '
                         + f'Begründen Sie ihre Aussage. \n\n'))
         loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{Die~zweite~Nullstelle~des'
@@ -3611,7 +3607,7 @@ def kurvendiskussion_polynom_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=None, expfkt=2, verschiebung=True, i=0, BE=[]):
+def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], ableitung=[False, True][0], expfkt=2, verschiebung=True, i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.
@@ -4025,7 +4021,7 @@ def kurvendiskussion_exponentialfkt(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitung=None, i=0, BE=[]):
+def kurvendiskussion_exponentialfkt_parameter(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], ableitung=[False, True][0], i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS eine Kurvendiskussion einer Exponentialfunktion mit einem Parameter durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter 'ableitungen=' kann Teilaufgabe c) festgelegt werden. Standardmäßig ist 'ableitung=None' und die SuS müssen in Teilaufgabe c) die Ableitungen berechnen. Ist 'ableitungen=True' sind die Ableitungen gegeben und die SuS müssen die Zwischenschritte angeben.

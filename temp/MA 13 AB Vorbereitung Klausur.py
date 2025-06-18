@@ -16,7 +16,7 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[geraden_lagebeziehung(1, lagebeziehung=random.choice(['parallel','windschief'])),
-                ebene_ebene(2, F_in_E='parallel')],
+                 ebene_ebene(2, lagebeziehung='parallel')],
                 [ebenenschar_buendel(3),baumdiagramm(4, stufen=3, art='zmZ')],
                 [vierfeldertafel_studie(5)]]
 

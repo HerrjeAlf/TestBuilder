@@ -27,7 +27,7 @@ aufgaben_teil1 = [[geraden_lagebeziehung(1, [random.choice(['a', 'b']), 'c'],
                    [vierfeldertafel_test(4, BE=[1,4,2])]]
 
 # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-aufgaben_teil2 = [[ebene_ebene(1, F_in_E='parallel'),
+aufgaben_teil2 = [[ebene_ebene(1, lagebeziehung='parallel'),
                    ebenenschar_buendel(2)],
                   [baumdiagramm(3, ['e', 'f', 'g'], stufen=3, art='zoZ'),
                    baumdiagramm(4, [ 'j', 'k'], stufen=3, art='zmZ')]]
