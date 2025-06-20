@@ -2225,19 +2225,22 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fal
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
-    # Hier sollen die SuS gegebenen Zahlen in Prozent- und Dezimalschreibweise umwandeln
+    # Hier sollen die SuS gegebenen Zahlen in Prozent-, Bruch- und Dezimalschreibweise umwandeln
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten Bruchtermen erstellt werden.
+    #
+    # a) Umwandeln einfacher Dezimalbrüche in Bruch- und Prozentreibweise
+    # b) Umwandeln einfacher Prozente in Bruch- und Dezimalschreibweise
+    # c) Umwandeln einfacher Dezimalbrüche oder Prozente
+    # d) Umwandeln von Prozentschreibweise in Dezimalschreibweise
+    # e) Umwandeln von Dezimalschreibweise in Prozentschreibweise
+    # f) Umwandeln von Prozentschreibweise oder Dezimalschreibweise
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    # a) Umwandeln einfacher Dezimalbrüche in Bruch- und Prozentreibweise
-    # b) Umwandeln einfacher Prozente in Bruch- und Dezimalschreibweise
-    # c) Umwandeln einfacher Dezimalbrüche oder Prozente
-    # d) Umwandeln einfacher Prozente in Dezimalschreibweise
-    # e) Umwandeln von Dezimalbrüchen in Prozentschreibweise
-    # f) Umwandeln von Prozenten in Dezimalschreibweise
+
 
     liste_bez = [f'{str(nr)}']
 
@@ -2396,6 +2399,62 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
             lsg += r' \hspace{8em} '
         aufgabe.append(text)
         loesung.append(lsg)
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = [len(teilaufg)]
+        liste_punkte = BE
+    else:
+        liste_punkte = [len(teilaufg)]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def darstellung_prozente(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen verschiedene Aufgaben mit dem Prozentfeld bearbeiten
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    #
+    # a) Die Schüler- und Schülerinnen sollen den Anteil in Prozent angeben, die ein Prozentfeld grau eingefärbt ist
+    # b) Die Schüler- und Schülerinnen sollen ein Prozentfeld zu einem gegebenen Anteil in Prozent korrekt einfärben.
+    #
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = [f'{str(nr)}']
+
+    if anzahl != False:
+        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh)
+    anz = Counter(teilaufg)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               'Rechne um.']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    for step in range(anz['a']):
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        rows = 4  # Zeilen
+        cols = 5  # Spalten
+
+        anz = nzahl(2, rows * cols)
+        x_max, y_max_unk = divmod(anz, rows)
+        y_max = y_max_unk / rows
+        create_rectangle(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                 + f') Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
+                        ['Grafik', '200px']))
+        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(anz / (rows * cols) * 100) + r'~ \% \quad (1BE) ')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(1)
+        i += 1
 
     if BE != []:
         if len(BE) > 1:
