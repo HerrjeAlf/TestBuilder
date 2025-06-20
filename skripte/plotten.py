@@ -314,6 +314,46 @@ def flaeche_zeichnen(*wertetabelle, text=False, name='flaeche'):
     plt.close('all')
     plt.clf()
 
+def create_rectangle(rows, cols, x_max=1, y_max=1, name='Menge'):
+    fig, (ax, text_ax) = plt.subplots(1, 2, figsize=(8, 3))
+    fig.patch.set_visible(False)
+    fig.tight_layout()
+    # Hinzufügen eines Textfeldes
+    text_ax.text(0.5, 0.5, 'p = ..............  %', va='center', ha='center', fontsize=24)
+    text_ax.axis('off')
+
+    # Setze die Gitterlinien
+    ax.set_xticks(np.arange(0, cols + 1))
+    ax.set_yticks(np.arange(0, rows + 1))
+    ax.grid(color="black", linestyle='-', linewidth=1)
+
+    # Wertebereich des Koordinatensystems festlegen
+    ax.set_xlim(0, cols)
+    ax.set_ylim(0, rows)
+
+    # Entferne die Achsenbeschriftungen
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+
+    # Hinzufügen von horizontalen Linien
+    for row in range(1, rows):
+        ax.axhline(y=row, color='black', linewidth=1)
+
+    # Hinzufügen von vertikalen Linien
+    for col in range(1, cols):
+        ax.axvline(x=col, color='black', linewidth=1)
+
+    # Ticks nach innen zeigen lassen
+    ax.tick_params(axis='both', which='both', direction='in')
+
+    # Vertikalen Bereich grau färben
+    ax.axvspan(0, x_max, ymin=0, ymax=1, color='gray', alpha=0.5)
+    ax.axvspan(x_max, x_max + 1, ymin=0, ymax=y_max, color='gray', alpha=0.5)
+    # plt.show()
+    plt.savefig('img/temp/' + name, dpi=200, bbox_inches='tight', pad_inches=0)
+    plt.close('all')
+    plt.clf()
+
 # Analysis
 def graph_xyfix(*funktionen, bezn=False, name='Graph'):
     # fig = plt.Figure()
