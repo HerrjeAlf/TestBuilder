@@ -2411,7 +2411,7 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def darstellung_prozente(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
+def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen verschiedene Aufgaben mit dem Prozentfeld bearbeiten
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     #
@@ -2426,35 +2426,55 @@ def darstellung_prozente(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fa
     liste_bez = [f'{str(nr)}']
 
     if anzahl != False:
-        anzahl = 26 if anzahl > 26 or type(anzahl) != int else anzahl
+        anzahl = 12 if anzahl > 12 or type(anzahl) != int else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
     if wdh != False:
-        teilaufg = repeat(teilaufg, wdh)
-    anz = Counter(teilaufg)
+        teilaufg = repeat(teilaufg, wdh) if wdh < 7 else repeat(teilaufg, wdh)
+    anz_teilaufg = Counter(teilaufg)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
-               'Rechne um.']
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    if 'a' in teilaufg:
+        # Die SuS sollen den grau eingefärbten Anteil eines Prozentfeldes als Bruch und in Prozentschreibweise notieren
+        aufgabe.append('Gib den Anteil der grau eingefärbten Felder in Prozent an.')
+        lsg = ''
+        for step in range(anz_teilaufg['a']):
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            ausw = random.choice([[5,1], [5,2], [10,1], [10,2], [10,5]])
+            cols = ausw[0] # Spalten
+            rows = ausw[1] # Zeilen
+            anz = nzahl(min([rows,cols]), rows * cols - 1)
+            x_max, y_max_unk = divmod(anz, rows)
+            y_max = y_max_unk / rows
+            prozentfeld(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            aufgabe.extend((['Grafik', '200px', None], NoEscape(beschriftung(liste_teilaufg,i)
+                            + r' p = $ \frac{ \hspace{3em} }{ \hspace{3em} } $ = .......... \% '), ' \n\n'))
+            lsg += str(liste_teilaufg[i]) + r') \quad ' + gzahl(int(anz / (rows * cols) * 100)) + r'~ \% \quad '
+            i += 1
+        loesung.append(lsg)
 
-    for step in range(anz['a']):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-        rows = 4  # Zeilen
-        cols = 5  # Spalten
+    if 'b' in teilaufg:
+        # Die SuS sollen zu einem gegebenen Prozentsatz ein Prozentfeld grau markieren
+        aufgabe.append('Gib den Anteil der grau eingefärbten Felder in Prozent an. \n\n')
+        for step in range(anz_teilaufg['b']):
+            grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
+            grafiken_loesung.append(f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
+            ausw = random.choice([[5,1], [5,2], [10,1], [10,2], [10,5]])
+            cols = ausw[0] # Spalten
+            rows = ausw[1] # Zeilen
+            anz = nzahl(min([rows,cols]), rows * cols - 1)
+            x_max, y_max_unk = divmod(anz, rows)
+            y_max = y_max_unk / rows
+            prozentfeld(rows, cols, x_max, y_max, name=f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})',
+                        text='.............................' + beschriftung(liste_teilaufg,i))
+            prozentfeld(rows, cols, 0, 0, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-        anz = nzahl(2, rows * cols)
-        x_max, y_max_unk = divmod(anz, rows)
-        y_max = y_max_unk / rows
-        create_rectangle(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-        aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                 + f') Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
-                        ['Grafik', '200px']))
-        loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(anz / (rows * cols) * 100) + r'~ \% \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+            aufgabe.extend((NoEscape(beschriftung(liste_teilaufg,i) + 'p = ' + gzahl(int(anz / (rows * cols) * 100)))
+                            + ' % ', ['Grafik', '200px', None]))
+            loesung.append(['Grafik', '200px'])
+            i += 1
 
     if BE != []:
         if len(BE) > 1:
