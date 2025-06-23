@@ -2227,14 +2227,6 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fal
 def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen in Prozent-, Bruch- und Dezimalschreibweise umwandeln
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    #
-    # a) Umwandeln einfacher Dezimalbrüche in Bruch- und Prozentreibweise
-    # b) Umwandeln einfacher Prozente in Bruch- und Dezimalschreibweise
-    # c) Umwandeln einfacher Dezimalbrüche oder Prozente
-    # d) Umwandeln von Prozentschreibweise in Dezimalschreibweise
-    # e) Umwandeln von Dezimalschreibweise in Prozentschreibweise
-    # f) Umwandeln von Prozentschreibweise oder Dezimalschreibweise
-    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -2262,9 +2254,9 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         aufgabe.append('Notiere in Bruch- und Prozentschreibweise.')
         lsg = text = ''
         for step in range(anz_aufg):
-            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100)
+            text += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step] / 100)
                      + r' ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} \% ')
-            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100) + r' ~=~ \frac{ '
+            lsg += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step] / 100) + r' ~=~ \frac{ '
                     + gzahl(zahlen[step]) + ' }{100} ~=~ ' + gzahl(zahlen[step]) + r' \% ')
             text += r' \hspace{5em} ' if step % 2 == 0 else r' \\\\ '
             lsg += r' \hspace{5em} ' if step % 2 == 0 else r' \\ '
@@ -2281,9 +2273,9 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         aufgabe.append('Notiere als Bruch und Dezimalbruch.')
         lsg = text = ''
         for step in range(anz_aufg):
-            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step])
+            text += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step])
                      + r' \% ~=~ \frac{ \hspace{2em} }{100} ~=~ \hspace{2em} ')
-            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step]) + r' \% ~=~ \frac{ '
+            lsg += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step]) + r' \% ~=~ \frac{ '
                     + gzahl(zahlen[step]) + ' }{100} ~=~ ' + gzahl(zahlen[step] / 100))
             text += r' \hspace{5em} ' if step % 2 == 0 else r' \\\\ '
             lsg += r' \hspace{5em} ' if step % 2 == 0 else r' \\ '
@@ -2315,8 +2307,8 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
                            + gzahl(zahlen[step + 1] / 100)]))
         random.shuffle(liste)
         for step, element in enumerate(liste):
-            liste[step] = [beschriftung(liste_teilaufg, i, True) + element[0],
-                           beschriftung(liste_teilaufg, i, True) + element[1]]
+            liste[step] = [beschriftung(len(teilaufg), i, True) + element[0],
+                           beschriftung(len(teilaufg), i, True) + element[1]]
             i += 1
         text = lsg = ''
         for step, element in enumerate(liste):
@@ -2336,9 +2328,9 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         aufgabe.append('Notiere in Prozentschreibweise.')
         lsg = text = ''
         for step in range(anz_aufg):
-            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100)
+            text += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step] / 100)
                      + r' ~=~ \hspace{2em} \% ')
-            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step] / 100) + r' ~=~ '
+            lsg += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step] / 100) + r' ~=~ '
                     + gzahl(zahlen[step]) + r' \% ')
             text += r' \hspace{5em} ' if (step + 1) % 3 != 0 else r' \\\\ '
             lsg += r' \hspace{5em} ' if (step + 1) % 3 != 0 else r' \\ '
@@ -2355,9 +2347,9 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
         aufgabe.append('Notiere als Dezimalbruch.')
         lsg = text = ''
         for step in range(anz_aufg):
-            text += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step])
+            text += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step])
                      + r' \% ~=~ \hspace{2em} ')
-            lsg += (beschriftung(liste_teilaufg, i, True) + gzahl(zahlen[step]) + r' \% ~=~ '
+            lsg += (beschriftung(len(teilaufg), i, True) + gzahl(zahlen[step]) + r' \% ~=~ '
                     + gzahl(zahlen[step] / 100) + r' \% ')
             text += r' \hspace{5em} ' if (step + 1) % 3 != 0 else r' \\\\ '
             lsg += r' \hspace{5em} ' if (step + 1)% 3 != 0 else r' \\ '
@@ -2386,8 +2378,8 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
                            gzahl(zahlen[step + 1]) + r' \% ~=~ ' + gzahl(zahlen[step + 1] / 100)]))
         random.shuffle(liste)
         for step, element in enumerate(liste):
-            liste[step] = [beschriftung(liste_teilaufg, i, True) + element[0],
-                           beschriftung(liste_teilaufg, i, True) + element[1]]
+            liste[step] = [beschriftung(len(teilaufg), i, True) + element[0],
+                           beschriftung(len(teilaufg), i, True) + element[1]]
             i += 1
         text = lsg = ''
         for step, element in enumerate(liste):
@@ -2414,10 +2406,6 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
 def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen verschiedene Aufgaben mit dem Prozentfeld bearbeiten
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
-    #
-    # a) Die Schüler- und Schülerinnen sollen den Anteil in Prozent angeben, die ein Prozentfeld grau eingefärbt ist
-    # b) Die Schüler- und Schülerinnen sollen ein Prozentfeld zu einem gegebenen Anteil in Prozent korrekt einfärben.
-    #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -2449,7 +2437,7 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
             x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             prozentfeld(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-            aufgabe.extend((['Grafik', '200px', None], NoEscape(beschriftung(liste_teilaufg,i)
+            aufgabe.extend((['Grafik', '200px', None], NoEscape(beschriftung(len(teilaufg),i)
                             + r' p = $ \frac{ \hspace{3em} }{ \hspace{3em} } $ = .......... \% '), ' \n\n'))
             lsg += str(liste_teilaufg[i]) + r') \quad ' + gzahl(int(anz / (rows * cols) * 100)) + r'~ \% \quad '
             i += 1
@@ -2468,10 +2456,10 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
             x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             prozentfeld(rows, cols, x_max, y_max, name=f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})',
-                        text='.............................' + beschriftung(liste_teilaufg,i))
+                        text='.............................' + beschriftung(len(teilaufg),i))
             prozentfeld(rows, cols, 0, 0, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-            aufgabe.extend((NoEscape(beschriftung(liste_teilaufg,i) + 'p = ' + gzahl(int(anz / (rows * cols) * 100)))
+            aufgabe.extend((NoEscape(beschriftung(len(teilaufg),i) + 'p = ' + gzahl(int(anz / (rows * cols) * 100)))
                             + ' % ', ['Grafik', '200px', None]))
             loesung.append(['Grafik', '200px'])
             i += 1
@@ -2484,5 +2472,56 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
         liste_punkte = BE
     else:
         liste_punkte = [len(teilaufg)]
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
+def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[]):
+    # Hier sollen die Schüler und Schülerinnen verschiedene Aufgaben zur Prozentrechnung bearbeiten
+    # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
+    # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_bez = []
+    liste_punkte = []
+    if anzahl != False:
+        anzahl = 27 if anzahl > 27 or type(anzahl) != int else anzahl
+        teilaufg = random_selection(teilaufg, anzahl, True)
+    if wdh != False:
+        teilaufg = repeat(teilaufg, wdh) if wdh < 7 else repeat(teilaufg, wdh)
+    anz_teilaufg = Counter(teilaufg)
+
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+    if 'a' in teilaufg:
+        # Die SuS sollen eine einfache Aufgabe zum Berechnen des Prozentwertes bearbeiten
+        anz = anz_teilaufg['a']
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[])})')
+        liste_punkte.append(anz)
+        grundwerte = random_selection([element * exp for element in range(1, 19) for exp in range(1,4)],
+                                      anzahl=anz, wdh=True)
+        einheiten = random_selection(['Euro', 'Kilogramm', 'Liter', 'Meter', 'US-Dollar'], anzahl=anz)
+        prozentwerte = random_selection([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
+                                        anzahl=anz, wdh=True)
+        for step in range(anz_teilaufg['a']):
+            pw = prozentwerte[step]
+            gw = grundwerte[step]
+            eh = einheiten[step]
+            aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechne {gzahl(pw)}% von {gzahl(gw)}{eh}. \n\n')
+            loesung.append(beschriftung(len(teilaufg), i, True) + ' W ~=~ ' + gzahl(pw/100) + r' \cdot '
+                           + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh)
+            i += 1
+
+    if BE != []:
+        if len(BE) > 1:
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+            liste_punkte = []
+        liste_punkte = BE
+    else:
+        liste_punkte = []
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]

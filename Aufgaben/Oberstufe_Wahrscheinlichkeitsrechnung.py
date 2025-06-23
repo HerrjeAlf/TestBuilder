@@ -228,18 +228,18 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             Baumdiagramm_zmZ(stufen, Rational(anzahl_1,(anzahl_1+anzahl_2)),
                              f'Loesung_{nr}{liste_teilaufg[i]}',
                              bz=farben_kuerzel_1, bz2=farben_kuerzel_2)
-        aufgabe.append(beschriftung(teilaufg,i) + 'Zeichnen Sie das Baumdiagramm für diesen Versuch.')
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Zeichnen Sie das Baumdiagramm für diesen Versuch.')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
         else:
             aufgabe.append(' \n\n')
         if anzahl_ziehen[0] == 2:
-            loesung.extend((beschriftung(teilaufg,i) + 'Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
+            loesung.extend((beschriftung(len(teilaufg),i) + 'Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '2 Stufen: 2P, Wkt an den Zweige: 2P, Beschriftung an den Knoten: 1P', 'Figure'))
             punkte = 5
         else:
-            loesung.extend((beschriftung(teilaufg,i) + 'Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
+            loesung.extend((beschriftung(len(teilaufg),i) + 'Baumdiagramm wie in der folgenden Abbildung dargestellt. \n\n',
                             '3 Stufen: 2P, Wkt an den Zweige: 3P, Beschriftung an den Knoten: 1P', 'Figure'))
             punkte = 6
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -250,18 +250,18 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         # Ergebnismengen angeben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         if pruef_kl10 == True:
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i) + f'Markieren Sie im Baumdiagramm alle '
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + f'Markieren Sie im Baumdiagramm alle '
                                      + f'Pfade vom Ereignis:'),'E_1: ' + ereignis_1))
-            loesung.append(beschriftung(teilaufg, i, True) + str(lsg_1) + r' ~~ (2BE) ')
+            loesung.append(beschriftung(len(teilaufg), i, True) + str(lsg_1) + r' ~~ (2BE) ')
             punkte = 2
         else:
-            aufgabe.extend((beschriftung(teilaufg,i) + f'Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
+            aufgabe.extend((beschriftung(len(teilaufg),i) + f'Geben Sie die Ergebnismenge der folgenden Ereignisse an.',
                             r' E_1: ' + ereignis_1 + r' \\ E_2: ' + ereignis_2 + r' \\ '
                             + vereinigung + r' \quad \mathrm{und} \quad ' + schnittmenge))
             punkte = 6
             # Tabelle mit dem Text
             table1 = Tabular('p{0.2cm} p{3cm} p{7cm} p{2cm}')
-            table1.add_row(beschriftung(teilaufg,i), MultiColumn(2, align='c', data='Die Ergebnismengen'),
+            table1.add_row(beschriftung(len(teilaufg),i), MultiColumn(2, align='c', data='Die Ergebnismengen'),
                            'Punkte')
             table1.add_row(MultiColumn(2, align='r', data='E1: '), str(lsg_1), '2P')
             table1.add_row(MultiColumn(2, align='r', data='E2: '), str(lsg_2), '2P')
@@ -282,29 +282,29 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
         if pruef_kl10:
             if 'b' not in teilaufg:
-                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(teilaufg,i)
+                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg),i)
                                          + f'Berechnen Sie die Wahrscheinlichkeit für das Ereignis '),
                                          + r' E_1: ' + ereignis_1))
             else:
-                aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(teilaufg,i)
+                aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg),i)
                                         + f'Berechnen Sie die Wahrscheinlichkeit für das Ereignis $ E_1 $.'))
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
-            loesung.append(r' ^{ \star } ' + beschriftung(teilaufg, i, True)
+            loesung.append(r' ^{ \star } ' + beschriftung(len(teilaufg), i, True)
                            + r' \mathrm{Berechnung~der~Wahrscheinlichkeit} ' + r' \quad P(E_1) ~=~' + wkt1_str)
             punkte = pkt1
         else:
             if 'b' not in teilaufg:
-                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(teilaufg,i)
+                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg),i)
                                + f'Berechnen Sie die Wahrscheinlichkeit für die folgenden Ereignisse.'),
                                 r' E_1: ' + ereignis_1 + r', \quad E_2: ' + ereignis_2
                                 + r',~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
             else:
-                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(teilaufg,i)
+                aufgabe.extend((NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg),i)
                                          + f'Berechnen Sie die Wahrscheinlichkeit für '
                                          + f'die folgenden Ereignisse.'),
                                 r' E_1,~E_2,~E_1 \cap E_2,~ \mathrm{und} ~E1 \cup E2'))
-            loesung.extend((beschriftung(teilaufg,i, True) + 'Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
+            loesung.extend((beschriftung(len(teilaufg),i, True) + 'Berechnung der Wahrscheinlichkeiten der angegebenen Ereignisse',
                             r' \quad P(E_1) ~=~' + wkt1_str + r' \quad (' + gzahl(pkt1) + r'BE) \qquad P(E_2) ~=~'
                             + wkt2_str + r' \quad (' + gzahl(pkt2) + r'BE) \\\\ P(E_1 \cap E_2) ~=~' + wkt5_str
                             + r' \quad (' + gzahl(pkt5) + r'BE) \qquad P( E1 \cup E2 ) ~=~' + wkt4_str
@@ -325,13 +325,13 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             lsg = (r' \neq P(E_1) ~=~' + gzahl(N(wkt1, 3) * 100) + r' \% \quad (3BE) \\'
                    + r' \mathrm{E_1~und~E_2~sind~stochastisch~abhängig} \quad (1BE)')
         if 'b' in teilaufg or 'c' in teilaufg:
-            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                     + f'Überprüfen Sie die stochastische Unabhängigkeit von $ E_1 $ und $ E_2 $.'))
         else:
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i) + f'Überprüfen Sie die stochastische '
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + f'Überprüfen Sie die stochastische '
                            + f'Unabhängigkeit von $ E_1 $ und $ E_2 $, mit: '), ' E_1: ' + ereignis_1 + r', \quad E_2: '
                            + ereignis_2))
-        loesung.append(NoEscape(beschriftung(teilaufg, i, True)
+        loesung.append(NoEscape(beschriftung(len(teilaufg), i, True)
                                 + r' \quad P_{E_2} (E_1) ~=~ \frac{P(E_1 \cap E_2)}{P(E_2)}~=~ \frac{'
                                 + gzahl(N(wkt5,3)*100) + r' \% }{' + gzahl(N(wkt2,3)*100) + r' \%} ~=~'
                                 + gzahl(N(wkt5/wkt2,3)*100) + r' \% ' + lsg))
@@ -354,7 +354,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         farbwahl, kuerzelwahl = auswahl()
         aufgabe.extend((NoEscape(r' \noindent ' + f'Die Zufallsgröße X ist die Anzahl der gezogenen Kugeln der '
                                  + f'Farbe {farbwahl}.'),' \n\n',
-                        beschriftung(teilaufg,i) + f'Geben Sie die Wahrscheinlichkeitsverteilung von X an '
+                        beschriftung(len(teilaufg),i) + f'Geben Sie die Wahrscheinlichkeitsverteilung von X an '
                         + f'und zeichnen Sie das zugehörige Histogramm.'))
         # Tabelle der Wahrscheinlichkeitsverteilung:
         spalten = 'c|c|'
@@ -387,7 +387,7 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         table1.add_hline(2)
         table1.add_row(liste_wkt)
         table1.add_hline(2)
-        loesung.extend((beschriftung(teilaufg,i, True) + wkt_berechn + r' \\', table1,
+        loesung.extend((beschriftung(len(teilaufg),i, True) + wkt_berechn + r' \\', table1,
                         r' \mathrm{Tabelle~(' + gzahl(pkt) + r'BE) }'))
         punkte = 2*pkt + 1
         # erstellen vom Histogramm
@@ -416,9 +416,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
             else:
                 ew_wert_str = ew_wert_str + vorz_str(x) + r' \cdot ' + gzahl(y)
         ew_wert = sum([x*y for x, y in zip(x_werte, y_werte)])
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i) + 'Berechnen Sie den Erwartungswert der '
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + 'Berechnen Sie den Erwartungswert der '
                                 + 'Zufallsgröße X.'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' E(X)~=~' + ew_wert_str + r' \\ E(X) ~=~'
                        + gzahl(N(ew_wert,3)) + r' \quad (' + str(punkte) + 'BE)')
         if pruef_kl10:
             aufgabe.append(['Bild', '430px'])
@@ -444,9 +444,9 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
                 var_wert_str = (var_wert_str + r'~+~ (' + gzahl(x) + '-' + gzahl(N(ew_wert, 3))
                                 + r')^2 \cdot ' + gzahl(y))
             var_wert = var_wert + (x - ew_wert)**2*y
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                 + 'Berechnen Sie die Varianz und die Standardabweichung der Zufallsgröße X.'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{V(X)~=~ \sum_{i=1}^{' + latex(stufen)
                        + r'} (x_i ~-~ E(x))^2 \cdot P(X ~=~ x_i) \quad und \quad \sigma (X) ~=~ \sqrt{V(X)}} \\'
                        + r' V(X)~=~' + var_wert_str + '~=~' + latex(N(var_wert,3)) + r' \quad (2BE) \\'
                        + r' \sigma (X) ~=~ \sqrt{' + gzahl((N(var_wert,3))) + '} ~=~ ' + gzahl(N(sqrt(var_wert),3))
@@ -470,10 +470,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     if 'h' in teilaufg:
         # mit Bernoullikoeffizient die Anzahl möglicher Ergebnisse berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((NoEscape(r' \noindent ' +beschriftung(teilaufg,i)
+        aufgabe.extend((NoEscape(r' \noindent ' +beschriftung(len(teilaufg),i)
                                  + f'Berechnen Sie die Anzahl der möglichen Ergebnisse, wenn {farbe_1}'
                                 + f' genau {gzahl(anzahl_k)} mal gezogen wird. '), '\n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' N ~=~   \begin{pmatrix} ' + r' n  \\' + r' k \\ '
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' N ~=~   \begin{pmatrix} ' + r' n  \\' + r' k \\ '
                        + r' \end{pmatrix} ~=~ \begin{pmatrix}' + gzahl(anzahl_n) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} ~=~ '
                        + gzahl(N(binomial(anzahl_n,anzahl_k),3)) + r' \quad (2BE)')
@@ -485,10 +485,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         # Berechnung der Wahrscheinlichkeit mit Lottomodell beim Ziehen ohne Zurücklegen
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                 + f'Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1}'
                                 + f' genau {gzahl(anzahl_k)} mal gezogen wird.'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{P(' + gzahl(anzahl_k) + '~' + farbe_1
                        + r'e)} ~=~ \frac{ \begin{pmatrix}' + gzahl(anzahl_1) + r' \\'
                        + gzahl(anzahl_k) + r' \\ ' + r' \end{pmatrix} \cdot \begin{pmatrix}' + gzahl(anzahl_2) + r' \\'
                        + gzahl(anzahl_n - anzahl_k) + r' \\ ' + r' \end{pmatrix} } { \begin{pmatrix}'
@@ -515,10 +515,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                 + f'Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
                                 + f'genau {gzahl(anzahl_k)} mal gezogen wird. '))
-        loesung.append(beschriftung(teilaufg,i, True) + r' P(X=' + gzahl(anzahl_k) + ') ~=~'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P(X=' + gzahl(anzahl_k) + ') ~=~'
                        + r' \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + gzahl(anzahl_k) + r' \\'
                        + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{' + gzahl(anzahl_k) + r'} \cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n-anzahl_k) + '} ~=~ '
@@ -539,10 +539,10 @@ def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         wkt = Rational(anzahl_1,anzahl_1 + anzahl_2)
         anz = anzahl_k - nzahl(2,5) if anzahl_k > 5 else anzahl_k - 1
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                 + f'Berechnen Sie die Wahrscheinlichkeit, dass {farbe_1} '
                                 + f'bis zu {gzahl(anz)} mal gezogen wird. '))
-        loesung.append(beschriftung(teilaufg,i, True) + r' P(X \leq ' + gzahl(anz) + ') ~=~'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P(X \leq ' + gzahl(anz) + ') ~=~'
                        + r' \sum_{i=0}^{' + gzahl(anz) + r'} \begin{pmatrix} ' + gzahl(anzahl_n) + r' \\' + 'i'
                        + r' \\' + r' \end{pmatrix} \cdot \left(' + gzahl(wkt) + r' \right)^{ i }\cdot \left( '
                        + gzahl(1-wkt) + r' \right) ^{' + gzahl(anzahl_n) + ' - i } ~=~ '
@@ -670,15 +670,15 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
         if vierfeldertafel == True:
             punkte = 3
             aufgabe.extend((Tabelle(A=A, P=P, P_H=P_H, H=H),' \n\n\n',
-                            beschriftung(teilaufg,i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
-            loesung.extend((beschriftung(teilaufg,i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
+                            beschriftung(len(teilaufg),i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
+            loesung.extend((beschriftung(len(teilaufg),i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
                             Tabelle(A=A, M=M, P=P, M_H=M_H, P_H=P_H, H=H, M_nH=M_nH, P_nH=P_nH, nH=nH), ' \n\n'))
             liste_punkte.append(punkte)
         else:
             punkte = 6
-            aufgabe.extend((Tabelle(),' \n\n\n', beschriftung(teilaufg,i) + f'Stellen Sie den oberen Sachverhalt '
+            aufgabe.extend((Tabelle(),' \n\n\n', beschriftung(len(teilaufg),i) + f'Stellen Sie den oberen Sachverhalt '
                             + f'mithilfe der Vierfeldertafel dar. \n\n'))
-            loesung.extend((beschriftung(teilaufg,i, True) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
+            loesung.extend((beschriftung(len(teilaufg),i, True) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
                             Tabelle(A=A, M=M, P=P, M_H=M_H, P_H=P_H, H=H, M_nH=M_nH, P_nH=P_nH, nH=nH), ' \n\n'))
             liste_punkte.append(punkte)
         i += 1
@@ -691,9 +691,9 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
         aufgabe.extend(('Zum Schluss der Studie werden die Heilungschancen beider Gruppen verglichen. '
                         'D.h. die Personen, die ein Medikament erhalten haben mit denjenigen, '
                         'die nur das Placebo erhalten haben. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie die Heilungschancen beider Gruppen '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie die Heilungschancen beider Gruppen '
                         + 'und vergleichen Sie diese. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cap H \vert }'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{P_{M}(H) ~=~ \frac{ \vert M \cap H \vert }'
                        + r'{ \vert M \vert } ~=~ \frac{' + gzahl(M_H) + '}{' + gzahl(M) + '} ~=~ '
                        + gzahl(Rational(M_H,M)) + '~=~' + gzahl(Rational(M_H*100,M))
                        + r' \%  \quad (2BE)  \quad und \quad P_{P}(H) = \frac{ \vert P \cap H \vert }'
@@ -713,9 +713,9 @@ def vierfeldertafel_studie(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i
 
         aufgabe.extend(('Ein Patient wurde geheilt und weiß nicht, '
                         + 'ob er das Placebo oder das Medikament erhalten hat. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
                         + 'dieser Patient ein Placebo erhalten hat. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{P_{H}(P) = \frac{' + gzahl(P_H) + '}{'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{P_{H}(P) = \frac{' + gzahl(P_H) + '}{'
                        + gzahl(H) + '} ~=~ ' + gzahl(Rational(P_H,H)) + '~=~' + gzahl(N(P_H*100/H,2))
                        + r' \% \quad } \\ \mathrm{insgesamt~' + str(punkte) + r'~Punkte}')
         liste_punkte.append(punkte)
@@ -783,18 +783,18 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
             punkte = 3
             if auswahl == 1:
                 aufgabe.extend((Tabelle(A=A, p=p, G_p=G_p, G=G),' \n\n\n',
-                            beschriftung(teilaufg,i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
+                            beschriftung(len(teilaufg),i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
             else:
                 aufgabe.extend((Tabelle(A=A, n=n, K_n=K_n, G=G), ' \n\n\n',
-                                beschriftung(teilaufg,i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
-            loesung.extend((beschriftung(teilaufg,i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
+                                beschriftung(len(teilaufg),i) + f'Vervollständigen Sie die obere Vierfeldertafel. \n\n'))
+            loesung.extend((beschriftung(len(teilaufg),i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
                             Tabelle(A=A, p=p, n=n, K_p=K_p, G_p=G_p, K=K, K_n=K_n, G_n=G_n, G=G), ' \n\n'))
             liste_punkte.append(punkte)
         else:
             punkte = 6
-            aufgabe.extend((Tabelle(),' \n\n\n', beschriftung(teilaufg,i) + f'Stellen Sie den oberen Sachverhalt '
+            aufgabe.extend((Tabelle(),' \n\n\n', beschriftung(len(teilaufg),i) + f'Stellen Sie den oberen Sachverhalt '
                             + f'mithilfe der Vierfeldertafel dar. \n\n'))
-            loesung.extend((beschriftung(teilaufg,i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
+            loesung.extend((beschriftung(len(teilaufg),i) + f'Tabelle wie unten ergibt {punkte} P. \n\n',
                             Tabelle(A=A, p=p, n=n, K_p=K_p, G_p=G_p, K=K, K_n=K_n, G_n=G_n, G=G), ' \n\n'))
             liste_punkte.append(punkte)
         i += 1
@@ -807,9 +807,9 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
         aufgabe.extend(('Um die Zuverlässigkeit des Tests zu bewerten, ist es erforderlich, am Ende der Studie die '
                         'Wahrscheinlichkeit zu bestimmen, mit welcher eine erkrankte Person positiv (Sensitivität) und '
                         'eine gesunde Person negativ (Spezifität) getestet wird. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie die Sensitivität und Spezifität des Tests und '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie die Sensitivität und Spezifität des Tests und '
                                                  'beurteilen Sie dessen Zuverlässigkeit. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{P_{K}(p) ~=~ \frac{ \vert K \cap p \vert }'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{P_{K}(p) ~=~ \frac{ \vert K \cap p \vert }'
                        + r'{ \vert K \vert } ~=~ \frac{' + gzahl(K_p) + '}{' + gzahl(K) + '} ~=~ '
                        + gzahl(Rational(K_p,K)) + '~=~' + gzahl(N(K_p*100/K,3))
                        + r' \%  \quad (2BE)  \quad und \quad P_{G}(n) = \frac{ \vert G \cap n \vert }'
@@ -830,16 +830,16 @@ def vierfeldertafel_test(nr, teilaufg=['a', 'b', 'c'], vierfeldertafel=True, i=0
         punkte = 3
         if auswahl == 1: # krank unter der Bed. negativer Test
             aufgabe.extend(('Eine Person hat ein negatives Testergebnis und befürchtet aber krank zu sein. \n\n',
-                            beschriftung(teilaufg,i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
+                            beschriftung(len(teilaufg),i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
                             + 'eine Person krank ist, obwohl der Test negativ war. \n\n'))
-            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{ P_{n}(K) = \frac{' + gzahl(K_n) + '}{'
+            loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{ P_{n}(K) = \frac{' + gzahl(K_n) + '}{'
                            + gzahl(n) + '} }~=~ ' + gzahl(Rational(K_n,n)) + '~=~' + gzahl(N(K_n*100/n,3))
                            + r' \% \quad (3BE) ')
         else: # gesund unter der Bed. postiver Test
             aufgabe.extend(('Eine Person hat ein positives Testergebnis und hofft aber trotzdem gesund zu sein. \n\n',
-                            beschriftung(teilaufg,i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
+                            beschriftung(len(teilaufg),i) + 'Berechnen Sie die Wahrscheinlichkeit, dass '
                             + 'eine Person gesund ist, obwohl der Test positiv war. \n\n'))
-            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{P_{p}(G) = \frac{' + gzahl(G_p) + '}{'
+            loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{P_{p}(G) = \frac{' + gzahl(G_p) + '}{'
                            + gzahl(p) + '}} ~=~ ' + gzahl(Rational(G_p,p)) + '~=~' + gzahl(N(G_p*100/p,3))
                            + r' \% \quad (3BE) ')
         liste_punkte.append(punkte)
@@ -909,9 +909,9 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], i=0, BE=[]):
         aufgabe.extend((f'Es wird ein Passwort aus {auswahl_text} mit {gzahl(laenge)} Stellen erstellt, '
                         f'wobei sich die Zeichen {wiederholung} wiederholen dürfen. \n'
                         'Hinweis: Zahlen haben 10 Zeichen, Buchstaben 26 Zeichen und Sonderzeichen 33 Zeichen \n\n',
-                        beschriftung(teilaufg,i) + 'Berechne die Anzahl der möglichen Kombinationen für ein '
+                        beschriftung(len(teilaufg),i) + 'Berechne die Anzahl der möglichen Kombinationen für ein '
                                                  'Passwort. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' N= ' + lsg + r' \quad (2BE)')
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' N= ' + lsg + r' \quad (2BE)')
         liste_punkte.append(punkte)
         i += 1
 
@@ -921,9 +921,9 @@ def sicheres_passwort(nr, teilaufg=['a', 'b'], i=0, BE=[]):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         zeit = N(ergebnis/grafikkarten[auswahl_g][2],3)
-        aufgabe.append(beschriftung(teilaufg,i) + f'Wie lange benötigt die {grafikkarten[auswahl_g][0]} '
+        aufgabe.append(beschriftung(len(teilaufg),i) + f'Wie lange benötigt die {grafikkarten[auswahl_g][0]} '
                        + ' zum Ausprobieren aller Kombinationen. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' t ~=~ \frac{' + latex(N(ergebnis,3)) + r'}{ '
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' t ~=~ \frac{' + latex(N(ergebnis,3)) + r'}{ '
                        + latex(N(grafikkarten[auswahl_g][2],3)) + r' \frac{1}{s} } ~=~'
                        + latex(zeit) + r's \quad (2BE)')
         liste_punkte.append(punkte)
@@ -1006,9 +1006,9 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
         punkte = 4
         mu = n*p
         sigma = N(sqrt(n*p*(1-p)),3)
-        aufgabe.extend((NoEscape(beschriftung(teilaufg,i) + r'Berechnen Sie den Erwartungswert $ \mu $ und '
+        aufgabe.extend((NoEscape(beschriftung(len(teilaufg),i) + r'Berechnen Sie den Erwartungswert $ \mu $ und '
                                 + r'die Standardabweichung $ \sigma $ von X.'),' \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mu ~=~ n \cdot p ~=~' + gzahl(n) + r' \cdot '
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mu ~=~ n \cdot p ~=~' + gzahl(n) + r' \cdot '
                        + gzahl(p) + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad \sigma ~=~ \sqrt{n \cdot p \cdot '
                        + r' (1-p) } ~=~ \sqrt{' + gzahl(n) + r' \cdot ' + gzahl(p) + r' \cdot (1- '+ gzahl(p) + ')} ~=~'
                        + gzahl(sigma) + r' \quad (4BE)')
@@ -1021,13 +1021,13 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             # die SuS sollen beurteilen, ob die Binomialverteilung die Laplace-Bedingung erfüllt´(diese Teilaufgabe wird nur angezeigt, wenn auch Teilaufgabe a ausgewählt wurde)
             liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             punkte = 1
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                      + f'Geben Sie an, ob die Laplace-Bedingung erfüllt ist.'), ' \n\n'))
             text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                     + r' > 3, \quad ist~die~Laplace-Bedingung~erfüllt.} \quad (1BE)') \
                 if sigma > 3 else (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                                    + r' \leq 3, \quad ist~die~Laplace-Bedingung~nicht~erfüllt.} \quad (1BE)')
-            loesung.append(beschriftung(teilaufg,i, True) + r' ' + text)
+            loesung.append(beschriftung(len(teilaufg),i, True) + r' ' + text)
 
             aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
@@ -1048,10 +1048,10 @@ def binomialverteilung(nr, teilaufg=['a', 'b', 'c'], laplace=True, neue_seite=No
             aufgabe.extend((NoEscape(r' \noindent Berechnen Sie das symmetrisch zum Erwartungswert $ \mu $'
                                      r' der Zufallsgröße X liegendes ' + gzahl(ausw_sigm)
                                      + r'$ \sigma $ Intervall I.'), ' \n\n',
-                            NoEscape(r' \noindent ' + beschriftung(teilaufg,i)
+                            NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                      + f'Berechnen Sie die Grenzen und die Wahrscheinlichkeit des Intervalls.'),
                             ' \n\n'))
-            loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{untere~Grenze: ~~ \mu }'
+            loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{untere~Grenze: ~~ \mu }'
                            + vorz_v_innen(-1*ausw_sigm,r' \sigma ') + '~=~' + gzahl(mu)
                            + vorz_str(N(-1*ausw_sigm*sigma,3)) + '~=~' + gzahl(untere_grenze)
                            + r' \quad \to \quad ' + gzahl(untere_grenze_ger) + r' \quad (2BE) \\'
@@ -1110,9 +1110,9 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         # Hier sollen die SuS das Prognoseintervall der keimenden Samen in der absoluten Häufigkeit (Anzahl) angeben
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 9
-        aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie das Prognoseintervall, '
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie das Prognoseintervall, '
                        + 'dass der Pflanzenhändler angeben sollte. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mu ~=~ n \cdot p ~=~' + gzahl(anzahl)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mu ~=~ n \cdot p ~=~' + gzahl(anzahl)
                        + r' \cdot ' + gzahl(keimen/100) + '~=~' + gzahl(mu) + r' \quad \mathrm{und} \quad '
                        + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
                        + gzahl(anzahl) + r' \cdot ' + gzahl(keimen/100) + r' \cdot (1- '+ gzahl(keimen/100)
@@ -1133,14 +1133,14 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         # Hier sollen die SuS überprüfen, ob die Laplace-Bedingung erfüllt ist und überhaupt eine Zusage möglich ist
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
-        aufgabe.append(beschriftung(teilaufg,i) + f'Überprüfen Sie, ob die Anzahl der gelieferten {samen} überhaupt '
+        aufgabe.append(beschriftung(len(teilaufg),i) + f'Überprüfen Sie, ob die Anzahl der gelieferten {samen} überhaupt '
                                                 f'eine Zusage über die Keimfähigkeit zulässt. \n\n')
         text = (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                 + r' > 3, \quad ist~die~Laplace-Bedingung~erfüllt~und~eine~Zusage~möglich.} \quad (1BE)') \
             if sigma > 3 else (r' \mathrm{da ~ \sigma ~=~ ' + gzahl(sigma)
                                + r' \leq 3, \quad ist~die~Laplace-Bedingung~nicht~erfüllt~und~keine~Zusage~möglich.} '
                                + r' \quad (1BE)')
-        loesung.append(beschriftung(teilaufg,i, True) + text)
+        loesung.append(beschriftung(len(teilaufg),i, True) + text)
 
         aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
@@ -1158,9 +1158,9 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
         sigma = N(sqrt(anzahl * keimen * (100 - keimen)) / 100, 3)
         aufgabe.extend((f'Bei einer anderen Lieferung von {gzahl(anzahl)} {samen} soll der Pflanzenhändler mit einer '
                         f'Sicherheit von {gzahl(wkt_intv_2)}% zusichern wie viel Prozent der {sorte} keimen. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie das Prognoseintervall in Prozent, '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie das Prognoseintervall in Prozent, '
                        + 'dass der Pflanzenhändler angeben sollte. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True)
+        loesung.append(beschriftung(len(teilaufg),i, True)
                        + r' I ~ \left[ p - c \cdot \sqrt{ \frac{p \cdot (1-p)}{n} } '
                        + r' \left\vert p + c \cdot \sqrt{ \frac{p \cdot (1-p)}{n}} \right. \right]  ~=~ '
                        + r' \left[ ' + gzahl(keimen/100) + vorz_str(-1*c_2) + r' \cdot \sqrt{ \frac{ '
@@ -1173,7 +1173,7 @@ def prognoseintervall(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, i=0, BE=[])
                        + r' \right. \right] ~=~ \left[ ' + gzahl(N(keimen-c_2*sqrt(keimen*(100-keimen)/(anzahl)),3))
                        + r' \% \left\vert ' + gzahl(N(keimen+c_2*sqrt(keimen*(100-keimen)/(anzahl)),3))
                        + r' \% \right. \right] \quad (3BE)')
-        # loesung.append(beschriftung(teilaufg,i, True) + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
+        # loesung.append(beschriftung(len(teilaufg),i, True) + r' \sigma ~=~ \sqrt{n \cdot p \cdot (1-p) } ~=~ \sqrt{'
         #               + gzahl(anzahl) + r' \cdot ' + gzahl(keimen / 100) + r' \cdot (1- ' + gzahl(keimen / 100)
         #                + ') } ~=~ ' + gzahl(sigma)
         #                + r' \\ \mathrm{Intervall ~~ I} \left[ p - c \cdot \frac{ \sigma }{n} \left\vert '
@@ -1273,9 +1273,9 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
         # Berechne den Prozentsatz zwischen den Grenzen
         prozentsatz = norm.cdf(obere_gr, loc=mu, scale=sigma) - norm.cdf(untere_gr, loc=mu, scale=sigma)
 
-        aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen Sie, welcher Prozentsatz der Bevölkerung einen '
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie, welcher Prozentsatz der Bevölkerung einen '
                        + f' Blutdruck zwischen {gzahl(untere_gr)} und {gzahl(obere_gr)} mmHg hat. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' P(' + gzahl(untere_gr) + r' \leq X \leq ' + gzahl(obere_gr)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P(' + gzahl(untere_gr) + r' \leq X \leq ' + gzahl(obere_gr)
                        + ') ~=~ ' + gzahl(N(prozentsatz,3)) + r' ~=~ ' + gzahl(N(prozentsatz*100,3))
                        + r' \% \quad (2BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1304,10 +1304,10 @@ def normalverteilung(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
         aufgabe.extend(('Nach den Leitlinien der Europäischen Gesellschaft für Kardiologie (ESC) und der Deutschen'
                         f'Hochdruckliga gilt ein Blutdruck von mehr als {gzahl(wert)} als {grad} Hypertonie und '
                         f'{folgen}. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie, wie viel Prozent der Bevölkerung einen '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie, wie viel Prozent der Bevölkerung einen '
                         + f'Blutdruck von {gzahl(wert)} mmHg oder höher haben. \n\n'))
 
-        loesung.append(beschriftung(teilaufg,i, True) + r' P( X \geq ' + gzahl(wert) + r' ) ~=~ 1 - P( X \leq '
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P( X \geq ' + gzahl(wert) + r' ) ~=~ 1 - P( X \leq '
                        + gzahl(wert) + r' ) ~=~ ' + gzahl(N(prozentsatz,3))
                        + r' ~=~ ' + gzahl(N(prozentsatz*100,3)) + r' \% \quad (3BE)')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1354,9 +1354,9 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         inverse_wert = round(norm.ppf(pwert/100, loc=mu, scale=sigma),2)
 
         punkte = 2
-        aufgabe.append(beschriftung(teilaufg,i) + f'Berechnen Sie das Gewicht das mindestens {gzahl(pwert)} % der '
+        aufgabe.append(beschriftung(len(teilaufg),i) + f'Berechnen Sie das Gewicht das mindestens {gzahl(pwert)} % der '
                        + f'Kekse haben. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True) + r' \Phi (z) ~=~ ' + gzahl(pwert/100)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \Phi (z) ~=~ ' + gzahl(pwert/100)
                        + r' \quad \to \quad z \approx ' + gzahl(inverse_wert) + r'g \quad (2BE)')
 
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1378,9 +1378,9 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
         aufgabe.extend((f'Die Maschine wurde neu kalibriert. Jetzt liegt das Gewicht von {gzahl(pwert)}% der Kekse '
                         f'unter {gzahl(r)}g. Da sich die Präzision nicht geändert hat, ist von der '
                         f'bisherigen Standardabweichung bei der Produktion auszugehen. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie das durchschnittliche Gewicht der Kekse,'
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie das durchschnittliche Gewicht der Kekse,'
                         + ' nach der Kalibrierung. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \Phi (z) ~=~ ' + gzahl(pwert/100)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \Phi (z) ~=~ ' + gzahl(pwert/100)
                        + r' \quad \to \quad z \approx ' + gzahl(inverse_wert)
                        + r' ~=~ \frac{r - \mu }{ \sigma }~=~ \frac{ ' + gzahl(r)
                        + r' - \mu }{ ' + gzahl(sigma) + r' } \quad \vert \cdot ' + gzahl(sigma)
@@ -1407,9 +1407,9 @@ def invertierte_normalverteilung(nr, teilaufg=['a', 'b', 'c'], neue_seite=None, 
                                      f'eingestellt werden, dass sie beim bisherigen durchschnittliches Gewicht der '
                                      f'Kekse mit ' + r'$ \mu $ = ' + f'{gzahl(mu)}g nur {gzahl(100 - pwert)} '
                                      + r' \% ' + f' der Kekse mehr als ' + f'{gzahl(grenzwert)}g wiegen.'), ' \n\n',
-                                     beschriftung(teilaufg,i) + 'Welche Standardabweichung muss die Maschine '
+                                     beschriftung(len(teilaufg),i) + 'Welche Standardabweichung muss die Maschine '
                                      + 'erreichen, um diese Anforderungen zu erfüllen. \n\n'))
-            loesung.append(beschriftung(teilaufg,i, True) + r' P(X \geq ' + gzahl(grenzwert) + ') ~=~ '
+            loesung.append(beschriftung(len(teilaufg),i, True) + r' P(X \geq ' + gzahl(grenzwert) + ') ~=~ '
                            + gzahl(1 - pwert/100) + r' \quad \to \quad 1 - P( X \leq ' + gzahl(grenzwert)
                            + r') ~=~ ' + gzahl(1 - pwert/100) + r' \quad \to \quad P( X \leq ' + gzahl(grenzwert)
                            + ') ~=~' + gzahl(pwert / 100) + r' \\ \Phi (z) ~=~ ' + gzahl(pwert / 100)
@@ -1471,9 +1471,9 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
         # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(beschriftung(teilaufg,i) + 'Nennen und erläutern Sie die möglichen Fehler, die bei der '
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Nennen und erläutern Sie die möglichen Fehler, die bei der '
                        + 'Zuordnung auftreten können. \n\n')
-        loesung.append(beschriftung(teilaufg,i) + f'Es können zwei Arten von Fehlern auftreten. \n\n'
+        loesung.append(beschriftung(len(teilaufg),i) + f'Es können zwei Arten von Fehlern auftreten. \n\n'
                        + f'Fehlertyp 1 (Alpha-Fehler): Eine Palette wird fälschlicherweise dem Hersteller Helion '
                        + f'zugeordnet, obwohl sie tatsächlich von Solco stammt. Dieser Fehler tritt auf, wenn zufällig '
                        + f'{gzahl(k)} Module oder weniger mit einem Wirkungsgrad von über {gzahl(wkt_wg)}% in der '
@@ -1496,8 +1496,8 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
         # die SuS sollen die möglichen Fehler beim Hypothesentest berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(beschriftung(teilaufg,i) + 'Berechnen die Wahrscheinlichkeiten für diese Fehler. \n\n')
-        loesung.append(beschriftung(teilaufg,i, True)
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen die Wahrscheinlichkeiten für diese Fehler. \n\n')
+        loesung.append(beschriftung(len(teilaufg),i, True)
                        + r' \mathrm{ Berechnung~des~ \alpha ~und~ \beta-Fehlers:}'
                        + r' \hspace{15em} (4BE) \\' + r' \alpha - Fehler: ~ P(X \leq ' + gzahl(k)
                        + r') ~=~ F( 20 \vert ' + gzahl(wkt_solco/100) + r' \vert ' + gzahl(k) + ') ~=~ '
@@ -1517,9 +1517,9 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
         punkte = 4
         aufgabe.extend((r'Der Fehler bei der Zuordnung der Module zum Herstellers Solco soll unter '
                         f'{gzahl(wkt_alpha_neu*100)}% liegen. \n\n',
-                        beschriftung(teilaufg,i) + 'Geben Sie eine Entscheidungsregel an, '
+                        beschriftung(len(teilaufg),i) + 'Geben Sie eine Entscheidungsregel an, '
                         + 'die diese Bedingung erfüllt. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{durch~probieren~ k ~=~ }'
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{durch~probieren~ k ~=~ }'
                        + gzahl(kn) + r' \quad \mathrm{da, ~} \alpha - Fehler: ~ P(X \leq ' + gzahl(kn)
                        + r') ~=~ F( 20 \vert ' + gzahl(wkt_solco/100) + r' \vert ' + gzahl(kn) + ') ~=~ '
                        + gzahl(wkt_kn) + '~=~' + gzahl(wkt_kn*100) + r' \% \quad (2BE)')
@@ -1541,9 +1541,9 @@ def hypothesentest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=[
                     'Entscheidungsregel anzunehmen ist.')
         aufgabe.extend((f'Die neue Entscheidungsregel aus der vorherigen Teilaufgabe hat auch Einfluss auf die '
                         f'fehlerhafte Zuordnung der Module zum Hersteller Helion. \n\n',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie diesen Fehler und diskutieren Sie die neue '
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie diesen Fehler und diskutieren Sie die neue '
                         + 'Entscheidungsregel. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \beta - Fehler : ~ P(X > ' + gzahl(kn)
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \beta - Fehler : ~ P(X > ' + gzahl(kn)
                        + r') ~=~ 1 - P(X \leq ' + gzahl(kn) + r') ~=~ 1 - F( 20 \vert ' + gzahl(wkt_helion/100)
                        + r' \vert ' + gzahl(kn) + ') ~=~ ' + gzahl(1 - wkt_beta_kn) + '~=~'
                        + gzahl(N((1 - wkt_beta_kn),3)*100) + r' \% \quad (2BE)')
@@ -1603,8 +1603,8 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         # die SuS sollen die möglichen Fehler beim Hypothesentest nennen und erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.append(beschriftung(teilaufg,i) + f'Formulieren Sie die Testhypothesen und die möglichen Fehler. \n\n')
-        loesung.append(beschriftung(teilaufg,i) + f'Nullhypothese: Die regelmäßigen Lernerfolgskontrollen haben keinen '
+        aufgabe.append(beschriftung(len(teilaufg),i) + f'Formulieren Sie die Testhypothesen und die möglichen Fehler. \n\n')
+        loesung.append(beschriftung(len(teilaufg),i) + f'Nullhypothese: Die regelmäßigen Lernerfolgskontrollen haben keinen '
                        + f'positiven Einfluss auf die Abschlussprüfungsergebnisse, wenn {gzahl(k)} oder weniger Schüler '
                        + f'und Schüler*innen 50 Punkte in den Abschlussprüfungen erreichen. \n'
                        + f'Fehlertyp 1 (Alpha-Fehler): Der Lehrer sieht seine Vermutung bestätigt und'
@@ -1627,9 +1627,9 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         punkte = 4
         aufgabe.extend((r'Ein Signifikanzniveau (Fehler 1. Art) von 5% gilt als Standard, bei Bildungsstudien oder'
                         r'schulischen Untersuchungen. Es bietet eine gute Balance zwischen Fehler 1. und 2. Art.',
-                        beschriftung(teilaufg,i) + 'Weisen Sie nach, dass die gewählte Entscheidungsregel den '
+                        beschriftung(len(teilaufg),i) + 'Weisen Sie nach, dass die gewählte Entscheidungsregel den '
                         + 'Standard nicht erfüllt. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' P(X > ' + gzahl(k) + r') ~=~ 1 - P(X \leq '
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P(X > ' + gzahl(k) + r') ~=~ 1 - P(X \leq '
                        + gzahl(k) + r') ~=~ 1 - F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt_h0/100) + r' \vert '
                        + gzahl(k) + ') ~=~ ' + gzahl(wkt_alpha) + '~=~' + gzahl(wkt_alpha*100) + r' \% \\'
                        + r' \mathrm{Das~Signifikanzniveau~beträgt~mehr~als~5~ \% ~und~der~Standard~ist~nicht~erfüllt.}')
@@ -1644,8 +1644,8 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
         punkte = 4
         aufgabe.extend(('Aufgrund der relativ geringen Stichprobenanzahl, ist ein Signifikanzniveau von genau '
                         '5% Zufall. Man kann aber eine Entscheidungsregel in der Nähe dieses Niveaus finden.',
-                        beschriftung(teilaufg,i) + 'Bestimmen Sie diese Entscheidungsregel. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' \mathrm{durch~probieren: \quad k~=~' + gzahl(k2)
+                        beschriftung(len(teilaufg),i) + 'Bestimmen Sie diese Entscheidungsregel. \n\n'))
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{durch~probieren: \quad k~=~' + gzahl(k2)
                        + r' \quad da} \quad P(x \leq ' + gzahl(k2) + ') ~=~'  + gzahl(wkt_alpha_k2))
 
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -1664,8 +1664,8 @@ def signifikanztest(nr, teilaufg=['a', 'b', 'c', 'd'], neue_seite=None, i=0, BE=
                         f'Der Lehrer zgeht bei der Berechnung des Fehlers 2. Art von den Ergebnissen seiner Schüler und '
                         f'Schülerinnen in den letzten Jahren aus und nimmt an, dass mindestens {gzahl(wkt_h1)}% mehr '
                         f'als 50 Punkte in der Abschlussprüfung schaffen.',
-                        beschriftung(teilaufg,i) + 'Berechnen Sie den Fehler 2. Art und überprüfen die Balance. \n\n'))
-        loesung.append(beschriftung(teilaufg,i, True) + r' P(X \leq ' + gzahl(k2)
+                        beschriftung(len(teilaufg),i) + 'Berechnen Sie den Fehler 2. Art und überprüfen die Balance. \n\n'))
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' P(X \leq ' + gzahl(k2)
                        + r') ~=~ F( ' + gzahl(anz) + r' \vert ' + gzahl(wkt_h1/100) + r' \vert ' + gzahl(k2) + ') ~=~ '
                        + gzahl(wkt_beta_k2) + '~=~' + gzahl(wkt_beta_k2*100) + r' \% \\' + text)
         aufgabe.append('NewPage') if neue_seite == i else ''

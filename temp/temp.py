@@ -132,9 +132,4 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-teilaufg = ['a', 'a', 'a', 'b', 'c']
-anz = Counter(teilaufg)
-i = 0
-for step in range(anz['a']):
-    print(i)
-    i += 1
+print([element * 10**exp for element in range(1, 19) for exp in range(1,4)])

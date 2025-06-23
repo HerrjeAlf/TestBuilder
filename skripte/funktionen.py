@@ -421,8 +421,8 @@ def kgv(q, p):
             return int(zahl*min)
     return max*min
 
-def beschriftung(teilaufg, i, latex_math=False):
-    if len(teilaufg) == 1:
+def beschriftung(anz, i, latex_math=False):
+    if anz == 1:
         return ''
     if latex_math:
         return str(liste_teilaufg[i]) + r') \quad '
