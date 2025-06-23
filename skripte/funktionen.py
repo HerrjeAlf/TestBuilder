@@ -196,6 +196,16 @@ def darstellung_zahl(zahl, exponent=None, darstellung='wiss'):
 
     return zahl
 
+def int_to_roman(n):
+    val = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+    syms = ["m", "cm", "d", "cd", "c", "xc", "l", "xl", "x", "ix", "v", "iv", "i"]
+    roman = ""
+    for i in range(len(val)):
+        while n >= val[i]:
+            roman += syms[i]
+            n -= val[i]
+    return roman
+
 def zzahl(p, q):
     return random.choice([-1, 1]) * random.randint(p, q)
 

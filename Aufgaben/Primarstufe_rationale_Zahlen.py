@@ -2496,32 +2496,33 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
+    k = 1
+
     if 'a' in teilaufg:
         # Die SuS sollen eine einfache Aufgabe zum Berechnen des Prozentwertes bearbeiten
-        anz = anz_teilaufg['a']
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[])})')
+        anz = anz_teilaufg['a'] if anz_teilaufg['a'] < 10 else 10
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         liste_punkte.append(anz)
-        grundwerte = random_selection([element * exp for element in range(1, 19) for exp in range(1,4)],
+        grundwerte = random_selection([element * 10**exp for element in range(1, 19) for exp in range(1,4)],
                                       anzahl=anz, wdh=True)
-        einheiten = random_selection(['Euro', 'Kilogramm', 'Liter', 'Meter', 'US-Dollar'], anzahl=anz)
+        einheiten = random_selection([' Euro', ' Kilogramm', ' Liter', ' Meter', ' US-Dollar'], anzahl=anz)
         prozentwerte = random_selection([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
                                         anzahl=anz, wdh=True)
+        aufgabe.append(beschriftung(len(anz_teilaufg), i) + 'Berechne den Prozentwert. \n\n')
         for step in range(anz_teilaufg['a']):
             pw = prozentwerte[step]
             gw = grundwerte[step]
             eh = einheiten[step]
-            aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechne {gzahl(pw)}% von {gzahl(gw)}{eh}. \n\n')
-            loesung.append(beschriftung(len(teilaufg), i, True) + ' W ~=~ ' + gzahl(pw/100) + r' \cdot '
+            aufgabe.extend((NoEscape(r' \hspace{3em} ' + int_to_roman(k) + r') ' + gzahl(pw) + r'\% von ' + gzahl(gw) + eh + '.'),' \n\n'))
+            loesung.append(int_to_roman(k) + r') \quad W ~=~ ' + gzahl(pw/100) + r' \cdot '
                            + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh)
-            i += 1
+            k += 1
+        i += 1
 
     if BE != []:
-        if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
-                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = []
-        liste_punkte = BE
-    else:
-        liste_punkte = []
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
