@@ -2513,9 +2513,10 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
             pw = prozentwerte[step]
             gw = grundwerte[step]
             eh = einheiten[step]
-            aufgabe.extend((NoEscape(r' \hspace{3em} ' + int_to_roman(k) + r') ' + gzahl(pw) + r'\% von ' + gzahl(gw) + eh + '.'),' \n\n'))
-            loesung.append(int_to_roman(k) + r') \quad W ~=~ ' + gzahl(pw/100) + r' \cdot '
-                           + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh)
+            aufgabe.extend((NoEscape(r' \indent ' + int_to_roman(k) + r') ' + gzahl(pw) + r'\% von ' + gzahl(gw)
+                                     + eh + '.'),' \n\n'))
+            loesung.append(int_to_roman(k) + r') \mathrm{ \quad W ~=~ ' + gzahl(pw/100) + r' \cdot '
+                           + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh + '}')
             k += 1
         i += 1
 
