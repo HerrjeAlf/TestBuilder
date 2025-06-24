@@ -2224,7 +2224,7 @@ def einheiten_umrechnen(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=Fal
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False, wdh=False, i=0, BE=[]):
+def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die SuS gegebenen Zahlen in Prozent-, Bruch- und Dezimalschreibweise umwandeln
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
@@ -2403,16 +2403,17 @@ def schreibweise_prozent_dezimal(nr, teilaufg=['a', 'b', 'c', 'd'], anzahl=False
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, BE=[]):
+def darstellung_prozente(nr, teilaufg=['a', 'b'], neue_seite=None, anzahl=False, wdh=False, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen verschiedene Aufgaben mit dem Prozentfeld bearbeiten
     # Mithilfe von "teilaufg=[]" können folgende Bruchterme (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Arten erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     liste_bez = [f'{str(nr)}']
-
+    random.seed()
     if anzahl != False:
         anzahl = 12 if anzahl > 12 or type(anzahl) != int else anzahl
         teilaufg = random_selection(teilaufg, anzahl, True)
@@ -2437,9 +2438,10 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
             x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             prozentfeld(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-            aufgabe.extend((['Grafik', '200px', None], NoEscape(beschriftung(len(teilaufg),i)
+            aufgabe.extend((['Grafik', '200px', None], NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                             + r' p = $ \frac{ \hspace{3em} }{ \hspace{3em} } $ = .......... \% '), ' \n\n'))
             lsg += str(liste_teilaufg[i]) + r') \quad ' + gzahl(int(anz / (rows * cols) * 100)) + r'~ \% \quad '
+            aufgabe.append('NewPage') if neue_seite == i else ''
             i += 1
         loesung.append(lsg)
 
@@ -2459,9 +2461,10 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
                         text='.............................' + beschriftung(len(teilaufg),i))
             prozentfeld(rows, cols, 0, 0, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-            aufgabe.extend((NoEscape(beschriftung(len(teilaufg),i) + 'p = ' + gzahl(int(anz / (rows * cols) * 100)))
-                            + ' % ', ['Grafik', '200px', None]))
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + 'p = '
+                                     + gzahl(int(anz / (rows * cols) * 100)) + ' \% '), ['Grafik', '200px', None]))
             loesung.append(['Grafik', '200px'])
+            aufgabe.append('NewPage') if neue_seite == i else ''
             i += 1
 
     if BE != []:
@@ -2472,7 +2475,6 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], anzahl=False, wdh=False, i=0, 
         liste_punkte = BE
     else:
         liste_punkte = [len(teilaufg)]
-
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[]):
@@ -2492,7 +2494,7 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
         teilaufg = repeat(teilaufg, wdh) if wdh < 7 else repeat(teilaufg, wdh)
     anz_teilaufg = Counter(teilaufg)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
