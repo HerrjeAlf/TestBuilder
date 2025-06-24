@@ -2439,9 +2439,13 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], neue_seite=None, anzahl=False,
             y_max = y_max_unk / rows
             prozentfeld(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             aufgabe.extend((['Grafik', '200px', None], NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
-                            + r' p = $ \frac{ \hspace{3em} }{ \hspace{3em} } $ = .......... \% '), ' \n\n'))
-            lsg += str(liste_teilaufg[i]) + r') \quad ' + gzahl(int(anz / (rows * cols) * 100)) + r'~ \% \quad '
+                            + r' p = $ \frac{ \hspace{3em} }{ \hspace{3em} }  = '
+                            + r' \frac{ \hspace{3em} }{ 100 } $ = .......... \% '), ' \n\n'))
+            lsg += (str(liste_teilaufg[i]) + r') \quad p ~=~ \frac{ ' + gzahl(anz) + '}{' + gzahl(cols*rows)
+                    + r'} ~=~ \frac{ ' + gzahl(anz*100/(cols*rows)) + '}{100} ~=~ '
+                    + gzahl(int(anz / (rows * cols) * 100)) + r'~ \% \quad ')
             aufgabe.append('NewPage') if neue_seite == i else ''
+            ausw.clear()
             i += 1
         loesung.append(lsg)
 
@@ -2458,13 +2462,14 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], neue_seite=None, anzahl=False,
             x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             prozentfeld(rows, cols, x_max, y_max, name=f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})',
-                        text='.............................' + beschriftung(len(teilaufg),i))
+                        text=beschriftung(len(teilaufg),i))
             prozentfeld(rows, cols, 0, 0, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
             aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + 'p = '
-                                     + gzahl(int(anz / (rows * cols) * 100)) + ' \% '), ['Grafik', '200px', None]))
+                                     + gzahl(int(anz / (rows * cols) * 100)) + r' \% '), ['Grafik', '200px', None]))
             loesung.append(['Grafik', '200px'])
             aufgabe.append('NewPage') if neue_seite == i else ''
+            ausw.clear()
             i += 1
 
     if BE != []:
@@ -2518,8 +2523,9 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
             aufgabe.extend((NoEscape(r' \indent ' + int_to_roman(k) + r') ' + gzahl(pw) + r'\% von ' + gzahl(gw)
                                      + eh + '.'),' \n\n'))
             loesung.append(int_to_roman(k) + r') \mathrm{ \quad W ~=~ ' + gzahl(pw/100) + r' \cdot '
-                           + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh + '}')
+                           + gzahl(gw) + '~'  + eh + '~=~' + gzahl(pw*gw/100) + '~' + eh + '}')
             k += 1
+        grundwerte.clear()
         i += 1
 
     if BE != []:
