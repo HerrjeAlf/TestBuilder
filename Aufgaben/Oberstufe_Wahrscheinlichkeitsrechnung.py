@@ -1,6 +1,7 @@
 import random
 import sympy, sys
 import string
+from collections import Counter
 from scipy.stats import norm, binom
 from pylatex import MediumText, Tabular, NoEscape, MultiColumn, MultiRow, SmallText
 from pylatex.utils import bold
@@ -33,10 +34,11 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [len(anzahl)]
+            liste_punkte = [anzahl]
         liste_punkte = BE
     else:
-        liste_punkte = [len(anzahl)]
+        liste_punkte = [anzahl]
+
     auswahl = np.random.choice(list(begriffe.keys()), anzahl, False)
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Erläutern Sie die folgenden Grundbegriffe der Wahrscheinlichkeitsrechnung.']
@@ -51,12 +53,86 @@ def begriffe_wahrscheinlichkeit(nr, anzahl=1, BE=[]):
             aufg = aufg + r' \\\\'
         lsg = lsg + begriffe[auswahl[element]]
 
-    lsg = lsg + r' \\ \mathrm{insgesamt~' + str(len(auswahl)) + r'~Punkte}'
     aufgabe.append(aufg)
     loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
+def haeufigkeiten(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
+    # Angabe der absoluten und Berechnung der relativen Häufigkeit
+    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "neue_seite_nach_teilaufg=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    liste_punkte = []
+    liste_bez = []
+
+    anz_wuerfe = nzahl(3, 5) * 5
+    urliste = [random.randint(1, 4) for _ in range(anz_wuerfe)]
+    urliste_str = ', '.join(str(element) for element in urliste)
+    abs = Counter(urliste)
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+               f'Ein Schüler untersucht das Würfeln mit einen vierseitigen Würfel. Er würfelt {gzahl(anz_wuerfe)} '
+               f'mal und erhält folgende Ergebnisse: ', urliste_str + r'~ \\']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
+    if any(element in ['a', 'b'] for element in teilaufg):
+        # die SuS sollen die absolute Häufigkeit einer Urliste bestimmen
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(beschriftung(len(teilaufg), i)
+                       + 'Erstellen Sie eine Tabelle mit der absoluten Häufigkeit der Ergebnisse dieser Urliste. \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1.add_hline()
+        table1.add_row('Ergebnis', '1', '2', '3', '4', 'Summe')
+        table1.add_hline()
+        table1.add_row(beschriftung(len(teilaufg),i) + 'absolute Häufigkeit',
+                       gzahl(abs[1]), gzahl(abs[2]), gzahl(abs[3]), gzahl(abs[4]), gzahl(anz_wuerfe))
+        table1.add_hline()
+        if 'b' not in teilaufg:
+            loesung.append(table1)
+            loesung.append('~')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(4)
+        i += 1
+
+    if 'b' in teilaufg:
+        # Ergebnismengen angeben
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        aufgabe.append(beschriftung(len(teilaufg), i)
+                       + 'Ergänzen Sie ihre Tabelle mit der relativen Häufigkeit der Ergebnisse. \n\n')
+        # Tabelle mit dem Text
+        table1 = Tabular('|c|c|c|c|c|c|', row_height=1.2)
+        table1.add_hline()
+        table1.add_row('Ergebnis', '1', '2', '3', '4', 'Summe')
+        table1.add_hline()
+        table1.add_row(beschriftung(len(teilaufg),i-1) + 'absolute Häufigkeit',
+                       gzahl(abs[1]), gzahl(abs[2]), gzahl(abs[3]), gzahl(abs[4]), gzahl(anz_wuerfe))
+        table1.add_hline()
+        table1.add_row(beschriftung(len(teilaufg),i) + 'relative Häufigkeit',
+                       Rational(abs[1], anz_wuerfe),
+                       Rational(abs[2], anz_wuerfe),
+                       Rational(abs[3], anz_wuerfe),
+                       Rational(abs[4], anz_wuerfe), gzahl(1))
+        table1.add_hline()
+        loesung.append(table1)
+        loesung.append('~')
+        aufgabe.append('NewPage') if neue_seite == i else ''
+        liste_punkte.append(4)
+        i += 1
+
+
+    if BE != []:
+        if len(BE) != len(teilaufg):
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
+
+    return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], stufen=None, art='zmZ', pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
