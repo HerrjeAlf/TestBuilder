@@ -2505,7 +2505,7 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
         liste_punkte.append(anz)
         grundwerte = random_selection([element * 10**exp for element in range(1, 19) for exp in range(1,4)],
                                       anzahl=anz, wdh=True)
-        einheiten = random_selection([' Euro', ' Kilogramm', ' Liter', ' Meter', ' US-Dollar'], anzahl=anz)
+        einheiten = random_selection([' Euro', ' Kilogramm', ' Liter', ' Meter', ' Kalorien', ' Personen', 'Stunden'], anzahl=anz)
         prozentwerte = random_selection([5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
                                         anzahl=anz, wdh=True)
         aufgabe.append(beschriftung(len(anz_teilaufg), i) + 'Berechne den Prozentwert. \n\n')
@@ -2518,6 +2518,7 @@ def prozentrechenaufgaben(nr, teilaufg=['a'], anzahl=False, wdh=False, i=0, BE=[
             loesung.append(int_to_roman(k) + r') \mathrm{ \quad W ~=~ ' + gzahl(pw/100) + r' \cdot '
                            + gzahl(gw) + eh + '~=~' + gzahl(pw*gw/100) + eh + '}')
             k += 1
+        grundwerte.clear()
         i += 1
 
     if BE != []:

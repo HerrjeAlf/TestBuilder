@@ -1,6 +1,7 @@
 allgemein:
 - alte Skripte in neue Form anpassen
 - optional Zeitstempel in Fußzeile
+- bei allen Aufgaben die zufällig erstellten Listen wieder schließen um Speicher zu sparen
 
 Berechnungen:
  - kleine Kurvendiskussion
