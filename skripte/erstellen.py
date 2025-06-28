@@ -43,14 +43,14 @@ def seite(aufgaben):
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
             elif 'Grafik' in elements:
-                placement = elements[2] if len(elements) > 2 else NoEscape(r"\centering")
-                width = elements[1] if len(elements) > 1 else '250px'
+                placement = elements[2] if len(elements) > 2 and isinstance(elements, list) else NoEscape(r"\centering")
+                width = elements[1] if len(elements) > 1 and isinstance(elements, list) else '250px'
                 with Aufgabe.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/temp/{aufgabe[2][i]}', width=width, placement=placement)
                 i += 1
             elif 'Bild' in elements:
-                placement = elements[2] if len(elements) > 2 else NoEscape(r"\centering")
-                width = elements[1] if len(elements) > 1 else '300px'
+                placement = elements[2] if len(elements) > 2 and isinstance(elements, list) else NoEscape(r"\centering")
+                width = elements[1] if len(elements) > 1 and isinstance(elements, list) else '300px'
                 with Aufgabe.create(Figure(position='ht!')) as graph:
                     graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width=width, placement=placement)
                 i += 1
