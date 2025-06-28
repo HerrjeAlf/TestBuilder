@@ -132,15 +132,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
+liste = ['test', 'neu', 'tester']
 
-
-
-anz_wuerfe = nzahl(3, 5) * 5
-
-urliste = [random.randint(1, 4) for _ in range(anz_wuerfe)]
-
-urliste_str = ', '.join(str(element) for element in urliste)
-
-
-print(urliste)
-print(urliste_str)
+if 'test' in liste:
+    print('geht')

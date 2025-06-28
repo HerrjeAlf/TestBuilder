@@ -19,7 +19,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
     liste_punkte = []
     liste_bez = []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), ['Grafik', '250px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -111,7 +111,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=1, 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
         aufgabe.extend((beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
-                       + f'-2 < x < 2.', 'Grafik \n\n'))
+                       + f'-2 < x < 2.', ' \n\n'))
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
@@ -477,11 +477,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=1, anz_ap=
         if anz_np + anz_ap == 1:
             aufgabe.extend(('Im unteren Koordinatensystem ist der Graph einer quadratischen Funktion (Parabel) '
                             'dargestellt. \n\n', beschriftung(len(teilaufg), i) + f'Lies den Scheitelpunkt und ggf. den '
-                            + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. ', 'Grafik'))
+                            + f'Faktor a ab und nenne die zugeh. Funktionsgleichung. ', ['Grafik', '250px']))
         else:
             aufgabe.extend(('Im unteren Koordinatensystem sind die Graphen verschiedener quadratischen Funktionen '
                             '(Parabeln) dargestellt. \n\n', beschriftung(len(teilaufg), i) + f'Lies die Scheitelpunkte und '
-                            + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen. ', 'Grafik'))
+                            + f'ggf. den Faktor a ab und nenne die zugeh. Funktionsgleichungen. ', ['Grafik', '250px']))
 
         loesung.append(lsg)
         liste_punkte.append(punkte)
