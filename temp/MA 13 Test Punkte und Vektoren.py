@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[punkte_und_vektoren(1, ks=True)],
+    Aufgaben = [[punkte_und_vektoren(1)],
                  [rechnen_mit_vektoren(2, random.choice([['a', 'b','c','e','f', 'g'], ['a', 'b', 'd','e','f', 'g']]))]]
     # hier werden aus der Liste der Aufgaben dieTest erzeugt
     liste_seiten = []
