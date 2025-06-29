@@ -17,7 +17,6 @@ from skripte.plotten import *
 
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
-
 # Berechnung für die Aufgaben
 def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], neue_seite=None, i=0, BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
@@ -120,12 +119,12 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         i += 1
 
     if 'b' in teilaufg:
-        # wählt man Teilaufgabe i, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
+        # wählt man Teilaufgabe b, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
         aufgabe.append(['Bild', '400px'])
         grafiken_aufgaben.append('3dim_Koordinatensystem')
         aufgabe.append('NewPage') if neue_seite == i else ''
     if 'c' in teilaufg:
-        # wählt man Teilaufgabe j, wird unter der Teilaufaufgabe kariertes Papier eingefügt
+        # wählt man Teilaufgabe c, wird unter der Teilaufaufgabe kariertes Papier eingefügt
         aufgabe.append(['Bild', '400px'])
         grafiken_aufgaben.append('kariertes_Papier')
         aufgabe.append('NewPage') if neue_seite == i else ''
@@ -169,7 +168,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                  + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Skalarproduktes.'),
                         ' \n\n'))
-        if 'b' in teilaufg:
+        if 'd' in teilaufg:
             pkt = 3
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
@@ -204,7 +203,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                  + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Kreuzproduktes.'),
                         ' \n\n'))
-        if len([element for element in ['b', 'd'] if element in teilaufg]) > 0:
+        if len([element for element in ['d', 'f'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
@@ -234,7 +233,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                  + f'Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des Kreuzproduktes.'),
                         ' \n\n'))
-        if len([element for element in ['b', 'd', 'e'] if element in teilaufg]) > 0:
+        if len([element for element in ['d', 'e', 'f'] if element in teilaufg]) > 0:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
@@ -264,7 +263,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
         vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
         erg = N(abs(vektor.skalarprodukt(kprod, vektor_ae)),3)
-        if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f'] if element in teilaufg]) > 0:
+        if len([element for element in ['a', 'd', 'e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
             aufgabe.extend((NoEscape(r' \noindent ' + 'Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | '
                                      + gzahl(ey) + ' | ' + gzahl(ez)
                                      + '), der mit den Punkten A, B und C ein Spat bildet.'), ' \n\n',
@@ -308,7 +307,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
         erg = Rational(abs(vektor.skalarprodukt(kprod, vektor_as)),6)
-        if len([element for element in ['a', 'b', 'c', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+        if len([element for element in ['a', 'd', 'e', 'f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
             aufgabe.extend((NoEscape('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | '
                                      + gzahl(sz) + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet.'),
                             ' \n\n', beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen der Pyramide. \n\n'))
