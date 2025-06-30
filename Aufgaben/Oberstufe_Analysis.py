@@ -924,7 +924,7 @@ def ableitungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
         else:
             print(teilaufg)
             anzahl = 26 if anzahl > 26 or anzahl == False else anzahl
-            teilaufg = repeat(teilaufg, wdh, laenge=anzahl)
+            teilaufg = repeat(teilaufg, wdh)
             print(teilaufg)
 
     aufgaben = {'a': polynom, 'b': polynom_rational, 'c': wurzel, 'd': poly_wurzel, 'e': fkt_exp,
