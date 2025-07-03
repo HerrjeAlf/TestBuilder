@@ -233,7 +233,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=None, i=0, BE=[]):
+def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][0], i=0, BE=[]):
     # Hier sollen die Schüler*innen mithilfe der gegebenen Daten eines rechtw. Dreieckes die Verhältnisgleichungen für den Sinus, Kosinus und Tangens aufstellen und die restlichen Größen berechnen.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
@@ -581,7 +581,7 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_turm(nr, koerpergroesse=True, BE=[]):
+def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], BE=[]):
     # Hier sollen die Schüler*innen die Höhe eines Turms berechnen (Trigonometrie im rechtw. Dreieck).
     # Mit dem Paramter "koerpergroesse=True" wird festgelegt, ob die Körpergröße des Beobachters in der Aufgabe berücksichtigt werden soll bzw. diese in der Aufgabenstellung genannt wird.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
@@ -789,7 +789,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1, 2, 3][0], i=0, BE=[]):
     # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
@@ -1009,7 +1009,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Flächen und Körperberechnung
-def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1, 2, 3, 4][0], i=0, BE=[]):
     # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
@@ -1184,7 +1184,7 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=False, neue_seite=No
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=False, neue_seite=None, i=0, BE=[]):
+def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1][0], i=0, BE=[]):
     # hier sollen die Schüler*innen
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
