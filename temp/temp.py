@@ -131,8 +131,8 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #     print('sigma(X) = ' + str(sigma))
 #
 # lsg1(0.53)
-
-liste = ['a']
-for element in liste:
-    if 'a' == element:
-        print('geht')
+pruef_kl10 = [True, False][0]
+teilaufg = ['a', 'b', 'c']
+print(teilaufg)
+teilaufg = [elements for element in teilaufg for elements in (element, 'g') if pruef_kl10]
+print(teilaufg)
