@@ -41,9 +41,9 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    if kongr == 'zufällig':
-        kongr = random.choice(range(0,5)) # hier wird ausgewürfelt, welcher Kongruenzsatz erzeugt werden soll
-    elif kongr == 'sss':
+
+    kongr = random.choice(['sss', 'sws', 'wsw','sww', 'nicht kongruent']) if kongr == 'zufällig' else kongr # hier wird ausgewürfelt, welcher Kongruenzsatz erzeugt werden soll
+    if kongr == 'sss':
         auswahl = ['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                    st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                    st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']

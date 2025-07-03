@@ -19,16 +19,14 @@ Titel = 'Hier wird getestet'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = False   # True: Probe 01, 02 usw. oder Gr. A, Gr. B usw
-clean_tex = True # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-clean_tex = True if clean_tex not in [True, False] else clean_tex
+clean_tex = [False, True][0]
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[begriffe_wahrscheinlichkeit(1), haeufigkeiten(2),
-                 baumdiagramm(3, ['a', 'b', 'c'])]]
+    Aufgaben = [[basisaufgaben(1)]]
 
     # Aufgaben = [[rechnen_mit_vektoren(1),
     #              geraden_aufstellen(2, ['b']),

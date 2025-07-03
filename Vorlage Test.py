@@ -24,9 +24,8 @@ Art = 'Test'
 Titel = 'Vorlage'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = False # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
-clean_tex = False # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
-clean_tex = True if clean_tex not in [True, False] else clean_tex
+probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
+clean_tex = [False, True][0] # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
 
 for i in range(anzahl):
     Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],

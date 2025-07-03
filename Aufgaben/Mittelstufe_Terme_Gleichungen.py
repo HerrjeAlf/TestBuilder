@@ -16,8 +16,8 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=True,
-                  anzahl=False, wdh=False, neue_seite=None, i=0, BE=[]):
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=[True, False][0],
+                  anzahl=False, wdh=False, neue_seite=[None, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12][0], i=0, BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Bruchterme einer Menge berechnen
