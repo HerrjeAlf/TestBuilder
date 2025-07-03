@@ -29,8 +29,8 @@ clean_tex = False # Hier kann mit True oder False festgelegt werden, ob die Late
 clean_tex = True if clean_tex not in [True, False] else clean_tex
 
 for i in range(anzahl):
-    Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],
-                 [sachaufgabe_wetterballon(4), sachaufgabe_rampe(5)]]
+    Aufgaben = [[begriffe_wahrscheinlichkeit(1), haeufigkeiten(2),
+                 baumdiagramm(3, ['a', 'b', 'c'])]]
 
 
 
@@ -56,7 +56,7 @@ for i in range(anzahl):
             liste_punkte.extend(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-    if sys.argv[1] == 'website':
+    if len(sys.argv) > 1 and sys.argv[1] == 'website':
         schnell = True if sys.argv[2] == 'True' else False
 
         if schnell:
