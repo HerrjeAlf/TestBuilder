@@ -133,6 +133,7 @@ def haeufigkeiten(nr, teilaufg=['a', 'b'], neue_seite=None, i=0, BE=[]):
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
+
 def baumdiagramm(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], stufen=None, art='zmZ', pruef_kl10=False, neue_seite=None, i=0, BE=[]):
     # Hier sollen die Schüler und Schülerinnen am Urnenmodell verschiedene Berechnungen durchführen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.

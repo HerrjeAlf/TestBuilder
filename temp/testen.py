@@ -27,7 +27,8 @@ liste_bez = ['Aufgabe']
 
 for ziffer in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()]] eintragen
-    Aufgaben = [[ableitungen(1, ['a', 'b', 'c'], wdh=3)]]
+    Aufgaben = [[begriffe_wahrscheinlichkeit(1), haeufigkeiten(2),
+                 baumdiagramm(3, ['a', 'b', 'c'])]]
 
     # Aufgaben = [[rechnen_mit_vektoren(1),
     #              geraden_aufstellen(2, ['b']),

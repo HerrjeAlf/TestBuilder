@@ -17,7 +17,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
-def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
+def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws', 'wsw','sww', 'nicht kongruent'][0], i=0, BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks den Kongruenzsatz erkennen und das Dreieck konstruieren.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "kongr=" kann festgelegt werden, welcher Kongruenzsatz erzeugt werden soll (0: sss, 1: sws, 2: wsw, 3:sww, 4: Ssw).
@@ -41,23 +41,23 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
     wk = [r' \alpha ', r' \beta ', r' \gamma']
     wk_werte = [alpha, beta, gamma]
 
-    if kongr == None or kongr not in list(range(5)):
+    if kongr == 'zufällig':
         kongr = random.choice(range(0,5)) # hier wird ausgewürfelt, welcher Kongruenzsatz erzeugt werden soll
-    if kongr == 0:
+    elif kongr == 'sss':
         auswahl = ['sss', st[0] + '~=~' + gzahl(st_werte[0]) + 'cm',
                    st[1] + '~=~' + gzahl(st_werte[1]) + 'cm',
                    st[2] + '~=~' + gzahl(st_werte[2]) + 'cm']
-    elif kongr == 1:
+    elif kongr == 'sws':
         rf = random.choice([[0,2,1], [0,1,2], [1,2,0]]) # mit rf wird die Reihenfolge der gegebenen Werte für sws festgelegt
         auswahl = ['sws', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
                    st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm',
                    wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
-    elif kongr == 2:
+    elif kongr == 'wsw':
         rf = random.choice([[0,2,1], [1,0,2], [0,1,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für wsw festgelegt
         auswahl = ['wsw', st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
                    wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
                    wk[rf[2]] + '~=~' + gzahl(wk_werte[rf[2]]) + r' ^{  \circ}']
-    elif kongr == 3:
+    elif kongr == 'sww':
         rf = random.choice([[0,0,2], [1,0,1], [2,1,2]]) # mit rf wird die Reihenfolge der gegebenen Werte für sww festgelegt
         auswahl = ['sww',  st[rf[0]] + '~=~' + gzahl(st_werte[rf[0]]) + 'cm',
                    wk[rf[1]] + '~=~' + gzahl(wk_werte[rf[1]]) + r' ^{  \circ}',
@@ -121,10 +121,10 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=None, i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, i=0, BE=[]):
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei Katheten', 'Kathete und Hypothenuse'][0], i=0, BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks die fehlende Seiten und Winkel mithilfe des Satz des Pythagoras und Sinus, Konsinus und Tnagens berechnen.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
-    # Mit dem Parameter "gegegeben=" kann festgelegt werden, welcher Seiten vom Dreieck gegeben sind. (0: zwei Katheten, 1: eine Kathete und eine Hypothenuse).
+    # Mit dem Parameter "gegeben=" kann festgelegt werden, welcher Seiten vom Dreieck gegeben sind. (0: zwei Katheten, 1: eine Kathete und eine Hypothenuse).
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -179,12 +179,12 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=None, i=0, BE=[]):
                      + gzahl(l_b) + r'cm \quad (3BE) \\' + r' \mathrm{Planskizze} \quad (1BE)')
         return aufgabe_3, loesung_3, st, wk
 
-    if gegeben == 0:
-        auswahl = kat_kat()
-    elif gegeben == 1:
-        auswahl = random.choice([kat_hyp, hyp_kat])()
-    else:
+    if gegeben == 'zufällig':
         auswahl = random.choice([kat_kat, kat_hyp, hyp_kat])()
+    elif gegeben == 'zwei Katheten':
+        auswahl = kat_kat()
+    elif gegeben == 'Kathete und Hypothenuse':
+        auswahl = random.choice([kat_hyp, hyp_kat])()
 
     st, wk = auswahl[2], auswahl[3]
 
