@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 from helpers import root_path
 from PyPDF2 import PdfMerger
 from Aufgaben import *
@@ -25,23 +26,16 @@ Titel = 'Vorlage'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
-clean_tex = [False, True][0] # Hier kann mit True oder False festgelegt werden, ob die Latex-Datei gelöscht werden soll
+clean_tex = [True, False][0]
+
+aufgaben = [[(kongruente_Dreiecke, [1]),
+             (rechtwinkliges_dreieck, [2]),
+             (verhaeltnisgleichgungen,[3])],
+            [(sachaufgabe_wetterballon, [4]),
+             (sachaufgabe_rampe, [5])]]
 
 for i in range(anzahl):
-    Aufgaben = [[kongruente_Dreiecke(1), rechtwinkliges_dreieck(2), verhaeltnisgleichgungen(3)],
-                 [sachaufgabe_wetterballon(4), sachaufgabe_rampe(5)]]
-
-
-
-
-
-
-
-
-
-
-
-# --------------------------------ab hier werden aus den eingegebenen Daten die Tests erzeugt ----------------------------
+    Aufgaben = [[titel(*args) for titel, args in teil_liste] for teil_liste in aufgaben]
 
     # Bezeichnung der Punktetabelle
     liste_punkte = ['Punkte']
@@ -55,21 +49,66 @@ for i in range(anzahl):
             liste_punkte.extend(aufgabe[4])
         liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'website':
+    if len(sys.argv)> 1 and sys.argv[1] == 'website':
         schnell = True if sys.argv[2] == 'True' else False
-
         if schnell:
             uuid, identifier = sys.argv[-1], sys.argv[-2]
-
             angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, None, liste_bez, liste_punkte, schnell, identifier, uuid]
         else:
             probe = True if sys.argv[8] == 'Probe' else False
-
             schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, identifier, uuid = sys.argv[3:]
-            angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, schnell, identifier, uuid]
-    else:
-        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+            angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, identifier, uuid]
+        def speichere_aufgabenpfad(aufgaben, uuid, identifier, verzeichnis='../daten/erzeugt'):
+            """
+            Speichert die Aufgabenliste gemeinsam mit uuid und identifier als JSON-Datei.
+            Der Dateiname basiert auf dem identifier.
+            """
 
+            # Sicherstellen, dass der Zielordner existiert
+            os.makedirs(verzeichnis, exist_ok=True)
+
+            # Pfad zur Zieldatei bestimmen
+            dateipfad = os.path.join(verzeichnis, f"{identifier}.json")
+
+            # Daten zusammenstellen
+            daten = {
+                "uuid": uuid,
+                "identifier": identifier,
+                "aufgaben": aufgaben
+            }
+
+            # Schreiben in die Datei
+            with open(dateipfad, 'w', encoding='utf-8') as f:
+                json.dump(daten, f, ensure_ascii=False, indent=4)
+
+            print(f"Aufgaben erfolgreich gespeichert unter: {dateipfad}")
+    else:
+        code = generate_mixed_code()
+        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, code]
+        def speichere_aufgabenpfad(aufgaben, uuid, identifier, verzeichnis='../daten/erzeugt'):
+            """
+            Speichert die Aufgabenliste gemeinsam mit uuid und identifier als JSON-Datei.
+            Der Dateiname basiert auf dem identifier.
+            """
+
+            # Sicherstellen, dass der Zielordner existiert
+            os.makedirs(verzeichnis, exist_ok=True)
+
+            # Pfad zur Zieldatei bestimmen
+            dateipfad = os.path.join(verzeichnis, f"{identifier}.json")
+
+            # Daten zusammenstellen
+            daten = {
+                "uuid": uuid,
+                "identifier": identifier,
+                "aufgaben": aufgaben
+            }
+
+            # Schreiben in die Datei
+            with open(dateipfad, 'w', encoding='utf-8') as f:
+                json.dump(daten, f, ensure_ascii=False, indent=4)
+
+            print(f"Aufgaben erfolgreich gespeichert unter: {dateipfad}")
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
     pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
 

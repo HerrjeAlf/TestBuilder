@@ -3,6 +3,8 @@ import random
 import time
 import numpy as np
 import string
+import json
+import os
 from sympy import *
 from pylatex import Document, Package,  Tabular, NoEscape
 
@@ -1710,3 +1712,10 @@ def kubische_gl(koeff, nst=[], schnittpkt=False):
         punkte += 2
 
     return text, lsg, punkte
+
+# Erstellen und Speichern der Schlüssel
+
+def generate_mixed_code():
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choices(chars, k=4)) + '-' + ''.join(random.choices(chars, k=4))
+

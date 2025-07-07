@@ -3,14 +3,14 @@ import os
 import string
 from pylatex import (Document, SmallText, LargeText, MediumText, NewPage, Tabular, Alignat, Figure,
                      MultiColumn, Package, HugeText, MultiRow, NoEscape, Center)
-from pylatex.utils import bold, italic
+from pylatex.utils import bold, italic, escape_latex
 from skripte.funktionen import *
 from skripte.plotten import *
 from helpers import root_path
 os.chdir(root_path())
 
 # # Sorgt dafür, dass mögliche benötigte Ordner erstellt werden
-dirs = ['img/temp', 'pdf']
+dirs = ['img/temp', 'pdf', 'daten']
 for directory in dirs:
     try:
         os.mkdir(directory)
@@ -30,6 +30,8 @@ geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "r
 def seite(aufgaben):
     Aufgabe = Document(geometry_options=geometry_options)
     Loesung = Document(geometry_options=geometry_options)
+    Aufgabe.packages.append(Package('array'))
+    Loesung.packages.append(Package('array'))
 
     for aufgabe in aufgaben:
         i = 0
@@ -91,7 +93,6 @@ def seite(aufgaben):
                 Aufgabe.append(NewPage())
             else:
                 Loesung.append(elements)
-
     return Aufgabe, Loesung
 
 # hier wird ein Arbeitsblatt erzeugt
@@ -165,7 +166,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
     def erzeugen_test(Teil, liste_seiten, angaben):
         schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel =\
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
-        in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
+        in_tagen, liste_bez, liste_punkte, uuid = angaben[8], angaben[9], angaben[10], angaben[-1]
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
         Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 
@@ -207,13 +208,17 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table1 = Tabular('|c|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{2cm}|p{3cm}|', row_height=1.2)
-            table1.add_row((MultiColumn(6, align='c', data=MediumText(bold(schule))),))
-            table1.add_row((MultiColumn(6, align='c', data=SmallText(bold(schulart))),))
+            table1 = Tabular('| c | p{2.5cm} | p{2cm} | p{4cm} | p{2cm} | p{2.5cm}  c |', row_height=1.2)
+            table1.add_row((MultiColumn(7, align='c', data=MediumText(bold(schule))),))
+            table1.add_row((MultiColumn(7, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()
-            table1.add_row('Klasse:', 'Fach:', 'Niveau:', 'Lehrkraft:', 'Datum:', 'Art:')
+            table1.add_row([NoEscape(r' \centering Klasse'), NoEscape(r' \centering Fach'),
+                            NoEscape(r' \centering Niveau'), NoEscape(r' \centering Lehrkraft'),
+                            NoEscape(r' \centering Datum'), NoEscape(r'\centering ' + Art), ''])
             table1.add_hline()
-            table1.add_row(Klasse, Fach, Kurs, Lehrer, Datum, Art)
+            table1.add_row([NoEscape(r' \centering ' + Klasse), NoEscape(r' \centering ' + Fach),
+                            NoEscape(r' \centering ' + Kurs), NoEscape(r' \centering ' + Lehrer),
+                            NoEscape(r' \centering ' + Datum), NoEscape(r'\centering ' + uuid), ''])
             table1.add_hline()
             Aufgabe.append(table1)
             Aufgabe.append(' \n\n\n\n')
