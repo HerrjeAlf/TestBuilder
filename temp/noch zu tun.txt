@@ -2,7 +2,7 @@ allgemein:
 - alte Skripte in neue Form anpassen
 - optional Zeitstempel in Fußzeile
 - bei allen Aufgaben die zufällig erstellten Listen wieder schließen um Speicher zu sparen
-- alle Aufgaben mit pruef_klasse_10 neu gestalten (statt Grafik einfügen einfach neue Teilaufgabe d) mit Grafik einfügen und dann
+- ggf. Aufgaben mit pruef_klasse_10 neu gestalten (statt Grafik einfügen einfach neue Teilaufgabe d) mit Grafik einfügen und dann
     for element in teilaufg:
         if element = 'a': ...
 
