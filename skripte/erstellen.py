@@ -218,7 +218,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             table1.add_hline()
             table1.add_row([NoEscape(r' \centering ' + Klasse), NoEscape(r' \centering ' + Fach),
                             NoEscape(r' \centering ' + Kurs), NoEscape(r' \centering ' + Lehrer),
-                            NoEscape(r' \centering ' + Datum), NoEscape(r'\centering ' + uuid), ''])
+                            NoEscape(r' \centering ' + Datum), NoEscape(r' \centering ' + uuid), ''])
             table1.add_hline()
             Aufgabe.append(table1)
             Aufgabe.append(' \n\n\n\n')

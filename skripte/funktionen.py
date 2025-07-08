@@ -1719,3 +1719,52 @@ def generate_mixed_code():
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choices(chars, k=4)) + '-' + ''.join(random.choices(chars, k=4))
 
+def create_unique_code(json_file):
+    if os.path.exists(json_file):
+        with open(json_file, 'r', encoding='utf-8') as file:
+            try:
+                codes_set = set(entry['code'] for entry in json.load(file))
+            except json.JSONDecodeError:
+                codes_set = set()
+    else:
+        codes_set = set()
+
+    for _ in range(10000):
+        new_code = generate_mixed_code()
+        if new_code not in codes_set:
+            del codes_set  #  Löscht das Set direkt nach der Prüfung
+            return new_code
+
+    del codes_set
+    raise Exception("Keine eindeutigen Schlüssel mehr verfügbar.")
+
+# Hilfsfunktion, um Namen und Argumente zu extrahieren
+def serialisiere_aufgaben_liste(aufgabenliste):
+    serialisiert = []
+    for seite in aufgabenliste:
+        seite_eintraege = []
+        for funktion, argumente in seite:
+            name = funktion.__name__ if callable(funktion) else str(funktion)
+            seite_eintraege.append({"funktion": name, "argumente": argumente})
+        serialisiert.append(seite_eintraege)
+    return serialisiert
+
+def save_new_entry(json_file, code, inhalt):
+    entry = {"code": code, "inhalt": inhalt}
+
+    if os.path.exists(json_file):
+        with open(json_file, 'r', encoding='utf-8') as file:
+            try:
+                data = json.load(file)
+            except json.JSONDecodeError:
+                data = []
+    else:
+        data = []
+
+    data.append(entry)
+
+    with open(json_file, 'w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+
+    del data  # Entferne Liste nach dem Speichern
+    del entry

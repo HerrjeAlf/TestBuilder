@@ -132,31 +132,34 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-
 import random
 import string
 import json
 import os
 
-# Kombination aus Großbuchstaben + Ziffern
-CHARS = string.ascii_uppercase + string.digits
-
-# Erzeuge neuen Schlüssel im Format XXXX-XXXX
 def generate_mixed_code():
-    return ''.join(random.choices(CHARS, k=4)) + '-' + ''.join(random.choices(CHARS, k=4))
+    chars = string.ascii_uppercase + string.digits
+    return ''.join(random.choices(chars, k=4)) + '-' + ''.join(random.choices(chars, k=4))
 
-# Lade vorhandene Codes aus JSON-Datei und gib als Set zurück
-def load_code_set(json_file):
+def create_unique_code(json_file):
     if os.path.exists(json_file):
         with open(json_file, 'r', encoding='utf-8') as file:
             try:
-                data = json.load(file)
-                return set(entry['code'] for entry in data)
+                codes_set = set(entry['code'] for entry in json.load(file))
             except json.JSONDecodeError:
-                return set()
-    return set()
+                codes_set = set()
+    else:
+        codes_set = set()
 
-# Speichere neuen Code und Inhalt
+    for _ in range(10000):
+        new_code = generate_mixed_code()
+        if new_code not in codes_set:
+            del codes_set  #  Löscht das Set direkt nach der Prüfung
+            return new_code
+
+    del codes_set
+    raise Exception("Keine eindeutigen Schlüssel mehr verfügbar.")
+
 def save_new_entry(json_file, code, inhalt):
     entry = {"code": code, "inhalt": inhalt}
 
@@ -174,22 +177,5 @@ def save_new_entry(json_file, code, inhalt):
     with open(json_file, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
-# Erzeuge eindeutigen Schlüssel
-def create_unique_code(json_file):
-    existing_codes = load_code_set(json_file)
-
-    for _ in range(10000):
-        new_code = generate_mixed_code()
-        if new_code not in existing_codes:
-            return new_code
-
-    raise Exception("Keine eindeutigen Schlüssel mehr verfügbar.")
-
-# 🔁 Beispielnutzung
-json_file = "dokumente.json"
-inhalt = "Beispielinhalt für das neue Dokument"
-
-code = create_unique_code(json_file)
-save_new_entry(json_file, code, inhalt)
-
-print("✅ Neuer eindeutiger Code erstellt und gespeichert:", code)
+    del data  # Entferne Liste nach dem Speichern
+    del entry
