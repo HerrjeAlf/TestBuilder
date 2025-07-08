@@ -100,8 +100,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
                    + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechne die Nullstellen der Graphen mithilfe der '
-                       + f'Funktionsgleichungen. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Berechne die Nullstellen der Graphen mithilfe der Funktionsgleichungen. \n\n'))
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -112,7 +112,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
         aufgabe.append(beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
-                       + f'-2 < x < 2.')
+                       + f'-2 < x < 2. \n\n')
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
@@ -185,13 +185,13 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                 lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
                              + fkt_bez[k+1] + r'.} \quad (1BE) \\'
                              + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
-                             + r'die~Lage~überprüfen} \quad (2BE) \hspace{10em}')
+                             + r'die~Lage~überprüfen} \quad (2BE)')
             else:
                 ywert_t = ywert_t + zzahl(1,2)
                 lsg_vergl = (r' \quad \mathrm{f.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
                              + fkt_bez[k+1] + r'.} \quad (1BE) \\'
                              + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
-                             + r'die~Lage~überprüfen} \quad (2BE) \hspace{10em}')
+                             + r'die~Lage~überprüfen} \quad (2BE)')
 
             lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{15em} \\'
                    + gzahl(fkt_m[anz_einf]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n[anz_einf]) + '~=~'

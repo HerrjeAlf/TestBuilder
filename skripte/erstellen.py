@@ -166,7 +166,11 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
     def erzeugen_test(Teil, liste_seiten, angaben):
         schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel =\
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
-        in_tagen, liste_bez, liste_punkte, uuid = angaben[8], angaben[9], angaben[10], angaben[-1]
+        if len(angaben) > 11:
+            in_tagen, liste_bez, liste_punkte, uuid = angaben[8], angaben[9], angaben[10], angaben[-1]
+        else:
+            in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
+
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
         Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d.%m.%Y')
 

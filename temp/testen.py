@@ -28,7 +28,7 @@ anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][0]
 
-aufgabenliste = [[(lineare_funktionen, [1, ['a']])]]
+aufgabenliste = [[(lineare_funktionen, [1])]]
 
 for i in range(anzahl):
     Aufgaben = [[titel(*args) for titel, args in teil_liste] for teil_liste in aufgabenliste]
