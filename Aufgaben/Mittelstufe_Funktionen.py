@@ -77,9 +77,10 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step]) + r' \quad (6BE) ')
             lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
         if anz_einf + anz_pkt == 1:
-            aufgabe.append(beschriftung(len(teilaufg), i) + f'Lies aus dem Graphen die Funktionsgleichung ab. \n\n')
+            aufgabe.extend((beschriftung(len(teilaufg), i) + f'Lies aus dem Graphen die Funktionsgleichung ab.', 'Grafik'))
+
         else:
-            aufgabe.append(beschriftung(len(teilaufg), i) + f'Lies aus den Graphen die jeweilige Funktionsgleichung ab.\n\n')
+            aufgabe.extend((beschriftung(len(teilaufg), i) + f'Lies aus den Graphen die jeweilige Funktionsgleichung ab.', 'Grafik'))
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -110,8 +111,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        aufgabe.extend((beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
-                       + f'-2 < x < 2.', 'Grafik'))
+        aufgabe.append(beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
+                       + f'-2 < x < 2.')
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
@@ -142,13 +143,13 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                         str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
                         + ' im oberen Koordinatensystem ein. \n\n'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
-        if 'f' not in teilaufg:
+        if 'e' not in teilaufg:
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
             graph_xyfix(*[fkt_m_pkt[anz_pkt]*x + fkt_n_pkt[anz_pkt]],
                         bezn=fkt_bez[k], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
             loesung.append('Figure')
         else:
-            loesung.append(r' \mathrm{Der~Graph~ist~im~Koordinatensystem~von~Teilaufgabe~f~enthalten.} ')
+            loesung.append(r' \mathrm{Der~Graph~ist~im~Koordinatensystem~von~Teilaufgabe~e~enthalten.} ')
 
         liste_punkte.append(punkte)
         i += 1
