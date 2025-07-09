@@ -164,12 +164,12 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
 # hier wird ein Test erzeugt
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
     def erzeugen_test(Teil, liste_seiten, angaben):
+        if len(angaben) < 12:
+            kennziffer = create_unique_code('daten/aufgaben')
+            angaben.append(kennziffer)
         schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel =\
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
-        if len(angaben) > 11:
-            in_tagen, liste_bez, liste_punkte, uuid = angaben[8], angaben[9], angaben[10], angaben[-1]
-        else:
-            in_tagen, liste_bez, liste_punkte = angaben[8], angaben[9], angaben[10]
+        in_tagen, liste_bez, liste_punkte, kennziffer = angaben[8], angaben[9], angaben[10], angaben[-1]
 
         print(f'\033[38;2;100;141;229m\033[1m{Teil}\033[0m')
         Datum = (datetime.now() + timedelta(days=in_tagen)).strftime('%d.%m.%Y')
@@ -222,7 +222,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             table1.add_hline()
             table1.add_row([NoEscape(r' \centering ' + Klasse), NoEscape(r' \centering ' + Fach),
                             NoEscape(r' \centering ' + Kurs), NoEscape(r' \centering ' + Lehrer),
-                            NoEscape(r' \centering ' + Datum), NoEscape(r' \centering ' + uuid), ''])
+                            NoEscape(r' \centering ' + Datum), NoEscape(r' \centering ' + kennziffer), ''])
             table1.add_hline()
             Aufgabe.append(table1)
             Aufgabe.append(' \n\n\n\n')
@@ -265,7 +265,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             Loesung = Document(geometry_options=geometry_options)
             packages(Loesung)
 
-            Loesung.append(LargeText(bold(f'Loesung für {Art} {Teil} \n {Titel}')))
+            Loesung.append(LargeText(bold(f'Loesung für {Art} ({kennziffer}) - {Teil} \n {Titel}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
             k = 0

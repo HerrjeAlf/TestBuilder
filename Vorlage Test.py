@@ -55,10 +55,10 @@ for i in range(anzahl):
             schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, identifier, uuid = sys.argv[3:]
             angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, identifier, uuid]
     else:
-        code = create_unique_code('daten/aufgaben')
+        kennziffer = create_unique_code('daten/aufgaben')
         aufgabenliste_serialisiert = serialisiere_aufgaben_liste(aufgabenliste)
-        save_new_entry("daten/aufgaben.json", code, aufgabenliste_serialisiert)
-        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, code]
+        save_new_entry("daten/aufgaben.json", kennziffer, aufgabenliste_serialisiert)
+        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, kennziffer]
 
 
 
