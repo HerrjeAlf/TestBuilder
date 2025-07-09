@@ -18,7 +18,7 @@ Art = 'HAK 15'
 Titel = 'Grundbegriffe der Wahrscheinlichkeit'
 datum_delta = 1  # in Tagen (0 ist Heute und 1 ist Morgen, 2 Übermorgen, usw.)
 anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
-probe = [False, True][1] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B uswy
+probe = [False, True][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B uswy
 
 liste_punkte = ['Punkte']
 liste_bez = ['Aufgabe']
