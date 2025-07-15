@@ -2451,7 +2451,7 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], neue_seite=None, anzahl=False,
 
     if 'b' in teilaufg:
         # Die SuS sollen zu einem gegebenen Prozentsatz ein Prozentfeld grau markieren
-        aufgabe.append('Gib den Anteil der grau eingefärbten Felder in Prozent an. \n\n')
+        aufgabe.append('Gib den Anteil der grau eingefärbten Felder in Prozent an. ')
         for step in range(anz_teilaufg['b']):
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             grafiken_loesung.append(f'Loesung_{str(nr)}_{str(liste_teilaufg[i])})')
@@ -2465,8 +2465,8 @@ def darstellung_prozente(nr, teilaufg=['a', 'b'], neue_seite=None, anzahl=False,
                         text=beschriftung(len(teilaufg),i))
             prozentfeld(rows, cols, 0, 0, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + 'p = '
-                                     + gzahl(int(anz / (rows * cols) * 100)) + r' \% '), ['Grafik', '200px', None]))
+            aufgabe.extend((['Grafik', '200px', None], NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i) + 'p = '
+                                     + gzahl(int(anz / (rows * cols) * 100)) + r' \% '), ' \n\n'))
             loesung.append(['Grafik', '200px'])
             aufgabe.append('NewPage') if neue_seite == i else ''
             ausw.clear()

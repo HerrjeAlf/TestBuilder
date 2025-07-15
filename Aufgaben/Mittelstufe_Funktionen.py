@@ -100,8 +100,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
                    + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
-                                + f'Berechne die Nullstellen der Graphen mithilfe der Funktionsgleichungen. \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Berechne die Nullstellen der Graphen mithilfe der Funktionsgleichungen.'), ' \n\n'))
         loesung.append(lsg)
         liste_punkte.append(punkte)
         i += 1
@@ -111,8 +111,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für '
-                       + f'-2 < x < 2. \n\n')
+        aufgabe.append(beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für'
+                       + f' -2 < x < 2. \n\n')
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
