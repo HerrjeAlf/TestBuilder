@@ -132,50 +132,7 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-import random
-import string
-import json
-import os
+liste1, liste2 = [0,1,2,3,4,5,6], []
 
-def generate_mixed_code():
-    chars = string.ascii_uppercase + string.digits
-    return ''.join(random.choices(chars, k=4)) + '-' + ''.join(random.choices(chars, k=4))
-
-def create_unique_code(json_file):
-    if os.path.exists(json_file):
-        with open(json_file, 'r', encoding='utf-8') as file:
-            try:
-                codes_set = set(entry['code'] for entry in json.load(file))
-            except json.JSONDecodeError:
-                codes_set = set()
-    else:
-        codes_set = set()
-
-    for _ in range(10000):
-        new_code = generate_mixed_code()
-        if new_code not in codes_set:
-            del codes_set  #  Löscht das Set direkt nach der Prüfung
-            return new_code
-
-    del codes_set
-    raise Exception("Keine eindeutigen Schlüssel mehr verfügbar.")
-
-def save_new_entry(json_file, code, inhalt):
-    entry = {"code": code, "inhalt": inhalt}
-
-    if os.path.exists(json_file):
-        with open(json_file, 'r', encoding='utf-8') as file:
-            try:
-                data = json.load(file)
-            except json.JSONDecodeError:
-                data = []
-    else:
-        data = []
-
-    data.append(entry)
-
-    with open(json_file, 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
-
-    del data  # Entferne Liste nach dem Speichern
-    del entry
+print(liste1)
+print(liste2)

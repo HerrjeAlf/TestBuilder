@@ -29,20 +29,31 @@ probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][0]
 
 for i in range(anzahl):
-    Aufgaben = [[darstellung_prozente(1, wdh=2),
-                 prozentrechenaufgaben(2)]]
+    Aufgaben = [darstellung_prozente(1, wdh=2),
+                 prozentrechenaufgaben(2)]
 
     # Bezeichnung der Punktetabelle
     liste_punkte = ['Punkte']
     liste_bez = ['Aufgabe']
 
     # auslesen der Bezeichung und der Punkte aus den Aufgaben
-    liste_seiten = []
-    for element in Aufgaben:
-        for aufgabe in element:
-            liste_bez.extend(aufgabe[5])
-            liste_punkte.extend(aufgabe[4])
-        liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
+    sheets, sheet = [], []
+    for aufgabe in Aufgaben:
+        liste_bez.extend(aufgabe[5])
+        liste_punkte.extend(aufgabe[4])
+
+        if 'NewPage' in aufgabe[0]:
+            idx = aufgabe[0].index('NewPage')
+            sheet1 = [element[:idx] for element in aufgabe]
+            sheet2 = [element[idx:] for element in aufgabe]
+
+            sheet.append(sheet1)
+            sheets.append(seite(sheet))
+            sheet = sheet2
+        else:
+            sheet.append(aufgabe)
+
+    sheets.append(seite(sheet))
 
     if len(sys.argv) > 1 and sys.argv[1] == 'website':
         schnell = True if sys.argv[2] == 'True' else False
