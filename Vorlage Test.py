@@ -48,7 +48,8 @@ for i in range(anzahl):
             angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, identifier, uuid]
 
     else:
-        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+        code = generate_mixed_code()
+        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, code]
 
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
     pdfs = test_erzeugen(sheets, angaben, i, probe, clean_tex)
