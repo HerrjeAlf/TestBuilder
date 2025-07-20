@@ -132,7 +132,11 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-liste1, liste2 = [0,1,2,3,4,5,6], []
+liste1, liste2 = ['Test 1','Test 2','Test 2', 'Test 3', 'Test 4', 'Test 5', 'Test 6'], []
 
 print(liste1)
 print(liste2)
+
+for k, element in enumerate(liste1):
+    print(element)
+    print(k)

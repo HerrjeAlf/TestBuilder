@@ -32,10 +32,13 @@ def seite(aufgaben):
     Loesung = Document(geometry_options=geometry_options)
     Aufgabe.packages.append(Package('array'))
     Loesung.packages.append(Package('array'))
-
     for aufgabe in aufgaben:
+        # print(aufgabe)
+        # print(aufgabe[0])
+        # print(aufgabe[0][0])
         i = 0
         for elements in aufgabe[0]:
+            # print(elements)
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
@@ -158,8 +161,8 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
 
 
 # hier wird ein Test erzeugt
-def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
-    def erzeugen_test(Teil, liste_seiten, angaben):
+def test_erzeugen(liste_inhalte, angaben, anzahl=1, probe=False, clean_tex=True):
+    def erzeugen_test(Teil, liste_inhalte, angaben):
         if len(angaben) < 12:
             kennziffer = create_unique_code('daten/aufgaben')
             angaben.append(kennziffer)
@@ -233,17 +236,37 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
                 return table3
 
             # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-            k = 0
-            for element in liste_seiten:
+            agst, aufg = [], []
+            for elements in liste_inhalte:
+                if 'NewPage' in elements[0]:
+                    idx = elements[0].index('NewPage')
+                    # print('erster Teil in Liste Inhalte: ')
+                    # print(elements[0][:idx])
+                    aufg += [elements[0][:idx]]
+                    # print('aufg: ')
+                    # print(aufg)
+                    agst.append(aufg)
+                    aufg = [elements[0][idx+1:]]
+                else:
+                    aufg += elements[0]
+            agst.append(aufg)
+            print('Liste der Inhalte 1:')
+            print(liste_inhalte[0][0])
+            print('Liste der Inhalte 2:')
+            print(liste_inhalte[0][1])
+            print(' \n\n Liste der Aufgabenstellung:')
+            print(agst)
+
+            for k, elements in enumerate(agst):
                 if k > 0:
                     Aufgabe.append(tabelle_kopf(Titel))
                     Aufgabe.append('\n\n')
-                Aufgabe.extend(element[0])
+                Aufgabe.extend(elements)
+                print('Element ' + str(k) + ': ')
+                print(elements)
                 Aufgabe.append(NewPage())
-                k += 1
 
-
-            if len(liste_seiten) % 2 == 0:
+            if len(agst) % 2 == 0:
                 Aufgabe.append(tabelle_kopf('für Notizen und Rechnungen'))
                 Aufgabe.append(NewPage())
 
@@ -265,7 +288,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
             k = 0
-            for element in liste_seiten:
+            for element in liste_inhalte:
                 Loesung.extend(element[1])
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
@@ -282,7 +305,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
 
     alphabet = string.ascii_uppercase
     teil = f'Probe {anzahl + 1:02d}' if probe else f'Gr. {alphabet[anzahl]}'
-    pfade = erzeugen_test(teil, liste_seiten, angaben)
+    pfade = erzeugen_test(teil, liste_inhalte, angaben)
     print()  # Abstand zwischen den Arbeiten (im Terminal)
 
     # [Pfad Aufgabe, Pfad Erwartungshorizont]

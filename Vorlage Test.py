@@ -29,31 +29,13 @@ probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][0]
 
 for i in range(anzahl):
-    Aufgaben = [darstellung_prozente(1, wdh=2),
-                 prozentrechenaufgaben(2)]
+    Aufgaben = [parabel_und_gerade(1, neue_seite=1), lineare_funktionen(2)]
 
-    # Bezeichnung der Punktetabelle
-    liste_punkte = ['Punkte']
-    liste_bez = ['Aufgabe']
-
-    # auslesen der Bezeichung und der Punkte aus den Aufgaben
-    sheets, sheet = [], []
+    liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:
         liste_bez.extend(aufgabe[5])
         liste_punkte.extend(aufgabe[4])
-
-        if 'NewPage' in aufgabe[0]:
-            idx = aufgabe[0].index('NewPage')
-            sheet1 = [element[:idx] for element in aufgabe]
-            sheet2 = [element[idx:] for element in aufgabe]
-
-            sheet.append(sheet1)
-            sheets.append(seite(sheet))
-            sheet = sheet2
-        else:
-            sheet.append(aufgabe)
-
-    sheets.append(seite(sheet))
+    sheets = [seite(Aufgaben)]
 
     if len(sys.argv) > 1 and sys.argv[1] == 'website':
         schnell = True if sys.argv[2] == 'True' else False
@@ -69,7 +51,7 @@ for i in range(anzahl):
         angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
 
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
-    pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
+    pdfs = test_erzeugen(sheets, angaben, i, probe, clean_tex)
 
     test.append(f'{pdfs[0]}.pdf')
     erwartungshorizont.append(f'{pdfs[1]}.pdf')

@@ -744,7 +744,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 1
         aufgabe.extend((NoEscape('Im unteren Koordinatensystem ist der Graph der Parabel p(x) = $ x^2 '
-                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + '$ dargestellt. \n\n'),
+                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + '$ dargestellt.'),
                         ['Grafik','200px'], NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                                      + r') Lesen Sie den Scheitelpunkt S'
                                                      + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),
