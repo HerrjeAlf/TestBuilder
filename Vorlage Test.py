@@ -30,11 +30,12 @@ clean_tex = [True, False][0]
 
 for i in range(anzahl):
     Aufgaben = [parabel_und_gerade(1, neue_seite=1), lineare_funktionen(2)]
+
     liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:
         liste_bez.extend(aufgabe[5])
         liste_punkte.extend(aufgabe[4])
-    sheets = [seite(Aufgaben)]
+    sheets = seite(Aufgaben)
 
 
     if len(sys.argv) > 1 and sys.argv[1] == 'website':
