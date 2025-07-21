@@ -27,71 +27,110 @@ for name in os.listdir('pdf'):
 
 geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "rmargin": "0.7in"}
 
-def seite(aufgaben):
-    Aufgabe = Document(geometry_options=geometry_options)
-    Loesung = Document(geometry_options=geometry_options)
-    Aufgabe.packages.append(Package('array'))
-    Loesung.packages.append(Package('array'))
+def seite(liste_inhalte):
+    # print(liste_inhalte)
+    liste_aufgaben = []
+    for k, elements in enumerate(liste_inhalte):
+        # print('elements ' + str(k) + ': ')
+        # print(elements)
+        for i, element in enumerate(elements[0]):
+            # print('element ' + str(i) + ': ')
+            # print(element)
+            liste_aufgaben.append(element)
+    # print('Aufgaben: ')
+    # print(liste_aufgaben)
+    indexes = [i for i, eintrag in enumerate(liste_aufgaben) if eintrag == "NewPage"]
 
-    for aufgabe in aufgaben:
+    # print(indexes)
+    aufgabe, aufg, inhalte_ltx = [], [], []
+    for idx in indexes:
+        aufg.extend(liste_aufgaben[:idx])
+        aufgabe.append(aufg)
+        aufg = [liste_aufgaben[idx + 1:]]
+    else:
+        aufgabe.append(aufg)
+    aufgabe.append(aufg)
+    # print('Aufgaben getrennt: ')
+    # print(aufgabe)
+    for elements in liste_inhalte:
+        liste_lsg = [element for element in elements[1]]
+    # print('Lösungen: ')
+    # print(liste_lsg)
+    grafiken_aufgaben = [element[2] for element in liste_inhalte]
+    # print('Grafiken Aufgaben: ')
+    # print(grafiken_aufgaben)
+    grafiken_loesungen = [element[3] for element in liste_inhalte]
+    # print('Grafiken Lösungen: ')
+    # print(grafiken_loesungen)
+
+    def aufgabentext(seite, grafiken_aufgaben):
+        Aufgabe = Document(geometry_options=geometry_options)
+        Aufgabe.packages.append(Package('array'))
         i = 0
-        for elements in aufgabe[0]:
+        for elements in seite:
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
             elif 'Figure' in elements:
                 with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{aufgabe[2][i]}', width='250px', placement=None)
+                    graph.add_image(f'../img/temp/{grafiken_aufgaben[i]}', width='250px', placement=None)
                 Aufgabe.append(SmallText('Abbildung ' + str(i+1) + ' \n\n'))
                 i += 1
             elif 'Grafik' in elements:
                 placement = elements[2] if len(elements) > 2 and isinstance(elements, list) else NoEscape(r"\centering")
                 width = elements[1] if len(elements) > 1 and isinstance(elements, list) else '250px'
                 with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{aufgabe[2][i]}', width=width, placement=placement)
+                    graph.add_image(f'../img/temp/{grafiken_aufgaben[i]}', width=width, placement=placement)
                 i += 1
             elif 'Bild' in elements:
                 placement = elements[2] if len(elements) > 2 and isinstance(elements, list) else NoEscape(r"\centering")
                 width = elements[1] if len(elements) > 1 and isinstance(elements, list) else '300px'
                 with Aufgabe.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/aufgaben/{aufgabe[2][i]}', width=width, placement=placement)
+                    graph.add_image(f'../img/aufgaben/{grafiken_aufgaben[i]}', width=width, placement=placement)
                 i += 1
             else:
                 Aufgabe.append(elements)
+            del grafiken_aufgaben[:i]
+            return Aufgabe
 
-    for loesung in aufgaben:
+    for element in aufgabe:
+        inhalte_ltx.append(aufgabentext(element, grafiken_aufgaben))
+    # print('inhalte_ltx: ')
+    # print(inhalte_ltx)
+
+    Loesung = Document(geometry_options=geometry_options)
+    Loesung.packages.append(Package('array'))
+    for loesung in liste_lsg:
         i = 0
-        for elements in loesung[1]:
-            if '~' in elements:
-                with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
-                    agn.append(elements)
-            elif 'Figure' in elements:
+        if '~' in loesung:
+            with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
+                agn.append(loesung)
+        elif 'Figure' in loesung:
+            with Loesung.create(Figure(position='ht!')) as graph:
+                graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
+            i += 1
+        elif 'Grafik' in loesung:
+            if isinstance(loesung, list) and len(loesung) == 2:
                 with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
+                    graph.add_image(f'../img/temp/{grafiken_loesungen[i]}', width=loesung[1])
                 i += 1
-            elif 'Grafik' in elements:
-                if isinstance(elements, list) and len(elements) == 2:
-                    with Loesung.create(Figure(position='ht!')) as graph:
-                        graph.add_image(f'../img/temp/{loesung[3][i]}', width=elements[1])
-                    i += 1
-                elif isinstance(elements, str):
-                    with Loesung.create(Figure(position='ht!')) as graph:
-                        graph.add_image(f'../img/temp/{loesung[3][i]}', width='250px')
-                    i += 1
-            elif 'Bild' in elements:
-                if isinstance(elements, list) and len(elements) == 2:
-                    with Loesung.create(Figure(position='ht!')) as graph:
-                        graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width=elements[1])
-                    i += 1
-                elif isinstance(elements, str):
-                    with Loesung.create(Figure(position='ht!')) as graph:
-                        graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width='300px')
-                    i += 1
-            elif 'NewPage' in elements:
-                Aufgabe.append(NewPage())
-            else:
-                Loesung.append(elements)
-    return Aufgabe, Loesung
+            elif isinstance(loesung, str):
+                with Loesung.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/temp/{grafiken_loesungen[i]}', width='250px')
+                i += 1
+        elif 'Bild' in loesung:
+            if isinstance(loesung, list) and len(loesung) == 2:
+                with Loesung.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/aufgaben/{grafiken_loesungen[i]}', width=loesung[1])
+                i += 1
+            elif isinstance(loesung, str):
+                with Loesung.create(Figure(position='ht!')) as graph:
+                    graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width='300px')
+                i += 1
+        else:
+            inhalte_ltx.append(loesung)
+
+    return inhalte_ltx
 
 # hier wird ein Arbeitsblatt erzeugt
 def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
@@ -163,7 +202,7 @@ def arbeitsblatt_erzeugen(liste_seiten, angaben, anzahl=1, clean_tex=True):
 def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
     def erzeugen_test(Teil, liste_seiten, angaben):
         if len(angaben) < 12:
-            kennziffer = create_unique_code('daten/aufgaben')
+            kennziffer = generate_mixed_code()
             angaben.append(kennziffer)
         schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel =\
             (angaben[0], angaben[1], angaben[2], angaben[3], angaben[4], angaben[5], angaben[6], angaben[7])
@@ -210,7 +249,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             packages(Aufgabe)
 
             # Kopf erste Seite
-            table1 = Tabular('| c | p{2.5cm} | p{2cm} | p{4cm} | p{2cm} | p{2.5cm}  c |', row_height=1.2)
+            table1 = Tabular('| c | p{2.5cm} | p{2cm} | p{4cm} | p{2cm} | c c |', row_height=1.2)
             table1.add_row((MultiColumn(7, align='c', data=MediumText(bold(schule))),))
             table1.add_row((MultiColumn(7, align='c', data=SmallText(bold(schulart))),))
             table1.add_hline()
@@ -235,17 +274,18 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
                 return table3
 
             # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-            k = 0
-            for element in liste_seiten:
+            print('Liste Seiten -1: ')
+            print(liste_seiten[:-1])
+            for k, element in enumerate(liste_seiten[:-1]):
                 if k > 0:
                     Aufgabe.append(tabelle_kopf(Titel))
                     Aufgabe.append('\n\n')
-                Aufgabe.extend(element[0])
+                Aufgabe.extend(element)
                 Aufgabe.append(NewPage())
                 k += 1
 
 
-            if len(liste_seiten) % 2 == 0:
+            if len(liste_seiten[:-1]) % 2 == 0:
                 Aufgabe.append(tabelle_kopf('für Notizen und Rechnungen'))
                 Aufgabe.append(NewPage())
 
@@ -268,7 +308,8 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
             k = 0
             for element in liste_seiten:
-                Loesung.extend(element[1])
+                print(liste_seiten)
+                Loesung.extend(element[-1])
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
