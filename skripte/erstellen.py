@@ -62,9 +62,6 @@ def seite(liste_inhalte):
         aufg.extend(liste_aufgaben)
     aufgabe.append(aufg)
 
-
-
-
     def aufgabentext(aufgaben, grafiken_aufgaben):
         # print(aufgaben)
         Aufgabe = Document(geometry_options=geometry_options)
@@ -99,24 +96,19 @@ def seite(liste_inhalte):
         return Aufgabe
 
     for k, element in enumerate(aufgabe):
-        print('Aufgaben getrennt: ')
-        print(element)
         inhalte_ltx.append(aufgabentext(element, grafiken_aufgaben))
-    # for k, element in enumerate(inhalte_ltx):
-    #     print('inhalte_ltx ' + str(k) + ': ')
-    #     print(element)
 
     def loesungtext(liste_lsg, grafiken_loesungen):
         Loesung = Document(geometry_options=geometry_options)
         Loesung.packages.append(Package('array'))
+        i = 0
         for loesung in liste_lsg:
-            i = 0
             if '~' in loesung:
                 with Loesung.create(Alignat(aligns=2, numbering=False, escape=False)) as agn:
                     agn.append(loesung)
             elif 'Figure' in loesung:
                 with Loesung.create(Figure(position='ht!')) as graph:
-                    graph.add_image(f'../img/temp/{loesung[3][i]}', width='200px')
+                    graph.add_image(f'../img/temp/{grafiken_loesungen[i]}', width='200px')
                 i += 1
             elif 'Grafik' in loesung:
                 if isinstance(loesung, list) and len(loesung) == 2:
@@ -134,11 +126,12 @@ def seite(liste_inhalte):
                     i += 1
                 elif isinstance(loesung, str):
                     with Loesung.create(Figure(position='ht!')) as graph:
-                        graph.add_image(f'../img/aufgaben/{loesung[2][i]}', width='300px')
+                        graph.add_image(f'../img/aufgaben/{grafiken_loesungen[i]}', width='300px')
                     i += 1
-        else:
-            Loesung.append(loesung)
+            else:
+                Loesung.append(loesung)
         return Loesung
+
     inhalte_ltx.append(loesungtext(liste_lsg, grafiken_loesungen))
     # for k, element in enumerate(inhalte_ltx):
     #     print('inhalte_ltx ' + str(k) + ': ')
@@ -261,8 +254,8 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             Loesung.append(LargeText(bold(f'Loesung für {Art} ({kennziffer}) - {Teil} \n {Titel}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
-            # print(liste_seiten[-1])
-            Loesung.extend(liste_seiten[-1])
+            print(liste_seiten[-1])
+            Loesung.append(liste_seiten[-1])
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
