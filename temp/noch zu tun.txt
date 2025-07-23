@@ -1,11 +1,14 @@
-allgemein:
-- alte Skripte in neue Form anpassen
-- optional Zeitstempel in Fußzeile
-- bei allen Aufgaben die zufällig erstellten Listen wieder schließen um Speicher zu sparen
-- ggf. Aufgaben mit pruef_klasse_10 neu gestalten (statt Grafik einfügen einfach neue Teilaufgabe d) mit Grafik einfügen und dann
-    for element in teilaufg:
-        if element = 'a': ...
+in den Ferien:
+bei allen Aufgaben
+    - bei allen Aufgaben die zufällig erstellten Listen wieder schließen um Speicher zu sparen
+    - Notizfeld einfügen mit Parameter notizfeld=[True, False][0]
+    - "NewPage" einfügen
+    - Parameter als Liste
 
+- Tabellenkopf Test Überschrift linksbündig
+- Aufgabe "Terme und Gleichungen" a, b oder c das Eurozeichen wird als Pfundzeichen angezeigt beheben
+
+allgemein:
 
 Berechnungen:
  - kleine Kurvendiskussion
@@ -36,10 +39,6 @@ in Aufgaben Wahrscheinlichkeit:
 
 in Algebra:
 - Vektorzugberechnung (siehe LB MA 12 LK S. 54) mit beliebigen Dreieck oder Viereck hinzufügen
-- Funktion programmieren, die Gleichungen der Art lsg_vec = orts_vec + r * vec1 + s * vec2 löst
-  in 3-dim und die vollst. Lsg in Latex ausgibt
-  --> er soll aber auch Gleichungen mit lsg_vec = r* vec1, oder lsg_vec = orts_vec + r*vec1 berücksichtigen
-  --> die vec dürfen auch nullen enthalten
 - Aufgaben zur Geradenschar anfertigen (siehe LB MA 12 LK S. 127 Nr. 5)
 - Aufgabe zur Abstandberechnung (siehe LB MA 12 LK S. 207 Nr. 23)
 
@@ -53,10 +52,8 @@ Physik
 - Test für Physik Klass 8 (Spannung, Strom, Schaltungen usw.) erstellen
 
 langfristig:
-- GUI
 - *.exe für GUI (damit Schüler*innen, Kollegen*innen die Software nutzen können)
 
 neue Projekte (Wunschzettel)
-- GUI für TestBuilder
 - Planung Stundenplan mit Graphentheorie in Python programmieren
 - Mathe KI von Google (in Arbeit) zur automatischen Korrektur von Test/Klausuren anpassen
