@@ -63,13 +63,10 @@ def seite(liste_inhalte):
     aufgabe.append(aufg)
 
     def aufgabentext(aufgaben, grafiken_aufgaben):
-        # print(aufgaben)
         Aufgabe = Document(geometry_options=geometry_options)
         Aufgabe.packages.append(Package('array'))
         i = 0
         for k, elements in enumerate(aufgaben):
-            # print('element in Aufgabentext: ' + str(k) + ': ')
-            # print(elements)
             if '~' in elements:
                 with Aufgabe.create(Alignat(aligns=1, numbering=False, escape=False)) as agn:
                     agn.append(elements)
@@ -133,9 +130,6 @@ def seite(liste_inhalte):
         return Loesung
 
     inhalte_ltx.append(loesungtext(liste_lsg, grafiken_loesungen))
-    # for k, element in enumerate(inhalte_ltx):
-    #     print('inhalte_ltx ' + str(k) + ': ')
-    #     print(element)
 
     return inhalte_ltx
 
@@ -214,19 +208,7 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
                 table3.add_empty_row()
                 return table3
 
-            # hier werden die Aufgaben der einzelnen Seiten an die Liste Aufgabe angehängt
-
-            # print('Liste Seiten: ')
-            # print(liste_seiten)
-            # for k, elements in enumerate(liste_seiten):
-            #     print('elements ' + str(k) + ': ')
-            #     # print(elements)
-            # for i, element in enumerate(liste_seiten[0][:-1]):
-            #     print('element ' + str(i) + ': ')
-            #     print(element)
-
             for k, elements in enumerate(liste_seiten[:-1]):
-                print(elements)
                 if k > 1:
                     Aufgabe.append(tabelle_kopf(Titel))
                     Aufgabe.append('\n\n')
@@ -254,8 +236,8 @@ def test_erzeugen(liste_seiten, angaben, anzahl=1, probe=False, clean_tex=True):
             Loesung.append(LargeText(bold(f'Loesung für {Art} ({kennziffer}) - {Teil} \n {Titel}')))
 
             # hier werden die Lösungen der einzelnen Seiten an die Liste Aufgabe angehängt
-            print(liste_seiten[-1])
-            Loesung.append(liste_seiten[-1])
+
+            Loesung.extend(liste_seiten[-1])
 
             Loesung.append(MediumText(bold(f'insgesamt {Punkte} Punkte')))
 
