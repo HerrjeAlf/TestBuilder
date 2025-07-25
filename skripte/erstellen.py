@@ -39,18 +39,9 @@ def seite(liste_inhalte):
             grafiken_aufgaben.append(element)
         for element in elements[3]:
             grafiken_loesungen.append(element)
-    # print('liste_aufgaben')
-    # print(liste_aufgaben)
-    # print('liste_lsg')
-    # print(liste_lsg)
-    # print('liste_grfiken_aufgaben')
-    # print(grafiken_aufgaben)
-    # print('grafiken loesung')
-    # print(grafiken_loesungen)
 
     indexes = [i for i, eintrag in enumerate(liste_aufgaben) if eintrag == "NewPage"]
 
-    print(indexes)
     aufgabe, aufg, inhalte_ltx = [], [], []
     if indexes:
         for idx in indexes:
