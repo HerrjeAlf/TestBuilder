@@ -24,25 +24,19 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Vorlage'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
-clean_tex = [True, False][0]
+clean_tex = [True, False][1]
 
 for i in range(anzahl):
-    Aufgaben = [[darstellung_prozente(1, wdh=2),
-                 prozentrechenaufgaben(2)]]
+    Aufgaben = [kurvendiskussion_polynome(1)]
 
-    # Bezeichnung der Punktetabelle
-    liste_punkte = ['Punkte']
-    liste_bez = ['Aufgabe']
+    liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
+    for aufgabe in Aufgaben:
+        liste_bez.extend(aufgabe[5])
+        liste_punkte.extend(aufgabe[4])
+    sheets = seite(Aufgaben)
 
-    # auslesen der Bezeichung und der Punkte aus den Aufgaben
-    liste_seiten = []
-    for element in Aufgaben:
-        for aufgabe in element:
-            liste_bez.extend(aufgabe[5])
-            liste_punkte.extend(aufgabe[4])
-        liste_seiten.append(seite(element)) # z.b. liste_seiten = [seite(aufgaben_seite1), seite(aufgaben_seite2)]
 
     if len(sys.argv) > 1 and sys.argv[1] == 'website':
         schnell = True if sys.argv[2] == 'True' else False
@@ -55,10 +49,11 @@ for i in range(anzahl):
             angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum, liste_bez, liste_punkte, identifier, uuid]
 
     else:
-        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte]
+        code = generate_mixed_code()
+        angaben = [schule, schulart, Kurs, Fach, Klasse, Lehrer, Art, Titel, datum_delta, liste_bez, liste_punkte, code]
 
     # Erstellt die Tests und nimmt die Pfade, welche zurückgegeben werden
-    pdfs = test_erzeugen(liste_seiten, angaben, i, probe, clean_tex)
+    pdfs = test_erzeugen(sheets, angaben, i, probe, clean_tex)
 
     test.append(f'{pdfs[0]}.pdf')
     erwartungshorizont.append(f'{pdfs[1]}.pdf')

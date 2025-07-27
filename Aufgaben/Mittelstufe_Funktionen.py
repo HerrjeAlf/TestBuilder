@@ -28,18 +28,23 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
 
     # Erstellen der vorgegebenen Graphen
-    aufg_e = 1 if 'e' in teilaufg else 0
-    fkt_m = random_selection([-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5], anz_einf + aufg_e)
-    fkt_n = random_selection(list(range(-3,4)), anz_einf + aufg_e)
+    aufg_e = 1 if bool(set(teilaufg) & {'e', 'f'}) else 0
+    liste_fkt_m = [-2.5,-2,-1.5,-1,-0.5,0.5,1,1.5,2,2.5]
+    liste_fkt_n = list(range(-3,4))
+    fkt_m = random_selection(liste_fkt_m, anz_einf + aufg_e)
+    fkt_n = random_selection(liste_fkt_n, anz_einf + aufg_e)
+    del liste_fkt_m
+    del liste_fkt_n
     # Punkte der schwierigeren Funktionen
     aufg_d = 1 if 'd' in teilaufg else 0
-    xwerte_1, ywerte_1 = (random_selection(list(range(-5,6)), anz_pkt + aufg_d),
-                          random_selection(list(range(-5,6)), anz_pkt + aufg_d))
+    liste_xwerte = list(range(-5,6))
+    xwerte_1, ywerte_1 = (random_selection(liste_xwerte, anz_pkt + aufg_d),
+                          random_selection(liste_xwerte, anz_pkt + aufg_d))
     xwerte_2_unbegr, ywerte_2_unbegr = ([wert+random.choice([1,2,4,6]) for wert in xwerte_1],
                                         [wert + random.choice([3,5,7]) for wert in ywerte_1])
     xwerte_2, ywerte_2 = ([wert if wert < 6 else wert - 10 for wert in xwerte_2_unbegr],
                           [wert if wert < 6 else wert - 10 for wert in ywerte_2_unbegr])
-    if xwerte_1 < xwerte_2:
+    if xwerte_1[0] < xwerte_2[0]:
         xwerte_P, ywerte_P = xwerte_1, ywerte_1
         xwerte_Q, ywerte_Q = xwerte_2, ywerte_2
     else:
@@ -55,6 +60,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                      + [vorz_v_aussen(fkt_m_pkt[k], 'x') + vorz_str(fkt_n_pkt[k]) for k in range(anz_pkt)])
     grafiken_aufgaben.append(f'Aufgabe_{nr}')
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
+    del liste_xwerte
+    del xwerte_2_unbegr, ywerte_2_unbegr
 
     if 'a' in teilaufg:
         # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
@@ -154,7 +161,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if bool(set(teilaufg) & {'e', 'f'}):
         # zu gegebener Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
