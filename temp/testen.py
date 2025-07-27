@@ -29,7 +29,7 @@ probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][1]
 
 for i in range(anzahl):
-    Aufgaben = [kurvendiskussion_polynome(1)]
+    Aufgaben = [lineare_funktionen(1)]
 
     liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:
