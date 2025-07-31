@@ -9,17 +9,19 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,1,2,3,4,5,6,7][1], anz_pkt=[0,1,2,3,4,5,6,7][1], i=0, BE=[]):
+def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=list(range(8))[1], anz_pkt=list(range(8))[1], notizfeld=[False, True][0], neue_seite=[None,1,2,3,4,5,6][0], i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer linearen Funktion ablesen, einzeichnen und Wertetabellen erstellen.
-    # Mit dem Parameter "anz_einf=" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
-    # Mit dem Parameter "anz_pkt=" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
-    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    # Mit dem Parameter "teilaufg" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "anz_einf" kann festgelegt werden, wie viele einfache Graphen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
+    # Mit dem Parameter "anz_pkt" kann festgelegt werden, wie viele Graphen von schwierigeren Funktionen (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_einf=1" und es wird ein Graph erzeugt.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "i" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "BE" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
     liste_bez = []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(bold('Aufgabe ' + str(nr)))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -61,7 +63,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
     graph_xyfix(*liste_fkt, name=f'Aufgabe_{nr}.png')
     del xwerte_2_unbegr, ywerte_2_unbegr, xwerte_1, ywerte_1, xwerte_2, ywerte_2
 
-    if 'a' in teilaufg:
+    if bool(set(teilaufg) & {'a', 'b', 'c'}):
         # SuS sollen die Funktionsgleichungen aus den Graphen ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf)*3 + anz_pkt*6
@@ -82,11 +84,24 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + vorz_v_aussen(fkt_m_pkt[step],'x') + vorz_str(fkt_n_pkt[step]) + r' \quad (6BE) ')
             lsg = lsg + r' \\ ' if (anz_einf + step + 1) < anz_einf + anz_pkt else lsg
         if anz_einf + anz_pkt == 1:
-            aufgabe.extend((beschriftung(len(teilaufg), i) + f'Lies aus dem Graphen die Funktionsgleichung ab.', 'Grafik'))
+            aufgabe.extend(('Grafik', NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                               + f'Lies aus dem Graphen die Funktionsgleichung ab.')))
 
         else:
-            aufgabe.extend((beschriftung(len(teilaufg), i) + f'Lies aus den Graphen die jeweilige Funktionsgleichung ab.', 'Grafik'))
+            aufgabe.extend(('Grafik', NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                              + f'Lies aus den Graphen die jeweilige Funktionsgleichung ab.')))
         loesung.append(lsg)
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            if anz_einf + anz_pkt < 5:
+                grafiken_aufgaben.append('notizen_klein')
+            elif anz_einf + anz_pkt < 9:
+                grafiken_aufgaben.append('notizen_mittel')
+            else:
+                grafiken_aufgaben.append('notizen_riesig')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -105,9 +120,20 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + gzahl(fkt_n_pkt[step]) + '}{' + gzahl(fkt_m_pkt[step]) + r'}~=~'
                    + gzahl(Rational(-1*fkt_n_pkt[step], fkt_m_pkt[step])) + r' \quad (2BE) ')
             lsg = lsg + r' \\ ' if step + 1 < anz_einf + anz_pkt else lsg
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
-                                + f'Berechne die Nullstellen der Graphen mithilfe der Funktionsgleichungen.'), ' \n\n'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                 + f'Berechne die Nullstellen der Graphen mithilfe der Funktionsgleichungen.'))
         loesung.append(lsg)
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            if anz_einf + anz_pkt < 5:
+                grafiken_aufgaben.append('notizen_klein')
+            elif anz_einf + anz_pkt < 9:
+                grafiken_aufgaben.append('notizen_mittel')
+            else:
+                grafiken_aufgaben.append('notizen_riesig')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -116,8 +142,8 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = (anz_einf + anz_pkt)*2
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für'
-                       + f' -2 < x < 2. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Erstelle zu den abgelesenen Funktionen eine Wertetabelle für -2 < x < 2.'))
         # Tabelle mit den Lösungen
         def tabelle(fkt, fkt_str, bez):
             table1 = Tabular('c|c|c|c|c|c|c|c', row_height=1.2)
@@ -135,6 +161,17 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                        + r'Funktionsgleichungen.} \hspace{10em}')
         for step in range(anz_einf + anz_pkt):
             loesung.extend((tabelle(liste_fkt[step], liste_fkt_str[step], fkt_bez[step]),' \n\n\n'))
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            if anz_einf + anz_pkt < 3:
+                grafiken_aufgaben.append('notizen_klein')
+            elif anz_einf + anz_pkt < 6:
+                grafiken_aufgaben.append('notizen_mittel')
+            else:
+                grafiken_aufgaben.append('notizen_riesig')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -143,10 +180,11 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         k = anz_einf + anz_pkt
         punkte = 2
-        aufgabe.extend((f'Die Funktion {fkt_bez[k]} geht durch die Punkte P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) '
-                        f'und Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}). \n\n',
-                        str(liste_teilaufg[i]) + r') Zeichne den Graphen der Funktion ' + fkt_bez[k]
-                        + ' im oberen Koordinatensystem ein. \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent ' + f'Die Funktion {fkt_bez[k]} geht durch die Punkte'
+                                                   f'P({xwerte_P[anz_pkt]}|{ywerte_P[anz_pkt]}) und '
+                                                   f'Q({xwerte_Q[anz_pkt]}|{ywerte_Q[anz_pkt]}).'), ' \n\n',
+                        beschriftung(len(teilaufg), i) + 'Zeichne den Graphen der Funktion ' + fkt_bez[k]
+                        + ' im oberen Koordinatensystem ein.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}')
         if 'e' not in teilaufg:
             grafiken_loesung.append(f'Aufgabe_{nr}{liste_teilaufg[i]}')
@@ -155,7 +193,12 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
             loesung.append('Figure')
         else:
             loesung.append(r' \mathrm{Der~Graph~ist~im~Koordinatensystem~von~Teilaufgabe~e~enthalten.} ')
-
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -171,11 +214,12 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
             graph_xyfix(*[fkt_m[anz_einf]*x + fkt_n[anz_einf]],
                         bezn=fkt_bez[k+1], name=f'Aufgabe_{nr}{liste_teilaufg[i]}.png')
         punkte = 2
-        aufgabe.extend((NoEscape(beschriftung(len(teilaufg), i) + 'Zeichne den Graphen der Funktion $' + fkt_bez[k+1] + '(x) = '
-                       + vorz_v_aussen(fkt_m[anz_einf],'x') + vorz_str(fkt_n[anz_einf])
-                       + '$ im oberen Koordinatensystem ein.'), ' \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Zeichne den Graphen der Funktion $'
+                                 + fkt_bez[k+1] + '(x) = ' + vorz_v_aussen(fkt_m[anz_einf],'x')
+                                 + vorz_str(fkt_n[anz_einf]) + '$ im oberen Koordinatensystem ein.'), ' \n\n'))
         loesung.extend((beschriftung(len(teilaufg), i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
+        aufgabe.append('NewPage') if neue_seite == i else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -203,9 +247,16 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=[0,
                    + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m[anz_einf] * xwert_t + fkt_n[anz_einf])
                    + '~=~' + gzahl(ywert_t))
 
-            aufgabe.append(beschriftung(len(teilaufg), i) + f'Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
-                           + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt. \n\n')
+            aufgabe.append((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                     + f'Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
+                                     + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt. ')))
             loesung.append(beschriftung(len(teilaufg), i, True) + lsg + lsg_vergl)
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
+            else:
+                aufgabe.append(' \n\n')
+            aufgabe.append('NewPage') if neue_seite == i else ''
             liste_punkte.append(punkte)
             i += 1
 
@@ -689,7 +740,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[False,True][0], neue_seite=[None,0,1,2,3,4,5][0], i=0, BE=[]):
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[False,True][0], neue_seite=[None,0,1,2,3,4,5][0], i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
@@ -767,7 +818,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
         punkte = 2
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Stellen Sie die Parabelgleichung in '
                                 + r'Scheitelpunktform auf.'))
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
         else:
@@ -780,12 +831,12 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
 
     if 'c' in teilaufg:
         # Nullstellen der Parabel berechnen
-        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        stern = r'$ ^{ \star } $' if notizfeld else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         punkte = 5
         aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Nullstellen '
                                 + 'und vergleichen Sie ihre Ergebnisse mit dem Graphen.'))
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
@@ -829,7 +880,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Erläutern Sie anhand des Graphen die '
                                 + r'Funktionsgleichung von $ g(x) =  ' + vorz_v_aussen(g_m, 'x')
                                 + vorz_str(g_n) + r'$. '))
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
         else:
@@ -854,7 +905,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
 
     if 'f' in teilaufg:
         # Schnittpunkte der linearen Funktion mit der Parabel berechnen
-        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
+        stern = r'$ ^{ \star } $' if notizfeld else ''
         liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
         p = -1* (g_m + nst1 + nst2)
         q = nst1 * nst2 - g_n
@@ -865,7 +916,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], pruef_kl10=[
         punkte = 7
         aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Schnittpunkte '
                                 + 'der linearen Funktion mit dem Graphen der Parabel.'))
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
         else:

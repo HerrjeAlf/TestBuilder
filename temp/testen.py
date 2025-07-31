@@ -24,12 +24,12 @@ Lehrer = 'Herr Herrys'
 Art = 'Test'
 Titel = 'Vorlage'
 datum_delta = 1  # Wann wird der Test geschrieben (in Tagen - 0 ist Heute, 1 ist Morgen, 2 Übermorgen, usw.)
-anzahl = 2 # wie viele verschiedenen Tests sollen erzeugt werden
+anzahl = 1 # wie viele verschiedenen Tests sollen erzeugt werden
 probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
-clean_tex = [True, False][1]
+clean_tex = [True, False][0]
 
 for i in range(anzahl):
-    Aufgaben = [lineare_funktionen(1)]
+    Aufgaben = [lineare_funktionen(1, anz_einf=2, anz_pkt=1, neue_seite=3)]
 
     liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:
