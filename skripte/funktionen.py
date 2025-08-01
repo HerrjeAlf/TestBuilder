@@ -1580,16 +1580,16 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
                 + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '
                 + r' \frac{' + gzahl(p) + r'}{2} \right) ^2 ' + vorz_str(-1*q) + ' } ~=~ '
                 + gzahl(Rational(-1*koeff[1],2*koeff[0])) + r' \pm \sqrt{ '
-                + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \quad (2BE) \\ ')
+                + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \quad (2BE) \\')
         punkte += 4
         if Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) < 0:
-            text += r' \mathrm{ n.d. }'
+            text += r' \quad \to \quad \mathrm{ n.d. } \quad (1BE) '
             lsg = []
             punkte += 1
         elif Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) == 0:
-            text += var + '_{' + gzahl(n1) + '} ~=~ ' + gzahl(Rational(-1*koeff[1],2*koeff[0]))
+            text += var + '_{' + gzahl(n1) + '} ~=~ ' + gzahl(Rational(-1*koeff[1],2*koeff[0])) + r' \quad (1BE)'
             lsg = [Rational(-1*koeff[1], 2*koeff[0])]
-            punkte += 2
+            punkte += 1
         else:
             lsg1 = Rational(-1*koeff[1],2*koeff[0]) - sqrt(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2))
             lsg2 = Rational(-1*koeff[1],2*koeff[0]) + sqrt(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2))
@@ -1603,17 +1603,14 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
             punkte += 2
 
     if schnittpkt:
-        text4 = r' \\'
-        k = 1
-        y_wert = round(fkt.subs(x, 0),2)
-        for element in lsg:
+        y_wert, text4, k =  round(fkt.subs(x, 0),2), r' \\', 1
+        for k, element in enumerate(lsg):
             if element != 0:
-                text4 = (text4 + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
-                         + r' \vert 0)} \quad ')
+                text4 = (text + r' \mathrm{ S_{x_{' + gzahl(k) + '}} (' + gzahl(N(element, 3))
+                          + r' \vert 0)} \quad ')
             else:
-                text4 = (text4 + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
-                         + r' \vert 0 ) } \quad ')
-            k += 1
+                text4 = (text + r' \mathrm{ S_y = S_{x_{' + gzahl(k) + '} } (' + gzahl(N(element, 3))
+                          + r' \vert 0 ) } \quad ')
         text4 += r' S_y( 0 \vert ' + gzahl(y_wert) + ')' if all(x != 0 for x in lsg) else ''
         text4 += r' \quad (2BE) '
         punkte += 2
