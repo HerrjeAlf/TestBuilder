@@ -30,28 +30,18 @@ geometry_options = {"tmargin": "0.2in", "lmargin": "1in", "bmargin": "0.5in", "r
 def seite(liste_inhalte):
     # print(liste_inhalte)
     liste_aufgaben, liste_lsg, grafiken_aufgaben, grafiken_loesungen = [], [], [], []
-    for elements in liste_inhalte:
-        for element in elements[0]:
-            liste_aufgaben.append(element)
-        for element in elements[1]:
-            liste_lsg.append(element)
-        for element in elements[2]:
-            grafiken_aufgaben.append(element)
-        for element in elements[3]:
-            grafiken_loesungen.append(element)
+    for element in liste_inhalte:
+        liste_aufgaben.extend(element[0])
+        liste_lsg.extend(element[1])
+        grafiken_aufgaben.extend(element[2])
+        grafiken_loesungen.extend(element[3])
 
     indexes = [i for i, eintrag in enumerate(liste_aufgaben) if eintrag == "NewPage"]
-
-    aufgabe, aufg, inhalte_ltx = [], [], []
-    if indexes:
-        for idx in indexes:
-            aufg.extend(liste_aufgaben[:idx])
-            aufgabe.append(aufg)
-            aufg = []
-            aufg.extend(liste_aufgaben[idx + 1:])
-    else:
-        aufg.extend(liste_aufgaben)
-    aufgabe.append(aufg)
+    aufgabe, inhalte_ltx, start = [], [], 0
+    for idx in indexes:
+        aufgabe.append(liste_aufgaben[start:idx])
+        start = idx + 1
+    aufgabe.append(liste_aufgaben[start:])  # Rest hinzufügen
 
     def aufgabentext(aufgaben, grafiken_aufgaben):
         Aufgabe = Document(geometry_options=geometry_options)
@@ -82,7 +72,6 @@ def seite(liste_inhalte):
                 Aufgabe.append(elements)
         del grafiken_aufgaben[:i]
         return Aufgabe
-
     for k, element in enumerate(aufgabe):
         inhalte_ltx.append(aufgabentext(element, grafiken_aufgaben))
 
