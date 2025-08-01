@@ -101,7 +101,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                 grafiken_aufgaben.append('notizen_riesig')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -133,7 +133,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                 grafiken_aufgaben.append('notizen_riesig')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -171,7 +171,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                 grafiken_aufgaben.append('notizen_riesig')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -198,7 +198,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -219,7 +219,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                                  + vorz_str(fkt_n[anz_einf]) + '$ im oberen Koordinatensystem ein.'), ' \n\n'))
         loesung.extend((beschriftung(len(teilaufg), i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)}',
                         'Figure'))
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -256,7 +256,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                 grafiken_aufgaben.append('notizen_klein')
             else:
                 aufgabe.append(' \n\n')
-            aufgabe.append('NewPage') if neue_seite == i else ''
+            aufgabe.append('NewPage') if neue_seite == i + 1 else ''
             liste_punkte.append(punkte)
             i += 1
 
@@ -268,9 +268,11 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], i=0, BE=[]):
+def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], notizfeld=[False, True][0], neue_seite=[None,1,2,3,4,5,6,7,8,9][0], i=0, BE=[]):
     # In dieser Aufgabe können die SuS ihre Kenntnisse der linearen Funktionen auf verschiedene Situationen, angelehnt auf Szenen im Film "Stirb Langsam" anwenden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     liste_punkte = []
@@ -308,6 +310,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     xwert_s = Rational(n_airbus - n + y_vers, steigung - steigung_airbus)
     ywert_s = N(steigung_airbus * xwert_s + n_airbus, 3)
     swinkel_airbus = N(np.arctan(steigung_airbus) * 180 / pi, 3)
+    del wertetabelle, ganze_werte
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
                'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
@@ -318,18 +321,25 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     grafiken_aufgaben = ['stirb_langsam_2']
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
+    if bool(set(teilaufg) & {'a', 'b', 'c'}):
         # aus zwei gegebenen Punkten die Geradengleichung
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((f'Das Radar des Flughafens ortet die Boing zuerst bei Punkt P({gzahl(p2[0])}|'
-                        f'{gzahl(p2[1])}) und nach {gzahl(zeit)}s bei Punkt Q({gzahl(p1[0])}|{gzahl(p1[1])}). \n\n',
-                        beschriftung(len(teilaufg), i) + f'Bestimmen Sie die Funktionsgleichung der Flugbahn. \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent Das Radar des Flughafens ortet die Boing zuerst bei Punkt '
+                                 f'P({gzahl(p2[0])}|{gzahl(p2[1])}) und nach {gzahl(zeit)}s bei '
+                                 f'Punkt Q({gzahl(p1[0])}|{gzahl(p1[1])}).'), ' \n\n',
+                        beschriftung(len(teilaufg), i) + f'Bestimmen Sie die Funktionsgleichung der Flugbahn. '))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' f(x) ~=~ \frac{y_2 - y_1}{x_2 - x_1} \cdot (x - x_1) + y_1 '
                        + r' ~=~ \frac{' + gzahl(p2[1]) + vorz_str(-1*p1[1]) + r'}{' + gzahl(p2[0]) + gzahl(-1*p1[0])
                        + r'} \left(x' + vorz_str(-1*p2[0]) + r' \right) ' + vorz_str(p2[1])
                        + r' \quad (2BE) \\ f(x) ~=~' + gzahl(steigung) + r' \left(x' + vorz_str(-1*p2[0])
                        + r' \right) ' + vorz_str(p2[1]) + '~=~' + vorz_v_aussen(steigung,'x')
                        + vorz_str(-1 * steigung * p2[0]) + vorz_str(p2[1]) + '~=~' + fkt_str + r' \quad (1BE) \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(3)
         i += 1
 
@@ -337,28 +347,40 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         # die SuS sollen den Abstand zwischen zwei Punkten bestimmen und damit die Geschwindigkeit berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechnen Sie Geschwindigkeit der Boing (in km/h) im '
-                       + f'Landeanflug. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Berechnen Sie Geschwindigkeit der Boing (in km/h) im Landeanflug.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' d(PQ) ~=~ \sqrt{ \left( ' + gzahl(p2[0])
                        + vorz_str(-1*p1[0]) + r' \right) ^2 + \left( ' + gzahl(p2[1]) + vorz_str(-1*p1[1])
                        + r' \right) ^2 } ~=~' + gzahl(abstand) + r'km \quad (2BE) \quad \to \quad v ~=~ \frac{s}{t} '
                        + r'~=~ \frac{' + gzahl(abstand*1000) + 'm}{' + gzahl(zeit) + 's} ~=~'
                        + gzahl(int(abstand*1000/zeit)) + r' \frac{m}{s} ~=~' + gzahl(int(abstand*1000/zeit*3.6))
                        + r' \frac{km}{h} \quad (3BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
-    if len([element for element in ['c', 'd', 'e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'c', 'd', 'e', 'f', 'g', 'h'}):
         # die SuS sollen die Veränderung des y-Achsenabschnittes durch die Manipulation der Flugbahn erklären
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
-        aufgabe.extend(('Durch die Manipulation rechnet die Flugzeugelektronik der Boeing mit der Funktion '
-                        f' f(x) = {gzahl(steigung)}x - {gzahl(abs(n_vers))}. \n\n',
+        aufgabe.extend((NoEscape(r' \noindent Durch die Manipulation rechnet die Flugzeugelektronik der Boeing mit'
+                                 f'der Funktion f(x) = {gzahl(steigung)}x - {gzahl(abs(n_vers))}.'), ' \n\n',
                         beschriftung(len(teilaufg), i) + f'Erläutern Sie den Unterschied zur ursprünglichen Funktion '
-                        + f'bzw. Flugbahn. \n\n'))
+                        + f'bzw. Flugbahn.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Der~Unterschied~ist~der~Schnittpunkt~mit~'
                        + r'der~y-Achse.~Die~manipulierte} \\ \mathrm{Flugbahn~ist~um~' + gzahl(round(y_vers,3)*1000)
                        + r'm~nach~unten~verschoben. \quad (2BE) }')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -368,12 +390,19 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         punkte = 4
         lsg = r' ~ \leq 3.5^{ \circ } \to \mathrm{Die~Boing~ist~nicht~gefährdet.}'
         lsg = r' ~ > 3.5^{ \circ } \to \mathrm{Die~Boing~ist~gefährdet.}' if swinkel > 3.5 else lsg
-        aufgabe.extend(('Ein Flugzeug landet unbeschadet, wenn der Anflugwinkel 3,5° nicht überschreiten wird. \n\n',
+        aufgabe.extend((NoEscape(r' \noindent Ein Flugzeug landet unbeschadet, wenn der Anflugwinkel'
+                                 r' 3,5° nicht überschreiten wird. '), ' \n\n',
                         beschriftung(len(teilaufg), i) + f'Berechnen Sie den Anflugwinkel (Schnittwinkel) der Boing. '
-                        + f'Ist die Boing gefährdet? \n\n'))
+                        + f'Ist die Boing gefährdet?'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' tan( \alpha ) ~=~ m \quad \vert tan^{-1}() \to '
                        + r' \alpha ~=~ tan^{-1} \left( ' + gzahl(steigung) + r' \right) ~=~' + gzahl(swinkel) + lsg
                        + r' \quad (4BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
@@ -383,35 +412,48 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         punkte = 4
         lsg = r' > 3 \quad \to \quad \mathrm{Die~Boing~landet~vor~der~Landebahn.}'
         lsg = r' \leq 3 \to \mathrm{Die~Boing~landet~auf~der~Landebahn.}' if N(-1*(n-y_vers)/steigung,3) <= 3 else lsg
-        aufgabe.extend(('Im Film landet die Boeing, bevor sie zerbricht, trotz der manipulierten Flugbahn '
-                        'auf der Landebahn (Nullstelle). Die Landebahn beginnt im Punkt A(3|0) und endet im '
-                        'Koordinatenursprung E(0|0). \n\n',
+        aufgabe.extend((NoEscape(r' \noindent Im Film landet die Boeing, bevor sie zerbricht, trotz der manipulierten '
+                                 r'Flugbahn auf der Landebahn (Nullstelle). Die Landebahn beginnt im Punkt A(3|0) '
+                                 r'und endet im Koordinatenursprung E(0|0).'), ' \n\n',
                         beschriftung(len(teilaufg), i) + f'Berechnen Sie die Landestelle nach der Manipulation '
-                        + f'des ILS. Landet die Boing auf der Landebahn? \n\n'))
+                        + f'des ILS. Landet die Boing auf der Landebahn?'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' x_0 ~=~ - \frac{n}{m} ~=~ - \frac{ ' + gzahl(N(n-y_vers,3))
                        + r'}{' + gzahl(N(steigung,3)) + '} ~=~' + gzahl(N(-1*(n-y_vers)/steigung,3)) + lsg
                        + r' \quad (4BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
-    if len([element for element in ['f', 'g'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'f', 'g', 'h'}):
         # Die SuS sollen erläutern, woran man erkennen kann das sich zwei Geraden schneiden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((f'Über dem Flughafen kreisen mehrere Flugzeuge und warten auf Landerlaubnis. Ein Airbus bewegt '
-                        f'sich auf der Flugbahn h(x) = {gzahl(steigung_airbus)} x {vorz_str(n_airbus)}, während sich '
-                        f'die Boing im Landeanflug befindet. \n\n',
-                        beschriftung(len(teilaufg), i) + f'Erläutern Sie, woran man erkennen kann, dass sich die Flugbahnen '
-                        + f'schneiden. \n\n'))
+        aufgabe.extend((NoEscape(r' \noindent Über dem Flughafen kreisen mehrere Flugzeuge und warten auf '
+                                 f'Landerlaubnis. Ein Airbus bewegt sich auf der Flugbahn '
+                                 f'h(x) = {gzahl(steigung_airbus)} x {vorz_str(n_airbus)}, während sich die Boing im '
+                                 f'Landeanflug befindet.'), ' \n\n',
+                        beschriftung(len(teilaufg), i) + f'Erläutern Sie, woran man erkennen kann, '
+                        + f'dass sich die Flugbahnen schneiden.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{~Da~die~Steigungen~der~beiden~Geraden~verschieden~'
                        + r'sind.} \quad (1BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(1)
         i += 1
 
     if 'g' in teilaufg:
         # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und '
-                       + f'der Boing. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Berechnen Sie den Schnittpunkt der Flugbahnen des Airbus und der Boing.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Ansatz: \quad f(x)=g(x)} '
                         + r' \quad \to \quad ' + fkt_vers_str + '~=~' + vorz_v_aussen(steigung_airbus,'x')
                         + vorz_str(n_airbus) + r' \quad \vert ' + vorz_v_innen(-1 * steigung_airbus, 'x')
@@ -422,6 +464,12 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
                         + gzahl(N((n_airbus - n + y_vers)/(steigung - steigung_airbus), 3))
                         + r' \quad (3BE) \\ \mathrm{Schnittpunkt \quad S(' + gzahl(N(xwert_s,3)) + r'~ \vert ~'
                         + gzahl(ywert_s) + r') \quad (2BE)}')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(8)
         i += 1
 
@@ -447,11 +495,17 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         else:
             lsg_1 = r' ^{ \circ } \quad (2BE)'
 
-        aufgabe.append(beschriftung(len(teilaufg), i) + f'Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und '
-                       + f'der Boing. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + f'Berechnen Sie den Schnittwinkel der Flugbahnen des Airbus und der Boing.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + lsg
                        + r' \gamma ~=~ \vert \beta - \alpha \vert ~=~ \vert ' + gzahl(swinkel_airbus) + '~-~'
                        + gzahl_klammer(swinkel) + r' \vert ~=~' + gzahl(N(abs(swinkel_airbus - swinkel),3)) + lsg_1)
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(pkt)
         i += 1
 
@@ -461,22 +515,30 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         punkte = 4
         xwert, ywert = ganze_werte[0][0], ganze_werte[0][1] - float(y_vers)
         steigung_g = N(-20/wert_steigung,3)
-        aufgabe.extend((f'Da die Gefahr für einen Absturz der Boing zu groß ist, muss Sie im Punkt ({gzahl(xwert)}|'
-                        f'{gzahl(ywert)}) orthogonal zur bisherigen (manipulierten) Flugbahn durchstarten und nach '
-                        f'einer Schleife eine erneute Landung versuchen. \n\n',
-                        beschriftung(len(teilaufg), i) + f'Berechnen Sie die neue Flugbahn g(x), '
-                        + f'nachdem die Boing durchgestartet ist. \n\n'))
-        loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Steigung~der~orthogonalen~Flugbahn:} \quad m_g ~=~ '
+        aufgabe.extend((NoEscape(r' \noindent ' + f'Da die Gefahr für einen Absturz der Boing zu groß ist, muss Sie im '
+                                 + f'Punkt ({gzahl(xwert)}|{gzahl(ywert)}) orthogonal zur bisherigen (manipulierten)'
+                                   f'Flugbahn durchstarten und nach einer Schleife eine erneute Landung versuchen.'),
+                        ' \n\n', beschriftung(len(teilaufg), i) + f'Berechnen Sie die neue Flugbahn g(x), '
+                        + f'nachdem die Boing durchgestartet ist.'))
+        loesung.append(beschriftung(len(teilaufg), i, True)
+                       + r' \mathrm{Steigung~der~orthogonalen~Flugbahn:} \quad m_g ~=~ '
                        + r' - \frac{1}{m_f} ~=~ - \frac{1}{' + gzahl(steigung) + '} ~=~' + gzahl(steigung_g)
                        + r' \quad (2BE) \\ g(x) ~=~' + gzahl(steigung_g) + binom_klammer(1, -1 * xwert, 'x')
                        + vorz_str(ywert) + '~=~' + vorz_v_aussen(steigung_g,'x')
                        + vorz_str(N(20/wert_steigung*xwert+ywert,3)) + r' \quad (2BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if neue_seite == i + 1 else ''
         liste_punkte.append(punkte)
         i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
