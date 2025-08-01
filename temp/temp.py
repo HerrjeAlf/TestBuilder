@@ -132,12 +132,11 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-teilaufg = ['a', 'b', 'c', 'd', 'e']
+teilaufg = [0,1,2,3,4]
 
-liste = [None] + teilaufg
+del teilaufg[:1]
 
-print(([None] + list(range(len(teilaufg))))[3])
-
+print(teilaufg)
 
 
 
