@@ -23,7 +23,7 @@ liste_bez = ['Aufgabe']
 
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
-    Aufgaben = [[kongruente_Dreiecke(1),
+    Aufgaben = [[kongruente_dreiecke(1),
                  rechtwinkliges_dreieck(2),
                  verhaeltnisgleichgungen(3)],
                  [sachaufgabe_wetterballon(4),

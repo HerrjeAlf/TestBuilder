@@ -17,12 +17,17 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
-def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws', 'wsw','sww', 'nicht kongruent'][0], i=0, BE=[]):
+def kongruente_dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws', 'wsw', 'sww', 'nicht kongruent'][0], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], i=0, BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks den Kongruenzsatz erkennen und das Dreieck konstruieren.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "kongr=" kann festgelegt werden, welcher Kongruenzsatz erzeugt werden soll (0: sss, 1: sws, 2: wsw, 3:sww, 4: Ssw).
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
     liste_punkte = []
     liste_bez = []
     alpha = 30 + nzahl(1, 6)*5
@@ -73,7 +78,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
             aufg2 = st[rf[1]] + '~=~' + gzahl(st_werte[rf[1]]) + 'cm'
         auswahl = ['Ssw', aufg1, aufg2, wk[rf[0]] + '~=~' + gzahl(wk_werte[rf[0]]) + r' ^{  \circ}']
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Von einem kongruenten Dreieck sind folgende Daten gegeben:']
     aufgabe.append(str(auswahl[1]) + ',~' + str(auswahl[2]) + r'~ \mathrm{und} ~'
                    + str(auswahl[3]) + r'.')
@@ -86,10 +91,17 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 3
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Fertige eine Planskizze an, markiere die gegebenen Größen und '
-                                                'nenne den Kongruenzsatz. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Fertige eine Planskizze an, markiere die gegebenen Größen und '
+                                + 'nenne den Kongruenzsatz.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Planskizze} ~ (2BE), \quad \to \quad '
                        + str(auswahl[0]) + r' \quad (1BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -99,7 +111,7 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         grafiken_loesung.append(f'Loesung_{nr}{liste_teilaufg[i]}')
         pkt = 5
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Konstruiere das Dreieck. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Konstruiere das Dreieck.'))
         if 'a' not in teilaufg:
             loesung.extend((beschriftung(len(teilaufg), i, True) + r' \mathrm{Planskizze} ~ (2BE), \quad '
                             + str(auswahl[1]) + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~'
@@ -111,6 +123,12 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
                            + '~(1BE),~' + str(auswahl[2]) + '~(1BE),~' + str(auswahl[3])
                             + r'~(1BE), \\ \mathrm{restl.~Seite(n)~und~Beschrift.} ~(2BE)', 'Figure'))
         dreieck_zeichnen(pkt_list, pkt_bez, st, wk, f'Loesung_{nr}{liste_teilaufg[i]}')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -121,12 +139,19 @@ def kongruente_Dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei Katheten', 'Kathete und Hypothenuse'][0], i=0, BE=[]):
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei Katheten', 'Kathete und Hypothenuse'][0], notizfeld=[False, True][0], neue_seite=[0,1,2][0], i=0, BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks die fehlende Seiten und Winkel mithilfe des Satz des Pythagoras und Sinus, Konsinus und Tnagens berechnen.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "gegeben=" kann festgelegt werden, welcher Seiten vom Dreieck gegeben sind. (0: zwei Katheten, 1: eine Kathete und eine Hypothenuse).
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
     liste_punkte = []
     liste_bez = []
 
@@ -188,7 +213,7 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
 
     st, wk = auswahl[2], auswahl[3]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Von einem rechtwinkligen Dreieck sind folgende Daten gegeben:', auswahl[0]]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -198,9 +223,15 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
         # Hier sollen die SuS aus den gegebenen Daten die fehlende Seitenlänge im rechtw. Dreieck mit dem Satz von Pythagoras berechnen.
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne die fehlende Seitenlänge im Dreieck ABC. '
-                                                'Fertige dazu eine Planskizze an. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechne die fehlende Seitenlänge im Dreieck ABC. Fertige dazu eine Planskizze an.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + auswahl[1])
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(5)
         i += 1
 
@@ -215,13 +246,20 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
             geg = ''
             punkte = 5
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne die fehlenden Winkel des Dreiecks. \n\n')
+        aufgabe.append(NoEscape(r' \noindent '
+                                + beschriftung(len(teilaufg), i) + 'Berechne die fehlenden Winkel des Dreiecks.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + geg + ' sin(' + wk[0] + r')~=~ \frac{' + st[0] + '}{'
                        + st[2] + r'} ~=~ \frac{' + gzahl(l_a) + 'cm}{' + gzahl(l_c)
                        + r'cm} \quad \vert ~ sin^{-1}() \quad \to \quad ' + wk[0]
                        + r'~=~ sin^{-1} \Big( \frac{' + gzahl(l_a) + '}{' + gzahl(l_c) + r'} \Big) ~=~' + gzahl(alpha)
                        + r' ^{ \circ} \quad (3BE) \\' + wk[1] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ '
                        + gzahl(alpha) + r'^{ \circ} ~=~ ' + gzahl(beta) + r'^{ \circ} \quad (2BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 

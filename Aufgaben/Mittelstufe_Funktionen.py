@@ -26,7 +26,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
     liste_punkte = []
     liste_bez = []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr)))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -316,7 +316,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
     xwert, ywert = ganze_werte[0][0], ganze_werte[0][1] - float(y_vers)
     del wertetabelle, ganze_werte
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Im zweiten Teil der legendären „Stirb langsam“ – Reihe manipulieren Terroristen '
                'das Instrumentenlandesystem (ILS) eines Flughafen, um General Ramon Esperanza freizupressen. '
                'Dabei lassen die Terroristen zur Abschreckung eine Boeing 747 landen, welche durch die Manipulation '
@@ -524,6 +524,8 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
@@ -551,7 +553,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
     liste_punkte = []
     liste_bez = []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -798,6 +800,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
             if notizfeld:
                 aufgabe.append(['Bild', '430px'])
                 grafiken_aufgaben.append('notizen_klein')
+            else:
+                aufgabe.append(' \n\n')
             aufgabe.append('NewPage') if i + 1 in neue_seite else None
             liste_punkte.append(punkte)
             i += 1
@@ -862,7 +866,7 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
     punkt_p = wertetabelle[0]
     punkt_q = wertetabelle[-1]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'Aufgabe_{nr}']
     grafiken_loesung = []
@@ -998,6 +1002,8 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1

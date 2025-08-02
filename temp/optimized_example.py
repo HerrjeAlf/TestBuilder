@@ -23,8 +23,8 @@ os.chdir(root_path())
 # Only import specific functions from Aufgaben
 from Aufgaben import (
     rechtwinkliges_dreieck,
-    verhaeltnisgleichgungen, 
-    kongruente_Dreiecke
+    verhaeltnisgleichgungen,
+    kongruente_dreiecke
 )
 
 def create_test_with_memory_management():
@@ -51,7 +51,7 @@ def create_test_with_memory_management():
             # Create tasks
             Aufgaben = [
                 [
-                    kongruente_Dreiecke(1),
+                    kongruente_dreiecke(1),
                     rechtwinkliges_dreieck(2),
                     verhaeltnisgleichgungen(3)
                 ]
