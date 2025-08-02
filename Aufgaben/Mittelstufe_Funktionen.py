@@ -1,5 +1,6 @@
 import string
 import random
+import gc
 from pylatex import MediumText, MultiColumn, MultiRow
 from pylatex.utils import bold
 from skripte.funktionen import *
@@ -21,6 +22,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
 
     if isinstance(neue_seite, int):
         neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
     liste_punkte = []
     liste_bez = []
 
@@ -108,7 +110,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'b' in teilaufg:
         # zu einer vorgegebenen Funktionsgleichung die Nullstellen berechnen anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -140,8 +141,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
-
     if 'c' in teilaufg:
         # zu einer vorgegebenen Funktionsgleichung die Wertetabelle anlegen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -178,7 +177,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'd' in teilaufg:
         # zu gegebenen Punkten einer Funktion den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -205,7 +203,6 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if bool(set(teilaufg) & {'e', 'f'}):
         # zu gegebener Funktionsgleichung den Graphen zeichnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -226,43 +223,40 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
+    if 'f' in teilaufg:
+        # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
+        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        punkte = 2
+        wertetabelle = [[xwert, fkt_m[anz_einf] * xwert + fkt_n[anz_einf]] for xwert in range(-5,5) if abs(fkt_m[anz_einf] * xwert + fkt_n[anz_einf]) < 5]
+        xwert_t = wertetabelle[0][0]
+        ywert_t = wertetabelle[0][1]
+        if random.choice([0,1]) == 0:
+            lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
+                         + fkt_bez[k+1] + r'.} \quad (1BE) \\'
+                         + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
+                         + r'die~Lage~überprüfen} \quad (2BE)')
+        else:
+            ywert_t = ywert_t + zzahl(1,2)
+            lsg_vergl = (r' \quad \mathrm{f.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
+                         + fkt_bez[k+1] + r'.} \quad (1BE) \\'
+                         + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
+                         + r'die~Lage~überprüfen} \quad (2BE)')
 
-        if 'f' in teilaufg:
-            # überprüfen, ob ein Punkt T auf dem Graphen der gegebenen Funktion liegt
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-            punkte = 2
-            wertetabelle = [[xwert, fkt_m[anz_einf] * xwert + fkt_n[anz_einf]] for xwert in range(-5,5) if abs(fkt_m[anz_einf] * xwert + fkt_n[anz_einf]) < 5]
-            xwert_t = wertetabelle[0][0]
-            ywert_t = wertetabelle[0][1]
-            if random.choice([0,1]) == 0:
-                lsg_vergl = (r' \quad \mathrm{w.A. \quad Der~Punkt~T~liegt~auf~der~Geraden~'
-                             + fkt_bez[k+1] + r'.} \quad (1BE) \\'
-                             + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
-                             + r'die~Lage~überprüfen} \quad (2BE)')
-            else:
-                ywert_t = ywert_t + zzahl(1,2)
-                lsg_vergl = (r' \quad \mathrm{f.A. \quad Der~Punkt~T~liegt~nicht~auf~der~Geraden~'
-                             + fkt_bez[k+1] + r'.} \quad (1BE) \\'
-                             + r' \mathrm{grafische~Lösung:~Einzeichnen~des~Punktes~T~im~Koordinatensystem~und~'
-                             + r'die~Lage~überprüfen} \quad (2BE)')
+        lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{15em} \\'
+               + gzahl(fkt_m[anz_einf]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n[anz_einf]) + '~=~'
+               + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m[anz_einf] * xwert_t + fkt_n[anz_einf])
+               + '~=~' + gzahl(ywert_t))
 
-            lsg = (r' \mathrm{einsetzen~des~Punktes~T~in~Funktionsgleichung} \hspace{15em} \\'
-                   + gzahl(fkt_m[anz_einf]) + gzahl_klammer(xwert_t) + vorz_str(fkt_n[anz_einf]) + '~=~'
-                   + gzahl(ywert_t) + r' \quad \to \quad ' + gzahl(fkt_m[anz_einf] * xwert_t + fkt_n[anz_einf])
-                   + '~=~' + gzahl(ywert_t))
-
-            aufgabe.append((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
-                                     + f'Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
-                                     + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt.')))
-            loesung.append(beschriftung(len(teilaufg), i, True) + lsg + lsg_vergl)
-            if notizfeld:
-                aufgabe.append(['Bild', '430px'])
-                grafiken_aufgaben.append('notizen_klein')
-            else:
-                aufgabe.append(' \n\n')
-            aufgabe.append('NewPage') if i + 1 in neue_seite else None
-            liste_punkte.append(punkte)
-            i += 1
+        aufgabe.append((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                 + f'Überprüfe, ob der Punkt T({gzahl(xwert_t)} | '
+                                 + f'{gzahl(N(ywert_t,3))}), auf dem Graphen von {fkt_bez[k+1]} liegt.')))
+        loesung.append(beschriftung(len(teilaufg), i, True) + lsg + lsg_vergl)
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+        liste_punkte.append(punkte)
+        i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
@@ -270,6 +264,7 @@ def lineare_funktionen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_einf=lis
                 f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
+    del fkt_m, fkt_n, fkt_m_pkt, fkt_n_pkt, liste_fkt, liste_fkt_str
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6,7,8,9][0], i=0, BE=[]):
@@ -282,6 +277,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
 
     if isinstance(neue_seite, int):
         neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
     liste_punkte = []
     liste_bez = []
     wert_steigung = nzahl(1, 8)
@@ -350,7 +346,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(3)
         i += 1
-
     if 'b' in teilaufg:
         # die SuS sollen den Abstand zwischen zwei Punkten bestimmen und damit die Geschwindigkeit berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -371,8 +366,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
-    if bool(set(teilaufg) & {'c', 'd', 'e', 'f', 'g', 'h'}):
+    if bool(set(teilaufg) & {'c', 'd', 'e', 'f', 'g', 'h', 'i'}):
         # die SuS sollen die Veränderung des y-Achsenabschnittes durch die Manipulation der Flugbahn erklären
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
@@ -391,7 +385,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'd' in teilaufg:
         # die SuS sollen den Schnittwinkel des Flugzeuges mit der Landebahn berechnen (Steigungswinkel)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -413,7 +406,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'e' in teilaufg:
         # die SuS sollen den Landepunkt des Flugzeuges berechnen (Nullstelle) und beurteilen, ob es noch auf der Landebahn landet
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -436,7 +428,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if bool(set(teilaufg) & {'f', 'g', 'h'}):
         # Die SuS sollen erläutern, woran man erkennen kann das sich zwei Geraden schneiden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -456,7 +447,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(1)
         i += 1
-
     if 'g' in teilaufg:
         # Die SuS sollen den Schnittpunkt zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -480,7 +470,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(8)
         i += 1
-
     if 'h' in teilaufg:
         # Die SuS sollen den Schnittwinkel zweier linearen Funktionen (Flugbahnen) berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -516,7 +505,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-
     if 'i' in teilaufg and (swinkel >= 3.5 or -1*(n-y_vers)/steigung >= 3):
         # Die SuS die orthogonale Flugbahn zur manipulierten Flugbahn berechnen. Die Aufgabe wird nur angezeigt, wenn der Anflugwinkel zu groß ist, oder das Flugzeug vor der Landebahn landen würde.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
@@ -536,8 +524,6 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
-        else:
-            aufgabe.append(' \n\n')
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
@@ -550,7 +536,7 @@ def stirb_langsam_2(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], 
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4,5,6,7][1], anz_ap=[0,1,2,3,4,5,6,7][1],  notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6][0], i=0, BE=[]):
+def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4,5,6][1], anz_ap=[0,1,2,3,4,5,6][1],  notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6][0], i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "anz_np=" kann festgelegt werden, wie viele Graphen einer Normalparabel (max. 6) zum Ablesen bei Teilaufgabe a erzeugt werden. Standardmäßig ist "anz_np=1" und es wird ein Graph in Teilaufgabe a erzeugt.
@@ -561,6 +547,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
     if isinstance(neue_seite, int):
         neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
     liste_punkte = []
     liste_bez = []
 
@@ -568,8 +555,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    anz_np = 6 if anz_np not in list(range(0,7)) else anz_np
-    anz_ap = 6 if anz_ap not in list(range(0,7)) else anz_ap
+    anz_np = 6 if anz_np not in list(range(0,6)) else anz_np
+    anz_ap = 6 if anz_ap not in list(range(0,6)) else anz_ap
     fkt_bez = ['f', 'g', 'h', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w']
     anz_d = 1 if 'c' in teilaufg else 0
     anz_e = 1 if 'e' in teilaufg else 0
@@ -668,7 +655,7 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
             aufgabe.append(['Bild', '430px'])
             if anz_np + anz_ap < 3:
                 grafiken_aufgaben.append('notizen_klein')
-            elif anz_np + anz_ap < 7:
+            elif anz_np + anz_ap < 5:
                 grafiken_aufgaben.append('notizen_mittel')
             else:
                 grafiken_aufgaben.append('notizen_riesig')
@@ -714,12 +701,13 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
             aufgabe.append(['Bild', '430px'])
             if anz_np + anz_ap < 3:
                 grafiken_aufgaben.append('notizen_klein')
-            elif anz_np + anz_ap < 7:
+            elif anz_np + anz_ap < 5:
                 grafiken_aufgaben.append('notizen_mittel')
             else:
                 grafiken_aufgaben.append('notizen_riesig')
         else:
             aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 
@@ -743,10 +731,11 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
         else:
             loesung.append(r' \\ \mathrm{Graph~siehe~Lösung~Teilaufgabe~f.} ')
         anz_np += 1
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 
-    if 'e' in teilaufg:
+    if bool(set(teilaufg) & {'e', 'f'}):
         # eine in Normalform gegebene Funktionsgleichung in Scheitelpunktsform umwandeln und den Scheitelpunkt, sowie den Faktor a daraus bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
@@ -759,9 +748,8 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
         fkt_e_spf_str = (vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x'
                          + vorz_str(-1 * xwert_s[k]) + r' \right) ^2 '
                          + vorz_str(ywert_s[k]))
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + f'Forme die Funktion $' + bez_fkt_e
-                        + '$(x) = $' + fkt_e_nf_str + '$ in die Scheitelpunktform um, nenne Scheitelpunkt und a.'),
-                        ' \n\n'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + f'Forme die Funktion $' + bez_fkt_e
+                        + '$(x) = $' + fkt_e_nf_str + '$ in die Scheitelpunktform um, nenne Scheitelpunkt und a.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + bez_fkt_e + '(x) ~=~' + fkt_e_nf_str + '~=~'
                        + vorz_v_aussen(fakt_ap[anz_ap],'') + r' \left( x^2'
                        + vorz_v_innen(-2 * xwert_s[k], 'x') + r' \right)'
@@ -783,6 +771,12 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
                        + fkt_e_spf_str + r' \quad (2BE) \\ S \left( ' + gzahl(xwert_s[anz_np+anz_ap]) + r' \vert '
                        + gzahl(ywert_s[anz_np+anz_ap]) + r' \right) \quad \mathrm{und} \quad a ~=~ '
                        + gzahl(fakt_ap[anz_ap]) + r' \quad (1BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 
@@ -801,6 +795,10 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
                                     + 'Teilaufgabe e).'))
             loesung.extend((beschriftung(len(teilaufg), i, True) + r' \mathrm{Scheitelpunkt~(1BE) \quad Graph~(1BE) \quad '
                             + r'Scheitelpunkt~und~a~stimmen~überein \quad (1BE) }', 'Figure'))
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else None
             liste_punkte.append(punkte)
             i += 1
 
@@ -812,13 +810,16 @@ def einf_parabeln(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anz_np=[0,1,2,3,4
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[False,True][0], neue_seite=[None,0,1,2,3,4,5][0], i=0, BE=[]):
+def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[False,True][0], neue_seite=[0,1,2,3,4,5,6][0], i=0, BE=[]):
     # In dieser Aufgabe sollen die SuS Funktionsgleichungen einer Parabel ablesen und umformen, Graphen einzeichnen und Wertetabellen erstellen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
     liste_punkte = []
     liste_bez = []
 
@@ -866,8 +867,9 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
     grafiken_aufgaben = [f'Aufgabe_{nr}']
     grafiken_loesung = []
     graph_xyfix(fkt_p_nf, bezn='p',  name=f'Aufgabe_{nr}.png')
+    del wertetabelle
 
-    if 'a' in teilaufg:
+    if bool(set(teilaufg) & {'a', 'b', 'c'}):
         # Scheitelpunkt einer Parabel ablesen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 1
@@ -875,56 +877,48 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
                         + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + '$ dargestellt.'),
                         ['Grafik','200px'], NoEscape(r' \noindent ' + str(liste_teilaufg[i])
                                                      + r') Lesen Sie den Scheitelpunkt S'
-                                                     + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. '),
-                        ' \n\n'))
+                                                     + r'$ \left( \qquad \vert \qquad \right) $ der Parabel ab. ')))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{der~Scheitelpunkt~lautet:} \quad S \left( '
                        + gzahl((nst1 + nst2) / 2) + r' \vert ' + gzahl(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4)
                        + r' \right) \quad (1BE)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'b' in teilaufg:
         # Parabelgleichung in Scheitelpunktform aufstellen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 2
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Stellen Sie die Parabelgleichung in '
                                 + r'Scheitelpunktform auf.'))
+        loesung.append(beschriftung(len(teilaufg), i, True) + r' p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
+                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (2BE)')
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        loesung.append(beschriftung(len(teilaufg), i, True) + r' p(x) ~=~ \left( x' + vorz_str(-1*(nst1 + nst2) / 2)
-                       + r' \right) ^2 ' + vorz_str(nst1 * nst2 - ((nst1 + nst2) ** 2) / 4) + r' \quad (2BE)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-
     if 'c' in teilaufg:
         # Nullstellen der Parabel berechnen
-        stern = r'$ ^{ \star } $' if notizfeld else ''
-        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
-        punkte = 5
-        aufgabe.append(NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Nullstellen '
-                                + 'und vergleichen Sie ihre Ergebnisse mit dem Graphen.'))
+        liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Nullstellen '
+                       + 'und vergleichen Sie ihre Ergebnisse mit dem Graphen.'))
+        lsg_text, lsg_erg, lsg_pkt = quadr_gl([1, -1*(nst1+nst2), nst1 * nst2])
+        lsg = lsg_text[0] + r' \\ \to \quad \mathrm{Sie~stimmen~mit~Graphen~überein} \quad (1BE)'
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-
-        loesung.append(beschriftung(len(teilaufg), i, True) + r' p(x) ~=~ 0 \quad \to \quad 0 ~=~ x^2 '
-                       + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad (1BE) \hspace{10em} \\'
-                       + r' x_{ 1,2 } ~=~ - \frac{p}{2} \pm \sqrt{ \left( \frac{p}{2} \right) ^2 - q } '
-                       + r' ~=~ - \frac{ ' + gzahl(-1*(nst1+nst2)) + r' }{2} \pm \sqrt{ \left( \frac{ '
-                       + gzahl( -1 * (nst1+nst2)) + r'}{2} \right) ^2 ' + vorz_str(-1*nst1*nst2) + '} '
-                       + '~=~ ' + gzahl(Rational(nst1+nst2,2)) + r' \pm \sqrt{ '
-                       + gzahl(Rational((nst1+nst2)**2 - 4*(nst1*nst2),4)) + r' } \quad (1BE) \\ '
-                       + 'x_1 ~=~ ' + gzahl(nst1) + r' \quad \mathrm{und} \quad x_2 ~=~ ' + gzahl(nst2)
-                       + r' \quad \to \quad \mathrm{Sie~stimmen~mit~Graphen~überein} \quad (3BE)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(punkte)
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+        liste_punkte.append(lsg_pkt + 1)
         i += 1
 
     if 'd' in teilaufg:
@@ -939,9 +933,10 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
                                  + gzahl(punkt_q[0]) + r' \vert ' +  gzahl(punkt_q[1]) + r' \right). $'),' \n\n ',
                         NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                  + 'Zeichnen Sie den Graphen der linearen Funktion g in das obere '
-                                 + r'Koordinatensystem ein.'),' \n\n'))
-        loesung.extend((beschriftung(len(teilaufg), i, True) + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
-        aufgabe.append('NewPage') if neue_seite == i else ''
+                                 + r'Koordinatensystem ein.'), ' \n\n'))
+        loesung.extend((beschriftung(len(teilaufg), i, True)
+                        + r' \mathrm{Punkte~(2BE) \quad Graph~(1BE)} ',['Grafik','150px']))
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 
@@ -952,12 +947,6 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Erläutern Sie anhand des Graphen die '
                                 + r'Funktionsgleichung von $ g(x) =  ' + vorz_v_aussen(g_m, 'x')
                                 + vorz_str(g_n) + r'$. '))
-        if notizfeld:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_gross')
-        else:
-            aufgabe.append(' \n\n')
-
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{13cm} p{2cm}')
         table1.add_row(str(liste_teilaufg[i]) + ')', MultiColumn(2, align='l',
@@ -971,13 +960,18 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table1)
         loesung.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 
     if 'f' in teilaufg:
         # Schnittpunkte der linearen Funktion mit der Parabel berechnen
-        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+        liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
         p = -1* (g_m + nst1 + nst2)
         q = nst1 * nst2 - g_n
         xwert_s1 = N(-p/2 + sqrt((p/2)**2-q),3)
@@ -987,11 +981,6 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
         punkte = 7
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Schnittpunkte '
                                 + 'der linearen Funktion mit dem Graphen der Parabel.'))
-        if notizfeld:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_gross')
-        else:
-            aufgabe.append(' \n\n')
         loesung.append(beschriftung(len(teilaufg), i, True) + r' g(x) ~=~ p(x) \quad \to \quad  '
                        + vorz_v_aussen(g_m, 'x') + vorz_str(g_n) + '~=~ x^2 '
                        + vorz_v_innen(-1*(nst1+nst2),'x') + vorz_str(nst1 * nst2) + r' \quad \vert '
@@ -1006,7 +995,10 @@ def parabel_und_gerade(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], notizfeld=[F
                        + r' \quad (2BE) \\ S_1 \left( ' + gzahl(xwert_s1) + r' \vert ' + gzahl(ywert_s1)
                        + r' \right) \quad \mathrm{und} \quad S_2 \left( ' + gzahl(xwert_s2) + r' \vert '
                        + gzahl(ywert_s2) + r' \right) \quad (2BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
 

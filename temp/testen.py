@@ -29,7 +29,7 @@ probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][0]
 
 for i in range(anzahl):
-    Aufgaben = [einf_parabeln(1)]
+    Aufgaben = [parabel_und_gerade(1, notizfeld=True, neue_seite=[3])]
 
     liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:

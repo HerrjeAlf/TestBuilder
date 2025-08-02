@@ -1532,7 +1532,7 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         else:
             lsg1 = Rational(-1 * koeff[2], koeff[1])
             text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[1], var) + vorz_str(koeff[2])
-                    + r' \quad \vert ' + vorz_str(-1 * koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[1])
+                    + umformung(koeff[2],'-') + umformung(koeff[1],':')
                     + r' \quad \to \quad ' + var + ' ~=~' + gzahl(lsg1) + r' \\')
             lsg = [lsg1]
             punkte += 2
@@ -1542,19 +1542,20 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
         lsg = [0]
         punkte += 2
     elif koeff[2] == 0:
-        text = (text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
+        text = ((text + ' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],str(var))
                 + '~=~' + var + r' \cdot \left( ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1])
-                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0  \quad (2BE) \\ 0 ~=~ f(' + var
-                + ') ~=~ ' + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + r' \quad \vert ' + vorz_str(-1*koeff[1])
-                + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad ' + var + '_{ ' + gzahl(n2)
+                + r' \right) \quad \to \quad ' + var + '_{' + gzahl(n1) + r' } = 0  \quad (2BE) \\ 0 ~=~'
+                + vorz_v_aussen(koeff[0], var) + vorz_str(koeff[1]) + umformung(koeff[1], '-')
+                + umformung(koeff[0], ':') + r' \quad \to \quad ' + var + '_{ ' + gzahl(n2)
                 + ' } ~=~ ' + gzahl(Rational(-1*koeff[1], koeff[0])) + '~=~' + gzahl(N(-1*koeff[1]/ koeff[0],3)))
+                + r' \quad (2BE) ')
         lsg = [0, Rational(-1*koeff[1], koeff[0])]
         lsg.sort()
         punkte += 4
     elif koeff[1] == 0:
-        text = (text + r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + r' \quad \vert '
-                + vorz_str(-1*koeff[2]) + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
-                + var + '^2 ~=~' + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
+        text = (text + r' 0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_str(koeff[2]) + umformung(koeff[2], '-')
+                + umformung(koeff[0],':') + r' \quad \to \quad ' + var + '^2 ~=~'
+                + gzahl(Rational(-1*koeff[2],koeff[0])) + r' \vert \sqrt{ ~ } \\')
         punkte += 2
         if Rational(-1*koeff[2],koeff[0]) < 0:
             text = (text + r' ' + var + '_{ ' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ \pm \sqrt{ '
@@ -1573,15 +1574,19 @@ def quadr_gl(koeff, i=1, schnittpkt=False, var='x'):
     else:
         p = Rational(koeff[1], koeff[0])
         q = Rational(koeff[2], koeff[0])
+        if koeff[0] != 1:
+            zw_lsg = (r' \quad \to \quad 0 ~=~ ' + var + '^2 '
+                      + vorz_v_innen(Rational(koeff[1], koeff[0]), var) + vorz_str(Rational(koeff[2], koeff[0]))
+                      + r' \quad (1BE) \\')
+            punkte +=1
+        else:
+            zw_lsg = r' \quad \to \quad '
         text = (text + '0 ~=~ ' + vorz_v_aussen(koeff[0], var + '^2') + vorz_v_innen(koeff[1],var) + vorz_str(koeff[2])
-                + r' \quad \vert \div ' + gzahl_klammer(koeff[0]) + r' \quad \to \quad '
-                + r' 0 ~=~ ' + var + '^2 ' + vorz_v_innen(Rational(koeff[1], koeff[0]), var)
-                + vorz_str(Rational(koeff[2], koeff[0])) + r' \quad (2BE) \\'
-                + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p) +  r'}{2} \pm \sqrt{ \left( '
-                + r' \frac{' + gzahl(p) + r'}{2} \right) ^2 ' + vorz_str(-1*q) + ' } ~=~ '
+                + umformung(koeff[0], ':') + zw_lsg + var + '_{' + gzahl(n1) + ',' + gzahl(n2) + r' } ~=~ - \frac{' + gzahl(p)
+                +  r'}{2} \pm \sqrt{ \left( \frac{' + gzahl(p) + r'}{2} \right) ^2 ' + vorz_str(-1*q) + ' } ~=~ '
                 + gzahl(Rational(-1*koeff[1],2*koeff[0])) + r' \pm \sqrt{ '
                 + gzahl(Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2)) + r'} \quad (2BE) \\')
-        punkte += 4
+        punkte += 2
         if Rational(koeff[1]**2 - 4*koeff[2]*koeff[0], 4*koeff[0]**2) < 0:
             text += r' \quad \to \quad \mathrm{ n.d. } \quad (1BE) '
             lsg = []
