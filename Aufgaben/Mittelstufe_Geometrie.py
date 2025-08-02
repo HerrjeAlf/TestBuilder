@@ -17,19 +17,20 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
 # Trigonometrie
-def kongruente_dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws', 'wsw', 'sww', 'nicht kongruent'][0], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], i=0, BE=[]):
+def kongruente_dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws', 'wsw', 'sww', 'nicht kongruent'][0], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks den Kongruenzsatz erkennen und das Dreieck konstruieren.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "kongr=" kann festgelegt werden, welcher Kongruenzsatz erzeugt werden soll (0: sss, 1: sws, 2: wsw, 3:sww, 4: Ssw).
     # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
     # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
     if isinstance(neue_seite, int):
         neue_seite = [neue_seite]
     neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
-    liste_punkte = []
-    liste_bez = []
+
+    i, liste_punkte, liste_bez = 0, [], []
+
     alpha = 30 + nzahl(1, 6)*5
     beta = 70 + nzahl(1, 8)*5 - alpha
     gamma = 180 - alpha - beta
@@ -139,21 +140,19 @@ def kongruente_dreiecke(nr, teilaufg=['a', 'b'], kongr=['zufällig', 'sss', 'sws
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei Katheten', 'Kathete und Hypothenuse'][0], notizfeld=[False, True][0], neue_seite=[0,1,2][0], i=0, BE=[]):
+def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei Katheten', 'Kathete und Hypothenuse'][0], notizfeld=[False, True][0], neue_seite=[0,1,2][0], BE=[]):
     # Bei dieser Aufgaben sollen die SuS aus den gegebenen Daten eines Dreiecks die fehlende Seiten und Winkel mithilfe des Satz des Pythagoras und Sinus, Konsinus und Tnagens berechnen.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
     # Mit dem Parameter "gegeben=" kann festgelegt werden, welcher Seiten vom Dreieck gegeben sind. (0: zwei Katheten, 1: eine Kathete und eine Hypothenuse).
     # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
     # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
     if isinstance(neue_seite, int):
         neue_seite = [neue_seite]
     neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
 
-    liste_punkte = []
-    liste_bez = []
+    i, liste_punkte, liste_bez = 0, [], []
 
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
@@ -271,13 +270,18 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][0], i=0, BE=[]):
+def verhaeltnisgleichungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][0], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], BE=[]):
     # Hier sollen die Schüler*innen mithilfe der gegebenen Daten eines rechtw. Dreieckes die Verhältnisgleichungen für den Sinus, Kosinus und Tangens aufstellen und die restlichen Größen berechnen.
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
@@ -308,8 +312,8 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][
     wk = bezeichnungen[auswahl_beschriftung]['Winkel']
     wk_werte = [w_a, w_b, w_c]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
-               'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.', 'Figure']
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+               'Die folgende Abbildung stellt ein rechtwinkliges Dreieck dar.', 'Grafik']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = [f'Loesung_{nr}']
     dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Loesung_{nr}')
@@ -321,8 +325,9 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][
     if 'a' in teilaufg:
         # Hier sollen die SuS die gegebenen Verhältnisgleichungen für sin, cos und tan vervollständigen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Vervollständige die folgenden Verhältnisgleichungen von Sinus, '
-                       + 'Kosiuns und Tangens. \n')
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Vervollständige die folgenden Verhältnisgleichungen von '
+                                + 'Sinus, Kosiuns und Tangens.'), ' \n'))
         if p == 0:
             aufgabe.append(r' sin(' + wk[p] + r')~= \hspace{10em} cos(' + wk[p]
                            + r')~= \hspace{10em} tan(' + wk[p] + r')~= \hspace{10em} \\')
@@ -337,16 +342,16 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][
                          + r'}, \quad tan(' + wk[1] + r')~=~ \frac{' + st[1] + '}{' + st[0] + r'}}')
 
         loesung.append(beschriftung(len(teilaufg), i, True) + loesungen + r' \quad (3BE)')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(3)
         i += 1
-
     if 'b' in teilaufg:
         # Hier sollen die Schüler*innen mithilfe der gegebenen Daten die restlichen Größen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         p = 0 if auswahl_seite != None else p
         auswahl_seite = random.randint(0,2) if auswahl_seite == None else auswahl_seite
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne die fehlenden Größen, '
-                       + 'wenn außer dem rechten Winkel, noch folgende Werte gegeben sind.')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechne die fehlenden Größen, '
+                       + 'wenn außer dem rechten Winkel, noch folgende Werte gegeben sind.'))
         aufgabe.append(wk[p] + '~=~' + gzahl(wk_werte[p]) + r'^{ \circ } \quad \mathrm{und} \quad ' + st[auswahl_seite]
                        + '~=~' + gzahl(st_werte[auswahl_seite]) + 'cm')
         if p == 0:
@@ -462,6 +467,10 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][
             loesung.append(beschriftung(len(teilaufg), i, True) + loesung_1
                            + wk[0] + r'~=~180^{ \circ} ~-~ 90^{ \circ} ~-~ ' + gzahl(wk_werte[p]) + r'^{ \circ} ~=~ '
                            + gzahl(wk_werte[0]) + r'^{ \circ} \quad (2BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(9)
         i += 1
 
@@ -475,14 +484,18 @@ def verhaeltnisgleichgungen(nr, teilaufg=['a', 'b'], auswahl_seite=[None, 0, 1][
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
+def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], BE=[]):
     # Hier sollen die Schüler*innen den Sichtwinkel und den Abstand eines Beobachters von einem Wetterballon berechnen (Trigonometrie im rechtw. Dreieck).
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_punkte = []
-    liste_bez = []
-    i = 0
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     n = random.randint(1, 5)
     m = n + random.randint(1, 5)
@@ -496,12 +509,12 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
     w_b = w_warte - w_beob
 
     if 'a' not in teilaufg:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                    f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
                    f' Wenn der Ballon eine Höhe von {hoehe}km erreicht hat, '
                    f'sieht ein Beobachter den Ballon unter einem Winkel von {w_beob}°. \n\n']
     else:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                    f'Bei einer Wetterwarte steigt ein Wetterballon senkrecht auf.'
                    f' Ein Beobachter befindet sich {abstand_beob_warte}km von der Wetterwarte entfernt '
                    f'und der Ballon hat eine Höhe von {hoehe}km erreicht. \n\n']
@@ -512,8 +525,9 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
     if 'a' in teilaufg:
         # Die SuS sollen den Sichtwinkel berechnen, unter dem der Wetterballon gesehen werden kann.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne den Winkel, unter dem der Beobachter'
-                                                f' den Ballon sieht. Fertige eine Planskizze an. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechne den Winkel, unter dem der Beobachter den Ballon sieht. '
+                                + 'Fertige eine Planskizze an.'))
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \mathrm{Lösung~Planskizze~(1BE)} \quad \mathrm{geg:~a~=~'
                        + str(hoehe) + 'km,~c~=~' + str(abstand_beob_warte)
@@ -523,15 +537,23 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
                        + r' tan^{-1} \Big( \frac{' + str(hoehe) + 'km }{'
                        + str(abstand_beob_warte) + r'km } \Big) ~=~' + str(w_beob)
                        + r' ^{ \circ} \quad (3BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(5)
         i += 1
 
     if 'b' in teilaufg:
         # Die SuS sollen den Abstand des Beobachters vom Wetterballon berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne den Abstand des Ballons vom Beobachter. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechne den Abstand des Ballons vom Beobachter. '))
         if 'a' in teilaufg:
-            loesung.append(beschriftung(len(teilaufg), i, True) + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
+            loesung.append(beschriftung(len(teilaufg), i, True)
+                           + r' sin( \alpha ) ~=~ \frac{a}{b} \quad \vert \cdot '
                            + r'b \quad \vert \div sin( \alpha ) \quad \to \quad b ~=~ '
                            + r'\frac{a}{ sin( \alpha )} ~=~ \frac{' + str(hoehe) + r'km }{ sin( ' + str(w_beob)
                            + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)')
@@ -543,6 +565,12 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
                            + r' \quad \to \quad b ~=~ \frac{a}{ sin( \alpha )} \frac{' + str(hoehe) + r'km }{ sin( '
                            + str(w_beob) + r' ^{ \circ}  )} ~=~' + str(abstand_beob_ballon) + r'km  \quad (3BE)')
             pkt = 4
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -556,33 +584,38 @@ def sachaufgabe_wetterballon(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
+def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], BE=[]):
     # Hier sollen die Schüler*innen den Anstellwinkel einer Klappleiter berechnen und beurteilen, ob dieser sicher aufgestellt werden kann (Trigonometrie im rechtw. Dreieck).
     # Mithilfe von "teilaufg=[]" können Teilaufgaben der Aufgabe festgelegt werden.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_punkte = []
-    liste_bez = []
-    i = 0
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     laenge_leiter = nzahl(23,50)/10
     deckenhoehe = round(laenge_leiter * (1-nzahl(5,15)/100),2)
     # hier werden die Winkel berechnet
     anstellwinkel = round(math.degrees(math.asin(deckenhoehe / laenge_leiter)),3)
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                f'Ein Dachboden ist über eine {laenge_leiter}m lange Klappleiter erreichbar. '
                + f'Die Höhe vom Boden zum Dachboden beträgt {deckenhoehe}m. '
                + 'Die Leiter ist gut zu begehen, wenn der Anstellwinkel der Leiter mit dem Fußboden '
-               + 'mindestens einen Winkel von 61° beträgt. \n',
-               'Fertige dazu eine Planskizze an. \n\n']
+               + 'mindestens einen Winkel von 61° beträgt. \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
 
-    if 'a' in teilaufg:
+    if teilaufg:
         # Die SuS sollen den Anstellwinkel einer Klappleiter berechnen.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne den Anstellwinkel der Leiter mit dem Dachboden. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechne den Anstellwinkel der Leiter mit dem Dachboden. '
+                                + 'Fertige dazu eine Planskizze an.'))
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \mathrm{Lösung~Planskizze~(2BE)} \quad \mathrm{geg:~a~=~'
                        + latex(deckenhoehe) + 'm,~b~=~' + latex(laenge_leiter)
@@ -591,13 +624,20 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
                        + r'\quad \to \quad \alpha ~=~ sin^{-1} \Big( \frac{a}{b} \Big) ~=~'
                        + r' sin^{-1} \Big( \frac{' + latex(deckenhoehe) + 'm }{'
                        + latex(laenge_leiter) + r'm } \Big) ~=~' + latex(anstellwinkel) + r' ^{ \circ} \quad (3BE) \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(6)
         i += 1
 
-    if 'a' and 'b' in teilaufg:
+    if 'b' in teilaufg:
         # Die SuS sollen beurteilen, ob die Dachleiter sicher aufgestellt werden kann.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(str(liste_teilaufg[i]) + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.')
+        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+                                + f') Beurteile, ob der Dachboden mit der Dachleiter gut zu begehen ist.'))
         if anstellwinkel <= 61:
             loesung.append(beschriftung(len(teilaufg), i, True)
                            + r' \mathrm{Der~Anstellwinkel~ist~kleiner~als~61°~und~somit~der~'
@@ -606,6 +646,12 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
             loesung.append(beschriftung(len(teilaufg), i, True)
                            + r' \mathrm{Der~Anstellwinkel~ist~größer~als~61°~und~somit~der~'
                            + r' Dachboden~gut~zu~begehen. \quad (1BE)}')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(1)
         i += 1
 
@@ -619,13 +665,18 @@ def sachaufgabe_klappleiter(nr, teilaufg=['a', 'b'], BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], BE=[]):
+def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], notizfeld=[False, True][0], neue_seite=[0, 1][0], BE=[]):
     # Hier sollen die Schüler*innen die Höhe eines Turms berechnen (Trigonometrie im rechtw. Dreieck).
     # Mit dem Paramter "koerpergroesse=True" wird festgelegt, ob die Körpergröße des Beobachters in der Aufgabe berücksichtigt werden soll bzw. diese in der Aufgabenstellung genannt wird.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = 1 if neue_seite[-1] > 1 else neue_seite[-1]
+
     liste_bez = [f'{nr}']
-    i = 0
 
     n = random.randint(2, 5)
     m = n + random.randint(2, 5)
@@ -650,11 +701,10 @@ def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], BE=[]):
         lsg_0 = hoehe_beob_str = ''
         punkte = 3
 
-
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
                f'Ein {hoehe_beob_str} Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
-               f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. \n',
-               'Berechne aus den gegebenen Werte die Höhe des Turms.']
+               f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. '
+               f'Berechne aus den gegebenen Werte die Höhe des Turms.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     loesung.append(r' \mathrm{geg:~ \alpha ~=~' + gzahl(w_beob) + r' ^{ \circ},~c~=~' + gzahl(abstand_beob_turm)
                    + r'm, \quad ges \colon  a \quad (1BE)} \\ tan( \alpha ) ~=~ \frac{a}{b}'
@@ -663,6 +713,13 @@ def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], BE=[]):
                    + gzahl(hoehe) + lsg_0 + r'm  \quad (4BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
+
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append('notizen_mittel')
+    else:
+        aufgabe.append(' \n\n')
+    aufgabe.append('NewPage') if 1 in neue_seite else None
 
     if BE != []:
         if len(BE) > 1:
