@@ -24,7 +24,7 @@ liste_bez = ['Aufgabe']
 for i in range(anzahl):
     # Hier die Aufgaben in der Form [[aufgabe1(), aufgabe2()],[aufgabe3(), aufgabe4()], usw.] eintragen
     Aufgaben = [[berechnungen_allg_dreieck(1),
-                 pruefung_kl10_allg_dr_01(2)],
+                 pruefung_kl10_allg_dr(2)],
                 [sachaufgabe_strassenbau(3)]]
 
     # hier werden aus der Liste der Aufgaben dieTest erzeugt

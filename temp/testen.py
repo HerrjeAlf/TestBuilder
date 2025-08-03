@@ -29,7 +29,7 @@ probe = [True, False][0] # True: Probe 01, 02 usw. oder False: Gr. A, Gr. B usw
 clean_tex = [True, False][0]
 
 for i in range(anzahl):
-    Aufgaben = [sachaufgabe_turm(1, notizfeld=True, neue_seite=[0]), sachaufgabe_klappleiter(2, notizfeld=True, neue_seite=[1,2])]
+    Aufgaben = [pruefung_kl10_allg_dr(1, notizfeld=True, neue_seite=[1,4]), prisma(2, notizfeld=True, neue_seite=[3])]
 
     liste_punkte, liste_bez = ['Punkte'], ['Aufgabe']
     for aufgabe in Aufgaben:

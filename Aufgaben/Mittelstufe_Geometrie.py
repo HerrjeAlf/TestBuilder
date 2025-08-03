@@ -233,7 +233,6 @@ def rechtwinkliges_dreieck(nr, teilaufg=['a', 'b'], gegeben=['zufällig','zwei K
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(5)
         i += 1
-
     if 'b' in teilaufg:
         # Mithilfe der Daten können die SuS die fehlenden Winkel im rechtwinkligen Dreieck mit Sinus, Kosinus und Tangens berechnen.
         if 'a' not in teilaufg:
@@ -701,7 +700,7 @@ def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], notizfeld=[False, True
         lsg_0 = hoehe_beob_str = ''
         punkte = 3
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                f'Ein {hoehe_beob_str} Betrachter steht {abstand_beob_turm}m entfernt von einem Turm '
                f'und sieht unter einem Winkel von {w_beob}° die Spitze des Turms. '
                f'Berechne aus den gegebenen Werte die Höhe des Turms.']
@@ -732,12 +731,18 @@ def sachaufgabe_turm(nr, koerpergroesse=[True, False][0], notizfeld=[False, True
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_rampe(nr, BE=[]):
+def sachaufgabe_rampe(nr, notizfeld=[False, True][0], neue_seite=[0, 1][0], BE=[]):
     # Hier sollen die Schüler*innen die Länge einer Rampe berechnen, damit diese gut befahrbar ist (Trigonometrie im rechtw. Dreieck).
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = 1 if neue_seite[-1] > 1 else neue_seite[-1]
+
     liste_bez = [f'{nr}']
-    i = 0
+
     hoehe = nzahl(30,60)
     tiefe_rampe = hoehe + nzahl(30, 120)
     # hier werden die Winkel berechnet
@@ -746,11 +751,10 @@ def sachaufgabe_rampe(nr, BE=[]):
     w_haus = w_haus - w_rampe
     laenge_rampe = N(hoehe/math.sin(math.radians(w_rampe)),4)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                f'Eine Rollstuhlrampe in einem öffentlichen Gebäude soll eine Höhe von {hoehe}cm überwinden. '
-               f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. '
-               f'Wie lang muss die Strecke sein, auf der der Rollstuhl nach unten fährt? \n'
-               'Fertige dazu eine Planskizze an.']
+               f'Der Steigungswinkel darf höchstens {w_rampe}° betragen. Wie lang muss die Strecke sein,'
+               f'auf der der Rollstuhl nach unten fährt? Fertige dazu eine Planskizze an.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     loesung.append(r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg:~ \alpha ~=~' + str(w_rampe)
                    + r'^{ \circ},~a ~=~' + str(hoehe) + r'cm, \quad ges \colon  b \quad (1BE)} \\ sin( \alpha ) ~=~'
@@ -759,6 +763,13 @@ def sachaufgabe_rampe(nr, BE=[]):
                    + r' ^{ \circ}  )} ~=~' + str(laenge_rampe) + r'cm  \quad (3BE)')
     grafiken_aufgaben = []
     grafiken_loesung = []
+
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append('notizen_mittel')
+    else:
+        aufgabe.append(' \n\n')
+    aufgabe.append('NewPage') if 1 in neue_seite else None
 
     if BE != []:
         if len(BE) > 1:
@@ -771,11 +782,19 @@ def sachaufgabe_rampe(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
+def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], notizfeld=[False, True][0], neue_seite=[0, 1, 2, 3][0], BE=[]):
     # Berechnungen im allgemeinen Dreieck
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
+
     liste_punkte = []
     liste_bez = []
 
@@ -800,7 +819,7 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
     seite_2, seite_wert_2, winkel_2, winkel_wert_2 = [element[1] for element in auswahl_liste.values()]
     seite_3, seite_wert_3, winkel_3, winkel_wert_3 = [element[2] for element in auswahl_liste.values()]
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Von einem allgemeinen Dreieck, sind folgende Daten gegeben: ',
                seite_1 + '~ = ~' + gzahl(seite_wert_1) + r'cm, \quad '
                + seite_2 + '~ = ~' + gzahl(seite_wert_2) + r'cm, \quad '
@@ -808,24 +827,22 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
-        ges_a =  winkel_2 + ',~' + winkel_3
-    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
-        ges_b =  ',~' + seite_3
-    if 'c' in teilaufg:
-        ges_c = ',~ A'
+    ges = winkel_2 + ',~' + winkel_3
+    ges += ',~' + seite_3 if bool(set(teilaufg) & {'b', 'c'}) else None
+    ges += ',~ A' if 'c' in teilaufg else None
+
     gegeben_und_gesucht = (r' \mathrm{geg:~} ' + seite_1 + '~=~' + gzahl(seite_wert_1)
                            + r'cm, \quad ' + seite_2 + '~=~' + gzahl(seite_wert_2) + r'cm, \quad ' + winkel_1
                            + '~=~' + latex(winkel_wert_1) + r'^{ \circ } \quad \mathrm{ges \colon ~}'
-                           + ges_a + ges_b + ges_c + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\')
+                           + ges + r' \quad (1BE) \quad \mathrm{aus~der~Planskizze~(1BE)~folgt:~} \\')
 
-    if len([element for element in ['a', 'b', 'c'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'a', 'b', 'c'}):
         # Berechnung der Winkel im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 8
-        aufgabe.append(beschriftung(len(teilaufg), i)+ 'Berechne die restlichen Winkel im Dreieck. '
-                       + 'Fertige dazu eine Planskizze an. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechne die restlichen Winkel im Dreieck. Fertige dazu eine Planskizze an.'))
         loesung.append(gegeben_und_gesucht + beschriftung(len(teilaufg), i, True) + r' \frac{' + seite_2
                        + '}{~sin(' + winkel_2 + ')} ~=~' + r' \frac{' + seite_1 + '}{~sin(' + winkel_1
                        + r')} \quad \to \quad \frac{~sin(' + winkel_2 + ')}{ ' + seite_2 + r'} ~=~ \frac{ sin('
@@ -839,16 +856,21 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
                        + gzahl(winkel_wert_2) + r'^{ \circ } \quad (2BE) \\' + winkel_3 + r'~=~ 180^{ \circ} ~-~'
                        + gzahl(winkel_wert_1) + r'^{ \circ} ~-~ ' + gzahl(winkel_wert_2) + r'^{ \circ} ~=~ '
                        + gzahl(winkel_wert_3) + r'^{ \circ} \quad (2BE) \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-
-    if len([element for element in ['b', 'c'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'b', 'c'}):
         # Berechnung der fehlenden Seitenlänge im allg. Dreieck
 
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 4
-        aufgabe.append(beschriftung(len(teilaufg), i)
-                       + 'Berechne die Länge der Seite {seite_3} mit dem Sinussatz. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                       + f'Berechne die Länge der Seite {seite_3} mit dem Sinussatz.'))
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \mathrm{aus~der~Planskizze~folgt:~} \hspace{15em} \\'
                        + r' \frac{' + seite_1 + '}{~sin(' + winkel_1 + ')} ~=~' + r' \frac{' + seite_3 + '}{~sin('
@@ -857,9 +879,14 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
                        + r') } \quad (2BE) \\' + seite_3 + r'~=~ \frac{' + gzahl(seite_wert_1) + r'cm \cdot sin('
                        + gzahl(winkel_wert_3) + r' ^{ \circ } )}{ sin(' + gzahl(winkel_wert_1) + r' ^{ \circ } )} ~=~'
                        + gzahl(seite_wert_3) + r'cm \quad (2BE) \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-
     if 'c' in teilaufg:
         # Berechnung der Fläche im allg. Dreieck
 
@@ -867,13 +894,19 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
         pkt = 3
         flaeche = 0.5*seite_wert_1*seite_wert_2*math.sin(math.radians(winkel_wert_3))
         # print(N(flaeche,3))
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechne die Fläche des Dreiecks. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechne die Fläche des Dreiecks.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' A ~ = ~ \frac{1}{2} \cdot ' + seite_1
                        + r' \cdot ' + seite_2
                        + r' \cdot sin(' + winkel_3 + r') ~=~ \frac{1}{2} \cdot ' + gzahl(seite_wert_1) + r'cm \cdot '
                        + gzahl(seite_wert_2) + r'cm \cdot sin(' + latex(winkel_wert_3) + r'^{ \circ } ) ~=~ '
                        + gzahl(N(flaeche,3)) + r'cm^2 \quad (3BE) \\'
                        + r' \mathrm{insgesamt~' + str(pkt) + r'~Punkte} \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -884,15 +917,18 @@ def berechnungen_allg_dreieck(nr, teilaufg=['a', 'b', 'c'], i=0, BE=[]):
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1, 2, 3][0], i=0, BE=[]):
-    # das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
-    # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
-    # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+def pruefung_kl10_allg_dr(nr, teilaufg=['a', 'b', 'c', 'd'], notizfeld=[False, True][0], neue_seite=[0, 1, 2, 3][0], BE=[]):
+    # Das ist eine orginale Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Trigonometrie
+    # Mit dem Parameter "teilaufg" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "BE" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     seite_a = nzahl(6, 12)
     seite_h = seite_a*nzahl(4,8)/10
@@ -916,7 +952,7 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
     wk_werte = [alpha, beta, gamma_1, 90]
     dreieck_zeichnen_mit_hoehe(pkt_list, pkt_bez, st, wk, f'{str(nr)}')
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr))) + ' \n\n',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                 NoEscape('Im abgebildeten allgemeinen Dreieck ist $ h = '
                          + gzahl(seite_h) + '$cm, $a = ' + gzahl(seite_a) + r'$cm und $ \gamma_1 = '
                          + gzahl(gamma_1) + r'^{ \circ}$.'), ['Grafik', '250px']]
@@ -924,24 +960,20 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
     grafiken_aufgaben = [f'{str(nr)}']
     grafiken_loesung = []
 
-    if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
-        ges_a =  r' \overline{FB} '
-    if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
-        ges_b =  r',~ \alpha ,~ \beta '
-    if len([element for element in [ 'c', 'd'] if element in teilaufg]) > 0:
-        ges_c = ',~ b'
-    if 'd' in teilaufg:
-        ges_d = ',~ A'
-    gegeben_und_gesucht = (r' \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~'
-                           + gzahl(seite_h) + r'cm \quad und  \gamma_1 = ' + gzahl(gamma_1)
-                           + r'^{ \circ} \quad ges \colon  \quad ' + ges_a + ges_b + ges_c + ges_d
-                           + r' \quad (1BE) \quad aus~der~Skizze~folgt:} \\')
+    ges =  r' \overline{FB} '
+    ges +=  r',~ \alpha ,~ \beta ' if bool(set(teilaufg) & {'b', 'c', 'd'}) else ''
+    ges += ',~ b' if bool(set(teilaufg) & {'c', 'd'}) else ''
+    ges += ',~ A' if 'd' in teilaufg else ''
+
+    gegeben_und_gesucht = (r' \mathrm{geg: \quad a~=~' + gzahl(seite_a) + r'cm,~ h~=~' + gzahl(seite_h)
+                           + r'cm \quad und  \gamma_1 = ' + gzahl(gamma_1) + r'^{ \circ} \quad ges \colon  \quad '
+                           + ges + r' \quad (1BE) \quad aus~der~Skizze~folgt:} \\')
 
 
-    if len([element for element in ['a', 'b', 'c', 'd'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'a', 'b', 'c', 'd'}):
         # Berechnung des Hypotenusenabschnittes mit Pythagoras
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i])
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                 + ') Berechnen Sie die Länge der Strecke ' + r'$ \overline{FB} $.'))
         loesung.append(gegeben_und_gesucht + str(liste_teilaufg[i])
                        + r') \quad h^2~+~ \overline{FB}^2~=~a^2 \quad \vert ~- h^2'
@@ -950,16 +982,16 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
                        + r' \overline{FB} ~=~ \sqrt{(' + gzahl(seite_a) + 'cm)^2 - ('
                        + gzahl(seite_h) + 'cm)^2 } ~=~' + gzahl(seite_FB) + r'cm \quad (2BE) \\'
                        + r' \mathrm{insgesamt~' + str(5) + r'~Punkte} \\')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(5)
         i += 1
 
-    if len([element for element in ['b', 'c', 'd'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'b', 'c', 'd'}):
         # Berechnung eines Winkels mit dem Sinus
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Größe der Winkel '
@@ -971,20 +1003,19 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
                        + r' \to \quad \beta ~=~ sin^{-1} \Big( \frac{h}{a} \Big) ~=~ sin^{-1} \Big( \frac{'
                        + gzahl(seite_h) + '}{' + gzahl(seite_a) + r'} \Big) ~=~ ' + gzahl(beta)
                        + r'^{ \circ} \quad (4BE)')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_mittel')
+            grafiken_aufgaben.append('notizen_gross')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(6)
         i += 1
 
-    if len([element for element in ['c', 'd'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'c', 'd'}):
         # Berechnung einer Seite mit dem Sinussatz
-        stern = r'$ ^{ \star } $' if pruef_kl10 else ''
-        liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
-        aufgabe.append(NoEscape(r' \noindent ' + stern + str(liste_teilaufg[i])
+        liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                 + ') Berechnen Sie die Länge der Seite b.'))
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \frac{a}{sin( \alpha)} ~=~ \frac{b}{sin( \beta)}'
@@ -992,12 +1023,12 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
                        + r' \frac{a \cdot sin( \beta )}{sin( \alpha )} ~=~ \frac{' + gzahl(seite_a) + r'cm \cdot sin('
                        + gzahl(beta) + r'^{ \circ})}' + r'{sin(' + gzahl(alpha) + r'^{ \circ})} ~=~' + gzahl(seite_b)
                        + r'cm \quad (4BE) \\')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(4)
         i += 1
 
@@ -1012,37 +1043,45 @@ def pruefung_kl10_allg_dr_01(nr, teilaufg=['a', 'b', 'c', 'd'], pruef_kl10=[Fals
                        + r' A ~=~ \frac{1}{2} \cdot a \cdot b \cdot sin( \gamma ) ~=~ \frac{1}{2} \cdot '
                        + gzahl(seite_a) + r'cm \cdot ' + gzahl(seite_b) + r'cm \cdot sin(' + gzahl(gamma)
                        + r'^{ \circ }) ~=~' + gzahl(flaeche) + r'cm^2 \quad (3BE) \\')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(5)
         i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_vermessung_see(nr, BE=[]):
+def sachaufgabe_vermessung_see(nr, notizfeld=[False, True][0], neue_seite=[0, 1][0], BE=[]):
     # Berechnungen der Länge eines Sees mit dem Kosinussatz
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = 1 if neue_seite[-1] > 1 else neue_seite[-1]
+
     liste_bez = [f'{nr}']
-    i = 0
+
     beta = nzahl(30,60)
     seite_c = nzahl(6, 12)
     seite_a = seite_c * nzahl(6, 9) / 10
     seite_b = N(sqrt(seite_c**2 + seite_a**2 - 2*seite_c*seite_a*math.cos(math.radians(beta))),3)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Um die Länge eines Sees zu vermessen, wurden mit einem Theodoliten die Entfernung zu den äußeren '
                f'Ufern mit a = {gzahl(seite_a)}km und c = {gzahl(seite_c)}km und der eingeschlossen Winkel von '
                f'{gzahl(beta)}° bestimmt. Berechnen Sie die Länge des Sees.', 'Bild',
-               'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht \n\n']
+               'Die Skizze der Vermessung des Sees ist nicht maßstabsgerecht.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ a ~=~' + gzahl(seite_a)
                + r' km, ~ c ~=~' + gzahl(seite_c) + r'km \quad \mathrm{und} \quad \beta ~=~' + gzahl(beta)
@@ -1052,6 +1091,13 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
                + gzahl(seite_b) + r'km  \quad (3BE)']
     grafiken_aufgaben = ['vermessung_see']
     grafiken_loesung = []
+
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append('notizen_mittel')
+    else:
+        aufgabe.append(' \n\n')
+    aufgabe.append('NewPage') if 1 in neue_seite else None
 
     if BE != []:
         if len(BE) > 1:
@@ -1064,11 +1110,18 @@ def sachaufgabe_vermessung_see(nr, BE=[]):
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def sachaufgabe_strassenbau(nr, BE=[]):
+def sachaufgabe_strassenbau(nr, notizfeld=[False, True][0], neue_seite=[0, 1][0], BE=[]):
     # Berechnungen der Länge einer neu gebauten Straße mit dem Sinussatz
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = 1 if neue_seite[-1] > 1 else neue_seite[-1]
+
     liste_bez = [f'{nr}']
-    i = 0
+
     gamma = nzahl(95,120)
     beta = nzahl(15,45)
     seite_c = nzahl(6, 12)
@@ -1079,7 +1132,7 @@ def sachaufgabe_strassenbau(nr, BE=[]):
                f'Straßenabschnitt der Hauptstraße, zwischen der geplanten Straße und der Eichenallee, soll '
                f'{gzahl(seite_c)}km lang sein. \n Berechnen Sie die Länge der geplanten neuen Straße, '
                r'wenn der Winkel $ \beta $ ' + f'zwischen der Eichenallee und der Hauptstraße {gzahl(beta)}° beträgt.'),
-               'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht \n\n']
+               'Bild', 'Skizze des geplanten Bauprojekt ist nicht maßstabsgerecht.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em} \\',
                r' \mathrm{Planskizze \quad (1BE) \quad \to \quad geg  \colon ~ c~=~' + gzahl(seite_c)
                + r' km, ~ \beta ~=~' + gzahl(beta) + r' ^{ \circ} \quad \mathrm{und} \quad \gamma ~=~' + gzahl(gamma)
@@ -1091,6 +1144,13 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     grafiken_aufgaben = ['strassenbau']
     grafiken_loesung = []
     pkt = 6
+
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append('notizen_gross')
+    else:
+        aufgabe.append(' \n\n')
+    aufgabe.append('NewPage') if 1 in neue_seite else None
 
     if BE != []:
         if len(BE) > 1:
@@ -1104,22 +1164,26 @@ def sachaufgabe_strassenbau(nr, BE=[]):
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
 # Flächen und Körperberechnung
-def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1, 2, 3, 4][0], i=0, BE=[]):
+def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], notizfeld=[False, True][0], neue_seite=[0, 1, 2, 3, 4, 5][0], BE=[]):
     # das ist eine Aufgabe der Abschlussprüfung Klasse 10 in Brandenburg zur Flächen und Volumenberechung
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
+
     laenge = nzahl(2,5) * 5
     radius = laenge * nzahl(3,4)/10
     anz_bahnen = 1
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Familie Geiss plant auf ihrem Anwesen an der '
-               + f'Côte d’Azur den Bau eines Swimmingpools. \n Dieser soll eine Länge von {gzahl(laenge+2*radius)}m und eine '
-               + f'Breite von {gzahl(2*radius)}m haben.',
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+               'Familie Geiss plant auf ihrem Anwesen an der Côte d’Azur den Bau eines Swimmingpools. \n '
+               + f'Dieser soll eine Länge von {gzahl(laenge+2*radius)}m und eine Breite von {gzahl(2*radius)}m haben.',
                ['Grafik','300px']]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
 
@@ -1170,16 +1234,17 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neu
         # Hier sollen die SuS die geoemtrischen Formen erkennen, aus denen sich der Pool zusammensetzt.
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         pkt = 2
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Geben Sie an, aus welchen Teilflächen '
-                                + 'sich die Grundfläche des Pools zusammensetzt.'))
-        loesung.append(beschriftung(len(teilaufg), i, True) + r' \mathrm{Aus~zwei~Halbkreisen~links~und~rechts~und~einem~'
-                       + r'Rechteck~in~der~Mitte.} \quad (2BE)')
-        if pruef_kl10:
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Geben Sie an, aus welchen '
+                                + 'Teilflächen sich die Grundfläche des Pools zusammensetzt.'))
+        loesung.append(beschriftung(len(teilaufg), i, True)
+                       + r' \mathrm{Aus~zwei~Halbkreisen~links~und~rechts~und~einem~Rechteck~in~der~Mitte.} '
+                       + r' \quad (2BE)')
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -1189,8 +1254,8 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neu
         pkt = 5
         aufgabe.extend((NoEscape(r' \noindent Am Rand des Pools soll das beim Baden übergelaufene Wasser in eine '
                                 + r'Abflussrinne laufen. Die Gitter für die Abdeckung der Rinne sind 50cm lang.'),
-                                ' \n\n', beschriftung(len(teilaufg), i) + 'Berechnen Sie, wie viele Gitter für den Pool '
-                                + 'benötigt werden.'))
+                        ' \n\n', beschriftung(len(teilaufg), i) + 'Berechnen Sie, wie viele Gitter für den Pool '
+                        + 'benötigt werden.'))
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' U_{ges} ~=~ U_{Kreis} + 2 \cdot (Länge - Breite) ~=~ '
                        + r' \pi \cdot Breite + 2 \left( ' + vorz_v_aussen(laenge + 2 * radius, 'm ')
@@ -1198,56 +1263,55 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neu
                        + r' m + 2 \cdot ' + gzahl(laenge) + r'm ~=~' + gzahl(N(2*pi*radius + 2*laenge,3))
                        + r'm \quad (4BE) \\ \mathrm{Es~sind~' + gzahl(int(4*(pi*radius + laenge)) + 1)
                        + r'~Gitter~für~die~Abdeckung~notwendig.} \quad (1BE) ')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_gross')
+            grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
-    if 'c' in teilaufg:
+    if bool(set(teilaufg) & {'c', 'd', 'e'}):
         # Hier sollen die SuS die Grundfläche des Pools berechnen
         liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
         pkt = 3
         flaeche = N(laenge*2*radius + pi*radius**2,2)
-        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechnen Sie die Größe der Grundfläche '
-                                 + 'des Pools.'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechnen Sie die Größe der Grundfläche des Pools.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' A_{ges} ~=~ A_{Rechteck} + A_{Kreis} ~=~ '
                        + r' ( Länge - Breite ) \cdot Breite + \pi \cdot r^2 \quad (1BE) \\ \hspace{15em} \left( '
                        + vorz_v_aussen(laenge + 2*radius, 'm') + vorz_v_innen(-2*radius, 'm')
                        + r' \right) \cdot ' + gzahl(2*radius) + r' + \pi \cdot \left( ' + gzahl(radius)
                        + r'm \right) ^2  ~=~ ' + gzahl(flaeche) + r'm^2 \quad (2BE)')
-        if pruef_kl10:
+        if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_mittel')
         else:
             aufgabe.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
 
-        if 'd' in teilaufg:
+        if bool(set(teilaufg) & { 'd', 'e'}):
             # Hier sollen die SuS das Wasservolumen des Pools berechnen
-            stern = r'$ ^{ \star } $' if pruef_kl10 else ''
             hoehe_pool = nzahl(22, 30) / 10
             volumen = N((laenge * 2 * radius + pi * radius ** 2) * hoehe_pool, 2)
             pkt = 3
-            liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+            liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
             aufgabe.extend((NoEscape(r' \noindent Damit Herr Geiss einen Kopfsprung in den Pool machen kann, '
                                      f'soll dieser {gzahl(hoehe_pool)}m tief sein.'),' \n\n',
-                            NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg), i)
+                            NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                      + 'Berechnen Sie die Wassermenge des Pools in $ m^3 $.')))
             loesung.append(beschriftung(len(teilaufg), i, True) + r' V ~=~ A \cdot h ~=~ ' + gzahl(flaeche)
                            + r'm^2 \cdot ' + gzahl(hoehe_pool) + 'm ~=~' + gzahl(volumen) +  r'm^3 \\')
-            if pruef_kl10:
+            if notizfeld:
                 aufgabe.append(['Bild', '430px'])
                 grafiken_aufgaben.append('notizen_klein')
             else:
                 aufgabe.append(' \n\n')
-            aufgabe.append('NewPage') if neue_seite == i else ''
+            aufgabe.append('NewPage') if i + 1 in neue_seite else None
             liste_punkte.append(pkt)
             i += 1
 
@@ -1256,38 +1320,41 @@ def pool(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], pruef_kl10=[False,True][0], neu
                 # Berechnung die Zeit zum Befüllen des Pools mit einem Gartenschlauch
                 menge_schlauch = nzahl(6,13) * 100
                 zeit = N(volumen/(menge_schlauch/1000),3)
-                stern = r'$ ^{ \star } $' if pruef_kl10 else ''
                 pkt = 3
-                liste_bez.append(NoEscape(f'{str(nr)}.{stern + str(liste_teilaufg[i])})'))
+                liste_bez.append(NoEscape(f'{str(nr)}.{str(liste_teilaufg[i])})'))
                 aufgabe.extend((NoEscape(r' \noindent Herr Geiss ist ungeduldig und möchte für die Befüllung des Pool '
                                          + f'einen Gartenschlauch nutzen. Mit diesem kann er den Pool mit '
                                          + f'{gzahl(menge_schlauch)}l Wasser pro Stunde befüllen.'),' \n\n',
-                                NoEscape(r' \noindent ' + stern + beschriftung(len(teilaufg), i)
+                                NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                          + 'Berechne Sie, wie lange es dauert den Pool so zu befüllen .')))
                 loesung.append(beschriftung(len(teilaufg), i, True) + r' t ~=~ \frac{' + gzahl(volumen) + 'm^3 }{'
                                + gzahl(menge_schlauch/1000) + r' \frac{m^3}{h} } ~=~ ' + gzahl(zeit)
                                + r'h \quad (3BE) ')
-                if pruef_kl10:
+                if notizfeld:
                     aufgabe.append(['Bild', '430px'])
                     grafiken_aufgaben.append('notizen_klein')
                 else:
                     aufgabe.append(' \n\n')
-                aufgabe.append('NewPage') if neue_seite == i else ''
+                aufgabe.append('NewPage') if i + 1 in neue_seite else None
                 liste_punkte.append(pkt)
                 i += 1
 
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=[False,True][0], neue_seite=[None, 0, 1][0], i=0, BE=[]):
+def prisma(nr, teilaufg=['a', 'b'], notizfeld=[False, True][0], neue_seite=[0, 1, 2][0], BE=[]):
     # hier sollen die Schüler*innen
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Ist der Parameter "pruef_kl10=True" dann wird unter der Teilaufgabe ein Notizfeld für die Berechnungen angezeigt. Standardmäßig ist "pruef_kl10=False" und es wird kein Notizfeld unter der Teilaufgabe angezeigt.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt kein erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
+
     a = nzahl(5,10)
     h = a * nzahl(10,20)/5
     hg = round(sqrt(3)/2*a,1)
@@ -1319,37 +1386,36 @@ def prisma(nr, teilaufg=['a', 'b'], pruef_kl10=[False,True][0], neue_seite=[None
     grafiken_aufgaben = [f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})']
     grafiken_loesung = []
 
-    if len([element for element in ['a', 'b'] if element in teilaufg]) > 0:
+    if bool(set(teilaufg) & {'a', 'b'}):
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + 'Berechne die Oberfläche des Prismas.'))
-        if pruef_kl10:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_klein')
-        else:
-            aufgabe.append(' \n\n')
         loesung.append(beschriftung(len(teilaufg), i, True) + r' A_G ~=~ \frac{1}{2} \cdot a \cdot h_a ~=~ \frac{1}{2} \cdot '
                        + gzahl(a) + r'cm \cdot ' + gzahl(hg) + ' cm ~=~ ' + gzahl(round(0.5*a*hg,1))
                        + r'cm^2 \quad \mathrm{und} \quad A_M ~=~ 3 \cdot a \cdot b ~=~ 3 \cdot ' + gzahl(a) + r' cm\cdot '
                        + gzahl(h) + 'cm ~=~' + gzahl(3*a*h) + r'cm^2 \\ \mathrm{Die~Oberfläche~A_O~beträgt~dann:} '
                        + r' \quad A_O ~=~ 2 \cdot A_G + A_M ~=~ 2 \cdot' + gzahl(round(0.5*a*hg,1)) + 'cm^2'
                        + vorz_str(3*a*h) + 'cm^2 ~=~' + gzahl(round(a*hg + 3*a*h,1)) + r'cm^2')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(6)
         i += 1
 
     if 'b' in teilaufg:
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Berechne das Volumen des Prismas.'))
-        if pruef_kl10:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_klein')
-        else:
-            aufgabe.append(' \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + r') Berechne das Volumen des Prismas.'))
         loesung.append(beschriftung(len(teilaufg), i, True) + r' V ~=~ A_g \cdot h ~=~ ' + gzahl(round(0.5*a*hg,1))
                        + r'cm^2 \cdot ' + gzahl(h) + r'cm ~=~ ' + gzahl(round(0.5*a*hg*h,1)) + r' cm^3 ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(2)
         i += 1
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
