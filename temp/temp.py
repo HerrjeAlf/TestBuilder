@@ -132,11 +132,11 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-teilaufg = [0,1,2,3,4]
+teilaufg = [0,1,2, 2,3,4,2]
 
-del teilaufg[:1]
+for step in range(teilaufg.count(2)):
+    print('2')
 
-print(teilaufg)
 
 
 

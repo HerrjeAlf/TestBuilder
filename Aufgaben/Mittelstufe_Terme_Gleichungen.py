@@ -16,8 +16,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], pruef_kl10=[True, False][0],
-                  anzahl=False, wdh=False, neue_seite=[None, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12][0], i=0, BE=[]):
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], anzahl=[False, True][0], wdh=[False, True][0], notizfeld=[False, True][0], neue_seite=[None, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12, 13][0], BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Bruchterme einer Menge berechnen
@@ -32,56 +31,54 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     # j) richtige Bezeichnung für ein gegebenes Viereck benennen
     # k) den richtigen Satz des Pythagoras zum gegebenen Dreieck auswählen
     #
-    # Mit dem Parameter "pruef_kl10=" wird festgelegt, ob unter den Aufgaben ein Notizfeld zur Berechnung
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
     # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
-
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_punkte = []
-    liste_bez = []
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
-    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
-    grafiken_aufgaben = []
-    grafiken_loesung = []
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
 
     if anzahl != False:
         if type(anzahl) != int or anzahl > 26:
-            exit("Der Parameter 'anzahl=' muss eine natürliche Zahl kleiner 27 sein.")
+            exit("Der Parameter 'anzahl' muss eine natürliche Zahl kleiner 27 sein.")
         teilaufg = random_selection(teilaufg, anzahl, True)
     elif wdh != False:
         teilaufg = repeat(teilaufg, wdh)
         exit("Die Anzahl der sich wiederholenden Teilaufgaben muss eine Zahl sein und insgesamt nicht mehr als "
              "26 Teilaufgaben ergeben.") if type(wdh) != int or len(teilaufg) > 26 else wdh
 
-    for step in range(len([element for element in teilaufg if element == 'a'])):
-        liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        nenner = random.choice([2, 3, 4, 5, 6, 8])
-        anteil = nzahl(2,10)*10
-        wert = anteil * nenner
-        einheit = random.choice(['kg', 't', 'm', 'l', '€'])
-        aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Bestimmen Sie ' + r'$ \frac{1}{'
-                                 + gzahl(nenner) + '} $ von ' + gzahl(wert) + einheit + '.'))
-        if pruef_kl10:
-            aufgabe.append(['Bild', '430px'])
-            grafiken_aufgaben.append('notizen_klein')
-        else:
-            aufgabe.append(' \n\n\n')
-        loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{1}{ ' + gzahl(nenner) + r'} \cdot ' + gzahl(wert) + einheit
-                       + '~=~' + gzahl(anteil) + einheit + r' \quad (1BE) ')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(1)
-        i += 1
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
+    loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
+    grafiken_aufgaben = []
+    grafiken_loesung = []
+
 
     for element in teilaufg:
         if element == 'a':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+            nenner = random.choice([2, 3, 4, 5, 6, 8])
+            anteil = nzahl(2, 10) * 10
+            wert = anteil * nenner
+            einheit = random.choice(['kg', 't', 'm', 'l', '€'])
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + r'Bestimmen Sie '
+                                    + r'$ \frac{1}{' + gzahl(nenner) + '} $ von ' + gzahl(wert) + einheit + '.'))
+            loesung.append(beschriftung(len(teilaufg), i, True) + r' \frac{1}{ ' + gzahl(nenner)
+                           + r'} \cdot ' + gzahl(wert) + einheit + '~=~' + gzahl(anteil) + einheit + r' \quad (1BE) ')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
+            else:
+                aufgabe.append(' \n\n')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
+            i += 1
+            del nenner, einheit
 
-            zahlen = random_selection(list(range(3,9)), anzahl=2)
-            bas = zahlen[0]
-            exp = zahlen[1]
+        if element == 'b':
+            bas, exp = random_selection(list(range(3,9)), anzahl=2)
             exp_1 = nzahl(1,2)
             exp_2 = exp - exp_1
             aufg_1 = (gzahl(bas) + '^{' + gzahl(exp, exp=True) + '} ~=~' + gzahl(bas) + '^{' + gzahl(exp_1, exp=True)
@@ -92,19 +89,16 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             list_lsg = [r' \surd \quad ' + aufg_1, r' \square \quad ' + aufg_2, r' \square \quad ' + aufg_3]
             ausw = [0,1,2]
             random.shuffle(ausw)
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                     + ') Kreuzen Sie die richtige Aussage an.'),
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                     + 'Kreuzen Sie die richtige Aussage an.'),
                             list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]] + r' \hspace{5em} '
                             + list_aufg[ausw[2]] + r' \\'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{5em} ' + list_lsg[ausw[1]]
-                           + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + list_lsg[ausw[0]] + r' \hspace{5em} '
+                           + list_lsg[ausw[1]] + r' \hspace{5em} ' + list_lsg[ausw[2]] + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
-        if element == 'b':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+        if element == 'c':
             werte = random_selection(list(range(1,11)),4)
             bruch1_str = r' \frac{' + gzahl(werte[0]) + r'}{' + gzahl(werte[1]) + '}'
             bruch2_str = r' \frac{' + gzahl(werte[2]) + r'}{' + gzahl(werte[3]) + '}'
@@ -116,44 +110,39 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                         Rational(werte[0]*werte[3] + werte[2]*werte[1],werte[1]*werte[3]),
                         Rational(werte[0]*werte[3] - werte[2]*werte[1],werte[1]*werte[3])]
             erg_ausw = random.choice([0,1,2,3])
-            # erg_ausw = 0
             erg = list_erg[erg_ausw]
             list_lsg[erg_ausw] = r' \surd \quad ' + list_terme[erg_ausw] + '~=~' + gzahl(erg)
             ausw = [0,1,2,3]
             random.shuffle(ausw)
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                     + r'Kreuzen Sie den Term an, dessen Wert $' + gzahl(erg) + '$ beträgt.'),
                             list_aufg[ausw[0]] + r' \hspace{4em} ' + list_aufg[ausw[1]] + r' \hspace{4em} '
                             + list_aufg[ausw[2]] + r' \hspace{4em} ' + list_aufg[ausw[3]] + r' \\'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{4em} ' + list_lsg[ausw[1]]
-                           + r' \hspace{4em} ' + list_lsg[ausw[2]] + r' \hspace{4em} ' + list_lsg[ausw[3]]
-                           + r' \quad (1BE) ')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + list_lsg[ausw[0]] + r' \hspace{4em} '
+                           + list_lsg[ausw[1]] + r' \hspace{4em} ' + list_lsg[ausw[2]]
+                           + r' \hspace{4em} ' + list_lsg[ausw[3]] + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
-        if element == 'c':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if element == 'd':
             erg = nzahl(1,5)
             abstand = nzahl(8,16)/2
             min = erg - abstand
             max = erg + abstand
-            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie diejenige Zahl an, die auf '
-                                    + r'der Zahlengeraden in der Mitte von ' + gzahl(min) + ' und ' + gzahl(max)
-                                    + ' liegt.'))
-            if pruef_kl10:
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                    + r'Geben Sie diejenige Zahl an, die auf der Zahlengeraden in der Mitte von '
+                                    + gzahl(min) + ' und ' + gzahl(max) + ' liegt.'))
+            loesung.append(beschriftung(len(teilaufg), i, True) + r' \frac{' + gzahl(min)
+                           + vorz_str(max) + '}{2} ~=~ ' + gzahl(erg) + r' \quad (1BE) ')
+            if notizfeld:
                 aufgabe.append(['Bild', '430px'])
                 grafiken_aufgaben.append('notizen_klein')
             else:
                 aufgabe.append(' \n\n')
-            loesung.append(str(liste_teilaufg[i]) + r') \quad \frac{' + gzahl(min) + vorz_str(max) + '}{2} ~=~ '
-                           + gzahl(erg) + r' \quad (1BE) ')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
-        if element == 'd':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-
+        if element == 'e':
             xwert = zzahl(1,5)
             ywert = zzahl(1,5)
             list_fkt = [r' \mathrm{ y~=~ \left( x' + vorz_str(-1*xwert) + r' \right) ^2' + vorz_str(ywert) + '}',
@@ -165,20 +154,17 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             list_lsg[0] = r' \surd \quad ' + list_fkt[0]
             ausw = [0,1,2,3]
             random.shuffle(ausw)
-
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche  Parabel '
-                                     + f'den Scheitelpunkt bei S({gzahl(xwert)}|{gzahl(ywert)}) hat.'),
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + f'Kreuzen Sie an, welche  '
+                                     + f'Parabel den Scheitelpunkt bei S({gzahl(xwert)}|{gzahl(ywert)}) hat.'),
                             list_aufg[ausw[0]] + r' \hspace{2em} ' + list_aufg[ausw[1]] + r' \hspace{2em} '
                             + list_aufg[ausw[2]] + r' \hspace{2em} ' + list_aufg[ausw[3]] + r' \\'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
-                           + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} ' + list_lsg[ausw[3]]
-                           + r' \quad (1BE) ')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + list_lsg[ausw[0]] + r' \hspace{2em} '
+                           + list_lsg[ausw[1]] + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \hspace{2em} '
+                           + list_lsg[ausw[3]] + r' \quad (1BE) ')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
-        if element == 'e':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if element == 'f':
             preis = nzahl(10,20) * 50
             rabatt = nzahl(1,5) * 5
             erg = preis*(100-rabatt)/100
@@ -186,20 +172,18 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                                         'eine Gitarre', 'ein Paar Sneaker'], 1)[0]
             aufgabe.extend((NoEscape(r' \noindent' + f' Max möchte {artikel} für {preis}€ kaufen und erhält beim Kauf '
                             + f'{rabatt} ' + r' \% Rabatt. '),' \n\n',
-                           str(liste_teilaufg[i]) + r') Berechne den Kaufpreis, den Max zahlen muss. '))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(preis) + r' \texteuro \cdot \frac{'
+                           beschriftung(len(teilaufg), i) + r'Berechnen Sie den Kaufpreis, den Max zahlen muss. '))
+            loesung.append(beschriftung(len(teilaufg), i, True) + gzahl(preis) + r' \texteuro \cdot \frac{'
                            + gzahl(100-rabatt) + '}{' + gzahl(100) + '} ~=~' + gzahl(erg) + r' \texteuro \quad (1BE) ')
-            if pruef_kl10:
+            if notizfeld:
                 aufgabe.append(['Bild', '430px'])
-                grafiken_aufgaben.append('notizen_klein')
+                grafiken_aufgaben.append('notizen_mittel')
             else:
                 aufgabe.append(' \n\n')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
-        if element == 'f':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        if element == 'g':
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             rows = 4  # Zeilen
             cols = 5  # Spalten
@@ -208,16 +192,15 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             x_max, y_max_unk = divmod(anz, rows)
             y_max = y_max_unk / rows
             create_rectangle(rows, cols, x_max, y_max, name=f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i])
-                                     + f') Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                     + f'Geben Sie den Anteil der grau eingefärbten Felder in Prozent an. '),
                             ['Grafik','200px']))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + gzahl(anz/(rows*cols)*100) + r'~ \% \quad (1BE) ')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + gzahl(anz/(rows*cols)*100)
+                           + r'~ \% \quad (1BE) ')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
         if element == 'i':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
             gamma = nzahl(16,22)*5
             beta = nzahl(6,12)*5
@@ -240,20 +223,17 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             ausw = random.choice([0,1,2])
             wk = [gzahl(wk_werte[0]) + r' ^{ \circ }', gzahl(wk_werte[1]) + r' ^{ \circ }', gzahl(wk_werte[2])+ r' ^{ \circ }']
             wk[ausw] = winkel[ausw]
-
             dreieck_zeichnen(pkt, pkt_bez, st, wk, f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Geben Sie die Größe des Winkels $ '
-                                     + winkel[ausw] + ' $ an.'),
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                     + r'Geben Sie die Größe des Winkels $ ' + winkel[ausw] + ' $ an.'),
                             ['Grafik','170px'], winkel[ausw] + r' ~=~ .................... '))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
+            loesung.append(beschriftung(len(teilaufg), i, True) + winkel[ausw] + '~=~' + gzahl(wk_werte[ausw])
                            + r' ^{ \circ } \quad (1BE) \\')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
         if element == 'j':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
 
             # Auswahl des gesuchten Winkels
@@ -270,8 +250,8 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                          r' \square \quad \mathrm{Trapez} ', r' \square \quad \mathrm{Parallelogramm} ']
             rf = [0, 1, 2, 3]
             random.shuffle(rf)
-            aufgabe.append(NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + r') Wie heißt diese geometrische Figur. '
-                                     + r'Kreuzen Sie an.'))
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                    + r'Wie heißt diese geometrische Figur. Kreuzen Sie an.'))
             if auswahl == 0:
                 aufgabe.append(['Grafik', '50px'])
             else:
@@ -281,17 +261,14 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                                     + '$'),' \n\n'))
             list_lsg = list_aufg
             list_lsg[auswahl] = r' \surd \quad \mathrm{ ' + bezeichnung[auswahl] + '}'
-            loesung.append(str(liste_teilaufg[i]) + r') ~ ~ ~ ' + list_lsg[rf[0]] + r' \hspace{4em} ' + list_lsg[rf[1]]
-                           + r' \hspace{4em} ' + list_lsg[rf[2]] + r' \hspace{4em} ' + list_lsg[rf[3]]
-                           + r' \quad (1BE)')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + list_lsg[rf[0]]
+                           + r' \hspace{4em} ' + list_lsg[rf[1]] + r' \hspace{4em} ' + list_lsg[rf[2]]
+                           + r' \hspace{4em} ' + list_lsg[rf[3]] + r' ~ ~ (1BE)')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
         if element == 'k':
-            liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
             grafiken_aufgaben.append(f'Aufgabe_{str(nr)}_{str(liste_teilaufg[i])})')
-
             n = random.randint(1, 5)
             m = n + random.randint(1, 5)
             # hier werden die Pythagoräischen Zahlentripel für die Seitenlängen berechnet
@@ -330,14 +307,14 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
             ausw = [0, 1, 2]
             random.shuffle(ausw)
 
-            aufgabe.extend((NoEscape(r' \noindent ' + str(liste_teilaufg[i]) + f') Kreuzen Sie an, welche Gleichung zur '
-                                     + f'Berechnung der Seite {st[2]} geeignet ist. '),['Grafik','170px'],
+            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i) + f'Kreuzen Sie an, '
+                                     + f'welche Gleichung zur Berechnung der Seite {st[2]} geeignet ist. '),
+                            ['Grafik','170px'],
                             r' \hspace{5em} ' + list_aufg[ausw[0]] + r' \hspace{5em} ' + list_aufg[ausw[1]]
                             + r' \hspace{5em} ' + list_aufg[ausw[2]] + r' \\'))
-            loesung.append(str(liste_teilaufg[i]) + r') \quad ' + list_lsg[ausw[0]] + r' \hspace{2em} ' + list_lsg[ausw[1]]
-                           + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \quad (1BE)')
-            aufgabe.append('NewPage') if neue_seite == i else ''
-            liste_punkte.append(1)
+            loesung.append(beschriftung(len(teilaufg), i, True) + list_lsg[ausw[0]] + r' \hspace{2em} '
+                           + list_lsg[ausw[1]] + r' \hspace{2em} ' + list_lsg[ausw[2]] + r' \quad (1BE)')
+            aufgabe.append('NewPage') if i + 1 in neue_seite else ''
             i += 1
 
 
