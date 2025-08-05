@@ -16,7 +16,7 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 
-def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], anzahl=[False, True][0], wdh=[False, True][0], notizfeld=[False, True][0], neue_seite=[None, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12, 13][0], BE=[]):
+def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'], anzahl=[False, True][0], wdh=[False, True][0], notizfeld=[False, True][0], neue_seite=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11][0], BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) einfache Bruchterme einer Menge berechnen
@@ -321,7 +321,7 @@ def basisaufgaben(nr,teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     liste_punkte = BE if len(BE) == len(teilaufg) else liste_punkte
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, i = 0, BE=[]):
+def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm'], anzahl=False, wdh=False, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen SuS Terme addieren bzw. subtrahieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Terme mit einer Basis und ganzzahligen Faktoren (zwei Summanden)
@@ -340,11 +340,16 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     #
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Fasse die Terme zusammen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -469,13 +474,11 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
                 'k': [gem_glw_ganzz_terme, 8], 'l': [gem_glw_rat_terme, 4],
                 'm': [gem_glw_rat_terme, 6]}
 
-    aufg = ''
-    lsg = ''
-    punkte = 0
+    aufg, lsg = '', ''
     for element in teilaufg:
         teilaufg_aufg, teilaufg_lsg = aufgaben[element][0](aufgaben[element][1])
-        aufg = aufg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_aufg
-        lsg = lsg + str(liste_teilaufg[i]) + r') \quad ' + teilaufg_lsg
+        aufg = aufg + beschriftung(len(teilaufg), i, True) + teilaufg_aufg
+        lsg = lsg + beschriftung(len(teilaufg), i, True) + teilaufg_lsg
         if element in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] and i + 1 < len(teilaufg):
             if (i + 1) % 3 != 0 and i + 1 < len(teilaufg):
                 aufg = aufg + r' \hspace{5em} '
@@ -489,23 +492,28 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
             if i + 1 < len(teilaufg):
                 aufg = aufg + r' \\\\'
                 lsg = lsg + r' \\\\'
-        punkte += 1
         i += 1
+
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    notizen = ['notizen_klein', 'notizen_mittel', 'notizen_gross', 'notizen_riesig']
+    auswahl = int(len(teilaufg)/3) if len(teilaufg) < 12 else 3
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append(notizen[auswahl])
+    aufgabe.append('NewPage') if 1 in neue_seite else None
 
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
+        else:
+            liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, i=0, BE=[]):
+def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=False, wdh=False, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen die SuS das Produkt mehrerer Terme bilden multiplizieren.
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Produkt aus zwei Termen mit einer Variablen und natürlichen Koeffizienten
@@ -515,13 +523,18 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
     # e) Produkt aus drei Termen und zwei Potenzen von Variablen mit ganzzahligen Koeffizienten
     # f) Produkt aus drei Termen und zwei Potenzen von Variablen und beliebig ausgewählten Koeffizienten
     #
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
-    # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
+   # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Vereinfache.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -601,20 +614,26 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
         punkte += 1
         i += 1
 
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    notizen = ['notizen_klein', 'notizen_mittel', 'notizen_gross', 'notizen_riesig']
+    auswahl = int(len(teilaufg)/4) if len(teilaufg) < 16 else 3
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append(notizen[auswahl])
+    aufgabe.append('NewPage') if 1 in neue_seite else None
+
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
+        else:
+            liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, i=0, BE=[]):
+def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], anzahl=False, wdh=False, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen die SuS verschiedene Produkte von Terme mit Klammern ausmultiplizieren
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Klammer mit ganzzahligen Koeffizienten und zwei ganzzahligen Summanden
@@ -628,13 +647,18 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     # i) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen
     # j) Klammer mit rationalen Koeffizienten sowie einer Potenz einer Variable und drei rationalen Summanden mit Potenzen von Variablen und einem weiteren Summanden
     #
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                'Löse die Klammern auf und fasse ggf. zusammen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
@@ -768,20 +792,26 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
         punkte += 1
         i += 1
 
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    notizen = ['notizen_klein', 'notizen_mittel', 'notizen_gross', 'notizen_riesig']
+    auswahl = int(len(teilaufg)/3) if len(teilaufg) < 12 else 3
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append(notizen[auswahl])
+    aufgabe.append('NewPage') if 1 in neue_seite else None
+
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+        else:
             liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], anzahl=False, wdh=False, i=0, BE=[]):
+def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], anzahl=False, wdh=False, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) eine natürliche Zahl aus zwei Summanden ausklammern, z.b. 8x+8y = 8(x+y)
@@ -794,17 +824,22 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     # h) eine ganze Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     # i) eine rationale Zahl und die Potenz einer Variablen im Zählern eines Bruchs, der aus rationalen Brüchen besteht, ausklammern und dann mit dem Nenner kürzen
     #
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    if len([element for element in ['f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    if bool(set(teilaufg) & {'f', 'g', 'h', 'i'}):
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                    'Klammere alle möglichen gemeinsamen Faktoren aus und kürze gegebenenfalls.']
     else:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                    'Klammere alle möglichen gemeinsamen Faktoren aus.']
 
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -920,20 +955,26 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
         punkte += 1
         i += 1
 
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    notizen = ['notizen_klein', 'notizen_mittel', 'notizen_gross', 'notizen_riesig']
+    auswahl = int(len(teilaufg)/3) if len(teilaufg) < 12 else 3
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append(notizen[auswahl])
+    aufgabe.append('NewPage') if 1 in neue_seite else None
+
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+        else:
             liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, i=0, BE=[]):
+def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'], anzahl=False, wdh=False, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen die SuS aus verschiedene Summen von Terme ausklammern
     # Mithilfe von "teilaufg=[]" können folgende Aufgaben (auch mehrfach z.B. der Form ['a', 'a', ...]) ausgewählt werden:
     # a) Gleichung der Form a * x = b mit ganzen Zahlen
@@ -951,13 +992,19 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     # m) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit ganzen Zahlen
     # n) Gleichung der Form (a * x^2 + b * x)/(c * x) = d * x + e mit rationalen Zahlen
     #
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
     # Mit 'anzahl=' kann eine Anzahl von zufällig ausgewählten Teilaufgaben aus den in 'teilaufg=[]' festgelegten Teilaufgaben erstellt werden.
     # Mit dem Parameter 'wdh=' kann festgelegt werden, wie oft die angegebenen Teilaufgaben wiederholt werden. Also ['a', 'b'] mit 'wdh=2' ergibt ['a','a','b','b'] als Teilaufgabe.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Lösen Sie die folgenden Gleichungen.']
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [len(teilaufg)], [f'{str(nr)}']
+
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+               'Lösen Sie die folgenden Gleichungen.']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -1170,15 +1217,22 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
         punkte += 1
         i += 1
 
+    aufgabe.append(aufg)
+    loesung.append(lsg)
+
+    notizen = ['notizen_klein', 'notizen_mittel', 'notizen_gross', 'notizen_riesig']
+    auswahl = int(len(teilaufg)/3) if len(teilaufg) < 12 else 3
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append(notizen[auswahl])
+    aufgabe.append('NewPage') if 1 in neue_seite else None
+
+
     if BE != []:
         if len(BE) > 1:
             print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
                   'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+        else:
             liste_punkte = [punkte]
-        liste_punkte = BE
-    else:
-        liste_punkte = [punkte]
-    aufgabe.append(aufg)
-    loesung.append(lsg)
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
