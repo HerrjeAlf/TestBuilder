@@ -18,13 +18,19 @@ from skripte.plotten import *
 a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 liste_teilaufg = list(string.ascii_lowercase)
 # Berechnung für die Aufgaben
-def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], neue_seite=None, i=0, BE=[]):
+def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], koord_sys=[True,False][1], notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6,7,8][0], BE=[]):
     # Aufgabe zur Darstellung von Punkten im 3-dim-Kordinatensystem und Vektorechnung.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
+    # Mit dem Parameter "koord_sys" kann unter Teilaufgabe a) ein 3-dim_Koordinatensystem angezeigt werden
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     def zf_vorz(q):
         return random.choice([-1, 1]) * q
@@ -32,7 +38,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
     vektor_ab = [abx, aby, abz] = vektor.punkt(4)
     laenge_vektor_ab = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_ab)) + '}'
                         + '~=~' + gzahl(N(sqrt(sum(a*a for a in vektor_ab)),3)))
-    ortsvektor_b = np.array(ortsvektor_a) + np.array(vektor_ab)
+    ortsvektor_b = [bx, by, bz] = np.array(ortsvektor_a) + np.array(vektor_ab)
     vektoren_auswahl = [[zf_vorz(abx), zf_vorz(abz), zf_vorz(aby)],
                         [zf_vorz(aby), zf_vorz(abz), zf_vorz(abx)],
                         [zf_vorz(aby), zf_vorz(abx), zf_vorz(abz)],
@@ -45,7 +51,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
             vektor_ac = [acx, acy, acz] = random.choice(vektoren_auswahl)
         laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
-        ortsvektor_c = np.array(ortsvektor_a) + np.array(vektor_ac)
+        ortsvektor_c = [cx, cy, cz] = np.array(ortsvektor_a) + np.array(vektor_ac)
         ortsvektor_d = np.array(ortsvektor_c) - np.array(vektor_ab)
         loesung_1 = (r' \overrightarrow{AC} ~=~ \begin{pmatrix}' + gzahl(vektor_ac[0]) + r' \\'
                      + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
@@ -65,7 +71,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
             vektor_bc = random.choice(vektoren_auswahl)
         laenge_vektor_bc = (r' \sqrt{' + gzahl(sum(a*a for a in vektor_bc)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a*a for a in vektor_bc)),3)))
-        ortsvektor_c = np.array(ortsvektor_b) + np.array(vektor_bc)
+        ortsvektor_c = [cx, cy, cz] = np.array(ortsvektor_b) + np.array(vektor_bc)
         vektor_ac = [acx, acy, acz] = ortsvektor_c - ortsvektor_a
         laenge_vektor_ac = (r' \sqrt{' + gzahl(sum(a * a for a in vektor_ac)) + '}' + '~=~'
                             + gzahl(N(sqrt(sum(a * a for a in vektor_ac)), 3)))
@@ -84,17 +90,19 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
-    if len([element for element in ['g', 'h'] if element in teilaufg]) > 0:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
-                   + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
-                   + 'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ), '
-                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ) \n\n']
-    else:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
-                   + 'A( ' + gzahl(ortsvektor_a[0]) + ' | ' + gzahl(ortsvektor_a[1]) + ' | ' + gzahl(ortsvektor_a[2]) + ' ), '
-                   + 'B( ' + gzahl(ortsvektor_b[0]) + ' | ' + gzahl(ortsvektor_b[1]) + ' | ' + gzahl(ortsvektor_b[2]) + ' ) und '
-                   + 'C( ' + gzahl(ortsvektor_c[0]) + ' | ' + gzahl(ortsvektor_c[1]) + ' | ' + gzahl(ortsvektor_c[2]) + ' ). \n\n']
 
+    if teilaufg in [['g'], ['h'], ['g', 'f']]:
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+                   'Gegeben sind die Punkte '
+                   + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
+                   + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ), '
+                   + 'C( ' + gzahl(cx) + ' | ' + gzahl(cy) + ' | ' + gzahl(cz) + ' ) \n\n']
+    else:
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+                   'Gegeben sind die Punkte '
+                   + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
+                   + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) und '
+                   + 'C( ' + gzahl(cx) + ' | ' + gzahl(cy) + ' | ' + gzahl(cz) + ' ). \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -103,37 +111,34 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
         pkt = 2
         # Punkte im 3-dim-Koordinatensystem einzeichnen und verbinden
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        if 'b' in teilaufg:
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+        if koord_sys:
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                      + f'Zeichnen Sie die Punkte A, B und C im Koordinatensystem ein '
-                                     + f'und verbinden diese.'), ' \n\n'))
+                                     + f'und verbinden diese.'))
             pkt += 2
         else:
-            aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
                                      + f'Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
-                                     + f'und verbinden diese.'), ' \n\n'))
+                                     + f'und verbinden diese.'))
             pkt += 4
         loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if koord_sys:
+            aufgabe.append(['Bild', '400px'])
+            grafiken_aufgaben.append('3dim_Koordinatensystem')
+        elif notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_riesig')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-
     if 'b' in teilaufg:
-        # wählt man Teilaufgabe b, wird unter der Teilaufaufgabe ein 3 dimensionales Koordinatensystem eingefügt
-        aufgabe.append(['Bild', '400px'])
-        grafiken_aufgaben.append('3dim_Koordinatensystem')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-    if 'c' in teilaufg:
-        # wählt man Teilaufgabe c, wird unter der Teilaufaufgabe kariertes Papier eingefügt
-        aufgabe.append(['Bild', '400px'])
-        grafiken_aufgaben.append('kariertes_Papier')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-    if 'd' in teilaufg:
         # Abstände von Punkten berechnen und vergleichen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 5
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
-                                 + f'Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist.'),' \n\n'))
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                 + f'Weisen Sie nach, dass das Dreieck ABC gleichschenklig ist.'))
         loesung.append(beschriftung(len(teilaufg),i, True) + r') \quad ~ \overrightarrow{AB} ~=~ \begin{pmatrix}'
                        + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
                        + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + gzahl(vektor_ab[0]) + ')^2 ~+~('
@@ -141,34 +146,42 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                        + r' \quad (2P) \\' + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
                        + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-    if 'e' in teilaufg:
+    if 'c' in teilaufg:
         # mithilfe von Vektorrechnung einen vierten Punkt für ein Parallelogramm berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 4
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                  + f'Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
-                                 + f' das Parallelogramm ABCD bilden.'), ' \n\n'))
+                                 + f' das Parallelogramm ABCD bilden.'))
         loesung.append(beschriftung(len(teilaufg),i, True) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
                        + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
                        + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
-    if 'f' in teilaufg:
-        # Hier sollen die SuS mithilfe des vektor.skalarproduktes die Fläche des Dreiecks ABC ausrechnen
+    if 'd' in teilaufg:
+        # Hier sollen die SuS mithilfe des Skalarproduktes die Fläche des Dreiecks ABC ausrechnen
         sprod = vektor.skalarprodukt(vektor_ab, vektor_ac)
         diskr_ab = sum(a * a for a in vektor_ab)
         diskr_ac = sum(a * a for a in vektor_ac)
         erg = N(0.5 * sqrt(diskr_ab*diskr_ac-sprod**2),3)
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
-                                 + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Skalarproduktes.'),
-                        ' \n\n'))
-        if 'd' in teilaufg:
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Skalarproduktes.'))
+        if 'b' in teilaufg:
             pkt = 3
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A~=~ \frac{1}{2} \sqrt{{ \left| \overrightarrow{AB} \right| }^2 \cdot '
@@ -177,6 +190,9 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + gzahl(diskr_ab) + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac)
                            + r'} \right) }^2 - \left( ' + gzahl(N(sprod,3)) + r' \right) ^2 } ~=~' + gzahl(erg)
                            + r' \quad (2BE) ')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
         else:
             pkt = 5
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
@@ -192,23 +208,30 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + r' \\ A ~=~ \frac{1}{2} \sqrt{{ \left( \sqrt{' + gzahl(diskr_ab)
                            + r'} \right) }^2 \cdot { \left( \sqrt{' + gzahl(diskr_ac) + r'} \right) }^2 - \left( '
                            + gzahl(N(sprod, 3)) + r' \right) ^2} ~=~' + gzahl(erg) + r' \quad (4BE)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_gross')
+
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-    if 'g' in teilaufg:
+    if 'e' in teilaufg:
         # Hier sollen die SuS mithilfe des Kreuzproduktes die Fläche des Dreiecks ABC ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         laenge_kprod =  N(sqrt(sum(a*a for a in kprod)),3)
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
-                                 + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Kreuzproduktes.'),
-                        ' \n\n'))
-        if len([element for element in ['d', 'f'] if element in teilaufg]) > 0:
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                 + f'Berechnen Sie die Fläche des Dreiecks ABC mithilfe des Kreuzproduktes.'))
+        if bool(set(teilaufg) & {'b', 'd'}):
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \frac{1}{2} \cdot \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
                            + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (3BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
             pkt = 3
         else:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
@@ -221,24 +244,30 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + r' A ~=~ \frac{1}{2} \cdot \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ \frac{1}{2} \cdot '
                            + gzahl(laenge_kprod) + '~=~' + gzahl(N(0.5*laenge_kprod,3)) + r' \quad (4BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_gross')
             pkt = 5
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-    if 'h' in teilaufg:
+    if 'f' in teilaufg:
         # mithilfe des Kreuzproduktes die Fläche des Parallelogramms ABCD ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         laenge_kprod = N(sqrt(sum(a * a for a in kprod)), 3)
-        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
-                                 + f'Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des Kreuzproduktes.'),
-                        ' \n\n'))
-        if len([element for element in ['d', 'e', 'f'] if element in teilaufg]) > 0:
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                + f'Berechnen Sie die Fläche des Parallelogramms ABCD mithilfe des Kreuzproduktes.'))
+        if bool(set(teilaufg) & {'b', 'd', 'e'}):
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
                            + r' A ~=~ \left| \overrightarrow{AB} \times \overrightarrow{AC} \right| '
                            + r'~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ '
                            + gzahl(laenge_kprod) + r' \quad (3BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
             pkt = 3
         else:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Die~Fläche~wird~berechnet~mit:} \quad'
@@ -251,35 +280,41 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + r' A ~=~ \left| \begin{pmatrix} ' + gzahl(kx) + r' \\' + gzahl(ky)
                            + r' \\' + gzahl(kz) + r' \\ \end{pmatrix} \right| ~=~ ' + gzahl(laenge_kprod)
                            + r' \quad (4BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_gross')
             pkt = 5
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-    if 'i' in teilaufg:
-        # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
+    if 'g' in teilaufg:
+        # mithilfe des Kreuz- und Skalarproduktes das Volumen eines Quaders ABCE (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor.kuerzen(kprod)
         punkt_e = [ex, ey, ez] = ortsvektor_a + zzahl(1,4) / 2 * vektor_ab + kprod_gek
         vektor_ae = [aex,aey,aez] = [ex - ax, ey - ay, ez - az]
         erg = N(abs(vektor.skalarprodukt(kprod, vektor_ae)),3)
-        if len([element for element in ['a', 'd', 'e', 'f', 'g', 'h'] if element in teilaufg]) > 0:
-            aufgabe.extend((NoEscape(r' \noindent ' + 'Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | '
-                                     + gzahl(ey) + ' | ' + gzahl(ez)
-                                     + '), der mit den Punkten A, B und C ein Spat bildet.'), ' \n\n',
-                            beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen des Spates. \n\n'))
+        if bool(set(teilaufg) & {'a', 'b', 'c', 'd', 'e', 'f'}):
+            aufgabe.extend((NoEscape(r' \noindent Gegeben ist ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey)
+                                     + ' | ' + gzahl(ez) + '), der mit den Punkten A, B und C ein Spat bildet.'), ' \n\n',
+                            beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen des Spates.'))
         else:
-                aufgabe.extend((NoEscape('und ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey)
-                                         + ' | ' + gzahl(ez) + '), der mit den Punkten A, B und C ein Spat bildet. '),
-                                ' \n\n', beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen des Spates. \n\n'))
+            aufgabe.extend((NoEscape('und ein weiterer Punkt E( ' + gzahl(ex) + ' | ' + gzahl(ey)
+                                     + ' | ' + gzahl(ez) + '), der mit den Punkten A, B und C ein Spat bildet. '),
+                            ' \n\n', beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen des Spates.'))
 
-        if len([element for element in ['b', 'd', 'e', 'f'] if element in teilaufg]) > 0:
+        if bool(set(teilaufg) & {'b', 'd', 'e', 'f'}):
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} \right) \cdot '
                            + r' \overrightarrow{AE} \right| ~=~ \left| \begin{pmatrix} ' + gzahl(kx)
                            + r' \quad (1BE) \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey) + r' \\'
                            + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (4BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_klein')
             pkt = 5
         else:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
@@ -295,33 +330,41 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(aex) + r' \\' + gzahl(aey)
                            + r' \\' + gzahl(aez) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
                            + r' \quad (6BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
             pkt = 7
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
-    if 'j' in teilaufg:
-        # mithilfe des Kreuz- und vektor.skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
+    if 'h' in teilaufg:
+        # mithilfe des Kreuz- und Skalarproduktes das Volumen einer Pyramide ABCS (Spat) ausrechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         kprod = [kx, ky, kz] = np.cross(vektor_ab, vektor_ac)
         kprod_gek = vektor.kuerzen(kprod)
         punkt_s = [sx, sy, sz] = ortsvektor_a + 0.5 * (vektor_ab + vektor_ac) + kprod_gek
         vektor_as = [asx, asy, asz] = [sx - ax, sy - ay, sz - az]
         erg = Rational(abs(vektor.skalarprodukt(kprod, vektor_as)),6)
-        if len([element for element in ['a', 'd', 'e', 'f', 'g', 'h', 'i'] if element in teilaufg]) > 0:
-            aufgabe.extend((NoEscape('Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | '
-                                     + gzahl(sz) + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet.'),
-                            ' \n\n', beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen der Pyramide. \n\n'))
+        if bool(set(teilaufg) & {'a', 'b', 'c', 'd', 'e', 'f', 'g'}):
+            aufgabe.extend((NoEscape(r' \noindent Gegeben ist ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy)
+                                     + ' | ' + gzahl(sz) + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS '
+                                     + 'bildet.'), ' \n\n',
+                            beschriftung(len(teilaufg), i) + f'Berechnen Sie das Volumen der Pyramide.'))
         else:
             aufgabe.extend((NoEscape('sowie ein weiterer Punkt S( ' + gzahl(sx) + ' | ' + gzahl(sy) + ' | ' + gzahl(sz)
                                      + '), der mit Dreieck ABC die dreiseitige Pyramide ABCS bildet.'), ' \n\n',
-                            beschriftung(len(teilaufg), i) + f') Berechnen Sie das Volumen der Pyramide. \n\n'))
-        if len([element for element in ['b', 'd', 'e', 'f', 'g'] if element in teilaufg]) > 0:
+                            beschriftung(len(teilaufg), i) + f') Berechnen Sie das Volumen der Pyramide.'))
+        if bool(set(teilaufg) & {'b', 'c', 'd', 'e', 'f'}):
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
                            + r' V ~=~ \frac{1}{6} \cdot \left| \left( \overrightarrow{AB} \times \overrightarrow{AC} '
                            + r' \right) \cdot \overrightarrow{AE} \right| ~=~ \frac{1}{6} \cdot \left| \begin{pmatrix} '
                            + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz) + r' \\ '
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy) + r' \\'
                            + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg) + r' \quad (5BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
             pkt = 5
         else:
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Das~Volumen~wird~berechnet~mit:} \quad'
@@ -337,8 +380,12 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
                            + r' \end{pmatrix} \cdot \begin{pmatrix} ' + gzahl(asx) + r' \\' + gzahl(asy)
                            + r' \\' + gzahl(asz) + r' \\ ' + r' \end{pmatrix} \right| ~=~ ' + gzahl(erg)
                            + r' \quad (6BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_gross')
             pkt = 7
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(pkt)
         i += 1
 
@@ -350,16 +397,20 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], n
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=[True, False][random.choice([0,1])], kollinear=None, neue_seite=None, i=0, BE=[]):
+def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linearkombination=[True, False][1], kollinear=[None, False, True][0], notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6,7][0],  BE=[]):
     # Aufgabe zum Rechnen mit Vektoren, Mittelpunkten, Linearkombination bzw. Kollinarität und Streckenverhältnissen.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "linearkombination=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe c) als Linearkombination darstellen lassen. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig.  Er kann auch True oder False sein.
     # Mit dem Parameter "kollinear=" kann festgelegt werden, ob sich die Vektoren bei Teilaufgabe e) kollinear sind. Standardmäßig ist "linearkombination=None" und damit die Auswahl zufällig. Er kann auch True oder False sein.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
@@ -373,81 +424,88 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         vektor_2 = vektor.punkt(7)
         faktor_1, faktor_2 = zzahl(2,8),zzahl(2,5)
         ergebnis = faktor_1 * np.array(vektor_1) + faktor_2 * np.array(vektor_2)
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechnen Sie den resultierenden Vektor.')
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Berechnen Sie den resultierenden Vektor.'), ' \n\n'))
         aufgabe.append(gzahl(faktor_1) + r' \cdot \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                        + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~'
                        + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} ' + gzahl(vektor_2[0]) + r' \\'
                        + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
-                       + r' \end{pmatrix} ~=~ \hspace{20em} \\')
+                       + r' \end{pmatrix} ~=~ \hspace{20em}')
         loesung.append(beschriftung(len(teilaufg),i, True) + gzahl(faktor_1) + r'  \cdot \begin{pmatrix} '
                        + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                        + r' \end{pmatrix} ~' + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} '
                        + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1])
                        + r' \\' + gzahl(ergebnis[2]) + r' \\' + r'  \end{pmatrix}  \quad (2P)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(2)
         i += 1
     if 'b' in teilaufg:
         # Mittelpunkt zweier gegebener Punkte berechnen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        vektor_1 = vektor.punkt(5)
-        vektor_2 = vektor.punkt(7)
-        ergebnis = 0.5 * (np.array(vektor_1) + np.array(vektor_2))
+        vektor_1 = [vx1, vy1, vz1] = vektor.punkt(5)
+        vektor_2 = [vx2, vy2, vz2] = vektor.punkt(7)
+        ergebnis = [gx, gy, gz] = 0.5 * (np.array(vektor_1) + np.array(vektor_2))
         # print(ergebnis)
-        punkte = 3
-
-        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Mittelpunkt der folgenden Punkte '
-                       'A( ' + gzahl(vektor_1[0])  + ' | ' + gzahl(vektor_1[1]) + ' | ' + gzahl(vektor_1[2]) + ' ) und '
-                       'B( ' + gzahl(vektor_2[0])  + ' | ' + gzahl(vektor_2[1]) + ' | ' + gzahl(vektor_2[2])
-                       + ' ). \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                + 'Berechnen Sie den Mittelpunkt der folgenden Punkte '
+                                + 'A( ' + gzahl(vx1)  + ' | ' + gzahl(vy1) + ' | ' + gzahl(vz1) + ' ) und '
+                                + 'B( ' + gzahl(vx2)  + ' | ' + gzahl(vy2) + ' | ' + gzahl(vz2) + ' ).'))
         loesung.append(beschriftung(len(teilaufg),i, True)
-                       + r' \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}'
-                       + r'  \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\' + gzahl(vektor_1[1]) + r' \\'
-                       + gzahl(vektor_1[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_2[0])
-                       + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
-                       + r' \end{pmatrix} \end{pmatrix}  ~=~ \begin{pmatrix}' + gzahl(ergebnis[0]) + r' \\'
-                       + gzahl(ergebnis[1]) + r' \\' + gzahl(ergebnis[2]) + r' \\'
+                       + r' \overrightarrow{OM} ~=~ \frac{1}{2} \cdot \begin{pmatrix}' + r'  \begin{pmatrix} '
+                       + gzahl(vx1) + r' \\' + gzahl(vy1) + r' \\' + gzahl(vz1) + r' \\'
+                       + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vx2) + r' \\' + gzahl(vy2) + r' \\'
+                       + gzahl(vz2) + r' \\' + r' \end{pmatrix} \end{pmatrix}  ~=~ \begin{pmatrix}' + gzahl(gx)
+                       + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
                        + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
-                       + gzahl(ergebnis[0]) + ' | ' + gzahl(ergebnis[1]) + ' | ' + gzahl(ergebnis[2])
-                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(punkte)
+                       + gzahl(gx) + ' | ' + gzahl(gy) + ' | ' + gzahl(gz) + r') \quad (1P) \\')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+        liste_punkte.append(3)
         i += 1
     if 'c' in teilaufg:
         # Linearkombination von Vektoren überprüfen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 9
         faktor_1, faktor_2 = random.randint(1,10)/2, random.randint(1,10)/2
         # print('r =' + gzahl(faktor_1)), print('s =' + gzahl(faktor_2))
         vektor_2 = [x_2, y_2, z_2] = np.array(vektor.punkt(5))
         vektor_3 = [x_3, y_3, z_3] = np.array([zzahl(1,7), zzahl(0,5),zzahl(0,7)])
 
-        if linearkombination == True:
+        if linearkombination:
             vektor_1 = [x_1, y_1, z_1] = np.array(vektor_2*faktor_1) + np.array(vektor_3*faktor_2)
             loesung_2 = (r' \\ \mathrm{Vektor~ \overrightarrow{a} ~lässt~sich~als~Linearkombination~'
                          r'von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen. } \quad (1BE) \\')
         else:
-            vektor_1 = [x_1, y_1, z_1] = (vektor_2[0] * faktor_1 + vektor_3[0] * faktor_2,
-                                          vektor_2[1] * faktor_1 + vektor_3[1] * faktor_2,
-                                          vektor_2[2] * faktor_1 + vektor_3[2] * faktor_2 + zzahl(1,3))
+            vektor_1 = [x_1, y_1, z_1] = (x_2 * faktor_1 + x_3 * faktor_2,
+                                          y_2 * faktor_1 + y_3 * faktor_2,
+                                          z_2 * faktor_1 + z_3 * faktor_2 + zzahl(1,3))
             loesung_2 = (r' \\ \mathrm{Vektor~ \overrightarrow{a} ~lässt~sich~nicht~als~Linearkombination~'
                          r' von~ \overrightarrow{b} ~und~ \overrightarrow{c} ~darstellen. } \quad (1BE) \\')
 
-        aufgabe.extend((beschriftung(len(teilaufg),i) + 'Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
-                        + ' von b und c dargestellt werden kann.',
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                 + 'Überprüfen Sie, ob der gegebenen Vektor a als Linearkombination'
+                                 + ' von b und c dargestellt werden kann.'),
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
                         + gzahl(z_1) + r' \\' + r' \end{pmatrix} ~,~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{c} ~=~\begin{pmatrix}'
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
-                        + r' \end{pmatrix} \\'))
+                        + r' \end{pmatrix}'))
 
         loesung_1, lsg, punkte = vektor.rechnung([vektor_1],[vektor_2, vektor_3], var_obj2=['r', 's'])
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \mathrm{Überprüfe,~ob~der~gegebenen~Vektor~a~als~Linearkombination'
                        + r'~von~b~und~c~dargestellt~werden~kann.} \\' + loesung_1[0] + loesung_2)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte + 1)
         i += 1
     if 'd' in teilaufg:
@@ -475,9 +533,9 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
                                       + gzahl(x_3) + '$'), '(1P)')
         table1.add_row('', 'II:', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
-                                                           + ' = ' + gzahl(y_3) + '$'), '(1P)')
+                                                 + ' = ' + gzahl(y_3) + '$'), '(1P)')
         table1.add_row('', 'III:', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
-                                                           + ' = ' + gzahl(z_3) + '$'),'(1P)')
+                                                  + ' = ' + gzahl(z_3) + '$'),'(1P)')
         loesung.append(table1)
         punkte += 3
         if faktor_1 == 1:
@@ -494,7 +552,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                      + r' \quad \to \quad r~=~' + gzahl(c1) + vorz_str(-1*b1) + r' \cdot ' + gzahl_klammer(faktor_2)
                      + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
             punkte += 4
-
         else:
             lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \vert \div '
@@ -518,7 +575,6 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                  + r'~=~a \quad \to \quad \mathrm{für \quad a ~=~' + gzahl(c3)
                  + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2P) }')
         punkte += 2
-
         aufgabe.extend((beschriftung(len(teilaufg),i) + 'Berechnen Sie den Wert des Parameters a, '
                         + 'für den die gegebenen Vektoren linear abhängig sind.',
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(x_1) + r' \\' + gzahl(y_1) + r' \\'
@@ -526,9 +582,14 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                         + gzahl(x_2) + r' \\' + gzahl(y_2) + r' \\' + gzahl(z_2) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{c} ~=~\begin{pmatrix}'
                         + gzahl(x_3) + r' \\' + gzahl(y_3) + r' \\' + gzahl(z_3) + r' \\'
-                        + r' \end{pmatrix} \\'))
+                        + r' \end{pmatrix}'))
         loesung.append(lsg_1+lsg_2+lsg_3)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'e' in teilaufg:
@@ -536,26 +597,32 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         vektor_1 = vektor.punkt(5)
         vektor_2 =  b1, b2, b3 = zzahl(3,6)/2 * vektor_1
-        vektor_2 = vektor_2 if random.randint(1,2) == 1 else np.array([b1, b2, b3+zzahl(1,3)])
+        kollinear = random.choice([False,True]) if kollinear == None else kollinear
+        vektor_2 = vektor_2 if kollinear else np.array([b1, b2, b3+zzahl(1,3)])
         faktor = zzahl(2, 40) / 10
         text, lsg, punkte = vektor.rechnung([vektor_1], [vektor_2])
         text_lsg = r' \\ \mathrm{Die~Vektoren~sind~kollinear.} \quad (1BE) ' if lsg[0] == lsg[1] == lsg[2] \
             else r' \\ \mathrm{Die~Vektoren~sind~nicht~kollinear.} \quad (1BE) '
         punkte += 1
-        aufgabe.extend((beschriftung(len(teilaufg), i) + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.',
+        aufgabe.extend((NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                 + 'Prüfen Sie, ob die gegebenen Vektoren kollinear sind.'),
                         r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(vektor_1[0]) + r' \\'
                         + gzahl(vektor_1[1]) + r' \\' + gzahl(vektor_1[2]) + r' \\'
                         + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{b} ~=~ \begin{pmatrix} '
                         + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
-                        + r' \end{pmatrix} '))
+                        + r' \end{pmatrix}'))
         loesung.append(beschriftung(len(teilaufg),i, True) + text[0] + text_lsg)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'f' in teilaufg:
         # Berechnen des Streckenverhältnisses, in die ein Punkt T eine Strecke teilt
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         vektor_a = [a1, a2, a3] = vektor.punkt(5)
         vektor_ab = [ab1, ab2, ab3] = vektor.punkt(5)
         vektor_b = [b1, b2, b3] = np.array(vektor_a) + np.array(vektor_ab)
@@ -568,50 +635,23 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         aufgabe.append(r' \mathrm{ A(~' + gzahl(a1) + r'~ \vert ~' + gzahl(a2) + r'~ \vert ~' + gzahl(a3)
                        + r'~ ), \quad B(~' + gzahl(b1) + r'~ \vert ~' + gzahl(b2) + r'~ \vert ~' + gzahl(b3)
                        + r'~) \quad und \quad T( ~' + gzahl(t1) + r'~ \vert ~' + gzahl(t2) + r'~ \vert ~' + gzahl(t3)
-                       + r'~ ). } \\')
+                       + r'~ ). }')
         lsg_text, lsg, punkte = vektor.rechnung([vektor_at], [vektor_tb])
         # print(vektor_at), print(vektor_tb)
         loesung.append(beschriftung(len(teilaufg), i, True)
                        + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
                        + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\' + lsg_text[0])
-        # loesung.append(beschriftung(len(teilaufg),i, True)
-        #                + r' \mathrm{Das~Verhältnis~entspricht~dem~Streckungsfaktor~r~}'
-        #                + r' \mathrm{der~Vektoren~ \overrightarrow{AT} ~und~ \overrightarrow{TB}.} \\'
-        #                + r' \overrightarrow{AT} ~=~ \begin{pmatrix} ' + gzahl(vektor_at[0]) + r' \\'
-        #                + gzahl(vektor_at[1]) + r' \\' + gzahl(vektor_at[2]) + r' \\ \end{pmatrix} \quad \mathrm{und} '
-        #                + r' \quad \overrightarrow{TB} ~=~ \begin{pmatrix} ' + gzahl(vektor_tb[0]) + r' \\'
-        #                + gzahl(vektor_tb[1]) + r' \\' + gzahl(vektor_tb[2]) + r' \\ \end{pmatrix} \quad \to \quad '
-        #                + r'  \begin{matrix}' + gzahl(vektor_at[0]) + '~=~' + gzahl(vektor_tb[0])
-        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-        #                + r'} \\' + gzahl(vektor_at[1]) + r'~=~' + gzahl_klammer(vektor_tb[1])
-        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-        #                + r'} \\' + gzahl(vektor_at[2]) + r'~=~' + gzahl_klammer(vektor_tb[2])
-        #                + r' \cdot r \quad \to \quad r~=~ \frac{' + gzahl(faktor) + '}{' + gzahl(10-faktor)
-        #                + r'} \\ \end{matrix} \\' + r' \mathrm{insgesamt~}' + str(punkte) + r'BE')
-        # alternative Variante:
-        # laenge_vektor_at = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_at),4)) + '} ~=~'
-        #                     + gzahl(sqrt(N(sum(a*a for a in vektor_at),3))))
-        # ergebnis_at = sqrt(N(sum(a*a for a in vektor_at),3))
-        # laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),3)) + '} ~=~'
-        #                     + gzahl(N(sqrt(sum(a*a for a in vektor_tb)),3)))
-        # ergebnis_tb = sqrt(N(sum(a*a for a in vektor_tb),3))
-        # loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{d(A,T)~=~} \sqrt{(' + gzahl(vektor_t[0]) + vorz_str(-1*vektor_a[0])
-        #                + ')^2 ~+~(' + gzahl(vektor_t[1]) + vorz_str(-1*vektor_a[1]) + ')^2 ~+~(' + gzahl(vektor_t[2])
-        #                + vorz_str(-1*vektor_a[2]) + ')^2 } ~=~' + laenge_vektor_at + r' \quad (1P) \\'
-        #                + r' \mathrm{d(T,B)~=~} \sqrt{(' + gzahl(vektor_b[0]) + vorz_str(-1*vektor_t[0])
-        #                + ')^2 ~+~(' + gzahl(vektor_b[1]) + vorz_str(-1*vektor_t[1]) + ')^2 ~+~(' + gzahl(vektor_b[2])
-        #                + vorz_str(-1*vektor_t[2]) + ')^2 } ~=~' + laenge_vektor_tb + r' \quad (1P) \\'
-        #                + r' r~=~ \frac{ ' + gzahl(ergebnis_at) + '}{' + gzahl(ergebnis_tb) + '} ~=~'
-        #                + gzahl(ergebnis_at/ergebnis_tb) + r' \quad (2P) \\'
-        #                + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'g' in teilaufg:
         # Berechnung eines Punktes aus gegebenen Streckenverhältnissen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         vektor_a = vektor.punkt(5)
         vektor_b = np.array(vektor_a) + np.array(vektor.punkt(5))
         vektor_ab = vektor_b - np.array(vektor_a)
@@ -625,11 +665,11 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         laenge_vektor_tb = (r' \sqrt{' + gzahl(N(sum(a*a for a in vektor_tb),4)) + '} ~=~'
                             + gzahl(sqrt(N(sum(a*a for a in vektor_tb),3))))
         faktor_r = Rational(a1,(10-a1))
-        aufgabe.append(beschriftung(len(teilaufg),i)
-                       + 'Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                       + 'Der Punkt T teilt die Strecke AB im Verhältnis r. Bestimme den Punkt B.'))
         aufgabe.append(r' \mathrm{A(~' + gzahl(vektor_a[0]) + r'~ \vert ~' + gzahl(vektor_a[1]) + r'~ \vert ~'
                        + gzahl(vektor_a[2]) + r'~), \quad T(~' + gzahl(vektor_t[0]) + r'~ \vert ~' + gzahl(vektor_t[1])
-                       + r'~ \vert ~' + gzahl(vektor_t[2]) + r'~) \quad und~r~=~' + gzahl(faktor_r) + r'.} \\')
+                       + r'~ \vert ~' + gzahl(vektor_t[2]) + r'~) \quad und~r~=~' + gzahl(faktor_r) + r'.}')
         loesung.append(beschriftung(len(teilaufg),i, True)
                        + r' \overrightarrow{OB} = \overrightarrow{OA} ~+~ \overrightarrow{AT} '
                        + r' \cdot \mathrm{ (~1~+~ \frac{1}{r} ~)}  ~=~ \begin{pmatrix} ' + gzahl(vektor_a[0]) + r' \\'
@@ -645,13 +685,19 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + gzahl(N(vektor_b[1],3)) + r' \\' + gzahl(N(vektor_b[2],3)) + r' \\'
                        + r' \end{pmatrix} \quad \to \quad B(~' + gzahl(vektor_b[0]) + r'~ \vert ~' + gzahl(vektor_b[1])
                        + r'~ \vert ~' + gzahl(vektor_b[2]) + r' ~) \\ \mathrm{insgesamt~' + str(punkte) + r'~BE}')
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(punkte)
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+        liste_punkte.append(4)
         i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
 
