@@ -502,7 +502,7 @@ def terme_addieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j
     if notizfeld:
         aufgabe.append(['Bild', '430px'])
         grafiken_aufgaben.append(notizen[auswahl])
-    aufgabe.append('NewPage') if 1 in neue_seite else None
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
 
     if BE != []:
         if len(BE) > 1:
@@ -622,7 +622,7 @@ def terme_multiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], anzahl=Fal
     if notizfeld:
         aufgabe.append(['Bild', '430px'])
         grafiken_aufgaben.append(notizen[auswahl])
-    aufgabe.append('NewPage') if 1 in neue_seite else None
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
 
     if BE != []:
         if len(BE) > 1:
@@ -800,7 +800,7 @@ def terme_ausmultiplizieren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
     if notizfeld:
         aufgabe.append(['Bild', '430px'])
         grafiken_aufgaben.append(notizen[auswahl])
-    aufgabe.append('NewPage') if 1 in neue_seite else None
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
 
     if BE != []:
         if len(BE) > 1:
@@ -963,7 +963,7 @@ def terme_ausklammern(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     if notizfeld:
         aufgabe.append(['Bild', '430px'])
         grafiken_aufgaben.append(notizen[auswahl])
-    aufgabe.append('NewPage') if 1 in neue_seite else None
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
 
     if BE != []:
         if len(BE) > 1:
@@ -1225,8 +1225,7 @@ def gleichungen(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
     if notizfeld:
         aufgabe.append(['Bild', '430px'])
         grafiken_aufgaben.append(notizen[auswahl])
-    aufgabe.append('NewPage') if 1 in neue_seite else None
-
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
 
     if BE != []:
         if len(BE) > 1:
