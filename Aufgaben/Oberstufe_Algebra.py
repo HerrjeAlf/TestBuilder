@@ -57,7 +57,7 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                      + gzahl(vektor_ac[1]) + r' \\' + gzahl(vektor_ac[2]) + r' \\'
                      + r' \end{pmatrix} \to \mathrm{d(A,C)~=~} \sqrt{(' + gzahl(vektor_ac[0]) + ')^2 ~+~('
                      + gzahl(vektor_ac[1]) + ')^2 ~+~(' + gzahl(vektor_ac[2]) + ')^2 } ~=~' + laenge_vektor_ac
-                     + r' \quad (3P) \\')
+                     + r' \quad (3BE) \\')
         loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OC} ~+~ \overrightarrow{BA} ~=~'
                      r' \begin{pmatrix} ' + gzahl(ortsvektor_c[0]) + r' \\' + gzahl(ortsvektor_c[1]) + r' \\'
                      + gzahl(ortsvektor_c[2]) + r' \\ \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(-1*vektor_ab[0])
@@ -79,14 +79,14 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         loesung_1 = (r' \overrightarrow{BC} ~=~ \begin{pmatrix}' + gzahl(vektor_bc[0]) + r' \\' + gzahl(vektor_bc[1])
                      + r' \\' + gzahl(vektor_bc[2]) + r' \\' + r' \end{pmatrix} \to \mathrm{d(B,C)~=~} \sqrt{('
                      + gzahl(vektor_bc[0]) + ')^2 ~+~(' + gzahl(vektor_bc[1]) + ')^2 ~+~(' + gzahl(vektor_bc[2])
-                     + ')^2 } ~=~' + laenge_vektor_bc + r' \quad (2P) \\')
+                     + ')^2 } ~=~' + laenge_vektor_bc + r' \quad (2BE) \\')
         loesung_2 = (r') \quad \overrightarrow{OD} = \overrightarrow{OA} ~+~ \overrightarrow{BC} ~=~ '
                      + r' \begin{pmatrix} ' + gzahl(ortsvektor_a[0]) + r' \\' + gzahl(ortsvektor_a[1]) + r' \\'
                      + gzahl(ortsvektor_a[2]) + r' \\' + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vektor_bc[0])
                      + r' \\' + gzahl(vektor_bc[1]) + r' \\' + gzahl(vektor_bc[2]) + r' \\'
                      + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ortsvektor_d[0]) + r' \\'
                      + gzahl(ortsvektor_d[1]) + r' \\' + gzahl(ortsvektor_d[2]) + r' \\'
-                     + r'  \end{pmatrix}  \quad (3P) \\')
+                     + r'  \end{pmatrix}  \quad (3BE) \\')
 
     # print('a = ' + str(ortsvektor_a)), print('b = ' + str(ortsvektor_b)), print('c = ' + str(ortsvektor_c))
     # print('d=' + str(ortsvektor_d)), print(vektor_ab), print(vektor_ac)
@@ -121,7 +121,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                                      + f'Zeichnen Sie die Punkte A, B und C in einem Koordinatensystem ein '
                                      + f'und verbinden diese.'))
             pkt += 4
-        loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Punkte~(1P),~Seiten~vom~Dreieck~(1P)}')
+        loesung.append(beschriftung(len(teilaufg),i, True)
+                       + r' \mathrm{Punkte~(1BE),~Seiten~vom~Dreieck~(1BE)}')
         if koord_sys:
             aufgabe.append(['Bild', '400px'])
             grafiken_aufgaben.append('3dim_Koordinatensystem')
@@ -143,8 +144,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
                        + gzahl(vektor_ab[0]) + r' \\' + gzahl(vektor_ab[1]) + r' \\' + gzahl(vektor_ab[2])
                        + r' \\ \end{pmatrix} \to \mathrm{d(A,B)~=~} \sqrt{(' + gzahl(vektor_ab[0]) + ')^2 ~+~('
                        + gzahl(vektor_ab[1]) + ')^2 ~+~(' + gzahl(vektor_ab[2]) + ')^2 } ~=~' + laenge_vektor_ab
-                       + r' \quad (2P) \\' + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
-                       + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1P) \\'
+                       + r' \quad (2BE) \\' + loesung_1 + r' \mathrm{Die~beiden~Seiten~sind~gleichlang,'
+                       + r'~somit~ist~das~Dreieck~gleichschenklig.} \quad (1BE) \\'
                        + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
@@ -161,9 +162,10 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
         aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
                                  + f'Bestimmen Sie einen Punkt D so, dass die Punkte A,B,C und D'
                                  + f' das Parallelogramm ABCD bilden.'))
-        loesung.append(beschriftung(len(teilaufg),i, True) + loesung_2 + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D('
-                       + gzahl(ortsvektor_d[0]) + ' | ' + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2])
-                       + r') \quad (1P) \\' + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
+        loesung.append(beschriftung(len(teilaufg),i, True) + loesung_2
+                       + r' \mathrm{Punkt~D~hat~die~Koordinaten:~}~D(' + gzahl(ortsvektor_d[0]) + ' | '
+                       + gzahl(ortsvektor_d[1]) + ' | ' + gzahl(ortsvektor_d[2]) + r') \quad (1P) \\'
+                       + r' \mathrm{insgesamt~' + str(punkte) + r'~BE}')
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
@@ -391,7 +393,8 @@ def punkte_und_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], k
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
 
@@ -412,7 +415,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     i, liste_punkte, liste_bez = 0, [], []
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -436,7 +439,7 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \end{pmatrix} ~' + vorz_str(faktor_2) + r' \cdot' + r'  \begin{pmatrix} '
                        + gzahl(vektor_2[0]) + r' \\' + gzahl(vektor_2[1]) + r' \\' + gzahl(vektor_2[2]) + r' \\'
                        + r' \end{pmatrix} ~=~ \begin{pmatrix} ' + gzahl(ergebnis[0]) + r' \\' + gzahl(ergebnis[1])
-                       + r' \\' + gzahl(ergebnis[2]) + r' \\' + r'  \end{pmatrix}  \quad (2P)')
+                       + r' \\' + gzahl(ergebnis[2]) + r' \\' + r'  \end{pmatrix}  \quad (2BE)')
         aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(2)
         i += 1
@@ -457,8 +460,8 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                        + r' \end{pmatrix} ~+~ \begin{pmatrix} ' + gzahl(vx2) + r' \\' + gzahl(vy2) + r' \\'
                        + gzahl(vz2) + r' \\' + r' \end{pmatrix} \end{pmatrix}  ~=~ \begin{pmatrix}' + gzahl(gx)
                        + r' \\' + gzahl(gy) + r' \\' + gzahl(gz) + r' \\'
-                       + r' \end{pmatrix} \quad (2P) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
-                       + gzahl(gx) + ' | ' + gzahl(gy) + ' | ' + gzahl(gz) + r') \quad (1P) \\')
+                       + r' \end{pmatrix} \quad (2BE) \\ \mathrm{Punkt~M~hat~die~Koordinaten:~}~M('
+                       + gzahl(gx) + ' | ' + gzahl(gy) + ' | ' + gzahl(gz) + r') \quad (1BE) \\')
         if notizfeld:
             aufgabe.append(['Bild', '430px'])
             grafiken_aufgaben.append('notizen_klein')
@@ -531,32 +534,32 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
         table1.add_row(beschriftung(len(teilaufg),i)
                        + 'aus den gegebenen Vektoren ergeben sich folgende Gleichungen: ',
                        'I:', NoEscape('$' + vorz_v_aussen(x_1,'r') + vorz_v_innen(x_2,'s') + ' = '
-                                      + gzahl(x_3) + '$'), '(1P)')
+                                      + gzahl(x_3) + '$'), '(1BE)')
         table1.add_row('', 'II:', NoEscape('$' + vorz_v_aussen(y_1,'r') + vorz_v_innen(y_2,'s')
-                                                 + ' = ' + gzahl(y_3) + '$'), '(1P)')
+                                                 + ' = ' + gzahl(y_3) + '$'), '(1BE)')
         table1.add_row('', 'III:', NoEscape('$' + vorz_v_aussen(z_1,'r') + vorz_v_innen(z_2,'s')
-                                                  + ' = ' + gzahl(z_3) + '$'),'(1P)')
+                                                  + ' = ' + gzahl(z_3) + '$'),'(1BE)')
         loesung.append(table1)
         punkte += 3
         if faktor_1 == 1:
             lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \to \quad r~=~'
-                     + gzahl(c1) + vorz_v_innen(-1*b1,'s') + r' \quad (2P) \\')
+                     + gzahl(c1) + vorz_v_innen(-1*b1,'s') + r' \quad (2BE) \\')
             punkte += 2
             lsg_2 = (r'  \mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( ' + gzahl(c1)
                      + vorz_v_innen(-1*b1,'s') + r' \right) ' + vorz_v_innen(b2,'s') + '~=~' + gzahl(c2)
                      + r' \quad \to \quad ' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1, 's') + vorz_v_innen(b2,'s')
-                     + '~=~' + gzahl(c2) + r' \quad (2P) \\' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1+b2, 's')
+                     + '~=~' + gzahl(c2) + r' \quad (2BE) \\' + gzahl(a2*c1) + vorz_v_innen(-1*a2*b1+b2, 's')
                      + '~=~' + gzahl(c2) + r' \quad \vert' + vorz_str(-1*a2*c1) + r' \quad \vert \div '
                      + gzahl_klammer(-1*a2*b1+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
                      + r' \quad \to \quad r~=~' + gzahl(c1) + vorz_str(-1*b1) + r' \cdot ' + gzahl_klammer(faktor_2)
-                     + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
+                     + '~=~' + gzahl(faktor_1) + r' \quad (2BE) \\')
             punkte += 4
         else:
             lsg_1 = (r' \mathrm{aus~' + zl[rf[0]] + r'~folgt:} \quad ' + vorz_v_aussen(a1,'r') + vorz_v_innen(b1,'s')
                      + '~=~' + gzahl(c1) + r' \quad \vert ' + vorz_v_innen(-1*b1,'s') + r' \quad \vert \div '
                      + gzahl_klammer(a1) + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1))
-                     + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \quad 2P) \\')
+                     + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \quad 2BE) \\')
             punkte += 2
             lsg_2 = (r' \mathrm{r~in~' + zl[rf[1]] + r'~einsetzen:} \quad ' + gzahl(a2) + r' \cdot \left( '
                      + gzahl(Rational(c1,a1)) + vorz_v_innen(Rational(-1*b1,a1),'s') + r' \right) '
@@ -567,13 +570,13 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
                      + vorz_str(Rational(-1*a2*c1,a1)) + r' \quad \vert \div '
                      + gzahl_klammer(Rational(-1*a2*b1,a1)+b2) + r' \quad \to \quad s~=~' + gzahl(faktor_2)
                      + r' \quad \to \quad r~=~' + gzahl(Rational(c1,a1)) + vorz_str(Rational(-1*b1,a1)) + r' \cdot '
-                     + gzahl_klammer(faktor_2) + '~=~' + gzahl(faktor_1) + r' \quad (2P) \\')
+                     + gzahl_klammer(faktor_2) + '~=~' + gzahl(faktor_1) + r' \quad (2BE) \\')
             punkte += 4
         lsg_3 = (r' \mathrm{r ~=~ ' + gzahl(faktor_1) + r' \quad und \quad s~=~' + gzahl(faktor_2) + r' \quad in ~ '
                  + zl[rf[2]] + r'~einsetzen: \quad } \\ ' + gzahl(a3) + r' \cdot ' + gzahl_klammer(faktor_1)
                  + vorz_str(b3) + r' \cdot ' + gzahl_klammer(faktor_2)
                  + r'~=~a \quad \to \quad \mathrm{für \quad a ~=~' + gzahl(c3)
-                 + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2P) }')
+                 + r' \quad sind~die~Vektoren~lin.~abhängig. \quad (2BE) }')
         punkte += 2
         aufgabe.extend((beschriftung(len(teilaufg),i) + 'Berechnen Sie den Wert des Parameters a, '
                         + 'für den die gegebenen Vektoren linear abhängig sind.',
@@ -703,12 +706,17 @@ def rechnen_mit_vektoren(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f', 'g'], linea
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def vektoren_koll_ortho(nr, BE=[]):
+def vektoren_koll_ortho(nr, notizfeld=[False, True][0], neue_seite=[0,1][0], BE=[]):
     # Hier sollen die SuS Vektoren zuordnen, die kollinear oder orthogonal sind.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
 
-    liste_bez = [f'{str(nr)}']
-    i = 0
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+
+    i, liste_punkte, liste_bez = 0, [6], [f'{str(nr)}']
+
     vec_a = vec_b = vec_c = [ax, ay, az] = vektor.punkt(4)
     # Vektor der kollinear zu Vektor a ist
     fakt_a = zzahl(3, 10) / 2
@@ -727,7 +735,7 @@ def vektoren_koll_ortho(nr, BE=[]):
     ausw_k = stelle(ausw, vec_k)
     ausw_s = stelle(ausw, vec_s)
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')),
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
                NoEscape(r'Nennen Sie alle Vektoren, die zum Vektor $ \overrightarrow{a} $ kollinear bzw. '
                         r'orthogonal sind. Begründen Sie ihre Zuordnung.'),
                r' \overrightarrow{a} ~=~ \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\'
@@ -739,55 +747,64 @@ def vektoren_koll_ortho(nr, BE=[]):
                + gzahl(ausw[2][0]) + r' \\' + gzahl(ausw[2][1]) + r' \\' + gzahl(ausw[2][2]) + r' \\'
                + r' \end{pmatrix} ~ \mathrm{und} ~ \overrightarrow{e} ~=~\begin{pmatrix}'
                + gzahl(ausw[3][0]) + r' \\' + gzahl(ausw[3][1]) + r' \\' + gzahl(ausw[3][2]) + r' \\'
-               + r' \end{pmatrix} \\']
+               + r' \end{pmatrix}']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}',
                r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_k+1] + '} ~ist~kollinear~zu~'
                + r'  \overrightarrow{a} ,~da:~} \begin{pmatrix}' + gzahl(kx) + r' \\' + gzahl(ky) + r' \\' + gzahl(kz)
                + r' \\' + r' \end{pmatrix} ~=~ ' + gzahl(fakt_a) + r' \cdot \begin{pmatrix} ' + gzahl(ax) + r' \\'
-               + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3P) \\'
+               + gzahl(ay) + r' \\' + gzahl(az) + r' \\' + r' \end{pmatrix} \quad (3BE) \\'
                + r' \mathrm{Der~Vektor~ \overrightarrow{' + liste_teilaufg[ausw_s + 1] + '} ~ist~ortogonal~zu~'
                + r'  \overrightarrow{a} ,~da:~} ' + gzahl(ax) + r' \cdot ' + gzahl_klammer(sx) + '+' + gzahl_klammer(ay)
                + r' \cdot ' + gzahl_klammer(sy) + '+' + gzahl_klammer(az) + r' \cdot ' + gzahl_klammer(sz)
-               + r' ~=~ 0 \quad (3P)']
+               + r' ~=~ 0 \quad (3BE)']
     grafiken_aufgaben = []
     grafiken_loesung = []
-    pkt = 6
+
+    if notizfeld:
+        aufgabe.append(['Bild', '430px'])
+        grafiken_aufgaben.append('notizen_gross')
+    aufgabe.append('NewPage') if any(element >= 1 for element in neue_seite) else None
+
     if BE != []:
         if len(BE) > 1:
-            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. Deswegen wird die standardmäßige Punkteverteilung übernommen.')
-            liste_punkte = [pkt]
-        liste_punkte = BE
-    else:
-        liste_punkte = [pkt]
-
+            print('Der Parameter BE darf nur ein Element haben, zum Beispiel BE=[2]. '
+                  'Deswegen wird die standardmäßige Punkteverteilung übernommen.')
+        else:
+            liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][random.choice([0, 1])], spurpunkt=['x-y', 'x-z', 'y-z', 'all', None][0], neue_seite=None, i=0, BE=[]):
+def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][random.choice([0, 1])], spurpunkt=[None,'x-y', 'x-z', 'y-z', 'all'][0], notizfeld=[False, True][0], neue_seite=[0,1,2,3][0], BE=[]):
     # Aufgabe zum Aufstellen von Geraden und Überprüfen der Lagebeziehung Punkt-Gerade.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "T_auf_g=" kann festgelegt werden, ob der Punkt T auf g liegt "T_auf_g=True" oder auch nicht "T_auf_g=False". Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "spurpunkt=" kann für Teilaufgabe c) festgelegt werden, welcher Spurpunkt berechnet werden soll. Standardmäßig ist "spurpunkt=None" und die Auswahl zufällig. Er kann 'x-y', 'x-z', 'y-z' oder 'all' (für alle) sein.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
+
     punkt_a = [ax, ay, az] = vektor.punkt(3)
     v = [vx, vy, vz] = vektor.punkt(4)
     punkt_b = [bx, by, bz] = punkt_a + v
     p = random.choice([0,1])
     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 5)) * np.array([vy, vx, vz + zzahl(1, 3)]))
-    while (tx - ax) / vx == (ty - ay) / ty == (tz - az) / tz:
+    while (tx - ax) / tx == (ty - ay) / ty == (tz - az) / tz:
         punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + (zzahl(1, 5)) * np.array([vy, vx, vz + zzahl(1, 3)]))
     punkt_t = [tx, ty, tz] = vektor.ganzzahl(punkt_a + zzahl(1, 5) * v) if T_auf_g else punkt_t
     lx, ly, lz = vektor.ganzzahl([(tx-ax)/vx, (ty-ay)/vy, (tz-az)/vz])
     if 'a' in teilaufg:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n')), 'Gegeben sind die Punkte '
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n',
+                   'Gegeben sind die Punkte '
                    + 'A( ' + gzahl(ax) + ' | ' + gzahl(ay) + ' | ' + gzahl(az) + ' ), '
                    + 'B( ' + gzahl(bx) + ' | ' + gzahl(by) + ' | ' + gzahl(bz) + ' ) \n\n']
     else:
-        aufgabe = [MediumText(bold('Aufgabe ' + str(nr))),
+        aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n'
                    r' \mathrm{Gegeben~ist~die~Gerade~g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                    + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                    + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
@@ -799,49 +816,58 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][rando
     if 'a' in teilaufg:
         # Aufstellen der Geradengleichung bei gegebenen Punkten
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte_aufg = 3
-        loesung_1 = (r' \overrightarrow{AB} ~=~ \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
-                     + gzahl(v[2]) + r' \\ \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~'
-                     r' \begin{pmatrix} ' + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                     r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
-                     + gzahl(v[2]) + r' \\ \end{pmatrix} \quad (3P) \\')
 
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Stellen Sie die Gleichung der Geraden g auf,'
-                                          f' welche die Punkte A und B enthält. \n\n')
-        loesung.append(beschriftung(len(teilaufg),i, True) + loesung_1)
-        aufgabe.append('NewPage') if neue_seite == i else ''
-        liste_punkte.append(punkte_aufg)
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Stellen Sie die Gleichung der Geraden g auf, welche die Punkte A und B enthält.'))
+        loesung.append(beschriftung(len(teilaufg),i, True) + r' \overrightarrow{AB} ~=~ \begin{pmatrix} '
+                       + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\' + gzahl(v[2])
+                       + r' \\ \end{pmatrix} \quad \to \quad g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                       + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                       + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} ' + gzahl(v[0]) + r' \\' + gzahl(v[1]) + r' \\'
+                       + gzahl(v[2]) + r' \\ \end{pmatrix} \quad (3BE)')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+        liste_punkte.append(3)
         i += 1
     if 'b' in teilaufg:
         # Überprüfen der Lagebeziehung der Geraden g mit dem Punkt T
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
-        punkte = 4
         text, lsg, punkte = vektor.rechnung([punkt_t], [punkt_a, v])
         if lsg[0] == lsg[1] == lsg[2]:
             loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~auf~der~Geraden.} \quad (1BE)'
         else:
             loesung_2 = r' \\ \mathrm{Der~Punkt~liegt~nicht~auf~der~Geraden.} \quad (1BE)'
         punkte += 1
-        aufgabe.append(beschriftung(len(teilaufg), i) + 'Überprüfen Sie, ob der Punkt T( ' + gzahl(N(tx,3))  + ' | '
-                       + gzahl(N(ty,3)) + ' | ' + gzahl(N(tz,3)) + ' ) auf g liegt. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                + 'Überprüfen Sie, ob der Punkt T( ' + gzahl(N(tx,3))  + ' | ' + gzahl(N(ty,3))
+                                + ' | ' + gzahl(N(tz,3)) + ' ) auf g liegt.'))
         loesung.append(beschriftung(len(teilaufg),i, True) + text[0] + loesung_2)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_klein')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'c' in teilaufg:
         # Berechnung der Spurpunkte der Gerade mit den Koordinatenebenen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 0
-        spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt not in ['x-y', 'x-z', 'y-z', 'all', None] else spurpunkt
-        spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt == None else spurpunkt
+        spurpunkt = random.choice(['x-y', 'x-z', 'y-z']) if spurpunkt not in ['x-y', 'x-z', 'y-z', 'all'] else spurpunkt
         if spurpunkt == 'all':
-            aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechnen Sie die Spurpunkte der Geraden g mit den '
-                           + f' Achsenebenen. \n\n')
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                    + 'Berechnen Sie die Spurpunkte der Geraden g mit den Achsenebenen.'))
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Berechnung~der~Spurpunkte~'
                            + r'mit~den~Achsenebenen.} \hspace{10em}')
         else:
-            aufgabe.append(beschriftung(len(teilaufg), i) + 'Berechnen Sie den Spurpunkt der Geraden g mit der '
-                           + spurpunkt + f'-Achsenebene. \n\n')
+            aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg), i)
+                                    + 'Berechnen Sie den Spurpunkt der Geraden g mit der '
+                                    + spurpunkt + f'-Achsenebene.'))
             loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathrm{Berechnung~des~Spurpunktes~'
                            + r'mit~der~' + spurpunkt + r'-Achsenebene.} \hspace{10em}')
 
@@ -886,28 +912,44 @@ def geraden_aufstellen(nr, teilaufg=['a', 'b', 'c'], T_auf_g=[True, False][rando
                            + r' \end{pmatrix} \quad \to \quad S_{yz} ~=~ \left( ' + gzahl(s3x) + r' \vert '
                            + gzahl(s3y) + r' \vert ' + gzahl(s3z) + r' \right) \quad (2BE)')
             punkte += 4
-        aufgabe.append('NewPage') if neue_seite == i else ''
+
+        if notizfeld:
+            if spurpunkt == 'all':
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_riesig')
+            else:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_mittel')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
+
         liste_punkte.append(punkte)
         i += 1
 
     if BE != []:
         if len(BE) != len(teilaufg):
-            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben ({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
+            print(f'Die Anzahl der gegebenen BE ({len(BE)}) stimmt nicht mit der Anzahl der Teilaufgaben '
+                  f'({len(teilaufg)}) überein. Es wird die ursprüngliche Punkteverteilung übernommen.')
         else:
             liste_punkte = BE
 
     return [aufgabe, loesung, grafiken_aufgaben, grafiken_loesung, liste_punkte, liste_bez]
 
-def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebeziehung=['identisch', 'parallel', 'windschief', 'schneiden'][random.choice([0,1,2,3])], gerade_k=[False,True][0],  neue_seite=None, i=0, BE=[]):
+def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e'], lagebeziehung=[None,'identisch', 'parallel', 'windschief', 'schneiden'][0], gerade_k=[False,True][0], notizfeld=[False, True][0], neue_seite=[0,1,2,3,4,5,6][0], BE=[]):
     # Aufgabe zur Lagebeziehung zweier Geraden und ggf. des Abstandes beider Geraden.
     # Mit dem Parameter "teilaufg=" können die Teilaufgaben ausgewählt werden. Zum Beispiel "teilaufg=['a', 'c']" erzeugt eine Aufgabe, in der nur Teilaufgabe 'a' und 'c' enthalten sind.
     # Mit dem Parameter "lagebeziehung=" kann festgelegt werden, ob Lagebeziehung die beiden Geraden haben. Sie kann 'identisch', 'parallel', 'windschief' oder 'schneiden' sein. Standardmäßig wird das zufällig ausgewählt.
     # Mit dem Parameter "gerade_k=" kann festgelegt ('True' oder 'False') werden, ob der Schnittwinkel bei Geraden, die sich schneiden zwischen den gegebenen Geraden g und h oder einer neuen Geraden k berechnet werden soll. Standardmäßig wird dann keine Gerade k erzeugt.
-    # Mit dem Parameter "neue_seite=" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=None" und es erfolgt keine erzwungener Seitenumbruch.
-    # Mit dem Parameter "i=" kann wird festgelegt mit welchen Buchstaben die Teilaufgaben beginnen. Standardmäßig ist "i=0" und die Teilaufgaben starten mit a.
+    # Mit dem Parameter "notizfeld" kann unter den Teilaufgaben ein Notizfeld angezeigt werden. Standardmäßig ist es nicht dabei
+    # Mit dem Parameter "neue_seite" kann festgelegt werden, nach welcher Teilaufgabe eine neue Seite für die restlichen Teilaufgaben erzeugt wird. Standardmäßig ist das "neue_seite=0" und es erfolgt keine erzwungener Seitenumbruch.
     # Mit dem Parameter "BE=[]" kann die Anzahl der Bewertungseinheiten festgelegt werden. Wird hier nichts eingetragen, werden die Standardbewertungseinheiten verwendet.
-    liste_punkte = []
-    liste_bez = []
+
+    if isinstance(neue_seite, int):
+        neue_seite = [neue_seite]
+    neue_seite[-1] = len(teilaufg) if neue_seite[-1] > len(teilaufg) else neue_seite[-1]
+
+    i, liste_punkte, liste_bez = 0, [], []
 
     v_teiler = random.choice([1, 2, 5])
     punkt_a = [ax, ay, az] = vektor.punkt(3) # Punkt A liegt auf Gerade g_1
@@ -920,7 +962,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
     uz = (vx*ux + vy * uy)/ (-1 * vz)
     u = vektor.kuerzen([ux, uy, uz])
 
-    aufgabe = [MediumText(bold('Aufgabe ' + str(nr) + ' \n\n'))]
+    aufgabe = [MediumText(NoEscape(r' \noindent \textbf{Aufgabe ' + str(nr) + r'}')), ' \n\n']
     loesung = [r' \mathbf{Lösung~Aufgabe~}' + str(nr) + r' \hspace{35em}']
     grafiken_aufgaben = []
     grafiken_loesung = []
@@ -929,9 +971,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         # lagebeziehungen zweier Geraden und die dafür nötigen Eigenschaften erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 8
-
-        aufgabe.append(beschriftung(len(teilaufg),i) + 'Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und '
-                                          'deren Eigenschaften. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                + 'Erläutern Sie die möglichen Lagebeziehungen zweier Geraden und deren '
+                                + 'Eigenschaften.'))
         # Tabelle mit dem Text
         table1 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
         table1.add_row(str(liste_teilaufg[i]) + ')',
@@ -947,17 +989,23 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         table1.add_row('', '', '', 'insg.: ' + str(punkte) + ' BE')
         loesung.append(table1)
 
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
         if 'b' in teilaufg:
             loesung.append(' \n\n')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'b' in teilaufg:
         # mathematisches Vorgehen zur Bestimmung der Lagebeziehung zweier Geraden erläutern
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
         punkte = 6
-        aufgabe.append(beschriftung(len(teilaufg),i) + 'Erläutern Sie, wie man die Lagebeziehung zweier '
-                                          'Geraden mathematisch überprüfen kann. \n\n')
+        aufgabe.append(NoEscape(r' \noindent ' + beschriftung(len(teilaufg),i)
+                                + 'Erläutern Sie, wie man die Lagebeziehung zweier Geraden mathematisch '
+                                + 'überprüfen kann.'))
         # Tabelle mit dem Text
         table2 = Tabular('p{0.2cm} p{0.2cm} p{12cm} p{2cm}')
         table2.add_row(beschriftung(len(teilaufg), i),
@@ -973,12 +1021,19 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        + 'erhält man keine Lösung, sind die Geraden windschief. ', '2BE')
         table2.add_row('', '', '', 'insg.: ' + str(punkte) + 'BE')
         loesung.append(table2)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'c' in teilaufg:
         # Lagebeziehung zweier gegebener Geraden bestimmen
         liste_bez.append(f'{str(nr)}.{str(liste_teilaufg[i])})')
+        list_lage = ['identisch', 'parallel', 'windschief', 'schneiden']
+        lagebeziehung = random.choice(list_lage) if lagebeziehung not in list_lage else lagebeziehung
         if lagebeziehung == 'identisch':
             fakt0 = zzahl(1,30)/5
             punkt_c = [cx,cy,cz] = vektor.ganzzahl([round(ax + fakt0*vx, 1), round(ay + fakt0*vy, 1), round(az + fakt0*vz, 1)]) # Punkt C liegt auf h
@@ -1028,17 +1083,8 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkt_d = [dx,dy,dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v)) # Punkte C und D liegen auf h
             punkt_c = [cx,cy,cz] = vektor.ganzzahl(punkt_d + fakt_s * np.array(u))
             [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c) # Vektor w ist der Richtungsvektor von h
-            # while (vx * wy - vy * wx) == 0 or (vx * wy - vy * wx) == 0:
-            #     fakt_r = zzahl(1, 7) / 2
-            #     fakt_s = zzahl(1, 7) / 2
-            #     punkt_d = [dx, dy, dz] = vektor.ganzzahl(punkt_a + fakt_r * np.array(v))  # Punkte C und D liegen auf h
-            #     punkt_c = [cx, cy, cz] = vektor.ganzzahl(punkt_a + fakt_s * np.array(u))
-            #     [wx, wy, wz] = w = vektor.kuerzen(punkt_d - punkt_c)  # Vektor w ist der Richtungsvektor von h
-            # print(punkt_a), print(v), print(punkt_c), print(w)
             lsg1, erg1, pkt1 = vektor.rechnung([v], [w])
             lsg2, erg2, pkt2 = vektor.rechnung([punkt_a, v],[punkt_c, w], var_obj1=['r'], var_obj2=['s'])
-            # print(erg2)
-            # lsgs = (dx - cx) / wx
             lsgs = erg2[1]
             schnittpunkt_s = [sx, sy, sz] = (vektor.ganzzahl(punkt_c + lsgs * w))
             loesung_1 = (r' \mathrm{ Überpüfen~der~Geraden~auf~Parallelität } \hspace{10em} \\' + lsg1[0]
@@ -1049,7 +1095,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             punkte_aufg = pkt1 + pkt2 + 3
             liste_punkte.append(punkte_aufg)
 
-        aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
+        aufgabe.extend((NoEscape(r' \noindent ' + 'Gegeben sind die beiden Geraden mit folgenden Gleichungen:'),
                         r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                        + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                        r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -1059,10 +1105,16 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                        r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                        + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                        r' \end{pmatrix}\\'))
-        aufgabe.append(beschriftung(len(teilaufg),i) + 'Überprüfen Sie die Lagebeziehung der Geraden. \n\n')
+        aufgabe.append(beschriftung(len(teilaufg),i)
+                                + 'Überprüfen Sie die Lagebeziehung der Geraden.')
         loesung.append(beschriftung(len(teilaufg),i, True) + r' \mathit{Die~Auswahl~war~'
                        + lagebeziehung + r'} \hspace{25em} \\' + loesung_1)
-        aufgabe.append('NewPage') if neue_seite == i else ''
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         i += 1
     if 'd' in teilaufg and lagebeziehung in ['parallel', 'windschief']:
         # Bestimmung des Abstandes zweier paralleler bzw. windschiefer Geraden
@@ -1090,7 +1142,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             fakt_n_str = '' if fakt_n == 1 else gzahl(fakt_n) + r' \cdot '
             erg= N(abs(((cx-ax)*nx+(cy-ay)*ny+(cz-az)*nz)/sqrt(nx**2+ny**2+nz**2)),3)
         if 'c' not in teilaufg:
-            aufgabe.extend(('Gegeben sind die beiden Geraden mit folgenden Gleichungen:',
+            aufgabe.extend((NoEscape(r' \noindent Gegeben sind die beiden Geraden mit folgenden Gleichungen:'),
                             r'g: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
                             + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
                             + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
@@ -1100,8 +1152,7 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                             + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
                             + gzahl(wx) + r' \\' + gzahl(wy) + r' \\' + gzahl(wz) + r' \\'
                             + r' \end{pmatrix}\\'))
-        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Abstand der Geraden g und h. \n\n')
-
+        aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Abstand der Geraden g und h.')
 
         if lagebeziehung == 'parallel':
             punkte = 7
@@ -1145,6 +1196,9 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + summe.exponenten([vx,vy,vz],2) + r'}} ~=~ \frac{ \sqrt{ '
                            + summe.exponenten([crx, cry, crz],2) + r' }}{ \sqrt{ '
                            + gzahl(vx**2 + vy**2 + vz**2) + r'}} ~=~' + gzahl(erg_alt) + r' \quad (3BE)')
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_riesig')
         elif lagebeziehung == 'windschief':
             punkte = 7
             loesung.append(beschriftung(len(teilaufg),i, True)
@@ -1166,7 +1220,11 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
                            + r' \\' + r' \end{pmatrix} \right| ~=~ \left| \frac{ '
                            + gzahl((cx-ax)*nx) + vorz_str((cy-ay)*ny) + vorz_str((cz-az)*nz) + r' }{ \sqrt{'
                            + gzahl(nx**2+ny**2+nz**2) + r'}} \right|  ~=~ ' + gzahl(erg) + r' \quad (3BE)')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+            if notizfeld:
+                aufgabe.append(['Bild', '430px'])
+                grafiken_aufgaben.append('notizen_gross')
+        aufgabe.append(' \n\n') if not notizfeld else None
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte)
         i += 1
     if 'e' in teilaufg:
@@ -1183,28 +1241,28 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
         if 'c' in teilaufg and lagebeziehung == 'schneiden' and gerade_k == False:
             [ex, ey, ez] = [cx,cy,cz]
             [px, py, pz] = [wx, wy, wz]
-            aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Schnittwinkel der Geraden g und h. \n\n')
+            aufgabe.append(NoEscape(r' \noindent' + beschriftung(len(teilaufg),i)
+                                    + 'Berechnen Sie den Schnittwinkel der Geraden g und h.'))
         elif 'c' not in teilaufg:
-            aufgabe.append('Gegeben sind die beiden Geraden mit folgenden Gleichungen:')
-            aufgabe.append(r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
-                           + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
-                           + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
-                           + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'+
-                           r' \end{pmatrix} \quad und \quad k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
-                           + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                           + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
-                           + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
-                               + r' \end{pmatrix} }')
-            aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+            aufgabe.extend((NoEscape(r' \noindent Gegeben sind die beiden Geraden mit folgenden Gleichungen:'),
+                            r' \mathrm{g: \overrightarrow{x} ~=~ \begin{pmatrix} '
+                            + gzahl(ax) + r' \\' + gzahl(ay) + r' \\' + gzahl(az) + r' \\'
+                            + r' \end{pmatrix} ~+~r \cdot \begin{pmatrix} '
+                            + gzahl(vx) + r' \\' + gzahl(vy) + r' \\' + gzahl(vz) + r' \\'+
+                            + r' \end{pmatrix} \quad und \quad k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
+                            + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
+                            + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
+                            + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
+                            + r' \end{pmatrix} }',
+                            beschriftung(len(teilaufg),i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. '))
 
         else:
-            aufgabe.append('Gegeben ist eine weitere Gerade k, die g schneidet, mit der folgenden Gleichung.')
-            aufgabe.append(r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} '
-                           + gzahl(ex) + r' \\' + gzahl(ey) + r' \\' + gzahl(ez) + r' \\'
-                           r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} '
-                           + gzahl(px) + r' \\' + gzahl(py) + r' \\' + gzahl(pz) + r' \\'
-                           r' \end{pmatrix} ')
-            aufgabe.append(beschriftung(len(teilaufg),i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k. \n\n')
+            aufgabe.extend((NoEscape(r' \noindent Gegeben ist eine weitere Gerade k, die g schneidet, '
+                                      + r'mit der folgenden Gleichung.'),
+                            r'k: \overrightarrow{x} \ ~=~ \begin{pmatrix} ' + gzahl(ex) + r' \\' + gzahl(ey) + r' \\'
+                            + gzahl(ez) + r' \\' + r' \end{pmatrix} ~+~s \cdot \begin{pmatrix} ' + gzahl(px) + r' \\'
+                            + gzahl(py) + r' \\' + gzahl(pz) + r' \\' + r' \end{pmatrix} ',
+                            beschriftung(len(teilaufg),i) + 'Berechnen Sie den Schnittwinkel der Geraden g und k.'))
 
         sp_vp = abs(vektor.skalarprodukt([px, py, pz],[vx, vy, vz]))
         l_v = sqrt(vx ** 2 + vy ** 2 + vz ** 2)
@@ -1217,26 +1275,30 @@ def geraden_lagebeziehung(nr, teilaufg=['a', 'b', 'c', 'd', 'e', 'f'], lagebezie
             text = ''
 
         loesung.append(beschriftung(len(teilaufg),i, True) + r' cos( \gamma ) = \frac{ \vert \overrightarrow{v}'
-                       r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                       r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
-                       r' \gamma ~=~ cos^{-1} \left( \frac{ \vert \overrightarrow{v}'
-                       r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
-                       r' \vert \overrightarrow{u} \vert } \right) \quad (1BE) \\'
-                       r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
-                       r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
+                       + r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
+                       + r' \vert \overrightarrow{u} \vert } \quad \vert ~ cos^{-1} \quad \to \quad '
+                       + r' \gamma ~=~ cos^{-1} \left( \frac{ \vert \overrightarrow{v}'
+                       + r' \cdot  \overrightarrow{u} \vert }{ \vert \overrightarrow{v} \vert \cdot '
+                       + r' \vert \overrightarrow{u} \vert } \right) \quad (1BE) \\'
+                       + r' \vert \overrightarrow{v} \cdot \overrightarrow{u} \vert'
+                       + r'~=~ \vert ' + gzahl_klammer(vx) + r' \cdot ' + gzahl_klammer(px)
                        + '+' + gzahl_klammer(vy) + r' \cdot ' + gzahl_klammer(py)
                        + '+' + gzahl_klammer(vz) + r' \cdot ' + gzahl_klammer(pz) + r' \vert ~=~'
                        + gzahl(abs(N(sp_vp,3))) + r' \quad (2BE) \\'
-                       r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
+                       + r' \vert \overrightarrow{u} \vert ~=~ \sqrt{ (' + str(vx) + ')^2 ~+~('
                        + str(vy) + ')^2 ~+~(' + str(vz) + ')^2} ~=~ ' + gzahl(N(l_v,3))
                        + r' \quad \mathrm{und} \quad \vert \overrightarrow{v} \vert ~=~ \sqrt{ ('
                        + str(px) + ')^2 ~+~(' + str(py) + ')^2 ~+~(' + str(pz)
                        + ')^2} ~=~ ' + gzahl(N(l_p,3)) + r' \quad (2BE) \\'
                        + r' \gamma ~=~ cos^{-1} \left( \frac{' + gzahl(N(sp_vp,3)) + '}{'
                        + gzahl(N(l_v,3)) + r' \cdot ' + gzahl(N(l_p,3))
-                       + r'} \right) ~=~' + gzahl(erg) + text
-                       + r' \quad (2BE) \\ \mathrm{insgesamt~' + str(punkte_aufg) + r'~BE} \\')
-        aufgabe.append('NewPage') if neue_seite == i else ''
+                       + r'} \right) ~=~' + gzahl(erg) + text + r' \quad (2BE) ')
+        if notizfeld:
+            aufgabe.append(['Bild', '430px'])
+            grafiken_aufgaben.append('notizen_gross')
+        else:
+            aufgabe.append(' \n\n')
+        aufgabe.append('NewPage') if i + 1 in neue_seite else None
         liste_punkte.append(punkte_aufg)
         i += 1
 

@@ -132,10 +132,11 @@ a, b, c, d, e, f, g, h, x, y, z = symbols('a b c d e f g h x y z')
 #
 # lsg1(0.53)
 
-teilaufg = [0,1,2, 2,3,4,2]
+teilaufg = True
+print('False') if not teilaufg else None
 
-for step in range(teilaufg.count(2)):
-    print('2')
+
+
 
 
 
