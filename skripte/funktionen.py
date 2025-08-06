@@ -631,6 +631,12 @@ class vektor():
                         rnull.append(element)
                     else:
                         nnull.append(element)
+                if len(nnull) == 3:
+                    bez1, a1, b1, c1, d1 = nnull[0]
+                    bez2, a2, b2, c2, d2 = nnull[1]
+                    if b2*d1-d2*b1 == c2*b1 - a2*b1 - b2*c1 + b2*a1 == 0:
+                        nnull[1], nnull[2] = nnull[2], nnull[1]
+
                 return [rsnull, snull, rnull, nnull]
 
             if len(obj1) == len(obj2) == 2: # hier wird der Text und die Probe für den Fall (Gerade-Gerade) erzeugt
@@ -698,14 +704,18 @@ class vektor():
                             + summe.terme([a2, Rational(b2*(c1 - a1),b1), Rational(b2*d1, b1)], ['','', var2])
                             + '~=~' + summe.terme([c2, d2], ['', var2])
                             + umformung(Rational(a2*b1 + b2*c1 - b2*a1,b1), '-') + r' \quad \vert ' + vorz_v_innen(-1*d2, var2)
-                            + r' \quad (1BE) \\ ' + vorz_v_aussen(Rational(b2*d1-d2*b1,b1), var2) + '~=~'
+                            + r' \quad (1BE) \\ ' + vorz_v_aussen(Rational(b2*d1-d2*b1,b1), var2, null=True) + '~=~'
                             + gzahl(Rational(c2*b1 - a2*b1 - b2*c1 + b2*a1, b1)))
                     if b2*d1-d2*b1 == 0:
-                        text += r' f.A. \quad (1BE) ' if c2*b1 - a2*b1 - b2*c1 + b2*a1 != 0 else r' w.A. \quad (1BE) '
+                        text += r' \quad  \mathrm{f.A.} \quad (1BE) ' if c2*b1 - a2*b1 - b2*c1 + b2*a1 != 0 \
+                            else r' \quad mathrm{w.A.} \quad (1BE) '
                         lsg = []
                     else:
-                        text += (zws3 + r' \mathrm{und} \quad ' + var1 + '~=~'
-                                 + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],['', r' \cdot ' + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))], eins=True)
+                        text += (zws3 + r' \quad \mathrm{und} \quad ' + var1 + '~=~'
+                                 + summe.terme([Rational(c1 - a1, b1), Rational(d1, b1)],
+                                               ['', r' \cdot '
+                                                + gzahl_klammer(Rational(c2*b1-a2*b1-b2*c1+b2*a1, b2*d1-d2*b1))],
+                                               eins=True)
                                  + '~=~' + gzahl(Rational(c1 - a1, b1) + Rational(d1*(c2*b1-a2*b1-b2*c1+b2*a1), b1*(b2*d1-d2*b1)))
                                  + r' \quad (1BE)')
                         lsg = [Rational(c1 - a1, b1) + Rational(d1*(c2*b1 - a2*b1 - b2*c1 + b2*a1), b1*(b2*d1 - d2*b1)),
@@ -849,7 +859,8 @@ class vektor():
                             + zws2 + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1) + '~=~'
                             + gzahl(Rational(a2*d1 - b2*d1 - d2*a1 + d2*b1, d1)))
                     if c2*d1 - d2*c1 == 0:
-                        text += r' f.A. \quad (1BE) ' if a2*d1 - b2*d1 - d2*a1 + d2*b1 != 0 else r' w.A. \quad (1BE) '
+                        text += r' \quad \mathrm{f.A.} \quad (1BE) ' if a2*d1 - b2*d1 - d2*a1 + d2*b1 != 0 \
+                            else r' \quad \mathrm{w.A.} \quad (1BE) '
                         lsg = []
                     else:
                         text += (zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
@@ -991,7 +1002,8 @@ class vektor():
                             + zws2 + vorz_v_aussen(Rational(c2*d1 - d2*c1, d1), var1) + '~=~'
                             + gzahl(Rational(a2*d1 - d2*a1, d1)))
                     if c2*d1 - d2*c1 == 0:
-                        text += r' f.A. \quad (1BE) ' if a2*d1 - d2*a1 != 0 else r' w.A. \quad (1BE) '
+                        text += r' \quad \mathrm{f.A.} \quad (1BE) ' if a2*d1 - d2*a1 != 0 \
+                            else r' \quad \mathrm{w.A.} \quad (1BE) '
                         lsg =[]
                     else:
                         text += (zws3 + r' \mathrm{und} \quad ' + var2 + '~=~'
